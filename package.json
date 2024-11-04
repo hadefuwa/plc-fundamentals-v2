@@ -1,0 +1,46 @@
+{
+  "name": "plc-base-module",
+  "version": "0.0.1",
+  "description": "HMI interface for Siemens S7-1200 PLC",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --debug",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "electron-builder --publish always"
+  },
+"build": {
+  "appId": "com.Matrix.plc-base",
+  "productName": "S7 HMI",
+  "files": [
+    "main.js",
+    "index.html",
+    "renderer.js",
+    "package.json",
+    "assets/**/*"
+  ],
+  "directories": {
+    "buildResources": "assets"
+  },
+  "publish": [
+    {
+      "provider": "github",
+      "owner": "hadefuwa",
+      "repo": "plc-base-module"
+    }
+  ]
+},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hadefuwa/plc-base-module.git"
+  },
+  "author": "Hamed Adefuwa",
+  "license": "MIT",
+  "dependencies": {
+    "nodes7": "^0.3.18"
+  },
+  "devDependencies": {
+    "electron": "^25.8.4",
+    "electron-builder": "^24.6.3"
+  }
+}
