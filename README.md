@@ -16,13 +16,13 @@ This is a basic HMI app built with Electron.js to communicate with Siemens S7 PL
    Open a terminal and run the following command to clone the repository:
 
    ```bash
-   git clone https://github.com/hadefuwa/basic-s7-hmi.git
+   git clone https://github.com/hadefuwa/plc-base-module.git
    ```
 
 2. **Navigate to the Project Directory**
 
    ```bash
-   cd basic-s7-hmi
+   plc-base-module
    ```
 
 3. **Install Dependencies**
