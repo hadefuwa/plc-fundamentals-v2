@@ -16,6 +16,7 @@
     h1 {
         color: #9da5b1;            /* Light gray color for headings */
         text-align: center;
+        margin: 0;  /* Remove default margins */
     }
 
     #container {
@@ -410,10 +411,36 @@
     .event-list-container::-webkit-scrollbar-thumb:hover {
         background: #5a6066;
     }
+
+    .matrix-logo {
+      width: 100%;
+      padding: 20px;
+      background-color: #2c3033;
+    }
+
+    .logo-header-container {
+        display: flex;
+        align-items: center;
+        gap: 20px;  /* Space between logo and heading */
+        max-width: 1200px;  /* Or your preferred max width */
+        margin: 0 auto;
+        justify-content: center;
+    }
+
+    .matrix-logo img {
+      max-height: 60px;
+      width: auto;
+    }
   </style>
 </head>
 <body>
-  <h1>PLC Base Module</h1>
+  <!-- Add this before the h1 -->
+  <div class="matrix-logo">
+    <div class="logo-header-container">
+      <img src="assets/matrix-logo.png" alt="Matrix Logo">
+      <h1>PLC Base Module</h1>
+    </div>
+  </div>
 
   <div id="container">
     <!-- Config Header with arrow -->
