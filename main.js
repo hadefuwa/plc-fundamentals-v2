@@ -10,76 +10,103 @@ let isConnected = false;
 let logInterval;
 let lastLoggedState = null;
 
-function startReadLoop() {
-  if (readInterval) {
-    clearInterval(readInterval);
-    readInterval = null;
-  }
+let connectionStats = {
+  responseTime: [],
+  errorCount: 0,
+  totalRequests: 0,
+  lastErrors: [],
+  connectionHistory: []
+};
 
-  readInterval = setInterval(() => {
-    if (!plc || !isConnected) {
-      console.log('No PLC instance or not connected');
-      if (win && !win.isDestroyed()) {
-        win.webContents.send('plc-status', 'PLC Lost Connection');
-      }
-      handleDisconnection();
-      return;
+let historicalData = {
+  ledStates: [],
+  estopEvents: [],
+  statusHistory: []
+};
+
+let plcAddress = '192.168.0.1';  // Default address
+
+ipcMain.on('update-plc-address', (_, address) => {
+    plcAddress = address;
+    console.log('PLC address updated:', plcAddress);
+});
+
+ipcMain.on('connect-plc', () => {
+    console.log('Connect PLC request received');
+    if (plc) {
+        try {
+            plc.dropConnection();
+        } catch (error) {
+            console.log('Error dropping existing connection:', error);
+        }
+    }
+    initiatePLCConnection();
+});
+
+function startReadLoop() {
+    if (readInterval) {
+        clearInterval(readInterval);
+        readInterval = null;
     }
 
-    plc.readAllItems((err, data) => {
-      if (err) {
-        console.log('Read error:', err);
-        if (win && !win.isDestroyed()) {
-          win.webContents.send('plc-status', 'PLC Lost Connection');
-        }
-        handleDisconnection();
-      } else {
-        const formattedData = {
-          'E-Stop': data['DB1,X2.0'],
-          'Blue LED': data['DB1,X58.0']
-        };
-
-        const currentState = JSON.stringify(formattedData);
-        if (lastLoggedState !== currentState) {
-          console.log('State changed:', formattedData);
-          lastLoggedState = currentState;
+    readInterval = setInterval(() => {
+        if (!plc || !isConnected) {
+            console.log('No PLC instance or not connected');
+            if (win && !win.isDestroyed()) {
+                win.webContents.send('plc-status', 'PLC Lost Connection');
+            }
+            return;
         }
 
-        if (win && !win.isDestroyed()) {
-          win.webContents.send('plc-data', formattedData);
-          win.webContents.send('plc-status', 'Connected to PLC');
-        }
-      }
-    });
-  }, 100);
+        const startTime = Date.now();
+        plc.readAllItems((err, data) => {
+            const responseTime = Date.now() - startTime;
+            
+            if (err) {
+                console.log('Read error:', err);
+                if (win && !win.isDestroyed()) {
+                    win.webContents.send('plc-status', 'PLC Lost Connection');
+                }
+            } else {
+                console.log('Read data:', data);
+                
+                const formattedData = {
+                    'E-Stop': data['DB1,X2.0'],
+                    'Blue LED': data['DB1,X58.0']
+                };
+
+                console.log('Sending formatted data to renderer:', formattedData);
+
+                updateHistoricalData(formattedData);
+
+                if (win && !win.isDestroyed()) {
+                    win.webContents.send('plc-data', formattedData);
+                    win.webContents.send('plc-status', 'Connected to PLC');
+                    win.webContents.send('stats-update', {
+                        connectionStats,
+                        historicalData
+                    });
+                }
+            }
+        });
+    }, 1000);
 }
 
 function handleDisconnection() {
-  if (!isConnected || isReconnecting) return;
-  
-  console.log('Connection lost');
-  isConnected = false;
-  
-  if (readInterval) {
-    clearInterval(readInterval);
-    readInterval = null;
-  }
-  if (logInterval) {
-    clearInterval(logInterval);
-    logInterval = null;
-  }
-  
-  if (win && !win.isDestroyed()) {
-    win.webContents.send('plc-status', 'PLC Lost Connection');
-  }
-  
-  setTimeout(closeAndReconnect, 1000);
+    isConnected = false;
+    updateConnectionStats(null, new Error('Connection lost'));
+    
+    if (!isReconnecting) {
+        setTimeout(initiatePLCConnection, 5000);
+    }
 }
 
 function initiatePLCConnection() {
   if (isReconnecting) return;
   isReconnecting = true;
   
+  console.log('Initiating PLC connection to:', plcAddress);
+
   if (plc) {
     try {
       plc.dropConnection();
@@ -95,7 +122,7 @@ function initiatePLCConnection() {
 
   plc.initiateConnection({
     port: 102,
-    host: '192.168.0.1',
+    host: plcAddress,
     rack: 0,
     slot: 1,
     timeout: 1500,
@@ -106,6 +133,9 @@ function initiatePLCConnection() {
       console.log('Connection error:', err);
       isConnected = false;
       isReconnecting = false;
+      if (win && !win.isDestroyed()) {
+        win.webContents.send('plc-status', 'PLC Connection Failed');
+      }
       setTimeout(initiatePLCConnection, 5000);
     } else {
       console.log('Connected to PLC');
@@ -120,7 +150,9 @@ function initiatePLCConnection() {
       
       isConnected = true;
       isReconnecting = false;
-      win.webContents.send('plc-status', 'Connected to PLC');
+      if (win && !win.isDestroyed()) {
+        win.webContents.send('plc-status', 'Connected to PLC');
+      }
       startReadLoop();
     }
   });
@@ -176,3 +208,74 @@ app.on('window-all-closed', () => {
     app.quit();
   }
 });
+
+function updateConnectionStats(responseTime, error) {
+    const timestamp = new Date();
+    connectionStats.totalRequests++;
+    
+    // Always push the current connection state
+    connectionStats.connectionHistory.push({
+        time: timestamp,
+        connected: isConnected  // Use the global isConnected state
+    });
+
+    if (error) {
+        connectionStats.errorCount++;
+        connectionStats.lastErrors.push({
+            time: timestamp,
+            error: error.message
+        });
+        // Keep only last 10 errors
+        if (connectionStats.lastErrors.length > 10) {
+            connectionStats.lastErrors.shift();
+        }
+    }
+
+    // Keep last 60 connection status updates
+    if (connectionStats.connectionHistory.length > 60) {
+        connectionStats.connectionHistory.shift();
+    }
+
+    // Send updated stats to renderer
+    if (win && !win.isDestroyed()) {
+        win.webContents.send('stats-update', {
+            connectionStats,
+            historicalData
+        });
+    }
+}
+
+function updateHistoricalData(data) {
+  const timestamp = new Date();
+
+  // Update LED history
+  historicalData.ledStates.push({
+    time: timestamp,
+    state: data['Blue LED']
+  });
+
+  // Update E-Stop history
+  historicalData.estopEvents.push({
+    time: timestamp,
+    state: data['E-Stop']
+  });
+
+  // Update general status history
+  historicalData.statusHistory.push({
+    time: timestamp,
+    connected: isConnected,
+    hasErrors: connectionStats.lastErrors.length > 0
+  });
+
+  // Keep only last 100 entries for each array
+  const maxEntries = 100;
+  if (historicalData.ledStates.length > maxEntries) {
+    historicalData.ledStates.shift();
+  }
+  if (historicalData.estopEvents.length > maxEntries) {
+    historicalData.estopEvents.shift();
+  }
+  if (historicalData.statusHistory.length > maxEntries) {
+    historicalData.statusHistory.shift();
+  }
+}

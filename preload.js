@@ -1,6 +1,9 @@
 const { contextBridge, ipcRenderer } = require('electron')
 
-contextBridge.exposeInMainWorld('electronAPI', {
-    onPLCData: (callback) => ipcRenderer.on('plc-data', callback),
-    onPLCStatus: (callback) => ipcRenderer.on('plc-status', callback)
+contextBridge.exposeInMainWorld('electron', {
+    receiveData: (callback) => ipcRenderer.on('plc-data', (_event, value) => callback(value)),
+    receiveStatus: (callback) => ipcRenderer.on('plc-status', (_event, value) => callback(value)),
+    receiveStats: (callback) => ipcRenderer.on('stats-update', (_event, value) => callback(value)),
+    updatePLCAddress: (ipAddress) => ipcRenderer.send('update-plc-address', ipAddress),
+    connectPLC: () => ipcRenderer.send('connect-plc')
 }) 

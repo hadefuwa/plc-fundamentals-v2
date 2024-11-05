@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PLC HMI Interface</title>
+  <style>
+    #container {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    #plc-image {
+      width: 60%;
+    }
+    #status-text {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 24px;
+      font-weight: bold;
+      padding: 5px 10px;
+      border-radius: 4px;
+      transition: all 0.3s;
+    }
+    div#status-text.connected {
+      color: white !important;
+      background-color: green !important;
+    }
+    div#status-text.disconnected {
+      color: yellow !important;
+      background-color: red !important;
+    }
+    .button {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.3s;
+    }
+    .button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    #blue-led {
+      bottom: 20px;
+      left: 30%;
+      background-color: blue;
+    }
+    #red-estop {
+      bottom: 20px;
+      right: 30%;
+      background-color: red;
+    }
+    .write-button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    .write-button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .error-message {
+      color: red;
+      margin-top: 20px;
+    }
+    .retry-button {
+      margin-top: 20px;
+    }
+    .status-label {
+      font-size: 18px;
+      margin: 10px;
+      font-weight: bold;
+    }
+    .circle {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: inline-block;
+        transition: all 0.3s;
+    }
+
+    /* Red Circle (E-Stop) styles */
+    .red-circle {
+        background-color: #ff0000;
+    }
+
+    /* Flashing animation for Safety Error */
+    @keyframes flash-safety {
+        0% { background-color: #ff0000; }
+        50% { background-color: #ffff00; }
+        100% { background-color: #ff0000; }
+    }
+
+    .red-circle.safety-error {
+        animation: flash-safety 1s infinite;
+    }
+
+    /* Blue Circle (LED) styles */
+    .blue-circle {
+        background-color: #000066;  /* Darker blue when off */
+        box-shadow: none;
+        transition: all 0.3s;
+    }
+
+    .blue-circle.led-on {
+        background-color: #0066ff;  /* Brighter blue when on */
+        box-shadow: 
+            0 0 10px #0066ff,
+            0 0 20px #0066ff,
+            0 0 30px #0066ff;
+    }
+
+    /* Add inside your existing <style> tag */
+    #circles-container {
+        display: flex;
+        justify-content: center;
+        gap: 20px;  /* Space between circles */
+        margin-top: 20px;  /* Space below PLC image */
+    }
+  </style>
+</head>
+<body>
+  <h1>PLC Base Module</h1>
+
+  <div id="container">
+    <!-- Connection Status Text -->
+    <div id="status-text" style="color: red;">Connecting...</div>
+
+    <!-- Siemens S7-1200 Image -->
+    <img id="plc-image" src="assets/s7-1200.png" alt="Siemens S7-1200">
+
+    <!-- Status Circles Container -->
+    <div id="circles-container">
+      <div id="led-circle" class="circle blue-circle"></div>
+      <div id="estop-circle" class="circle red-circle"></div>
+    </div>
+  </div>
+
+  <p id="plc-data">PLC Data: Waiting for connection...</p>
+  <!-- Add error message display -->
+  <div id="error-message" class="error-message"></div>
+
+  <!-- Add connection retry button -->
+  <button id="retry-connection" class="retry-button" disabled>Retry Connection</button>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
