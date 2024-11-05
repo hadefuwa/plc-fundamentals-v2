@@ -1,4 +1,6 @@
 let charts = {};
+let lastEstopState = true; // Initialize to true since that's the normal state
+let lastLedState = false;
 
 document.addEventListener('DOMContentLoaded', () => {
     initializeCharts();
@@ -25,6 +27,28 @@ document.addEventListener('DOMContentLoaded', () => {
             statusText.textContent = status;
             statusText.style.color = status.includes('Connected') ? 'green' : 'red';
         }
+
+        const isConnected = status === 'Connected to PLC';
+        const ledCircle = document.getElementById('led-circle');
+        const estopCircle = document.getElementById('estop-circle');
+
+        // Update circles connection state
+        if (ledCircle) {
+            if (!isConnected) {
+                ledCircle.classList.add('disconnected');
+            } else {
+                ledCircle.classList.remove('disconnected');
+            }
+        }
+
+        if (estopCircle) {
+            if (!isConnected) {
+                estopCircle.classList.add('disconnected');
+                estopCircle.classList.remove('flashing');  // Stop flashing when disconnected
+            } else {
+                estopCircle.classList.remove('disconnected');
+            }
+        }
     });
 
     // PLC data updates
@@ -34,19 +58,31 @@ document.addEventListener('DOMContentLoaded', () => {
         const ledCircle = document.getElementById('led-circle');
         const estopCircle = document.getElementById('estop-circle');
         
-        if (ledCircle) {
+        // Only update circles if we have a connection
+        if (ledCircle && !ledCircle.classList.contains('disconnected')) {
             console.log('LED state:', data['Blue LED']);
             ledCircle.classList.toggle('active', data['Blue LED']);
         }
         
-        if (estopCircle) {
-            if (data['E-Stop']) {
+        if (estopCircle && !estopCircle.classList.contains('disconnected')) {
+            const currentEstopState = data['E-Stop'];
+            
+            // Check for falling edge (true to false transition)
+            if (lastEstopState === true && currentEstopState === false) {
+                addEvent('estop', false, Date.now());
+            }
+            
+            // Update E-Stop circle state
+            if (currentEstopState) {
                 estopCircle.classList.add('active');
                 estopCircle.classList.remove('flashing');
             } else {
                 estopCircle.classList.remove('active');
                 estopCircle.classList.add('flashing');
             }
+
+            // Update last known state
+            lastEstopState = currentEstopState;
         }
     });
 
@@ -151,17 +187,24 @@ function initializeCharts() {
         
         if (charts.statusChart) {
             const currentData = charts.statusChart.data.datasets[0].data;
-            currentData.push({
-                x: now,
-                y: isConnected ? 1 : 0
-            });
+            
+            // Only add a point if the connection state has changed
+            if (currentData.length === 0 || 
+                currentData[currentData.length - 1].y !== (isConnected ? 1 : 0)) {
+                
+                currentData.push({
+                    x: now,
+                    y: isConnected ? 1 : 0
+                });
 
-            // Keep only last 60 seconds of data
-            while (currentData.length > 0 && now - currentData[0].x > 60000) {
-                currentData.shift();
+                // Keep only last 60 seconds of data
+                const cutoff = new Date(now - 60000);
+                while (currentData.length > 0 && currentData[0].x < cutoff) {
+                    currentData.shift();
+                }
+
+                charts.statusChart.update('quiet');
             }
-
-            charts.statusChart.update('quiet');
         }
     });
 }
@@ -210,4 +253,31 @@ function setupDataListeners() {
         // Add console log to verify listener setup
         console.log('Data listeners set up');
     });
+}
+
+function addEvent(type, state, timestamp) {
+    const listId = type === 'estop' ? 'estop-events-list' : 'led-events-list';
+    const eventsList = document.getElementById(listId);
+    if (!eventsList) return;
+
+    const li = document.createElement('li');
+    li.className = `${type}-event`;
+    const date = new Date(timestamp);
+    
+    const message = type === 'estop' 
+        ? 'E-Stop Triggered'
+        : (state ? 'LED Turned ON' : 'LED Turned OFF');
+
+    li.innerHTML = `
+        <span class="event-message">${message}</span>
+        <span class="event-time">${date.toLocaleTimeString()}</span>
+    `;
+
+    // Add to the beginning of the list
+    eventsList.insertBefore(li, eventsList.firstChild);
+
+    // Keep only the last 50 events
+    while (eventsList.children.length > 50) {
+        eventsList.removeChild(eventsList.lastChild);
+    }
 }

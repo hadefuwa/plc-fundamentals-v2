@@ -25,6 +25,10 @@ let historicalData = {
 };
 
 let plcAddress = '192.168.0.1';  // Default address
+let lastEstopState = true;
+
+let reconnectTimer = null;
+const RECONNECT_DELAY = 5000; // 5 seconds between reconnection attempts
 
 ipcMain.on('update-plc-address', (_, address) => {
     plcAddress = address;
@@ -33,156 +37,119 @@ ipcMain.on('update-plc-address', (_, address) => {
 
 ipcMain.on('connect-plc', () => {
     console.log('Connect PLC request received');
+    isReconnecting = false;
+    clearAllTimers();
+    initiatePLCConnection();
+});
+
+function clearAllTimers() {
+    if (readInterval) {
+        clearInterval(readInterval);
+        readInterval = null;
+    }
+    if (reconnectTimer) {
+        clearTimeout(reconnectTimer);
+        reconnectTimer = null;
+    }
+}
+
+function handleDisconnection() {
+    if (isReconnecting) return;
+    
+    console.log('Handling disconnection...');
+    isConnected = false;
+    isReconnecting = true;
+    
+    clearAllTimers();
+
+    if (win && !win.isDestroyed()) {
+        win.webContents.send('plc-status', 'PLC Lost Connection');
+    }
+
+    // Schedule a single reconnection attempt
+    reconnectTimer = setTimeout(() => {
+        console.log('Attempting to reconnect...');
+        initiatePLCConnection();
+    }, RECONNECT_DELAY);
+}
+
+function startReadLoop() {
+    if (readInterval) {
+        clearInterval(readInterval);
+    }
+
+    readInterval = setInterval(() => {
+        if (!plc || !isConnected) return;
+
+        plc.readAllItems((err, data) => {
+            if (err) {
+                console.log('Read error:', err);
+                handleDisconnection();
+                return;
+            }
+
+            const formattedData = {
+                'E-Stop': data['DB1,X2.0'],
+                'Blue LED': data['DB1,X58.0']
+            };
+
+            if (win && !win.isDestroyed()) {
+                win.webContents.send('plc-data', formattedData);
+                win.webContents.send('plc-status', 'Connected to PLC');
+            }
+        });
+    }, 1000);
+}
+
+function initiatePLCConnection() {
+    clearAllTimers();
+
     if (plc) {
         try {
             plc.dropConnection();
         } catch (error) {
             console.log('Error dropping existing connection:', error);
         }
-    }
-    initiatePLCConnection();
-});
-
-function startReadLoop() {
-    if (readInterval) {
-        clearInterval(readInterval);
-        readInterval = null;
+        plc = null;
     }
 
-    readInterval = setInterval(() => {
-        if (!plc || !isConnected) {
-            console.log('No PLC instance or not connected');
-            if (win && !win.isDestroyed()) {
-                win.webContents.send('plc-status', 'PLC Lost Connection');
-            }
-            return;
-        }
-
-        const startTime = Date.now();
-        plc.readAllItems((err, data) => {
-            const responseTime = Date.now() - startTime;
-            
-            if (err) {
-                console.log('Read error:', err);
-                if (win && !win.isDestroyed()) {
-                    win.webContents.send('plc-status', 'PLC Lost Connection');
-                }
-            } else {
-                console.log('Read data:', data);
-                
-                const formattedData = {
-                    'E-Stop': data['DB1,X2.0'],
-                    'Blue LED': data['DB1,X58.0']
-                };
-
-                console.log('Sending formatted data to renderer:', formattedData);
-
-                updateHistoricalData(formattedData);
-
-                if (win && !win.isDestroyed()) {
-                    win.webContents.send('plc-data', formattedData);
-                    win.webContents.send('plc-status', 'Connected to PLC');
-                    win.webContents.send('stats-update', {
-                        connectionStats,
-                        historicalData
-                    });
-                }
-            }
-        });
-    }, 1000);
-}
-
-function handleDisconnection() {
-    isConnected = false;
-    updateConnectionStats(null, new Error('Connection lost'));
-    
-    if (!isReconnecting) {
-        setTimeout(initiatePLCConnection, 5000);
-    }
-}
-
-function initiatePLCConnection() {
-  if (isReconnecting) return;
-  isReconnecting = true;
-  
-  console.log('Initiating PLC connection to:', plcAddress);
-
-  if (plc) {
-    try {
-      plc.dropConnection();
-    } catch (error) {
-      console.log('Error dropping existing connection:', error);
-    }
-  }
-
-  plc = new nodes7({
-    silent: true,
-    debug: false
-  });
-
-  plc.initiateConnection({
-    port: 102,
-    host: plcAddress,
-    rack: 0,
-    slot: 1,
-    timeout: 1500,
-    localTSAP: 0x0100,
-    remoteTSAP: 0x0200,
-  }, (err) => {
-    if (err) {
-      console.log('Connection error:', err);
-      isConnected = false;
-      isReconnecting = false;
-      if (win && !win.isDestroyed()) {
-        win.webContents.send('plc-status', 'PLC Connection Failed');
-      }
-      setTimeout(initiatePLCConnection, 5000);
-    } else {
-      console.log('Connected to PLC');
-      
-      const variables = {
-        'E-Stop': 'DB1,X2.0',
-        'Blue LED': 'DB1,X58.0'
-      };
-      
-      plc.addItems([variables['E-Stop'], variables['Blue LED']]);
-      console.log('Items added:', variables);
-      
-      isConnected = true;
-      isReconnecting = false;
-      if (win && !win.isDestroyed()) {
-        win.webContents.send('plc-status', 'Connected to PLC');
-      }
-      startReadLoop();
-    }
-  });
-}
-
-function closeAndReconnect() {
-  if (!plc || isReconnecting) return;
-  
-  console.log('Initiating reconnection...');
-  isReconnecting = true;
-  
-  if (readInterval) {
-    clearInterval(readInterval);
-    readInterval = null;
-  }
-
-  try {
-    plc.dropConnection(() => {
-      plc = null;
-      isConnected = false;
-      isReconnecting = false;
-      setTimeout(initiatePLCConnection, 5000);
+    plc = new nodes7({
+        silent: true,
+        debug: false
     });
-  } catch (error) {
-    console.log('Error during disconnect:', error);
-    plc = null;
-    isConnected = false;
-    isReconnecting = false;
-    setTimeout(initiatePLCConnection, 5000);
-  }
+
+    plc.initiateConnection({
+        port: 102,
+        host: plcAddress,
+        rack: 0,
+        slot: 1,
+        timeout: 1500,
+        localTSAP: 0x0100,
+        remoteTSAP: 0x0200,
+    }, (err) => {
+        if (err) {
+            console.log('Connection failed:', err.message);
+            isConnected = false;
+            
+            if (win && !win.isDestroyed()) {
+                win.webContents.send('plc-status', 'PLC Connection Failed');
+            }
+            
+            handleDisconnection();
+        } else {
+            console.log('Connected to PLC successfully');
+            isConnected = true;
+            isReconnecting = false;
+            
+            plc.addItems(['DB1,X2.0', 'DB1,X58.0']);
+            
+            if (win && !win.isDestroyed()) {
+                win.webContents.send('plc-status', 'Connected to PLC');
+            }
+            
+            startReadLoop();
+        }
+    });
 }
 
 function createWindow() {
@@ -279,3 +246,15 @@ function updateHistoricalData(data) {
     historicalData.statusHistory.shift();
   }
 }
+
+// Clean up on app exit
+app.on('before-quit', () => {
+    clearAllTimers();
+    if (plc) {
+        try {
+            plc.dropConnection();
+        } catch (error) {
+            console.log('Error dropping connection on quit:', error);
+        }
+    }
+});
