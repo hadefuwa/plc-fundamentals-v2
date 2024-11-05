@@ -60,17 +60,67 @@ function handleDisconnection() {
     isConnected = false;
     isReconnecting = true;
     
+    updateConnectionStats(0, new Error('Connection lost'));
+
     clearAllTimers();
 
     if (win && !win.isDestroyed()) {
         win.webContents.send('plc-status', 'PLC Lost Connection');
     }
 
-    // Schedule a single reconnection attempt
-    reconnectTimer = setTimeout(() => {
-        console.log('Attempting to reconnect...');
-        initiatePLCConnection();
-    }, RECONNECT_DELAY);
+    attemptReconnection();
+}
+
+function attemptReconnection() {
+    console.log('Attempting to reconnect...');
+    
+    if (plc) {
+        try {
+            plc.dropConnection();
+        } catch (error) {
+            console.log('Error dropping connection:', error);
+        }
+        plc = null;
+    }
+
+    plc = new nodes7({
+        silent: true,
+        debug: false
+    });
+
+    plc.initiateConnection({
+        port: 102,
+        host: plcAddress,
+        rack: 0,
+        slot: 1,
+        timeout: 1500,
+        localTSAP: 0x0100,
+        remoteTSAP: 0x0200,
+    }, (err) => {
+        if (err) {
+            console.log('Reconnection failed:', err.message);
+            
+            if (win && !win.isDestroyed()) {
+                win.webContents.send('plc-status', 'Reconnection Failed');
+            }
+            
+            reconnectTimer = setTimeout(() => {
+                attemptReconnection();
+            }, RECONNECT_DELAY);
+        } else {
+            console.log('Reconnected to PLC successfully');
+            isConnected = true;
+            isReconnecting = false;
+            
+            plc.addItems(['DB1,X2.0', 'DB1,X58.0']);
+            
+            if (win && !win.isDestroyed()) {
+                win.webContents.send('plc-status', 'Connected to PLC');
+            }
+            
+            startReadLoop();
+        }
+    });
 }
 
 function startReadLoop() {
@@ -93,6 +143,8 @@ function startReadLoop() {
                 'Blue LED': data['DB1,X58.0']
             };
 
+            updateConnectionStats(0, null);
+
             if (win && !win.isDestroyed()) {
                 win.webContents.send('plc-data', formattedData);
                 win.webContents.send('plc-status', 'Connected to PLC');
@@ -103,6 +155,7 @@ function startReadLoop() {
 
 function initiatePLCConnection() {
     clearAllTimers();
+    isReconnecting = false;
 
     if (plc) {
         try {
@@ -180,30 +233,15 @@ function updateConnectionStats(responseTime, error) {
     const timestamp = new Date();
     connectionStats.totalRequests++;
     
-    // Always push the current connection state
     connectionStats.connectionHistory.push({
         time: timestamp,
-        connected: isConnected  // Use the global isConnected state
+        connected: isConnected
     });
 
-    if (error) {
-        connectionStats.errorCount++;
-        connectionStats.lastErrors.push({
-            time: timestamp,
-            error: error.message
-        });
-        // Keep only last 10 errors
-        if (connectionStats.lastErrors.length > 10) {
-            connectionStats.lastErrors.shift();
-        }
-    }
-
-    // Keep last 60 connection status updates
     if (connectionStats.connectionHistory.length > 60) {
         connectionStats.connectionHistory.shift();
     }
 
-    // Send updated stats to renderer
     if (win && !win.isDestroyed()) {
         win.webContents.send('stats-update', {
             connectionStats,

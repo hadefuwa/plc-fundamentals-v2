@@ -1,6 +1,6 @@
 {
   "name": "plc-base-module",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "HMI interface for Siemens S7-1200 PLC",
   "main": "main.js",
   "scripts": {
@@ -38,7 +38,8 @@
   "license": "MIT",
   "dependencies": {
     "chart.js": "^4.4.6",
-    "nodes7": "^0.3.18"
+    "nodes7": "^0.3.18",
+    "plc-base-module": "file:"
   },
   "devDependencies": {
     "electron": "^25.8.4",

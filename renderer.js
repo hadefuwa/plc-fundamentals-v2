@@ -60,8 +60,16 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Only update circles if we have a connection
         if (ledCircle && !ledCircle.classList.contains('disconnected')) {
-            console.log('LED state:', data['Blue LED']);
-            ledCircle.classList.toggle('active', data['Blue LED']);
+            const currentLedState = data['Blue LED'];
+            console.log('LED state:', currentLedState);
+            
+            // Check for LED state changes
+            if (currentLedState !== lastLedState) {
+                addEvent('led', currentLedState, Date.now());
+                lastLedState = currentLedState;
+            }
+            
+            ledCircle.classList.toggle('active', currentLedState);
         }
         
         if (estopCircle && !estopCircle.classList.contains('disconnected')) {
@@ -179,79 +187,21 @@ function initializeCharts() {
             }
         }
     });
-
-    // Update chart with connection status
-    window.electron.receiveStatus((status) => {
-        const isConnected = status === 'Connected to PLC';
-        const now = new Date();
-        
-        if (charts.statusChart) {
-            const currentData = charts.statusChart.data.datasets[0].data;
-            
-            // Only add a point if the connection state has changed
-            if (currentData.length === 0 || 
-                currentData[currentData.length - 1].y !== (isConnected ? 1 : 0)) {
-                
-                currentData.push({
-                    x: now,
-                    y: isConnected ? 1 : 0
-                });
-
-                // Keep only last 60 seconds of data
-                const cutoff = new Date(now - 60000);
-                while (currentData.length > 0 && currentData[0].x < cutoff) {
-                    currentData.shift();
-                }
-
-                charts.statusChart.update('quiet');
-            }
-        }
-    });
 }
 
 function setupDataListeners() {
-    let lastUpdateTime = 0;
-    const updateThreshold = 1000; // Minimum time between updates (1 second)
-
     window.electron.receiveStats((stats) => {
-        const now = Date.now();
-        if (now - lastUpdateTime < updateThreshold) {
-            return; // Skip update if too soon
-        }
-        lastUpdateTime = now;
-
         if (charts.statusChart && stats.connectionStats.connectionHistory) {
-            // Process connection history
-            const newData = stats.connectionStats.connectionHistory
-                .filter(item => item.time) // Ensure time exists
-                .map(item => ({
-                    x: new Date(item.time),
-                    y: item.connected ? 1 : 0
-                }));
+            // Convert connection history to chart data points
+            const newData = stats.connectionStats.connectionHistory.map(item => ({
+                x: new Date(item.time),
+                y: item.connected ? 1 : 0
+            }));
 
-            // Process error events
-            const errorData = stats.connectionStats
-                .filter(error => error.time) // Ensure time exists
-                .map(error => ({
-                    x: new Date(error.time),
-                    y: 0 // Show at bottom of chart
-                }));
-
-            // Keep only last 60 data points (1 minute at 1-second intervals)
-            if (newData.length > 60) {
-                newData.splice(0, newData.length - 60);
-            }
-
+            // Update the chart with the new data
             charts.statusChart.data.datasets[0].data = newData;
-            charts.statusChart.data.datasets[1].data = errorData;
             charts.statusChart.update('quiet');
         }
-
-        // Add console log to verify data reception
-        console.log('Received stats update:', stats);
-
-        // Add console log to verify listener setup
-        console.log('Data listeners set up');
     });
 }
 
