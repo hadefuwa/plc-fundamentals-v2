@@ -112,7 +112,9 @@ function attemptReconnection() {
             isConnected = true;
             isReconnecting = false;
             
-            plc.addItems(['DB1,X2.0', 'DB1,X58.0']);
+            plc.addItems(['DB1,X2.0', 'DB1,X58.0', 'DB1,REAL32']);
+            
+            console.log('Items added to PLC');
             
             if (win && !win.isDestroyed()) {
                 win.webContents.send('plc-status', 'Connected to PLC');
@@ -138,10 +140,15 @@ function startReadLoop() {
                 return;
             }
 
+            console.log('Raw PLC data:', data);
+
             const formattedData = {
                 'E-Stop': data['DB1,X2.0'],
-                'Blue LED': data['DB1,X58.0']
+                'Blue LED': data['DB1,X58.0'],
+                'Analogue Input': data['DB1,REAL32']
             };
+
+            console.log('Formatted PLC Data:', formattedData);
 
             updateConnectionStats(0, null);
 
@@ -194,7 +201,9 @@ function initiatePLCConnection() {
             isConnected = true;
             isReconnecting = false;
             
-            plc.addItems(['DB1,X2.0', 'DB1,X58.0']);
+            plc.addItems(['DB1,X2.0', 'DB1,X58.0', 'DB1,REAL32']);
+            
+            console.log('Items added to PLC');
             
             if (win && !win.isDestroyed()) {
                 win.webContents.send('plc-status', 'Connected to PLC');
