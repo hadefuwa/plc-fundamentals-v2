@@ -30,6 +30,8 @@ let lastEstopState = true;
 let reconnectTimer = null;
 const RECONNECT_DELAY = 5000; // 5 seconds between reconnection attempts
 
+let analogueWindow = null;
+
 ipcMain.on('update-plc-address', (_, address) => {
     plcAddress = address;
     console.log('PLC address updated:', plcAddress);
@@ -40,6 +42,10 @@ ipcMain.on('connect-plc', () => {
     isReconnecting = false;
     clearAllTimers();
     initiatePLCConnection();
+});
+
+ipcMain.on('open-analogue-window', () => {
+    createAnalogueWindow();
 });
 
 function clearAllTimers() {
@@ -154,7 +160,9 @@ function startReadLoop() {
 
             if (win && !win.isDestroyed()) {
                 win.webContents.send('plc-data', formattedData);
-                win.webContents.send('plc-status', 'Connected to PLC');
+                if (analogueWindow && !analogueWindow.isDestroyed()) {
+                    analogueWindow.webContents.send('plc-data', formattedData);
+                }
             }
         });
     }, 1000);
@@ -192,7 +200,7 @@ function initiatePLCConnection() {
             isConnected = false;
             
             if (win && !win.isDestroyed()) {
-                win.webContents.send('plc-status', 'PLC Connection Failed');
+                win.webContents.send('plc-status', 'Connection Failed');
             }
             
             handleDisconnection();
@@ -201,32 +209,45 @@ function initiatePLCConnection() {
             isConnected = true;
             isReconnecting = false;
             
-            plc.addItems(['DB1,X2.0', 'DB1,X58.0', 'DB1,REAL32']);
-            
-            console.log('Items added to PLC');
-            
             if (win && !win.isDestroyed()) {
                 win.webContents.send('plc-status', 'Connected to PLC');
             }
             
+            plc.addItems(['DB1,X2.0', 'DB1,X58.0', 'DB1,REAL32']);
             startReadLoop();
         }
     });
 }
 
 function createWindow() {
-  win = new BrowserWindow({
-    width: 1200,
-    height: 800,
-    webPreferences: {
-      nodeIntegration: false,
-      contextIsolation: true,
-      preload: path.join(__dirname, 'preload.js')
-    }
-  });
+    win = new BrowserWindow({
+        width: 1920,          // Default width
+        height: 1080,         // Default height
+        webPreferences: {
+            nodeIntegration: false,
+            contextIsolation: true,
+            preload: path.join(__dirname, 'preload.js')
+        },
+        show: false          // Don't show until ready
+    });
 
-  win.loadFile('index.html');
-  initiatePLCConnection();
+    // Load the index.html file
+    win.loadFile('index.html');
+
+    // When ready, maximize and show
+    win.once('ready-to-show', () => {
+        win.maximize();      // Maximize the window
+        win.show();         // Show the window after maximized
+    });
+
+    // Optional: If you want true fullscreen (no taskbar)
+    // win.setFullScreen(true);
+
+    win.on('closed', () => {
+        win = null;
+    });
+
+    initiatePLCConnection();
 }
 
 app.whenReady().then(createWindow);
@@ -305,3 +326,26 @@ app.on('before-quit', () => {
         }
     }
 });
+
+function createAnalogueWindow() {
+    if (analogueWindow) {
+        analogueWindow.focus();
+        return;
+    }
+
+    analogueWindow = new BrowserWindow({
+        width: 800,
+        height: 600,
+        webPreferences: {
+            nodeIntegration: false,
+            contextIsolation: true,
+            preload: path.join(__dirname, 'preload.js')
+        }
+    });
+
+    analogueWindow.loadFile('analogue-popup.html');
+
+    analogueWindow.on('closed', () => {
+        analogueWindow = null;
+    });
+}

@@ -33,24 +33,6 @@
     #plc-image {
       width: 60%;
     }
-    #status-text {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      font-size: 24px;
-      font-weight: bold;
-      padding: 5px 10px;
-      border-radius: 4px;
-      transition: all 0.3s;
-    }
-    div#status-text.connected {
-      color: white !important;
-      background-color: green !important;
-    }
-    div#status-text.disconnected {
-      color: yellow !important;
-      background-color: red !important;
-    }
     .button {
       position: absolute;
       width: 50px;
@@ -431,6 +413,91 @@
       max-height: 60px;
       width: auto;
     }
+
+    /* Add these styles */
+    .analogue-display {
+        background-color: #383c40;
+        padding: 10px;
+        border-radius: 4px;
+        margin: 10px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .analogue-label {
+        color: #9da5b1;
+        font-size: 16px;
+    }
+
+    .analogue-value {
+        background-color: #2c3033;
+        color: #4BC0C0;  /* Same color as the graph */
+        padding: 8px 16px;
+        border-radius: 4px;
+        font-family: monospace;
+        font-size: 20px;
+        font-weight: bold;
+        min-width: 100px;
+        text-align: right;
+    }
+
+    /* Status Display */
+    .plc-connect-status {
+        background-color: #383c40;
+        padding: 10px;
+        border-radius: 4px;
+        margin: 10px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .status-label {
+        color: #9da5b1;
+        font-size: 16px;
+    }
+
+    .status-value {
+        background-color: #2c3033;
+        color: #f44336;  /* Default to red for waiting/disconnected */
+        padding: 8px 16px;
+        border-radius: 4px;
+        font-family: monospace;
+        font-size: 20px;
+        font-weight: bold;
+        min-width: 100px;
+        text-align: right;
+    }
+
+    /* Add !important to ensure these colors take precedence */
+    #plc-data {
+        color: #4caf50 !important;  /* Green for connected state */
+    }
+
+    #plc-data.disconnected {
+        color: #f44336 !important;  /* Red for disconnected state */
+    }
+
+    .status-value.connected {
+        color: #4caf50;  /* Green for connected state */
+    }
+
+    .status-value.disconnected {
+        color: #f44336;
+    }
+
+    #plc-data.disconnected {
+        color: #FF4444;  /* Red color for disconnected state */
+    }
+
+    /* Add loading state styles */
+    #plc-data.loading {
+        color: #9da5b1 !important;  /* Grey color for loading state */
+        opacity: 0.7;
+    }
   </style>
 </head>
 <body>
@@ -465,14 +532,14 @@
         </div>
     </div>
 
-    <div id="status-text" style="color: red;">Connecting...</div>
     <div id="circles-container">
         <div id="led-circle" class="circle blue-circle"></div>
         <div id="estop-circle" class="circle red-circle"></div>
     </div>
   </div>
 
-  <p id="plc-data">PLC Data: Waiting for connection...</p>
+
+
   <!-- Add error message display -->
   <div id="error-message" class="error-message"></div>
 
@@ -480,14 +547,23 @@
     <!-- Add this new chart before the events sections -->
     <div class="dashboard-item">
         <h3 class="chart-title">ANALOGUE INPUT</h3>
+        <!-- Add this div for the digital display -->
+        <div class="analogue-display">
+            <span class="analogue-label">Current Value:</span>
+            <div class="analogue-value" id="analogue-value">0.0</div>
+        </div>
         <div class="chart-container">
             <canvas id="analogueChart"></canvas>
         </div>
     </div>
 
-    <!-- Top row - wide charts -->
+
     <div class="dashboard-item">
       <h3 class="chart-title">PLC STATUS HISTORY</h3>
+      <div class="plc-connect-status">
+        <span class="status-label">PLC Status:</span>
+        <div class="status-value loading" id="plc-data">Loading...</div>
+      </div>
       <div class="chart-container">
         <canvas id="statusChart"></canvas>
       </div>

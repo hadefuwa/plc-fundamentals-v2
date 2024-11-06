@@ -25,13 +25,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Status updates
     window.electron.receiveStatus((status) => {
-        const statusText = document.getElementById('status-text');
-        if (statusText) {
-            statusText.textContent = status;
-            statusText.style.color = status.includes('Connected') ? 'green' : 'red';
+        const plcData = document.getElementById('plc-data');
+        if (plcData) {
+            // Remove loading state and update immediately
+            plcData.classList.remove('loading');
+            
+            // Immediate status update
+            const isConnected = status === 'Connected to PLC';
+            plcData.textContent = status;
+            
+            // Remove any existing status classes
+            plcData.classList.remove('disconnected', 'connected');
+            
+            // Add appropriate class
+            if (isConnected) {
+                plcData.classList.add('connected');
+            } else {
+                plcData.classList.add('disconnected');
+            }
         }
 
-        const isConnected = status === 'Connected to PLC';
         const ledCircle = document.getElementById('led-circle');
         const estopCircle = document.getElementById('estop-circle');
 
@@ -51,6 +64,14 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 estopCircle.classList.remove('disconnected');
             }
+        }
+
+        // Update the status value display
+        const statusValue = document.getElementById('status-value');
+        if (statusValue) {
+            const isConnected = status === 'Connected to PLC';
+            statusValue.textContent = isConnected ? 'Connected' : 'Disconnected';
+            statusValue.className = `status-value ${isConnected ? 'connected' : 'disconnected'}`;
         }
     });
 
@@ -101,6 +122,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const now = new Date();
             const value = data['Analogue Input'];
             
+            // Update the digital display
+            const analogueDisplay = document.getElementById('analogue-value');
+            if (analogueDisplay) {
+                analogueDisplay.textContent = value.toFixed(2);  // Display 2 decimal places
+            }
+
             charts.analogueChart.data.datasets[0].data.push({
                 x: now,
                 y: value
@@ -152,6 +179,15 @@ document.addEventListener('DOMContentLoaded', () => {
             configHeader.classList.remove('open');
         }
     });
+
+    // Add click handler for the analogue chart
+    const analogueChart = document.querySelector('.dashboard-item:has(#analogueChart)');
+    if (analogueChart) {
+        analogueChart.style.cursor = 'pointer';
+        analogueChart.addEventListener('click', () => {
+            window.electron.openAnalogueWindow();
+        });
+    }
 });
 
 function initializeCharts() {

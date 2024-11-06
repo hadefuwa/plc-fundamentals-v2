@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analogue Input Detail</title>
+    <style>
+        body {
+            background-color: #2c3033;
+            color: white;
+            margin: 0;
+            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            overflow: hidden;
+        }
+
+        .dashboard-item {
+            background-color: #383c40;
+            border-radius: 8px;
+            padding: 20px;
+            height: calc(100vh - 60px);
+            box-sizing: border-box;
+        }
+
+        .chart-title {
+            color: #9da5b1;
+            margin-top: 0;
+        }
+
+        .analogue-display {
+            background-color: #383c40;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .analogue-label {
+            color: #9da5b1;
+            font-size: 20px;
+        }
+
+        .analogue-value {
+            background-color: #2c3033;
+            color: #4BC0C0;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 24px;
+            font-weight: bold;
+            min-width: 150px;
+            text-align: right;
+        }
+
+        .chart-container {
+            height: calc(100% - 100px);
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-item">
+        <h3 class="chart-title">ANALOGUE INPUT</h3>
+        <div class="analogue-display">
+            <span class="analogue-label">Current Value:</span>
+            <div class="analogue-value" id="analogue-value">0.0</div>
+        </div>
+        <div class="chart-container">
+            <canvas id="analogueChart"></canvas>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="analogue-popup.js"></script>
+</body>
+</html> 
