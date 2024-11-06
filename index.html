@@ -84,54 +84,83 @@
         border-radius: 50%;
         margin: 15px;
         transition: all 0.3s ease;
-        opacity: 0.3;
+        position: relative;
+        box-shadow: 
+            inset 0 -3px 8px rgba(0,0,0,0.4),
+            0 3px 8px rgba(0,0,0,0.4);
+        opacity: 0.5;
     }
 
     .circle.disconnected {
-        background-color: #4a4f55 !important; /* Grey color */
+        background: radial-gradient(circle at 30% 30%, #666, #444);
+        border-color: #333;
+        box-shadow: 
+            inset 0 -3px 8px rgba(0,0,0,0.4),
+            0 3px 8px rgba(0,0,0,0.4);
         opacity: 0.2 !important;
         box-shadow: none !important;
         animation: none !important;
     }
 
     .blue-circle {
-        background-color: #36A2EB;
+        background: radial-gradient(circle at 30% 30%, #7FB5FF, #36A2EB);
+        border: 2px solid #2d88c9;
     }
 
     .blue-circle.active {
-        opacity: 1;
-        box-shadow: 0 0 15px rgba(54, 162, 235, 0.5);
+        background: radial-gradient(circle at 30% 30%, #9fddff, #36A2EB);
+        box-shadow: 
+            inset 0 -3px 8px rgba(0,0,0,0.4),
+            0 3px 8px rgba(0,0,0,0.4),
+            0 0 20px #36A2EB,
+            0 0 40px rgba(54, 162, 235, 0.5);
     }
 
     .red-circle {
-        background-color: #FF4444;
-        opacity: 0.3;
+        background: radial-gradient(circle at 30% 30%, #ff6b6b, #cc0000);
+        border: 2px solid #960000;
+        transform: scale(1.2);  /* Make E-Stop slightly larger */
+        box-shadow: 
+            inset 0 -4px 8px rgba(0,0,0,0.4),
+            0 4px 8px rgba(0,0,0,0.4);
+    }
+
+    .red-circle::after {
+        content: "E-STOP";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 12px;
+        font-weight: bold;
+        color: white;
+        white-space: nowrap;  /* Keep text on one line */
+        text-shadow: 0 1px 2px rgba(0,0,0,0.6);
     }
 
     .red-circle.active {
-        opacity: 1;
-        box-shadow: 0 0 15px rgba(255, 68, 68, 0.5);
-        animation: none;
+        background: radial-gradient(circle at 30% 30%, #ff9999, #ff0000);
+        box-shadow: 
+            inset 0 -4px 8px rgba(0,0,0,0.4),
+            0 4px 8px rgba(0,0,0,0.4),
+            0 0 20px #ff0000,
+            0 0 40px rgba(255, 0, 0, 0.5);
     }
 
     @keyframes flash-warning {
         0% { 
-            background-color: #FF4444;  /* Red */
-            opacity: 1;
+            background: radial-gradient(circle at 30% 30%, #ff6b6b, #cc0000);
         }
         50% { 
-            background-color: #FFD700;  /* Yellow */
-            opacity: 1;
+            background: radial-gradient(circle at 30% 30%, #fff200, #ffd000);
         }
         100% { 
-            background-color: #FF4444;  /* Red */
-            opacity: 1;
+            background: radial-gradient(circle at 30% 30%, #ff6b6b, #cc0000);
         }
     }
 
     .red-circle.flashing {
         animation: flash-warning 1s infinite;
-        opacity: 1;
     }
 
     #circles-container {
@@ -498,6 +527,36 @@
         color: #9da5b1 !important;  /* Grey color for loading state */
         opacity: 0.7;
     }
+
+    .control-panel {
+        background-color: #2c3033;
+        padding: 15px;
+        border-radius: 4px;
+        margin: 10px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .control-button {
+        background-color: #36A2EB;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+    }
+
+    .control-button:hover {
+        background-color: #2184c7;
+    }
+
+    .control-button:active {
+        background-color: #1a6698;
+    }
   </style>
 </head>
 <body>
@@ -586,6 +645,13 @@
             <ul id="led-events-list" class="event-list">
                 <!-- Events added dynamically -->
             </ul>
+        </div>
+    </div>
+
+    <div class="dashboard-item">
+        <h3 class="chart-title">PLC CONTROLS</h3>
+        <div class="control-panel">
+            <button id="write-btn" class="control-button">Run Motor</button>
         </div>
     </div>
   </div>

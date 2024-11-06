@@ -32,6 +32,10 @@ const RECONNECT_DELAY = 5000; // 5 seconds between reconnection attempts
 
 let analogueWindow = null;
 
+let statusInterval;
+
+let lastWriteState = false;
+
 ipcMain.on('update-plc-address', (_, address) => {
     plcAddress = address;
     console.log('PLC address updated:', plcAddress);
@@ -48,10 +52,27 @@ ipcMain.on('open-analogue-window', () => {
     createAnalogueWindow();
 });
 
+ipcMain.on('write-plc', () => {
+    if (plc && isConnected) {
+        plc.writeItems('DB1,X60.0', !lastWriteState, (err) => {
+            if (err) {
+                console.log('Write error:', err);
+            } else {
+                console.log('Write successful, new state:', !lastWriteState);
+                lastWriteState = !lastWriteState;
+            }
+        });
+    }
+});
+
 function clearAllTimers() {
     if (readInterval) {
         clearInterval(readInterval);
         readInterval = null;
+    }
+    if (statusInterval) {
+        clearInterval(statusInterval);
+        statusInterval = null;
     }
     if (reconnectTimer) {
         clearTimeout(reconnectTimer);
@@ -135,7 +156,11 @@ function startReadLoop() {
     if (readInterval) {
         clearInterval(readInterval);
     }
+    if (statusInterval) {
+        clearInterval(statusInterval);
+    }
 
+    // Fast interval for PLC data
     readInterval = setInterval(() => {
         if (!plc || !isConnected) return;
 
@@ -146,17 +171,11 @@ function startReadLoop() {
                 return;
             }
 
-            console.log('Raw PLC data:', data);
-
             const formattedData = {
                 'E-Stop': data['DB1,X2.0'],
                 'Blue LED': data['DB1,X58.0'],
                 'Analogue Input': data['DB1,REAL32']
             };
-
-            console.log('Formatted PLC Data:', formattedData);
-
-            updateConnectionStats(0, null);
 
             if (win && !win.isDestroyed()) {
                 win.webContents.send('plc-data', formattedData);
@@ -165,7 +184,12 @@ function startReadLoop() {
                 }
             }
         });
-    }, 1000);
+    }, 100);  // 100ms for PLC data
+
+    // Slower interval for connection status updates
+    statusInterval = setInterval(() => {
+        updateConnectionStats(0, null);
+    }, 1000);  // 1000ms for connection status
 }
 
 function initiatePLCConnection() {
@@ -200,7 +224,7 @@ function initiatePLCConnection() {
             isConnected = false;
             
             if (win && !win.isDestroyed()) {
-                win.webContents.send('plc-status', 'Connection Failed');
+                win.webContents.send('plc-status', 'PLC Connection Failed');
             }
             
             handleDisconnection();
@@ -209,11 +233,14 @@ function initiatePLCConnection() {
             isConnected = true;
             isReconnecting = false;
             
+            plc.addItems(['DB1,X2.0', 'DB1,X58.0', 'DB1,REAL32']);
+            
+            console.log('Items added to PLC');
+            
             if (win && !win.isDestroyed()) {
                 win.webContents.send('plc-status', 'Connected to PLC');
             }
             
-            plc.addItems(['DB1,X2.0', 'DB1,X58.0', 'DB1,REAL32']);
             startReadLoop();
         }
     });

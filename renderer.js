@@ -27,24 +27,15 @@ document.addEventListener('DOMContentLoaded', () => {
     window.electron.receiveStatus((status) => {
         const plcData = document.getElementById('plc-data');
         if (plcData) {
-            // Remove loading state and update immediately
+            // Remove loading state
             plcData.classList.remove('loading');
             
-            // Immediate status update
-            const isConnected = status === 'Connected to PLC';
+            // Update status as before
             plcData.textContent = status;
-            
-            // Remove any existing status classes
-            plcData.classList.remove('disconnected', 'connected');
-            
-            // Add appropriate class
-            if (isConnected) {
-                plcData.classList.add('connected');
-            } else {
-                plcData.classList.add('disconnected');
-            }
+            plcData.classList.toggle('disconnected', !status.includes('Connected'));
         }
 
+        const isConnected = status === 'Connected to PLC';
         const ledCircle = document.getElementById('led-circle');
         const estopCircle = document.getElementById('estop-circle');
 
@@ -125,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Update the digital display
             const analogueDisplay = document.getElementById('analogue-value');
             if (analogueDisplay) {
-                analogueDisplay.textContent = value.toFixed(2);  // Display 2 decimal places
+                analogueDisplay.textContent = `${value.toFixed(2)}V`;  // Added V suffix here
             }
 
             charts.analogueChart.data.datasets[0].data.push({
@@ -188,6 +179,13 @@ document.addEventListener('DOMContentLoaded', () => {
             window.electron.openAnalogueWindow();
         });
     }
+
+    const writeBtn = document.getElementById('write-btn');
+    if (writeBtn) {
+        writeBtn.addEventListener('click', () => {
+            window.electron.writePLC();
+        });
+    }
 });
 
 function initializeCharts() {
@@ -208,7 +206,7 @@ function initializeCharts() {
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            animation: false, // Disable animations for better performance
+            animation: false,
             plugins: {
                 legend: {
                     labels: {
@@ -251,7 +249,6 @@ function initializeCharts() {
         }
     });
 
-    // Update analogue chart configuration
     const analogueCtx = document.getElementById('analogueChart').getContext('2d');
     charts.analogueChart = new Chart(analogueCtx, {
         type: 'line',
