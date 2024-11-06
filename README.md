@@ -1,8 +1,8 @@
-# Basic S7 HMI
+# PLC Base Module
 
 This is a basic HMI app built with Electron.js to communicate with Siemens S7 PLCs. Follow these steps to set up and run the application.
 
-![image](https://github.com/user-attachments/assets/d0782656-14d8-4d6b-8fcf-aefef6669a43)
+![image](https://github.com/user-attachments/assets/ce9a4d07-aa5c-4dae-85c7-8898fb86b566)
 
 ## Prerequisites
 
