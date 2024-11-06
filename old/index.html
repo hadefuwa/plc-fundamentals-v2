@@ -33,6 +33,51 @@
     #plc-image {
       width: 60%;
     }
+    .button {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.3s;
+    }
+    .button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    #blue-led {
+      bottom: 20px;
+      left: 30%;
+      background-color: blue;
+    }
+    #red-estop {
+      bottom: 20px;
+      right: 30%;
+      background-color: red;
+    }
+    .write-button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    .write-button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .error-message {
+      color: red;
+      margin-top: 20px;
+    }
+    .retry-button {
+      margin-top: 20px;
+    }
+    .status-label {
+      font-size: 18px;
+      margin: 10px;
+      font-weight: bold;
+    }
     .circle {
         width: 50px;
         height: 50px;
@@ -118,9 +163,23 @@
         animation: flash-warning 1s infinite;
     }
 
+    #circles-container {
+        display: flex;
+        justify-content: center;
+        gap: 30px;           /* Increased gap between circles */
+        margin: 20px 0;
+    }
+
     .circle.active {
         opacity: 1;
         box-shadow: 0 0 10px rgba(54, 162, 235, 0.5);
+    }
+
+    #circles-container {
+        display: flex;
+        justify-content: center;
+        gap: 20px;  /* Space between circles */
+        margin-top: 20px;  /* Space below PLC image */
     }
 
     .dashboard-container {
@@ -498,145 +557,6 @@
     .control-button:active {
         background-color: #1a6698;
     }
-
-    /* Add to your existing CSS */
-    .db-values-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-        padding: 16px;
-        background: #2a2e33;
-        border-radius: 8px;
-    }
-
-    .db-value-item {
-        display: flex;
-        flex-direction: column;
-        padding: 12px;
-        background: #383c40;
-        border-radius: 6px;
-        transition: all 0.3s ease;
-    }
-
-    .db-value-label {
-        color: #9da5b1;
-        font-size: 12px;
-        margin-bottom: 4px;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-
-    .db-value-content {
-        color: #fff;
-        font-size: 18px;
-        font-weight: 500;
-    }
-
-    .db-value-item.boolean {
-        position: relative;
-        overflow: hidden;
-    }
-
-    .db-value-item.boolean .db-value-content {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .status-indicator {
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        background: #4a4f55;
-        transition: all 0.3s ease;
-    }
-
-    .status-indicator.active {
-        background: #4BC0C0;
-        box-shadow: 0 0 10px rgba(75, 192, 192, 0.5);
-    }
-
-    .status-indicator.error {
-        background: #ff6384;
-        box-shadow: 0 0 10px rgba(255, 99, 132, 0.5);
-    }
-
-    #circles-container {
-        display: flex;
-        justify-content: center;
-        gap: 20px;  /* Space between circles */
-        margin-top: 20px;  /* Space below PLC image */
-    }
-
-    /* PLC Data Overview Grid Styles */
-    .plc-data-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 16px;
-        padding: 16px;
-        background: #2a2e33;
-        border-radius: 8px;
-    }
-
-    .grid-item {
-        background: #383c40;
-        padding: 16px;
-        border-radius: 8px;
-        transition: all 0.3s ease;
-        cursor: pointer;
-        border: 1px solid transparent;
-    }
-
-    .grid-item:hover {
-        background: #424649;
-        border-color: #36A2EB;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    .grid-item h4 {
-        color: #9da5b1;
-        margin: 0 0 12px 0;
-        font-size: 14px;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        font-weight: 600;
-    }
-
-    .grid-content {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-    }
-
-    .grid-content div {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 8px;
-        background: #2c3033;
-        border-radius: 4px;
-    }
-
-    .grid-content span {
-        font-family: monospace;
-        font-size: 14px;
-        color: #4BC0C0;  /* Same color as the analogue graph */
-        padding: 4px 8px;
-        background: #2a2e33;
-        border-radius: 4px;
-        min-width: 60px;
-        text-align: right;
-    }
-
-    /* Status indicators for boolean values */
-    .grid-content span.true {
-        color: #4caf50;
-    }
-
-    .grid-content span.false {
-        color: #f44336;
-    }
   </style>
 </head>
 <body>
@@ -732,64 +652,6 @@
         <h3 class="chart-title">PLC CONTROLS</h3>
         <div class="control-panel">
             <button id="write-btn" class="control-button">Run Motor</button>
-        </div>
-    </div>
-
-    <div class="dashboard-item">
-        <h3 class="chart-title">PLC DATA OVERVIEW</h3>
-        <div class="plc-data-grid">
-            <div class="grid-item" data-type="inputs">
-                <h4>Digital Inputs</h4>
-                <div class="grid-content">
-                    <div>
-                        <span>A0-A7:</span>
-                        <span id="din-a-status">-</span>
-                    </div>
-                    <div>
-                        <span>B0-B5:</span>
-                        <span id="din-b-status">-</span>
-                    </div>
-                </div>
-            </div>
-            <div class="grid-item" data-type="outputs">
-                <h4>Digital Outputs</h4>
-                <div class="grid-content">
-                    <div>
-                        <span>A0-A7:</span>
-                        <span id="dout-a-status">-</span>
-                    </div>
-                    <div>
-                        <span>B0-B1:</span>
-                        <span id="dout-b-status">-</span>
-                    </div>
-                </div>
-            </div>
-            <div class="grid-item" data-type="analogue">
-                <h4>Analogue Inputs</h4>
-                <div class="grid-content">
-                    <div>
-                        <span>AI0:</span>
-                        <span id="ai0-value">-</span>
-                    </div>
-                    <div>
-                        <span>AI1:</span>
-                        <span id="ai1-value">-</span>
-                    </div>
-                </div>
-            </div>
-            <div class="grid-item" data-type="hmi">
-                <h4>HMI Controls</h4>
-                <div class="grid-content">
-                    <div>
-                        <span>Clear Forcing:</span>
-                        <span id="clear-forcing">-</span>
-                    </div>
-                    <div>
-                        <span>Fault Reset:</span>
-                        <span id="fault-reset">-</span>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
   </div>

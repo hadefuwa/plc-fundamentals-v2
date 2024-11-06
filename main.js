@@ -36,6 +36,10 @@ let statusInterval;
 
 let lastWriteState = false;
 
+let detailsWindow = null;
+
+let plcData = {};
+
 ipcMain.on('update-plc-address', (_, address) => {
     plcAddress = address;
     console.log('PLC address updated:', plcAddress);
@@ -63,6 +67,10 @@ ipcMain.on('write-plc', () => {
             }
         });
     }
+});
+
+ipcMain.on('open-details', (_, dataType) => {
+    createDetailsWindow(dataType);
 });
 
 function clearAllTimers() {
@@ -374,5 +382,32 @@ function createAnalogueWindow() {
 
     analogueWindow.on('closed', () => {
         analogueWindow = null;
+    });
+}
+
+function createDetailsWindow(dataType) {
+    if (detailsWindow) {
+        detailsWindow.focus();
+        return;
+    }
+
+    detailsWindow = new BrowserWindow({
+        width: 1000,
+        height: 800,
+        webPreferences: {
+            nodeIntegration: false,
+            contextIsolation: true,
+            preload: path.join(__dirname, 'preload.js')
+        }
+    });
+
+    detailsWindow.loadFile('plc-details.html');
+
+    detailsWindow.webContents.on('did-finish-load', () => {
+        detailsWindow.webContents.send('init-data', { type: dataType, data: plcData });
+    });
+
+    detailsWindow.on('closed', () => {
+        detailsWindow = null;
     });
 }

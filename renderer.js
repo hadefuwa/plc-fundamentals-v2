@@ -66,78 +66,78 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // PLC data updates
-    window.electron.receiveData((data) => {
-        console.log('Received PLC data in renderer:', data);
+  // PLC data updates
+  window.electron.receiveData((data) => {
+    console.log('Received PLC data in renderer:', data);
+    
+    const ledCircle = document.getElementById('led-circle');
+    const estopCircle = document.getElementById('estop-circle');
+    
+    // Only update circles if we have a connection
+    if (ledCircle && !ledCircle.classList.contains('disconnected')) {
+        const currentLedState = data['Blue LED'];
+        console.log('LED state:', currentLedState);
         
-        const ledCircle = document.getElementById('led-circle');
-        const estopCircle = document.getElementById('estop-circle');
-        
-        // Only update circles if we have a connection
-        if (ledCircle && !ledCircle.classList.contains('disconnected')) {
-            const currentLedState = data['Blue LED'];
-            console.log('LED state:', currentLedState);
-            
-            // Check for LED state changes
-            if (currentLedState !== lastLedState) {
-                addEvent('led', currentLedState, Date.now());
-                lastLedState = currentLedState;
-            }
-            
-            ledCircle.classList.toggle('active', currentLedState);
+        // Check for LED state changes
+        if (currentLedState !== lastLedState) {
+            addEvent('led', currentLedState, Date.now());
+            lastLedState = currentLedState;
         }
         
-        if (estopCircle && !estopCircle.classList.contains('disconnected')) {
-            const currentEstopState = data['E-Stop'];
-            
-            // Check for falling edge (true to false transition)
-            if (lastEstopState === true && currentEstopState === false) {
-                addEvent('estop', false, Date.now());
-            }
-            
-            // Update E-Stop circle state
-            if (currentEstopState) {
-                estopCircle.classList.add('active');
-                estopCircle.classList.remove('flashing');
-            } else {
-                estopCircle.classList.remove('active');
-                estopCircle.classList.add('flashing');
-            }
-
-            // Update last known state
-            lastEstopState = currentEstopState;
+        ledCircle.classList.toggle('active', currentLedState);
+    }
+    
+    if (estopCircle && !estopCircle.classList.contains('disconnected')) {
+        const currentEstopState = data['E-Stop'];
+        
+        // Check for falling edge (true to false transition)
+        if (lastEstopState === true && currentEstopState === false) {
+            addEvent('estop', false, Date.now());
+        }
+        
+        // Update E-Stop circle state
+        if (currentEstopState) {
+            estopCircle.classList.add('active');
+            estopCircle.classList.remove('flashing');
+        } else {
+            estopCircle.classList.remove('active');
+            estopCircle.classList.add('flashing');
         }
 
-        // Update Analogue Input handling
-        if (charts.analogueChart && typeof data['Analogue Input'] === 'number') {
-            const now = new Date();
-            const value = data['Analogue Input'];
-            
-            // Update the digital display
-            const analogueDisplay = document.getElementById('analogue-value');
-            if (analogueDisplay) {
-                analogueDisplay.textContent = `${value.toFixed(2)}V`;  // Added V suffix here
-            }
+        // Update last known state
+        lastEstopState = currentEstopState;
+    }
 
-            charts.analogueChart.data.datasets[0].data.push({
-                x: now,
-                y: value
-            });
-
-            // Keep only last 30 seconds of data
-            const cutoff = now.getTime() - (30 * 1000);
-            charts.analogueChart.data.datasets[0].data = 
-                charts.analogueChart.data.datasets[0].data.filter(point => point.x.getTime() > cutoff);
-
-            // Find the maximum value in the current dataset
-            const maxValue = Math.max(...charts.analogueChart.data.datasets[0].data.map(point => point.y));
-            
-            // Update the Y axis max with some headroom
-            charts.analogueChart.options.scales.y.max = Math.ceil(maxValue * 1.1); // 10% headroom
-            
-            charts.analogueChart.update('quiet');
+    // Update Analogue Input handling
+    if (charts.analogueChart && typeof data['Analogue Input'] === 'number') {
+        const now = new Date();
+        const value = data['Analogue Input'];
+        
+        // Update the digital display
+        const analogueDisplay = document.getElementById('analogue-value');
+        if (analogueDisplay) {
+            analogueDisplay.textContent = `${value.toFixed(2)}V`;  // Added V suffix here
         }
-    });
+
+        charts.analogueChart.data.datasets[0].data.push({
+            x: now,
+            y: value
+        });
+
+        // Keep only last 30 seconds of data
+        const cutoff = now.getTime() - (30 * 1000);
+        charts.analogueChart.data.datasets[0].data = 
+            charts.analogueChart.data.datasets[0].data.filter(point => point.x.getTime() > cutoff);
+
+        // Find the maximum value in the current dataset
+        const maxValue = Math.max(...charts.analogueChart.data.datasets[0].data.map(point => point.y));
+        
+        // Update the Y axis max with some headroom
+        charts.analogueChart.options.scales.y.max = Math.ceil(maxValue * 1.1); // 10% headroom
+        
+        charts.analogueChart.update('quiet');
+    }
+});
 
     // IP address validation
     function isValidIP(ip) {
@@ -185,6 +185,26 @@ document.addEventListener('DOMContentLoaded', () => {
         writeBtn.addEventListener('click', () => {
             window.electron.writePLC();
         });
+    }
+
+    // Add to your existing event listeners
+    document.querySelectorAll('.grid-item').forEach(item => {
+        item.addEventListener('click', () => {
+            const dataType = item.getAttribute('data-type');
+            window.electron.openDetails(dataType);
+        });
+    });
+
+    // Add to your data update function
+    function updatePLCData(data) {
+        // Update Digital Inputs A
+        const dinAStatus = document.getElementById('din-a-status');
+        if (dinAStatus) {
+            const states = data.Static.CPU.Inputs.Digitals.A.map(d => d.State.MonitorValue).join('');
+            dinAStatus.textContent = states;
+        }
+
+        // Similar updates for other values...
     }
 });
 
