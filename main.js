@@ -1,50 +1,90 @@
+/**
+ * @fileoverview Main process for PLC Communication Application
+ * @author Hamed Adefuwa
+ * @version 1.0.0
+ * @date 2024-03-19
+ * 
+ * @description
+ * This is the main process for an Electron application that communicates with a Siemens S7-1200 PLC.
+ * It handles:
+ * - PLC communication using nodes7
+ * - Real-time data monitoring
+ * - Connection management and automatic reconnection
+ * - Multiple window management (main, analogue, and details views)
+ * - Historical data tracking
+ * - Performance monitoring
+ * 
+ * @requires electron
+ * @requires nodes7
+ * @requires path
+ * @requires ./db1Handler
+ * 
+ * @copyright Copyright (c) 2024 Matrix TSL
+ * @license MIT
+ */
+
+// Import required Electron modules for app management and window creation
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
+// Import nodes7 library for Siemens S7 PLC communication
 const nodes7 = require('nodes7');
+// Import DB1 structure and handler functions
+const db1Structure = require('./db1.json');
+const { getDB1Items, formatDB1Data, logDB1Values } = require('./db1Handler');
 
-let plc = null;
-let win;
-let readInterval;
-let isReconnecting = false;
-let isConnected = false;
-let logInterval;
-let lastLoggedState = null;
+// Initialize main application variables
+let plc = null;                    // PLC connection object
+let win;                          // Main application window
+let readInterval;                 // Timer for periodic PLC reads
+let isReconnecting = false;       // Flag to prevent multiple reconnection attempts
+let isConnected = false;          // Current PLC connection status
+let logInterval;                  // Timer for logging
+let lastLoggedState = null;       // Last logged PLC state
 
+// Track connection statistics and performance metrics
 let connectionStats = {
-  responseTime: [],
-  errorCount: 0,
-  totalRequests: 0,
-  lastErrors: [],
-  connectionHistory: []
+    responseTime: [],             // Store response times for performance monitoring
+    errorCount: 0,                // Count of communication errors
+    totalRequests: 0,             // Total number of requests made to PLC
+    lastErrors: [],               // Store recent error messages
+    connectionHistory: []         // Track connection state changes
 };
 
+// Store historical data for UI visualization
 let historicalData = {
-  ledStates: [],
-  estopEvents: [],
-  statusHistory: []
+    ledStates: [],               // Track LED state changes over time
+    estopEvents: [],             // Track Emergency Stop events
+    statusHistory: []            // Track overall system status
 };
 
-let plcAddress = '192.168.0.1';  // Default address
-let lastEstopState = true;
+// PLC connection configuration
+let plcAddress = '192.168.0.99';  // Default PLC IP address
+let lastEstopState = true;        // Track last known E-Stop state
 
+// Reconnection handling
 let reconnectTimer = null;
-const RECONNECT_DELAY = 5000; // 5 seconds between reconnection attempts
+const RECONNECT_DELAY = 5000;     // Wait 5 seconds between reconnection attempts
 
-let analogueWindow = null;
+// Additional application windows
+let analogueWindow = null;        // Window for analogue value display
+let detailsWindow = null;         // Window for detailed PLC information
 
-let statusInterval;
+// Application state management
+let plcData = {};                 // Current PLC data cache
+let lastWriteState = false;       // Track last written state
+let statusInterval;               // Timer for status updates
 
-let lastWriteState = false;
+// Logging rate control
+let lastLogTime = 0;
+const LOG_INTERVAL = 5000;        // Log to console every 5 seconds
 
-let detailsWindow = null;
-
-let plcData = {};
-
+// IPC Event Handlers for renderer process communication
 ipcMain.on('update-plc-address', (_, address) => {
     plcAddress = address;
     console.log('PLC address updated:', plcAddress);
 });
 
+// Handle PLC connection request from renderer
 ipcMain.on('connect-plc', () => {
     console.log('Connect PLC request received');
     isReconnecting = false;
@@ -52,10 +92,37 @@ ipcMain.on('connect-plc', () => {
     initiatePLCConnection();
 });
 
+// Handle request to open analogue value window
 ipcMain.on('open-analogue-window', () => {
-    createAnalogueWindow();
+    if (analogueWindow) {
+        analogueWindow.focus();
+        return;
+    }
+
+    // Create new window for analogue display with larger dimensions
+    analogueWindow = new BrowserWindow({
+        width: 1200,      // Increased from 800
+        height: 800,      // Increased from 600
+        minWidth: 800,    // Add minimum size constraints
+        minHeight: 600,
+        webPreferences: {
+            nodeIntegration: false,
+            contextIsolation: true,
+            preload: path.join(__dirname, 'preload.js')
+        }
+    });
+
+    analogueWindow.loadFile('analogue-popup.html');
+
+    // Optional: Start maximized
+    // analogueWindow.maximize();
+
+    analogueWindow.on('closed', () => {
+        analogueWindow = null;
+    });
 });
 
+// Handle PLC write requests from renderer
 ipcMain.on('write-plc', () => {
     if (plc && isConnected) {
         plc.writeItems('DB1,X60.0', !lastWriteState, (err) => {
@@ -69,10 +136,12 @@ ipcMain.on('write-plc', () => {
     }
 });
 
+// Handle request to open details window
 ipcMain.on('open-details', (_, dataType) => {
     createDetailsWindow(dataType);
 });
 
+// Utility function to clear all active timers
 function clearAllTimers() {
     if (readInterval) {
         clearInterval(readInterval);
@@ -88,6 +157,7 @@ function clearAllTimers() {
     }
 }
 
+// Handle PLC disconnection events
 function handleDisconnection() {
     if (isReconnecting) return;
     
@@ -99,6 +169,7 @@ function handleDisconnection() {
 
     clearAllTimers();
 
+    // Notify renderer of connection loss
     if (win && !win.isDestroyed()) {
         win.webContents.send('plc-status', 'PLC Lost Connection');
     }
@@ -106,9 +177,11 @@ function handleDisconnection() {
     attemptReconnection();
 }
 
+// Function to attempt reconnection to the PLC
 function attemptReconnection() {
     console.log('Attempting to reconnect...');
     
+    // Clean up existing PLC connection if any
     if (plc) {
         try {
             plc.dropConnection();
@@ -118,19 +191,20 @@ function attemptReconnection() {
         plc = null;
     }
 
+    // Create new PLC instance and attempt connection
     plc = new nodes7({
         silent: true,
         debug: false
     });
 
     plc.initiateConnection({
-        port: 102,
-        host: plcAddress,
-        rack: 0,
-        slot: 1,
-        timeout: 1500,
-        localTSAP: 0x0100,
-        remoteTSAP: 0x0200,
+        port: 102,               // Standard S7 communication port
+        host: plcAddress,        // PLC IP address
+        rack: 0,                 // Rack number in hardware config
+        slot: 1,                 // Slot number in hardware config
+        timeout: 1500,           // Connection timeout in milliseconds
+        localTSAP: 0x0100,      // Local TSAP
+        remoteTSAP: 0x0200,     // Remote TSAP
     }, (err) => {
         if (err) {
             console.log('Reconnection failed:', err.message);
@@ -139,6 +213,7 @@ function attemptReconnection() {
                 win.webContents.send('plc-status', 'Reconnection Failed');
             }
             
+            // Schedule another reconnection attempt
             reconnectTimer = setTimeout(() => {
                 attemptReconnection();
             }, RECONNECT_DELAY);
@@ -147,7 +222,8 @@ function attemptReconnection() {
             isConnected = true;
             isReconnecting = false;
             
-            plc.addItems(['DB1,X2.0', 'DB1,X58.0', 'DB1,REAL32']);
+            // Add items to be monitored
+            plc.addItems(getDB1Items());
             
             console.log('Items added to PLC');
             
@@ -160,6 +236,7 @@ function attemptReconnection() {
     });
 }
 
+// Function to start the cyclic reading of PLC data
 function startReadLoop() {
     if (readInterval) {
         clearInterval(readInterval);
@@ -168,7 +245,7 @@ function startReadLoop() {
         clearInterval(statusInterval);
     }
 
-    // Fast interval for PLC data
+    // Fast interval for PLC data reading (100ms)
     readInterval = setInterval(() => {
         if (!plc || !isConnected) return;
 
@@ -179,31 +256,47 @@ function startReadLoop() {
                 return;
             }
 
-            const formattedData = {
-                'E-Stop': data['DB1,X2.0'],
-                'Blue LED': data['DB1,X58.0'],
-                'Analogue Input': data['DB1,REAL32']
-            };
+            // Throttled logging based on LOG_INTERVAL
+            const currentTime = Date.now();
+            if (currentTime - lastLogTime >= LOG_INTERVAL) {
+                logDB1Values(data);
+                lastLogTime = currentTime;
+            }
+
+            const formattedData = formatDB1Data(data);
+
+            // Update historical data and send to renderer
+            updateHistoricalData(formattedData);
 
             if (win && !win.isDestroyed()) {
                 win.webContents.send('plc-data', formattedData);
-                if (analogueWindow && !analogueWindow.isDestroyed()) {
-                    analogueWindow.webContents.send('plc-data', formattedData);
-                }
+            }
+
+            // Add this section to specifically send analogue data to the popup
+            if (analogueWindow && !analogueWindow.isDestroyed()) {
+                const analogueData = {
+                    analogueInputs: [
+                        formattedData.analogue.ai0.scaled,
+                        formattedData.analogue.ai1.scaled
+                    ]
+                };
+                analogueWindow.webContents.send('analogue-data', analogueData);
             }
         });
     }, 100);  // 100ms for PLC data
 
-    // Slower interval for connection status updates
+    // Slower interval for connection status updates (1000ms)
     statusInterval = setInterval(() => {
         updateConnectionStats(0, null);
     }, 1000);  // 1000ms for connection status
 }
 
+// Function to initiate initial PLC connection
 function initiatePLCConnection() {
     clearAllTimers();
     isReconnecting = false;
 
+    // Clean up existing PLC connection if any
     if (plc) {
         try {
             plc.dropConnection();
@@ -213,19 +306,21 @@ function initiatePLCConnection() {
         plc = null;
     }
 
+    // Create new PLC instance with logging disabled
     plc = new nodes7({
         silent: true,
         debug: false
     });
 
+    // Configure and initiate PLC connection
     plc.initiateConnection({
-        port: 102,
-        host: plcAddress,
-        rack: 0,
-        slot: 1,
-        timeout: 1500,
-        localTSAP: 0x0100,
-        remoteTSAP: 0x0200,
+        port: 102,               // Standard S7 communication port
+        host: plcAddress,        // PLC IP address
+        rack: 0,                 // Rack number in hardware config
+        slot: 1,                 // Slot number in hardware config
+        timeout: 1500,           // Connection timeout in milliseconds
+        localTSAP: 0x0100,      // Local TSAP
+        remoteTSAP: 0x0200,     // Remote TSAP
     }, (err) => {
         if (err) {
             console.log('Connection failed:', err.message);
@@ -241,7 +336,7 @@ function initiatePLCConnection() {
             isConnected = true;
             isReconnecting = false;
             
-            plc.addItems(['DB1,X2.0', 'DB1,X58.0', 'DB1,REAL32']);
+            plc.addItems(getDB1Items());
             
             console.log('Items added to PLC');
             
@@ -254,38 +349,39 @@ function initiatePLCConnection() {
     });
 }
 
+// Function to create the main application window
 function createWindow() {
     win = new BrowserWindow({
-        width: 1920,          // Default width
-        height: 1080,         // Default height
+        width: 1920,
+        height: 1080,
         webPreferences: {
-            nodeIntegration: false,
-            contextIsolation: true,
-            preload: path.join(__dirname, 'preload.js')
+            nodeIntegration: false,        // Disable node integration for security
+            contextIsolation: true,        // Enable context isolation
+            preload: path.join(__dirname, 'preload.js')  // Use preload script
         },
-        show: false          // Don't show until ready
+        show: false  // Don't show until ready
     });
 
-    // Load the index.html file
     win.loadFile('index.html');
 
-    // When ready, maximize and show
+    // Show window when ready and initiate PLC connection
     win.once('ready-to-show', () => {
-        win.maximize();      // Maximize the window
-        win.show();         // Show the window after maximized
+        win.maximize();
+        win.show();
+        
+        win.webContents.send('plc-status', 'Connecting to PLC...');
+        initiatePLCConnection();
     });
-
-    // Optional: If you want true fullscreen (no taskbar)
-    // win.setFullScreen(true);
 
     win.on('closed', () => {
         win = null;
     });
-
-    initiatePLCConnection();
 }
 
+// Initialize application when ready
 app.whenReady().then(createWindow);
+
+// Handle application quit for non-macOS platforms
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     if (readInterval) clearInterval(readInterval);
@@ -294,19 +390,23 @@ app.on('window-all-closed', () => {
   }
 });
 
+// Function to update connection statistics and metrics
 function updateConnectionStats(responseTime, error) {
     const timestamp = new Date();
     connectionStats.totalRequests++;
     
+    // Add connection state to history
     connectionStats.connectionHistory.push({
         time: timestamp,
         connected: isConnected
     });
 
+    // Keep only last 60 connection history entries
     if (connectionStats.connectionHistory.length > 60) {
         connectionStats.connectionHistory.shift();
     }
 
+    // Send updated stats to renderer process
     if (win && !win.isDestroyed()) {
         win.webContents.send('stats-update', {
             connectionStats,
@@ -315,42 +415,51 @@ function updateConnectionStats(responseTime, error) {
     }
 }
 
+// Function to update historical data for UI visualization
 function updateHistoricalData(data) {
-  const timestamp = new Date();
+    const timestamp = new Date();
 
-  // Update LED history
-  historicalData.ledStates.push({
-    time: timestamp,
-    state: data['Blue LED']
-  });
+    // Update LED history - using X58.0 (outputs.a[0])
+    historicalData.ledStates.push({
+        time: timestamp,
+        state: data.outputs.a[0]  // X58.0
+    });
 
-  // Update E-Stop history
-  historicalData.estopEvents.push({
-    time: timestamp,
-    state: data['E-Stop']
-  });
+    // Update E-Stop history - using X2.0 (inputs.a[0].state)
+    historicalData.estopEvents.push({
+        time: timestamp,
+        state: data.inputs.a[0].state  // X2.0
+    });
 
-  // Update general status history
-  historicalData.statusHistory.push({
-    time: timestamp,
-    connected: isConnected,
-    hasErrors: connectionStats.lastErrors.length > 0
-  });
+    // Update general status history
+    historicalData.statusHistory.push({
+        time: timestamp,
+        connected: isConnected,
+        hasErrors: connectionStats.lastErrors.length > 0
+    });
 
-  // Keep only last 100 entries for each array
-  const maxEntries = 100;
-  if (historicalData.ledStates.length > maxEntries) {
-    historicalData.ledStates.shift();
-  }
-  if (historicalData.estopEvents.length > maxEntries) {
-    historicalData.estopEvents.shift();
-  }
-  if (historicalData.statusHistory.length > maxEntries) {
-    historicalData.statusHistory.shift();
-  }
+    // Keep only last 100 entries for each array
+    const maxEntries = 100;
+    if (historicalData.ledStates.length > maxEntries) {
+        historicalData.ledStates.shift();
+    }
+    if (historicalData.estopEvents.length > maxEntries) {
+        historicalData.estopEvents.shift();
+    }
+    if (historicalData.statusHistory.length > maxEntries) {
+        historicalData.statusHistory.shift();
+    }
+
+    // Send updated stats to the renderer
+    if (win && !win.isDestroyed()) {
+        win.webContents.send('stats-update', {
+            connectionStats,
+            historicalData
+        });
+    }
 }
 
-// Clean up on app exit
+// Clean up resources on app exit
 app.on('before-quit', () => {
     clearAllTimers();
     if (plc) {
@@ -362,35 +471,15 @@ app.on('before-quit', () => {
     }
 });
 
-function createAnalogueWindow() {
-    if (analogueWindow) {
-        analogueWindow.focus();
-        return;
-    }
-
-    analogueWindow = new BrowserWindow({
-        width: 800,
-        height: 600,
-        webPreferences: {
-            nodeIntegration: false,
-            contextIsolation: true,
-            preload: path.join(__dirname, 'preload.js')
-        }
-    });
-
-    analogueWindow.loadFile('analogue-popup.html');
-
-    analogueWindow.on('closed', () => {
-        analogueWindow = null;
-    });
-}
-
+// Function to create and manage the details window
 function createDetailsWindow(dataType) {
+    // Return focus to existing window if it exists
     if (detailsWindow) {
         detailsWindow.focus();
         return;
     }
 
+    // Create new details window
     detailsWindow = new BrowserWindow({
         width: 1000,
         height: 800,
@@ -403,10 +492,12 @@ function createDetailsWindow(dataType) {
 
     detailsWindow.loadFile('plc-details.html');
 
+    // Send initial data when window is ready
     detailsWindow.webContents.on('did-finish-load', () => {
         detailsWindow.webContents.send('init-data', { type: dataType, data: plcData });
     });
 
+    // Clean up on window close
     detailsWindow.on('closed', () => {
         detailsWindow = null;
     });

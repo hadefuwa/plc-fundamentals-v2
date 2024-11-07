@@ -1,52 +1,243 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>PLC Data Details</title>
+    <title>PLC Details View</title>
     <style>
         body {
-            background-color: #2c3033;
-            color: white;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            padding: 20px;
-        }
-
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        .data-table th, .data-table td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #444;
-        }
-
-        .data-table th {
-            background-color: #383c40;
+            background-color: #1e2124;
             color: #9da5b1;
+            font-family: Arial, sans-serif;
+            margin: 20px;
         }
 
-        .data-table tr:hover {
-            background-color: #383c40;
+        .details-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
         }
 
-        .section-header {
+        .section {
+            background: #2a2e33;
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .section-title {
+            color: #36A2EB;
+            border-bottom: 1px solid #36A2EB;
+            padding-bottom: 8px;
+            margin-bottom: 16px;
+        }
+
+        .io-grid {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .io-item {
+            display: contents;
+        }
+
+        .io-label {
             color: #9da5b1;
-            margin-top: 20px;
+            font-size: 14px;
         }
 
-        .value-true {
-            color: #4caf50;
+        .io-value {
+            font-family: monospace;
+            background: #383c40;
+            padding: 4px 8px;
+            border-radius: 4px;
+            text-align: center;
+            color: #4BC0C0;
         }
 
-        .value-false {
-            color: #f44336;
+        .io-status {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #666;
+        }
+
+        .io-status.true {
+            background-color: #4caf50;
+        }
+
+        .io-status.false {
+            background-color: #f44336;
+        }
+
+        .forced {
+            border: 2px solid #ff9800;
+        }
+
+        .analogue-value {
+            font-family: monospace;
+            color: #4BC0C0;
         }
     </style>
 </head>
 <body>
-    <div id="plc-data-container"></div>
-    <script src="plc-details.js"></script>
+    <div class="details-container">
+        <!-- HMI Section -->
+        <div class="section">
+            <h2 class="section-title">HMI Controls</h2>
+            <div class="io-grid" id="hmi-controls">
+                <!-- Will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Digital Inputs Section -->
+        <div class="section">
+            <h2 class="section-title">Digital Inputs</h2>
+            <div class="io-grid" id="digital-inputs-a">
+                <h3>Bank A</h3>
+                <!-- Will be populated by JavaScript -->
+            </div>
+            <div class="io-grid" id="digital-inputs-b">
+                <h3>Bank B</h3>
+                <!-- Will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Digital Outputs Section -->
+        <div class="section">
+            <h2 class="section-title">Digital Outputs</h2>
+            <div class="io-grid" id="digital-outputs-a">
+                <h3>Bank A</h3>
+                <!-- Will be populated by JavaScript -->
+            </div>
+            <div class="io-grid" id="digital-outputs-b">
+                <h3>Bank B</h3>
+                <!-- Will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Analogue Section -->
+        <div class="section">
+            <h2 class="section-title">Analogue Inputs</h2>
+            <div class="io-grid">
+                <div class="io-item">
+                    <span class="io-label">AI0 Raw</span>
+                    <span class="io-value analogue-value" id="ai0-raw">-</span>
+                    <span class="io-label">counts</span>
+                </div>
+                <div class="io-item">
+                    <span class="io-label">AI0 Scaled</span>
+                    <span class="io-value analogue-value" id="ai0-scaled">-</span>
+                    <span class="io-label">V</span>
+                </div>
+                <div class="io-item">
+                    <span class="io-label">AI1 Raw</span>
+                    <span class="io-value analogue-value" id="ai1-raw">-</span>
+                    <span class="io-label">counts</span>
+                </div>
+                <div class="io-item">
+                    <span class="io-label">AI1 Scaled</span>
+                    <span class="io-value analogue-value" id="ai1-scaled">-</span>
+                    <span class="io-label">V</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let lastConsoleLog = 0;
+        const LOG_INTERVAL = 5000; // Only log every 5 seconds
+
+        // Function to create an IO row
+        function createIORow(label, value, isForced = false) {
+            const isBoolean = typeof value === 'boolean';
+            return `
+                <div class="io-item">
+                    <span class="io-label">${label}</span>
+                    <span class="io-value ${isForced ? 'forced' : ''}">${isBoolean ? (value ? 'TRUE' : 'FALSE') : value}</span>
+                    ${isBoolean ? `
+                        <span class="io-status ${value ? 'true' : 'false'}"></span>
+                    ` : ''}
+                </div>
+            `;
+        }
+
+        // Function to update digital IO sections
+        function updateDigitalIO(data) {
+            // Digital Inputs Bank A
+            const dinAContainer = document.getElementById('digital-inputs-a');
+            dinAContainer.innerHTML = '<h3>Bank A</h3>';
+            for (let i = 0; i < 8; i++) {
+                const value = data[`DB1,X${2 + (i * 2)}.0`];
+                dinAContainer.insertAdjacentHTML('beforeend', createIORow(`DI A${i}`, value));
+            }
+
+            // Digital Inputs Bank B
+            const dinBContainer = document.getElementById('digital-inputs-b');
+            dinBContainer.innerHTML = '<h3>Bank B</h3>';
+            for (let i = 0; i < 6; i++) {
+                const value = data[`DB1,X${18 + (i * 2)}.0`];
+                dinBContainer.insertAdjacentHTML('beforeend', createIORow(`DI B${i}`, value));
+            }
+
+            // Digital Outputs Bank A
+            const doutAContainer = document.getElementById('digital-outputs-a');
+            doutAContainer.innerHTML = '<h3>Bank A</h3>';
+            for (let i = 0; i < 8; i++) {
+                const value = data[`DB1,X${58 + (i * 2)}.0`];
+                doutAContainer.insertAdjacentHTML('beforeend', createIORow(`DO A${i}`, value));
+            }
+
+            // Digital Outputs Bank B
+            const doutBContainer = document.getElementById('digital-outputs-b');
+            doutBContainer.innerHTML = '<h3>Bank B</h3>';
+            for (let i = 0; i < 2; i++) {
+                const value = data[`DB1,X${74 + (i * 2)}.0`];
+                doutBContainer.insertAdjacentHTML('beforeend', createIORow(`DO B${i}`, value));
+            }
+        }
+
+        // Function to update analogue values
+        function updateAnalogueInputs(data) {
+            const analogueContainer = document.querySelector('.io-grid');
+            analogueContainer.innerHTML = `
+                ${createIORow('AI0 Raw', data['DB1,INT30'])}
+                ${createIORow('AI0 Scaled', data['DB1,REAL32'].toFixed(2))}
+                ${createIORow('AI0 Offset', data['DB1,REAL36'].toFixed(2))}
+                ${createIORow('AI0 Scalar', data['DB1,REAL40'].toFixed(2))}
+                ${createIORow('AI1 Raw', data['DB1,INT44'])}
+                ${createIORow('AI1 Scaled', data['DB1,REAL46'].toFixed(2))}
+                ${createIORow('AI1 Offset', data['DB1,REAL50'].toFixed(2))}
+                ${createIORow('AI1 Scalar', data['DB1,REAL54'].toFixed(2))}
+            `;
+        }
+
+        // Function to update HMI controls
+        function updateHMIControls(data) {
+            const hmiContainer = document.getElementById('hmi-controls');
+            hmiContainer.innerHTML = `
+                ${createIORow('Clear Forcing', data['DB1,X0.0'])}
+                ${createIORow('Fault Reset', data['DB1,X0.1'])}
+            `;
+        }
+
+        // Add debug logging to the data receiver
+        window.electron.receiveDB1Data((data) => {
+            try {
+                // Throttle console logging
+                const now = Date.now();
+                if (now - lastConsoleLog >= LOG_INTERVAL) {
+                    console.log('Renderer received DB1 data:', data);
+                    lastConsoleLog = now;
+                }
+
+                updateDigitalIO(data);
+                updateAnalogueInputs(data);
+                updateHMIControls(data);
+            } catch (error) {
+                console.error('Error updating display:', error);
+                console.error('Error stack:', error.stack);
+            }
+        });
+    </script>
 </body>
 </html> 

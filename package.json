@@ -1,6 +1,6 @@
 {
   "name": "plc-base-module",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "HMI interface for Siemens S7-1200 PLC",
   "main": "main.js",
   "scripts": {
