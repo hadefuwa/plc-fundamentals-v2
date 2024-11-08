@@ -860,99 +860,234 @@
         </div>
     </div>
 
+    <!-- First jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Then the notification banner plugin -->
     <script>
-        $(document).ready(function() {
-            function formatBoolValue(value) {
-                return value ? 'ON' : 'OFF';
+    (function($) {
+        $.fn.notificationBanner = function(options) {
+            var settings = $.extend({
+                text: "",
+                position: "top",
+                background: "#000000",
+                height: "auto",
+                padding: "10px",
+                width: "100%",
+                style: {}
+            }, options);
+
+            return this.each(function() {
+                $(this).css({
+                    'position': 'fixed',
+                    'z-index': '9999',
+                    'left': '0',
+                    'right': '0',
+                    [settings.position]: '0',
+                    'background-color': settings.background,
+                    'height': settings.height,
+                    'padding': settings.padding,
+                    'width': settings.width
+                }).css(settings.style).html(settings.text);
+            });
+        };
+    })(jQuery);
+    </script>
+
+    <!-- Then the forcing banner code -->
+    <script>
+    const ForcingBanner = {
+        init: function() {
+            // Create the banner div if it doesn't exist
+            if (!$('#forcing-banner').length) {
+                $('body').prepend('<div id="forcing-banner"></div>');
             }
 
-            function updateStatusColor(element, value) {
-                element.style.color = value ? '#4caf50' : '#f44336';
-            }
+            // Initialize the notification banner (hidden by default)
+            $("#forcing-banner").notificationBanner({
+                text: "⚠️ FORCING ACTIVE - Some I/O points are currently being forced",
+                position: "top",
+                background: "#dc3545",
+                height: "30px",
+                padding: "15px",
+                width: "100%",
+                style: {
+                    color: "white",
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                    textAlign: "center",
+                    display: "none"
+                }
+            });
+        },
 
-            // Add the toggleForce function
-            window.toggleForce = function(type, bank, channel, state) {
-                // Send command to PLC with pulse pattern
+        update: function(data) {
+            // Check the Stats.ForcingActive bit
+            if (data && data.stats && data.stats.forcingActive) {
+                $("#forcing-banner").slideDown();
+            } else {
+                $("#forcing-banner").slideUp();
+            }
+        }
+    };
+    </script>
+
+    <!-- Then your existing scripts -->
+    <script>
+    $(document).ready(function() {
+        ForcingBanner.init();
+        function formatBoolValue(value) {
+            return value ? 'ON' : 'OFF';
+        }
+
+        function updateStatusColor(element, value) {
+            element.style.color = value ? '#4caf50' : '#f44336';
+        }
+
+        // Add the toggleForce function
+        window.toggleForce = function(type, bank, channel, state) {
+            // Send command to PLC with pulse pattern
+            window.electron.sendToMain('force-digital', {
+                type: type,
+                bank: bank,
+                channel: channel,
+                forcedStatus: state,
+                forcedState: true
+            });
+
+            setTimeout(() => {
                 window.electron.sendToMain('force-digital', {
                     type: type,
                     bank: bank,
                     channel: channel,
                     forcedStatus: state,
-                    forcedState: true
+                    forcedState: false
                 });
+            }, 500);
+        };
 
-                setTimeout(() => {
-                    window.electron.sendToMain('force-digital', {
-                        type: type,
-                        bank: bank,
-                        channel: channel,
-                        forcedStatus: state,
-                        forcedState: false
-                    });
-                }, 500);
-            };
+        // Update the receiveData handler
+        window.electron.receiveData((data) => {
+            ForcingBanner.update(data);
+            plcData = data; // Store the data globally
+            updatePLCTags(data);
+        });
 
-            // Update the receiveData handler
-            window.electron.receiveData((data) => {
-                // Update Digital Inputs Bank A
-                for (let i = 0; i < 8; i++) {
-                    const diElement = document.getElementById(`di-a${i}-status`);
-                    if (diElement) {
-                        diElement.textContent = formatBoolValue(data.inputs.a[i].state);
-                        updateStatusColor(diElement, data.inputs.a[i].state);
-                    }
+        function updatePLCTags(data) {
+            // Update Analogue Values
+            document.getElementById('ai0-scaled-value').textContent = `${data.analogue.ai0.scaled.toFixed(2)} V`;
+            document.getElementById('ai1-scaled-value').textContent = `${data.analogue.ai1.scaled.toFixed(2)} V`;
+            document.getElementById('ai0-offset-value').textContent = data.analogue.ai0.offset.toFixed(2);
+            document.getElementById('ai1-offset-value').textContent = data.analogue.ai1.offset.toFixed(2);
+            document.getElementById('ai0-scalar-value').textContent = data.analogue.ai0.scalar.toFixed(2);
+            document.getElementById('ai1-scalar-value').textContent = data.analogue.ai1.scalar.toFixed(2);
+            document.getElementById('ai0-raw-value').textContent = data.analogue.ai0.raw;
+            document.getElementById('ai1-raw-value').textContent = data.analogue.ai1.raw;
+
+            // Update Digital Inputs Bank A
+            for (let i = 0; i < 8; i++) {
+                const diElement = document.getElementById(`di-a${i}-status`);
+                if (diElement) {
+                    diElement.textContent = formatBoolValue(data.inputs.a[i].state);
+                    updateStatusColor(diElement, data.inputs.a[i].state);
                 }
+            }
 
-                // Update Digital Outputs Bank A
-                for (let i = 0; i < 8; i++) {
-                    const doElement = document.getElementById(`do-a${i}-status`);
-                    if (doElement) {
-                        doElement.textContent = formatBoolValue(data.outputs.a[i].state);
-                        updateStatusColor(doElement, data.outputs.a[i].state);
-                    }
+            // Update Digital Outputs Bank A
+            for (let i = 0; i < 8; i++) {
+                const doElement = document.getElementById(`do-a${i}-status`);
+                if (doElement) {
+                    doElement.textContent = formatBoolValue(data.outputs.a[i].state);
+                    updateStatusColor(doElement, data.outputs.a[i].state);
                 }
+            }
 
-                // Update Digital Inputs Bank B
-                for (let i = 0; i < 6; i++) {
-                    const diElement = document.getElementById(`di-b${i}-status`);
-                    if (diElement) {
-                        diElement.textContent = formatBoolValue(data.inputs.b[i].state);
-                        updateStatusColor(diElement, data.inputs.b[i].state);
-                    }
+            // Update Digital Inputs Bank B
+            for (let i = 0; i < 6; i++) {
+                const diElement = document.getElementById(`di-b${i}-status`);
+                if (diElement) {
+                    diElement.textContent = formatBoolValue(data.inputs.b[i].state);
+                    updateStatusColor(diElement, data.inputs.b[i].state);
                 }
+            }
 
-                // Update Digital Outputs Bank B (only B0 and B1)
-                for (let i = 0; i < 2; i++) {
-                    const doElement = document.getElementById(`do-b${i}-status`);
-                    if (doElement) {
-                        doElement.textContent = formatBoolValue(data.outputs.b[i].state);
-                        updateStatusColor(doElement, data.outputs.b[i].state);
-                    }
+            // Update Digital Outputs Bank B (only B0 and B1)
+            for (let i = 0; i < 2; i++) {
+                const doElement = document.getElementById(`do-b${i}-status`);
+                if (doElement) {
+                    doElement.textContent = formatBoolValue(data.outputs.b[i].state);
+                    updateStatusColor(doElement, data.outputs.b[i].state);
                 }
+            }
+        }
+
+        // Add event listener for the test force button
+        $(document).on('click', '.control-button', () => {
+            window.electron.sendToMain('force-digital', {
+                type: 'input',
+                bank: 'a',
+                channel: 0,
+                forcedStatus: true,
+                forcedState: true
             });
 
-            // Add event listener for the test force button
-            $(document).on('click', '.control-button', () => {
+            setTimeout(() => {
                 window.electron.sendToMain('force-digital', {
                     type: 'input',
                     bank: 'a',
                     channel: 0,
                     forcedStatus: true,
-                    forcedState: true
+                    forcedState: false
                 });
-
-                setTimeout(() => {
-                    window.electron.sendToMain('force-digital', {
-                        type: 'input',
-                        bank: 'a',
-                        channel: 0,
-                        forcedStatus: true,
-                        forcedState: false
-                    });
-                }, 500);
-            });
+            }, 500);
         });
+
+        window.modifyValue = function(type, channel) {
+            if (!plcData) return;
+            
+            const currentValue = type === 'offset' 
+                ? plcData.analogue[`ai${channel}`].offset 
+                : plcData.analogue[`ai${channel}`].scalar;
+            
+            const newValue = prompt(`Enter new ${type} value for AI${channel}:`, currentValue);
+            
+            if (newValue !== null && !isNaN(newValue)) {
+                window.electron.sendToMain('modify-analogue', {
+                    channel: channel,
+                    type: type,
+                    value: parseFloat(newValue)
+                });
+            }
+        };
+
+        // Add event listeners for the special buttons
+        $(document).on('click', '#clear-forcing-btn', () => {
+            window.electron.clearForcing();
+        });
+
+        $(document).on('click', '#fault-reset-btn', () => {
+            window.electron.faultReset();
+        });
+
+        // In your receiveData handler, make sure you have this part:
+        window.electron.receiveData((data) => {
+            // ... other updates ...
+
+            // Update HMI Button Status
+            const clearForcingStatus = document.getElementById('clear-forcing-status');
+            const faultResetStatus = document.getElementById('fault-reset-status');
+            
+            if (clearForcingStatus) {
+                clearForcingStatus.textContent = data.hmiButtons.clearForcing ? 'ON' : 'OFF';
+                clearForcingStatus.style.color = data.hmiButtons.clearForcing ? '#4caf50' : '#f44336';
+            }
+            
+            if (faultResetStatus) {
+                faultResetStatus.textContent = data.hmiButtons.faultReset ? 'ON' : 'OFF';
+                faultResetStatus.style.color = data.hmiButtons.faultReset ? '#4caf50' : '#f44336';
+            }
+        });
+    });
     </script>
 </body>
 </html>

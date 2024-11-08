@@ -46,7 +46,11 @@ function getDB1Items() {
         
         // Digital Outputs Bank B with forced states
         'DB1,X74.0', 'DB1,X74.1', 'DB1,X74.2',   // DO B0
-        'DB1,X76.0', 'DB1,X76.1', 'DB1,X76.2'    // DO B1
+        'DB1,X76.0', 'DB1,X76.1', 'DB1,X76.2',   // DO B1
+
+        // Stats
+        'DB1,X78.0',    // ForcingActive
+        'DB1,INT80'     // ForcedCount
     ];
 
     return items;
@@ -203,6 +207,10 @@ function formatDB1Data(data) {
                     forcedStatus: data['DB1,X76.2']
                 }
             }
+        },
+        stats: {
+            forcingActive: data['DB1,X78.0'],
+            forcedCount: data['DB1,INT80']
         }
     };
 }

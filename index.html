@@ -859,5 +859,22 @@
   <script>
     console.log('Page loaded');
   </script>
+
+
+  <script src="jquery.notification-banner.js"></script>
+  <script src="forcing-banner.js"></script>
+  <script>
+    $(document).ready(function() {
+        ForcingBanner.init();
+        
+        window.electron.receiveData((data) => {
+            // Keep your existing receiveData code
+            updatePLCData(data);
+            updateCharts(data);
+            // Add the forcing banner update
+            ForcingBanner.update(data);
+        });
+    });
+  </script>
 </body>
 </html>
