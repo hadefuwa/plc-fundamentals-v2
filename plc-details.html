@@ -1,243 +1,958 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>PLC Details View</title>
-    <style>
-        body {
-            background-color: #1e2124;
-            color: #9da5b1;
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PLC HMI Interface</title>
+  <style>
+    body {
+        background-color: #2c3033;
+        color: white;
+        margin: 0;
+        padding: 5px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        overflow-x: hidden;
+        width: 100%;
+        box-sizing: border-box;
+    }
 
-        .details-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-        }
+    h1 {
+        color: #9da5b1;
+        text-align: center;
+        margin: 0;
+    }
 
-        .section {
-            background: #2a2e33;
-            border-radius: 8px;
-            padding: 16px;
+    #container {
+        position: relative;
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: center;
+        margin-bottom: 20px;
+        padding: 20px;
+        background-color: #383c40;
+        border-radius: 8px;
+    }
+
+
+    .dashboard-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        padding: 20px;
+        background-color: #2c3033;
+        color: white;
+    }
+
+    .dashboard-item {
+        background-color: #383c40;
+        border-radius: 8px;
+        padding: 15px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .wide {
+        grid-column: span 3;
+    }
+
+    .medium {
+        grid-column: span 2;
+    }
+
+    .chart-title {
+        font-size: 1.2em;
+        color: #9da5b1;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .btn {
+        line-height: 1.2;
+        min-height: 35px;
+        width: 85px !important;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        border-radius: 0 !important;
+        cursor: pointer;
+    }
+
+    .modify-btn:hover,
+    .force-btn-on:hover,
+    .force-btn-off:hover,
+    .clear-btn:hover,
+    .reset-btn:hover {
+        opacity: 1 !important;
+    }
+
+    .force-on:hover {
+        background-color: #dc3545 !important;
+    }
+
+    .force-off:hover {
+        background-color: #9a0c1c !important;
+    }
+
+    .clear-btn:hover {
+        background-color: #28a745 !important;
+    }
+
+    .reset-btn:hover,
+    .modify-btn:hover {
+        background-color: #007bff !important;
+    }
+
+    .event-list-container {
+        height: 250px;
+        overflow-y: auto;
+        padding: 10px;
+    }
+
+    .event-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .event-list li {
+        background-color: #2c3033;
+        margin-bottom: 8px;
+        padding: 10px;
+        border-radius: 4px;
+        color: #9da5b1;
+        font-size: 14px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .event-list li .event-time {
+        font-family: monospace;
+    }
+
+    .event-list li.estop-event .event-time {
+        color: #FF4444;
+    }
+
+    .event-list li.led-event .event-time {
+        color: #36A2EB;
+    }
+
+    .event-list-container::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .event-list-container::-webkit-scrollbar-track {
+        background: #2c3033;
+        border-radius: 4px;
+    }
+
+    .event-list-container::-webkit-scrollbar-thumb {
+        background: #4a4f55;
+        border-radius: 4px;
+    }
+
+    .event-list-container::-webkit-scrollbar-thumb:hover {
+        background: #5a6066;
+    }
+
+    .matrix-logo {
+        width: 100%;
+        padding: 20px;
+        background-color: #2c3033;
+    }
+
+    /* DB Values Grid */
+    .db-values-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        padding: 16px;
+        background: #2a2e33;
+        border-radius: 8px;
+    }
+
+    .db-value-item {
+        display: flex;
+        flex-direction: column;
+        padding: 12px;
+        background: #383c40;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+    }
+
+    .db-value-label {
+        color: #9da5b1;
+        font-size: 12px;
+        margin-bottom: 4px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .db-value-content {
+        color: #fff;
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+    .section {
+            width: 100%;
+            overflow-x: hidden;
+            box-sizing: border-box;
+            padding: 0 5px;
         }
 
         .section-title {
-            color: #36A2EB;
-            border-bottom: 1px solid #36A2EB;
-            padding-bottom: 8px;
-            margin-bottom: 16px;
-        }
-
-        .io-grid {
-            display: grid;
-            grid-template-columns: auto 1fr auto;
-            gap: 8px;
-            align-items: center;
-        }
-
-        .io-item {
-            display: contents;
-        }
-
-        .io-label {
             color: #9da5b1;
-            font-size: 14px;
         }
 
-        .io-value {
-            font-family: monospace;
-            background: #383c40;
-            padding: 4px 8px;
+        /* Make the table columns equal width */
+        #plc-tags-table th,
+        #plc-tags-table td {
+            width: 25%;
+        }
+
+        /* Add/update these styles in the <style> section */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        /* Update table styles */
+        #plc-analogue-table,
+        #plc-digital-table {
+            width: 100% !important;
+            box-sizing: border-box;
+        }
+
+        /* Add responsive table container */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            box-sizing: border-box;
+        }
+
+        .control-button {
+            background-color: #36A2EB;
+            color: white;
+            border: none;
+            padding: 10px 20px;
             border-radius: 4px;
-            text-align: center;
-            color: #4BC0C0;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+            width: 100%;
+            white-space: nowrap;
         }
 
-        .io-status {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: #666;
+        .control-button:hover {
+            background-color: #2184c7;
         }
 
-        .io-status.true {
-            background-color: #4caf50;
+        .control-button:active {
+            background-color: #1a6698;
         }
 
-        .io-status.false {
-            background-color: #f44336;
+        .btn.modify-btn:hover {
+            opacity: 1 !important;
+            background-color: #28a745 !important;
         }
 
-        .forced {
-            border: 2px solid #ff9800;
+        .btn:disabled {
+            cursor: not-allowed;
         }
 
-        .analogue-value {
-            font-family: monospace;
-            color: #4BC0C0;
+        .force-btn-on:not(:disabled):hover,
+        .force-btn-off:not(:disabled):hover {
+            opacity: 1 !important;
         }
-    </style>
+
+        .force-btn-on:not(:disabled):hover {
+            background-color: #dc3545 !important;
+        }
+
+        .force-btn-off:not(:disabled):hover {
+            background-color: #9a0c1c !important;
+        }
+</style>
+
 </head>
 <body>
-    <div class="details-container">
-        <!-- HMI Section -->
+    <div style="padding: 10px;">
+        <button onclick="window.location.href='index.html'" 
+                class="btn btn-sm modify-btn" 
+                style="background-color: #36A2EB; color: white;">
+            Back to Dashboard
+        </button>
+    </div>
+
+    <h1>PLC IO</h1>
+    <div class="container">
+        <!-- HMI Control Buttons Section -->
         <div class="section">
-            <h2 class="section-title">HMI Controls</h2>
-            <div class="io-grid" id="hmi-controls">
-                <!-- Will be populated by JavaScript -->
+            <h2 class="section-title">HMI Control Buttons</h2>
+            <div class="table-responsive" style="margin-bottom: 20px;">
+                <table style="width: 100%">
+                    <tbody>
+                        <tr>
+                            <td style="width: 25%">Clear Forcing</td>
+                            <td style="width: 10%">
+                                <span id="clear-forcing-status" style="color: #4caf50; font-weight: bold;">OFF</span>
+                            </td>
+                            <td style="width: 10%">
+                                <button id="clear-forcing-btn" 
+                                        class="btn btn-sm modify-btn" 
+                                        style="background-color: #28a745; color: white; opacity: 0.7;">
+                                    Clear Forcing
+                                </button>
+                            </td>
+                            <td style="width: 10%"></td>
+                            <td style="width: 25%">Fault Reset</td>
+                            <td style="width: 10%">
+                                <span id="fault-reset-status" style="color: #4caf50; font-weight: bold;">OFF</span>
+                            </td>
+                            <td style="width: 10%">
+                                <button id="fault-reset-btn" 
+                                        class="btn btn-sm modify-btn" 
+                                        style="background-color: #28a745; color: white; opacity: 0.7;">
+                                    Fault Reset
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
-        <!-- Digital Inputs Section -->
+        <!-- Analogue I/O Section -->
         <div class="section">
-            <h2 class="section-title">Digital Inputs</h2>
-            <div class="io-grid" id="digital-inputs-a">
-                <h3>Bank A</h3>
-                <!-- Will be populated by JavaScript -->
-            </div>
-            <div class="io-grid" id="digital-inputs-b">
-                <h3>Bank B</h3>
-                <!-- Will be populated by JavaScript -->
+            <h2 class="section-title">Analogue I/O</h2>
+            <div class="table-responsive">
+                <table style="width: 100%">
+                    <tbody>
+                        <!-- AI0/1 Scaled Row -->
+                        <tr>
+                            <td style="width: 25%">AI0 Scaled</td>
+                            <td style="width: 10%">
+                                <span id="ai0-scaled-value" style="color: #4caf50; font-weight: bold; font-size: 1.1em">0.00 V</span>
+                            </td>
+                            <td style="width: 10%"></td>
+                            <td style="width: 10%"></td>
+                            <td style="width: 25%">AI1 Scaled</td>
+                            <td style="width: 10%">
+                                <span id="ai1-scaled-value" style="color: #4caf50; font-weight: bold; font-size: 1.1em">0.00 V</span>
+                            </td>
+                            <td style="width: 10%"></td>
+                        </tr>
+                        <!-- AI0/1 Offset Row -->
+                        <tr>
+                            <td style="width: 25%">AI0 Offset</td>
+                            <td style="width: 10%"><span id="ai0-offset-value">0.00</span></td>
+                            <td style="width: 10%">
+                                <button class="btn btn-sm modify-btn" 
+                                        onclick="modifyValue('offset', 0)"
+                                        style="background-color: #007bff; color: white; opacity: 0.7;">
+                                    Modify
+                                </button>
+                            </td>
+                            <td style="width: 10%"></td>
+                            <td style="width: 25%">AI1 Offset</td>
+                            <td style="width: 10%"><span id="ai1-offset-value">0.00</span></td>
+                            <td style="width: 10%">
+                                <button class="btn btn-sm modify-btn" 
+                                        onclick="modifyValue('offset', 1)"
+                                        style="background-color: #007bff; color: white; opacity: 0.7;">
+                                    Modify
+                                </button>
+                            </td>
+                        </tr>
+                        <!-- AI0/1 Scalar Row -->
+                        <tr>
+                            <td style="width: 25%">AI0 Scalar</td>
+                            <td style="width: 10%"><span id="ai0-scalar-value">0.00</span></td>
+                            <td style="width: 10%">
+                                <button class="btn btn-sm modify-btn" 
+                                        onclick="modifyValue('scalar', 0)"
+                                        style="background-color: #007bff; color: white; opacity: 0.7;">
+                                    Modify
+                                </button>
+                            </td>
+                            <td style="width: 10%"></td>
+                            <td style="width: 25%">AI1 Scalar</td>
+                            <td style="width: 10%"><span id="ai1-scalar-value">0.00</span></td>
+                            <td style="width: 10%">
+                                <button class="btn btn-sm modify-btn" 
+                                        onclick="modifyValue('scalar', 1)"
+                                        style="background-color: #007bff; color: white; opacity: 0.7;">
+                                    Modify
+                                </button>
+                            </td>
+                        </tr>
+                        <!-- AI0/1 Raw Row -->
+                        <tr>
+                            <td style="width: 25%">AI0 Raw</td>
+                            <td style="width: 10%"><span id="ai0-raw-value">0</span></td>
+                            <td style="width: 10%"></td>
+                            <td style="width: 10%"></td>
+                            <td style="width: 25%">AI1 Raw</td>
+                            <td style="width: 10%"><span id="ai1-raw-value">0</span></td>
+                            <td style="width: 10%"></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
-        <!-- Digital Outputs Section -->
-        <div class="section">
-            <h2 class="section-title">Digital Outputs</h2>
-            <div class="io-grid" id="digital-outputs-a">
-                <h3>Bank A</h3>
-                <!-- Will be populated by JavaScript -->
-            </div>
-            <div class="io-grid" id="digital-outputs-b">
-                <h3>Bank B</h3>
-                <!-- Will be populated by JavaScript -->
-            </div>
-        </div>
-
-        <!-- Analogue Section -->
-        <div class="section">
-            <h2 class="section-title">Analogue Inputs</h2>
-            <div class="io-grid">
-                <div class="io-item">
-                    <span class="io-label">AI0 Raw</span>
-                    <span class="io-value analogue-value" id="ai0-raw">-</span>
-                    <span class="io-label">counts</span>
-                </div>
-                <div class="io-item">
-                    <span class="io-label">AI0 Scaled</span>
-                    <span class="io-value analogue-value" id="ai0-scaled">-</span>
-                    <span class="io-label">V</span>
-                </div>
-                <div class="io-item">
-                    <span class="io-label">AI1 Raw</span>
-                    <span class="io-value analogue-value" id="ai1-raw">-</span>
-                    <span class="io-label">counts</span>
-                </div>
-                <div class="io-item">
-                    <span class="io-label">AI1 Scaled</span>
-                    <span class="io-value analogue-value" id="ai1-scaled">-</span>
-                    <span class="io-label">V</span>
-                </div>
+        <!-- Digital I/O Section -->
+        <div class="section" style="margin-top: 30px;">
+            <h2 class="section-title">Digital I/O</h2>
+            <div class="table-responsive">
+                <table style="width: 100%">
+                    <tbody>
+                        <!-- Bank A -->
+                        <tr>
+                            <td style="width: 25%">DI A0</td>
+                            <td style="width: 10%"><span id="di-a0-status" style="color: #f44336; font-weight: bold;">OFF</span></td>
+                            <td style="width: 10%">
+                                <div style="display: flex; gap: 5px; justify-content: center;">
+                                    <button class="btn btn-sm force-btn-on" 
+                                            onclick="toggleForce('input', 'a', 0, true)"
+                                            style="background-color: #dc3545; color: white; opacity: 0.7;">
+                                        Force On
+                                    </button>
+                                    <button class="btn btn-sm force-btn-off" 
+                                            onclick="toggleForce('input', 'a', 0, false)"
+                                            style="background-color: #9a0c1c; color: white; opacity: 0.7;">
+                                        Force Off
+                                    </button>
+                                </div>
+                            </td>
+                            <td style="width: 10%"></td>
+                            <td style="width: 25%">DO A0</td>
+                            <td style="width: 10%"><span id="do-a0-status" style="color: #f44336; font-weight: bold;">OFF</span></td>
+                            <td style="width: 10%">
+                                <div style="display: flex; gap: 5px; justify-content: center;">
+                                    <button class="btn btn-sm force-btn-on" 
+                                            onclick="toggleForce('output', 'a', 0, true)"
+                                            style="background-color: #dc3545; color: white; opacity: 0.7;">
+                                        Force On
+                                    </button>
+                                    <button class="btn btn-sm force-btn-off" 
+                                            onclick="toggleForce('output', 'a', 0, false)"
+                                            style="background-color: #9a0c1c; color: white; opacity: 0.7;">
+                                        Force Off
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 25%">DI A1</td>
+                            <td style="width: 10%"><span id="di-a1-status" style="color: #f44336; font-weight: bold;">OFF</span></td>
+                            <td style="width: 10%">
+                                <div style="display: flex; gap: 5px; justify-content: center;">
+                                    <button class="btn btn-sm force-btn-on" 
+                                            onclick="toggleForce('input', 'a', 1, true)"
+                                            style="background-color: #dc3545; color: white; opacity: 0.7;">
+                                        Force On
+                                    </button>
+                                    <button class="btn btn-sm force-btn-off" 
+                                            onclick="toggleForce('input', 'a', 1, false)"
+                                            style="background-color: #9a0c1c; color: white; opacity: 0.7;">
+                                        Force Off
+                                    </button>
+                                </div>
+                            </td>
+                            <td style="width: 10%"></td>
+                            <td style="width: 25%">DO A1</td>
+                            <td style="width: 10%"><span id="do-a1-status" style="color: #f44336; font-weight: bold;">OFF</span></td>
+                            <td style="width: 10%">
+                                <div style="display: flex; gap: 5px; justify-content: center;">
+                                    <button class="btn btn-sm force-btn-on" 
+                                            onclick="toggleForce('output', 'a', 1, true)"
+                                            style="background-color: #dc3545; color: white; opacity: 0.7;">
+                                        Force On
+                                    </button>
+                                    <button class="btn btn-sm force-btn-off" 
+                                            onclick="toggleForce('output', 'a', 1, false)"
+                                            style="background-color: #9a0c1c; color: white; opacity: 0.7;">
+                                        Force Off
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 25%">DI A2</td>
+                            <td style="width: 10%"><span id="di-a2-status" style="color: #f44336; font-weight: bold;">OFF</span></td>
+                            <td style="width: 10%">
+                                <div style="display: flex; gap: 5px; justify-content: center;">
+                                    <button class="btn btn-sm force-btn-on" 
+                                            onclick="toggleForce('input', 'a', 2, true)"
+                                            style="background-color: #dc3545; color: white; opacity: 0.7;">
+                                        Force On
+                                    </button>
+                                    <button class="btn btn-sm force-btn-off" 
+                                            onclick="toggleForce('input', 'a', 2, false)"
+                                            style="background-color: #9a0c1c; color: white; opacity: 0.7;">
+                                        Force Off
+                                    </button>
+                                </div>
+                            </td>
+                            <td style="width: 10%"></td>
+                            <td style="width: 25%">DO A2</td>
+                            <td style="width: 10%"><span id="do-a2-status" style="color: #f44336; font-weight: bold;">OFF</span></td>
+                            <td style="width: 10%">
+                                <div style="display: flex; gap: 5px; justify-content: center;">
+                                    <button class="btn btn-sm force-btn-on" 
+                                            onclick="toggleForce('output', 'a', 2, true)"
+                                            style="background-color: #dc3545; color: white; opacity: 0.7;">
+                                        Force On
+                                    </button>
+                                    <button class="btn btn-sm force-btn-off" 
+                                            onclick="toggleForce('output', 'a', 2, false)"
+                                            style="background-color: #9a0c1c; color: white; opacity: 0.7;">
+                                        Force Off
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 25%">DI A3</td>
+                            <td style="width: 10%"><span id="di-a3-status" style="color: #f44336; font-weight: bold;">OFF</span></td>
+                            <td style="width: 10%">
+                                <div style="display: flex; gap: 5px; justify-content: center;">
+                                    <button class="btn btn-sm force-btn-on" 
+                                            onclick="toggleForce('input', 'a', 3, true)"
+                                            style="background-color: #dc3545; color: white; opacity: 0.7;">
+                                        Force On
+                                    </button>
+                                    <button class="btn btn-sm force-btn-off" 
+                                            onclick="toggleForce('input', 'a', 3, false)"
+                                            style="background-color: #9a0c1c; color: white; opacity: 0.7;">
+                                        Force Off
+                                    </button>
+                                </div>
+                            </td>
+                            <td style="width: 10%"></td>
+                            <td style="width: 25%">DO A3</td>
+                            <td style="width: 10%"><span id="do-a3-status" style="color: #f44336; font-weight: bold;">OFF</span></td>
+                            <td style="width: 10%">
+                                <div style="display: flex; gap: 5px; justify-content: center;">
+                                    <button class="btn btn-sm force-btn-on" 
+                                            onclick="toggleForce('output', 'a', 3, true)"
+                                            style="background-color: #dc3545; color: white; opacity: 0.7;">
+                                        Force On
+                                    </button>
+                                    <button class="btn btn-sm force-btn-off" 
+                                            onclick="toggleForce('output', 'a', 3, false)"
+                                            style="background-color: #9a0c1c; color: white; opacity: 0.7;">
+                                        Force Off
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 25%">DI A4</td>
+                            <td style="width: 10%"><span id="di-a4-status" style="color: #f44336; font-weight: bold;">OFF</span></td>
+                            <td style="width: 10%">
+                                <div style="display: flex; gap: 5px; justify-content: center;">
+                                    <button class="btn btn-sm force-btn-on" 
+                                            onclick="toggleForce('input', 'a', 4, true)"
+                                            style="background-color: #dc3545; color: white; opacity: 0.7;">
+                                        Force On
+                                    </button>
+                                    <button class="btn btn-sm force-btn-off" 
+                                            onclick="toggleForce('input', 'a', 4, false)"
+                                            style="background-color: #9a0c1c; color: white; opacity: 0.7;">
+                                        Force Off
+                                    </button>
+                                </div>
+                            </td>
+                            <td style="width: 10%"></td>
+                            <td style="width: 25%">DO A4</td>
+                            <td style="width: 10%"><span id="do-a4-status" style="color: #f44336; font-weight: bold;">OFF</span></td>
+                            <td style="width: 10%">
+                                <div style="display: flex; gap: 5px; justify-content: center;">
+                                    <button class="btn btn-sm force-btn-on" 
+                                            onclick="toggleForce('output', 'a', 4, true)"
+                                            style="background-color: #dc3545; color: white; opacity: 0.7;">
+                                        Force On
+                                    </button>
+                                    <button class="btn btn-sm force-btn-off" 
+                                            onclick="toggleForce('output', 'a', 4, false)"
+                                            style="background-color: #9a0c1c; color: white; opacity: 0.7;">
+                                        Force Off
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 25%">DI A5</td>
+                            <td style="width: 10%"><span id="di-a5-status" style="color: #f44336; font-weight: bold;">OFF</span></td>
+                            <td style="width: 10%">
+                                <div style="display: flex; gap: 5px; justify-content: center;">
+                                    <button class="btn btn-sm force-btn-on" 
+                                            onclick="toggleForce('input', 'a', 5, true)"
+                                            style="background-color: #dc3545; color: white; opacity: 0.7;">
+                                        Force On
+                                    </button>
+                                    <button class="btn btn-sm force-btn-off" 
+                                            onclick="toggleForce('input', 'a', 5, false)"
+                                            style="background-color: #9a0c1c; color: white; opacity: 0.7;">
+                                        Force Off
+                                    </button>
+                                </div>
+                            </td>
+                            <td style="width: 10%"></td>
+                            <td style="width: 25%">DO A5</td>
+                            <td style="width: 10%"><span id="do-a5-status" style="color: #f44336; font-weight: bold;">OFF</span></td>
+                            <td style="width: 10%">
+                                <div style="display: flex; gap: 5px; justify-content: center;">
+                                    <button class="btn btn-sm force-btn-on" 
+                                            onclick="toggleForce('output', 'a', 5, true)"
+                                            style="background-color: #dc3545; color: white; opacity: 0.7;">
+                                        Force On
+                                    </button>
+                                    <button class="btn btn-sm force-btn-off" 
+                                            onclick="toggleForce('output', 'a', 5, false)"
+                                            style="background-color: #9a0c1c; color: white; opacity: 0.7;">
+                                        Force Off
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 25%">DI A6</td>
+                            <td style="width: 10%"><span id="di-a6-status" style="color: #f44336; font-weight: bold;">OFF</span></td>
+                            <td style="width: 10%">
+                                <div style="display: flex; gap: 5px; justify-content: center;">
+                                    <button class="btn btn-sm force-btn-on" 
+                                            onclick="toggleForce('input', 'a', 6, true)"
+                                            style="background-color: #dc3545; color: white; opacity: 0.7;">
+                                        Force On
+                                    </button>
+                                    <button class="btn btn-sm force-btn-off" 
+                                            onclick="toggleForce('input', 'a', 6, false)"
+                                            style="background-color: #9a0c1c; color: white; opacity: 0.7;">
+                                        Force Off
+                                    </button>
+                                </div>
+                            </td>
+                            <td style="width: 10%"></td>
+                            <td style="width: 25%">DO A6</td>
+                            <td style="width: 10%"><span id="do-a6-status" style="color: #f44336; font-weight: bold;">OFF</span></td>
+                            <td style="width: 10%">
+                                <div style="display: flex; gap: 5px; justify-content: center;">
+                                    <button class="btn btn-sm force-btn-on" 
+                                            onclick="toggleForce('output', 'a', 6, true)"
+                                            style="background-color: #dc3545; color: white; opacity: 0.7;">
+                                        Force On
+                                    </button>
+                                    <button class="btn btn-sm force-btn-off" 
+                                            onclick="toggleForce('output', 'a', 6, false)"
+                                            style="background-color: #9a0c1c; color: white; opacity: 0.7;">
+                                        Force Off
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 25%">DI A7</td>
+                            <td style="width: 10%"><span id="di-a7-status" style="color: #f44336; font-weight: bold;">OFF</span></td>
+                            <td style="width: 10%">
+                                <div style="display: flex; gap: 5px; justify-content: center;">
+                                    <button class="btn btn-sm force-btn-on" 
+                                            onclick="toggleForce('input', 'a', 7, true)"
+                                            style="background-color: #dc3545; color: white; opacity: 0.7;">
+                                        Force On
+                                    </button>
+                                    <button class="btn btn-sm force-btn-off" 
+                                            onclick="toggleForce('input', 'a', 7, false)"
+                                            style="background-color: #9a0c1c; color: white; opacity: 0.7;">
+                                        Force Off
+                                    </button>
+                                </div>
+                            </td>
+                            <td style="width: 10%"></td>
+                            <td style="width: 25%">DO A7</td>
+                            <td style="width: 10%"><span id="do-a7-status" style="color: #f44336; font-weight: bold;">OFF</span></td>
+                            <td style="width: 10%">
+                                <div style="display: flex; gap: 5px; justify-content: center;">
+                                    <button class="btn btn-sm force-btn-on" 
+                                            onclick="toggleForce('output', 'a', 7, true)"
+                                            style="background-color: #dc3545; color: white; opacity: 0.7;">
+                                        Force On
+                                    </button>
+                                    <button class="btn btn-sm force-btn-off" 
+                                            onclick="toggleForce('output', 'a', 7, false)"
+                                            style="background-color: #9a0c1c; color: white; opacity: 0.7;">
+                                        Force Off
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- Bank B -->
+                        <tr>
+                            <td style="width: 25%">DI B0</td>
+                            <td style="width: 10%"><span id="di-b0-status" style="color: #f44336; font-weight: bold;">OFF</span></td>
+                            <td style="width: 10%">
+                                <div style="display: flex; gap: 5px; justify-content: center;">
+                                    <button class="btn btn-sm force-btn-on" 
+                                            onclick="toggleForce('input', 'b', 0, true)"
+                                            style="background-color: #dc3545; color: white; opacity: 0.7;">
+                                        Force On
+                                    </button>
+                                    <button class="btn btn-sm force-btn-off" 
+                                            onclick="toggleForce('input', 'b', 0, false)"
+                                            style="background-color: #9a0c1c; color: white; opacity: 0.7;">
+                                        Force Off
+                                    </button>
+                                </div>
+                            </td>
+                            <td style="width: 10%"></td>
+                            <td style="width: 25%">DO B0</td>
+                            <td style="width: 10%"><span id="do-b0-status" style="color: #f44336; font-weight: bold;">OFF</span></td>
+                            <td style="width: 10%">
+                                <div style="display: flex; gap: 5px; justify-content: center;">
+                                    <button class="btn btn-sm force-btn-on" 
+                                            onclick="toggleForce('output', 'b', 0, true)"
+                                            style="background-color: #dc3545; color: white; opacity: 0.7;">
+                                        Force On
+                                    </button>
+                                    <button class="btn btn-sm force-btn-off" 
+                                            onclick="toggleForce('output', 'b', 0, false)"
+                                            style="background-color: #9a0c1c; color: white; opacity: 0.7;">
+                                        Force Off
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 25%">DI B1</td>
+                            <td style="width: 10%"><span id="di-b1-status" style="color: #f44336; font-weight: bold;">OFF</span></td>
+                            <td style="width: 10%">
+                                <div style="display: flex; gap: 5px; justify-content: center;">
+                                    <button class="btn btn-sm force-btn-on" 
+                                            onclick="toggleForce('input', 'b', 1, true)"
+                                            style="background-color: #dc3545; color: white; opacity: 0.7;">
+                                        Force On
+                                    </button>
+                                    <button class="btn btn-sm force-btn-off" 
+                                            onclick="toggleForce('input', 'b', 1, false)"
+                                            style="background-color: #9a0c1c; color: white; opacity: 0.7;">
+                                        Force Off
+                                    </button>
+                                </div>
+                            </td>
+                            <td style="width: 10%"></td>
+                            <td style="width: 25%">DO B1</td>
+                            <td style="width: 10%"><span id="do-b1-status" style="color: #f44336; font-weight: bold;">OFF</span></td>
+                            <td style="width: 10%">
+                                <div style="display: flex; gap: 5px; justify-content: center;">
+                                    <button class="btn btn-sm force-btn-on" 
+                                            onclick="toggleForce('output', 'b', 1, true)"
+                                            style="background-color: #dc3545; color: white; opacity: 0.7;">
+                                        Force On
+                                    </button>
+                                    <button class="btn btn-sm force-btn-off" 
+                                            onclick="toggleForce('output', 'b', 1, false)"
+                                            style="background-color: #9a0c1c; color: white; opacity: 0.7;">
+                                        Force Off
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 25%">DI B2</td>
+                            <td style="width: 10%"><span id="di-b2-status" style="color: #f44336; font-weight: bold;">OFF</span></td>
+                            <td style="width: 10%">
+                                <div style="display: flex; gap: 5px; justify-content: center;">
+                                    <button class="btn btn-sm force-btn-on" 
+                                            onclick="toggleForce('input', 'b', 2, true)"
+                                            style="background-color: #dc3545; color: white; opacity: 0.7;">
+                                        Force On
+                                    </button>
+                                    <button class="btn btn-sm force-btn-off" 
+                                            onclick="toggleForce('input', 'b', 2, false)"
+                                            style="background-color: #9a0c1c; color: white; opacity: 0.7;">
+                                        Force Off
+                                    </button>
+                                </div>
+                            </td>
+                            <td style="width: 10%"></td>
+                            <td style="width: 25%"></td>
+                            <td style="width: 10%"></td>
+                            <td style="width: 10%"></td>
+                        </tr>
+                        <tr>
+                            <td style="width: 25%">DI B3</td>
+                            <td style="width: 10%"><span id="di-b3-status" style="color: #f44336; font-weight: bold;">OFF</span></td>
+                            <td style="width: 10%">
+                                <div style="display: flex; gap: 5px; justify-content: center;">
+                                    <button class="btn btn-sm force-btn-on" 
+                                            onclick="toggleForce('input', 'b', 3, true)"
+                                            style="background-color: #dc3545; color: white; opacity: 0.7;">
+                                        Force On
+                                    </button>
+                                    <button class="btn btn-sm force-btn-off" 
+                                            onclick="toggleForce('input', 'b', 3, false)"
+                                            style="background-color: #9a0c1c; color: white; opacity: 0.7;">
+                                        Force Off
+                                    </button>
+                                </div>
+                            </td>
+                            <td style="width: 10%"></td>
+                            <td style="width: 25%"></td>
+                            <td style="width: 10%"></td>
+                            <td style="width: 10%"></td>
+                        </tr>
+                        <tr>
+                            <td style="width: 25%">DI B4</td>
+                            <td style="width: 10%"><span id="di-b4-status" style="color: #f44336; font-weight: bold;">OFF</span></td>
+                            <td style="width: 10%">
+                                <div style="display: flex; gap: 5px; justify-content: center;">
+                                    <button class="btn btn-sm force-btn-on" 
+                                            onclick="toggleForce('input', 'b', 4, true)"
+                                            style="background-color: #dc3545; color: white; opacity: 0.7;">
+                                        Force On
+                                    </button>
+                                    <button class="btn btn-sm force-btn-off" 
+                                            onclick="toggleForce('input', 'b', 4, false)"
+                                            style="background-color: #9a0c1c; color: white; opacity: 0.7;">
+                                        Force Off
+                                    </button>
+                                </div>
+                            </td>
+                            <td style="width: 10%"></td>
+                            <td style="width: 25%"></td>
+                            <td style="width: 10%"></td>
+                            <td style="width: 10%"></td>
+                        </tr>
+                        <tr>
+                            <td style="width: 25%">DI B5</td>
+                            <td style="width: 10%"><span id="di-b5-status" style="color: #f44336; font-weight: bold;">OFF</span></td>
+                            <td style="width: 10%">
+                                <div style="display: flex; gap: 5px; justify-content: center;">
+                                    <button class="btn btn-sm force-btn-on" 
+                                            onclick="toggleForce('input', 'b', 5, true)"
+                                            style="background-color: #dc3545; color: white; opacity: 0.7;">
+                                        Force On
+                                    </button>
+                                    <button class="btn btn-sm force-btn-off" 
+                                            onclick="toggleForce('input', 'b', 5, false)"
+                                            style="background-color: #9a0c1c; color: white; opacity: 0.7;">
+                                        Force Off
+                                    </button>
+                                </div>
+                            </td>
+                            <td style="width: 10%"></td>
+                            <td style="width: 25%"></td>
+                            <td style="width: 10%"></td>
+                            <td style="width: 10%"></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        let lastConsoleLog = 0;
-        const LOG_INTERVAL = 5000; // Only log every 5 seconds
-
-        // Function to create an IO row
-        function createIORow(label, value, isForced = false) {
-            const isBoolean = typeof value === 'boolean';
-            return `
-                <div class="io-item">
-                    <span class="io-label">${label}</span>
-                    <span class="io-value ${isForced ? 'forced' : ''}">${isBoolean ? (value ? 'TRUE' : 'FALSE') : value}</span>
-                    ${isBoolean ? `
-                        <span class="io-status ${value ? 'true' : 'false'}"></span>
-                    ` : ''}
-                </div>
-            `;
-        }
-
-        // Function to update digital IO sections
-        function updateDigitalIO(data) {
-            // Digital Inputs Bank A
-            const dinAContainer = document.getElementById('digital-inputs-a');
-            dinAContainer.innerHTML = '<h3>Bank A</h3>';
-            for (let i = 0; i < 8; i++) {
-                const value = data[`DB1,X${2 + (i * 2)}.0`];
-                dinAContainer.insertAdjacentHTML('beforeend', createIORow(`DI A${i}`, value));
+        $(document).ready(function() {
+            function formatBoolValue(value) {
+                return value ? 'ON' : 'OFF';
             }
 
-            // Digital Inputs Bank B
-            const dinBContainer = document.getElementById('digital-inputs-b');
-            dinBContainer.innerHTML = '<h3>Bank B</h3>';
-            for (let i = 0; i < 6; i++) {
-                const value = data[`DB1,X${18 + (i * 2)}.0`];
-                dinBContainer.insertAdjacentHTML('beforeend', createIORow(`DI B${i}`, value));
+            function updateStatusColor(element, value) {
+                element.style.color = value ? '#4caf50' : '#f44336';
             }
 
-            // Digital Outputs Bank A
-            const doutAContainer = document.getElementById('digital-outputs-a');
-            doutAContainer.innerHTML = '<h3>Bank A</h3>';
-            for (let i = 0; i < 8; i++) {
-                const value = data[`DB1,X${58 + (i * 2)}.0`];
-                doutAContainer.insertAdjacentHTML('beforeend', createIORow(`DO A${i}`, value));
-            }
+            // Add the toggleForce function
+            window.toggleForce = function(type, bank, channel, state) {
+                // Send command to PLC with pulse pattern
+                window.electron.sendToMain('force-digital', {
+                    type: type,
+                    bank: bank,
+                    channel: channel,
+                    forcedStatus: state,
+                    forcedState: true
+                });
 
-            // Digital Outputs Bank B
-            const doutBContainer = document.getElementById('digital-outputs-b');
-            doutBContainer.innerHTML = '<h3>Bank B</h3>';
-            for (let i = 0; i < 2; i++) {
-                const value = data[`DB1,X${74 + (i * 2)}.0`];
-                doutBContainer.insertAdjacentHTML('beforeend', createIORow(`DO B${i}`, value));
-            }
-        }
+                setTimeout(() => {
+                    window.electron.sendToMain('force-digital', {
+                        type: type,
+                        bank: bank,
+                        channel: channel,
+                        forcedStatus: state,
+                        forcedState: false
+                    });
+                }, 500);
+            };
 
-        // Function to update analogue values
-        function updateAnalogueInputs(data) {
-            const analogueContainer = document.querySelector('.io-grid');
-            analogueContainer.innerHTML = `
-                ${createIORow('AI0 Raw', data['DB1,INT30'])}
-                ${createIORow('AI0 Scaled', data['DB1,REAL32'].toFixed(2))}
-                ${createIORow('AI0 Offset', data['DB1,REAL36'].toFixed(2))}
-                ${createIORow('AI0 Scalar', data['DB1,REAL40'].toFixed(2))}
-                ${createIORow('AI1 Raw', data['DB1,INT44'])}
-                ${createIORow('AI1 Scaled', data['DB1,REAL46'].toFixed(2))}
-                ${createIORow('AI1 Offset', data['DB1,REAL50'].toFixed(2))}
-                ${createIORow('AI1 Scalar', data['DB1,REAL54'].toFixed(2))}
-            `;
-        }
-
-        // Function to update HMI controls
-        function updateHMIControls(data) {
-            const hmiContainer = document.getElementById('hmi-controls');
-            hmiContainer.innerHTML = `
-                ${createIORow('Clear Forcing', data['DB1,X0.0'])}
-                ${createIORow('Fault Reset', data['DB1,X0.1'])}
-            `;
-        }
-
-        // Add debug logging to the data receiver
-        window.electron.receiveDB1Data((data) => {
-            try {
-                // Throttle console logging
-                const now = Date.now();
-                if (now - lastConsoleLog >= LOG_INTERVAL) {
-                    console.log('Renderer received DB1 data:', data);
-                    lastConsoleLog = now;
+            // Update the receiveData handler
+            window.electron.receiveData((data) => {
+                // Update Digital Inputs Bank A
+                for (let i = 0; i < 8; i++) {
+                    const diElement = document.getElementById(`di-a${i}-status`);
+                    if (diElement) {
+                        diElement.textContent = formatBoolValue(data.inputs.a[i].state);
+                        updateStatusColor(diElement, data.inputs.a[i].state);
+                    }
                 }
 
-                updateDigitalIO(data);
-                updateAnalogueInputs(data);
-                updateHMIControls(data);
-            } catch (error) {
-                console.error('Error updating display:', error);
-                console.error('Error stack:', error.stack);
-            }
+                // Update Digital Outputs Bank A
+                for (let i = 0; i < 8; i++) {
+                    const doElement = document.getElementById(`do-a${i}-status`);
+                    if (doElement) {
+                        doElement.textContent = formatBoolValue(data.outputs.a[i].state);
+                        updateStatusColor(doElement, data.outputs.a[i].state);
+                    }
+                }
+
+                // Update Digital Inputs Bank B
+                for (let i = 0; i < 6; i++) {
+                    const diElement = document.getElementById(`di-b${i}-status`);
+                    if (diElement) {
+                        diElement.textContent = formatBoolValue(data.inputs.b[i].state);
+                        updateStatusColor(diElement, data.inputs.b[i].state);
+                    }
+                }
+
+                // Update Digital Outputs Bank B (only B0 and B1)
+                for (let i = 0; i < 2; i++) {
+                    const doElement = document.getElementById(`do-b${i}-status`);
+                    if (doElement) {
+                        doElement.textContent = formatBoolValue(data.outputs.b[i].state);
+                        updateStatusColor(doElement, data.outputs.b[i].state);
+                    }
+                }
+            });
+
+            // Add event listener for the test force button
+            $(document).on('click', '.control-button', () => {
+                window.electron.sendToMain('force-digital', {
+                    type: 'input',
+                    bank: 'a',
+                    channel: 0,
+                    forcedStatus: true,
+                    forcedState: true
+                });
+
+                setTimeout(() => {
+                    window.electron.sendToMain('force-digital', {
+                        type: 'input',
+                        bank: 'a',
+                        channel: 0,
+                        forcedStatus: true,
+                        forcedState: false
+                    });
+                }, 500);
+            });
         });
     </script>
 </body>
-</html> 
+</html>

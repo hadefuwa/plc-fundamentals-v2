@@ -11,10 +11,17 @@ contextBridge.exposeInMainWorld('electron', {
     receiveInitData: (callback) => ipcRenderer.on('init-data', (_, data) => callback(data)),
     receiveDetailData: (callback) => ipcRenderer.on('detail-data', (_, data) => callback(data)),
     forceInput: (address, value) => ipcRenderer.send('force-input', { address, value }),
-    clearForcing: (address) => ipcRenderer.send('clear-forcing', address),
+    clearForcing: () => ipcRenderer.send('clear-forcing'),
     requestIOHistory: (ioPoint) => ipcRenderer.send('request-io-history', ioPoint),
     receiveIOHistory: (callback) => ipcRenderer.on('io-history', (_, data) => callback(data)),
     receiveDB1Data: (callback) => ipcRenderer.on('db1-data', (_, data) => callback(data)),
     receiveAnalogueData: (callback) => ipcRenderer.on('analogue-data', (_, data) => callback(data)),
-    openAnalogueWindow: () => ipcRenderer.send('open-analogue-window')
+    openAnalogueWindow: () => ipcRenderer.send('open-analogue-window'),
+    sendToMain: (channel, data) => {
+        let validChannels = ['force-digital', 'modify-analogue'];
+        if (validChannels.includes(channel)) {
+            ipcRenderer.send(channel, data);
+        }
+    },
+    faultReset: () => ipcRenderer.send('fault-reset'),
 }) 

@@ -268,11 +268,17 @@ function startReadLoop() {
             // Update historical data and send to renderer
             updateHistoricalData(formattedData);
 
+            // Send to main window
             if (win && !win.isDestroyed()) {
                 win.webContents.send('plc-data', formattedData);
             }
 
-            // Add this section to specifically send analogue data to the popup
+            // Send to details window if it exists
+            if (detailsWindow && !detailsWindow.isDestroyed()) {
+                detailsWindow.webContents.send('plc-data', formattedData);
+            }
+
+            // Send to analogue window if it exists
             if (analogueWindow && !analogueWindow.isDestroyed()) {
                 const analogueData = {
                     analogueInputs: [
@@ -375,6 +381,13 @@ function createWindow() {
 
     win.on('closed', () => {
         win = null;
+    });
+
+    // Add this to your existing window creation code
+    win.webContents.setWindowOpenHandler(({ url }) => {
+        // Handle the navigation within the existing window
+        win.webContents.loadURL(url);
+        return { action: 'deny' }; // Prevents new window from being created
     });
 }
 
@@ -481,8 +494,9 @@ function createDetailsWindow(dataType) {
 
     // Create new details window
     detailsWindow = new BrowserWindow({
-        width: 1000,
-        height: 800,
+        width: 1200,      // Increased from default
+        height: 800,      // Increased from default
+        title: 'PLC Details View',
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,
@@ -502,3 +516,90 @@ function createDetailsWindow(dataType) {
         detailsWindow = null;
     });
 }
+
+// Example: Sending DB1 data
+function sendDB1DataToRenderer(data) {
+    if (detailsWindow && !detailsWindow.isDestroyed()) {
+        detailsWindow.webContents.send('db1-data', data);
+    }
+}
+
+// Update the clear-forcing handler
+ipcMain.on('clear-forcing', () => {
+    if (plc && isConnected) {
+        plc.writeItems('DB1,X0.0', true, (err) => {
+            if (err) {
+                console.log('Write error:', err);
+            } else {
+                console.log('Clear forcing write successful');
+                setTimeout(() => {
+                    plc.writeItems('DB1,X0.0', false, (err) => {
+                        if (err) {
+                            console.log('Write error:', err);
+                        } else {
+                            console.log('Clear forcing reset successful');
+                        }
+                    });
+                }, 500);
+            }
+        });
+    }
+});
+
+// Update the fault-reset handler
+ipcMain.on('fault-reset', () => {
+    if (plc && isConnected) {
+        plc.writeItems('DB1,X0.1', true, (err) => {
+            if (err) {
+                console.log('Write error:', err);
+            } else {
+                console.log('Fault reset write successful');
+                setTimeout(() => {
+                    plc.writeItems('DB1,X0.1', false, (err) => {
+                        if (err) {
+                            console.log('Write error:', err);
+                        } else {
+                            console.log('Fault reset reset successful');
+                        }
+                    });
+                }, 500);
+            }
+        });
+    }
+});
+
+// Add the force-digital handler
+ipcMain.on('force-digital', (event, data) => {
+    if (plc && isConnected) {
+        // Determine the DB offset based on type and bank
+        let baseOffset = data.type === 'input' ? 2 : 58;  // 2 for inputs (starting at X2.0), 58 for outputs
+        if (data.bank === 'b') {
+            baseOffset += data.type === 'input' ? 24 : 82;  // Add 24 for input bank B, 82 for output bank B
+        }
+        
+        // Calculate the specific addresses for this I/O point
+        const stateOffset = baseOffset + (data.channel * 2);  // Each digital point starts 2 bytes after the previous one
+        const forcedStateAddress = `DB1,X${stateOffset}.1`;  // .1 for ForcedState
+        const forcedStatusAddress = `DB1,X${stateOffset}.2`;  // .2 for ForcedStatus
+
+        console.log(`Writing to addresses: ${forcedStateAddress} and ${forcedStatusAddress}`); // Debug log
+
+        // Write ForcedState (always true when forcing)
+        plc.writeItems(forcedStateAddress, true, (err) => {
+            if (err) {
+                console.log('Write error (ForcedState):', err);
+            } else {
+                console.log(`Force state write successful for ${data.type} ${data.bank}${data.channel}`);
+                
+                // Write ForcedStatus (true for ON, false for OFF)
+                plc.writeItems(forcedStatusAddress, data.forcedStatus, (err) => {
+                    if (err) {
+                        console.log('Write error (ForcedStatus):', err);
+                    } else {
+                        console.log(`Force status write successful for ${data.type} ${data.bank}${data.channel}`);
+                    }
+                });
+            }
+        });
+    }
+});

@@ -192,18 +192,26 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    const writeBtn = document.getElementById('write-btn');
-    if (writeBtn) {
-        writeBtn.addEventListener('click', () => {
-            window.electron.writePLC();
-        });
-    }
+    // Existing motor button
+    document.getElementById('write-btn').addEventListener('click', () => {
+        window.electron.writePLC();
+    });
+
+    // New clear forcing button
+    document.getElementById('clear-forcing-btn').addEventListener('click', () => {
+        window.electron.clearForcing();
+    });
+
+    // New fault reset button
+    document.getElementById('fault-reset-btn').addEventListener('click', () => {
+        window.electron.faultReset();
+    });
 
     // Add to your existing event listeners
     document.querySelectorAll('.grid-item').forEach(item => {
         item.addEventListener('click', () => {
             const dataType = item.getAttribute('data-type');
-            window.electron.openDetails(dataType);
+            window.location.href = 'plc-details.html';
         });
     });
 
@@ -219,14 +227,16 @@ document.addEventListener('DOMContentLoaded', () => {
         // Similar updates for other values...
     }
 
+    // Listen for DB1 data and send it to plc-details.html
+    window.electron.receiveDB1Data((data) => {
+        document.querySelector('#plc-tags-table').contentWindow.updatePLCTags(data);
+    });
+
+
     // Add this alongside your other event listeners
     window.electron.receiveDB1Data((data) => {
-        // Throttle logging to every 5 seconds to avoid console spam
-        const now = Date.now();
-        if (!window.lastDB1Log || now - window.lastDB1Log >= 5000) {
-            console.log('DB1 Data:', data);
-            window.lastDB1Log = now;
-        }
+        console.log('Received DB1 data in renderer:', data); // Debug log
+        updatePLCTags(data);
     });
 
     // Update the analogue chart click handler
@@ -415,45 +425,22 @@ function addEvent(type, state, timestamp) {
     }
 }
 
-window.electron.receive('plc-data', (data) => {
-    console.log('Received analogue data:', {
-        AI0: data['DB1,REAL32'],
-        AI1: data['DB1,REAL46']
-    });
-
+window.electron.receiveData((data) => {
     // Update analogue value displays
     const analogueValue0 = document.getElementById('analogue-value-0');
     const analogueValue1 = document.getElementById('analogue-value-1');
     const ai0Grid = document.getElementById('ai0-value');
     const ai1Grid = document.getElementById('ai1-value');
 
-    // Get the values using correct addresses
-    const ai0Value = Number(data['DB1,REAL32']) || 0;
-    const ai1Value = Number(data['DB1,REAL46']) || 0;
+    // Update displays using the correct data structure
+    if (analogueValue0) analogueValue0.textContent = `${data.analogue.ai0.scaled.toFixed(2)}V`;
+    if (analogueValue1) analogueValue1.textContent = `${data.analogue.ai1.scaled.toFixed(2)}V`;
+    if (ai0Grid) ai0Grid.textContent = `${data.analogue.ai0.scaled.toFixed(2)}V`;
+    if (ai1Grid) ai1Grid.textContent = `${data.analogue.ai1.scaled.toFixed(2)}V`;
 
-    // Update displays
-    analogueValue0.textContent = `${ai0Value.toFixed(2)}V`;
-    analogueValue1.textContent = `${ai1Value.toFixed(2)}V`;
-    ai0Grid.textContent = `${ai0Value.toFixed(2)}V`;
-    ai1Grid.textContent = `${ai1Value.toFixed(2)}V`;
-
-    // Update chart
-    if (analogueChart) {
-        const now = new Date();
-        
-        // Add new data points
-        analogueChart.data.labels.push(now);
-        analogueChart.data.datasets[0].data.push(ai0Value);
-        analogueChart.data.datasets[1].data.push(ai1Value);
-
-        // Keep only last 50 points
-        if (analogueChart.data.labels.length > 50) {
-            analogueChart.data.labels.shift();
-            analogueChart.data.datasets[0].data.shift();
-            analogueChart.data.datasets[1].data.shift();
-        }
-
-        // Update the chart
-        analogueChart.update('none'); // Use 'none' mode for better performance
-    }
+    // Chart updates are already handled in the existing receiveData handler
 });
+
+function openPLCDetails() {
+    window.location.href = 'plc-details.html';
+}
