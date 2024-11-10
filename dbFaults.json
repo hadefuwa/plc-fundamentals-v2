@@ -1,0 +1,62 @@
+{
+    "name": "Faults_DB",
+    "number": 6,
+    "structure": {
+        "EStopPressed": {
+            "type": "Bool",
+            "offset": "0.0"
+        },
+        "Fault2": {
+            "type": "Bool",
+            "offset": "0.1"
+        },
+        "Fault3": {
+            "type": "Bool",
+            "offset": "0.2"
+        },
+        "Fault4": {
+            "type": "Bool",
+            "offset": "0.3"
+        },
+        "Fault5": {
+            "type": "Bool",
+            "offset": "0.4"
+        },
+        "Fault6": {
+            "type": "Bool",
+            "offset": "0.5"
+        },
+        "Fault7": {
+            "type": "Bool",
+            "offset": "0.6"
+        },
+        "Fault8": {
+            "type": "Bool",
+            "offset": "0.7"
+        },
+        "Fault9": {
+            "type": "Bool",
+            "offset": "1.0"
+        },
+        "Fault10": {
+            "type": "Bool",
+            "offset": "1.1"
+        },
+        "Fault11": {
+            "type": "Bool",
+            "offset": "1.2"
+        },
+        "Fault12": {
+            "type": "Bool",
+            "offset": "1.3"
+        },
+        "Fault13": {
+            "type": "Bool",
+            "offset": "1.4"
+        },
+        "Fault14": {
+            "type": "Bool",
+            "offset": "1.5"
+        }
+    }
+} 

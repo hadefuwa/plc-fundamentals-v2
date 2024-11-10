@@ -18,6 +18,7 @@
  * @requires nodes7
  * @requires path
  * @requires ./db1Handler
+ * @requires ./dbFaultsHandler
  * 
  * @copyright Copyright (c) 2024 Matrix TSL
  * @license MIT
@@ -31,6 +32,9 @@ const nodes7 = require('nodes7');
 // Import DB1 structure and handler functions
 const db1Structure = require('./db1.json');
 const { getDB1Items, formatDB1Data, logDB1Values } = require('./db1Handler');
+// Import DB Faults structure and handler functions
+const dbFaultsStructure = require('./dbFaults.json');
+const { getDBFaultsItems, formatDBFaultsData, logDBFaultsValues } = require('./dbFaultsHandler');
 
 // Initialize main application variables
 let plc = null;                    // PLC connection object

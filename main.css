@@ -1,0 +1,1106 @@
+body {
+    background-color: #2c3033;  /* Dark background color */
+    color: white;               /* Light text color */
+    margin: 0;                  /* Remove default margins */
+    padding: 5px;              /* Add some padding */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    overflow-x: hidden;
+    width: 100%;
+    box-sizing: border-box;
+    background: linear-gradient(135deg, #2c3033 0%, #1a1d20 100%);
+    position: relative;
+    min-height: 100vh;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    z-index: 0;
+    background-image: url('./assets/matrix-logo.png');
+    background-size: 150px;
+    background-repeat: repeat;
+    opacity: 0.03;
+    transform: rotate(-45deg);
+    pointer-events: none;
+    animation: slideBackground 120s linear infinite;
+}
+
+h1 {
+    color: #9da5b1;            /* Light gray color for headings */
+    text-align: center;
+    margin: 0;  /* Remove default margins */
+}
+
+#container {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 0px;
+  background-color: #383c40;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+#plc-image {
+  width: 60%;
+}
+.circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin: 15px;
+    transition: all 0.3s ease;
+    position: relative;
+    box-shadow: 
+        inset 0 -3px 8px rgba(0,0,0,0.4),
+        0 3px 8px rgba(0,0,0,0.4);
+    opacity: 0.5;
+}
+
+.circle.disconnected {
+    background: radial-gradient(circle at 30% 30%, #666, #444);
+    border-color: #333;
+    box-shadow: 
+        inset 0 -3px 8px rgba(0,0,0,0.4),
+        0 3px 8px rgba(0,0,0,0.4);
+    opacity: 0.2 !important;
+    box-shadow: none !important;
+    animation: none !important;
+}
+
+.blue-circle {
+    background: radial-gradient(circle at 30% 30%, #7FB5FF, #36A2EB);
+    border: 2px solid #2d88c9;
+}
+
+.blue-circle.active {
+    background: radial-gradient(circle at 30% 30%, #9fddff, #36A2EB);
+    box-shadow: 
+        inset 0 -3px 8px rgba(0,0,0,0.4),
+        0 3px 8px rgba(0,0,0,0.4),
+        0 0 20px #36A2EB,
+        0 0 40px rgba(54, 162, 235, 0.5);
+}
+
+.red-circle {
+    background: radial-gradient(circle at 30% 30%, #ff6b6b, #cc0000);
+    border: 2px solid #960000;
+    transform: scale(1.2);  /* Make E-Stop slightly larger */
+    box-shadow: 
+        inset 0 -4px 8px rgba(0,0,0,0.4),
+        0 4px 8px rgba(0,0,0,0.4);
+}
+
+.red-circle::after {
+    content: "E-STOP";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+    white-space: nowrap;  /* Keep text on one line */
+    text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+}
+
+.red-circle.active {
+    background: radial-gradient(circle at 30% 30%, #ff9999, #ff0000);
+    box-shadow: 
+        inset 0 -4px 8px rgba(0,0,0,0.4),
+        0 4px 8px rgba(0,0,0,0.4),
+        0 0 20px #ff0000,
+        0 0 40px rgba(255, 0, 0, 0.5);
+}
+
+@keyframes flash-warning {
+    0% { 
+        background: radial-gradient(circle at 30% 30%, #ff6b6b, #cc0000);
+    }
+    50% { 
+        background: radial-gradient(circle at 30% 30%, #fff200, #ffd000);
+    }
+    100% { 
+        background: radial-gradient(circle at 30% 30%, #ff6b6b, #cc0000);
+    }
+}
+
+.red-circle.flashing {
+    animation: flash-warning 1s infinite;
+}
+
+.circle.active {
+    opacity: 1;
+    box-shadow: 0 0 10px rgba(54, 162, 235, 0.5);
+}
+
+.dashboard-container {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 20px;
+    background-color: rgba(44, 48, 51, 0.55); /* Added transparency */
+    color: white;
+}
+
+.dashboard-item {
+    background-color: rgba(56, 60, 64, 0.85); /* Added transparency */
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    backdrop-filter: blur(5px); /* Optional: adds a glass effect */
+    transform: translateY(0);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: fadeIn 0.5s ease-out;
+}
+
+.dashboard-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    background-color: rgba(56, 60, 64, 0.95);
+    transition: background-color 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.wide {
+  grid-column: span 3;
+}
+
+.medium {
+  grid-column: span 2;
+}
+
+.chart-title {
+  font-size: 1.2em;
+  color: #9da5b1;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.chart-container {
+  width: 100%;
+  height: 250px;
+  position: relative;
+  transition: all 0.3s ease;
+  animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.plc-config {
+    background-color: #383c40;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.plc-config label {
+    color: #9da5b1;
+    font-size: 14px;
+}
+
+.plc-config input {
+    background-color: #2c3033;
+    border: 1px solid #4a4f55;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 150px;
+}
+
+.plc-config input:focus {
+    outline: none;
+    border-color: #36A2EB;
+}
+
+.plc-config button {
+    background-color: #36A2EB;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.plc-config button:hover {
+    background-color: #2186d1;
+}
+
+.plc-config button:disabled {
+    background-color: #4a4f55;
+    cursor: not-allowed;
+}
+
+.config-header {
+    display: flex;
+    justify-content: center;  /* Center horizontally */
+    align-items: center;      /* Center vertically */
+    padding: 12px;
+    background-color: #383c40;
+    border-radius: 0px;
+    margin-bottom: 0px;
+    width: 100%;
+}
+
+.header-content {
+    display: flex;
+    flex-direction: column;   /* Stack items vertically */
+    align-items: center;      /* Center items horizontally */
+    gap: 15px;               /* Space between elements */
+    width: 100%;             /* Take full width */
+}
+
+.config-header h3 {
+    margin: 0;
+    color: #9da5b1;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.config-panel {
+    max-height: 500px;
+    overflow: hidden;
+    transition: all 0.3s ease-out;
+    opacity: 1;
+}
+
+.plc-image-container {
+    display: flex;
+    justify-content: center;  /* Center the image */
+    width: 100%;
+    padding: 0px 0;
+}
+
+#plc-image {
+    width: 60%;              /* Adjust as needed */
+    max-width: 300px;        /* Prevent image from getting too large */
+    height: auto;
+}
+
+.circle-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.circle-group label {
+    color: #9da5b1;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+@keyframes flash {
+    0% { opacity: 1; }
+    50% { opacity: 0.3; }
+    100% { opacity: 1; }
+}
+
+.red-circle {
+    background-color: #FF4444;
+    opacity: 0.3;
+}
+
+.red-circle.active {
+    opacity: 1;
+    box-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+    animation: none;
+}
+
+.red-circle.flashing {
+    animation: flash 1s infinite;
+}
+
+.event-list-container {
+    height: 250px;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.event-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.event-list li {
+    background-color: #2c3033;
+    margin-bottom: 8px;
+    padding: 10px;
+    border-radius: 4px;
+    color: #9da5b1;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.event-list li .event-time {
+    font-family: monospace;
+}
+
+/* Different colors for each event type */
+.event-list li.estop-event .event-time {
+    color: #FF4444;
+}
+
+.event-list li.led-event .event-time {
+    color: #36A2EB;
+}
+
+/* Scrollbar styling */
+.event-list-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.event-list-container::-webkit-scrollbar-track {
+    background: #2c3033;
+    border-radius: 4px;
+}
+
+.event-list-container::-webkit-scrollbar-thumb {
+    background: #4a4f55;
+    border-radius: 4px;
+}
+
+.event-list-container::-webkit-scrollbar-thumb:hover {
+    background: #5a6066;
+}
+
+.matrix-logo {
+  width: 100%;
+  padding: 20px;
+  background-color: #2c3033;
+}
+
+.logo-header-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;  /* Space between logo and heading */
+    max-width: 1200px;  /* Or your preferred max width */
+    margin: 0 auto;
+    justify-content: center;
+}
+
+.matrix-logo img {
+  max-height: 80px;
+  width: auto;
+}
+
+/* Add these styles */
+.analogue-display {
+    background: linear-gradient(145deg, #383c40, #424649);
+    padding: 12px;
+    border-radius: 8px;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.analogue-display:hover {
+    transform: translateX(5px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.analogue-label {
+    color: #9da5b1;
+    font-size: 16px;
+    flex: 1;
+}
+
+.analogue-value {
+    background: linear-gradient(145deg, #2c3033, #343739);
+    color: #4BC0C0;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-family: monospace;
+    font-size: 20px;
+    font-weight: bold;
+    min-width: 100px;
+    text-align: right;
+    text-shadow: 0 0 10px rgba(75, 192, 192, 0.3);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(75, 192, 192, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(75, 192, 192, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(75, 192, 192, 0);
+    }
+}
+
+/* Status Display */
+.plc-connect-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;  /* Center the status display */
+    gap: 10px;
+    width: 100%;             /* Take full width */
+    padding: 10px;
+}
+
+.status-label {
+    color: #9da5b1;
+    font-size: 16px;
+}
+
+.status-value {
+    background-color: #2c3033;
+    color: #f44336;  /* Default to red for waiting/disconnected */
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 20px;
+    font-weight: bold;
+    min-width: 100px;
+    text-align: right;
+}
+
+/* Add !important to ensure these colors take precedence */
+#plc-data {
+    color: #4caf50 !important;  /* Green for connected state */
+}
+
+#plc-data.disconnected {
+    color: #f44336 !important;  /* Red for disconnected state */
+}
+
+.status-value.connected {
+    color: #4caf50;  /* Green for connected state */
+}
+
+.status-value.disconnected {
+    color: #f44336;
+}
+
+#plc-data.disconnected {
+    color: #FF4444;  /* Red color for disconnected state */
+}
+
+/* Add loading state styles */
+#plc-data.loading {
+    color: #9da5b1 !important;  /* Grey color for loading state */
+    opacity: 0.7;
+}
+
+.control-panel {
+    background-color: #2c3033;
+    padding: 15px;
+    border-radius: 4px;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.control-button {
+    background: linear-gradient(145deg, #36A2EB, #2184c7);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(54, 162, 235, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.control-button:hover {
+    background: linear-gradient(145deg, #2184c7, #1a6698);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(54, 162, 235, 0.3);
+}
+
+.control-button:active {
+    transform: translateY(1px);
+}
+
+.control-button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%);
+    transform-origin: 50% 50%;
+}
+
+.control-button:focus:not(:active)::after {
+    animation: ripple 1s ease-out;
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(0, 0);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(100, 100);
+        opacity: 0;
+    }
+}
+
+/* Add to your existing CSS */
+.db-values-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 16px;
+    background: #2a2e33;
+    border-radius: 8px;
+}
+
+.db-value-item {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    background: #383c40;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.db-value-label {
+    color: #9da5b1;
+    font-size: 12px;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.db-value-content {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.db-value-item.boolean {
+    position: relative;
+    overflow: hidden;
+}
+
+.db-value-item.boolean .db-value-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.status-indicator.active {
+    animation: glow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        box-shadow: 0 0 5px #4BC0C0,
+                    0 0 10px #4BC0C0,
+                    0 0 15px #4BC0C0;
+    }
+    to {
+        box-shadow: 0 0 10px #4BC0C0,
+                    0 0 20px #4BC0C0,
+                    0 0 30px #4BC0C0;
+    }
+}
+
+#circles-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;  /* Space between circles */
+    margin-top: 20px;  /* Space below PLC image */
+}
+
+/* PLC Data Overview Grid Styles */
+.plc-data-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    padding: 16px;
+    background: #2a2e33;
+    border-radius: 8px;
+}
+
+.grid-item {
+    background: linear-gradient(145deg, #383c40, #424649);
+    padding: 20px;
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.grid-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(225deg, transparent 0%, rgba(54, 162, 235, 0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.grid-item:hover::before {
+    opacity: 1;
+}
+
+.grid-item h4 {
+    color: #9da5b1;
+    margin: 0 0 12px 0;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}
+
+.grid-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.grid-content div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    background: #2c3033;
+    border-radius: 4px;
+}
+
+.grid-content span {
+    font-family: monospace;
+    font-size: 14px;
+    color: #4BC0C0;  /* Same color as the analogue graph */
+    padding: 4px 8px;
+    background: #2a2e33;
+    border-radius: 4px;
+    min-width: 60px;
+    text-align: right;
+}
+
+/* Status indicators for boolean values */
+.grid-content span.true {
+    color: #4caf50;
+}
+
+.grid-content span.false {
+    color: #f44336;
+}
+
+.chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.chart-control-button {
+    background-color: #36A2EB;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.chart-control-button:hover {
+    background-color: #2184c7;
+}
+
+.chart-control-button.paused {
+    background-color: #4BC0C0;
+}
+
+.chart-control-button.paused .button-text::before {
+    content: "Resume";
+}
+
+.chart-control-button .button-text::before {
+    content: "Pause";
+}
+
+.button-text {
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.chart-title-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.chart-title-container .circle {
+    margin: 0;  /* Override previous margin */
+}
+
+.plc-config {
+    text-align: center;
+}
+
+.plc-config label,
+.plc-config input,
+.plc-config button {
+    margin: 1px;
+}
+
+.plc-data-grid .grid-item {
+    /* Base styles */
+    padding: 12px 24px;
+    background: linear-gradient(145deg, #2196F3, #1976D2);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    
+    /* Hover effect */
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(33, 150, 243, 0.3);
+        background: linear-gradient(145deg, #1E88E5, #1565C0);
+    }
+    
+    /* Active state */
+    &:active {
+        transform: translateY(1px);
+        box-shadow: 0 2px 4px rgba(33, 150, 243, 0.2);
+    }
+}
+
+/* Optional: Add some spacing in the grid container */
+.plc-data-grid {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Enhanced Logo Animation */
+.matrix-logo img {
+    animation: logoFloat 6s ease-in-out infinite;
+    filter: drop-shadow(0 0 10px rgba(54, 162, 235, 0.3));
+}
+
+@keyframes logoFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Glowing Title Effect */
+.chart-title {
+    position: relative;
+    color: #9da5b1;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    animation: glowText 2s ease-in-out infinite alternate;
+}
+
+@keyframes glowText {
+    from { text-shadow: 0 0 5px rgba(157, 165, 177, 0); }
+    to { text-shadow: 0 0 10px rgba(157, 165, 177, 0.5); }
+}
+
+/* Enhanced Dashboard Container */
+.dashboard-container {
+    perspective: 1000px;
+    padding: 20px;
+}
+
+.dashboard-item {
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    animation: cardEntrance 0.8s cubic-bezier(0.4, 0, 0.2, 1) both;
+    animation-delay: calc(var(--animation-order) * 100ms);
+}
+
+@keyframes cardEntrance {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(20px) rotateX(5deg);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0) rotateX(0);
+    }
+}
+
+/* Animated Control Buttons */
+.control-button {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    background: linear-gradient(45deg, #36A2EB, #2184c7);
+    border: none;
+    z-index: 1;
+}
+
+.control-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: 0.5s;
+    z-index: -1;
+}
+
+.control-button:hover::before {
+    left: 100%;
+}
+
+/* Enhanced Analogue Display */
+.analogue-display {
+    position: relative;
+    overflow: hidden;
+}
+
+.analogue-display::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.1) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: rotate(45deg);
+    animation: shine 3s infinite;
+}
+
+@keyframes shine {
+    from { transform: rotate(45deg) translateY(-100%); }
+    to { transform: rotate(45deg) translateY(100%); }
+}
+
+/* Enhanced Status Value Animation */
+.status-value {
+    position: relative;
+    overflow: hidden;
+}
+
+.status-value.connected {
+    animation: statusPulse 2s infinite;
+}
+
+@keyframes statusPulse {
+    0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(76, 175, 80, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
+}
+
+/* Enhanced Chart Container */
+.chart-container {
+    position: relative;
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+}
+
+.chart-container:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+/* Enhanced Event List */
+.event-list li {
+    transform: translateX(-100%);
+    animation: slideIn 0.5s forwards;
+    animation-delay: calc(var(--animation-order) * 100ms);
+}
+
+@keyframes slideIn {
+    to { transform: translateX(0); }
+}
+
+/* PLC Image Container Enhancement */
+.plc-image-container {
+    perspective: 1000px;
+}
+
+#plc-image {
+    transition: transform 0.5s ease;
+    transform-style: preserve-3d;
+}
+
+.plc-image-container:hover #plc-image {
+    transform: rotateY(10deg) rotateX(5deg);
+}
+
+/* Enhanced Input Field */
+.plc-config input {
+    background: linear-gradient(145deg, #2c3033, #343739);
+    border: 1px solid #4a4f55;
+    transition: all 0.3s ease;
+}
+
+.plc-config input:focus {
+    border-color: #36A2EB;
+    box-shadow: 0 0 15px rgba(54, 162, 235, 0.3);
+    transform: translateY(-2px);
+}
+
+/* Loading Animation */
+.loading {
+    position: relative;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(90deg, transparent, #36A2EB, transparent);
+    animation: loadingBar 1.5s infinite;
+}
+
+@keyframes loadingBar {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* Grid Item Hover Effect */
+.grid-item {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.grid-item:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+/* Enhanced Circle Animations */
+.circle {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.circle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px currentColor;
+}
+
+/* Dashboard Layout Animation */
+.dashboard-container {
+    opacity: 0;
+    animation: fadeInDashboard 1s ease-out forwards;
+}
+
+@keyframes fadeInDashboard {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Add this to your JavaScript to set animation order */
+document.querySelectorAll('.dashboard-item').forEach((item, index) => {
+    item.style.setProperty('--animation-order', index + 1);
+});
+
+/* Update the background pattern */
+.background-pattern {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background-image: url('../assets/matrix-logo.png');
+    background-size: 100px;
+    background-repeat: repeat;
+    opacity: 0.02;
+    transform: rotate(-45deg);
+    pointer-events: none;
+    animation: slideBackground 120s linear infinite;
+}
+
+@keyframes slideBackground {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 1000px 1000px;
+    }
+}
+
+/* Add this to ensure content stays above background */
+.dashboard-container {
+    position: relative;
+    z-index: 1;
+}

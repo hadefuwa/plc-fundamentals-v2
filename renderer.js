@@ -1,6 +1,6 @@
 let charts = {
-    statusChart: null,
-    analogueChart: null
+    analogue: null,
+    status: null
 };
 let lastEstopState = true; // Initialize to true since that's the normal state
 let lastLedState = false;
@@ -67,89 +67,92 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-  // PLC data updates
-  window.electron.receiveData((data) => {
-    
-    const ledCircle = document.getElementById('led-circle');
-    const estopCircle = document.getElementById('estop-circle');
-    
-    // Only update circles if we have a connection
-    if (ledCircle && !ledCircle.classList.contains('disconnected')) {
-        const currentLedState = data.outputs.a[0].state;
-        
-        // Check for LED state changes
-        if (currentLedState !== lastLedState) {
-            addEvent('led', currentLedState, Date.now());
-            lastLedState = currentLedState;
+    // CONSOLIDATE your receiveData handlers into ONE
+    window.electron.receiveData((data) => {
+        // Update forcing banner
+        if (typeof ForcingBanner !== 'undefined') {
+            ForcingBanner.update(data);
         }
         
-        ledCircle.classList.toggle('active', currentLedState);
-    }
-    
-    if (estopCircle && !estopCircle.classList.contains('disconnected')) {
-        const currentEstopState = data.inputs.a[0].state;
+        // LED and E-Stop circles
+        const ledCircle = document.getElementById('led-circle');
+        const estopCircle = document.getElementById('estop-circle');
         
-        // Check for falling edge (true to false transition)
-        if (lastEstopState === true && currentEstopState === false) {
-            addEvent('estop', false, Date.now());
+        // Circle updates
+        if (ledCircle && !ledCircle.classList.contains('disconnected')) {
+            const currentLedState = data.outputs.a[0].state;
+            if (currentLedState !== lastLedState) {
+                addEvent('led', currentLedState, Date.now());
+                lastLedState = currentLedState;
+            }
+            ledCircle.classList.toggle('active', currentLedState);
         }
         
-        // Update E-Stop circle state
-        if (currentEstopState) {
-            estopCircle.classList.add('active');
-            estopCircle.classList.remove('flashing');
-        } else {
-            estopCircle.classList.remove('active');
-            estopCircle.classList.add('flashing');
+        // E-Stop updates
+        if (estopCircle && !estopCircle.classList.contains('disconnected')) {
+            const currentEstopState = data.inputs.a[0].state;
+            
+            // Check for falling edge (true to false transition)
+            if (lastEstopState === true && currentEstopState === false) {
+                addEvent('estop', false, Date.now());
+            }
+            
+            // Update E-Stop circle state
+            if (currentEstopState) {
+                estopCircle.classList.add('active');
+                estopCircle.classList.remove('flashing');
+            } else {
+                estopCircle.classList.remove('active');
+                estopCircle.classList.add('flashing');
+            }
+
+            // Update last known state
+            lastEstopState = currentEstopState;
         }
 
-        // Update last known state
-        lastEstopState = currentEstopState;
-    }
+        // Analogue updates
+        if (charts.analogue && !isChartPaused) {
+            const now = new Date();
+            
+            // Update the digital displays
+            const analogueValue0 = document.getElementById('analogue-value-0');
+            const analogueValue1 = document.getElementById('analogue-value-1');
+            const ai0Grid = document.getElementById('ai0-value');
+            const ai1Grid = document.getElementById('ai1-value');
 
-    // Update Analogue Input handling
-    if (charts.analogueChart && !isChartPaused) {
-        const now = new Date();
-        
-        // Update the digital displays
-        const analogueValue0 = document.getElementById('analogue-value-0');
-        const analogueValue1 = document.getElementById('analogue-value-1');
-        const ai0Grid = document.getElementById('ai0-value');
-        const ai1Grid = document.getElementById('ai1-value');
+            if (analogueValue0) analogueValue0.textContent = `${data.analogue.ai0.scaled.toFixed(2)}V`;
+            if (analogueValue1) analogueValue1.textContent = `${data.analogue.ai1.scaled.toFixed(2)}V`;
+            if (ai0Grid) ai0Grid.textContent = `${data.analogue.ai0.scaled.toFixed(2)}V`;
+            if (ai1Grid) ai1Grid.textContent = `${data.analogue.ai1.scaled.toFixed(2)}V`;
 
-        if (analogueValue0) analogueValue0.textContent = `${data.analogue.ai0.scaled.toFixed(2)}V`;
-        if (analogueValue1) analogueValue1.textContent = `${data.analogue.ai1.scaled.toFixed(2)}V`;
-        if (ai0Grid) ai0Grid.textContent = `${data.analogue.ai0.scaled.toFixed(2)}V`;
-        if (ai1Grid) ai1Grid.textContent = `${data.analogue.ai1.scaled.toFixed(2)}V`;
+            // Update chart data
+            charts.analogue.data.datasets[0].data.push({
+                x: now,
+                y: data.analogue.ai0.scaled
+            });
+            charts.analogue.data.datasets[1].data.push({
+                x: now,
+                y: data.analogue.ai1.scaled
+            });
 
-        // Update chart data
-        charts.analogueChart.data.datasets[0].data.push({
-            x: now,
-            y: data.analogue.ai0.scaled
-        });
-        charts.analogueChart.data.datasets[1].data.push({
-            x: now,
-            y: data.analogue.ai1.scaled
-        });
+            // Keep only last 30 seconds of data
+            const cutoff = now.getTime() - (30 * 1000);
+            charts.analogue.data.datasets.forEach(dataset => {
+                dataset.data = dataset.data.filter(point => point.x.getTime() > cutoff);
+            });
 
-        // Keep only last 30 seconds of data
-        const cutoff = now.getTime() - (30 * 1000);
-        charts.analogueChart.data.datasets.forEach(dataset => {
-            dataset.data = dataset.data.filter(point => point.x.getTime() > cutoff);
-        });
-
-        // Find the maximum value in both datasets
-        const maxValue = Math.max(
-            ...charts.analogueChart.data.datasets[0].data.map(point => point.y),
-            ...charts.analogueChart.data.datasets[1].data.map(point => point.y)
-        );
-        
-        // Update the Y axis max with some headroom
-        charts.analogueChart.options.scales.y.max = Math.ceil(maxValue * 1.1);
-        
-        charts.analogueChart.update('none'); // Use 'none' mode for better performance
-    }
-});
+            // Find the maximum value in both datasets
+            const maxValue = Math.max(
+                ...charts.analogue.data.datasets[0].data.map(point => point.y),
+                ...charts.analogue.data.datasets[1].data.map(point => point.y)
+            );
+            
+            // Update the Y axis max with some headroom
+            charts.analogue.options.scales.y.max = Math.ceil(maxValue * 1.1);
+            
+            charts.analogue.update('none'); // Use 'none' mode for better performance
+        }
+    });
 
     // IP address validation
     function isValidIP(ip) {
@@ -276,7 +279,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function initializeCharts() {
     const statusCtx = document.getElementById('statusChart').getContext('2d');
-    charts.statusChart = new Chart(statusCtx, {
+    charts.status = new Chart(statusCtx, {
         type: 'line',
         data: {
             datasets: [{
@@ -337,7 +340,7 @@ function initializeCharts() {
 
     const analogueCtx = document.getElementById('analogueChart');
     if (analogueCtx) {
-        charts.analogueChart = new Chart(analogueCtx, {
+        charts.analogue = new Chart(analogueCtx, {
             type: 'line',
             data: {
                 datasets: [{
@@ -384,7 +387,7 @@ function initializeCharts() {
 
 function setupDataListeners() {
     window.electron.receiveStats((stats) => {
-        if (charts.statusChart && stats.connectionStats.connectionHistory) {
+        if (charts.status && stats.connectionStats.connectionHistory) {
             // Convert connection history to chart data points
             const newData = stats.connectionStats.connectionHistory.map(item => ({
                 x: new Date(item.time),
@@ -392,8 +395,8 @@ function setupDataListeners() {
             }));
 
             // Update the chart with the new data
-            charts.statusChart.data.datasets[0].data = newData;
-            charts.statusChart.update('quiet');
+            charts.status.data.datasets[0].data = newData;
+            charts.status.update('quiet');
         }
     });
 }
@@ -424,22 +427,6 @@ function addEvent(type, state, timestamp) {
         eventsList.removeChild(eventsList.lastChild);
     }
 }
-
-window.electron.receiveData((data) => {
-    // Update analogue value displays
-    const analogueValue0 = document.getElementById('analogue-value-0');
-    const analogueValue1 = document.getElementById('analogue-value-1');
-    const ai0Grid = document.getElementById('ai0-value');
-    const ai1Grid = document.getElementById('ai1-value');
-
-    // Update displays using the correct data structure
-    if (analogueValue0) analogueValue0.textContent = `${data.analogue.ai0.scaled.toFixed(2)}V`;
-    if (analogueValue1) analogueValue1.textContent = `${data.analogue.ai1.scaled.toFixed(2)}V`;
-    if (ai0Grid) ai0Grid.textContent = `${data.analogue.ai0.scaled.toFixed(2)}V`;
-    if (ai1Grid) ai1Grid.textContent = `${data.analogue.ai1.scaled.toFixed(2)}V`;
-
-    // Chart updates are already handled in the existing receiveData handler
-});
 
 function openPLCDetails() {
     window.location.href = 'plc-details.html';

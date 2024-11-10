@@ -1,17 +1,16 @@
-// Make this a module that can be imported in all pages
-const ForcingBanner = {
-    lastState: false,  // Track last shown state
-    lastCount: 0,      // Track last count
+console.log('Forcing banner script started');
+
+window.ForcingBanner = {
+    lastState: false,
+    lastCount: 0,
     
     init: function() {
-        // Create the banner div if it doesn't exist
         if (!$('#forcing-banner').length) {
             $('body').prepend('<div id="forcing-banner"></div>');
         }
 
-        // Initialize the notification banner (hidden by default)
         $("#forcing-banner").notificationBanner({
-            text: "⚠️ FORCING ACTIVE - 0 points currently forced",
+            text: "⚠️ Warning: Forcing Active - Currently 0 IO Are Being Forced",
             position: "top",
             background: "#dc3545",
             height: "30px",
@@ -23,14 +22,13 @@ const ForcingBanner = {
                 fontWeight: "bold",
                 textAlign: "center",
                 display: "none",
-                position: "fixed",     // Make sure it's fixed
-                pointerEvents: "none", // Ignore mouse events
-                zIndex: 9999,         // Keep on top
-                userSelect: "none"     // Prevent text selection
+                position: "fixed",
+                pointerEvents: "none",
+                zIndex: 9999,
+                userSelect: "none"
             }
         });
 
-        // Add additional CSS to prevent interactions
         $('body').on('mouseover mouseout', '#forcing-banner', function(e) {
             e.stopPropagation();
             return false;
@@ -42,21 +40,19 @@ const ForcingBanner = {
             const isForcing = data.stats.forcingActive;
             const count = data.stats.forcedCount || 0;
 
-            // Only update if state or count has changed
             if (this.lastState !== isForcing || this.lastCount !== count) {
                 if (isForcing) {
-                    const pointText = count === 1 ? 'point' : 'points';
+                    const ioText = count === 1 ? 'IO Is' : 'IO Are';
                     $("#forcing-banner")
-                        .html(`⚠️ FORCING ACTIVE - ${count} ${pointText} currently forced`)
-                        .stop(true, true)  // Stop any current animations
-                        .slideDown(300);    // Slower, smoother animation
+                        .html(`⚠️ Warning: Forcing Active - Currently ${count} ${ioText} Being Forced`)
+                        .stop(true, true)
+                        .slideDown(300);
                 } else {
                     $("#forcing-banner")
-                        .stop(true, true)   // Stop any current animations
-                        .slideUp(300);      // Slower, smoother animation
+                        .stop(true, true)
+                        .slideUp(300);
                 }
                 
-                // Update tracking variables
                 this.lastState = isForcing;
                 this.lastCount = count;
             }
@@ -64,5 +60,4 @@ const ForcingBanner = {
     }
 };
 
-// Export the module
-module.exports = ForcingBanner; 
+console.log('ForcingBanner object created:', window.ForcingBanner);
