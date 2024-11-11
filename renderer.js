@@ -239,15 +239,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Add click handler for the analogue chart
-    const analogueChart = document.querySelector('.dashboard-item:has(#analogueChart)');
-    if (analogueChart) {
-        analogueChart.style.cursor = 'pointer';
-        analogueChart.addEventListener('click', () => {
-            window.electron.openAnalogueWindow();
-        });
-    }
-
     // Existing motor button
     document.getElementById('write-btn').addEventListener('click', () => {
         window.electron.writePLC();
@@ -295,14 +286,6 @@ document.addEventListener('DOMContentLoaded', () => {
         updatePLCTags(data);
     });
 
-    // Update the analogue chart click handler
-    const analogueGridItem = document.querySelector('.grid-item[data-type="analogue"]');
-    if (analogueGridItem) {
-        analogueGridItem.addEventListener('click', () => {
-            window.electron.openAnalogueWindow();
-        });
-    }
-
     // Add pause button handler
     const pauseButton = document.getElementById('pause-analogue');
     if (pauseButton) {
@@ -317,60 +300,47 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Separate function to handle fault banner
+    function handleFaultBanner(faultsData) {
+        //console.log('Processing faults data:', faultsData); // Debug log
     
-    // If you have a separate handler for the analogue popup, 
-    // make sure it's attached to a different element
-
-    const analogueSection = document.querySelector('.dashboard-item[data-type="analogue"]');
-    if (analogueSection) {
-        analogueSection.addEventListener('click', (e) => {
-            // Only trigger if not clicking the pause button
-            if (!e.target.closest('#pause-analogue')) {
-                window.electron.openAnalogueWindow();
+        const faultBanner = document.getElementById('fault-banner');
+        const faultMessage = document.getElementById('fault-message');
+    
+        if (!faultBanner || !faultMessage) {
+            console.warn('Fault banner elements not found');
+            return;
+        }
+    
+        // Check if there are any active faults
+        const activeFaults = faultsData.activeFaults || [];
+        //console.log('Active faults:', activeFaults);
+    
+        if (activeFaults.length > 0) {
+            // Format fault names for display
+            const faultList = activeFaults.map(fault => 
+                fault.replace(/([A-Z])/g, ' $1').trim()
+            ).join(', ');
+    
+            faultMessage.textContent = `Active Faults: ${faultList}`;
+            faultBanner.classList.remove('hidden');
+            //console.log('Showing fault banner with message:', faultList); // Debug log
+        } else {
+            faultBanner.classList.add('hidden');
+            //console.log('Hiding fault banner - no active faults'); // Debug log
+        }
+    }
+    
+    // Acknowledge button handler
+    const acknowledgeButton = document.getElementById('acknowledge-fault');
+    if (acknowledgeButton) {
+        acknowledgeButton.addEventListener('click', () => {
+            const faultBanner = document.getElementById('fault-banner');
+            if (faultBanner) {
+                faultBanner.classList.add('hidden');
             }
         });
     }
-        // Separate function to handle fault banner
-        function handleFaultBanner(faultsData) {
-            //console.log('Processing faults data:', faultsData); // Debug log
-    
-            const faultBanner = document.getElementById('fault-banner');
-            const faultMessage = document.getElementById('fault-message');
-    
-            if (!faultBanner || !faultMessage) {
-                console.warn('Fault banner elements not found');
-                return;
-            }
-    
-            // Check if there are any active faults
-            const activeFaults = faultsData.activeFaults || [];
-            //console.log('Active faults:', activeFaults);
-    
-            if (activeFaults.length > 0) {
-                // Format fault names for display
-                const faultList = activeFaults.map(fault => 
-                    fault.replace(/([A-Z])/g, ' $1').trim()
-                ).join(', ');
-    
-                faultMessage.textContent = `Active Faults: ${faultList}`;
-                faultBanner.classList.remove('hidden');
-                //console.log('Showing fault banner with message:', faultList); // Debug log
-            } else {
-                faultBanner.classList.add('hidden');
-                //console.log('Hiding fault banner - no active faults'); // Debug log
-            }
-        }
-    
-        // Acknowledge button handler
-        const acknowledgeButton = document.getElementById('acknowledge-fault');
-        if (acknowledgeButton) {
-            acknowledgeButton.addEventListener('click', () => {
-                const faultBanner = document.getElementById('fault-banner');
-                if (faultBanner) {
-                    faultBanner.classList.add('hidden');
-                }
-            });
-        }
 
     startChartUpdates();
 });
