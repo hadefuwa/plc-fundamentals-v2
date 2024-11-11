@@ -9,6 +9,16 @@
 </head>
 <body>
 
+  <div id="splash-screen">
+    <div class="splash-content">
+      <img src="assets/matrix-logo.png" alt="Matrix Logo" class="splash-logo">
+      <div class="loading-bar">
+        <div class="loading-progress"></div>
+      </div>
+      <div class="loading-text">Initializing HMI Interface...</div>
+    </div>
+  </div>
+
   <div class="matrix-logo">
     <div class="logo-header-container">
       <img src="assets/matrix-logo.png" alt="Matrix Logo">
@@ -187,6 +197,52 @@
                 container.appendChild(draggingItem);
             }
         });
+
+        // Splash screen animation
+        const splashScreen = {
+          init() {
+            // Logo animation
+            anime({
+              targets: '.splash-logo',
+              scale: [0.5, 1],
+              opacity: [0, 1],
+              duration: 1000,
+              easing: 'easeOutExpo'
+            });
+
+            // Loading text animation
+            anime({
+              targets: '.loading-text',
+              opacity: [0, 1],
+              duration: 800,
+              delay: 300,
+              easing: 'easeOutExpo'
+            });
+
+            // Progress bar animation
+            anime({
+              targets: '.loading-progress',
+              width: ['0%', '100%'],
+              duration: 2000,
+              easing: 'easeInOutQuart',
+              complete: () => {
+                // Fade out splash screen
+                anime({
+                  targets: '#splash-screen',
+                  opacity: [1, 0],
+                  duration: 800,
+                  easing: 'easeOutExpo',
+                  complete: () => {
+                    document.getElementById('splash-screen').style.display = 'none';
+                  }
+                });
+              }
+            });
+          }
+        };
+
+        // Initialize splash screen
+        splashScreen.init();
     });
 </script>
 
