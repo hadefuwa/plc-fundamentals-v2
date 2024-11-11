@@ -85,12 +85,12 @@ const LOG_INTERVAL = 5000;        // Log to console every 5 seconds
 // IPC Event Handlers for renderer process communication
 ipcMain.on('update-plc-address', (_, address) => {
     plcAddress = address;
-    console.log('PLC address updated:', plcAddress);
+    //console.log('PLC address updated:', plcAddress);
 });
 
 // Handle PLC connection request from renderer
 ipcMain.on('connect-plc', () => {
-    console.log('Connect PLC request received');
+    //console.log('Connect PLC request received');
     isReconnecting = false;
     clearAllTimers();
     initiatePLCConnection();
@@ -131,9 +131,9 @@ ipcMain.on('write-plc', () => {
     if (plc && isConnected) {
         plc.writeItems('DB1,X60.0', !lastWriteState, (err) => {
             if (err) {
-                console.log('Write error:', err);
+                //console.log('Write error:', err);
             } else {
-                console.log('Write successful, new state:', !lastWriteState);
+                //console.log('Write successful, new state:', !lastWriteState);
                 lastWriteState = !lastWriteState;
             }
         });
@@ -165,7 +165,7 @@ function clearAllTimers() {
 function handleDisconnection() {
     if (isReconnecting) return;
     
-    console.log('Handling disconnection...');
+    //console.log('Handling disconnection...');
     isConnected = false;
     isReconnecting = true;
     
@@ -183,14 +183,14 @@ function handleDisconnection() {
 
 // Function to attempt reconnection to the PLC
 function attemptReconnection() {
-    console.log('Attempting to reconnect...');
+    //console.log('Attempting to reconnect...');
     
     // Clean up existing PLC connection if any
     if (plc) {
         try {
             plc.dropConnection();
         } catch (error) {
-            console.log('Error dropping connection:', error);
+            //console.log('Error dropping connection:', error);
         }
         plc = null;
     }
@@ -211,7 +211,7 @@ function attemptReconnection() {
         remoteTSAP: 0x0200,     // Remote TSAP
     }, (err) => {
         if (err) {
-            console.log('Reconnection failed:', err.message);
+            //console.log('Reconnection failed:', err.message);
             
             if (win && !win.isDestroyed()) {
                 win.webContents.send('plc-status', 'Reconnection Failed');
@@ -222,14 +222,15 @@ function attemptReconnection() {
                 attemptReconnection();
             }, RECONNECT_DELAY);
         } else {
-            console.log('Reconnected to PLC successfully');
+            //console.log('Reconnected to PLC successfully');
             isConnected = true;
             isReconnecting = false;
             
             // Add items to be monitored
             plc.addItems(getDB1Items());
+            plc.addItems(getDBFaultsItems());
             
-            console.log('Items added to PLC');
+            //console.log('Items added to PLC');
             
             if (win && !win.isDestroyed()) {
                 win.webContents.send('plc-status', 'Connected to PLC');
@@ -255,50 +256,48 @@ function startReadLoop() {
 
         plc.readAllItems((err, data) => {
             if (err) {
-                console.log('Read error:', err);
+                //console.log('Read error:', err);
                 handleDisconnection();
                 return;
             }
 
-            // Throttled logging based on LOG_INTERVAL
-            const currentTime = Date.now();
-            if (currentTime - lastLogTime >= LOG_INTERVAL) {
-                logDB1Values(data);
-                lastLogTime = currentTime;
-            }
+            // Separate DB1 and DB6 data before formatting
+            const db1Data = {};
+            const db6Data = {};
 
-            const formattedData = formatDB1Data(data);
+            // Sort the data into respective DBs
+            Object.entries(data).forEach(([key, value]) => {
+                if (key.startsWith('DB1,')) {
+                    db1Data[key] = value;
+                } else if (key.startsWith('DB6,')) {
+                    db6Data[key] = value;
+                }
+            });
 
-            // Update historical data and send to renderer
-            updateHistoricalData(formattedData);
+            // Format each DB separately
+            const formattedDB1Data = formatDB1Data(db1Data);
+            const formattedFaultsData = formatDBFaultsData(db6Data);
 
-            // Send to main window
+            // Create a serializable version of the faults data
+            const serializableFaultsData = {
+                faults: formattedFaultsData.faults,
+                activeFaultCount: formattedFaultsData.activeFaultCount(),
+                activeFaults: formattedFaultsData.getActiveFaults()
+            };
+
+            // Debug logs
+            //console.log('Formatted DB1 Data:', formattedDB1Data);
+            //console.log('Formatted Faults Data:', serializableFaultsData);
+
+            // Send to renderer
             if (win && !win.isDestroyed()) {
-                win.webContents.send('plc-data', formattedData);
-            }
-
-            // Send to details window if it exists
-            if (detailsWindow && !detailsWindow.isDestroyed()) {
-                detailsWindow.webContents.send('plc-data', formattedData);
-            }
-
-            // Send to analogue window if it exists
-            if (analogueWindow && !analogueWindow.isDestroyed()) {
-                const analogueData = {
-                    analogueInputs: [
-                        formattedData.analogue.ai0.scaled,
-                        formattedData.analogue.ai1.scaled
-                    ]
-                };
-                analogueWindow.webContents.send('analogue-data', analogueData);
+                win.webContents.send('plc-data', {
+                    db1: formattedDB1Data,
+                    faults: serializableFaultsData
+                });
             }
         });
     }, 100);  // 100ms for PLC data
-
-    // Slower interval for connection status updates (1000ms)
-    statusInterval = setInterval(() => {
-        updateConnectionStats(0, null);
-    }, 1000);  // 1000ms for connection status
 }
 
 // Function to initiate initial PLC connection
@@ -311,52 +310,62 @@ function initiatePLCConnection() {
         try {
             plc.dropConnection();
         } catch (error) {
-            console.log('Error dropping existing connection:', error);
+            //console.log('Error dropping existing connection:', error);
         }
         plc = null;
     }
 
-    // Create new PLC instance with logging disabled
-    plc = new nodes7({
-        silent: true,
-        debug: false
-    });
+    try {
+        // Create new PLC instance with logging disabled
+        plc = new nodes7({
+            silent: true,
+            debug: false
+        });
 
-    // Configure and initiate PLC connection
-    plc.initiateConnection({
-        port: 102,               // Standard S7 communication port
-        host: plcAddress,        // PLC IP address
-        rack: 0,                 // Rack number in hardware config
-        slot: 1,                 // Slot number in hardware config
-        timeout: 1500,           // Connection timeout in milliseconds
-        localTSAP: 0x0100,      // Local TSAP
-        remoteTSAP: 0x0200,     // Remote TSAP
-    }, (err) => {
-        if (err) {
-            console.log('Connection failed:', err.message);
-            isConnected = false;
-            
-            if (win && !win.isDestroyed()) {
-                win.webContents.send('plc-status', 'PLC Connection Failed');
+        // Configure and initiate PLC connection
+        plc.initiateConnection({
+            port: 102,               // Standard S7 communication port
+            host: plcAddress,        // PLC IP address
+            rack: 0,                 // Rack number in hardware config
+            slot: 1,                 // Slot number in hardware config
+            timeout: 1500,           // Connection timeout in milliseconds
+            localTSAP: 0x0100,      // Local TSAP
+            remoteTSAP: 0x0200,     // Remote TSAP
+        }, (err) => {
+            if (err) {
+                isConnected = false;
+                
+                if (win && !win.isDestroyed()) {
+                    win.webContents.send('plc-status', 'PLC Connection Failed');
+                }
+                
+                handleDisconnection();
+            } else {
+                isConnected = true;
+                isReconnecting = false;
+                
+                // Add both DB1 and DB6 items to be read
+                const db1Items = getDB1Items();
+                const db6Items = getDBFaultsItems();
+                
+                // Add all items to PLC
+                plc.addItems([...db1Items, ...db6Items]);
+                
+                if (win && !win.isDestroyed()) {
+                    win.webContents.send('plc-status', 'Connected to PLC');
+                }
+                
+                startReadLoop();
             }
-            
-            handleDisconnection();
-        } else {
-            console.log('Connected to PLC successfully');
-            isConnected = true;
-            isReconnecting = false;
-            
-            plc.addItems(getDB1Items());
-            
-            console.log('Items added to PLC');
-            
-            if (win && !win.isDestroyed()) {
-                win.webContents.send('plc-status', 'Connected to PLC');
-            }
-            
-            startReadLoop();
+        });
+
+    } catch (error) {
+        console.error('Error initializing PLC:', error);
+        if (win && !win.isDestroyed()) {
+            win.webContents.send('plc-status', 'PLC Initialization Failed');
         }
-    });
+        handleDisconnection();
+    }
 }
 
 // Function to create the main application window
@@ -483,7 +492,7 @@ app.on('before-quit', () => {
         try {
             plc.dropConnection();
         } catch (error) {
-            console.log('Error dropping connection on quit:', error);
+            //console.log('Error dropping connection on quit:', error);
         }
     }
 });
@@ -533,15 +542,15 @@ ipcMain.on('clear-forcing', () => {
     if (plc && isConnected) {
         plc.writeItems('DB1,X0.0', true, (err) => {
             if (err) {
-                console.log('Write error:', err);
+                //console.log('Write error:', err);
             } else {
-                console.log('Clear forcing write successful');
+                //console.log('Clear forcing write successful');
                 setTimeout(() => {
                     plc.writeItems('DB1,X0.0', false, (err) => {
                         if (err) {
-                            console.log('Write error:', err);
+                            //console.log('Write error:', err);
                         } else {
-                            console.log('Clear forcing reset successful');
+                            //console.log('Clear forcing reset successful');
                         }
                     });
                 }, 500);
@@ -555,15 +564,15 @@ ipcMain.on('fault-reset', () => {
     if (plc && isConnected) {
         plc.writeItems('DB1,X0.1', true, (err) => {
             if (err) {
-                console.log('Write error:', err);
+                //console.log('Write error:', err);
             } else {
-                console.log('Fault reset write successful');
+                //console.log('Fault reset write successful');
                 setTimeout(() => {
                     plc.writeItems('DB1,X0.1', false, (err) => {
                         if (err) {
-                            console.log('Write error:', err);
+                            //console.log('Write error:', err);
                         } else {
-                            console.log('Fault reset reset successful');
+                            //console.log('Fault reset reset successful');
                         }
                     });
                 }, 500);
@@ -586,24 +595,31 @@ ipcMain.on('force-digital', (event, data) => {
         const forcedStateAddress = `DB1,X${stateOffset}.1`;  // .1 for ForcedState
         const forcedStatusAddress = `DB1,X${stateOffset}.2`;  // .2 for ForcedStatus
 
-        console.log(`Writing to addresses: ${forcedStateAddress} and ${forcedStatusAddress}`); // Debug log
+        //console.log(`Writing to addresses: ${forcedStateAddress} and ${forcedStatusAddress}`); // Debug log
 
         // Write ForcedState (always true when forcing)
         plc.writeItems(forcedStateAddress, true, (err) => {
             if (err) {
-                console.log('Write error (ForcedState):', err);
+                //console.log('Write error (ForcedState):', err);
             } else {
-                console.log(`Force state write successful for ${data.type} ${data.bank}${data.channel}`);
+                //console.log(`Force state write successful for ${data.type} ${data.bank}${data.channel}`);
                 
                 // Write ForcedStatus (true for ON, false for OFF)
                 plc.writeItems(forcedStatusAddress, data.forcedStatus, (err) => {
                     if (err) {
-                        console.log('Write error (ForcedStatus):', err);
+                        //console.log('Write error (ForcedStatus):', err);
                     } else {
-                        console.log(`Force status write successful for ${data.type} ${data.bank}${data.channel}`);
+                        //console.log(`Force status write successful for ${data.type} ${data.bank}${data.channel}`);
                     }
                 });
             }
         });
     }
 });
+
+// Add this with your other IPC handlers
+ipcMain.handle('request-status', async (event) => {
+    // Return the current PLC status
+    return plc.getStatus();  // Adjust this based on how you store/get PLC status
+});
+

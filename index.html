@@ -21,7 +21,7 @@
 
   <div class="dashboard-container">
     <!-- Add this new chart before the events sections -->
-    <div class="dashboard-item">
+    <div class="dashboard-item" draggable="true">
         <div class="chart-header">
             <h3 class="chart-title">ANALOGUE INPUTS</h3>
             <button id="pause-analogue" class="chart-control-button">Pause</button>
@@ -42,7 +42,7 @@
     </div>
 
 
-    <div class="dashboard-item">
+    <div class="dashboard-item" draggable="true">
       <h3 class="chart-title">PLC STATUS HISTORY</h3>
       <div class="plc-connect-status">
         <span class="status-label">PLC Status:</span>
@@ -53,7 +53,7 @@
       </div>
     </div>
 
-    <div class="dashboard-item">
+    <div class="dashboard-item" draggable="true">
         <div class="chart-title-container">
             <h3 class="chart-title">E-STOP EVENTS</h3>
             <div id="estop-circle" class="circle red-circle"></div>
@@ -66,7 +66,7 @@
     </div>
 
     <!-- Blue LED Events -->
-    <div class="dashboard-item">
+    <div class="dashboard-item" draggable="true">
         <div class="chart-title-container">
             <h3 class="chart-title">BLUE LED EVENTS</h3>
             <div id="led-circle" class="circle blue-circle"></div>
@@ -78,7 +78,7 @@
         </div>
     </div>
 
-    <div class="dashboard-item">
+    <div class="dashboard-item" draggable="true">
         <h3 class="chart-title">PLC CONTROLS</h3>
         <div class="control-panel">
             <button id="write-btn" class="control-button">Run Motor</button>
@@ -87,7 +87,7 @@
         </div>
     </div>
 
-    <div class="dashboard-item">
+    <div class="dashboard-item" draggable="true">
         <h3 class="chart-title">PLC DATA OVERVIEW</h3>
         <div class="plc-data-grid">
             <button class="grid-item">View All PLC Tags</button>
@@ -95,7 +95,7 @@
     </div>
 
 
-    <div class="dashboard-item">
+    <div class="dashboard-item" draggable="true">
         <h3 class="chart-title">PLC CONFIGURATION</h3>
         <div id="container">
             <div class="config-header">
@@ -140,7 +140,67 @@
         document.querySelectorAll('.event-list li').forEach((item, index) => {
             item.style.setProperty('--animation-order', index + 1);
         });
+
+        const container = document.querySelector('.dashboard-container');
+        const items = document.querySelectorAll('.dashboard-item');
+
+        items.forEach(item => {
+            // Add drag handle visual indicator
+            const handle = document.createElement('div');
+            handle.className = 'drag-handle';
+            item.insertBefore(handle, item.firstChild);
+
+            item.addEventListener('dragstart', (e) => {
+                e.target.classList.add('dragging');
+                e.dataTransfer.setData('text/plain', ''); // Required for Firefox
+            });
+
+            item.addEventListener('dragend', (e) => {
+                e.target.classList.remove('dragging');
+            });
+        });
+
+        container.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            const draggingItem = document.querySelector('.dragging');
+            const siblings = [...container.querySelectorAll('.dashboard-item:not(.dragging)')];
+            
+            const nextSibling = siblings.find(sibling => {
+                const box = sibling.getBoundingClientRect();
+                const offset = e.clientY - box.top - box.height / 2;
+                return offset < 0;
+            });
+
+            if (nextSibling) {
+                container.insertBefore(draggingItem, nextSibling);
+            } else {
+                container.appendChild(draggingItem);
+            }
+        });
     });
 </script>
+
+<!-- Fault Banner -->
+<script>
+    $(document).ready(function() {
+        console.log('Document ready, initializing ForcingBanner');
+        if (typeof ForcingBanner === 'undefined') {
+            console.error('ForcingBanner not loaded');
+        } else {
+            ForcingBanner.init();
+        }
+    });
+    </script>
+  
+      <!-- Fault Banner -->
+      <div id="fault-banner" class="fault-banner hidden">
+          <div class="fault-banner-content">
+              <span id="fault-message"></span>
+              <button id="acknowledge-fault" class="acknowledge-button">Acknowledge</button>
+          </div>
+      </div>
+  
+      <!-- Fault Banner Script -->
+      <script src="fault-banner.js"></script>
 </body>
 </html>

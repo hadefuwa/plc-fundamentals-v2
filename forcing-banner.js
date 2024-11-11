@@ -1,4 +1,4 @@
-console.log('Forcing banner script started');
+//console.log('Forcing banner script started');
 
 window.ForcingBanner = {
     lastState: false,
@@ -60,4 +60,4 @@ window.ForcingBanner = {
     }
 };
 
-console.log('ForcingBanner object created:', window.ForcingBanner);
+//console.log('ForcingBanner object created:', window.ForcingBanner);

@@ -141,22 +141,24 @@ h1 {
 }
 
 .dashboard-container {
-    position: relative;
-    z-index: 1;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
     padding: 20px;
-    background-color: rgba(44, 48, 51, 0.55); /* Added transparency */
+    background-color: rgba(44, 48, 51, 0.55);
     color: white;
+    min-height: 100vh;
 }
 
 .dashboard-item {
-    background-color: rgba(56, 60, 64, 0.85); /* Added transparency */
+    cursor: move;
+    user-select: none;
+    position: relative;
+    background-color: rgba(56, 60, 64, 0.85);
     border-radius: 8px;
     padding: 15px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    backdrop-filter: blur(5px); /* Optional: adds a glass effect */
+    backdrop-filter: blur(5px);
     transform: translateY(0);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     animation: fadeIn 0.5s ease-out;
@@ -198,7 +200,7 @@ h1 {
 
 .chart-container {
   width: 100%;
-  height: 250px;
+  height: 300px;
   position: relative;
   transition: all 0.3s ease;
   animation: slideIn 0.5s ease-out;
@@ -1103,4 +1105,82 @@ document.querySelectorAll('.dashboard-item').forEach((item, index) => {
 .dashboard-container {
     position: relative;
     z-index: 1;
+}
+
+.dashboard-item.dragging {
+    opacity: 0.5;
+    border: 2px dashed #36A2EB;
+}
+
+/* Add a visual drag handle */
+.drag-handle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 8px;
+    background: linear-gradient(90deg, #36A2EB 50%, transparent 50%);
+    background-size: 8px 100%;
+    opacity: 0;
+    transition: opacity 0.2s;
+    cursor: move;
+    border-radius: 8px 8px 0 0;
+}
+
+.dashboard-item:hover .drag-handle {
+    opacity: 0.3;
+}
+
+.dashboard-item.dragging .drag-handle {
+    opacity: 0.5;
+}
+
+/* Optional: Add transition for smooth reordering */
+.dashboard-item {
+    transition: transform 0.2s;
+}
+
+.dashboard-item.dragging {
+    transition: none; /* Disable transition while dragging */
+}
+
+/* Fault Banner */
+.fault-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #ff4444;
+    color: white;
+    padding: 15px;
+    z-index: 9999; /* Ensure it's above other elements */
+    transform: translateY(0);
+    transition: transform 0.3s ease-in-out;
+}
+
+.fault-banner.hidden {
+    transform: translateY(100%);
+}
+
+.fault-banner-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.acknowledge-button {
+    background-color: white;
+    color: #ff4444;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.acknowledge-button:hover {
+    background-color: #f0f0f0;
 }

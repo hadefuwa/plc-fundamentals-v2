@@ -217,22 +217,22 @@ function formatDB1Data(data) {
 
 function logDB1Values(data) {
     /*
-    console.log('\n=== DB1 Values Example ===');
+    //console.log('\n=== DB1 Values Example ===');
     
-    console.log('\nDigital Input Example:');
-    console.log('  A0:');
-    console.log(`    State (X2.0): ${data['DB1,X2.0']}`);
-    console.log(`    ForcedState (X2.1): ${data['DB1,X2.1']}`);
-    console.log(`    ForcedStatus (X2.2): ${data['DB1,X2.2']}`);
+    //console.log('\nDigital Input Example:');
+    //console.log('  A0:');
+    //console.log(`    State (X2.0): ${data['DB1,X2.0']}`);
+    //console.log(`    ForcedState (X2.1): ${data['DB1,X2.1']}`);
+    //console.log(`    ForcedStatus (X2.2): ${data['DB1,X2.2']}`);
     
-    console.log('\nAnalogue Input Example:');
-    console.log(`  AI0:`);
-    console.log(`    Raw (INT30): ${data['DB1,INT30']}`);
-    console.log(`    Scaled (REAL32): ${data['DB1,REAL32']}V`);
-    console.log(`    Offset (REAL36): ${data['DB1,REAL36']}`);
-    console.log(`    Scalar (REAL40): ${data['DB1,REAL40']}`);
+    //console.log('\nAnalogue Input Example:');
+    //console.log(`  AI0:`);
+    //console.log(`    Raw (INT30): ${data['DB1,INT30']}`);
+    //console.log(`    Scaled (REAL32): ${data['DB1,REAL32']}V`);
+    //console.log(`    Offset (REAL36): ${data['DB1,REAL36']}`);
+    //console.log(`    Scalar (REAL40): ${data['DB1,REAL40']}`);
     
-    console.log('\n=================\n');
+    //console.log('\n=================\n');
     */
 }
 

@@ -699,56 +699,104 @@
 
         // Update the receiveData handler
         window.electron.receiveData((data) => {
-            ForcingBanner.update(data);
-            plcData = data; // Store the data globally
-            updatePLCTags(data);
+            try {
+                //console.log('Received PLC data:', data);
+                
+                if (data && data.db1) {
+                    ForcingBanner.update(data.db1);
+                    plcData = data.db1; // Store the data globally
+                    updatePLCTags(data.db1);
+                }
+
+                if (data && data.faults) {
+                    handleFaultBanner(data.faults);
+                }
+            } catch (error) {
+                console.error('Error processing PLC data:', error);
+                console.error('Data structure:', data);
+            }
         });
 
         function updatePLCTags(data) {
-            // Update Analogue Values
-            document.getElementById('ai0-scaled-value').textContent = `${data.analogue.ai0.scaled.toFixed(2)} V`;
-            document.getElementById('ai1-scaled-value').textContent = `${data.analogue.ai1.scaled.toFixed(2)} V`;
-            document.getElementById('ai0-offset-value').textContent = data.analogue.ai0.offset.toFixed(2);
-            document.getElementById('ai1-offset-value').textContent = data.analogue.ai1.offset.toFixed(2);
-            document.getElementById('ai0-scalar-value').textContent = data.analogue.ai0.scalar.toFixed(2);
-            document.getElementById('ai1-scalar-value').textContent = data.analogue.ai1.scalar.toFixed(2);
-            document.getElementById('ai0-raw-value').textContent = data.analogue.ai0.raw;
-            document.getElementById('ai1-raw-value').textContent = data.analogue.ai1.raw;
-
-            // Update Digital Inputs Bank A
-            for (let i = 0; i < 8; i++) {
-                const diElement = document.getElementById(`di-a${i}-status`);
-                if (diElement) {
-                    diElement.textContent = formatBoolValue(data.inputs.a[i].state);
-                    updateStatusColor(diElement, data.inputs.a[i].state);
+            try {
+                // Update Analogue Values
+                if (data.analogue) {
+                    if (data.analogue.ai0) {
+                        document.getElementById('ai0-scaled-value').textContent = `${data.analogue.ai0.scaled.toFixed(2)} V`;
+                        document.getElementById('ai0-offset-value').textContent = data.analogue.ai0.offset.toFixed(2);
+                        document.getElementById('ai0-scalar-value').textContent = data.analogue.ai0.scalar.toFixed(2);
+                        document.getElementById('ai0-raw-value').textContent = data.analogue.ai0.raw;
+                    }
+                    if (data.analogue.ai1) {
+                        document.getElementById('ai1-scaled-value').textContent = `${data.analogue.ai1.scaled.toFixed(2)} V`;
+                        document.getElementById('ai1-offset-value').textContent = data.analogue.ai1.offset.toFixed(2);
+                        document.getElementById('ai1-scalar-value').textContent = data.analogue.ai1.scalar.toFixed(2);
+                        document.getElementById('ai1-raw-value').textContent = data.analogue.ai1.raw;
+                    }
                 }
-            }
 
-            // Update Digital Outputs Bank A
-            for (let i = 0; i < 8; i++) {
-                const doElement = document.getElementById(`do-a${i}-status`);
-                if (doElement) {
-                    doElement.textContent = formatBoolValue(data.outputs.a[i].state);
-                    updateStatusColor(doElement, data.outputs.a[i].state);
+                // Update Digital Inputs Bank A
+                if (data.inputs && data.inputs.a) {
+                    for (let i = 0; i < 8; i++) {
+                        const diElement = document.getElementById(`di-a${i}-status`);
+                        if (diElement && data.inputs.a[i]) {
+                            diElement.textContent = formatBoolValue(data.inputs.a[i].state);
+                            updateStatusColor(diElement, data.inputs.a[i].state);
+                        }
+                    }
                 }
-            }
 
-            // Update Digital Inputs Bank B
-            for (let i = 0; i < 6; i++) {
-                const diElement = document.getElementById(`di-b${i}-status`);
-                if (diElement) {
-                    diElement.textContent = formatBoolValue(data.inputs.b[i].state);
-                    updateStatusColor(diElement, data.inputs.b[i].state);
+                // Update Digital Outputs Bank A
+                if (data.outputs && data.outputs.a) {
+                    for (let i = 0; i < 8; i++) {
+                        const doElement = document.getElementById(`do-a${i}-status`);
+                        if (doElement && data.outputs.a[i]) {
+                            doElement.textContent = formatBoolValue(data.outputs.a[i].state);
+                            updateStatusColor(doElement, data.outputs.a[i].state);
+                        }
+                    }
                 }
-            }
 
-            // Update Digital Outputs Bank B (only B0 and B1)
-            for (let i = 0; i < 2; i++) {
-                const doElement = document.getElementById(`do-b${i}-status`);
-                if (doElement) {
-                    doElement.textContent = formatBoolValue(data.outputs.b[i].state);
-                    updateStatusColor(doElement, data.outputs.b[i].state);
+                // Update Digital Inputs Bank B
+                if (data.inputs && data.inputs.b) {
+                    for (let i = 0; i < 6; i++) {
+                        const diElement = document.getElementById(`di-b${i}-status`);
+                        if (diElement && data.inputs.b[i]) {
+                            diElement.textContent = formatBoolValue(data.inputs.b[i].state);
+                            updateStatusColor(diElement, data.inputs.b[i].state);
+                        }
+                    }
                 }
+
+                // Update Digital Outputs Bank B (only B0 and B1)
+                if (data.outputs && data.outputs.b) {
+                    for (let i = 0; i < 2; i++) {
+                        const doElement = document.getElementById(`do-b${i}-status`);
+                        if (doElement && data.outputs.b[i]) {
+                            doElement.textContent = formatBoolValue(data.outputs.b[i].state);
+                            updateStatusColor(doElement, data.outputs.b[i].state);
+                        }
+                    }
+                }
+
+                // Update HMI Button Status
+                if (data.hmiButtons) {
+                    const clearForcingStatus = document.getElementById('clear-forcing-status');
+                    const faultResetStatus = document.getElementById('fault-reset-status');
+                    
+                    if (clearForcingStatus) {
+                        clearForcingStatus.textContent = data.hmiButtons.clearForcing ? 'ON' : 'OFF';
+                        clearForcingStatus.style.color = data.hmiButtons.clearForcing ? '#4caf50' : '#f44336';
+                    }
+                    
+                    if (faultResetStatus) {
+                        faultResetStatus.textContent = data.hmiButtons.faultReset ? 'ON' : 'OFF';
+                        faultResetStatus.style.color = data.hmiButtons.faultReset ? '#4caf50' : '#f44336';
+                    }
+                }
+            } catch (error) {
+                console.error('Error in updatePLCTags:', error);
+                console.error('Data structure:', data);
             }
         }
 
@@ -800,24 +848,7 @@
             window.electron.faultReset();
         });
 
-        // In your receiveData handler, make sure you have this part:
-        window.electron.receiveData((data) => {
-            // ... other updates ...
 
-            // Update HMI Button Status
-            const clearForcingStatus = document.getElementById('clear-forcing-status');
-            const faultResetStatus = document.getElementById('fault-reset-status');
-            
-            if (clearForcingStatus) {
-                clearForcingStatus.textContent = data.hmiButtons.clearForcing ? 'ON' : 'OFF';
-                clearForcingStatus.style.color = data.hmiButtons.clearForcing ? '#4caf50' : '#f44336';
-            }
-            
-            if (faultResetStatus) {
-                faultResetStatus.textContent = data.hmiButtons.faultReset ? 'ON' : 'OFF';
-                faultResetStatus.style.color = data.hmiButtons.faultReset ? '#4caf50' : '#f44336';
-            }
-        });
     });
     </script>
 

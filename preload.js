@@ -24,4 +24,11 @@ contextBridge.exposeInMainWorld('electron', {
         }
     },
     faultReset: () => ipcRenderer.send('fault-reset'),
+    onConnectionChange: (callback) => {
+        ipcRenderer.on('connection-status', (_, status) => callback(status));
+    },
+    onPlcStatus: (callback) => {
+        ipcRenderer.on('plc-status', (_, status) => callback(status));
+    },
+    requestStatus: () => ipcRenderer.send('request-status'),
 }) 
