@@ -108,6 +108,9 @@ document.addEventListener('DOMContentLoaded', () => {
             //console.log('Received PLC data:', data);
             
             if (data && data.db1) {
+                // Store the DB1 data globally for use in the modal
+                plcData = data.db1;
+
                 // LED Circle updates (Output A0)
                 const ledCircle = document.getElementById('led-circle');
                 if (ledCircle && !ledCircle.classList.contains('disconnected')) {
@@ -678,3 +681,62 @@ document.addEventListener('DOMContentLoaded', () => {
         );
     }
 });
+
+// Add this function to handle the modal interaction
+window.modifyValue = function(type, channel) {
+    const modal = document.getElementById('modify-modal');
+    const input = document.getElementById('value-input');
+    const saveBtn = document.getElementById('modal-save');
+    const cancelBtn = document.getElementById('modal-cancel');
+    const titleElement = document.getElementById('modal-title');
+    
+    // Set the title based on what's being modified
+    titleElement.textContent = `Modify ${type} for AI${channel}`;
+    
+    // Get current value from plcData
+    const currentValue = type === 'offset' 
+        ? plcData.analogue[`ai${channel}`].offset 
+        : plcData.analogue[`ai${channel}`].scalar;
+    
+    input.value = currentValue;
+    modal.style.display = 'block';
+    input.focus();
+
+    // Handle save
+    const handleSave = () => {
+        const newValue = parseFloat(input.value);
+        if (!isNaN(newValue)) {
+            window.electron.modifyAnalogue(channel, type, newValue);
+            console.log(`Sending ${type} modification for AI${channel}: ${newValue}`);
+        }
+        modal.style.display = 'none';
+        cleanup();
+    };
+
+    // Handle cancel
+    const handleCancel = () => {
+        modal.style.display = 'none';
+        cleanup();
+    };
+
+    // Handle Enter key
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            handleSave();
+        } else if (e.key === 'Escape') {
+            handleCancel();
+        }
+    };
+
+    // Set up event listeners
+    saveBtn.addEventListener('click', handleSave);
+    cancelBtn.addEventListener('click', handleCancel);
+    input.addEventListener('keyup', handleKeyPress);
+    
+    // Cleanup function
+    const cleanup = () => {
+        saveBtn.removeEventListener('click', handleSave);
+        cancelBtn.removeEventListener('click', handleCancel);
+        input.removeEventListener('keyup', handleKeyPress);
+    };
+};

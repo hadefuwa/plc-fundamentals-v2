@@ -31,4 +31,7 @@ contextBridge.exposeInMainWorld('electron', {
         ipcRenderer.on('plc-status', (_, status) => callback(status));
     },
     requestStatus: () => ipcRenderer.send('request-status'),
+    modifyAnalogue: (channel, type, value) => {
+        ipcRenderer.send('modify-analogue', { channel, type, value });
+    },
 }) 

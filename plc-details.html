@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="plc-details-css.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
+  
 </head>
 <body>
     <div class="container">
@@ -598,6 +599,21 @@
         </div>
     </div>
 
+    <!-- Add the modal here, before scripts -->
+    <div id="modify-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h2 id="modal-title">Modify Value</h2>
+            <div class="modal-body">
+                <label for="value-input">Enter new value:</label>
+                <input type="number" id="value-input" step="0.01">
+            </div>
+            <div class="modal-footer">
+                <button id="modal-cancel" class="btn btn-secondary">Cancel</button>
+                <button id="modal-save" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Scripts in correct order -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
@@ -840,15 +856,58 @@
                 ? plcData.analogue[`ai${channel}`].offset 
                 : plcData.analogue[`ai${channel}`].scalar;
             
-            const newValue = prompt(`Enter new ${type} value for AI${channel}:`, currentValue);
+            const modal = document.getElementById('modify-modal');
+            const titleElement = document.getElementById('modal-title');
+            const input = document.getElementById('value-input');
+            const saveBtn = document.getElementById('modal-save');
+            const cancelBtn = document.getElementById('modal-cancel');
             
-            if (newValue !== null && !isNaN(newValue)) {
-                window.electron.sendToMain('modify-analogue', {
-                    channel: channel,
-                    type: type,
-                    value: parseFloat(newValue)
-                });
-            }
+            // Set up the modal
+            titleElement.textContent = `Modify ${type} for AI${channel}`;
+            input.value = currentValue;
+            modal.style.display = 'block';
+            input.focus();
+
+            // Handle save
+            const handleSave = () => {
+                const newValue = parseFloat(input.value);
+                if (!isNaN(newValue)) {
+                    window.electron.sendToMain('modify-analogue', {
+                        channel: channel,
+                        type: type,
+                        value: newValue
+                    });
+                }
+                modal.style.display = 'none';
+                cleanup();
+            };
+
+            // Handle cancel
+            const handleCancel = () => {
+                modal.style.display = 'none';
+                cleanup();
+            };
+
+            // Handle Enter key
+            const handleKeyPress = (e) => {
+                if (e.key === 'Enter') {
+                    handleSave();
+                } else if (e.key === 'Escape') {
+                    handleCancel();
+                }
+            };
+
+            // Set up event listeners
+            saveBtn.addEventListener('click', handleSave);
+            cancelBtn.addEventListener('click', handleCancel);
+            input.addEventListener('keyup', handleKeyPress);
+            
+            // Cleanup function
+            const cleanup = () => {
+                saveBtn.removeEventListener('click', handleSave);
+                cancelBtn.removeEventListener('click', handleCancel);
+                input.removeEventListener('keyup', handleKeyPress);
+            };
         };
 
         // Add event listeners for the special buttons

@@ -236,8 +236,26 @@ function logDB1Values(data) {
     */
 }
 
+// Add this new function to handle writing analogue values
+function getAnalogueWriteAddress(type, channel) {
+    // Map the type and channel to the correct DB1 address
+    const addressMap = {
+        offset: {
+            0: 'DB1,REAL36',  // AI0 Offset
+            1: 'DB1,REAL50'   // AI1 Offset
+        },
+        scalar: {
+            0: 'DB1,REAL40',  // AI0 Scalar
+            1: 'DB1,REAL54'   // AI1 Scalar
+        }
+    };
+
+    return addressMap[type]?.[channel];
+}
+
 module.exports = {
     getDB1Items,
     formatDB1Data,
-    logDB1Values
+    logDB1Values,
+    getAnalogueWriteAddress
 }; 

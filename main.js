@@ -31,7 +31,7 @@ const path = require('path');
 const nodes7 = require('nodes7');
 // Import DB1 structure and handler functions
 const db1Structure = require('./db1.json');
-const { getDB1Items, formatDB1Data, logDB1Values } = require('./db1Handler');
+const { getDB1Items, formatDB1Data, logDB1Values, getAnalogueWriteAddress } = require('./db1Handler');
 // Import DB Faults structure and handler functions
 const dbFaultsStructure = require('./dbFaults.json');
 const { getDBFaultsItems, formatDBFaultsData, logDBFaultsValues } = require('./dbFaultsHandler');
@@ -621,5 +621,28 @@ ipcMain.on('force-digital', (event, data) => {
 ipcMain.handle('request-status', async (event) => {
     // Return the current PLC status
     return plc.getStatus();  // Adjust this based on how you store/get PLC status
+});
+
+// Add this with your other IPC handlers
+ipcMain.on('modify-analogue', async (event, data) => {
+    try {
+        const { channel, type, value } = data;
+        const address = getAnalogueWriteAddress(type, channel);
+        
+        if (!address) {
+            throw new Error('Invalid analogue address');
+        }
+
+        plc.writeItems(address, value, (err) => {
+            if (err) {
+                console.error('Write error:', err);
+            } else {
+                console.log(`Successfully wrote ${value} to ${address}`);
+            }
+        });
+        
+    } catch (error) {
+        console.error('Error writing analogue value:', error);
+    }
 });
 
