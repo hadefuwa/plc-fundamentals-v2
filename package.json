@@ -1,6 +1,6 @@
 {
   "name": "plc-base-module",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "HMI interface for Matrix PLC Base Module Product",
   "main": "main.js",
   "scripts": {
@@ -16,9 +16,22 @@
       "main.js",
       "index.html",
       "renderer.js",
+      "preload.js",
       "package.json",
+      "db1.json",
+      "db1Handler.js",
+      "dbFaults.json",
+      "dbFaultsHandler.js",
+      "fault-banner.js",
+      "forcing-banner.js",
+      "jquery.notification-banner.js",
+      "main.css",
+      "plc-details.css",
+      "plc-details.html",
       "assets/**/*",
-      "db1.json"
+      "dist/**/*",
+      "LICENSE",
+      "README.md"
     ],
     "directories": {
       "buildResources": "assets"
