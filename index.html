@@ -12,6 +12,10 @@
   <div class="matrix-logo">
     <div class="logo-header-container">
       <img src="assets/matrix-logo.png" alt="Matrix Logo">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+      <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+
      <!-- <h1>PLC Base Module</h1> -->
     </div>
   </div>
@@ -24,7 +28,13 @@
     <div class="dashboard-item" draggable="true">
         <div class="chart-header">
             <h3 class="chart-title">ANALOGUE INPUTS</h3>
-            <button id="pause-analogue" class="chart-control-button">Pause</button>
+            <div class="chart-controls">
+                <button id="pause-analogue" class="chart-control-button">Pause</button>
+                <button id="print-analogue" class="chart-control-button">
+                    <i class="fas fa-print"></i>
+                    Print
+                </button>
+            </div>
         </div>
         <!-- AI0 Display -->
         <div class="analogue-display">

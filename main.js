@@ -646,3 +646,65 @@ ipcMain.on('modify-analogue', async (event, data) => {
     }
 });
 
+
+// Add this to where you set up your IPC handlers
+ipcMain.handle('print-chart', async (event, chartDataUrl) => {
+  const win = new BrowserWindow({
+    width: 800,
+    height: 600,
+    show: false,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false
+    }
+  });
+
+  await win.loadURL(`data:text/html,
+    <html>
+      <head>
+        <title>Analogue Inputs Chart</title>
+        <style>
+          body { margin: 0; display: flex; justify-content: center; }
+          .print-container { 
+            padding: 20px;
+            max-width: 100%;
+          }
+          img {
+            max-width: 100%;
+            height: auto;
+          }
+          @media print {
+            @page { 
+              margin: 0.5cm;
+              size: landscape;
+            }
+          }
+        </style>
+      </head>
+      <body>
+        <div class="print-container">
+          <h2>Analogue Inputs Chart</h2>
+          <img src="${chartDataUrl}" />
+          <div class="timestamp">
+            Printed: ${new Date().toLocaleString()}
+          </div>
+        </div>
+      </body>
+    </html>
+  `);
+
+  win.webContents.print({ 
+    landscape: true,
+    printBackground: true,
+    margins: {
+      marginType: 'custom',
+      top: 0.4,
+      bottom: 0.4,
+      left: 0.4,
+      right: 0.4
+    }
+  }, (success, errorType) => {
+    win.close();
+  });
+});
+

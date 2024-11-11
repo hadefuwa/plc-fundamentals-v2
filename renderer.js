@@ -740,3 +740,23 @@ window.modifyValue = function(type, channel) {
         input.removeEventListener('keyup', handleKeyPress);
     };
 };
+
+// Add this event listener for the print button
+document.getElementById('print-analogue').addEventListener('click', async function() {
+    try {
+        // Use html2canvas to capture the entire chart container
+        const chartContainer = document.querySelector('.chart-container');
+        const canvas = await html2canvas(chartContainer, {
+            backgroundColor: '#ffffff',
+            scale: 2, // Higher resolution
+            logging: false,
+            useCORS: true,
+            allowTaint: true
+        });
+        
+        const chartDataUrl = canvas.toDataURL('image/png');
+        window.electron.printChart(chartDataUrl);
+    } catch (error) {
+        console.error('Error printing chart:', error);
+    }
+});

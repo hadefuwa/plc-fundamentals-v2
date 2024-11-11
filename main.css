@@ -1213,3 +1213,18 @@ document.querySelectorAll('.dashboard-item').forEach((item, index) => {
   color: white !important;
   font-size: 11px !important;
 }
+
+.chart-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.chart-control-button {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.chart-control-button i {
+    font-size: 14px;
+}
