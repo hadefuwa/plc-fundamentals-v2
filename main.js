@@ -648,52 +648,25 @@ ipcMain.on('modify-analogue', async (event, data) => {
 
 
 // Add this to where you set up your IPC handlers
-ipcMain.handle('print-chart', async (event, chartDataUrl) => {
+ipcMain.handle('print-chart', async (event, htmlContent) => {
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1200,  // Increased size
+    height: 800,
     show: false,
     webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false
+      nodeIntegration: false,
+      contextIsolation: true
     }
   });
 
-  await win.loadURL(`data:text/html,
-    <html>
-      <head>
-        <title>Analogue Inputs Chart</title>
-        <style>
-          body { margin: 0; display: flex; justify-content: center; }
-          .print-container { 
-            padding: 20px;
-            max-width: 100%;
-          }
-          img {
-            max-width: 100%;
-            height: auto;
-          }
-          @media print {
-            @page { 
-              margin: 0.5cm;
-              size: landscape;
-            }
-          }
-        </style>
-      </head>
-      <body>
-        <div class="print-container">
-          <h2>Analogue Inputs Chart</h2>
-          <img src="${chartDataUrl}" />
-          <div class="timestamp">
-            Printed: ${new Date().toLocaleString()}
-          </div>
-        </div>
-      </body>
-    </html>
-  `);
+  // Load the HTML content
+  await win.loadURL(`data:text/html;charset=UTF-8,${encodeURIComponent(htmlContent)}`);
 
-  win.webContents.print({ 
+  // Wait a bit for the content to render
+  await new Promise(resolve => setTimeout(resolve, 500));
+
+  // Print options
+  const options = {
     landscape: true,
     printBackground: true,
     margins: {
@@ -703,7 +676,13 @@ ipcMain.handle('print-chart', async (event, chartDataUrl) => {
       left: 0.4,
       right: 0.4
     }
-  }, (success, errorType) => {
+  };
+
+  // Print and close window
+  win.webContents.print(options, (success, errorType) => {
+    if (!success) {
+      console.error('Print failed:', errorType);
+    }
     win.close();
   });
 });

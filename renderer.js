@@ -744,19 +744,107 @@ window.modifyValue = function(type, channel) {
 // Add this event listener for the print button
 document.getElementById('print-analogue').addEventListener('click', async function() {
     try {
-        // Use html2canvas to capture the entire chart container
-        const chartContainer = document.querySelector('.chart-container');
-        const canvas = await html2canvas(chartContainer, {
-            backgroundColor: '#ffffff',
-            scale: 2, // Higher resolution
-            logging: false,
-            useCORS: true,
-            allowTaint: true
-        });
+        // Get the original chart instance
+        const originalChart = Chart.getChart(document.getElementById('analogueChart'));
         
-        const chartDataUrl = canvas.toDataURL('image/png');
-        window.electron.printChart(chartDataUrl);
+        // Create a temporary canvas with larger dimensions for better print quality
+        const tempCanvas = document.createElement('canvas');
+        tempCanvas.width = originalChart.canvas.width * 2;  // Double the size for better quality
+        tempCanvas.height = originalChart.canvas.height * 2;
+        
+        const ctx = tempCanvas.getContext('2d');
+        ctx.scale(2, 2);  // Scale up for better resolution
+        
+        const tempChart = new Chart(ctx, {
+            type: originalChart.config.type,
+            data: originalChart.data,
+            options: {
+                ...originalChart.config.options,
+                animation: false,
+                responsive: false,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        ...originalChart.config.options.scales.x,
+                        grid: { color: 'rgba(0, 0, 0, 0.1)' },
+                        ticks: { color: 'black', font: { size: 11 } }
+                    },
+                    y: {
+                        ...originalChart.config.options.scales.y,
+                        grid: { color: 'rgba(0, 0, 0, 0.1)' },
+                        ticks: { color: 'black', font: { size: 11 } }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: { 
+                            color: 'black',
+                            font: { size: 12 }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Wait for the chart to render
+        await new Promise(resolve => setTimeout(resolve, 200));
+
+        // Get the base64 image
+        const chartImage = tempCanvas.toDataURL('image/png', 1.0);
+        
+        // Clean up
+        tempChart.destroy();
+
+        // Send to main process for printing
+        const htmlContent = `
+            <html>
+                <head>
+                    <title>Analogue Inputs Chart</title>
+                    <style>
+                        @page {
+                            size: landscape;
+                            margin: 1cm;
+                        }
+                        body {
+                            margin: 0;
+                            padding: 20px;
+                            font-family: Arial, sans-serif;
+                        }
+                        .chart-container {
+                            width: 90%;
+                            margin: 0 auto;
+                        }
+                        img {
+                            width: 100%;
+                            max-height: 70vh;
+                            object-fit: contain;
+                        }
+                        h2 {
+                            color: black;
+                            margin-bottom: 20px;
+                        }
+                        .timestamp {
+                            margin-top: 20px;
+                            color: black;
+                            font-size: 12px;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="chart-container">
+                        <h2>Analogue Inputs Chart</h2>
+                        <img src="${chartImage}" />
+                        <div class="timestamp">
+                            Printed: ${new Date().toLocaleString()}
+                        </div>
+                    </div>
+                </body>
+            </html>
+        `;
+
+        window.electron.printChart(htmlContent);
+
     } catch (error) {
-        console.error('Error printing chart:', error);
+        console.error('Error preparing chart for print:', error);
     }
 });
