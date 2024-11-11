@@ -96,36 +96,6 @@ ipcMain.on('connect-plc', () => {
     initiatePLCConnection();
 });
 
-// Handle request to open analogue value window
-ipcMain.on('open-analogue-window', () => {
-    if (analogueWindow) {
-        analogueWindow.focus();
-        return;
-    }
-
-    // Create new window for analogue display with larger dimensions
-    analogueWindow = new BrowserWindow({
-        width: 1200,      // Increased from 800
-        height: 800,      // Increased from 600
-        minWidth: 800,    // Add minimum size constraints
-        minHeight: 600,
-        webPreferences: {
-            nodeIntegration: false,
-            contextIsolation: true,
-            preload: path.join(__dirname, 'preload.js')
-        }
-    });
-
-    analogueWindow.loadFile('analogue-popup.html');
-
-    // Optional: Start maximized
-    // analogueWindow.maximize();
-
-    analogueWindow.on('closed', () => {
-        analogueWindow = null;
-    });
-});
-
 // Handle PLC write requests from renderer
 ipcMain.on('write-plc', () => {
     if (plc && isConnected) {
