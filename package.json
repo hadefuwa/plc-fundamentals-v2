@@ -1,7 +1,7 @@
 {
   "name": "plc-base-module",
   "version": "0.3.1",
-  "description": "HMI interface for Siemens S7-1200 PLC",
+  "description": "HMI interface for Matrix PLC Base Module Product",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -11,7 +11,7 @@
   },
   "build": {
     "appId": "com.Matrix.plc-base",
-    "productName": "S7 HMI",
+    "productName": "Matrix PLC Base Module",
     "files": [
       "main.js",
       "index.html",
