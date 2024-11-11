@@ -671,3 +671,89 @@ tr:hover {
     tr:hover {
         transform: none !important;
     }
+
+
+    .fault-banner {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: #dc3545;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        z-index: 1000;
+        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .fault-banner.hidden {
+        display: none;
+    }
+
+    .fault-banner-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .acknowledge-button {
+        background-color: white;
+        color: #dc3545;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .acknowledge-button:hover {
+        background-color: #f8f9fa;
+    }
+
+    /* Center align status values and buttons */
+    .table-responsive td {
+        text-align: center;
+    }
+
+    /* Ensure buttons stay centered */
+    .table-responsive td div {
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+    }
+
+    /* Center align spans containing values */
+    .table-responsive td span {
+        display: inline-block;
+        text-align: center;
+        width: 100%;
+    }
+
+    /* Keep left alignment for labels */
+    .table-responsive td:first-child {
+        text-align: left;
+    }
+
+    /* Center align all table cells */
+    .table-responsive td {
+        text-align: center !important;
+    }
+
+    /* Ensure buttons stay centered */
+    .table-responsive td div {
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+    }
+
+    /* Center align spans containing values */
+    .table-responsive td span {
+        display: inline-block;
+        text-align: center;
+        width: 100%;
+    }
+
+    /* Remove the first column exception */
+    .table-responsive td:first-child {
+        text-align: center !important;
+    }

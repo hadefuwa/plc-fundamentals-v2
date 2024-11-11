@@ -1184,3 +1184,32 @@ document.querySelectorAll('.dashboard-item').forEach((item, index) => {
 .acknowledge-button:hover {
     background-color: #f0f0f0;
 }
+
+/* Add these new styles for chart customization */
+.status-chart {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Make points match line color */
+.status-chart .chartjs-point {
+  fill: #4BC0C0 !important;  /* Match your line color */
+}
+
+/* Customize axis and legend text */
+.status-chart .chartjs-axis-label,
+.status-chart .chartjs-legend-item {
+  color: white !important;
+  font-size: 12px !important;
+}
+
+/* Make grid lines more visible */
+.status-chart .chartjs-grid-line {
+  stroke: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Enhance tick marks */
+.status-chart .chartjs-tick {
+  color: white !important;
+  font-size: 11px !important;
+}

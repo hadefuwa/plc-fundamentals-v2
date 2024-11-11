@@ -34,7 +34,7 @@ function formatDBFaultsData(data) {
     }
 
     const faults = {
-        eStopPressed: Boolean(data['DB6,X0.0']),
+        EStopPressed: Boolean(data['DB6,X0.0']),
         NoSystemDetected: Boolean(data['DB6,X0.1']),
         fault3: Boolean(data['DB6,X0.2']),
         fault4: Boolean(data['DB6,X0.3']),

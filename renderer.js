@@ -14,6 +14,23 @@ let initialized = false;  // Flag to prevent multiple initializations
 
 let lastKnownStatus = localStorage.getItem('plcStatus') || 'Loading...';
 
+let connectionHistoryBuffer = [];
+const MAX_HISTORY_POINTS = 120; // 2 minutes worth of data at 1-second intervals
+
+function addConnectionDataPoint(connected) {
+    const now = new Date();
+    connectionHistoryBuffer.push({
+        x: now,
+        y: connected ? 1 : 0
+    });
+
+    // Keep only last 2 minutes of data
+    const cutoff = now.getTime() - (120 * 1000);
+    connectionHistoryBuffer = connectionHistoryBuffer.filter(point => 
+        point.x.getTime() > cutoff
+    );
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM loaded, restoring last known status...');
     
@@ -372,13 +389,13 @@ function initializeCharts() {
             data: {
                 datasets: [{
                     label: 'PLC Connection Status',
-                    data: [],
+                    data: [...connectionHistoryBuffer],
                     borderColor: '#4CAF50',
                     backgroundColor: 'rgba(76, 175, 80, 0.1)',
                     borderWidth: 2,
                     pointRadius: 3,
                     pointBackgroundColor: '#4CAF50',
-                    pointBorderColor: '#fff',
+                    pointBorderColor: '#4CAF50',
                     pointHoverRadius: 5,
                     fill: true
                 }]
@@ -398,6 +415,9 @@ function initializeCharts() {
                         },
                         grid: {
                             color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: 'white'
                         }
                     },
                     y: {
@@ -407,6 +427,7 @@ function initializeCharts() {
                             color: 'rgba(255, 255, 255, 0.1)'
                         },
                         ticks: {
+                            color: 'white',
                             callback: function(value) {
                                 if(value === 0) return 'Disconnected';
                                 if(value === 1) return 'Connected';
@@ -416,6 +437,11 @@ function initializeCharts() {
                     }
                 },
                 plugins: {
+                    legend: {
+                        labels: {
+                            color: 'white'
+                        }
+                    },
                     tooltip: {
                         callbacks: {
                             label: function(context) {
@@ -444,10 +470,10 @@ function initializeCharts() {
                         borderColor: '#4BC0C0',  // Cyan color
                         backgroundColor: 'rgba(75, 192, 192, 0.1)',
                         borderWidth: 2,
-                        pointRadius: 2,          // Smaller points
+                        pointRadius: 2,
                         pointBackgroundColor: '#4BC0C0',
                         pointBorderColor: '#4BC0C0',
-                        tension: 0.3,            // Slight curve to lines
+                        tension: 0.3,
                         fill: true
                     },
                     {
@@ -456,10 +482,10 @@ function initializeCharts() {
                         borderColor: '#FF6B6B',  // Coral red color
                         backgroundColor: 'rgba(255, 107, 107, 0.1)',
                         borderWidth: 2,
-                        pointRadius: 2,          // Smaller points
+                        pointRadius: 2,
                         pointBackgroundColor: '#FF6B6B',
                         pointBorderColor: '#FF6B6B',
-                        tension: 0.3,            // Slight curve to lines
+                        tension: 0.3,
                         fill: true
                     }
                 ]
@@ -482,18 +508,18 @@ function initializeCharts() {
                             drawBorder: false
                         },
                         ticks: {
-                            color: '#aaa'
+                            color: 'white'
                         }
                     },
                     y: {
                         min: 0,
-                        suggestedMax: 10,  // Initial max that will be updated dynamically
+                        suggestedMax: 10,
                         grid: {
                             color: 'rgba(255, 255, 255, 0.1)',
                             drawBorder: false
                         },
                         ticks: {
-                            color: '#aaa',
+                            color: 'white',
                             callback: function(value) {
                                 return value.toFixed(1) + 'V';
                             }
@@ -504,7 +530,7 @@ function initializeCharts() {
                     legend: {
                         position: 'top',
                         labels: {
-                            color: '#fff',
+                            color: 'white',
                             usePointStyle: true,
                             pointStyle: 'circle'
                         }
@@ -597,35 +623,11 @@ window.electron.onConnectionChange((status) => {
 });
 
 function updateStatusChart(connected) {
-    console.log('updateStatusChart called with:', connected);
+    addConnectionDataPoint(connected);
     
-    if (!charts.status) {
-        console.error('Status chart not initialized!');
-        return;
-    }
-
-    try {
-        const now = new Date();
-        const newDataPoint = {
-            x: now,
-            y: connected ? 1 : 0
-        };
-        console.log('Adding new data point:', newDataPoint);
-        
-        charts.status.data.datasets[0].data.push(newDataPoint);
-
-        // Keep only last 30 seconds of data
-        const cutoff = now.getTime() - (30 * 1000);
-        const oldLength = charts.status.data.datasets[0].data.length;
-        charts.status.data.datasets[0].data = charts.status.data.datasets[0].data
-            .filter(point => point.x.getTime() > cutoff);
-        console.log(`Filtered data points: ${oldLength} -> ${charts.status.data.datasets[0].data.length}`);
-
+    if (charts.status) {
+        charts.status.data.datasets[0].data = [...connectionHistoryBuffer];
         charts.status.update('none');
-        console.log('Chart updated successfully');
-    } catch (error) {
-        console.error('Error updating status chart:', error);
-        console.error('Current chart state:', charts.status);
     }
 }
 
@@ -663,31 +665,14 @@ function startChartUpdates() {
     }
 
     chartUpdateInterval = setInterval(() => {
-        if (!charts?.status) {
-            console.error('Status chart not available for update');
-            return;
-        }
-
-        try {
-            const now = new Date();
-            const currentStatus = document.getElementById('plc-data')?.textContent || 'Disconnected';
-            const statusValue = currentStatus === 'Connected to PLC' ? 1 : 0;
-
-            console.log('Adding regular status point:', { time: now, status: statusValue });
-            
-            charts.status.data.datasets[0].data.push({
-                x: now,
-                y: statusValue
-            });
-
-            // Keep last 2 minutes of data instead of 30 seconds
-            const cutoff = now.getTime() - (120 * 1000);  // 120 seconds history
-            charts.status.data.datasets[0].data = charts.status.data.datasets[0].data
-                .filter(point => point.x.getTime() > cutoff);
-            
+        const currentStatus = document.getElementById('plc-data')?.textContent || 'Disconnected';
+        const statusValue = currentStatus === 'Connected to PLC' ? 1 : 0;
+        
+        addConnectionDataPoint(statusValue);
+        
+        if (charts.status) {
+            charts.status.data.datasets[0].data = [...connectionHistoryBuffer];
             charts.status.update('none');
-        } catch (error) {
-            console.error('Error updating status chart:', error);
         }
     }, 1000);
 }
@@ -696,5 +681,30 @@ function startChartUpdates() {
 window.addEventListener('beforeunload', () => {
     if (chartUpdateInterval) {
         clearInterval(chartUpdateInterval);
+    }
+});
+
+// Optional: Save buffer to localStorage when window is hidden
+document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') {
+        localStorage.setItem('connectionHistory', JSON.stringify(connectionHistoryBuffer));
+    }
+});
+
+// Optional: Restore buffer from localStorage when page loads
+document.addEventListener('DOMContentLoaded', () => {
+    const savedHistory = localStorage.getItem('connectionHistory');
+    if (savedHistory) {
+        const parsedHistory = JSON.parse(savedHistory);
+        // Convert string dates back to Date objects
+        connectionHistoryBuffer = parsedHistory.map(point => ({
+            x: new Date(point.x),
+            y: point.y
+        }));
+        // Remove any stale data
+        const cutoff = Date.now() - (120 * 1000);
+        connectionHistoryBuffer = connectionHistoryBuffer.filter(point => 
+            new Date(point.x).getTime() > cutoff
+        );
     }
 });

@@ -1,31 +1,16 @@
-class FaultBanner {
-    constructor() {
-        this.acknowledgedFaults = new Set();
-        this.initialize();
-    }
+// Create a global FaultHandler object that the HTML can reference
+window.FaultHandler = {
+    acknowledgedFaults: new Set(),
 
-    initialize() {
-        //console.log('Initializing FaultBanner');
-        
-        // Add event listener for PLC data
-        window.electron.receiveData((data) => {
-            // Wrap in try-catch to prevent errors from breaking other functionality
-            try {
-                this.handleFaultData(data);
-            } catch (error) {
-                console.error('Error handling fault data:', error);
-            }
-        });
-
-        // Add click handler for acknowledge button
+    initializeFaultHandling: function() {
         const acknowledgeButton = document.getElementById('acknowledge-fault');
         if (acknowledgeButton) {
             acknowledgeButton.addEventListener('click', () => this.acknowledgeFaults());
         }
-    }
+    },
 
-    handleFaultData(data) {
-        if (!data || !data.faults || !data.faults.faults) {
+    handleFaultBanner: function(faultsData) {
+        if (!faultsData || !faultsData.faults) {
             return;
         }
 
@@ -37,7 +22,7 @@ class FaultBanner {
         }
 
         // Get active faults
-        const activeFaults = Object.entries(data.faults.faults)
+        const activeFaults = Object.entries(faultsData.faults)
             .filter(([_, isActive]) => isActive)
             .map(([faultName]) => faultName);
 
@@ -57,9 +42,9 @@ class FaultBanner {
             faultBanner.classList.add('hidden');
             this.acknowledgedFaults.clear();
         }
-    }
+    },
 
-    acknowledgeFaults() {
+    acknowledgeFaults: function() {
         const faultBanner = document.getElementById('fault-banner');
         const faultMessage = document.getElementById('fault-message');
         
@@ -73,9 +58,4 @@ class FaultBanner {
             faultBanner.classList.add('hidden');
         }
     }
-}
-
-// Create instance when script loads
-//console.log('Forcing banner script started');
-const faultBanner = new FaultBanner();
-//console.log('ForcingBanner object created:', faultBanner); 
+};
