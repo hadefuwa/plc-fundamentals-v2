@@ -30,7 +30,7 @@ const path = require('path');
 // Import nodes7 library for Siemens S7 PLC communication
 const nodes7 = require('nodes7');
 // Import DB1 structure and handler functions
-const db1Structure = require('./db1.json');
+const db1Path = path.join(__dirname, 'db1.json');
 const { getDB1Items, formatDB1Data, logDB1Values, getAnalogueWriteAddress } = require('./db1Handler');
 // Import DB Faults structure and handler functions
 const dbFaultsStructure = require('./dbFaults.json');
@@ -348,7 +348,8 @@ function createWindow() {
             contextIsolation: true,        // Enable context isolation
             preload: path.join(__dirname, 'preload.js')  // Use preload script
         },
-        show: false  // Don't show until ready
+        show: false,  // Don't show until ready
+        icon: path.join(__dirname, 'assets', 'icons', 'matrix-icon.png'),
     });
 
     win.loadFile('index.html');

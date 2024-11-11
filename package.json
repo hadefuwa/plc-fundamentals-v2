@@ -1,6 +1,6 @@
 {
   "name": "plc-base-module",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "HMI interface for Matrix PLC Base Module Product",
   "main": "main.js",
   "scripts": {
@@ -17,7 +17,8 @@
       "index.html",
       "renderer.js",
       "package.json",
-      "assets/**/*"
+      "assets/**/*",
+      "db1.json"
     ],
     "directories": {
       "buildResources": "assets"
@@ -28,7 +29,16 @@
         "owner": "hadefuwa",
         "repo": "plc-base-module"
       }
-    ]
+    ],
+    "win": {
+      "icon": "assets/icons/matrix-icon.ico"
+    },
+    "mac": {
+      "icon": "assets/icons/matrix-icon.icns"
+    },
+    "linux": {
+      "icon": "assets/icons/matrix-icon.png"
+    }
   },
   "repository": {
     "type": "git",
@@ -43,8 +53,7 @@
     "datatables.net-buttons": "^3.1.2",
     "html2canvas": "^1.4.1",
     "jquery": "^3.7.1",
-    "nodes7": "^0.3.18",
-    "plc-base-module": "file:"
+    "nodes7": "^0.3.18"
   },
   "devDependencies": {
     "electron": "^25.9.8",
