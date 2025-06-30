@@ -942,4 +942,46 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// PDF Integration Functions
+function openPDF(pdfPath) {
+    console.log('Opening PDF:', pdfPath);
+    // Create a file URL for the PDF
+    const fileUrl = `file:///${pdfPath.replace(/\\/g, '/')}`;
+    // Navigate to pdf-viewer.html with the PDF path as a query parameter
+    window.location.href = `pdf-viewer.html?pdf=${encodeURIComponent(fileUrl)}`;
+}
+
+// Add showPDF function that works the same way as openPDF
+function showPDF(pdfPath) {
+    console.log('Showing PDF:', pdfPath);
+    // Create a file URL for the PDF
+    const fileUrl = `file:///${pdfPath.replace(/\\/g, '/')}`;
+    // Navigate to pdf-viewer.html with the PDF path as a query parameter
+    window.location.href = `pdf-viewer.html?pdf=${encodeURIComponent(fileUrl)}`;
+}
+
+// Add hover effects for PDF buttons when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Add PDF button hover effects
+    function addPDFButtonEffects() {
+        const pdfButtons = document.querySelectorAll('.pdf-button');
+        pdfButtons.forEach(button => {
+            button.addEventListener('mouseenter', function() {
+                this.style.background = '#555';
+                this.style.transform = 'translateY(-2px)';
+                this.style.boxShadow = '0 4px 8px rgba(0,0,0,0.3)';
+            });
+            
+            button.addEventListener('mouseleave', function() {
+                this.style.background = '#444';
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = 'none';
+            });
+        });
+    }
+    
+    // Call after a short delay to ensure elements are rendered
+    setTimeout(addPDFButtonEffects, 100);
+});
+
 

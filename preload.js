@@ -35,4 +35,5 @@ contextBridge.exposeInMainWorld('electron', {
         ipcRenderer.send('modify-analogue', { channel, type, value });
     },
     printChart: (chartDataUrl) => ipcRenderer.invoke('print-chart', chartDataUrl),
+    openPDF: (pdfPath) => ipcRenderer.send('open-pdf', pdfPath),
 }) 

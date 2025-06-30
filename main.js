@@ -25,13 +25,18 @@
  */
 
 // Import required Electron modules for app management and window creation
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, protocol } = require('electron');
+
+// Import electron-pdf-window for PDF viewing
+const PDFWindow = require('electron-pdf-window');
 
 // Add command line switches to handle SSL certificates for HMI server
 app.commandLine.appendSwitch('ignore-certificate-errors');
 app.commandLine.appendSwitch('ignore-ssl-errors');
 app.commandLine.appendSwitch('ignore-certificate-errors-spki-list');
 app.commandLine.appendSwitch('disable-web-security');
+app.commandLine.appendSwitch('allow-file-access-from-files');
+app.commandLine.appendSwitch('allow-file-access-from-file-urls');
 app.commandLine.appendSwitch('disable-features', 'VizDisplayCompositor');
 app.commandLine.appendSwitch('disable-site-isolation-trials');
 const path = require('path');
@@ -80,6 +85,7 @@ const RECONNECT_DELAY = 5000;     // Wait 5 seconds between reconnection attempt
 // Additional application windows
 let analogueWindow = null;        // Window for analogue value display
 let detailsWindow = null;         // Window for detailed PLC information
+let pdfWindow = null;             // Window for PDF viewer
 
 // Application state management
 let plcData = {};                 // Current PLC data cache
@@ -121,6 +127,24 @@ ipcMain.on('write-plc', () => {
 // Handle request to open details window
 ipcMain.on('open-details', (_, dataType) => {
     createDetailsWindow(dataType);
+});
+
+// Handle request to open PDF directly in system's default viewer
+ipcMain.on('open-pdf', (_, pdfPath) => {
+    // Build the full path to the PDF
+    const fullPath = path.join(__dirname, pdfPath);
+    console.log('Opening PDF in default viewer:', fullPath);
+    
+    // Open the PDF in the default application
+    require('electron').shell.openPath(fullPath)
+        .then(result => {
+            if (result) {
+                console.error('Error opening PDF:', result);
+            }
+        })
+        .catch(error => {
+            console.error('Failed to open PDF:', error);
+        });
 });
 
 // Utility function to clear all active timers
@@ -348,9 +372,11 @@ function initiatePLCConnection() {
 
 // Function to create the main application window
 function createWindow() {
+    // Create the browser window
     win = new BrowserWindow({
         width: 1920,
         height: 1080,
+        autoHideMenuBar: true,             // Hide the File, Edit, View menu
         webPreferences: {
             nodeIntegration: false,        // Disable node integration for security
             contextIsolation: true,        // Enable context isolation
@@ -358,6 +384,7 @@ function createWindow() {
             allowRunningInsecureContent: true,  // Allow HTTP content
             experimentalFeatures: true,    // Enable experimental features
             webviewTag: true,              // Enable webview tag
+            allowFileAccessFromFileURLs: true,
             preload: path.join(__dirname, 'preload.js')  // Use preload script
         },
         show: false,  // Don't show until ready
@@ -365,7 +392,22 @@ function createWindow() {
     });
 
     win.loadFile('index.html');
-
+    
+    // Allow navigation between index.html and pdf-viewer.html
+    win.webContents.on('will-navigate', (event, url) => {
+        const parsedUrl = new URL(url);
+        const pathname = parsedUrl.pathname.toLowerCase();
+        
+        // Allow navigation to pdf-viewer.html and index.html
+        if (pathname.endsWith('pdf-viewer.html') || pathname.endsWith('index.html')) {
+            console.log('Allowing navigation to:', url);
+        } else {
+            // Prevent navigation to other URLs
+            event.preventDefault();
+            console.log('Navigation prevented:', url);
+        }
+    });
+    
     // Configure session to ignore certificate errors for HMI server
     win.webContents.session.setCertificateVerifyProc((request, callback) => {
         const { hostname } = request;
@@ -376,7 +418,7 @@ function createWindow() {
             callback(-2); // Use default verification for other hosts
         }
     });
-
+    
     // Show window when ready and initiate PLC connection
     win.once('ready-to-show', () => {
         win.maximize();
@@ -387,6 +429,7 @@ function createWindow() {
     });
 
     win.on('closed', () => {
+        clearAllTimers();
         win = null;
     });
 
@@ -411,7 +454,56 @@ app.on('certificate-error', (event, webContents, url, error, certificate, callba
 });
 
 // Initialize application when ready
-app.whenReady().then(createWindow);
+app.whenReady().then(() => {
+    // Register a custom protocol to serve PDFs directly
+    protocol.registerFileProtocol('pdf-viewer', (request, callback) => {
+        const url = request.url.replace('pdf-viewer://', '');
+        try {
+            // Decode the URL and resolve the path
+            const decodedPath = decodeURIComponent(url);
+            const filePath = path.isAbsolute(decodedPath) 
+                ? decodedPath 
+                : path.join(__dirname, decodedPath);
+            
+            console.log('PDF Protocol Request:', request.url);
+            console.log('Resolved PDF Path:', filePath);
+            
+            callback({ path: filePath });
+        } catch (error) {
+            console.error('Error handling PDF protocol:', error);
+            callback({ error: -2 });
+        }
+    });
+
+    // Register file protocol handler for regular file URLs
+    protocol.interceptFileProtocol('file', (request, callback) => {
+        let url = request.url.substr(7); // strip "file://"
+        
+        // Handle Windows paths properly
+        if (process.platform === 'win32' && url.startsWith('/')) {
+            url = url.substring(1);
+        }
+        
+        // Remove query parameters for file path resolution
+        let filePath = url;
+        if (url.includes('?')) {
+            filePath = url.split('?')[0];
+        }
+        
+        // Decode URL components
+        filePath = decodeURIComponent(filePath);
+        
+        // If the path doesn't exist, try to resolve it relative to __dirname
+        const resolvedPath = path.isAbsolute(filePath) ? filePath : path.join(__dirname, filePath);
+        
+        console.log('Intercepted file request:', request.url);
+        console.log('Resolved to:', resolvedPath);
+        
+        callback({ path: resolvedPath });
+    });
+
+    createWindow();
+});
 
 // Handle application quit for non-macOS platforms
 app.on('window-all-closed', () => {
@@ -516,9 +608,13 @@ function createDetailsWindow(dataType) {
         width: 1200,      // Increased from default
         height: 800,      // Increased from default
         title: 'PLC Details View',
+        autoHideMenuBar: true,
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,
+            webviewTag: true,
+            webSecurity: false,
+            allowFileAccessFromFileURLs: true,
             preload: path.join(__dirname, 'preload.js')
         }
     });
@@ -671,17 +767,10 @@ ipcMain.handle('print-chart', async (event, htmlContent) => {
   // Wait a bit for the content to render
   await new Promise(resolve => setTimeout(resolve, 500));
 
-  // Print options
+  // Simple print options that work
   const options = {
-    landscape: true,
-    printBackground: true,
-    margins: {
-      marginType: 'custom',
-      top: 0.4,
-      bottom: 0.4,
-      left: 0.4,
-      right: 0.4
-    }
+    silent: false,
+    printBackground: true
   };
 
   // Print and close window

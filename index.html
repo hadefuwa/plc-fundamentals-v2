@@ -83,14 +83,33 @@
          width: 200px;
          height: 100%;
          background: rgba(0, 0, 0, 0.1);
-         border: 1px dashed #444;
+         border: 1px solid #444;
          display: flex;
+         flex-direction: column;
          align-items: center;
          justify-content: center;
-         color: #666;
-         font-size: 12px;
+         gap: 15px;
+         padding: 20px;
        ">
-         Future Analytics 1
+         <div style="color: #00ff88; font-weight: bold; font-size: 14px; margin-bottom: 10px;">
+           Curriculum
+         </div>
+         <button class="pdf-button" onclick="showPDF('docs/CP6773 - Troubleshooting & Fault-Finding Closed Loop Systems.pdf')" style="
+           background: #444; color: white; border: none; padding: 16px 20px;
+           border-radius: 8px; cursor: pointer; font-size: 13px; width: 100%;
+           transition: all 0.3s; display: flex; align-items: center; gap: 10px;
+           font-weight: 500; min-height: 50px;
+         ">
+           Troubleshooting (CP6773)
+         </button>
+         <button class="pdf-button" onclick="showPDF('docs/CP0539 - Industrial Maintenance of Closed Loop Systems.pdf')" style="
+           background: #444; color: white; border: none; padding: 16px 20px;
+           border-radius: 8px; cursor: pointer; font-size: 13px; width: 100%;
+           transition: all 0.3s; display: flex; align-items: center; gap: 10px;
+           font-weight: 500; min-height: 50px;
+         ">
+           Industrial Maintenance (CP0539)
+         </button>
        </div>
        
        <!-- CAD Image Left -->
@@ -143,14 +162,33 @@
          width: 200px;
          height: 100%;
          background: rgba(0, 0, 0, 0.1);
-         border: 1px dashed #444;
+         border: 1px solid #444;
          display: flex;
+         flex-direction: column;
          align-items: center;
          justify-content: center;
-         color: #666;
-         font-size: 12px;
+         gap: 15px;
+         padding: 20px;
        ">
-         Future Analytics 2
+         <div style="color: #00ff88; font-weight: bold; font-size: 14px; margin-bottom: 10px;">
+           Documentation
+         </div>
+         <button class="pdf-button" onclick="openPDF('docs/IM0004 - Maintenance of Closed Loop Systems User Manual.pdf')" style="
+           background: #444; color: white; border: none; padding: 16px 20px;
+           border-radius: 8px; cursor: pointer; font-size: 13px; width: 100%;
+           transition: all 0.3s; display: flex; align-items: center; gap: 10px;
+           font-weight: 500; min-height: 50px;
+         ">
+           User Manual (IM0004)
+         </button>
+         <button class="pdf-button" onclick="openPDF('docs/IM0004 Electrical Drawings RevG.pdf')" style="
+           background: #444; color: white; border: none; padding: 16px 20px;
+           border-radius: 8px; cursor: pointer; font-size: 13px; width: 100%;
+           transition: all 0.3s; display: flex; align-items: center; gap: 10px;
+           font-weight: 500; min-height: 50px;
+         ">
+           Electrical Drawings
+         </button>
        </div>
      </div>
   </div>
@@ -393,7 +431,77 @@
       <!-- Fault Banner Script -->
       <script src="fault-banner.js"></script>
 
-      <!-- HMI Fullscreen Modal (will be created dynamically) -->
-      
+      <!-- PDF Loading Popup -->
+      <div id="pdf-loading-popup" style="
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 20px 40px;
+        border-radius: 8px;
+        z-index: 9999;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        text-align: center;
+      ">
+        <div style="margin-bottom: 15px; font-size: 18px;">Opening PDF...</div>
+        <div class="loading-spinner" style="
+          width: 40px;
+          height: 40px;
+          margin: 0 auto;
+          border: 4px solid rgba(255, 255, 255, 0.3);
+          border-radius: 50%;
+          border-top: 4px solid #00ff88;
+          animation: spin 1s linear infinite;
+        "></div>
+      </div>
+
+      <style>
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      </style>
+
+      <!-- PDF Navigation Functions -->
+      <script>
+          function openPDF(pdfPath) {
+              console.log('Opening PDF:', pdfPath);
+              
+              // Show loading popup
+              const popup = document.getElementById('pdf-loading-popup');
+              popup.style.display = 'block';
+              
+              // Use the IPC method to open PDF in the system's default viewer
+              if (window.electron && window.electron.openPDF) {
+                  window.electron.openPDF(pdfPath);
+              }
+              
+              // Hide popup after 5 seconds
+              setTimeout(() => {
+                  popup.style.display = 'none';
+              }, 5000);
+          }
+
+          function showPDF(pdfPath) {
+              console.log('Showing PDF:', pdfPath);
+              
+              // Show loading popup
+              const popup = document.getElementById('pdf-loading-popup');
+              popup.style.display = 'block';
+              
+              // Use the IPC method to open PDF in the system's default viewer
+              if (window.electron && window.electron.openPDF) {
+                  window.electron.openPDF(pdfPath);
+              }
+              
+              // Hide popup after 5 seconds
+              setTimeout(() => {
+                  popup.style.display = 'none';
+              }, 5000);
+          }
+      </script>
 </body>
 </html>
