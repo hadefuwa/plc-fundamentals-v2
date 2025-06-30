@@ -848,3 +848,98 @@ document.getElementById('print-analogue').addEventListener('click', async functi
         console.error('Error preparing chart for print:', error);
     }
 });
+
+// HMI Webview Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // HMI Interface Controls
+    const hmiWebview = document.getElementById('hmi-webview');
+    const hmiStatus = document.getElementById('hmi-status');
+    const refreshHmiBtn = document.getElementById('refresh-hmi');
+    const zoomInHmiBtn = document.getElementById('zoom-in-hmi');
+    const zoomOutHmiBtn = document.getElementById('zoom-out-hmi');
+    const resetZoomHmiBtn = document.getElementById('reset-zoom-hmi');
+
+    let currentZoomLevel = 0; // 0 = 100%
+
+    // Show status message
+    function showHmiStatus(message, duration = 2000) {
+        if (hmiStatus) {
+            hmiStatus.textContent = message;
+            hmiStatus.classList.remove('hidden');
+            setTimeout(() => {
+                hmiStatus.classList.add('hidden');
+            }, duration);
+        }
+    }
+
+    // Webview event listeners
+    if (hmiWebview) {
+        hmiWebview.addEventListener('dom-ready', function() {
+            console.log('HMI interface loaded successfully');
+            // Set default zoom to 80%
+            currentZoomLevel = -0.5;
+            hmiWebview.setZoomLevel(currentZoomLevel);
+            showHmiStatus('HMI Interface Ready - Zoom: 80%');
+        });
+
+        hmiWebview.addEventListener('did-start-loading', function() {
+            console.log('HMI interface loading...');
+            showHmiStatus('Loading HMI Interface...', 5000);
+        });
+
+        hmiWebview.addEventListener('did-fail-load', function(event) {
+            console.error('HMI interface failed to load:', event.errorDescription);
+            showHmiStatus('Failed to load HMI Interface', 5000);
+        });
+    }
+
+    // Control button events
+    if (refreshHmiBtn) {
+        refreshHmiBtn.addEventListener('click', function() {
+            console.log('Refreshing HMI interface');
+            showHmiStatus('Refreshing...');
+            if (hmiWebview) {
+                hmiWebview.reload();
+            }
+        });
+    }
+
+    if (zoomOutHmiBtn) {
+        zoomOutHmiBtn.addEventListener('click', function() {
+            if (hmiWebview) {
+                currentZoomLevel -= 0.25;
+                if (currentZoomLevel < -2) currentZoomLevel = -2;
+                hmiWebview.setZoomLevel(currentZoomLevel);
+                const zoomPercent = Math.round(Math.pow(1.2, currentZoomLevel) * 100);
+                console.log('Zoom OUT - Level:', currentZoomLevel, 'Percent:', zoomPercent + '%');
+                showHmiStatus(`Zoom: ${zoomPercent}%`, 1000);
+            }
+        });
+    }
+
+    if (zoomInHmiBtn) {
+        zoomInHmiBtn.addEventListener('click', function() {
+            if (hmiWebview) {
+                currentZoomLevel += 0.25;
+                if (currentZoomLevel > 2) currentZoomLevel = 2;
+                hmiWebview.setZoomLevel(currentZoomLevel);
+                const zoomPercent = Math.round(Math.pow(1.2, currentZoomLevel) * 100);
+                console.log('Zoom IN - Level:', currentZoomLevel, 'Percent:', zoomPercent + '%');
+                showHmiStatus(`Zoom: ${zoomPercent}%`, 1000);
+            }
+        });
+    }
+
+    if (resetZoomHmiBtn) {
+        resetZoomHmiBtn.addEventListener('click', function() {
+            if (hmiWebview) {
+                currentZoomLevel = 0;
+                hmiWebview.setZoomLevel(currentZoomLevel);
+                console.log('Reset zoom to 100%');
+                showHmiStatus('Zoom: 100%', 1000);
+            }
+        });
+    }
+});
+
+

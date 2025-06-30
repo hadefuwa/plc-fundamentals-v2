@@ -1,4 +1,4 @@
-# PLC Base Module
+# Closed Loop Maintenance
 
 This is a basic HMI app built with Electron.js to communicate with Siemens S7 PLCs. Follow these steps to set up and run the application.
 

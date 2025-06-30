@@ -1069,11 +1069,6 @@ h1 {
     }
 }
 
-/* Add this to your JavaScript to set animation order */
-document.querySelectorAll('.dashboard-item').forEach((item, index) => {
-    item.style.setProperty('--animation-order', index + 1);
-});
-
 /* Update the background pattern */
 .background-pattern {
     content: '';
@@ -1247,7 +1242,7 @@ document.querySelectorAll('.dashboard-item').forEach((item, index) => {
 }
 
 .splash-logo {
-  width: 200px;
+  width: 500px;
   opacity: 0;
   transform: scale(0.5);
 }
@@ -1272,4 +1267,138 @@ document.querySelectorAll('.dashboard-item').forEach((item, index) => {
   color: #fff;
   font-family: 'Arial', sans-serif;
   opacity: 0;
+}
+
+/* HMI Webview Styles */
+.hmi-container {
+    position: relative;
+    width: 100%;
+    height: 800px;
+    min-height: 600px;
+    background-color: rgba(44, 48, 51, 0.8);
+    border-radius: 8px;
+    overflow: auto;
+    border: 2px solid rgba(157, 165, 177, 0.2);
+    transition: all 0.3s ease;
+}
+
+.hmi-container:hover {
+    border-color: rgba(157, 165, 177, 0.4);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.hmi-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background-color: white;
+    border-radius: 6px;
+    transition: opacity 0.3s ease;
+    display: block;
+    object-fit: contain;
+}
+
+.hmi-iframe:not([src]) {
+    opacity: 0;
+}
+
+.hmi-status {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #9da5b1;
+    font-size: 16px;
+    text-align: center;
+    z-index: 2;
+    background-color: rgba(44, 48, 51, 0.9);
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid rgba(157, 165, 177, 0.2);
+}
+
+.hmi-status.hidden {
+    display: none;
+}
+
+/* Full-screen modal styles */
+.hmi-fullscreen-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.95);
+    z-index: 9999;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.hmi-fullscreen-modal.active {
+    display: flex;
+}
+
+.hmi-fullscreen-content {
+    width: 95%;
+    height: 90%;
+    position: relative;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.hmi-fullscreen-header {
+    background-color: rgba(44, 48, 51, 0.95);
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+
+.hmi-fullscreen-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.hmi-fullscreen-close:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.hmi-fullscreen-iframe {
+    width: 100%;
+    height: calc(100% - 60px);
+    border: none;
+}
+
+/* Special styling for HMI panel */
+.hmi-panel {
+    min-height: 650px;
+}
+
+.hmi-panel .hmi-container {
+    height: 800px;
+    min-height: 600px;
+}
+
+/* Make HMI panel responsive */
+@media (max-height: 900px) {
+    .hmi-panel .hmi-container {
+        height: 500px;
+        min-height: 350px;
+    }
+}
+
+@media (min-height: 1200px) {
+    .hmi-panel .hmi-container {
+        height: 700px;
+        min-height: 500px;
+    }
 }

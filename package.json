@@ -1,7 +1,7 @@
 {
-  "name": "plc-base-module",
+  "name": "matrix-plc-interface",
   "version": "0.3.3",
-  "description": "HMI interface for Matrix PLC Base Module Product",
+  "description": "HMI interface for Matrix Closed Loop Maintenance Product",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -10,8 +10,8 @@
     "build": "electron-builder --publish always"
   },
   "build": {
-    "appId": "com.Matrix.plc-base",
-    "productName": "Matrix PLC Base Module",
+    "appId": "com.matrix.plc.interface",
+    "productName": "Matrix Closed Loop Maintenance",
     "files": [
       "main.js",
       "index.html",

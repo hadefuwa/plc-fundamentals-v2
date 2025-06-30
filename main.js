@@ -26,6 +26,14 @@
 
 // Import required Electron modules for app management and window creation
 const { app, BrowserWindow, ipcMain } = require('electron');
+
+// Add command line switches to handle SSL certificates for HMI server
+app.commandLine.appendSwitch('ignore-certificate-errors');
+app.commandLine.appendSwitch('ignore-ssl-errors');
+app.commandLine.appendSwitch('ignore-certificate-errors-spki-list');
+app.commandLine.appendSwitch('disable-web-security');
+app.commandLine.appendSwitch('disable-features', 'VizDisplayCompositor');
+app.commandLine.appendSwitch('disable-site-isolation-trials');
 const path = require('path');
 // Import nodes7 library for Siemens S7 PLC communication
 const nodes7 = require('nodes7');
@@ -62,7 +70,7 @@ let historicalData = {
 };
 
 // PLC connection configuration
-let plcAddress = '192.168.0.99';  // Default PLC IP address
+let plcAddress = '192.168.7.100';  // Default PLC IP address
 let lastEstopState = true;        // Track last known E-Stop state
 
 // Reconnection handling
@@ -346,6 +354,10 @@ function createWindow() {
         webPreferences: {
             nodeIntegration: false,        // Disable node integration for security
             contextIsolation: true,        // Enable context isolation
+            webSecurity: false,            // Allow loading external web content
+            allowRunningInsecureContent: true,  // Allow HTTP content
+            experimentalFeatures: true,    // Enable experimental features
+            webviewTag: true,              // Enable webview tag
             preload: path.join(__dirname, 'preload.js')  // Use preload script
         },
         show: false,  // Don't show until ready
@@ -353,6 +365,17 @@ function createWindow() {
     });
 
     win.loadFile('index.html');
+
+    // Configure session to ignore certificate errors for HMI server
+    win.webContents.session.setCertificateVerifyProc((request, callback) => {
+        const { hostname } = request;
+        if (hostname === '192.168.7.101') {
+            console.log('Bypassing certificate verification for HMI server');
+            callback(0); // Accept the certificate
+        } else {
+            callback(-2); // Use default verification for other hosts
+        }
+    });
 
     // Show window when ready and initiate PLC connection
     win.once('ready-to-show', () => {
@@ -374,6 +397,18 @@ function createWindow() {
         return { action: 'deny' }; // Prevents new window from being created
     });
 }
+
+// Handle certificate errors for HMI web server
+app.on('certificate-error', (event, webContents, url, error, certificate, callback) => {
+    // Check if this is our HMI server
+    if (url.startsWith('https://192.168.7.101')) {
+        console.log('Ignoring certificate error for HMI server:', url);
+        event.preventDefault();
+        callback(true); // Trust the certificate
+    } else {
+        callback(false); // Use default behavior for other URLs
+    }
+});
 
 // Initialize application when ready
 app.whenReady().then(createWindow);
