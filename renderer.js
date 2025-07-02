@@ -945,14 +945,16 @@ document.addEventListener('DOMContentLoaded', function() {
     // Webview event listeners
     if (hmiWebview) {
         // Set initial zoom level
-        const setDefaultZoom = () => {
+        const setDefaultZoom = async () => {
             try {
-                // Set default zoom to 116%
-                currentZoomLevel = Math.log(1.16) / Math.log(1.2); // Calculate zoom level for 116%
+                // Get saved settings
+                const settings = await window.electron.getSettings();
+                // Set zoom from settings
+                currentZoomLevel = Math.log(settings.hmiZoomLevel / 100) / Math.log(1.2);
                 hmiWebview.setZoomLevel(currentZoomLevel);
                 const zoomPercent = Math.round(Math.pow(1.2, currentZoomLevel) * 100);
                 console.log('Setting default zoom level:', currentZoomLevel, 'Zoom:', zoomPercent + '%');
-                showHmiStatus('HMI Interface Ready - Zoom: 116%');
+                showHmiStatus(`HMI Interface Ready - Zoom: ${zoomPercent}%`);
             } catch (error) {
                 console.warn('Failed to set zoom level:', error);
             }
@@ -989,7 +991,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     if (zoomOutHmiBtn) {
-        zoomOutHmiBtn.addEventListener('click', function() {
+        zoomOutHmiBtn.addEventListener('click', async function() {
             if (hmiWebview) {
                 currentZoomLevel -= 0.1;  // Smaller increments for finer control
                 if (currentZoomLevel < -2) currentZoomLevel = -2;
@@ -997,12 +999,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 const zoomPercent = Math.round(Math.pow(1.2, currentZoomLevel) * 100);
                 console.log('Zoom OUT - Level:', currentZoomLevel, 'Percent:', zoomPercent + '%');
                 showHmiStatus(`Zoom: ${zoomPercent}%`, 1000);
+                
+                // Save the new zoom level
+                const settings = await window.electron.getSettings();
+                settings.hmiZoomLevel = zoomPercent;
+                await window.electron.saveSettings(settings);
             }
         });
     }
 
     if (zoomInHmiBtn) {
-        zoomInHmiBtn.addEventListener('click', function() {
+        zoomInHmiBtn.addEventListener('click', async function() {
             if (hmiWebview) {
                 currentZoomLevel += 0.1;  // Smaller increments for finer control
                 if (currentZoomLevel > 2) currentZoomLevel = 2;
@@ -1010,18 +1017,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 const zoomPercent = Math.round(Math.pow(1.2, currentZoomLevel) * 100);
                 console.log('Zoom IN - Level:', currentZoomLevel, 'Percent:', zoomPercent + '%');
                 showHmiStatus(`Zoom: ${zoomPercent}%`, 1000);
+                
+                // Save the new zoom level
+                const settings = await window.electron.getSettings();
+                settings.hmiZoomLevel = zoomPercent;
+                await window.electron.saveSettings(settings);
             }
         });
     }
 
     if (resetZoomHmiBtn) {
-        resetZoomHmiBtn.addEventListener('click', function() {
+        resetZoomHmiBtn.addEventListener('click', async function() {
             if (hmiWebview) {
-                // Reset to 116%
-                currentZoomLevel = Math.log(1.16) / Math.log(1.2);
+                const settings = await window.electron.getSettings();
+                currentZoomLevel = Math.log(settings.hmiZoomLevel / 100) / Math.log(1.2);
                 hmiWebview.setZoomLevel(currentZoomLevel);
-                console.log('Reset zoom to 116%');
-                showHmiStatus('Zoom: 116%', 1000);
+                const zoomPercent = settings.hmiZoomLevel;
+                console.log('Reset zoom to saved default:', zoomPercent + '%');
+                showHmiStatus(`Zoom: ${zoomPercent}%`, 1000);
             }
         });
     }
@@ -1068,5 +1081,116 @@ document.addEventListener('DOMContentLoaded', function() {
     // Call after a short delay to ensure elements are rendered
     setTimeout(addPDFButtonEffects, 100);
 });
+
+// Settings Management
+const defaultSettings = {
+    hmiIpAddress: '192.168.0.1',
+    hmiZoomLevel: 116,
+    autoRefreshInterval: 0
+};
+
+function loadSettings() {
+    try {
+        const savedSettings = localStorage.getItem('appSettings');
+        return savedSettings ? JSON.parse(savedSettings) : defaultSettings;
+    } catch (error) {
+        console.error('Error loading settings:', error);
+        return defaultSettings;
+    }
+}
+
+function saveSettings(settings) {
+    try {
+        localStorage.setItem('appSettings', JSON.stringify(settings));
+        return true;
+    } catch (error) {
+        console.error('Error saving settings:', error);
+        return false;
+    }
+}
+
+// Initialize settings page if we're on it
+document.addEventListener('DOMContentLoaded', function() {
+    const isSettingsPage = document.getElementById('settings-btn');
+    if (isSettingsPage) {
+        const settings = loadSettings();
+        
+        // Initialize input values
+        document.getElementById('hmi-ip').value = settings.hmiIpAddress;
+        document.getElementById('hmi-zoom').value = settings.hmiZoomLevel;
+        document.getElementById('auto-refresh').value = settings.autoRefreshInterval;
+
+        // Save settings button
+        document.getElementById('save-settings').addEventListener('click', function() {
+            const newSettings = {
+                hmiIpAddress: document.getElementById('hmi-ip').value,
+                hmiZoomLevel: parseInt(document.getElementById('hmi-zoom').value),
+                autoRefreshInterval: parseInt(document.getElementById('auto-refresh').value)
+            };
+
+            if (saveSettings(newSettings)) {
+                alert('Settings saved successfully!');
+                // Reload the page to apply new settings
+                window.location.reload();
+            } else {
+                alert('Failed to save settings. Please try again.');
+            }
+        });
+
+        // Reset settings button
+        document.getElementById('reset-settings').addEventListener('click', function() {
+            if (confirm('Are you sure you want to reset all settings to default values?')) {
+                saveSettings(defaultSettings);
+                window.location.reload();
+            }
+        });
+    }
+});
+
+// Update HMI webview initialization to use settings
+if (hmiWebview) {
+    const settings = loadSettings();
+    
+    // Set initial zoom level from settings
+    const setDefaultZoom = () => {
+        try {
+            // Set zoom from settings
+            currentZoomLevel = Math.log(settings.hmiZoomLevel / 100) / Math.log(1.2);
+            hmiWebview.setZoomLevel(currentZoomLevel);
+            const zoomPercent = Math.round(Math.pow(1.2, currentZoomLevel) * 100);
+            console.log('Setting default zoom level:', currentZoomLevel, 'Zoom:', zoomPercent + '%');
+            showHmiStatus(`HMI Interface Ready - Zoom: ${zoomPercent}%`);
+        } catch (error) {
+            console.warn('Failed to set zoom level:', error);
+        }
+    };
+
+    // Auto-refresh timer
+    let autoRefreshTimer = null;
+    const startAutoRefresh = () => {
+        if (settings.autoRefreshInterval > 0) {
+            autoRefreshTimer = setInterval(() => {
+                if (hmiWebview) {
+                    console.log('Auto-refreshing HMI interface');
+                    hmiWebview.reload();
+                }
+            }, settings.autoRefreshInterval * 1000);
+        }
+    };
+
+    // Clear existing timer if any
+    if (autoRefreshTimer) {
+        clearInterval(autoRefreshTimer);
+    }
+
+    // Set zoom when webview is ready
+    hmiWebview.addEventListener('dom-ready', function() {
+        console.log('HMI interface loaded successfully');
+        setDefaultZoom();
+        startAutoRefresh();
+    });
+
+    // ... rest of the existing hmiWebview event listeners ...
+}
 
 
