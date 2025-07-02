@@ -1402,3 +1402,222 @@ h1 {
         min-height: 500px;
     }
 }
+
+/* HMI Section Layout */
+.hmi-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* HMI Zoom Controls */
+.hmi-controls {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.hmi-controls .control-btn {
+    background: #2d2d2d;
+    color: #00ff88;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    min-width: 70px;
+    text-align: center;
+}
+
+.hmi-controls .control-btn:hover {
+    background: #3d3d3d;
+    transform: translateY(-1px);
+}
+
+.hmi-controls .control-btn:active {
+    transform: translateY(0);
+    background: #222;
+}
+
+/* Responsive adjustments */
+@media (max-width: 999px) {
+    .hmi-controls {
+        justify-content: center;
+    }
+}
+
+/* Navigation Styles */
+.main-navigation {
+    background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+    border-bottom: 3px solid #00ff88;
+    padding: 0;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 0;
+}
+
+.nav-logo img {
+    height: 40px;
+    width: auto;
+}
+
+.nav-logo h1 {
+    color: #00ff88;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 5px;
+}
+
+.nav-item {
+    position: relative;
+}
+
+.nav-link {
+    display: block;
+    padding: 15px 25px;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background: linear-gradient(135deg, #333333, #555555);
+    border: 2px solid transparent;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.nav-link:hover {
+    background: linear-gradient(135deg, #00ff88, #00cc6a);
+    color: #000;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 255, 136, 0.4);
+    border: 2px solid #00ff88;
+}
+
+.nav-link.active {
+    background: linear-gradient(135deg, #00ff88, #00cc6a);
+    color: #000;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(0, 255, 136, 0.5);
+    border: 2px solid #00ff88;
+}
+
+/* Mobile Menu Button */
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: #00ff88;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 10px;
+    transition: all 0.3s ease;
+}
+
+.mobile-menu-btn:hover {
+    color: #fff;
+}
+
+/* Responsive Navigation */
+@media (max-width: 768px) {
+    .nav-container {
+        padding: 0 15px;
+    }
+
+    .nav-logo h1 {
+        display: none; /* Hide the title */
+    }
+
+    .nav-logo img {
+        height: 35px;
+    }
+
+    .mobile-menu-btn {
+        display: block;
+        margin-left: auto; /* Push to the right */
+    }
+
+    .nav-menu {
+        display: none; /* Hide by default */
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+        flex-direction: column;
+        gap: 0;
+        padding: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+    }
+
+    .nav-menu.active {
+        display: flex;
+    }
+
+    .nav-item {
+        width: 100%;
+    }
+
+    .nav-link {
+        width: 100%;
+        text-align: center;
+        padding: 15px;
+        border-radius: 4px;
+        margin: 2px 0;
+    }
+
+    .nav-link:hover {
+        transform: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-logo {
+        gap: 10px;
+    }
+
+    .nav-logo img {
+        height: 30px;
+    }
+
+    .nav-link {
+        font-size: 14px;
+        padding: 12px 20px;
+    }
+
+    .mobile-menu-btn {
+        font-size: 20px;
+        padding: 8px;
+    }
+}

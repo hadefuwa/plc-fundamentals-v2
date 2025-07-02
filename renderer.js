@@ -34,6 +34,49 @@ function addConnectionDataPoint(connected) {
 document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM loaded, restoring last known status...');
     
+    // Mobile Menu Toggle
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const navMenu = document.getElementById('nav-menu');
+    
+    if (mobileMenuBtn && navMenu) {
+        mobileMenuBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent event from bubbling
+            navMenu.classList.toggle('active');
+            // Toggle icon between bars and times (x)
+            const icon = mobileMenuBtn.querySelector('i');
+            if (icon) {
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
+            }
+        });
+
+        // Close menu when clicking anywhere outside
+        document.addEventListener('click', (e) => {
+            if (navMenu.classList.contains('active') && 
+                !navMenu.contains(e.target) && 
+                !mobileMenuBtn.contains(e.target)) {
+                navMenu.classList.remove('active');
+                const icon = mobileMenuBtn.querySelector('i');
+                if (icon) {
+                    icon.classList.add('fa-bars');
+                    icon.classList.remove('fa-times');
+                }
+            }
+        });
+
+        // Close menu when clicking a nav link
+        navMenu.addEventListener('click', (e) => {
+            if (e.target.classList.contains('nav-link')) {
+                navMenu.classList.remove('active');
+                const icon = mobileMenuBtn.querySelector('i');
+                if (icon) {
+                    icon.classList.add('fa-bars');
+                    icon.classList.remove('fa-times');
+                }
+            }
+        });
+    }
+    
     // Restore last known status
     const statusElement = document.getElementById('plc-data');
     if (statusElement && lastKnownStatus !== 'Loading...') {
@@ -892,14 +935,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Webview event listeners
     if (hmiWebview) {
+        // Set initial zoom level
+        const setDefaultZoom = () => {
+            try {
+                // Set default zoom to 95%
+                currentZoomLevel = Math.log(0.95) / Math.log(1.2); // Approximately -0.0873
+                hmiWebview.setZoomLevel(currentZoomLevel);
+                const zoomPercent = Math.round(Math.pow(1.2, currentZoomLevel) * 100);
+                console.log('Setting default zoom level:', currentZoomLevel, 'Zoom:', zoomPercent + '%');
+                showHmiStatus('HMI Interface Ready - Zoom: 95%');
+            } catch (error) {
+                console.warn('Failed to set zoom level:', error);
+            }
+        };
+
+        // Set zoom when webview is ready
         hmiWebview.addEventListener('dom-ready', function() {
             console.log('HMI interface loaded successfully');
-            // Set default zoom to 96%
-            currentZoomLevel = Math.log(0.96) / Math.log(1.2); // Approximately -0.0689
-            hmiWebview.setZoomLevel(currentZoomLevel);
-            const zoomPercent = Math.round(Math.pow(1.2, currentZoomLevel) * 100);
-            console.log('Setting default zoom level:', currentZoomLevel, 'Zoom:', zoomPercent + '%');
-            showHmiStatus('HMI Interface Ready - Zoom: 96%');
+            setDefaultZoom();
+            // Set zoom again after a short delay to ensure it sticks
+            setTimeout(setDefaultZoom, 500);
         });
 
         hmiWebview.addEventListener('did-start-loading', function() {
@@ -927,7 +982,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (zoomOutHmiBtn) {
         zoomOutHmiBtn.addEventListener('click', function() {
             if (hmiWebview) {
-                currentZoomLevel -= 0.25;
+                currentZoomLevel -= 0.1;  // Smaller increments for finer control
                 if (currentZoomLevel < -2) currentZoomLevel = -2;
                 hmiWebview.setZoomLevel(currentZoomLevel);
                 const zoomPercent = Math.round(Math.pow(1.2, currentZoomLevel) * 100);
@@ -940,7 +995,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (zoomInHmiBtn) {
         zoomInHmiBtn.addEventListener('click', function() {
             if (hmiWebview) {
-                currentZoomLevel += 0.25;
+                currentZoomLevel += 0.1;  // Smaller increments for finer control
                 if (currentZoomLevel > 2) currentZoomLevel = 2;
                 hmiWebview.setZoomLevel(currentZoomLevel);
                 const zoomPercent = Math.round(Math.pow(1.2, currentZoomLevel) * 100);
@@ -953,10 +1008,11 @@ document.addEventListener('DOMContentLoaded', function() {
     if (resetZoomHmiBtn) {
         resetZoomHmiBtn.addEventListener('click', function() {
             if (hmiWebview) {
-                currentZoomLevel = 0;
+                // Reset to 95%
+                currentZoomLevel = Math.log(0.95) / Math.log(1.2);
                 hmiWebview.setZoomLevel(currentZoomLevel);
-                console.log('Reset zoom to 100%');
-                showHmiStatus('Zoom: 100%', 1000);
+                console.log('Reset zoom to 95%');
+                showHmiStatus('Zoom: 95%', 1000);
             }
         });
     }

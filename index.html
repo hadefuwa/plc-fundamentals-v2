@@ -338,7 +338,10 @@
         <img src="assets/matrix-logo.png" alt="Matrix Logo">
         <h1>Matrix Closed Loop Maintenance</h1>
       </div>
-      <ul class="nav-menu">
+      <button class="mobile-menu-btn" id="mobile-menu-btn">
+        <i class="fas fa-bars"></i>
+      </button>
+      <ul class="nav-menu" id="nav-menu">
         <li class="nav-item">
           <a href="index.html" class="nav-link active">
             <i class="fas fa-home"></i> Home
@@ -379,15 +382,22 @@
     </div>
 
     <!-- HMI CENTER - MOST IMPORTANT -->
-    <div class="hmi-webview">
-      <div class="hmi-status hidden" id="hmi-status">Loading HMI Interface...</div>
-      <webview 
-        id="hmi-webview" 
-        src="https://192.168.7.101/device/WebRH" 
-        allowpopups
-        disablewebsecurity
-        style="width: 100%; height: 100%; border: none; border-radius: 4px;">
-      </webview>
+    <div class="hmi-section">
+      <div class="hmi-controls">
+        <button class="control-btn" id="zoom-out-hmi">Zoom Out</button>
+        <button class="control-btn" id="zoom-in-hmi">Zoom In</button>
+        <button class="control-btn" id="reset-zoom-hmi">Reset</button>
+      </div>
+      <div class="hmi-webview">
+        <div class="hmi-status hidden" id="hmi-status">Loading HMI Interface...</div>
+        <webview 
+          id="hmi-webview" 
+          src="https://192.168.7.101/device/WebRH" 
+          allowpopups
+          disablewebsecurity
+          style="width: 100%; height: 100%; border: none; border-radius: 4px;">
+        </webview>
+      </div>
     </div>
 
     <!-- RIGHT SIDE - DOCUMENTATION -->
@@ -471,104 +481,6 @@
 
         // Initialize splash screen
         splashScreen.init();
-
-        // HMI Zoom Management
-        const hmiZoomManager = {
-            maxResolution: 1920,
-            breakpoint: 960, // 50% of max resolution
-            zoomDecreaseStep: 0.05, // 5% decrease
-            pixelStep: 50, // Every 50 pixels
-            webviewReady: false,
-
-            init() {
-                // Wait for webview to be ready
-                this.waitForWebview();
-                
-                // Listen for window resize
-                window.addEventListener('resize', () => {
-                    this.adjustZoom();
-                });
-            },
-
-            waitForWebview() {
-                const webview = document.getElementById('hmi-webview');
-                
-                if (!webview) {
-                    setTimeout(() => this.waitForWebview(), 100);
-                    return;
-                }
-
-                // Wait for webview to be ready
-                const checkReady = () => {
-                    if (webview.getWebContents) {
-                        this.webviewReady = true;
-                        console.log('Webview is ready, setting initial zoom');
-                        this.adjustZoom();
-                    } else {
-                        setTimeout(checkReady, 100);
-                    }
-                };
-
-                // Also listen for webview ready events
-                webview.addEventListener('dom-ready', () => {
-                    console.log('Webview DOM ready');
-                    this.webviewReady = true;
-                    this.adjustZoom();
-                });
-
-                webview.addEventListener('did-finish-load', () => {
-                    console.log('Webview finished loading');
-                    this.webviewReady = true;
-                    this.adjustZoom();
-                });
-
-                checkReady();
-            },
-
-            adjustZoom() {
-                const currentWidth = window.innerWidth;
-                const webview = document.getElementById('hmi-webview');
-                
-                if (!webview) return;
-
-                let zoomLevel = 0; // Default zoom level (100%)
-                let zoomFactor = 1.0; // CSS zoom factor
-
-                // Only adjust zoom if below breakpoint
-                if (currentWidth < this.breakpoint) {
-                    const pixelsBelowBreakpoint = this.breakpoint - currentWidth;
-                    const stepsBelow = Math.floor(pixelsBelowBreakpoint / this.pixelStep);
-                    const zoomDecrease = stepsBelow * this.zoomDecreaseStep;
-                    
-                    // Convert to zoom level (negative values for zoom out)
-                    zoomLevel = -zoomDecrease;
-                    zoomFactor = 1.0 - zoomDecrease;
-                    
-                    console.log(`Screen width: ${currentWidth}px, Zoom level: ${zoomLevel}, Zoom factor: ${zoomFactor}`);
-                }
-
-                // Try multiple zoom methods for reliability
-                if (this.webviewReady) {
-                    try {
-                        webview.setZoomLevel(zoomLevel);
-                        console.log('Applied Electron zoom level:', zoomLevel);
-                    } catch (error) {
-                        console.warn('Electron setZoomLevel failed:', error);
-                    }
-                }
-
-                // CSS zoom as fallback
-                try {
-                    webview.style.zoom = zoomFactor;
-                    console.log('Applied CSS zoom factor:', zoomFactor);
-                } catch (error) {
-                    console.warn('CSS zoom failed:', error);
-                }
-            }
-        };
-
-        // Initialize HMI zoom manager
-        hmiZoomManager.init();
     });
 </script>
 
