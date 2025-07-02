@@ -157,51 +157,274 @@
       box-shadow: 0 6px 20px rgba(74, 158, 255, 0.5) !important;
     }
 
-    /* New Simplified Layout Styles */
-    .curriculum-top, .documentation-bottom {
-      white-space: nowrap;
+    /* Responsive HMI Layout */
+    .hmi-main-container {
+      background: #2d2d2d;
+      margin-bottom: 20px;
+      padding: 20px;
+      border-radius: 8px;
     }
 
-    /* Responsive adjustments for top/bottom button bars */
-    @media (max-width: 1200px) {
-      .curriculum-section, .documentation-section {
-        padding: 10px 15px;
+    .hmi-layout {
+      display: flex;
+      gap: 20px;
+      align-items: stretch;
+      min-height: 600px;
+    }
+
+    /* Side Panels */
+    .side-panel {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      min-width: 200px;
+      max-width: 250px;
+      flex: 0 0 auto;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: bold;
+      font-size: 18px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid;
+    }
+
+    .left-panel .panel-header {
+      color: #00ff88;
+      border-bottom-color: #00ff88;
+    }
+
+    .right-panel .panel-header {
+      color: #4a9eff;
+      border-bottom-color: #4a9eff;
+    }
+
+    .panel-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      flex: 1;
+    }
+
+    .panel-buttons .pdf-button {
+      display: flex !important;
+      align-items: center !important;
+      gap: 15px !important;
+      padding: 20px !important;
+      border-radius: 8px !important;
+      font-size: 16px !important;
+      min-height: 80px !important;
+    }
+
+    .button-text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      line-height: 1.2;
+    }
+
+    .button-title {
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .button-subtitle {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .button-text small {
+      font-size: 12px;
+      opacity: 0.7;
+      margin-top: 4px;
+    }
+
+    /* HMI Center */
+    .hmi-center {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      border: 2px solid #00ff88;
+      padding: 20px;
+    }
+
+    .hmi-status {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.8);
+      color: #00ff88;
+      padding: 8px 16px;
+      border-radius: 5px;
+      font-size: 14px;
+      z-index: 1000;
+      transition: opacity 0.3s;
+    }
+
+    #hmi-webview {
+      width: 100%;
+      height: 100%;
+      min-height: 500px;
+      border: none;
+      border-radius: 4px;
+    }
+
+    /* Responsive Breakpoints */
+    
+    /* Large screens (1400px+) - Full layout */
+    @media (min-width: 1400px) {
+      .side-panel {
+        min-width: 220px;
+        max-width: 250px;
       }
-      .curriculum-section div, .documentation-section div {
-        gap: 20px;
+    }
+
+    /* Medium-large screens (1200-1399px) - Smaller panels */
+    @media (max-width: 1399px) and (min-width: 1200px) {
+      .side-panel {
+        min-width: 180px;
+        max-width: 200px;
+        padding: 15px;
       }
-      .curriculum-top, .documentation-bottom {
+      .panel-buttons .pdf-button {
+        padding: 15px !important;
+        min-height: 70px !important;
         font-size: 14px !important;
-        padding: 12px 20px !important;
+      }
+      .button-title {
+        font-size: 14px;
+      }
+      .button-subtitle {
+        font-size: 12px;
       }
     }
 
-    @media (max-width: 900px) {
-      .curriculum-section div, .documentation-section div {
-        flex-direction: column;
-        gap: 15px;
+    /* Medium screens (900-1199px) - Compact panels */
+    @media (max-width: 1199px) and (min-width: 900px) {
+      .side-panel {
+        min-width: 160px;
+        max-width: 180px;
+        padding: 12px;
       }
-      .curriculum-section div > div, .documentation-section div > div {
-        margin-right: 0;
-        margin-bottom: 10px;
+      .panel-header {
+        font-size: 16px;
+      }
+      .panel-buttons .pdf-button {
+        padding: 12px !important;
+        min-height: 60px !important;
+        font-size: 13px !important;
+      }
+      .button-title {
+        font-size: 13px;
+      }
+      .button-subtitle {
+        font-size: 11px;
       }
     }
 
-    @media (max-width: 600px) {
-      .hmi-section {
-        height: auto;
-        min-height: 400px;
+    /* Small screens (600-899px) - Scale down instead of hiding */
+    @media (max-width: 899px) and (min-width: 600px) {
+      .hmi-main-container {
+        transform: scale(0.85);
+        transform-origin: top center;
+        margin-bottom: -60px; /* Adjust for scaled content */
       }
-      .hmi-container {
-        height: auto !important;
+      .side-panel {
+        min-width: 140px;
+        max-width: 160px;
         padding: 10px;
       }
-      #hmi-webview {
-        height: 400px !important;
+      .panel-header {
+        font-size: 14px;
       }
-      .curriculum-top, .documentation-bottom {
+      .panel-buttons .pdf-button {
+        padding: 10px !important;
+        min-height: 50px !important;
         font-size: 12px !important;
-        padding: 10px 15px !important;
+      }
+      .button-title {
+        font-size: 12px;
+      }
+      .button-subtitle {
+        font-size: 10px;
+      }
+      .button-text small {
+        font-size: 9px;
+      }
+    }
+
+    /* Very small screens (400-599px) - More scaling */
+    @media (max-width: 599px) and (min-width: 400px) {
+      .hmi-main-container {
+        transform: scale(0.7);
+        transform-origin: top center;
+        margin-bottom: -120px; /* Adjust for scaled content */
+      }
+      .side-panel {
+        min-width: 120px;
+        max-width: 140px;
+        padding: 8px;
+      }
+      .panel-header {
+        font-size: 12px;
+      }
+      .panel-buttons .pdf-button {
+        padding: 8px !important;
+        min-height: 45px !important;
+        font-size: 11px !important;
+      }
+      .button-title {
+        font-size: 11px;
+      }
+      .button-subtitle {
+        font-size: 9px;
+      }
+      .button-text small {
+        font-size: 8px;
+      }
+    }
+
+    /* Mobile screens (under 400px) - Maximum scaling */
+    @media (max-width: 399px) {
+      .hmi-main-container {
+        transform: scale(0.6);
+        transform-origin: top center;
+        margin-bottom: -160px; /* Adjust for scaled content */
+      }
+      .side-panel {
+        min-width: 100px;
+        max-width: 120px;
+        padding: 6px;
+      }
+      .panel-header {
+        font-size: 11px;
+      }
+      .panel-buttons .pdf-button {
+        padding: 6px !important;
+        min-height: 40px !important;
+        font-size: 10px !important;
+      }
+      .button-title {
+        font-size: 10px;
+      }
+      .button-subtitle {
+        font-size: 8px;
+      }
+      .button-text small {
+        font-size: 7px;
       }
     }
   </style>
@@ -243,153 +466,73 @@
   
   <div id="error-message" class="error-message"></div>
 
-  <!-- Curriculum Section (Top) -->
-  <div class="curriculum-section" style="
-    background: linear-gradient(135deg, #2d2d2d, #1a1a1a);
-    border-bottom: 2px solid #00ff88;
-    padding: 15px 20px;
-    margin-bottom: 10px;
-  ">
-    <div style="
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 30px;
-      flex-wrap: wrap;
-    ">
-      <div style="
-        color: #00ff88; 
-        font-weight: bold; 
-        font-size: 20px; 
-        text-align: center;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-right: 20px;
-      ">
-        📚 Curriculum
-      </div>
-      <button class="pdf-button pdf-button-curriculum curriculum-top" onclick="showPDF('docs/CP0539 - Industrial Maintenance of Closed Loop Systems.pdf')" style="
-        display: inline-flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 10px;
-        padding: 15px 25px;
-        min-height: auto;
-        font-size: 16px;
-      ">
-        <i class="fas fa-cogs" style="font-size: 20px;"></i>
-        <span>Industrial Maintenance (CP0539)</span>
-      </button>
-      <button class="pdf-button pdf-button-curriculum curriculum-top" onclick="showPDF('docs/CP6773 - Troubleshooting & Fault-Finding Closed Loop Systems.pdf')" style="
-        display: inline-flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 10px;
-        padding: 15px 25px;
-        min-height: auto;
-        font-size: 16px;
-      ">
-        <i class="fas fa-exclamation-triangle" style="font-size: 20px;"></i>
-        <span>Fault Scenarios (CP6773)</span>
-      </button>
-    </div>
-  </div>
-
-  <!-- HMI Web Interface Section (Full Width) -->
-  <div class="hmi-section" style="
-    background: #2d2d2d;
-    border-bottom: 2px solid #444;
-    margin-bottom: 10px;
-  ">
-    <div class="hmi-container" style="
-      width: 100%;
-      height: 600px;
-      position: relative;
-      background: transparent;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    ">
-      <div class="hmi-status hidden" id="hmi-status" style="
-        position: absolute;
-        top: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: rgba(0, 0, 0, 0.8);
-        color: #00ff88;
-        padding: 8px 16px;
-        border-radius: 5px;
-        font-size: 14px;
-        z-index: 1000;
-        transition: opacity 0.3s;
-      ">Loading HMI Interface...</div>
+  <!-- HMI Interface with Responsive Side Panels -->
+  <div class="hmi-main-container">
+    <div class="hmi-layout">
       
-      <!-- HMI Webview (Full Width) -->
-      <webview 
-        id="hmi-webview" 
-        src="https://192.168.7.101/device/WebRH"
-        style="
-          width: 100%;
-          height: 560px;
-          border: 2px solid #00ff88;
-          border-radius: 8px;
-        "
-        allowpopups
-        disablewebsecurity>
-      </webview>
-    </div>
-  </div>
-
-  <!-- Documentation Section (Bottom) -->
-  <div class="documentation-section" style="
-    background: linear-gradient(135deg, #2d2d2d, #1a1a1a);
-    border-top: 2px solid #4a9eff;
-    padding: 15px 20px;
-    margin-top: 10px;
-  ">
-    <div style="
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 30px;
-      flex-wrap: wrap;
-    ">
-      <div style="
-        color: #4a9eff; 
-        font-weight: bold; 
-        font-size: 20px; 
-        text-align: center;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-right: 20px;
-      ">
-        📄 Documentation
+      <!-- Left Panel - Curriculum -->
+      <div class="side-panel left-panel">
+        <div class="panel-header">
+          <i class="fas fa-graduation-cap"></i>
+          <span>Curriculum</span>
+        </div>
+        <div class="panel-buttons">
+          <button class="pdf-button pdf-button-curriculum" onclick="showPDF('docs/CP0539 - Industrial Maintenance of Closed Loop Systems.pdf')">
+            <i class="fas fa-cogs"></i>
+            <div class="button-text">
+              <span class="button-title">Industrial</span>
+              <span class="button-subtitle">Maintenance</span>
+              <small>(CP0539)</small>
+            </div>
+          </button>
+          <button class="pdf-button pdf-button-curriculum" onclick="showPDF('docs/CP6773 - Troubleshooting & Fault-Finding Closed Loop Systems.pdf')">
+            <i class="fas fa-exclamation-triangle"></i>
+            <div class="button-text">
+              <span class="button-title">Fault</span>
+              <span class="button-subtitle">Scenarios</span>
+              <small>(CP6773)</small>
+            </div>
+          </button>
+        </div>
       </div>
-      <button class="pdf-button pdf-button-documentation documentation-bottom" onclick="openPDF('docs/IM0004 - Maintenance of Closed Loop Systems User Manual.pdf')" style="
-        display: inline-flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 10px;
-        padding: 15px 25px;
-        min-height: auto;
-        font-size: 16px;
-      ">
-        <i class="fas fa-book" style="font-size: 20px;"></i>
-        <span>User Manual (IM0004)</span>
-      </button>
-      <button class="pdf-button pdf-button-documentation documentation-bottom" onclick="openPDF('docs/IM0004 Electrical Drawings RevG.pdf')" style="
-        display: inline-flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 10px;
-        padding: 15px 25px;
-        min-height: auto;
-        font-size: 16px;
-      ">
-        <i class="fas fa-drafting-compass" style="font-size: 20px;"></i>
-        <span>Electrical Drawings</span>
-      </button>
+
+      <!-- Center Panel - HMI Interface -->
+      <div class="hmi-center">
+        <div class="hmi-status hidden" id="hmi-status">Loading HMI Interface...</div>
+        <webview 
+          id="hmi-webview" 
+          src="https://192.168.7.101/device/WebRH"
+          allowpopups
+          disablewebsecurity>
+        </webview>
+      </div>
+
+      <!-- Right Panel - Documentation -->
+      <div class="side-panel right-panel">
+        <div class="panel-header">
+          <i class="fas fa-book"></i>
+          <span>Documentation</span>
+        </div>
+        <div class="panel-buttons">
+          <button class="pdf-button pdf-button-documentation" onclick="openPDF('docs/IM0004 - Maintenance of Closed Loop Systems User Manual.pdf')">
+            <i class="fas fa-book"></i>
+            <div class="button-text">
+              <span class="button-title">User</span>
+              <span class="button-subtitle">Manual</span>
+              <small>(IM0004)</small>
+            </div>
+          </button>
+          <button class="pdf-button pdf-button-documentation" onclick="openPDF('docs/IM0004 Electrical Drawings RevG.pdf')">
+            <i class="fas fa-drafting-compass"></i>
+            <div class="button-text">
+              <span class="button-title">Electrical</span>
+              <span class="button-subtitle">Drawings</span>
+              <small>(RevG)</small>
+            </div>
+          </button>
+        </div>
+      </div>
+
     </div>
   </div>
 
