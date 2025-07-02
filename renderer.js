@@ -947,12 +947,12 @@ document.addEventListener('DOMContentLoaded', function() {
         // Set initial zoom level
         const setDefaultZoom = () => {
             try {
-                // Set default zoom to 95%
-                currentZoomLevel = Math.log(0.95) / Math.log(1.2); // Approximately -0.0873
+                // Set default zoom to 116%
+                currentZoomLevel = Math.log(1.16) / Math.log(1.2); // Calculate zoom level for 116%
                 hmiWebview.setZoomLevel(currentZoomLevel);
                 const zoomPercent = Math.round(Math.pow(1.2, currentZoomLevel) * 100);
                 console.log('Setting default zoom level:', currentZoomLevel, 'Zoom:', zoomPercent + '%');
-                showHmiStatus('HMI Interface Ready - Zoom: 95%');
+                showHmiStatus('HMI Interface Ready - Zoom: 116%');
             } catch (error) {
                 console.warn('Failed to set zoom level:', error);
             }
@@ -1017,11 +1017,11 @@ document.addEventListener('DOMContentLoaded', function() {
     if (resetZoomHmiBtn) {
         resetZoomHmiBtn.addEventListener('click', function() {
             if (hmiWebview) {
-                // Reset to 95%
-                currentZoomLevel = Math.log(0.95) / Math.log(1.2);
+                // Reset to 116%
+                currentZoomLevel = Math.log(1.16) / Math.log(1.2);
                 hmiWebview.setZoomLevel(currentZoomLevel);
-                console.log('Reset zoom to 95%');
-                showHmiStatus('Zoom: 95%', 1000);
+                console.log('Reset zoom to 116%');
+                showHmiStatus('Zoom: 116%', 1000);
             }
         });
     }
