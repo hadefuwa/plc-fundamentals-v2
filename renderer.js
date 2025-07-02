@@ -1148,6 +1148,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Update HMI webview initialization to use settings
+const hmiWebview = document.querySelector('webview#hmi-interface');
 if (hmiWebview) {
     const settings = loadSettings();
     
@@ -1189,8 +1190,6 @@ if (hmiWebview) {
         setDefaultZoom();
         startAutoRefresh();
     });
-
-    // ... rest of the existing hmiWebview event listeners ...
 }
 
 
