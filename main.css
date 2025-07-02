@@ -1559,11 +1559,14 @@ h1 {
     .nav-menu {
         width: 100%;
         margin-top: 10px;
-        gap: 10px;
+        flex-direction: column; /* Stack buttons vertically */
+        gap: 8px;
     }
 
     .nav-item {
-        width: 150px; /* Slightly smaller fixed width for tablets */
+        width: 100%; /* Full width */
+        max-width: 300px; /* Maximum width */
+        margin: 0 auto; /* Center the buttons */
     }
 
     .nav-link {
@@ -1572,7 +1575,7 @@ h1 {
     }
 
     .nav-link:hover {
-        transform: translateY(-2px); /* Smaller hover effect on mobile */
+        transform: translateY(-2px);
     }
 }
 
@@ -1586,11 +1589,11 @@ h1 {
     }
 
     .nav-menu {
-        gap: 8px;
+        gap: 6px;
     }
 
     .nav-item {
-        width: 130px; /* Even smaller fixed width for mobile */
+        max-width: 250px; /* Slightly smaller on mobile */
     }
 
     .nav-link {
