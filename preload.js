@@ -36,4 +36,7 @@ contextBridge.exposeInMainWorld('electron', {
     },
     printChart: (chartDataUrl) => ipcRenderer.invoke('print-chart', chartDataUrl),
     openPDF: (pdfPath) => ipcRenderer.send('open-pdf', pdfPath),
+    getSettings: () => ipcRenderer.invoke('get-settings'),
+    saveSettings: (settings) => ipcRenderer.invoke('save-settings', settings),
+    navigate: (page) => ipcRenderer.send('navigate', page),
 }) 

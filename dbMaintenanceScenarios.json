@@ -1,0 +1,221 @@
+{
+    "scenarios": [
+        {
+            "id": 1,
+            "title": "Closed-Loop Control Systems",
+            "paragraphs": [
+                "You are tasked with performing routine maintenance on a closed-loop control system in a manufacturing plant.",
+                "The system controls the temperature of a critical process using a PID controller.",
+                "Regular maintenance is essential to ensure accurate temperature control and prevent process deviations.",
+                "You need to check various components including sensors, actuators, and control elements."
+            ],
+            "image": "assets/scenarios/temperature-control.png",
+            "questions": [
+                {
+                    "id": "1.1",
+                    "text": "What are the key components you would inspect in this closed-loop system?",
+                    "type": "text",
+                    "placeholder": "List the components and explain why they need inspection..."
+                },
+                {
+                    "id": "1.2",
+                    "text": "How would you verify the accuracy of the temperature sensor?",
+                    "type": "text",
+                    "placeholder": "Describe your calibration process..."
+                },
+                {
+                    "id": "1.3",
+                    "text": "What documentation would you maintain during this maintenance?",
+                    "type": "text",
+                    "placeholder": "List the important records to keep..."
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "title": "Emergency Stop Systems",
+            "paragraphs": [
+                "As part of your monthly safety checks, you need to inspect and test all emergency stop systems.",
+                "The facility has multiple E-stop buttons located at critical points around the equipment.",
+                "These safety systems must function perfectly to protect both personnel and equipment.",
+                "You need to verify both the mechanical operation and the electrical circuit integrity."
+            ],
+            "image": "assets/scenarios/estop-system.png",
+            "questions": [
+                {
+                    "id": "2.1",
+                    "text": "What physical checks would you perform on each E-stop button?",
+                    "type": "text",
+                    "placeholder": "Detail the mechanical inspection steps..."
+                },
+                {
+                    "id": "2.2",
+                    "text": "How would you test the E-stop circuit without disrupting production?",
+                    "type": "text",
+                    "placeholder": "Explain your testing procedure..."
+                },
+                {
+                    "id": "2.3",
+                    "text": "What documentation is required for E-stop system maintenance?",
+                    "type": "text",
+                    "placeholder": "List required safety records..."
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "title": "Status LED Indicators",
+            "paragraphs": [
+                "The control panel has multiple LED indicators showing various system states.",
+                "These indicators are crucial for operators to monitor system status at a glance.",
+                "Regular maintenance ensures all indicators are functioning correctly and visible.",
+                "You need to verify both the LED operation and the underlying signal integrity."
+            ],
+            "image": "assets/scenarios/led-panel.png",
+            "questions": [
+                {
+                    "id": "3.1",
+                    "text": "How would you test each LED indicator?",
+                    "type": "text",
+                    "placeholder": "Describe your testing method..."
+                },
+                {
+                    "id": "3.2",
+                    "text": "What would you check if an LED is lit but showing incorrect status?",
+                    "type": "text",
+                    "placeholder": "List potential issues to investigate..."
+                },
+                {
+                    "id": "3.3",
+                    "text": "How often should LED indicators be checked and why?",
+                    "type": "text",
+                    "placeholder": "Explain the maintenance frequency..."
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "title": "PLC Maintenance",
+            "paragraphs": [
+                "The facility's automation system is controlled by a Siemens S7-1200 PLC.",
+                "Regular PLC maintenance is essential for reliable system operation.",
+                "You need to check both hardware components and program integrity.",
+                "This includes inspecting connections, backup batteries, and program backups."
+            ],
+            "image": "assets/scenarios/plc-maintenance.png",
+            "questions": [
+                {
+                    "id": "4.1",
+                    "text": "What physical inspections would you perform on the PLC?",
+                    "type": "text",
+                    "placeholder": "List hardware checks..."
+                },
+                {
+                    "id": "4.2",
+                    "text": "How would you verify the program backup is current and complete?",
+                    "type": "text",
+                    "placeholder": "Describe backup verification steps..."
+                },
+                {
+                    "id": "4.3",
+                    "text": "What environmental factors should be monitored in the PLC cabinet?",
+                    "type": "text",
+                    "placeholder": "List environmental considerations..."
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "title": "HMI System",
+            "paragraphs": [
+                "The operator interface consists of a touchscreen HMI panel.",
+                "The HMI provides critical process information and control capabilities.",
+                "Regular maintenance ensures reliable operation and accurate display.",
+                "You need to verify both hardware functionality and software configuration."
+            ],
+            "image": "assets/scenarios/hmi-system.png",
+            "questions": [
+                {
+                    "id": "5.1",
+                    "text": "How would you test the touchscreen calibration?",
+                    "type": "text",
+                    "placeholder": "Describe calibration process..."
+                },
+                {
+                    "id": "5.2",
+                    "text": "What software checks should be performed?",
+                    "type": "text",
+                    "placeholder": "List software maintenance tasks..."
+                },
+                {
+                    "id": "5.3",
+                    "text": "How would you verify all HMI screens are functioning correctly?",
+                    "type": "text",
+                    "placeholder": "Explain your testing approach..."
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "title": "Pump Maintenance",
+            "paragraphs": [
+                "The system includes several centrifugal pumps for fluid circulation.",
+                "These pumps are critical for maintaining proper flow rates.",
+                "Regular maintenance prevents unexpected failures and ensures efficiency.",
+                "You need to check mechanical components and monitor performance metrics."
+            ],
+            "image": "assets/scenarios/pump-maintenance.png",
+            "questions": [
+                {
+                    "id": "6.1",
+                    "text": "What are the key measurements to take during pump inspection?",
+                    "type": "text",
+                    "placeholder": "List important measurements..."
+                },
+                {
+                    "id": "6.2",
+                    "text": "How would you check for pump cavitation?",
+                    "type": "text",
+                    "placeholder": "Describe detection methods..."
+                },
+                {
+                    "id": "6.3",
+                    "text": "What preventive maintenance tasks should be performed?",
+                    "type": "text",
+                    "placeholder": "List maintenance procedures..."
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "title": "Control Valve Maintenance",
+            "paragraphs": [
+                "The process uses several control valves for flow regulation.",
+                "These valves are essential for maintaining precise process control.",
+                "Regular maintenance ensures accurate valve positioning and sealing.",
+                "You need to check both mechanical operation and control signals."
+            ],
+            "image": "assets/scenarios/valve-maintenance.png",
+            "questions": [
+                {
+                    "id": "7.1",
+                    "text": "How would you verify valve positioning accuracy?",
+                    "type": "text",
+                    "placeholder": "Describe calibration steps..."
+                },
+                {
+                    "id": "7.2",
+                    "text": "What signs indicate valve stem packing needs replacement?",
+                    "type": "text",
+                    "placeholder": "List warning signs..."
+                },
+                {
+                    "id": "7.3",
+                    "text": "How would you test valve response time?",
+                    "type": "text",
+                    "placeholder": "Explain testing procedure..."
+                }
+            ]
+        }
+    ]
+} 

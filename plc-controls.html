@@ -121,13 +121,18 @@
       </div>
       <ul class="nav-menu" id="nav-menu">
         <li class="nav-item">
-          <a href="index.html" class="nav-link">
+          <a href="#" onclick="window.electron.navigate('index.html')" class="nav-link">
             <i class="fas fa-home"></i> HOME
           </a>
         </li>
         <li class="nav-item">
-          <a href="plc-controls.html" class="nav-link active">
+          <a href="#" onclick="window.electron.navigate('plc-controls.html')" class="nav-link active">
             <i class="fas fa-cogs"></i> PLC CONTROLS
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" onclick="window.electron.navigate('settings.html')" class="nav-link">
+            <i class="fas fa-gear"></i> SETTINGS
           </a>
         </li>
       </ul>

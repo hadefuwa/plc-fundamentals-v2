@@ -30,6 +30,10 @@ const { app, BrowserWindow, ipcMain, protocol } = require('electron');
 // Import electron-pdf-window for PDF viewing
 const PDFWindow = require('electron-pdf-window');
 
+// Import path and fs modules for settings management
+const path = require('path');
+const fs = require('fs');
+
 // Add command line switches to handle SSL certificates for HMI server
 app.commandLine.appendSwitch('ignore-certificate-errors');
 app.commandLine.appendSwitch('ignore-ssl-errors');
@@ -39,7 +43,7 @@ app.commandLine.appendSwitch('allow-file-access-from-files');
 app.commandLine.appendSwitch('allow-file-access-from-file-urls');
 app.commandLine.appendSwitch('disable-features', 'VizDisplayCompositor');
 app.commandLine.appendSwitch('disable-site-isolation-trials');
-const path = require('path');
+
 // Import nodes7 library for Siemens S7 PLC communication
 const nodes7 = require('nodes7');
 // Import DB1 structure and handler functions
@@ -95,6 +99,42 @@ let statusInterval;               // Timer for status updates
 // Logging rate control
 let lastLogTime = 0;
 const LOG_INTERVAL = 5000;        // Log to console every 5 seconds
+
+// Settings Management
+const defaultSettings = {
+    hmiIpAddress: '192.168.0.1',
+    hmiZoomLevel: 116,
+    autoRefreshInterval: 0
+};
+
+let settings = { ...defaultSettings };
+
+// Load settings from file
+function loadSettings() {
+    const settingsPath = path.join(app.getPath('userData'), 'settings.json');
+    try {
+        if (fs.existsSync(settingsPath)) {
+            const data = fs.readFileSync(settingsPath, 'utf8');
+            settings = { ...defaultSettings, ...JSON.parse(data) };
+        }
+    } catch (error) {
+        console.error('Error loading settings:', error);
+    }
+    return settings;
+}
+
+// Save settings to file
+function saveSettings(newSettings) {
+    const settingsPath = path.join(app.getPath('userData'), 'settings.json');
+    try {
+        fs.writeFileSync(settingsPath, JSON.stringify(newSettings, null, 2));
+        settings = { ...newSettings };
+        return true;
+    } catch (error) {
+        console.error('Error saving settings:', error);
+        return false;
+    }
+}
 
 // IPC Event Handlers for renderer process communication
 ipcMain.on('update-plc-address', (_, address) => {
@@ -504,6 +544,7 @@ app.whenReady().then(() => {
         callback({ path: resolvedPath });
     });
 
+    loadSettings();
     createWindow();
 });
 
@@ -782,5 +823,21 @@ ipcMain.handle('print-chart', async (event, htmlContent) => {
     }
     win.close();
   });
+});
+
+// IPC Handlers for Settings
+ipcMain.handle('get-settings', () => {
+    return settings;
+});
+
+ipcMain.handle('save-settings', async (event, newSettings) => {
+    return saveSettings(newSettings);
+});
+
+// Handle navigation between pages
+ipcMain.on('navigate', (_, page) => {
+    if (win && !win.isDestroyed()) {
+        win.loadFile(page);
+    }
 });
 
