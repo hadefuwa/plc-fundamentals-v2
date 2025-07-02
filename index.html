@@ -17,15 +17,90 @@
       background: #555 !important;
     }
 
+    /* Navigation Styles */
+    .main-navigation {
+      background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+      border-bottom: 3px solid #00ff88;
+      padding: 0;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    .nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 15px 0;
+    }
+    
+    .nav-logo img {
+      height: 40px;
+      width: auto;
+    }
+    
+    .nav-logo h1 {
+      color: #00ff88;
+      font-size: 24px;
+      font-weight: bold;
+      margin: 0;
+      text-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+    }
+    
+    .nav-menu {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: 5px;
+    }
+    
+    .nav-item {
+      position: relative;
+    }
+    
+    .nav-link {
+      display: block;
+      padding: 15px 25px;
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      border-radius: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .nav-link:hover {
+      background: rgba(0, 255, 136, 0.1);
+      color: #00ff88;
+      transform: translateY(-2px);
+    }
+    
+    .nav-link.active {
+      background: linear-gradient(135deg, #00ff88, #00cc6a);
+      color: #000;
+      font-weight: bold;
+    }
+
     /* Enhanced PDF Button Hover Effects */
     .pdf-button-curriculum {
       background: linear-gradient(135deg, #00ff88, #00cc6a) !important;
       color: #000 !important;
       border: 2px solid #00ff88 !important;
-      padding: 24px 16px !important;
+      padding: 32px 20px !important;
       border-radius: 12px !important;
       cursor: pointer !important;
-      font-size: 16px !important;
+      font-size: 20px !important;
       font-weight: bold !important;
       width: 100% !important;
       transition: all 0.3s ease !important;
@@ -33,8 +108,8 @@
       flex-direction: column !important;
       align-items: center !important;
       justify-content: center !important;
-      gap: 8px !important;
-      min-height: 80px !important;
+      gap: 12px !important;
+      min-height: 100px !important;
       box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3) !important;
       text-align: center !important;
       line-height: 1.2 !important;
@@ -50,10 +125,10 @@
       background: linear-gradient(135deg, #4a9eff, #2d7dd2) !important;
       color: white !important;
       border: 2px solid #4a9eff !important;
-      padding: 24px 16px !important;
+      padding: 32px 20px !important;
       border-radius: 12px !important;
       cursor: pointer !important;
-      font-size: 16px !important;
+      font-size: 20px !important;
       font-weight: bold !important;
       width: 100% !important;
       transition: all 0.3s ease !important;
@@ -61,8 +136,8 @@
       flex-direction: column !important;
       align-items: center !important;
       justify-content: center !important;
-      gap: 8px !important;
-      min-height: 80px !important;
+      gap: 12px !important;
+      min-height: 100px !important;
       box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3) !important;
       text-align: center !important;
       line-height: 1.2 !important;
@@ -87,15 +162,27 @@
     </div>
   </div>
 
-  <div class="matrix-logo">
-    <div class="logo-header-container">
-      <img src="assets/matrix-logo.png" alt="Matrix Logo">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-
-     <!-- <h1>Closed Loop Maintenance</h1> -->
+  <!-- Navigation -->
+  <nav class="main-navigation">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <img src="assets/matrix-logo.png" alt="Matrix Logo">
+        <h1>Matrix Closed Loop Maintenance</h1>
+      </div>
+      <ul class="nav-menu">
+        <li class="nav-item">
+          <a href="index.html" class="nav-link active">
+            <i class="fas fa-home"></i> Home
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="plc-controls.html" class="nav-link">
+            <i class="fas fa-cogs"></i> PLC Controls
+          </a>
+        </li>
+      </ul>
     </div>
-  </div>
+  </nav>
 
   
   <div id="error-message" class="error-message"></div>
@@ -160,16 +247,16 @@
          ">
            📚 Curriculum
          </div>
-         <button class="pdf-button pdf-button-curriculum" onclick="showPDF('docs/CP6773 - Troubleshooting & Fault-Finding Closed Loop Systems.pdf')">
-           <i class="fas fa-tools" style="font-size: 20px; margin-bottom: 5px;"></i>
-           <span>Troubleshooting</span>
-           <small style="font-size: 12px; opacity: 0.8;">(CP6773)</small>
-         </button>
          <button class="pdf-button pdf-button-curriculum" onclick="showPDF('docs/CP0539 - Industrial Maintenance of Closed Loop Systems.pdf')">
-           <i class="fas fa-cogs" style="font-size: 20px; margin-bottom: 5px;"></i>
+           <i class="fas fa-cogs" style="font-size: 24px; margin-bottom: 8px;"></i>
            <span>Industrial</span>
            <span>Maintenance</span>
-           <small style="font-size: 12px; opacity: 0.8;">(CP0539)</small>
+           <small style="font-size: 14px; opacity: 0.8;">(CP0539)</small>
+         </button>
+         <button class="pdf-button pdf-button-curriculum" onclick="showPDF('docs/CP6773 - Troubleshooting & Fault-Finding Closed Loop Systems.pdf')">
+           <i class="fas fa-exclamation-triangle" style="font-size: 24px; margin-bottom: 8px;"></i>
+           <span>Fault Scenarios</span>
+           <small style="font-size: 14px; opacity: 0.8;">(CP6773)</small>
          </button>
        </div>
        
@@ -245,12 +332,12 @@
            📄 Documentation
          </div>
          <button class="pdf-button pdf-button-documentation" onclick="openPDF('docs/IM0004 - Maintenance of Closed Loop Systems User Manual.pdf')">
-           <i class="fas fa-book" style="font-size: 20px; margin-bottom: 5px;"></i>
+           <i class="fas fa-book" style="font-size: 24px; margin-bottom: 8px;"></i>
            <span>User Manual</span>
-           <small style="font-size: 12px; opacity: 0.9;">(IM0004)</small>
+           <small style="font-size: 14px; opacity: 0.9;">(IM0004)</small>
          </button>
          <button class="pdf-button pdf-button-documentation" onclick="openPDF('docs/IM0004 Electrical Drawings RevG.pdf')">
-           <i class="fas fa-drafting-compass" style="font-size: 20px; margin-bottom: 5px;"></i>
+           <i class="fas fa-drafting-compass" style="font-size: 24px; margin-bottom: 8px;"></i>
            <span>Electrical</span>
            <span>Drawings</span>
          </button>
@@ -258,111 +345,7 @@
      </div>
   </div>
 
-  <div class="dashboard-container">
-    <!-- Add this new chart before the events sections -->
-    <div class="dashboard-item" draggable="true">
-        <div class="chart-header">
-            <h3 class="chart-title">ANALOGUE INPUTS</h3>
-            <div class="chart-controls">
-                <button id="pause-analogue" class="chart-control-button">Pause</button>
-                <button id="print-analogue" class="chart-control-button">
-                    <i class="fas fa-print"></i>
-                    Print
-                </button>
-            </div>
-        </div>
-        <!-- AI0 Display -->
-        <div class="analogue-display">
-            <span class="analogue-label">AI0 Value:</span>
-            <div class="analogue-value" id="analogue-value-0">0.0V</div>
-        </div>
-        <!-- AI1 Display -->
-        <div class="analogue-display">
-            <span class="analogue-label">AI1 Value:</span>
-            <div class="analogue-value" id="analogue-value-1">0.0V</div>
-        </div>
-        <div class="chart-container">
-            <canvas id="analogueChart"></canvas>
-        </div>
-    </div>
 
-
-    <div class="dashboard-item" draggable="true">
-      <h3 class="chart-title">PLC STATUS HISTORY</h3>
-      <div class="plc-connect-status">
-        <span class="status-label">PLC Status:</span>
-        <div class="status-value loading" id="plc-data">Loading...</div>
-      </div>
-      <div class="chart-container">
-        <canvas id="statusChart"></canvas>
-      </div>
-    </div>
-
-    <div class="dashboard-item" draggable="true">
-        <div class="chart-title-container">
-            <h3 class="chart-title">E-STOP EVENTS</h3>
-            <div id="estop-circle" class="circle red-circle"></div>
-        </div>
-        <div class="event-list-container">
-            <ul id="estop-events-list" class="event-list">
-                <!-- Events added dynamically -->
-            </ul>
-        </div>
-    </div>
-
-    <!-- Blue LED Events -->
-    <div class="dashboard-item" draggable="true">
-        <div class="chart-title-container">
-            <h3 class="chart-title">BLUE LED EVENTS</h3>
-            <div id="led-circle" class="circle blue-circle"></div>
-        </div>
-        <div class="event-list-container">
-            <ul id="led-events-list" class="event-list">
-                <!-- Events added dynamically -->
-            </ul>
-        </div>
-    </div>
-
-    <div class="dashboard-item" draggable="true">
-        <h3 class="chart-title">PLC CONTROLS</h3>
-        <div class="control-panel">
-            <button id="write-btn" class="control-button">Run Motor</button>
-            <button id="clear-forcing-btn" class="control-button">Clear Forcing</button>
-            <button id="fault-reset-btn" class="control-button">Fault Reset</button>
-        </div>
-    </div>
-
-    <div class="dashboard-item" draggable="true">
-        <h3 class="chart-title">PLC DATA OVERVIEW</h3>
-        <div class="plc-data-grid">
-            <button class="grid-item">View All PLC Tags</button>
-        </div>
-    </div>
-
-
-    <div class="dashboard-item" draggable="true">
-        <h3 class="chart-title">PLC CONFIGURATION</h3>
-        <div id="container">
-            <div class="config-header">
-                <div class="header-content">
-                    <div id="config-panel" class="config-panel">
-                        <div class="plc-config">
-                            <label for="plc-ip">PLC IP Address:</label>
-                            <input type="text" id="plc-ip" value="192.168.7.100" pattern="^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$">
-                            <button id="connect-btn">Connect</button>
-                        </div>
-                        <div class="plc-image-container">
-                            <img id="plc-image" src="assets/s7-1200.png" alt="Siemens S7-1200">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-</div>
-</div>
 
 
   <!-- External Libraries -->
@@ -378,53 +361,6 @@
   <script src="renderer.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // Set animation order for dashboard items
-        document.querySelectorAll('.dashboard-item').forEach((item, index) => {
-            item.style.setProperty('--animation-order', index + 1);
-        });
-        
-        // Set animation order for event list items
-        document.querySelectorAll('.event-list li').forEach((item, index) => {
-            item.style.setProperty('--animation-order', index + 1);
-        });
-
-        const container = document.querySelector('.dashboard-container');
-        const items = document.querySelectorAll('.dashboard-item');
-
-        items.forEach(item => {
-            // Add drag handle visual indicator
-            const handle = document.createElement('div');
-            handle.className = 'drag-handle';
-            item.insertBefore(handle, item.firstChild);
-
-            item.addEventListener('dragstart', (e) => {
-                e.target.classList.add('dragging');
-                e.dataTransfer.setData('text/plain', ''); // Required for Firefox
-            });
-
-            item.addEventListener('dragend', (e) => {
-                e.target.classList.remove('dragging');
-            });
-        });
-
-        container.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            const draggingItem = document.querySelector('.dragging');
-            const siblings = [...container.querySelectorAll('.dashboard-item:not(.dragging)')];
-            
-            const nextSibling = siblings.find(sibling => {
-                const box = sibling.getBoundingClientRect();
-                const offset = e.clientY - box.top - box.height / 2;
-                return offset < 0;
-            });
-
-            if (nextSibling) {
-                container.insertBefore(draggingItem, nextSibling);
-            } else {
-                container.appendChild(draggingItem);
-            }
-        });
-
         // Splash screen animation
         const splashScreen = {
           init() {
