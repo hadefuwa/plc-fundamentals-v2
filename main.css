@@ -1489,39 +1489,33 @@ h1 {
 
 .nav-menu {
     display: flex;
-    flex-direction: row; /* Explicitly set horizontal layout */
     list-style: none;
     margin: 0;
     padding: 0;
-    gap: 20px;
-    justify-content: center;
-    align-items: center;
+    gap: 10px;
 }
 
 .nav-item {
-    flex: 0 0 auto; /* Don't grow or shrink */
-    width: 180px;
+    flex: 0 0 auto;
 }
 
 .nav-link {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
-    padding: 12px 0;
+    padding: 10px 25px;
     color: #ffffff;
     text-decoration: none;
     font-weight: 600;
     font-size: 16px;
     transition: all 0.3s ease;
-    border-radius: 8px;
+    border-radius: 4px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    background: linear-gradient(135deg, #333333, #555555);
-    border: 2px solid transparent;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    background: #2d2d2d;
     cursor: pointer;
     white-space: nowrap;
+    min-width: 140px;
 }
 
 .nav-link i {
@@ -1529,19 +1523,14 @@ h1 {
 }
 
 .nav-link:hover {
-    background: linear-gradient(135deg, #00ff88, #00cc6a);
+    background: #00ff88;
     color: #000;
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(0, 255, 136, 0.4);
-    border: 2px solid #00ff88;
 }
 
 .nav-link.active {
-    background: linear-gradient(135deg, #00ff88, #00cc6a);
+    background: #00ff88;
     color: #000;
     font-weight: bold;
-    box-shadow: 0 4px 15px rgba(0, 255, 136, 0.5);
-    border: 2px solid #00ff88;
 }
 
 /* Only stack vertically on small screens */
@@ -1562,7 +1551,7 @@ h1 {
     .nav-menu {
         width: 100%;
         margin-top: 10px;
-        flex-direction: column; /* Stack buttons vertically */
+        flex-direction: column;
         gap: 8px;
     }
 
@@ -1573,12 +1562,9 @@ h1 {
     }
 
     .nav-link {
+        width: 100%;
         font-size: 14px;
         padding: 10px 0;
-    }
-
-    .nav-link:hover {
-        transform: translateY(-2px);
     }
 }
 
