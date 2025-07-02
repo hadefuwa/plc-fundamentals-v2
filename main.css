@@ -1489,15 +1489,18 @@ h1 {
 
 .nav-menu {
     display: flex;
+    flex-direction: row; /* Explicitly set horizontal layout */
     list-style: none;
     margin: 0;
     padding: 0;
-    gap: 20px; /* Increased gap between buttons */
+    gap: 20px;
     justify-content: center;
+    align-items: center;
 }
 
 .nav-item {
-    width: 180px; /* Fixed width for buttons */
+    flex: 0 0 auto; /* Don't grow or shrink */
+    width: 180px;
 }
 
 .nav-link {
@@ -1505,7 +1508,7 @@ h1 {
     align-items: center;
     justify-content: center;
     width: 100%;
-    padding: 12px 0; /* Vertical padding only */
+    padding: 12px 0;
     color: #ffffff;
     text-decoration: none;
     font-weight: 600;
@@ -1541,7 +1544,7 @@ h1 {
     border: 2px solid #00ff88;
 }
 
-/* Responsive Navigation */
+/* Only stack vertically on small screens */
 @media (max-width: 768px) {
     .nav-container {
         flex-direction: column;
@@ -1564,9 +1567,9 @@ h1 {
     }
 
     .nav-item {
-        width: 100%; /* Full width */
-        max-width: 300px; /* Maximum width */
-        margin: 0 auto; /* Center the buttons */
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
     }
 
     .nav-link {
@@ -1593,7 +1596,7 @@ h1 {
     }
 
     .nav-item {
-        max-width: 250px; /* Slightly smaller on mobile */
+        max-width: 250px;
     }
 
     .nav-link {
