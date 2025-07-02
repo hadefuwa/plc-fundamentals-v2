@@ -62,6 +62,198 @@
                     "placeholder": "List the key parameters..."
                 }
             ]
+        },
+        {
+            "id": 3,
+            "title": "CNC Machines Factory Cooling",
+            "paragraphs": [
+                "You're called to investigate a CNC machining facility where multiple machines are reporting spindle temperature warnings.",
+                "The central coolant system that supplies all CNC machines shows normal pressure readings.",
+                "Operators report that the issue started gradually over the past month.",
+                "The facility recently increased production hours from 8 to 24 hours per day.",
+                "Temperature logs show higher than normal readings during the night shift."
+            ],
+            "image": "assets/scenarios/cnc-cooling.png",
+            "questions": [
+                {
+                    "id": "3.1",
+                    "text": "Why might the temperature issues be more prominent during night shift?",
+                    "type": "text",
+                    "placeholder": "Consider environmental and operational factors..."
+                },
+                {
+                    "id": "3.2",
+                    "text": "What maintenance checks would you perform on the central coolant system?",
+                    "type": "text",
+                    "placeholder": "List specific checks and measurements..."
+                },
+                {
+                    "id": "3.3",
+                    "text": "How would you verify if the coolant flow is adequate for 24-hour operation?",
+                    "type": "text",
+                    "placeholder": "Describe your testing approach..."
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "title": "Marketing",
+            "paragraphs": [
+                "A marketing company's server room cooling system has triggered multiple high-temperature alarms.",
+                "The building management system shows the HVAC is running at maximum capacity.",
+                "IT staff report that several new high-performance servers were installed last week.",
+                "The room temperature sensors show uneven readings across different areas.",
+                "Some server racks are showing significantly higher intake temperatures than others."
+            ],
+            "image": "assets/scenarios/server-room.png",
+            "questions": [
+                {
+                    "id": "4.1",
+                    "text": "What immediate steps would you take to protect the server equipment?",
+                    "type": "text",
+                    "placeholder": "List immediate actions..."
+                },
+                {
+                    "id": "4.2",
+                    "text": "How would you investigate the uneven temperature distribution?",
+                    "type": "text",
+                    "placeholder": "Describe your investigation process..."
+                },
+                {
+                    "id": "4.3",
+                    "text": "What long-term solutions would you propose to prevent this issue?",
+                    "type": "text",
+                    "placeholder": "List potential solutions..."
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "title": "Potash Mine",
+            "paragraphs": [
+                "At a potash mine, the brine injection system's flow control loop is showing inconsistent behavior.",
+                "Operators report that the flow rate fluctuates despite a constant setpoint.",
+                "The control valve position indicator shows frequent movement.",
+                "Pressure sensors upstream and downstream of the control valve show stable readings.",
+                "The issue appears to be worse when the brine temperature is higher."
+            ],
+            "image": "assets/scenarios/brine-system.png",
+            "questions": [
+                {
+                    "id": "5.1",
+                    "text": "Why might the valve position be constantly changing?",
+                    "type": "text",
+                    "placeholder": "List possible causes..."
+                },
+                {
+                    "id": "5.2",
+                    "text": "How does brine temperature affect the control system?",
+                    "type": "text",
+                    "placeholder": "Explain the relationship..."
+                },
+                {
+                    "id": "5.3",
+                    "text": "What maintenance procedures would you recommend?",
+                    "type": "text",
+                    "placeholder": "Detail your maintenance plan..."
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "title": "First Day On The Job",
+            "paragraphs": [
+                "You've just started as a maintenance technician at a food processing plant.",
+                "During your first day, an operator reports that the steam sterilization system isn't reaching temperature.",
+                "The system should maintain 121°C for sterilization, but it's only reaching 115°C.",
+                "The steam pressure gauge shows normal supply pressure.",
+                "You notice the temperature controller display occasionally flickers."
+            ],
+            "image": "assets/scenarios/sterilizer.png",
+            "questions": [
+                {
+                    "id": "6.1",
+                    "text": "What safety considerations should you keep in mind when troubleshooting?",
+                    "type": "text",
+                    "placeholder": "List safety precautions..."
+                },
+                {
+                    "id": "6.2",
+                    "text": "What could cause the temperature controller display to flicker?",
+                    "type": "text",
+                    "placeholder": "Consider possible causes..."
+                },
+                {
+                    "id": "6.3",
+                    "text": "How would you systematically troubleshoot this issue?",
+                    "type": "text",
+                    "placeholder": "Outline your troubleshooting steps..."
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "title": "Why's It Always The Temperature?",
+            "paragraphs": [
+                "A plastic injection molding machine is producing parts with inconsistent quality.",
+                "The mold temperature control unit shows the temperature is within specification.",
+                "Quality control reports that parts from certain cavities are showing signs of incomplete filling.",
+                "The temperature sensor was replaced last month during scheduled maintenance.",
+                "The PID parameters were automatically tuned after the sensor replacement."
+            ],
+            "image": "assets/scenarios/injection-mold.png",
+            "questions": [
+                {
+                    "id": "7.1",
+                    "text": "Why might some cavities be affected while others aren't?",
+                    "type": "text",
+                    "placeholder": "Analyze possible causes..."
+                },
+                {
+                    "id": "7.2",
+                    "text": "How would you verify the accuracy of the new temperature sensor?",
+                    "type": "text",
+                    "placeholder": "Describe verification steps..."
+                },
+                {
+                    "id": "7.3",
+                    "text": "What impact might the auto-tuned PID parameters have?",
+                    "type": "text",
+                    "placeholder": "Explain PID considerations..."
+                }
+            ]
+        },
+        {
+            "id": 8,
+            "title": "Settings",
+            "paragraphs": [
+                "A chemical reactor's pH control system is behaving erratically after a recent software update.",
+                "The control system was upgraded to include new safety features.",
+                "Operators report that the pH swings are larger than before the update.",
+                "The system documentation shows new default PID settings were implemented.",
+                "The pH probe calibration records show it was last calibrated three months ago."
+            ],
+            "image": "assets/scenarios/ph-control.png",
+            "questions": [
+                {
+                    "id": "8.1",
+                    "text": "What risks are associated with poor pH control in this system?",
+                    "type": "text",
+                    "placeholder": "List potential risks..."
+                },
+                {
+                    "id": "8.2",
+                    "text": "How would you verify if the new PID settings are appropriate?",
+                    "type": "text",
+                    "placeholder": "Describe your verification process..."
+                },
+                {
+                    "id": "8.3",
+                    "text": "What documentation would you review before making any changes?",
+                    "type": "text",
+                    "placeholder": "List relevant documentation..."
+                }
+            ]
         }
     ]
 } 
