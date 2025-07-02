@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PLC HMI Interface</title>
+  <title>Matrix Closed Loop Maintenance</title>
   <link rel="stylesheet" href="main.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -334,7 +334,7 @@
     }
   </style>
 </head>
-<body>
+<body class="home-page">
 
   <div id="splash-screen">
     <div class="splash-content">
@@ -394,12 +394,7 @@
 
         <!-- HMI CENTER -->
         <div class="hmi-section">
-            <div class="hmi-controls">
-                <button class="control-btn" id="zoom-out-hmi">Zoom Out</button>
-                <button class="control-btn" id="zoom-in-hmi">Zoom In</button>
-                <button class="control-btn" id="reset-zoom-hmi">Reset</button>
-            </div>
-            <div class="hmi-container">
+            <div class="hmi-container" id="hmi-container">
                 <div class="hmi-status hidden" id="hmi-status">Loading HMI Interface...</div>
                 <div class="hmi-frame">
                     <webview 
@@ -411,6 +406,23 @@
                     </webview>
                 </div>
             </div>
+            <div class="hmi-controls">
+                <button class="control-btn" id="zoom-out-hmi" title="Zoom Out">
+                    <i class="fas fa-search-minus"></i>
+                </button>
+                <button class="control-btn" id="zoom-in-hmi" title="Zoom In">
+                    <i class="fas fa-search-plus"></i>
+                </button>
+                <button class="control-btn" id="reset-zoom-hmi" title="Reset Zoom">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+                <button class="fullscreen-btn" id="fullscreen-btn" title="Enter Fullscreen">
+                    <i class="fas fa-expand"></i>
+                </button>
+            </div>
+            <button class="fullscreen-btn exit-fullscreen-btn" id="exit-fullscreen-btn" title="Exit Fullscreen">
+                <i class="fas fa-compress"></i>
+            </button>
         </div>
 
         <!-- RIGHT SIDE - DOCUMENTATION -->
@@ -589,6 +601,63 @@
             popup.style.display = 'none';
         }, 5000);
     }
+</script>
+
+<script>
+// Initialize zoom level
+let currentZoom = 1.16; // Start at 116%
+const webview = document.getElementById('hmi-webview');
+
+// Function to set zoom level
+function setZoomLevel(zoom) {
+    webview.setZoomLevel(zoom);
+    currentZoom = zoom;
+}
+
+// Set initial zoom after webview is ready
+webview.addEventListener('dom-ready', () => {
+    // Wait a short moment to ensure webview is fully loaded
+    setTimeout(() => {
+        setZoomLevel(currentZoom);
+    }, 100);
+});
+
+// Also set zoom when webview finishes loading
+webview.addEventListener('did-finish-load', () => {
+    setZoomLevel(currentZoom);
+});
+
+// Fullscreen controls
+document.getElementById('fullscreen-btn').addEventListener('click', function() {
+    const container = document.getElementById('hmi-container');
+    container.classList.add('fullscreen');
+});
+
+document.getElementById('exit-fullscreen-btn').addEventListener('click', function() {
+    const container = document.getElementById('hmi-container');
+    container.classList.remove('fullscreen');
+});
+
+// ESC key to exit fullscreen
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        const container = document.getElementById('hmi-container');
+        container.classList.remove('fullscreen');
+    }
+});
+
+// Zoom controls
+document.getElementById('zoom-in-hmi').addEventListener('click', function() {
+    setZoomLevel(currentZoom + 0.1);
+});
+
+document.getElementById('zoom-out-hmi').addEventListener('click', function() {
+    setZoomLevel(currentZoom - 0.1);
+});
+
+document.getElementById('reset-zoom-hmi').addEventListener('click', function() {
+    setZoomLevel(1.16); // Reset to 116%
+});
 </script>
 </body>
 </html>
