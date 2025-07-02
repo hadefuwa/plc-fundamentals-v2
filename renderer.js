@@ -1192,4 +1192,13 @@ if (hmiWebview) {
     });
 }
 
+// Function to open worksheets
+function openWorksheet(number) {
+    const pdfPath = `docs/worksheets/worksheet${number}.pdf`;
+    window.electron.openPDF(pdfPath);
+}
+
+// Make the function available globally
+window.openWorksheet = openWorksheet;
+
 
