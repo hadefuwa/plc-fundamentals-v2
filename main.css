@@ -1558,7 +1558,8 @@ h1 {
 /* Responsive Navigation */
 @media (max-width: 768px) {
     .nav-container {
-        padding: 0 15px;
+        flex-direction: column;
+        padding: 10px 15px;
     }
 
     .nav-logo h1 {
@@ -1570,46 +1571,39 @@ h1 {
     }
 
     .mobile-menu-btn {
-        display: block;
-        margin-left: auto; /* Push to the right */
+        display: none; /* Hide hamburger menu */
     }
 
     .nav-menu {
-        display: none; /* Hide by default */
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
-        flex-direction: column;
-        gap: 0;
-        padding: 10px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        z-index: 1000;
-    }
-
-    .nav-menu.active {
         display: flex;
+        width: 100%;
+        justify-content: center;
+        margin-top: 10px;
+        gap: 10px;
     }
 
     .nav-item {
-        width: 100%;
+        flex: 1;
+        max-width: 200px;
     }
 
     .nav-link {
         width: 100%;
         text-align: center;
-        padding: 15px;
-        border-radius: 4px;
-        margin: 2px 0;
+        padding: 12px 15px;
+        font-size: 14px;
     }
 
-    .nav-link:hover {
-        transform: none;
+    .nav-link i {
+        margin-right: 5px;
     }
 }
 
 @media (max-width: 480px) {
+    .nav-container {
+        padding: 8px 10px;
+    }
+
     .nav-logo {
         gap: 10px;
     }
@@ -1618,13 +1612,12 @@ h1 {
         height: 30px;
     }
 
-    .nav-link {
-        font-size: 14px;
-        padding: 12px 20px;
+    .nav-menu {
+        gap: 8px;
     }
 
-    .mobile-menu-btn {
-        font-size: 20px;
-        padding: 6px 10px;
+    .nav-link {
+        padding: 10px;
+        font-size: 13px;
     }
 }
