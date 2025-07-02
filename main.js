@@ -393,13 +393,15 @@ function createWindow() {
 
     win.loadFile('index.html');
     
-    // Allow navigation between index.html and pdf-viewer.html
+    // Allow navigation between pages
     win.webContents.on('will-navigate', (event, url) => {
         const parsedUrl = new URL(url);
         const pathname = parsedUrl.pathname.toLowerCase();
         
-        // Allow navigation to pdf-viewer.html and index.html
-        if (pathname.endsWith('pdf-viewer.html') || pathname.endsWith('index.html')) {
+        // Allow navigation to our app pages
+        if (pathname.endsWith('pdf-viewer.html') || 
+            pathname.endsWith('index.html') || 
+            pathname.endsWith('plc-controls.html')) {
             console.log('Allowing navigation to:', url);
         } else {
             // Prevent navigation to other URLs

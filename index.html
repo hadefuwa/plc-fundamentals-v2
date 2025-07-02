@@ -78,18 +78,26 @@
       border-radius: 8px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
+      background: linear-gradient(135deg, #333333, #555555);
+      border: 2px solid transparent;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
     }
     
     .nav-link:hover {
-      background: rgba(0, 255, 136, 0.1);
-      color: #00ff88;
-      transform: translateY(-2px);
+      background: linear-gradient(135deg, #00ff88, #00cc6a);
+      color: #000;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0, 255, 136, 0.4);
+      border: 2px solid #00ff88;
     }
     
     .nav-link.active {
       background: linear-gradient(135deg, #00ff88, #00cc6a);
       color: #000;
       font-weight: bold;
+      box-shadow: 0 4px 15px rgba(0, 255, 136, 0.5);
+      border: 2px solid #00ff88;
     }
 
     /* Enhanced PDF Button Hover Effects */
