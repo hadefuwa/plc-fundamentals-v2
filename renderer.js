@@ -42,11 +42,18 @@ document.addEventListener('DOMContentLoaded', () => {
         mobileMenuBtn.addEventListener('click', (e) => {
             e.stopPropagation(); // Prevent event from bubbling
             navMenu.classList.toggle('active');
+            mobileMenuBtn.classList.toggle('active');
+            
             // Toggle icon between bars and times (x)
             const icon = mobileMenuBtn.querySelector('i');
             if (icon) {
-                icon.classList.toggle('fa-bars');
-                icon.classList.toggle('fa-times');
+                if (navMenu.classList.contains('active')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.add('fa-bars');
+                    icon.classList.remove('fa-times');
+                }
             }
         });
 
@@ -56,6 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 !navMenu.contains(e.target) && 
                 !mobileMenuBtn.contains(e.target)) {
                 navMenu.classList.remove('active');
+                mobileMenuBtn.classList.remove('active');
                 const icon = mobileMenuBtn.querySelector('i');
                 if (icon) {
                     icon.classList.add('fa-bars');
@@ -68,6 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
         navMenu.addEventListener('click', (e) => {
             if (e.target.classList.contains('nav-link')) {
                 navMenu.classList.remove('active');
+                mobileMenuBtn.classList.remove('active');
                 const icon = mobileMenuBtn.querySelector('i');
                 if (icon) {
                     icon.classList.add('fa-bars');
