@@ -1420,7 +1420,7 @@ h1 {
 
 .hmi-controls .control-btn {
     background: #2d2d2d;
-    color: #00ff88;
+    color: #FFFFFF;
     border: none;
     padding: 6px 12px;
     border-radius: 4px;
@@ -1434,7 +1434,7 @@ h1 {
 
 .hmi-controls .control-btn:hover {
     background: #3d3d3d;
-    transform: translateY(-1px);
+    color: #F5F5F5;
 }
 
 .hmi-controls .control-btn:active {
@@ -1452,7 +1452,7 @@ h1 {
 /* Navigation Styles */
 .main-navigation {
     background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
-    border-bottom: 3px solid #00ff88;
+    border-bottom: 3px solid #FFFFFF;
     padding: 0;
     margin-bottom: 20px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
@@ -1480,11 +1480,11 @@ h1 {
 }
 
 .nav-logo h1 {
-    color: #00ff88;
+    color: #FFFFFF;
     font-size: 24px;
     font-weight: bold;
     margin: 0;
-    text-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }
 
 .nav-menu {
@@ -1523,12 +1523,12 @@ h1 {
 }
 
 .nav-link:hover {
-    background: #00ff88;
+    background: #F5F5F5;
     color: #000;
 }
 
 .nav-link.active {
-    background: #00ff88;
+    background: #FFFFFF;
     color: #000;
     font-weight: bold;
 }
@@ -1593,4 +1593,234 @@ h1 {
     .nav-link i {
         margin-right: 6px;
     }
+}
+
+.side-header.curriculum {
+    color: #FFFFFF;
+    border-bottom-color: #FFFFFF;
+}
+
+.pdf-button.curriculum {
+    background: linear-gradient(135deg, #FFFFFF, #F5F5F5);
+    color: #000;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+}
+
+.pdf-button.curriculum:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(255, 255, 255, 0.5);
+}
+
+/* Curriculum Section */
+.curriculum-section {
+    padding: 20px;
+}
+
+.curriculum-button {
+    display: flex;
+    align-items: center;
+    background: #2d2d2d;
+    color: #FFFFFF;
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border: 2px solid #FFFFFF;
+}
+
+.curriculum-button:hover {
+    background: #3d3d3d;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+}
+
+.curriculum-button:active {
+    transform: translateY(0);
+}
+
+.curriculum-button i {
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.curriculum-button .button-text {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* Fix for hover persistence */
+.nav-link, .curriculum-button {
+    transition: all 0.2s ease;
+    will-change: transform;
+}
+
+.nav-link:hover, .curriculum-button:hover {
+    transition: all 0.2s ease;
+}
+
+.nav-link:not(:hover), .curriculum-button:not(:hover) {
+    transform: none;
+    background: #2d2d2d;
+    box-shadow: none;
+}
+
+/* Curriculum header */
+.side-header.curriculum {
+    color: #FFFFFF;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #FFFFFF;
+}
+
+/* Unified Button Styles for Curriculum and Documentation */
+.side-button {
+    display: flex;
+    align-items: center;
+    background: rgba(45, 45, 45, 0.7);
+    color: #FFFFFF;
+    padding: 15px 20px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border: 2px solid #FFFFFF;
+    width: 100%;
+    cursor: pointer;
+}
+
+.side-button:hover {
+    background: rgba(61, 61, 61, 0.9);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+}
+
+.side-button:active {
+    transform: translateY(0);
+}
+
+.side-button:not(:hover) {
+    transform: none;
+    box-shadow: none;
+}
+
+.side-button i {
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.side-button .button-text {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.side-button small {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 12px;
+    margin-left: 5px;
+}
+
+/* Section Headers */
+.side-header {
+    color: #FFFFFF;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #FFFFFF;
+    text-transform: uppercase;
+}
+
+.side-header.documentation {
+    color: #FFFFFF;
+}
+
+.side-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Documentation specific */
+.documentation-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* CAD Image */
+.cad-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 0;
+    display: block;
+}
+
+/* Button Container */
+.button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Side Header */
+.side-header {
+    color: #FFFFFF;
+    font-size: 20px;
+    font-weight: bold;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #FFFFFF;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+/* Side Button */
+.side-button {
+    display: flex;
+    align-items: center;
+    background: rgba(45, 45, 45, 0.7);
+    color: #FFFFFF;
+    padding: 15px 20px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border: 2px solid #FFFFFF;
+    width: 100%;
+    cursor: pointer;
+    margin: 0;
+}
+
+.side-button:hover {
+    background: rgba(61, 61, 61, 0.9);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+}
+
+.side-button:active {
+    transform: translateY(0);
+}
+
+.side-button:not(:hover) {
+    transform: none;
+    box-shadow: none;
+}
+
+.side-button i {
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.side-button .button-text {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.side-button small {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 12px;
+    margin-left: 5px;
 }
