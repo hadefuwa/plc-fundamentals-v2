@@ -9,7 +9,7 @@
                 "Initial investigation shows that the PID controller output seems to be oscillating more than usual, and the temperature is not maintaining steady state.",
                 "The system was working perfectly fine last week, and no changes have been made to the PID parameters."
             ],
-            "image": "assets/scenarios/titanium-forge.png",
+            "image": "assets/scenarios/titanium-forge.svg",
             "questions": [
                 {
                     "id": "1.1",
@@ -41,7 +41,7 @@
                 "The system uses a water-cooled chiller with redundant pumps.",
                 "Maintenance logs show all preventive maintenance is up to date."
             ],
-            "image": "assets/scenarios/pharma-cleanroom.png",
+            "image": "assets/scenarios/pharma-cleanroom.svg",
             "questions": [
                 {
                     "id": "2.1",
@@ -73,7 +73,7 @@
                 "The facility recently increased production hours from 8 to 24 hours per day.",
                 "Temperature logs show higher than normal readings during the night shift."
             ],
-            "image": "assets/scenarios/cnc-cooling.png",
+            "image": "assets/scenarios/cnc-cooling.svg",
             "questions": [
                 {
                     "id": "3.1",
@@ -105,7 +105,7 @@
                 "The room temperature sensors show uneven readings across different areas.",
                 "Some server racks are showing significantly higher intake temperatures than others."
             ],
-            "image": "assets/scenarios/server-room.png",
+            "image": "assets/scenarios/server-room.svg",
             "questions": [
                 {
                     "id": "4.1",
@@ -137,7 +137,7 @@
                 "Pressure sensors upstream and downstream of the control valve show stable readings.",
                 "The issue appears to be worse when the brine temperature is higher."
             ],
-            "image": "assets/scenarios/brine-system.png",
+            "image": "assets/scenarios/brine-system.svg",
             "questions": [
                 {
                     "id": "5.1",
@@ -169,7 +169,7 @@
                 "The steam pressure gauge shows normal supply pressure.",
                 "You notice the temperature controller display occasionally flickers."
             ],
-            "image": "assets/scenarios/sterilizer.png",
+            "image": "assets/scenarios/sterilizer.svg",
             "questions": [
                 {
                     "id": "6.1",
@@ -201,7 +201,7 @@
                 "The temperature sensor was replaced last month during scheduled maintenance.",
                 "The PID parameters were automatically tuned after the sensor replacement."
             ],
-            "image": "assets/scenarios/injection-mold.png",
+            "image": "assets/scenarios/injection-mold.svg",
             "questions": [
                 {
                     "id": "7.1",
@@ -233,7 +233,7 @@
                 "The system documentation shows new default PID settings were implemented.",
                 "The pH probe calibration records show it was last calibrated three months ago."
             ],
-            "image": "assets/scenarios/ph-control.png",
+            "image": "assets/scenarios/ph-control.svg",
             "questions": [
                 {
                     "id": "8.1",

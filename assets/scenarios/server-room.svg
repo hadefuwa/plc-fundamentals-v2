@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="400" version="1.1" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+    <style>
+        text { font-family: Arial, sans-serif; }
+        .title { font-size: 24px; fill: #4CAF50; }
+        .label { font-size: 14px; fill: #ffffff; }
+        .value { font-size: 12px; fill: #e0e0e0; }
+        .warning { font-size: 12px; fill: #ff6b6b; }
+    </style>
+    
+    <!-- Background -->
+    <rect width="800" height="400" fill="#2a2a2a"/>
+    
+    <!-- Server Room -->
+    <rect x="100" y="50" width="600" height="300" fill="#444" stroke="#666" stroke-width="4"/>
+    
+    <!-- Server Racks -->
+    <g transform="translate(150,100)">
+        <rect width="80" height="200" fill="#333" stroke="#555" stroke-width="2"/>
+        <text x="40" y="220" class="label" text-anchor="middle">Rack 1</text>
+        <text x="40" y="240" class="warning" text-anchor="middle">28°C</text>
+    </g>
+    
+    <g transform="translate(300,100)">
+        <rect width="80" height="200" fill="#333" stroke="#555" stroke-width="2"/>
+        <text x="40" y="220" class="label" text-anchor="middle">Rack 2</text>
+        <text x="40" y="240" class="warning" text-anchor="middle">31°C</text>
+    </g>
+    
+    <g transform="translate(450,100)">
+        <rect width="80" height="200" fill="#333" stroke="#555" stroke-width="2"/>
+        <text x="40" y="220" class="label" text-anchor="middle">Rack 3</text>
+        <text x="40" y="240" class="warning" text-anchor="middle">29°C</text>
+    </g>
+    
+    <!-- CRAC Units -->
+    <rect x="600" y="100" width="50" height="80" fill="#4CAF50" stroke="#666" stroke-width="2"/>
+    <rect x="600" y="220" width="50" height="80" fill="#4CAF50" stroke="#666" stroke-width="2"/>
+    
+    <!-- Air Flow Indicators -->
+    <path d="M 580,140 L 560,140 L 570,130 L 580,140" fill="#4CAF50"/>
+    <path d="M 580,260 L 560,260 L 570,250 L 580,260" fill="#4CAF50"/>
+    
+    <!-- Temperature Sensors -->
+    <circle cx="200" cy="80" r="5" fill="#ff6b6b"/>
+    <circle cx="350" cy="80" r="5" fill="#ff6b6b"/>
+    <circle cx="500" cy="80" r="5" fill="#ff6b6b"/>
+    
+    <!-- Control Panel -->
+    <rect x="50" y="100" width="80" height="200" fill="#333" stroke="#555" stroke-width="2"/>
+    <text x="90" y="130" class="label" text-anchor="middle">HVAC</text>
+    <text x="90" y="150" class="warning" text-anchor="middle">Alert!</text>
+    <text x="90" y="170" class="value" text-anchor="middle">Load: 95%</text>
+    
+    <!-- Title -->
+    <text x="400" y="30" class="title" text-anchor="middle">Server Room Temperature Monitoring</text>
+</svg> 
