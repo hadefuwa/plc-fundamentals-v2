@@ -6,6 +6,43 @@ A comprehensive Electron.js application designed for industrial maintenance oper
 
 ![Closed Loop Maintenance Interface](https://github.com/user-attachments/assets/ce9a4d07-aa5c-4dae-85c7-8898fb86b566)
 
+## 🎓 Training Curriculum
+
+### 📘 **CP0539 - Industrial Maintenance**
+Interactive training module with 14 comprehensive worksheets covering:
+- Control Systems Fundamentals
+- Emergency Stop Systems
+- LED Status Indicators
+- PLC Maintenance
+- HMI Systems
+- Pump Maintenance
+- Control Valve Operations
+- Sensor Calibration
+- Network Communication
+- Data Logging Systems
+- Power Supply Systems
+- Safety Interlocks
+- Control Panel Maintenance
+- Documentation Management
+
+### 🔍 **CP6773 - Troubleshooting & Fault-Finding**
+Real-world fault scenarios for practical training:
+- Titanium Forging Temperature Control
+- Pharmaceutical Clean Room HVAC
+- CNC Machines Factory Cooling
+- Server Room Temperature Control
+- Potash Mine Brine System
+- Food Processing Sterilizer
+- Injection Molding Temperature
+- pH Control Systems
+
+Each scenario includes:
+- Detailed situation description
+- Interactive questions
+- Visual diagrams
+- Answer tracking
+- Progress saving
+
 ## 🚀 Features
 
 ### 🔧 **Core Functionality**
@@ -27,6 +64,14 @@ A comprehensive Electron.js application designed for industrial maintenance oper
 - **Smart Splash Screen** - Elegant startup animation that only shows on first boot
 - **Persistent Settings** - User preferences saved between sessions
 - **Customizable HMI View** - Adjustable zoom levels with automatic persistence
+
+### 📚 **Training Features**
+- **Interactive Worksheets** - Hands-on learning with real-world scenarios
+- **Progress Tracking** - Save and resume your training progress
+- **Visual Learning** - SVG diagrams for each topic
+- **Practical Scenarios** - Real industrial fault-finding exercises
+- **Answer Storage** - Local storage for worksheet responses
+- **Organized Curriculum** - Structured learning path with clear progression
 
 ### ⚙️ **Settings & Customization**
 - **Application Settings** - Centralized settings page for all configurations
@@ -92,6 +137,19 @@ npm start
 3. **Test Connection** - Verify PLC communication status
 4. **Access HMI** - View integrated web interface for process control
 
+### **Training Modules**
+1. **CP0539 - Industrial Maintenance**
+   - Access worksheets from the main dashboard
+   - Complete interactive questions
+   - Progress is automatically saved
+   - Review completed worksheets anytime
+
+2. **CP6773 - Troubleshooting**
+   - Select fault scenarios to analyze
+   - Work through diagnostic questions
+   - Save responses for later review
+   - Track completion progress
+
 ### **Dashboard Navigation**
 - **Home** - Overview and quick access to main features
 - **PLC Controls** - Monitor and control PLC operations
@@ -125,6 +183,8 @@ const defaultPLCConfig = {
 ### **Database Structure**
 - `db1.json` - PLC data storage (inputs, outputs, analogue values)
 - `dbFaults.json` - Fault logging and acknowledgment tracking
+- `dbMaintenanceScenarios.json` - CP0539 worksheet content
+- `dbFaultScenarios.json` - CP6773 fault scenario content
 
 ### **Styling Customization**
 - `main.css` - Primary application styling
@@ -135,22 +195,26 @@ const defaultPLCConfig = {
 
 ```
 closed-loop-maint/
-├── assets/                     # Images and icons
-│   ├── icons/                 # Application icons
-│   ├── cad.png               # CAD equipment images
-│   ├── cad2.png              # Secondary CAD image
-│   └── matrix-logo.png       # Branding assets
-├── db1.json                   # PLC data storage
-├── dbFaults.json             # Fault logging
-├── index.html                # Main application interface
-├── hmi-interface.html        # Standalone HMI viewer
-├── main.js                   # Electron main process
-├── renderer.js               # Frontend application logic
-├── preload.js                # Electron preload script
-├── main.css                  # Primary stylesheet
-├── package.json              # Dependencies and scripts
-├── PDF_INTEGRATION_GUIDE.md  # PDF integration documentation
-└── README.md                 # This file
+├── assets/                    # Images and icons
+│   ├── icons/                # Application icons
+│   ├── scenarios/           # Training scenario diagrams
+│   ├── cad.png              # CAD equipment images
+│   ├── cad2.png             # Secondary CAD image
+│   └── matrix-logo.png      # Branding assets
+├── db1.json                  # PLC data storage
+├── dbFaults.json            # Fault logging
+├── dbMaintenanceScenarios.json # CP0539 content
+├── dbFaultScenarios.json    # CP6773 content
+├── index.html               # Main application interface
+├── hmi-interface.html       # Standalone HMI viewer
+├── main.js                  # Electron main process
+├── renderer.js              # Frontend application logic
+├── scenario-popup.js        # Training scenario handler
+├── preload.js               # Electron preload script
+├── main.css                 # Primary stylesheet
+├── package.json             # Dependencies and scripts
+├── PDF_INTEGRATION_GUIDE.md # PDF integration documentation
+└── README.md                # This file
 ```
 
 ## 🔍 Troubleshooting
@@ -171,6 +235,11 @@ closed-loop-maint/
 - Check PLC communication status
 - Verify analogue input configuration
 - Restart application if data appears stale
+
+**Training Content Not Loading**
+- Check JSON file integrity
+- Clear browser cache
+- Verify file permissions
 
 **Performance Issues**
 - Close unnecessary applications
@@ -198,8 +267,8 @@ We welcome contributions to improve the Closed Loop Maintenance PC Companion!
 ### **Code Standards**
 - Use clear, descriptive variable names
 - Follow existing code formatting
-- Add comments for complex logic
-- Test thoroughly before submitting
+- Document new features thoroughly
+- Test all changes before submitting
 
 ## 📄 License
 
