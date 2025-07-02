@@ -16,6 +16,63 @@
     .hmi-section button:hover {
       background: #555 !important;
     }
+
+    /* Enhanced PDF Button Hover Effects */
+    .pdf-button-curriculum {
+      background: linear-gradient(135deg, #00ff88, #00cc6a) !important;
+      color: #000 !important;
+      border: 2px solid #00ff88 !important;
+      padding: 24px 16px !important;
+      border-radius: 12px !important;
+      cursor: pointer !important;
+      font-size: 16px !important;
+      font-weight: bold !important;
+      width: 100% !important;
+      transition: all 0.3s ease !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 8px !important;
+      min-height: 80px !important;
+      box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3) !important;
+      text-align: center !important;
+      line-height: 1.2 !important;
+      transform: scale(1) !important;
+    }
+
+    .pdf-button-curriculum:hover {
+      transform: scale(1.05) !important;
+      box-shadow: 0 6px 20px rgba(0, 255, 136, 0.5) !important;
+    }
+
+    .pdf-button-documentation {
+      background: linear-gradient(135deg, #4a9eff, #2d7dd2) !important;
+      color: white !important;
+      border: 2px solid #4a9eff !important;
+      padding: 24px 16px !important;
+      border-radius: 12px !important;
+      cursor: pointer !important;
+      font-size: 16px !important;
+      font-weight: bold !important;
+      width: 100% !important;
+      transition: all 0.3s ease !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 8px !important;
+      min-height: 80px !important;
+      box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3) !important;
+      text-align: center !important;
+      line-height: 1.2 !important;
+      transform: scale(1) !important;
+    }
+
+    .pdf-button-documentation:hover {
+      transform: scale(1.05) !important;
+      box-shadow: 0 6px 20px rgba(74, 158, 255, 0.5) !important;
+    }
   </style>
 </head>
 <body>
@@ -34,7 +91,6 @@
     <div class="logo-header-container">
       <img src="assets/matrix-logo.png" alt="Matrix Logo">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-      <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
 
      <!-- <h1>Closed Loop Maintenance</h1> -->
@@ -91,24 +147,29 @@
          gap: 15px;
          padding: 20px;
        ">
-         <div style="color: #00ff88; font-weight: bold; font-size: 14px; margin-bottom: 10px;">
-           Curriculum
+         <div style="
+           color: #00ff88; 
+           font-weight: bold; 
+           font-size: 18px; 
+           margin-bottom: 15px;
+           text-align: center;
+           text-transform: uppercase;
+           letter-spacing: 1px;
+           border-bottom: 2px solid #00ff88;
+           padding-bottom: 8px;
+         ">
+           📚 Curriculum
          </div>
-         <button class="pdf-button" onclick="showPDF('docs/CP6773 - Troubleshooting & Fault-Finding Closed Loop Systems.pdf')" style="
-           background: #444; color: white; border: none; padding: 16px 20px;
-           border-radius: 8px; cursor: pointer; font-size: 13px; width: 100%;
-           transition: all 0.3s; display: flex; align-items: center; gap: 10px;
-           font-weight: 500; min-height: 50px;
-         ">
-           Troubleshooting (CP6773)
+         <button class="pdf-button pdf-button-curriculum" onclick="showPDF('docs/CP6773 - Troubleshooting & Fault-Finding Closed Loop Systems.pdf')">
+           <i class="fas fa-tools" style="font-size: 20px; margin-bottom: 5px;"></i>
+           <span>Troubleshooting</span>
+           <small style="font-size: 12px; opacity: 0.8;">(CP6773)</small>
          </button>
-         <button class="pdf-button" onclick="showPDF('docs/CP0539 - Industrial Maintenance of Closed Loop Systems.pdf')" style="
-           background: #444; color: white; border: none; padding: 16px 20px;
-           border-radius: 8px; cursor: pointer; font-size: 13px; width: 100%;
-           transition: all 0.3s; display: flex; align-items: center; gap: 10px;
-           font-weight: 500; min-height: 50px;
-         ">
-           Industrial Maintenance (CP0539)
+         <button class="pdf-button pdf-button-curriculum" onclick="showPDF('docs/CP0539 - Industrial Maintenance of Closed Loop Systems.pdf')">
+           <i class="fas fa-cogs" style="font-size: 20px; margin-bottom: 5px;"></i>
+           <span>Industrial</span>
+           <span>Maintenance</span>
+           <small style="font-size: 12px; opacity: 0.8;">(CP0539)</small>
          </button>
        </div>
        
@@ -170,24 +231,28 @@
          gap: 15px;
          padding: 20px;
        ">
-         <div style="color: #00ff88; font-weight: bold; font-size: 14px; margin-bottom: 10px;">
-           Documentation
+         <div style="
+           color: #4a9eff; 
+           font-weight: bold; 
+           font-size: 18px; 
+           margin-bottom: 15px;
+           text-align: center;
+           text-transform: uppercase;
+           letter-spacing: 1px;
+           border-bottom: 2px solid #4a9eff;
+           padding-bottom: 8px;
+         ">
+           📄 Documentation
          </div>
-         <button class="pdf-button" onclick="openPDF('docs/IM0004 - Maintenance of Closed Loop Systems User Manual.pdf')" style="
-           background: #444; color: white; border: none; padding: 16px 20px;
-           border-radius: 8px; cursor: pointer; font-size: 13px; width: 100%;
-           transition: all 0.3s; display: flex; align-items: center; gap: 10px;
-           font-weight: 500; min-height: 50px;
-         ">
-           User Manual (IM0004)
+         <button class="pdf-button pdf-button-documentation" onclick="openPDF('docs/IM0004 - Maintenance of Closed Loop Systems User Manual.pdf')">
+           <i class="fas fa-book" style="font-size: 20px; margin-bottom: 5px;"></i>
+           <span>User Manual</span>
+           <small style="font-size: 12px; opacity: 0.9;">(IM0004)</small>
          </button>
-         <button class="pdf-button" onclick="openPDF('docs/IM0004 Electrical Drawings RevG.pdf')" style="
-           background: #444; color: white; border: none; padding: 16px 20px;
-           border-radius: 8px; cursor: pointer; font-size: 13px; width: 100%;
-           transition: all 0.3s; display: flex; align-items: center; gap: 10px;
-           font-weight: 500; min-height: 50px;
-         ">
-           Electrical Drawings
+         <button class="pdf-button pdf-button-documentation" onclick="openPDF('docs/IM0004 Electrical Drawings RevG.pdf')">
+           <i class="fas fa-drafting-compass" style="font-size: 20px; margin-bottom: 5px;"></i>
+           <span>Electrical</span>
+           <span>Drawings</span>
          </button>
        </div>
      </div>
