@@ -1492,16 +1492,20 @@ h1 {
     list-style: none;
     margin: 0;
     padding: 0;
-    gap: 5px;
+    gap: 20px; /* Increased gap between buttons */
+    justify-content: center;
 }
 
 .nav-item {
-    position: relative;
+    width: 180px; /* Fixed width for buttons */
 }
 
 .nav-link {
-    display: block;
-    padding: 15px 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 12px 0; /* Vertical padding only */
     color: #ffffff;
     text-decoration: none;
     font-weight: 600;
@@ -1514,6 +1518,11 @@ h1 {
     border: 2px solid transparent;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     cursor: pointer;
+    white-space: nowrap;
+}
+
+.nav-link i {
+    margin-right: 8px;
 }
 
 .nav-link:hover {
@@ -1532,38 +1541,15 @@ h1 {
     border: 2px solid #00ff88;
 }
 
-/* Mobile Menu Button */
-.mobile-menu-btn {
-    display: none;
-    background: none;
-    border: 2px solid #00ff88;
-    color: #00ff88;
-    font-size: 24px;
-    cursor: pointer;
-    padding: 8px 12px;
-    border-radius: 6px;
-    transition: all 0.3s ease;
-    margin-left: 15px;
-}
-
-.mobile-menu-btn:hover {
-    background: rgba(0, 255, 136, 0.1);
-    transform: translateY(-2px);
-}
-
-.mobile-menu-btn:active {
-    transform: translateY(0);
-}
-
 /* Responsive Navigation */
 @media (max-width: 768px) {
     .nav-container {
         flex-direction: column;
-        padding: 10px 15px;
+        padding: 10px;
     }
 
     .nav-logo h1 {
-        display: none; /* Hide the title */
+        display: none;
     }
 
     .nav-logo img {
@@ -1571,35 +1557,28 @@ h1 {
     }
 
     .nav-menu {
-        display: flex;
         width: 100%;
-        justify-content: center;
         margin-top: 10px;
-        gap: 15px;
-        padding: 0 10px;
+        gap: 10px;
     }
 
     .nav-item {
-        flex: 0 1 auto; /* Don't force equal widths */
-        min-width: 120px; /* Minimum width for buttons */
+        width: 150px; /* Slightly smaller fixed width for tablets */
     }
 
     .nav-link {
-        width: 100%;
-        text-align: center;
-        padding: 10px 15px;
         font-size: 14px;
-        white-space: nowrap; /* Prevent text wrapping */
+        padding: 10px 0;
+    }
+
+    .nav-link:hover {
+        transform: translateY(-2px); /* Smaller hover effect on mobile */
     }
 }
 
 @media (max-width: 480px) {
     .nav-container {
-        padding: 8px 10px;
-    }
-
-    .nav-logo {
-        gap: 10px;
+        padding: 8px;
     }
 
     .nav-logo img {
@@ -1607,16 +1586,19 @@ h1 {
     }
 
     .nav-menu {
-        gap: 10px;
-        padding: 0 5px;
+        gap: 8px;
     }
 
     .nav-item {
-        min-width: 100px; /* Smaller minimum width */
+        width: 130px; /* Even smaller fixed width for mobile */
     }
 
     .nav-link {
-        padding: 8px 12px;
         font-size: 13px;
+        padding: 8px 0;
+    }
+
+    .nav-link i {
+        margin-right: 6px;
     }
 }
