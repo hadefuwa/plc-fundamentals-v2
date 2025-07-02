@@ -1,0 +1,67 @@
+{
+    "scenarios": [
+        {
+            "id": 1,
+            "title": "Titanium Forging",
+            "paragraphs": [
+                "You are working at a titanium forging plant where precise temperature control is critical for the material properties of the final product.",
+                "The operators have reported that the temperature control system has been behaving erratically over the past shift.",
+                "Initial investigation shows that the PID controller output seems to be oscillating more than usual, and the temperature is not maintaining steady state.",
+                "The system was working perfectly fine last week, and no changes have been made to the PID parameters."
+            ],
+            "image": "assets/scenarios/titanium-forge.png",
+            "questions": [
+                {
+                    "id": "1.1",
+                    "text": "What are the potential causes of the oscillating behavior in the temperature control system?",
+                    "type": "text",
+                    "placeholder": "List potential causes..."
+                },
+                {
+                    "id": "1.2",
+                    "text": "Which components would you check first and why?",
+                    "type": "text",
+                    "placeholder": "Describe your initial troubleshooting steps..."
+                },
+                {
+                    "id": "1.3",
+                    "text": "How would you verify if the thermocouple is functioning correctly?",
+                    "type": "text",
+                    "placeholder": "Explain your verification process..."
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "title": "Pharmaceutical Plant",
+            "paragraphs": [
+                "A pharmaceutical plant's clean room temperature control system is showing signs of deviation from setpoint.",
+                "The facility manager has noticed that the temperature is gradually rising above setpoint during peak production hours.",
+                "The clean room must maintain a temperature of 20°C ±0.5°C for product quality.",
+                "The system uses a water-cooled chiller with redundant pumps.",
+                "Maintenance logs show all preventive maintenance is up to date."
+            ],
+            "image": "assets/scenarios/pharma-cleanroom.png",
+            "questions": [
+                {
+                    "id": "2.1",
+                    "text": "What could be causing the gradual temperature rise during peak hours?",
+                    "type": "text",
+                    "placeholder": "Consider all possible factors..."
+                },
+                {
+                    "id": "2.2",
+                    "text": "How would you determine if the issue is related to cooling capacity or control system?",
+                    "type": "text",
+                    "placeholder": "Explain your diagnostic approach..."
+                },
+                {
+                    "id": "2.3",
+                    "text": "What data would you collect to troubleshoot this issue?",
+                    "type": "text",
+                    "placeholder": "List the key parameters..."
+                }
+            ]
+        }
+    ]
+} 

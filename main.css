@@ -2059,3 +2059,150 @@ body:not(.plc-controls-page) .fullscreen-btn {
 .fullscreen-btn i {
     font-size: 14px;
 }
+
+/* Scenario Popup Styles */
+.scenario-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.scenario-content {
+    background-color: #2a2a2a;
+    border-radius: 8px;
+    padding: 30px;
+    width: 80%;
+    max-width: 1000px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.close-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+.close-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.scenario-content h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #4CAF50;
+    font-size: 24px;
+}
+
+.scenario-text {
+    margin-bottom: 30px;
+}
+
+.scenario-text p {
+    margin-bottom: 15px;
+    line-height: 1.6;
+    color: #e0e0e0;
+}
+
+.scenario-image {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.scenario-image img {
+    max-width: 100%;
+    max-height: 400px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.scenario-questions {
+    background-color: #333333;
+    padding: 20px;
+    border-radius: 6px;
+}
+
+.scenario-questions h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #4CAF50;
+}
+
+.question {
+    margin-bottom: 20px;
+}
+
+.question label {
+    display: block;
+    margin-bottom: 10px;
+    color: #e0e0e0;
+    font-weight: bold;
+}
+
+.question textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #444;
+    border-radius: 4px;
+    background-color: #2a2a2a;
+    color: #ffffff;
+    font-size: 14px;
+    resize: vertical;
+}
+
+.question textarea:focus {
+    outline: none;
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+.save-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+.save-button:hover {
+    background-color: #45a049;
+}
+
+/* Custom scrollbar for the popup */
+.scenario-content::-webkit-scrollbar {
+    width: 10px;
+}
+
+.scenario-content::-webkit-scrollbar-track {
+    background: #1a1a1a;
+    border-radius: 5px;
+}
+
+.scenario-content::-webkit-scrollbar-thumb {
+    background: #4CAF50;
+    border-radius: 5px;
+}
+
+.scenario-content::-webkit-scrollbar-thumb:hover {
+    background: #45a049;
+}
