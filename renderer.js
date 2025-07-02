@@ -894,10 +894,12 @@ document.addEventListener('DOMContentLoaded', function() {
     if (hmiWebview) {
         hmiWebview.addEventListener('dom-ready', function() {
             console.log('HMI interface loaded successfully');
-            // Set default zoom to 80%
-            currentZoomLevel = -0.5;
+            // Set default zoom to 96%
+            currentZoomLevel = Math.log(0.96) / Math.log(1.2); // Approximately -0.0689
             hmiWebview.setZoomLevel(currentZoomLevel);
-            showHmiStatus('HMI Interface Ready - Zoom: 80%');
+            const zoomPercent = Math.round(Math.pow(1.2, currentZoomLevel) * 100);
+            console.log('Setting default zoom level:', currentZoomLevel, 'Zoom:', zoomPercent + '%');
+            showHmiStatus('HMI Interface Ready - Zoom: 96%');
         });
 
         hmiWebview.addEventListener('did-start-loading', function() {
