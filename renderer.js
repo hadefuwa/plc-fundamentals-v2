@@ -58,7 +58,9 @@ document.addEventListener('DOMContentLoaded', () => {
         configHeader.classList.toggle('open');
     }
 
-    configHeader.addEventListener('click', toggleConfig);
+    if (configHeader) {
+        configHeader.addEventListener('click', toggleConfig);
+    }
 
     // Status updates
     window.electron.receiveStatus((status) => {
@@ -243,19 +245,28 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Existing motor button
-    document.getElementById('write-btn').addEventListener('click', () => {
-        window.electron.writePLC();
-    });
+    const writeBtn = document.getElementById('write-btn');
+    if (writeBtn) {
+        writeBtn.addEventListener('click', () => {
+            window.electron.writePLC();
+        });
+    }
 
     // New clear forcing button
-    document.getElementById('clear-forcing-btn').addEventListener('click', () => {
-        window.electron.clearForcing();
-    });
+    const clearForcingBtn = document.getElementById('clear-forcing-btn');
+    if (clearForcingBtn) {
+        clearForcingBtn.addEventListener('click', () => {
+            window.electron.clearForcing();
+        });
+    }
 
     // New fault reset button
-    document.getElementById('fault-reset-btn').addEventListener('click', () => {
-        window.electron.faultReset();
-    });
+    const faultResetBtn = document.getElementById('fault-reset-btn');
+    if (faultResetBtn) {
+        faultResetBtn.addEventListener('click', () => {
+            window.electron.faultReset();
+        });
+    }
 
     // Add to your existing event listeners
     document.querySelectorAll('.grid-item').forEach(item => {
@@ -742,7 +753,9 @@ window.modifyValue = function(type, channel) {
 };
 
 // Add this event listener for the print button
-document.getElementById('print-analogue').addEventListener('click', async function() {
+const printAnalogueBtn = document.getElementById('print-analogue');
+if (printAnalogueBtn) {
+    printAnalogueBtn.addEventListener('click', async function() {
     try {
         // Get the original chart instance
         const originalChart = Chart.getChart(document.getElementById('analogueChart'));
@@ -847,7 +860,8 @@ document.getElementById('print-analogue').addEventListener('click', async functi
     } catch (error) {
         console.error('Error preparing chart for print:', error);
     }
-});
+    });
+}
 
 // HMI Webview Functionality
 document.addEventListener('DOMContentLoaded', function() {
