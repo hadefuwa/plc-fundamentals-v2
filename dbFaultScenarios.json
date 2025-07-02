@@ -2,14 +2,14 @@
     "scenarios": [
         {
             "id": 1,
-            "title": "Titanium Forging",
+            "title": "Titanium Forging Temperature Control",
             "paragraphs": [
                 "You are working at a titanium forging plant where precise temperature control is critical for the material properties of the final product.",
                 "The operators have reported that the temperature control system has been behaving erratically over the past shift.",
                 "Initial investigation shows that the PID controller output seems to be oscillating more than usual, and the temperature is not maintaining steady state.",
                 "The system was working perfectly fine last week, and no changes have been made to the PID parameters."
             ],
-            "image": "assets/scenarios/titanium-forge.svg",
+            "image": "titanium-forge.svg",
             "questions": [
                 {
                     "id": "1.1",
@@ -33,7 +33,7 @@
         },
         {
             "id": 2,
-            "title": "Pharmaceutical Plant",
+            "title": "Pharmaceutical Clean Room HVAC",
             "paragraphs": [
                 "A pharmaceutical plant's clean room temperature control system is showing signs of deviation from setpoint.",
                 "The facility manager has noticed that the temperature is gradually rising above setpoint during peak production hours.",
@@ -41,7 +41,7 @@
                 "The system uses a water-cooled chiller with redundant pumps.",
                 "Maintenance logs show all preventive maintenance is up to date."
             ],
-            "image": "assets/scenarios/pharma-cleanroom.svg",
+            "image": "pharma-cleanroom.svg",
             "questions": [
                 {
                     "id": "2.1",
@@ -73,7 +73,7 @@
                 "The facility recently increased production hours from 8 to 24 hours per day.",
                 "Temperature logs show higher than normal readings during the night shift."
             ],
-            "image": "assets/scenarios/cnc-cooling.svg",
+            "image": "cnc-cooling.svg",
             "questions": [
                 {
                     "id": "3.1",
@@ -97,7 +97,7 @@
         },
         {
             "id": 4,
-            "title": "Marketing",
+            "title": "Server Room Temperature Control",
             "paragraphs": [
                 "A marketing company's server room cooling system has triggered multiple high-temperature alarms.",
                 "The building management system shows the HVAC is running at maximum capacity.",
@@ -105,7 +105,7 @@
                 "The room temperature sensors show uneven readings across different areas.",
                 "Some server racks are showing significantly higher intake temperatures than others."
             ],
-            "image": "assets/scenarios/server-room.svg",
+            "image": "server-room.svg",
             "questions": [
                 {
                     "id": "4.1",
@@ -129,7 +129,7 @@
         },
         {
             "id": 5,
-            "title": "Potash Mine",
+            "title": "Potash Mine Brine System",
             "paragraphs": [
                 "At a potash mine, the brine injection system's flow control loop is showing inconsistent behavior.",
                 "Operators report that the flow rate fluctuates despite a constant setpoint.",
@@ -137,7 +137,7 @@
                 "Pressure sensors upstream and downstream of the control valve show stable readings.",
                 "The issue appears to be worse when the brine temperature is higher."
             ],
-            "image": "assets/scenarios/brine-system.svg",
+            "image": "brine-system.svg",
             "questions": [
                 {
                     "id": "5.1",
@@ -161,7 +161,7 @@
         },
         {
             "id": 6,
-            "title": "First Day On The Job",
+            "title": "Food Processing Sterilizer",
             "paragraphs": [
                 "You've just started as a maintenance technician at a food processing plant.",
                 "During your first day, an operator reports that the steam sterilization system isn't reaching temperature.",
@@ -169,7 +169,7 @@
                 "The steam pressure gauge shows normal supply pressure.",
                 "You notice the temperature controller display occasionally flickers."
             ],
-            "image": "assets/scenarios/sterilizer.svg",
+            "image": "sterilizer.svg",
             "questions": [
                 {
                     "id": "6.1",
@@ -193,65 +193,65 @@
         },
         {
             "id": 7,
-            "title": "Why's It Always The Temperature?",
+            "title": "Injection Molding Temperature",
             "paragraphs": [
                 "A plastic injection molding machine is producing parts with inconsistent quality.",
                 "The mold temperature control unit shows the temperature is within specification.",
                 "Quality control reports that parts from certain cavities are showing signs of incomplete filling.",
-                "The temperature sensor was replaced last month during scheduled maintenance.",
-                "The PID parameters were automatically tuned after the sensor replacement."
+                "The issue seems to be more pronounced during longer production runs.",
+                "Historical data shows gradual degradation in temperature uniformity."
             ],
-            "image": "assets/scenarios/injection-mold.svg",
+            "image": "injection-mold.svg",
             "questions": [
                 {
                     "id": "7.1",
-                    "text": "Why might some cavities be affected while others aren't?",
+                    "text": "Why might some cavities be affected more than others?",
                     "type": "text",
-                    "placeholder": "Analyze possible causes..."
+                    "placeholder": "Consider thermal distribution factors..."
                 },
                 {
                     "id": "7.2",
-                    "text": "How would you verify the accuracy of the new temperature sensor?",
+                    "text": "What could cause temperature non-uniformity despite control readings being normal?",
                     "type": "text",
-                    "placeholder": "Describe verification steps..."
+                    "placeholder": "List potential causes..."
                 },
                 {
                     "id": "7.3",
-                    "text": "What impact might the auto-tuned PID parameters have?",
+                    "text": "How would you verify the actual mold temperature distribution?",
                     "type": "text",
-                    "placeholder": "Explain PID considerations..."
+                    "placeholder": "Describe your testing approach..."
                 }
             ]
         },
         {
             "id": 8,
-            "title": "Settings",
+            "title": "Chemical Reactor pH Control",
             "paragraphs": [
-                "A chemical reactor's pH control system is behaving erratically after a recent software update.",
-                "The control system was upgraded to include new safety features.",
-                "Operators report that the pH swings are larger than before the update.",
-                "The system documentation shows new default PID settings were implemented.",
-                "The pH probe calibration records show it was last calibrated three months ago."
+                "A chemical processing plant is experiencing issues with pH control in a continuous reactor.",
+                "The pH readings are showing more variation than usual, affecting product quality.",
+                "The control system appears to be responding slower than normal to pH deviations.",
+                "Calibration records show the pH probe was replaced last month.",
+                "The issue seems worse when processing certain product grades."
             ],
-            "image": "assets/scenarios/ph-control.svg",
+            "image": "ph-control.svg",
             "questions": [
                 {
                     "id": "8.1",
-                    "text": "What risks are associated with poor pH control in this system?",
+                    "text": "What could cause the slower response time in the pH control system?",
                     "type": "text",
-                    "placeholder": "List potential risks..."
+                    "placeholder": "List potential causes..."
                 },
                 {
                     "id": "8.2",
-                    "text": "How would you verify if the new PID settings are appropriate?",
+                    "text": "How would you verify if the new pH probe is functioning correctly?",
                     "type": "text",
-                    "placeholder": "Describe your verification process..."
+                    "placeholder": "Describe verification steps..."
                 },
                 {
                     "id": "8.3",
-                    "text": "What documentation would you review before making any changes?",
+                    "text": "What maintenance procedures would you recommend for the pH control system?",
                     "type": "text",
-                    "placeholder": "List relevant documentation..."
+                    "placeholder": "Detail maintenance steps..."
                 }
             ]
         }

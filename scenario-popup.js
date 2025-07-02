@@ -1,7 +1,7 @@
 // Only initialize scenario functionality if we're on the main page with scenarios
 document.addEventListener('DOMContentLoaded', () => {
-    const scenarioSection = document.querySelector('.worksheets-section');
-    if (!scenarioSection) return; // Exit if we're not on the scenarios page
+    // Exit if we're not on a page with scenarios
+    if (!document.querySelector('.scenarios-section') && !document.querySelector('.worksheets-section')) return;
 
     // Load both fault and maintenance scenarios
     let faultScenarios = [];
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function showScenario(id, type = 'fault') {
         // Get the correct scenario array based on type
         const scenarios = type === 'fault' ? faultScenarios : maintenanceScenarios;
-        const scenario = scenarios.find(s => s.id === parseInt(id));
+        const scenario = scenarios.find(s => s.id === id);
         
         if (!scenario) {
             console.error('Scenario not found:', id);
@@ -76,13 +76,15 @@ document.addEventListener('DOMContentLoaded', () => {
         content.appendChild(textContainer);
         
         // Add image
-        const imageContainer = document.createElement('div');
-        imageContainer.className = 'scenario-image';
-        const img = document.createElement('img');
-        img.src = scenario.image;
-        img.alt = scenario.title;
-        imageContainer.appendChild(img);
-        content.appendChild(imageContainer);
+        if (scenario.image) {
+            const imageContainer = document.createElement('div');
+            imageContainer.className = 'scenario-image';
+            const img = document.createElement('img');
+            img.src = `assets/scenarios/${scenario.image}`;
+            img.alt = scenario.title;
+            imageContainer.appendChild(img);
+            content.appendChild(imageContainer);
+        }
         
         // Add questions
         const questionsContainer = document.createElement('div');
@@ -100,18 +102,18 @@ document.addEventListener('DOMContentLoaded', () => {
             questionDiv.appendChild(label);
             
             const textarea = document.createElement('textarea');
-            textarea.placeholder = question.placeholder;
-            textarea.id = question.id;
+            textarea.placeholder = question.placeholder || 'Enter your answer here...';
+            textarea.id = `${type}_question_${id}_${question.id}`;
             
             // Load saved answer if exists
-            const savedAnswer = localStorage.getItem(`${type}_scenario_${question.id}`);
+            const savedAnswer = localStorage.getItem(textarea.id);
             if (savedAnswer) {
                 textarea.value = savedAnswer;
             }
             
             // Save answer on change
             textarea.onchange = (e) => {
-                localStorage.setItem(`${type}_scenario_${question.id}`, e.target.value);
+                localStorage.setItem(textarea.id, e.target.value);
             };
             
             questionDiv.appendChild(textarea);
@@ -123,11 +125,19 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.appendChild(popup);
     }
 
-    // Add click event listeners to scenario cards
-    const cards = document.querySelectorAll('.worksheet-card');
-    cards.forEach(card => {
-        const scenarioId = parseInt(card.querySelector('.worksheet-number').textContent.split(' ')[2]);
-        card.onclick = () => showScenario(scenarioId);
+    // Add click event listeners to fault scenario cards
+    const faultCards = document.querySelectorAll('.scenario-card');
+    faultCards.forEach(card => {
+        const scenarioId = parseInt(card.querySelector('.card-number').textContent);
+        card.onclick = () => showScenario(scenarioId, 'fault');
+    });
+
+    // Add click event listeners to worksheet cards
+    const worksheetCards = document.querySelectorAll('.worksheet-card');
+    worksheetCards.forEach(card => {
+        const worksheetNum = card.querySelector('.worksheet-number').textContent;
+        const scenarioId = parseInt(worksheetNum.match(/\d+/)[0]); // Extract number from "Worksheet X"
+        card.onclick = () => showScenario(scenarioId, 'maintenance');
     });
 
     // Export the function for use in other files

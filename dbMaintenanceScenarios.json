@@ -9,7 +9,7 @@
                 "Regular maintenance is essential to ensure accurate temperature control and prevent process deviations.",
                 "You need to check various components including sensors, actuators, and control elements."
             ],
-            "image": "assets/scenarios/temperature-control.png",
+            "image": "temperature-control.svg",
             "questions": [
                 {
                     "id": "1.1",
@@ -40,7 +40,7 @@
                 "These safety systems must function perfectly to protect both personnel and equipment.",
                 "You need to verify both the mechanical operation and the electrical circuit integrity."
             ],
-            "image": "assets/scenarios/estop-system.png",
+            "image": "estop-system.svg",
             "questions": [
                 {
                     "id": "2.1",
@@ -71,7 +71,7 @@
                 "Regular maintenance ensures all indicators are functioning correctly and visible.",
                 "You need to verify both the LED operation and the underlying signal integrity."
             ],
-            "image": "assets/scenarios/led-panel.png",
+            "image": "led-panel.svg",
             "questions": [
                 {
                     "id": "3.1",
@@ -102,7 +102,7 @@
                 "You need to check both hardware components and program integrity.",
                 "This includes inspecting connections, backup batteries, and program backups."
             ],
-            "image": "assets/scenarios/plc-maintenance.png",
+            "image": "plc-maintenance.svg",
             "questions": [
                 {
                     "id": "4.1",
@@ -133,7 +133,7 @@
                 "Regular maintenance ensures reliable operation and accurate display.",
                 "You need to verify both hardware functionality and software configuration."
             ],
-            "image": "assets/scenarios/hmi-system.png",
+            "image": "hmi-system.svg",
             "questions": [
                 {
                     "id": "5.1",
@@ -164,7 +164,7 @@
                 "Regular maintenance prevents unexpected failures and ensures efficiency.",
                 "You need to check mechanical components and monitor performance metrics."
             ],
-            "image": "assets/scenarios/pump-maintenance.png",
+            "image": "pump-maintenance.svg",
             "questions": [
                 {
                     "id": "6.1",
@@ -195,25 +195,25 @@
                 "Regular maintenance ensures accurate valve positioning and sealing.",
                 "You need to check both mechanical operation and control signals."
             ],
-            "image": "assets/scenarios/valve-maintenance.png",
+            "image": "valve-maintenance.svg",
             "questions": [
                 {
                     "id": "7.1",
-                    "text": "How would you verify valve positioning accuracy?",
+                    "text": "What mechanical checks would you perform on the valve?",
                     "type": "text",
-                    "placeholder": "Describe calibration steps..."
+                    "placeholder": "List mechanical inspections..."
                 },
                 {
                     "id": "7.2",
-                    "text": "What signs indicate valve stem packing needs replacement?",
+                    "text": "How would you verify valve positioning accuracy?",
                     "type": "text",
-                    "placeholder": "List warning signs..."
+                    "placeholder": "Describe calibration process..."
                 },
                 {
                     "id": "7.3",
-                    "text": "How would you test valve response time?",
+                    "text": "What signs indicate valve maintenance is needed?",
                     "type": "text",
-                    "placeholder": "Explain testing procedure..."
+                    "placeholder": "List warning signs..."
                 }
             ]
         }
