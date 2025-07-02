@@ -125,20 +125,27 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.appendChild(popup);
     }
 
-    // Add click event listeners to fault scenario cards
-    const faultCards = document.querySelectorAll('.scenario-card');
-    faultCards.forEach(card => {
-        const scenarioId = parseInt(card.querySelector('.card-number').textContent);
-        card.onclick = () => showScenario(scenarioId, 'fault');
-    });
+    // Add click event listeners to fault scenario cards (in the scenarios section)
+    const scenariosSection = document.querySelector('.scenarios-section');
+    if (scenariosSection) {
+        const faultCards = scenariosSection.querySelectorAll('.worksheet-card');
+        faultCards.forEach(card => {
+            const scenarioNum = card.querySelector('.worksheet-number').textContent;
+            const scenarioId = parseInt(scenarioNum.match(/\d+/)[0]); // Extract number from "Fault Scenario X"
+            card.onclick = () => showScenario(scenarioId, 'fault');
+        });
+    }
 
-    // Add click event listeners to worksheet cards
-    const worksheetCards = document.querySelectorAll('.worksheet-card');
-    worksheetCards.forEach(card => {
-        const worksheetNum = card.querySelector('.worksheet-number').textContent;
-        const scenarioId = parseInt(worksheetNum.match(/\d+/)[0]); // Extract number from "Worksheet X"
-        card.onclick = () => showScenario(scenarioId, 'maintenance');
-    });
+    // Add click event listeners to worksheet cards (in the worksheets section)
+    const worksheetsSection = document.querySelector('.worksheets-section');
+    if (worksheetsSection) {
+        const worksheetCards = worksheetsSection.querySelectorAll('.worksheet-card');
+        worksheetCards.forEach(card => {
+            const worksheetNum = card.querySelector('.worksheet-number').textContent;
+            const scenarioId = parseInt(worksheetNum.match(/\d+/)[0]); // Extract number from "Worksheet X"
+            card.onclick = () => showScenario(scenarioId, 'maintenance');
+        });
+    }
 
     // Export the function for use in other files
     window.showScenario = showScenario;

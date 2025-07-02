@@ -216,6 +216,223 @@
                     "placeholder": "List warning signs..."
                 }
             ]
+        },
+        {
+            "id": 8,
+            "title": "Sensor Calibration",
+            "paragraphs": [
+                "The process relies on various sensors for accurate measurements.",
+                "Regular calibration ensures measurement accuracy and system reliability.",
+                "You need to verify and adjust sensor readings against known standards.",
+                "This includes temperature, pressure, flow, and level sensors."
+            ],
+            "image": "temperature-control.svg",
+            "questions": [
+                {
+                    "id": "8.1",
+                    "text": "What equipment is needed for sensor calibration?",
+                    "type": "text",
+                    "placeholder": "List calibration tools and standards..."
+                },
+                {
+                    "id": "8.2",
+                    "text": "How would you document the calibration process?",
+                    "type": "text",
+                    "placeholder": "Describe documentation requirements..."
+                },
+                {
+                    "id": "8.3",
+                    "text": "What factors can affect sensor accuracy?",
+                    "type": "text",
+                    "placeholder": "List potential interference sources..."
+                }
+            ]
+        },
+        {
+            "id": 9,
+            "title": "Network Communication",
+            "paragraphs": [
+                "The control system relies on industrial networks for data exchange.",
+                "Regular maintenance of network infrastructure is crucial.",
+                "You need to verify communication integrity and troubleshoot issues.",
+                "This includes checking cables, connections, and network devices."
+            ],
+            "image": "plc-maintenance.svg",
+            "questions": [
+                {
+                    "id": "9.1",
+                    "text": "How would you test network communication?",
+                    "type": "text",
+                    "placeholder": "Describe testing methods..."
+                },
+                {
+                    "id": "9.2",
+                    "text": "What are common network failure points?",
+                    "type": "text",
+                    "placeholder": "List potential issues..."
+                },
+                {
+                    "id": "9.3",
+                    "text": "What preventive maintenance is needed for networks?",
+                    "type": "text",
+                    "placeholder": "List maintenance tasks..."
+                }
+            ]
+        },
+        {
+            "id": 10,
+            "title": "Data Logging Systems",
+            "paragraphs": [
+                "Process data is recorded for analysis and compliance.",
+                "The data logging system must be maintained for reliable operation.",
+                "You need to verify data accuracy and storage integrity.",
+                "This includes checking sensors, loggers, and backup systems."
+            ],
+            "image": "hmi-system.svg",
+            "questions": [
+                {
+                    "id": "10.1",
+                    "text": "How would you verify data logging accuracy?",
+                    "type": "text",
+                    "placeholder": "Describe verification process..."
+                },
+                {
+                    "id": "10.2",
+                    "text": "What backup procedures should be in place?",
+                    "type": "text",
+                    "placeholder": "List backup requirements..."
+                },
+                {
+                    "id": "10.3",
+                    "text": "How often should data logging be verified?",
+                    "type": "text",
+                    "placeholder": "Explain maintenance frequency..."
+                }
+            ]
+        },
+        {
+            "id": 11,
+            "title": "Power Supply Systems",
+            "paragraphs": [
+                "Reliable power is crucial for control system operation.",
+                "UPS and power distribution systems need regular maintenance.",
+                "You need to check power quality and backup systems.",
+                "This includes testing batteries and monitoring voltage levels."
+            ],
+            "image": "plc-maintenance.svg",
+            "questions": [
+                {
+                    "id": "11.1",
+                    "text": "What power quality measurements are important?",
+                    "type": "text",
+                    "placeholder": "List key measurements..."
+                },
+                {
+                    "id": "11.2",
+                    "text": "How would you test UPS operation?",
+                    "type": "text",
+                    "placeholder": "Describe testing procedure..."
+                },
+                {
+                    "id": "11.3",
+                    "text": "What preventive maintenance is needed?",
+                    "type": "text",
+                    "placeholder": "List maintenance tasks..."
+                }
+            ]
+        },
+        {
+            "id": 12,
+            "title": "Safety Interlocks",
+            "paragraphs": [
+                "Safety interlocks protect personnel and equipment.",
+                "Regular testing ensures reliable safety system operation.",
+                "You need to verify all interlock functions and responses.",
+                "This includes checking sensors, logic, and actuators."
+            ],
+            "image": "estop-system.svg",
+            "questions": [
+                {
+                    "id": "12.1",
+                    "text": "How would you test safety interlocks?",
+                    "type": "text",
+                    "placeholder": "Describe testing procedure..."
+                },
+                {
+                    "id": "12.2",
+                    "text": "What documentation is required?",
+                    "type": "text",
+                    "placeholder": "List required records..."
+                },
+                {
+                    "id": "12.3",
+                    "text": "How often should interlocks be tested?",
+                    "type": "text",
+                    "placeholder": "Explain testing frequency..."
+                }
+            ]
+        },
+        {
+            "id": 13,
+            "title": "Control Panel Maintenance",
+            "paragraphs": [
+                "Control panels house critical control components.",
+                "Regular maintenance ensures reliable operation.",
+                "You need to check electrical connections and components.",
+                "This includes inspecting terminals, wiring, and indicators."
+            ],
+            "image": "led-panel.svg",
+            "questions": [
+                {
+                    "id": "13.1",
+                    "text": "What should be checked during panel inspection?",
+                    "type": "text",
+                    "placeholder": "List inspection points..."
+                },
+                {
+                    "id": "13.2",
+                    "text": "How would you test panel ventilation?",
+                    "type": "text",
+                    "placeholder": "Describe testing method..."
+                },
+                {
+                    "id": "13.3",
+                    "text": "What cleaning procedures are needed?",
+                    "type": "text",
+                    "placeholder": "List cleaning tasks..."
+                }
+            ]
+        },
+        {
+            "id": 14,
+            "title": "Documentation Management",
+            "paragraphs": [
+                "Proper documentation is crucial for maintenance.",
+                "You need to maintain accurate records and procedures.",
+                "This includes updating drawings and maintenance logs.",
+                "Documentation helps ensure consistent maintenance quality."
+            ],
+            "image": "plc-maintenance.svg",
+            "questions": [
+                {
+                    "id": "14.1",
+                    "text": "What documents should be maintained?",
+                    "type": "text",
+                    "placeholder": "List required documentation..."
+                },
+                {
+                    "id": "14.2",
+                    "text": "How would you organize maintenance records?",
+                    "type": "text",
+                    "placeholder": "Describe organization system..."
+                },
+                {
+                    "id": "14.3",
+                    "text": "What revision control procedures are needed?",
+                    "type": "text",
+                    "placeholder": "Explain version control..."
+                }
+            ]
         }
     ]
 } 
