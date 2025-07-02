@@ -24,7 +24,15 @@ A comprehensive Electron.js application designed for industrial maintenance oper
 - **Modern Design** - Professional dark theme with Matrix branding
 - **Responsive Layout** - Adaptive grid system with draggable components
 - **CAD Integration** - Industrial equipment imagery for context
-- **Splash Screen** - Branded startup experience with loading animations
+- **Smart Splash Screen** - Elegant startup animation that only shows on first boot
+- **Persistent Settings** - User preferences saved between sessions
+- **Customizable HMI View** - Adjustable zoom levels with automatic persistence
+
+### ⚙️ **Settings & Customization**
+- **Application Settings** - Centralized settings page for all configurations
+- **HMI Preferences** - Customizable zoom levels and refresh intervals
+- **Network Configuration** - Easy IP address management for PLC connections
+- **UI Preferences** - Persistent user interface customizations
 
 ### 🔒 **Security & Reliability**
 - **Offline Operation** - No internet dependency for core functionality
@@ -62,10 +70,14 @@ cd closed-loop-maint
 npm install
 ```
 
-### 3. Configure PLC Connection
-- Update PLC IP address in the application settings
-- Default HMI URL: `https://192.168.7.101/device/WebRH`
-- Ensure network connectivity to your S7 PLC
+### 3. Configure Settings
+1. Launch the application
+2. Click the Settings button in the navigation bar
+3. Configure your preferences:
+   - PLC IP Address
+   - Default HMI Zoom Level
+   - Auto-refresh Interval
+4. Click Save to apply changes
 
 ### 4. Launch Application
 ```bash
@@ -76,20 +88,25 @@ npm start
 
 ### **Initial Setup**
 1. **Launch Application** - Run `npm start` to open the interface
-2. **Configure PLC IP** - Set your Siemens S7 PLC IP address
+2. **Configure Settings** - Set your preferences in the Settings page
 3. **Test Connection** - Verify PLC communication status
 4. **Access HMI** - View integrated web interface for process control
 
 ### **Dashboard Navigation**
-- **Analogue Inputs** - Monitor AI0/AI1 voltage levels with real-time charts
-- **PLC Status** - View connection history and system health
-- **Event Monitoring** - Track E-Stop events and LED state changes
+- **Home** - Overview and quick access to main features
+- **PLC Controls** - Monitor and control PLC operations
+- **Settings** - Configure application preferences
 - **HMI Interface** - Full-screen process visualization and control
+
+### **HMI Interface Features**
+- **Zoom Controls** - Adjust view size with persistent settings
+- **Auto-refresh** - Configure automatic page updates
+- **Fullscreen Mode** - Maximize HMI view for better visibility
+- **Quick Reset** - Return to default zoom level instantly
 
 ### **Advanced Features**
 - **Drag & Drop** - Rearrange dashboard components as needed
 - **Print Charts** - Generate printable reports of analogue data
-- **Zoom Controls** - Adjust HMI interface zoom for optimal viewing
 - **Fault Management** - Acknowledge and track system faults
 
 ## 🔧 Configuration
