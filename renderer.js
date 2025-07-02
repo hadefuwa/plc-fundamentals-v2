@@ -219,30 +219,34 @@ document.addEventListener('DOMContentLoaded', () => {
         return ip.split('.').every(num => parseInt(num) >= 0 && parseInt(num) <= 255);
     }
 
-    ipInput.addEventListener('input', (e) => {
-        const ip = e.target.value;
-        if (isValidIP(ip)) {
-            ipInput.style.borderColor = '#4a4f55';
-            connectBtn.disabled = false;
-        } else {
-            ipInput.style.borderColor = '#ff4444';
-            connectBtn.disabled = true;
-        }
-    });
+    if (ipInput) {
+        ipInput.addEventListener('input', (e) => {
+            const ip = e.target.value;
+            if (isValidIP(ip)) {
+                ipInput.style.borderColor = '#4a4f55';
+                if (connectBtn) connectBtn.disabled = false;
+            } else {
+                ipInput.style.borderColor = '#ff4444';
+                if (connectBtn) connectBtn.disabled = true;
+            }
+        });
+    }
 
-    connectBtn.addEventListener('click', () => {
-        const ip = ipInput.value;
-        if (isValidIP(ip)) {
-            connectBtn.disabled = true;
-            window.electron.updatePLCAddress(ip);
-            window.electron.connectPLC();
-            //console.log('Attempting to connect to PLC at:', ip);
-            
-            // Optional: collapse the config panel after connecting
-            configPanel.classList.add('collapsed');
-            configHeader.classList.remove('open');
-        }
-    });
+    if (connectBtn) {
+        connectBtn.addEventListener('click', () => {
+            const ip = ipInput ? ipInput.value : '';
+            if (isValidIP(ip)) {
+                connectBtn.disabled = true;
+                window.electron.updatePLCAddress(ip);
+                window.electron.connectPLC();
+                //console.log('Attempting to connect to PLC at:', ip);
+                
+                // Optional: collapse the config panel after connecting
+                if (configPanel) configPanel.classList.add('collapsed');
+                if (configHeader) configHeader.classList.remove('open');
+            }
+        });
+    }
 
     // Existing motor button
     const writeBtn = document.getElementById('write-btn');
