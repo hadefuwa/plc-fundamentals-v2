@@ -156,6 +156,126 @@
       transform: scale(1.05) !important;
       box-shadow: 0 6px 20px rgba(74, 158, 255, 0.5) !important;
     }
+
+    /* Responsive HMI Interface */
+    .responsive-hmi {
+      flex-wrap: nowrap !important;
+    }
+    
+    .analytics-column {
+      flex-shrink: 0;
+      min-width: 180px;
+    }
+    
+    .cad-image-container {
+      flex-shrink: 1;
+      min-width: 200px;
+    }
+    
+    #hmi-webview {
+      flex-grow: 1;
+      max-width: 100%;
+      min-width: 400px;
+      width: auto !important;
+      height: 580px;
+      border: none;
+    }
+
+    /* Large screens - show everything */
+    @media (min-width: 1600px) {
+      .analytics-column {
+        width: 200px;
+      }
+      .cad-image-container {
+        width: 400px;
+      }
+      #hmi-webview {
+        width: 800px;
+      }
+    }
+
+    /* Medium-large screens - reduce CAD image size */
+    @media (max-width: 1599px) and (min-width: 1400px) {
+      .analytics-column {
+        width: 180px;
+      }
+      .cad-image-container {
+        width: 300px;
+      }
+      #hmi-webview {
+        width: 600px;
+      }
+    }
+
+    /* Medium screens - hide CAD images, keep side panels */
+    @media (max-width: 1399px) and (min-width: 1200px) {
+      .cad-image-container {
+        display: none;
+      }
+      .analytics-column {
+        width: 160px;
+      }
+      #hmi-webview {
+        width: 700px;
+      }
+    }
+
+    /* Small-medium screens - smaller side panels */
+    @media (max-width: 1199px) and (min-width: 900px) {
+      .cad-image-container {
+        display: none;
+      }
+      .analytics-column {
+        width: 140px;
+        padding: 10px;
+      }
+      .analytics-column .pdf-button {
+        font-size: 16px !important;
+        padding: 20px 10px !important;
+        min-height: 80px !important;
+      }
+      .analytics-column .fas {
+        font-size: 18px !important;
+      }
+      #hmi-webview {
+        width: 500px;
+      }
+    }
+
+    /* Small screens - hide side panels completely, focus on HMI */
+    @media (max-width: 899px) {
+      .analytics-column {
+        display: none;
+      }
+      .cad-image-container {
+        display: none;
+      }
+      #hmi-webview {
+        width: 100%;
+        max-width: 800px;
+      }
+      .responsive-hmi {
+        padding: 0 10px;
+      }
+    }
+
+    /* Mobile screens - stack vertically */
+    @media (max-width: 600px) {
+      .hmi-section {
+        height: auto;
+        min-height: 400px;
+      }
+      .responsive-hmi {
+        height: auto;
+        flex-direction: column;
+        gap: 10px;
+        padding: 20px;
+      }
+      #hmi-webview {
+        width: 100%;
+        height: 400px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -203,17 +323,18 @@
   ">
 
 
-         <div class="hmi-container" style="
+         <div class="hmi-container responsive-hmi" style="
        width: 100%;
        height: 600px;
        position: relative;
        background: transparent;
        display: flex;
        align-items: center;
-       justify-content: space-between;
+       justify-content: center;
        padding: 0 20px;
        overflow-x: hidden;
        overflow-y: hidden;
+       gap: 20px;
      ">
        <div class="hmi-status hidden" id="hmi-status" style="
          position: absolute;
@@ -231,7 +352,6 @@
        
        <!-- Analytics Column 1 -->
        <div class="analytics-column" style="
-         width: 200px;
          height: 100%;
          background: rgba(0, 0, 0, 0.1);
          border: 1px solid #444;
@@ -269,11 +389,10 @@
        </div>
        
        <!-- CAD Image Left -->
-       <div style="
+       <div class="cad-image-container" style="
          display: flex; 
          align-items: center; 
          justify-content: center;
-         width: 500px;
          height: 100%;
        ">
          <img src="assets/cad.png" alt="CAD Image Left" style="
@@ -287,22 +406,16 @@
        <!-- HMI Webview -->
        <webview 
          id="hmi-webview" 
-         src="https://192.168.7.101/device/WebRH" 
-         style="
-           width: 965px;
-           height: 580px;
-           border: none;
-         "
+         src="https://192.168.7.101/device/WebRH"
          allowpopups
          disablewebsecurity>
        </webview>
        
        <!-- CAD Image Right -->
-       <div style="
+       <div class="cad-image-container" style="
          display: flex; 
          align-items: center; 
          justify-content: center;
-         width: 500px;
          height: 100%;
        ">
          <img src="assets/cad2.png" alt="CAD Image Right" style="
@@ -315,7 +428,6 @@
        
        <!-- Analytics Column 2 -->
        <div class="analytics-column" style="
-         width: 200px;
          height: 100%;
          background: rgba(0, 0, 0, 0.1);
          border: 1px solid #444;
