@@ -162,6 +162,257 @@ document.addEventListener('DOMContentLoaded', () => {
         title.textContent = 'Closed-Loop Control Systems';
         content.appendChild(title);
 
+        // Add Introduction Section
+        const introSection = document.createElement('div');
+        introSection.className = 'worksheet-section introduction-section';
+        introSection.innerHTML = `
+            <h3>1. Introduction</h3>
+            <div class="section-content">
+                <p>${escapeHtml("The system you have in front of you is a Closed-Loop Flow Control system, meaning it continuously adjusts itself to meet a desired target, called the setpoint. It does this by using feedback from sensors to control devices like pumps and valves, keeping the system accurate and stable even if conditions change.")}</p>
+                
+                <div class="cad-images">
+                    <figure>
+                        <img src="assets/cad.png" alt="CAD Diagram 1" class="cad-image">
+                        <figcaption>CAD Model - Front View</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="assets/cad2.png" alt="CAD Diagram 2" class="cad-image">
+                        <figcaption>CAD Model - Side View</figcaption>
+                    </figure>
+                </div>
+            </div>
+        `;
+        content.appendChild(introSection);
+
+        // Add Over To You Section
+        const overToYouSection = document.createElement('div');
+        overToYouSection.className = 'worksheet-section over-to-you-section';
+        overToYouSection.innerHTML = `
+            <h3>2. Over To You</h3>
+            <div class="section-content">
+                <p class="instruction-intro">${escapeHtml("Select Start and observe the system start up. Once the pump is running you should see water flow through the flow gauge. Ensure the hand valve is in the open position, (the handle should be in line with the piping).")}</p>
+                
+                <div class="steps-container">
+                    <div class="step-card" data-step="1">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <div class="step-header">
+                                <h4>Set a Flow Rate</h4>
+                                <label class="step-checkbox">
+                                    <input type="checkbox" class="step-complete-checkbox">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <p>${escapeHtml("Enter a target flow rate on the HMI. You can adjust in increments of 20 using the +/- buttons.")}</p>
+                        </div>
+                    </div>
+
+                    <div class="step-card" data-step="2">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <div class="step-header">
+                                <h4>Observe Feedback</h4>
+                                <label class="step-checkbox">
+                                    <input type="checkbox" class="step-complete-checkbox">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <p>${escapeHtml("Watch the flow sensor reading on the HMI and compare it to the setpoint.")}</p>
+                        </div>
+                    </div>
+
+                    <div class="step-card" data-step="3">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <div class="step-header">
+                                <h4>Watch the System Adjust</h4>
+                                <label class="step-checkbox">
+                                    <input type="checkbox" class="step-complete-checkbox">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <p>${escapeHtml("Note how the pump speed and valve position change to bring the flow rate to the setpoint.")}</p>
+                        </div>
+                    </div>
+
+                    <div class="step-card" data-step="4">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <div class="step-header">
+                                <h4>Introduce a Disturbance</h4>
+                                <label class="step-checkbox">
+                                    <input type="checkbox" class="step-complete-checkbox">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <p>${escapeHtml("Temporarily restrict the flow (e.g., partially close the shut-off valve) and observe how the system reacts to maintain the flow rate.")}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        content.appendChild(overToYouSection);
+
+        // Add "So What?" section
+        const soWhatSection = document.createElement('div');
+        soWhatSection.className = 'so-what-section';
+        
+        soWhatSection.innerHTML = `
+            <h3 class="section-title">So What?</h3>
+            <div class="so-what-content">
+                <p>This is part of a control system, which automates processes in Industry. At the heart of this system is a PLC (Programmable Logic Controller), a computer that makes real-time decisions based on sensor data. The HMI (Human-Machine Interface) allows you to monitor and adjust settings easily.</p>
+                
+                <div class="key-point">
+                    <i class="fas fa-lightbulb"></i>
+                    <div>
+                        <strong>Control Loop in Action:</strong>
+                        <p>Restricting the hand valve reduced flow, which the sensor detected and sent to the PLC. The PLC increased pump speed and adjusted the valve to restore flow, showing automatic correction.</p>
+                    </div>
+                </div>
+
+                <div class="key-point">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <div>
+                        <strong>System Behavior:</strong>
+                        <p>Rapid valve changes caused oscillations, highlighting the need for gradual adjustments. Fully closing the valve stopped flow; the PLC responded by maxing the pump and opening the valve, but no water moved.</p>
+                    </div>
+                </div>
+
+                <div class="key-point">
+                    <i class="fas fa-info-circle"></i>
+                    <div>
+                        <strong>Important Takeaway:</strong>
+                        <p>This demonstrates risks like pressure buildup and why managing flow restrictions is critical.</p>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        content.appendChild(soWhatSection);
+
+        // Add styles for the "So What?" section
+        const style = document.createElement('style');
+        style.textContent = `
+            .so-what-section {
+                background: #2d2d2d;
+                border-radius: 8px;
+                padding: 20px;
+                margin-top: 30px;
+                border-left: 4px solid #4CAF50;
+            }
+
+            .so-what-section .section-title {
+                color: #FFFFFF;
+                font-size: 24px;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .so-what-section .section-title::before {
+                content: "💡";
+                font-size: 28px;
+            }
+
+            .so-what-content {
+                color: #FFFFFF;
+                font-size: 16px;
+                line-height: 1.6;
+            }
+
+            .so-what-content p {
+                margin-bottom: 20px;
+            }
+
+            .key-point {
+                display: flex;
+                gap: 15px;
+                margin-bottom: 20px;
+                padding: 15px;
+                background: rgba(76, 175, 80, 0.1);
+                border-radius: 6px;
+                transition: transform 0.2s ease;
+                align-items: flex-start;
+            }
+
+            .key-point:hover {
+                transform: translateX(5px);
+            }
+
+            .key-point i {
+                font-size: 24px;
+                color: #4CAF50;
+                margin-top: 4px;
+                flex-shrink: 0;
+            }
+
+            .key-point div {
+                flex: 1;
+            }
+
+            .key-point strong {
+                display: block;
+                color: #4CAF50;
+                margin-bottom: 8px;
+                font-size: 18px;
+            }
+
+            .key-point p {
+                margin: 0;
+                color: #FFFFFF;
+            }
+        `;
+
+        document.head.appendChild(style);
+
+        // Initialize step completion functionality
+        const stepCards = overToYouSection.querySelectorAll('.step-card');
+        stepCards.forEach(card => {
+            const checkbox = card.querySelector('.step-complete-checkbox');
+            const stepNumber = card.dataset.step;
+            
+            // Load saved state
+            const savedState = localStorage.getItem(`worksheet1_step${stepNumber}_complete`);
+            if (savedState === 'true') {
+                checkbox.checked = true;
+                card.classList.add('step-completed');
+            }
+
+            // Function to toggle step completion
+            const toggleStep = (e) => {
+                // Don't toggle if clicking the checkbox itself (it handles its own state)
+                if (e.target.type === 'checkbox') return;
+                
+                // Toggle checkbox
+                checkbox.checked = !checkbox.checked;
+                
+                // Update card state
+                if (checkbox.checked) {
+                    card.classList.add('step-completed');
+                } else {
+                    card.classList.remove('step-completed');
+                }
+                
+                // Save state
+                localStorage.setItem(`worksheet1_step${stepNumber}_complete`, checkbox.checked);
+            };
+
+            // Add click handler to card
+            card.addEventListener('click', toggleStep);
+
+            // Add change handler to checkbox
+            checkbox.addEventListener('change', (e) => {
+                if (e.target.checked) {
+                    card.classList.add('step-completed');
+                } else {
+                    card.classList.remove('step-completed');
+                }
+                // Save state
+                localStorage.setItem(`worksheet1_step${stepNumber}_complete`, e.target.checked);
+            });
+        });
+
         // Create the main simulation section with tabs for different features
         const simSection = document.createElement('div');
         simSection.className = 'simulation-section';
@@ -614,4 +865,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Export the function for use in other files
     window.showScenario = showScenario;
+
+    // Helper function to escape HTML special characters
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
 }); 
