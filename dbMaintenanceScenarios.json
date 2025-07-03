@@ -226,7 +226,7 @@
                 "You need to verify and adjust sensor readings against known standards.",
                 "This includes temperature, pressure, flow, and level sensors."
             ],
-            "image": "temperature-control.svg",
+            "image": "ph-control.svg",
             "questions": [
                 {
                     "id": "8.1",
@@ -257,7 +257,7 @@
                 "You need to verify communication integrity and troubleshoot issues.",
                 "This includes checking cables, connections, and network devices."
             ],
-            "image": "plc-maintenance.svg",
+            "image": "server-room.svg",
             "questions": [
                 {
                     "id": "9.1",
@@ -288,7 +288,7 @@
                 "You need to verify data accuracy and storage integrity.",
                 "This includes checking sensors, loggers, and backup systems."
             ],
-            "image": "hmi-system.svg",
+            "image": "server-room.svg",
             "questions": [
                 {
                     "id": "10.1",
@@ -319,7 +319,7 @@
                 "You need to check power quality and backup systems.",
                 "This includes testing batteries and monitoring voltage levels."
             ],
-            "image": "plc-maintenance.svg",
+            "image": "cnc-cooling.svg",
             "questions": [
                 {
                     "id": "11.1",
@@ -412,7 +412,7 @@
                 "This includes updating drawings and maintenance logs.",
                 "Documentation helps ensure consistent maintenance quality."
             ],
-            "image": "plc-maintenance.svg",
+            "image": "pharma-cleanroom.svg",
             "questions": [
                 {
                     "id": "14.1",
