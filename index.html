@@ -5,9 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Matrix Closed Loop Maintenance</title>
   <link rel="stylesheet" href="main.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">
+  <!-- Load dependencies -->
+  <script src="node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <!-- Load app-specific scripts after dependencies -->
+  <script defer src="jquery.notification-banner.js"></script>
+  <script defer src="forcing-banner.js"></script>
+  <script defer src="fault-banner.js"></script>
+  <script defer src="scenario-popup.js"></script>
+  <script defer src="renderer.js"></script>
   <style>
     .hidden {
       opacity: 0;
@@ -678,7 +686,6 @@
   <script src="./forcing-banner.js"></script>
 
   <!-- Application Code -->
-  <script src="renderer.js"></script>
   <script src="scenario-popup.js"></script>
   
   <script>
@@ -774,15 +781,18 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.9);
   color: white;
   padding: 20px 40px;
   border-radius: 8px;
-  z-index: 9999;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  z-index: 99999;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
   text-align: center;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  min-width: 200px;
 ">
-  <div style="margin-bottom: 15px; font-size: 18px;">Opening PDF...</div>
+  <div style="margin-bottom: 15px; font-size: 18px; font-weight: 500;">Opening PDF...</div>
   <div class="loading-spinner" style="
     width: 40px;
     height: 40px;
@@ -799,6 +809,15 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+  
+  #pdf-loading-popup {
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+  }
+  
+  #pdf-loading-popup.visible {
+    opacity: 1;
+  }
 </style>
 
 <!-- PDF Navigation Functions -->
@@ -806,37 +825,29 @@
     function openPDF(pdfPath) {
         console.log('Opening PDF:', pdfPath);
         
-        // Show loading popup
+        // Show loading popup with fade in
         const popup = document.getElementById('pdf-loading-popup');
         popup.style.display = 'block';
+        // Force a reflow to enable the transition
+        popup.offsetHeight;
+        popup.classList.add('visible');
         
         // Use the IPC method to open PDF in the system's default viewer
         if (window.electron && window.electron.openPDF) {
             window.electron.openPDF(pdfPath);
         }
         
-        // Hide popup after 5 seconds
+        // Hide popup after 2 seconds with fade out
         setTimeout(() => {
-            popup.style.display = 'none';
-        }, 5000);
+            popup.classList.remove('visible');
+            setTimeout(() => {
+                popup.style.display = 'none';
+            }, 200); // Wait for fade out animation
+        }, 2000);
     }
 
     function showPDF(pdfPath) {
-        console.log('Showing PDF:', pdfPath);
-        
-        // Show loading popup
-        const popup = document.getElementById('pdf-loading-popup');
-        popup.style.display = 'block';
-        
-        // Use the IPC method to open PDF in the system's default viewer
-        if (window.electron && window.electron.openPDF) {
-            window.electron.openPDF(pdfPath);
-        }
-        
-        // Hide popup after 5 seconds
-        setTimeout(() => {
-            popup.style.display = 'none';
-        }, 5000);
+        openPDF(pdfPath); // Use the same function for consistency
     }
 </script>
 

@@ -1042,21 +1042,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // PDF Integration Functions
 function openPDF(pdfPath) {
-    console.log('Opening PDF:', pdfPath);
-    // Create a file URL for the PDF
-    const fileUrl = `file:///${pdfPath.replace(/\\/g, '/')}`;
-    // Navigate to pdf-viewer.html with the PDF path as a query parameter
-    window.location.href = `pdf-viewer.html?pdf=${encodeURIComponent(fileUrl)}`;
+    try {
+        console.log('Attempting to open PDF:', pdfPath);
+        // Use the exposed openPDF function from preload.js
+        window.electron.openPDF(pdfPath);
+        console.log('PDF open request sent successfully');
+    } catch (error) {
+        console.error('Error in openPDF function:', error);
+    }
 }
 
-// Add showPDF function that works the same way as openPDF
-function showPDF(pdfPath) {
-    console.log('Showing PDF:', pdfPath);
-    // Create a file URL for the PDF
-    const fileUrl = `file:///${pdfPath.replace(/\\/g, '/')}`;
-    // Navigate to pdf-viewer.html with the PDF path as a query parameter
-    window.location.href = `pdf-viewer.html?pdf=${encodeURIComponent(fileUrl)}`;
-}
+// Alias showPDF to openPDF for compatibility
+const showPDF = openPDF;
 
 // Add hover effects for PDF buttons when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {

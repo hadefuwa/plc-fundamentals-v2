@@ -80,7 +80,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const imageContainer = document.createElement('div');
             imageContainer.className = 'scenario-image';
             const img = document.createElement('img');
-            img.src = `assets/scenarios/${scenario.image}`;
+            // Use the correct directory based on scenario type
+            const imageDir = type === 'fault' ? 'scenarios' : 'maintenance';
+            img.src = `assets/${imageDir}/${scenario.image}`;
             img.alt = scenario.title;
             imageContainer.appendChild(img);
             content.appendChild(imageContainer);

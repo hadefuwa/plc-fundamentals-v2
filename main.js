@@ -27,9 +27,6 @@
 // Import required Electron modules for app management and window creation
 const { app, BrowserWindow, ipcMain, protocol } = require('electron');
 
-// Import electron-pdf-window for PDF viewing
-const PDFWindow = require('electron-pdf-window');
-
 // Import path and fs modules for settings management
 const path = require('path');
 const fs = require('fs');
@@ -89,7 +86,7 @@ const RECONNECT_DELAY = 5000;     // Wait 5 seconds between reconnection attempt
 // Additional application windows
 let analogueWindow = null;        // Window for analogue value display
 let detailsWindow = null;         // Window for detailed PLC information
-let pdfWindow = null;             // Window for PDF viewer
+
 
 // Application state management
 let plcData = {};                 // Current PLC data cache
@@ -175,15 +172,25 @@ ipcMain.on('open-pdf', (_, pdfPath) => {
     const fullPath = path.join(__dirname, pdfPath);
     console.log('Opening PDF in default viewer:', fullPath);
     
+    // First check if the file exists
+    if (!fs.existsSync(fullPath)) {
+        console.error('PDF file not found:', fullPath);
+        return;
+    }
+    
     // Open the PDF in the default application
     require('electron').shell.openPath(fullPath)
         .then(result => {
             if (result) {
                 console.error('Error opening PDF:', result);
+                // Try opening the containing folder instead
+                require('electron').shell.showItemInFolder(fullPath);
             }
         })
         .catch(error => {
             console.error('Failed to open PDF:', error);
+            // Try opening the containing folder instead
+            require('electron').shell.showItemInFolder(fullPath);
         });
 });
 
@@ -418,8 +425,9 @@ function createWindow() {
         height: 1080,
         autoHideMenuBar: true,             // Hide the File, Edit, View menu
         webPreferences: {
-            nodeIntegration: false,        // Disable node integration for security
-            contextIsolation: true,        // Enable context isolation
+            nodeIntegration: false,        // Keep Node integration disabled
+            contextIsolation: true,        // Keep context isolation enabled
+            sandbox: false,                // Allow preload script
             webSecurity: false,            // Allow loading external web content
             allowRunningInsecureContent: true,  // Allow HTTP content
             experimentalFeatures: true,    // Enable experimental features
