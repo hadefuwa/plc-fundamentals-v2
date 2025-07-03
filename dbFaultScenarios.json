@@ -9,7 +9,7 @@
                 "Initial investigation shows that the PID controller output seems to be oscillating more than usual, and the temperature is not maintaining steady state.",
                 "The system was working perfectly fine last week, and no changes have been made to the PID parameters."
             ],
-            "image": "titanium-forge.svg",
+            "image": "titanium-forge.png",
             "questions": [
                 {
                     "id": "1.1",
@@ -41,7 +41,7 @@
                 "The system uses a water-cooled chiller with redundant pumps.",
                 "Maintenance logs show all preventive maintenance is up to date."
             ],
-            "image": "pharma-cleanroom.svg",
+            "image": "pharma-cleanroom.png",
             "questions": [
                 {
                     "id": "2.1",
@@ -73,7 +73,7 @@
                 "The facility recently increased production hours from 8 to 24 hours per day.",
                 "Temperature logs show higher than normal readings during the night shift."
             ],
-            "image": "cnc-cooling.svg",
+            "image": "cnc-cooling.png",
             "questions": [
                 {
                     "id": "3.1",
@@ -105,7 +105,7 @@
                 "The room temperature sensors show uneven readings across different areas.",
                 "Some server racks are showing significantly higher intake temperatures than others."
             ],
-            "image": "server-room.svg",
+            "image": "server-room.png",
             "questions": [
                 {
                     "id": "4.1",
@@ -137,7 +137,7 @@
                 "Pressure sensors upstream and downstream of the control valve show stable readings.",
                 "The issue appears to be worse when the brine temperature is higher."
             ],
-            "image": "brine-system.svg",
+            "image": "brine-system.png",
             "questions": [
                 {
                     "id": "5.1",
@@ -169,7 +169,7 @@
                 "The steam pressure gauge shows normal supply pressure.",
                 "You notice the temperature controller display occasionally flickers."
             ],
-            "image": "sterilizer.svg",
+            "image": "sterilizer.png",
             "questions": [
                 {
                     "id": "6.1",
@@ -198,28 +198,28 @@
                 "A plastic injection molding machine is producing parts with inconsistent quality.",
                 "The mold temperature control unit shows the temperature is within specification.",
                 "Quality control reports that parts from certain cavities are showing signs of incomplete filling.",
-                "The issue seems to be more pronounced during longer production runs.",
-                "Historical data shows gradual degradation in temperature uniformity."
+                "The issue seems to be worse after extended production runs.",
+                "The cooling water temperature and pressure are within normal ranges."
             ],
-            "image": "injection-mold.svg",
+            "image": "injection-mold.png",
             "questions": [
                 {
                     "id": "7.1",
-                    "text": "Why might some cavities be affected more than others?",
-                    "type": "text",
-                    "placeholder": "Consider thermal distribution factors..."
-                },
-                {
-                    "id": "7.2",
-                    "text": "What could cause temperature non-uniformity despite control readings being normal?",
+                    "text": "What could cause temperature variations between mold cavities?",
                     "type": "text",
                     "placeholder": "List potential causes..."
                 },
                 {
-                    "id": "7.3",
-                    "text": "How would you verify the actual mold temperature distribution?",
+                    "id": "7.2",
+                    "text": "How would you verify the temperature readings are accurate?",
                     "type": "text",
-                    "placeholder": "Describe your testing approach..."
+                    "placeholder": "Describe verification steps..."
+                },
+                {
+                    "id": "7.3",
+                    "text": "What maintenance procedures would you recommend?",
+                    "type": "text",
+                    "placeholder": "Detail maintenance plan..."
                 }
             ]
         },
@@ -227,31 +227,31 @@
             "id": 8,
             "title": "Chemical Reactor pH Control",
             "paragraphs": [
-                "A chemical processing plant is experiencing issues with pH control in a continuous reactor.",
-                "The pH readings are showing more variation than usual, affecting product quality.",
-                "The control system appears to be responding slower than normal to pH deviations.",
-                "Calibration records show the pH probe was replaced last month.",
-                "The issue seems worse when processing certain product grades."
+                "A chemical reactor's pH control system is showing unstable behavior.",
+                "The pH value oscillates around the setpoint more than usual.",
+                "The control valve for acid addition appears to be hunting.",
+                "The pH sensor was calibrated last week and shows correct buffer readings.",
+                "The reactor temperature and level are stable at their setpoints."
             ],
-            "image": "ph-control.svg",
+            "image": "ph-control.png",
             "questions": [
                 {
                     "id": "8.1",
-                    "text": "What could cause the slower response time in the pH control system?",
+                    "text": "What could cause the pH control instability?",
                     "type": "text",
                     "placeholder": "List potential causes..."
                 },
                 {
                     "id": "8.2",
-                    "text": "How would you verify if the new pH probe is functioning correctly?",
+                    "text": "How would you verify the pH measurement is reliable?",
                     "type": "text",
                     "placeholder": "Describe verification steps..."
                 },
                 {
                     "id": "8.3",
-                    "text": "What maintenance procedures would you recommend for the pH control system?",
+                    "text": "What maintenance procedures would you recommend?",
                     "type": "text",
-                    "placeholder": "Detail maintenance steps..."
+                    "placeholder": "Detail maintenance plan..."
                 }
             ]
         }

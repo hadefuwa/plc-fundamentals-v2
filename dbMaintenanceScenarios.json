@@ -9,7 +9,7 @@
                 "Regular maintenance is essential to ensure accurate temperature control and prevent process deviations.",
                 "You need to check various components including sensors, actuators, and control elements."
             ],
-            "image": "temperature-control.svg",
+            "image": "closed-loop-control.png",
             "questions": [
                 {
                     "id": "1.1",
@@ -40,7 +40,7 @@
                 "These safety systems must function perfectly to protect both personnel and equipment.",
                 "You need to verify both the mechanical operation and the electrical circuit integrity."
             ],
-            "image": "estop-system.svg",
+            "image": "emergency-stops.png",
             "questions": [
                 {
                     "id": "2.1",
@@ -71,7 +71,7 @@
                 "Regular maintenance ensures all indicators are functioning correctly and visible.",
                 "You need to verify both the LED operation and the underlying signal integrity."
             ],
-            "image": "led-panel.svg",
+            "image": "status-led.png",
             "questions": [
                 {
                     "id": "3.1",
@@ -102,7 +102,7 @@
                 "You need to check both hardware components and program integrity.",
                 "This includes inspecting connections, backup batteries, and program backups."
             ],
-            "image": "plc-maintenance.svg",
+            "image": "plc.png",
             "questions": [
                 {
                     "id": "4.1",
@@ -133,7 +133,7 @@
                 "Regular maintenance ensures reliable operation and accurate display.",
                 "You need to verify both hardware functionality and software configuration."
             ],
-            "image": "hmi-system.svg",
+            "image": "hmi.png",
             "questions": [
                 {
                     "id": "5.1",
@@ -164,7 +164,7 @@
                 "Regular maintenance prevents unexpected failures and ensures efficiency.",
                 "You need to check mechanical components and monitor performance metrics."
             ],
-            "image": "pump-maintenance.svg",
+            "image": "pump.png",
             "questions": [
                 {
                     "id": "6.1",
@@ -195,7 +195,7 @@
                 "Regular maintenance ensures accurate valve positioning and sealing.",
                 "You need to check both mechanical operation and control signals."
             ],
-            "image": "valve-maintenance.svg",
+            "image": "valve.png",
             "questions": [
                 {
                     "id": "7.1",
@@ -219,218 +219,218 @@
         },
         {
             "id": 8,
-            "title": "Sensor Calibration",
+            "title": "Float Switch",
             "paragraphs": [
-                "The process relies on various sensors for accurate measurements.",
-                "Regular calibration ensures measurement accuracy and system reliability.",
-                "You need to verify and adjust sensor readings against known standards.",
-                "This includes temperature, pressure, flow, and level sensors."
+                "Float switches are used for level detection in tanks and vessels.",
+                "These switches provide critical level control and safety functions.",
+                "Regular maintenance ensures reliable operation and accurate switching.",
+                "You need to verify both mechanical operation and electrical signals."
             ],
-            "image": "ph-control.svg",
+            "image": "float-switch.png",
             "questions": [
                 {
                     "id": "8.1",
-                    "text": "What equipment is needed for sensor calibration?",
+                    "text": "What mechanical checks would you perform on a float switch?",
                     "type": "text",
-                    "placeholder": "List calibration tools and standards..."
+                    "placeholder": "List mechanical inspections..."
                 },
                 {
                     "id": "8.2",
-                    "text": "How would you document the calibration process?",
+                    "text": "How would you test float switch operation?",
                     "type": "text",
-                    "placeholder": "Describe documentation requirements..."
+                    "placeholder": "Describe testing procedure..."
                 },
                 {
                     "id": "8.3",
-                    "text": "What factors can affect sensor accuracy?",
+                    "text": "What maintenance is required for float switches?",
                     "type": "text",
-                    "placeholder": "List potential interference sources..."
+                    "placeholder": "List maintenance tasks..."
                 }
             ]
         },
         {
             "id": 9,
-            "title": "Network Communication",
+            "title": "Proximity Switch",
             "paragraphs": [
-                "The control system relies on industrial networks for data exchange.",
-                "Regular maintenance of network infrastructure is crucial.",
-                "You need to verify communication integrity and troubleshoot issues.",
-                "This includes checking cables, connections, and network devices."
+                "Proximity switches detect object presence without contact.",
+                "These sensors are crucial for position detection and counting.",
+                "Regular maintenance ensures reliable detection and signal output.",
+                "You need to verify both sensor operation and wiring integrity."
             ],
-            "image": "server-room.svg",
+            "image": "proximity-switch.png",
             "questions": [
                 {
                     "id": "9.1",
-                    "text": "How would you test network communication?",
+                    "text": "How would you test proximity switch operation?",
                     "type": "text",
                     "placeholder": "Describe testing methods..."
                 },
                 {
                     "id": "9.2",
-                    "text": "What are common network failure points?",
+                    "text": "What factors affect proximity switch performance?",
                     "type": "text",
-                    "placeholder": "List potential issues..."
+                    "placeholder": "List influencing factors..."
                 },
                 {
                     "id": "9.3",
-                    "text": "What preventive maintenance is needed for networks?",
+                    "text": "What maintenance is needed for proximity switches?",
                     "type": "text",
-                    "placeholder": "List maintenance tasks..."
+                    "placeholder": "Detail maintenance requirements..."
                 }
             ]
         },
         {
             "id": 10,
-            "title": "Data Logging Systems",
+            "title": "Flow Sensor",
             "paragraphs": [
-                "Process data is recorded for analysis and compliance.",
-                "The data logging system must be maintained for reliable operation.",
-                "You need to verify data accuracy and storage integrity.",
-                "This includes checking sensors, loggers, and backup systems."
+                "Flow sensors measure fluid movement in pipes and vessels.",
+                "Accurate flow measurement is critical for process control.",
+                "Regular maintenance ensures measurement accuracy and reliability.",
+                "You need to verify both sensor operation and signal processing."
             ],
-            "image": "server-room.svg",
+            "image": "flow-sensor.png",
             "questions": [
                 {
                     "id": "10.1",
-                    "text": "How would you verify data logging accuracy?",
+                    "text": "How would you calibrate a flow sensor?",
                     "type": "text",
-                    "placeholder": "Describe verification process..."
+                    "placeholder": "Describe calibration process..."
                 },
                 {
                     "id": "10.2",
-                    "text": "What backup procedures should be in place?",
+                    "text": "What affects flow sensor accuracy?",
                     "type": "text",
-                    "placeholder": "List backup requirements..."
+                    "placeholder": "List influencing factors..."
                 },
                 {
                     "id": "10.3",
-                    "text": "How often should data logging be verified?",
+                    "text": "What maintenance is required for flow sensors?",
                     "type": "text",
-                    "placeholder": "Explain maintenance frequency..."
+                    "placeholder": "Detail maintenance tasks..."
                 }
             ]
         },
         {
             "id": 11,
-            "title": "Power Supply Systems",
+            "title": "Temperature Sensor",
             "paragraphs": [
-                "Reliable power is crucial for control system operation.",
-                "UPS and power distribution systems need regular maintenance.",
-                "You need to check power quality and backup systems.",
-                "This includes testing batteries and monitoring voltage levels."
+                "Temperature sensors monitor process and equipment heat.",
+                "Accurate temperature measurement is vital for control and safety.",
+                "Regular maintenance ensures measurement accuracy and reliability.",
+                "You need to verify both sensor operation and signal processing."
             ],
-            "image": "cnc-cooling.svg",
+            "image": "temperature-sensor.png",
             "questions": [
                 {
                     "id": "11.1",
-                    "text": "What power quality measurements are important?",
+                    "text": "How would you calibrate a temperature sensor?",
                     "type": "text",
-                    "placeholder": "List key measurements..."
+                    "placeholder": "Describe calibration process..."
                 },
                 {
                     "id": "11.2",
-                    "text": "How would you test UPS operation?",
+                    "text": "What affects temperature sensor accuracy?",
                     "type": "text",
-                    "placeholder": "Describe testing procedure..."
+                    "placeholder": "List influencing factors..."
                 },
                 {
                     "id": "11.3",
-                    "text": "What preventive maintenance is needed?",
+                    "text": "What maintenance is required for temperature sensors?",
                     "type": "text",
-                    "placeholder": "List maintenance tasks..."
+                    "placeholder": "Detail maintenance tasks..."
                 }
             ]
         },
         {
             "id": 12,
-            "title": "Safety Interlocks",
+            "title": "Digital Sensors",
             "paragraphs": [
-                "Safety interlocks protect personnel and equipment.",
-                "Regular testing ensures reliable safety system operation.",
-                "You need to verify all interlock functions and responses.",
-                "This includes checking sensors, logic, and actuators."
+                "Digital sensors provide binary state information.",
+                "These sensors are used for position, level, and presence detection.",
+                "Regular maintenance ensures reliable operation and signal integrity.",
+                "You need to verify both sensor operation and signal processing."
             ],
-            "image": "estop-system.svg",
+            "image": "digital-sensors.png",
             "questions": [
                 {
                     "id": "12.1",
-                    "text": "How would you test safety interlocks?",
+                    "text": "How would you test digital sensor operation?",
                     "type": "text",
-                    "placeholder": "Describe testing procedure..."
+                    "placeholder": "Describe testing methods..."
                 },
                 {
                     "id": "12.2",
-                    "text": "What documentation is required?",
+                    "text": "What affects digital sensor reliability?",
                     "type": "text",
-                    "placeholder": "List required records..."
+                    "placeholder": "List influencing factors..."
                 },
                 {
                     "id": "12.3",
-                    "text": "How often should interlocks be tested?",
+                    "text": "What maintenance is required for digital sensors?",
                     "type": "text",
-                    "placeholder": "Explain testing frequency..."
+                    "placeholder": "Detail maintenance tasks..."
                 }
             ]
         },
         {
             "id": 13,
-            "title": "Control Panel Maintenance",
+            "title": "Analogue Sensors",
             "paragraphs": [
-                "Control panels house critical control components.",
-                "Regular maintenance ensures reliable operation.",
-                "You need to check electrical connections and components.",
-                "This includes inspecting terminals, wiring, and indicators."
+                "Analogue sensors provide continuous measurement values.",
+                "These sensors measure variables like pressure, flow, and level.",
+                "Regular maintenance ensures measurement accuracy and reliability.",
+                "You need to verify both sensor operation and signal processing."
             ],
-            "image": "led-panel.svg",
+            "image": "analogue-sensors.png",
             "questions": [
                 {
                     "id": "13.1",
-                    "text": "What should be checked during panel inspection?",
+                    "text": "How would you calibrate analogue sensors?",
                     "type": "text",
-                    "placeholder": "List inspection points..."
+                    "placeholder": "Describe calibration process..."
                 },
                 {
                     "id": "13.2",
-                    "text": "How would you test panel ventilation?",
+                    "text": "What affects analogue sensor accuracy?",
                     "type": "text",
-                    "placeholder": "Describe testing method..."
+                    "placeholder": "List influencing factors..."
                 },
                 {
                     "id": "13.3",
-                    "text": "What cleaning procedures are needed?",
+                    "text": "What maintenance is required for analogue sensors?",
                     "type": "text",
-                    "placeholder": "List cleaning tasks..."
+                    "placeholder": "Detail maintenance tasks..."
                 }
             ]
         },
         {
             "id": 14,
-            "title": "Documentation Management",
+            "title": "Faults",
             "paragraphs": [
-                "Proper documentation is crucial for maintenance.",
-                "You need to maintain accurate records and procedures.",
-                "This includes updating drawings and maintenance logs.",
-                "Documentation helps ensure consistent maintenance quality."
+                "System faults can occur in any part of the control system.",
+                "Quick fault diagnosis and resolution is essential.",
+                "Regular maintenance helps prevent common faults.",
+                "You need to understand fault types and troubleshooting methods."
             ],
-            "image": "pharma-cleanroom.svg",
+            "image": "faults.png",
             "questions": [
                 {
                     "id": "14.1",
-                    "text": "What documents should be maintained?",
+                    "text": "What are common control system faults?",
                     "type": "text",
-                    "placeholder": "List required documentation..."
+                    "placeholder": "List common faults..."
                 },
                 {
                     "id": "14.2",
-                    "text": "How would you organize maintenance records?",
+                    "text": "How would you diagnose system faults?",
                     "type": "text",
-                    "placeholder": "Describe organization system..."
+                    "placeholder": "Describe diagnostic approach..."
                 },
                 {
                     "id": "14.3",
-                    "text": "What revision control procedures are needed?",
+                    "text": "What preventive maintenance reduces faults?",
                     "type": "text",
-                    "placeholder": "Explain version control..."
+                    "placeholder": "List preventive measures..."
                 }
             ]
         }
