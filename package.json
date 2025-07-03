@@ -1,6 +1,6 @@
 {
   "name": "matrix-plc-interface",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "HMI interface for Matrix Closed Loop Maintenance Product with PDF Integration",
   "main": "main.js",
   "scripts": {
