@@ -32,14 +32,18 @@ const path = require('path');
 const fs = require('fs');
 
 // Add command line switches to handle SSL certificates for HMI server
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';  // Disable SSL verification globally
 app.commandLine.appendSwitch('ignore-certificate-errors');
 app.commandLine.appendSwitch('ignore-ssl-errors');
 app.commandLine.appendSwitch('ignore-certificate-errors-spki-list');
 app.commandLine.appendSwitch('disable-web-security');
 app.commandLine.appendSwitch('allow-file-access-from-files');
 app.commandLine.appendSwitch('allow-file-access-from-file-urls');
-app.commandLine.appendSwitch('disable-features', 'VizDisplayCompositor');
+app.commandLine.appendSwitch('disable-features', 'VizDisplayCompositor,OutOfBlinkCors');
 app.commandLine.appendSwitch('disable-site-isolation-trials');
+
+// Suppress Electron security warnings
+process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true';
 
 // Import nodes7 library for Siemens S7 PLC communication
 const nodes7 = require('nodes7');
@@ -423,57 +427,51 @@ function createWindow() {
     win = new BrowserWindow({
         width: 1920,
         height: 1080,
-        autoHideMenuBar: true,             // Hide the File, Edit, View menu
+        autoHideMenuBar: true,
         webPreferences: {
-            nodeIntegration: false,        // Keep Node integration disabled
-            contextIsolation: true,        // Keep context isolation enabled
-            sandbox: false,                // Allow preload script
-            webSecurity: false,            // Allow loading external web content
-            allowRunningInsecureContent: true,  // Allow HTTP content
-            experimentalFeatures: true,    // Enable experimental features
-            webviewTag: true,              // Enable webview tag
+            nodeIntegration: false,
+            contextIsolation: true,
+            sandbox: false,
+            webSecurity: false,
+            allowRunningInsecureContent: true,
+            experimentalFeatures: true,
+            webviewTag: true,
             allowFileAccessFromFileURLs: true,
-            preload: path.join(__dirname, 'preload.js')  // Use preload script
+            preload: path.join(__dirname, 'preload.js')
         },
-        show: false,  // Don't show until ready
+        show: false,
         icon: path.join(__dirname, 'assets', 'icons', 'matrix-icon.png'),
     });
 
+    // Configure session to ignore certificate errors for HMI server
+    const ses = win.webContents.session;
+    ses.clearCache();
+    ses.clearStorageData();
+    
+    ses.setCertificateVerifyProc((request, callback) => {
+        callback(0);
+    });
+
+    // Load the app
     win.loadFile('index.html');
     
     // Allow navigation between pages
     win.webContents.on('will-navigate', (event, url) => {
         const parsedUrl = new URL(url);
         const pathname = parsedUrl.pathname.toLowerCase();
-        
-        // Allow navigation to our app pages
         if (pathname.endsWith('pdf-viewer.html') || 
             pathname.endsWith('index.html') || 
             pathname.endsWith('plc-controls.html')) {
-            console.log('Allowing navigation to:', url);
+            // Allow navigation to our app pages
         } else {
-            // Prevent navigation to other URLs
             event.preventDefault();
-            console.log('Navigation prevented:', url);
         }
     });
-    
-    // Configure session to ignore certificate errors for HMI server
-    win.webContents.session.setCertificateVerifyProc((request, callback) => {
-        const { hostname } = request;
-        if (hostname === '192.168.7.101') {
-            console.log('Bypassing certificate verification for HMI server');
-            callback(0); // Accept the certificate
-        } else {
-            callback(-2); // Use default verification for other hosts
-        }
-    });
-    
+
     // Show window when ready and initiate PLC connection
     win.once('ready-to-show', () => {
         win.maximize();
         win.show();
-        
         win.webContents.send('plc-status', 'Connecting to PLC...');
         initiatePLCConnection();
     });
@@ -483,44 +481,30 @@ function createWindow() {
         win = null;
     });
 
-    // Add this to your existing window creation code
     win.webContents.setWindowOpenHandler(({ url }) => {
-        // Handle the navigation within the existing window
         win.webContents.loadURL(url);
-        return { action: 'deny' }; // Prevents new window from being created
+        return { action: 'deny' };
     });
 }
 
-// Handle certificate errors for HMI web server
-app.on('certificate-error', (event, webContents, url, error, certificate, callback) => {
-    // Check if this is our HMI server
-    if (url.startsWith('https://192.168.7.101')) {
-        console.log('Ignoring certificate error for HMI server:', url);
-        event.preventDefault();
-        callback(true); // Trust the certificate
-    } else {
-        callback(false); // Use default behavior for other URLs
-    }
-});
-
 // Initialize application when ready
 app.whenReady().then(() => {
+    // Set up certificate error handling before creating any windows
+    app.on('certificate-error', (event, webContents, url, error, certificate, callback) => {
+        event.preventDefault();
+        callback(true);
+    });
+
     // Register a custom protocol to serve PDFs directly
     protocol.registerFileProtocol('pdf-viewer', (request, callback) => {
         const url = request.url.replace('pdf-viewer://', '');
         try {
-            // Decode the URL and resolve the path
             const decodedPath = decodeURIComponent(url);
             const filePath = path.isAbsolute(decodedPath) 
                 ? decodedPath 
                 : path.join(__dirname, decodedPath);
-            
-            console.log('PDF Protocol Request:', request.url);
-            console.log('Resolved PDF Path:', filePath);
-            
             callback({ path: filePath });
         } catch (error) {
-            console.error('Error handling PDF protocol:', error);
             callback({ error: -2 });
         }
     });
@@ -528,27 +512,12 @@ app.whenReady().then(() => {
     // Register file protocol handler for regular file URLs
     protocol.interceptFileProtocol('file', (request, callback) => {
         let url = request.url.substr(7); // strip "file://"
-        
-        // Handle Windows paths properly
         if (process.platform === 'win32' && url.startsWith('/')) {
             url = url.substring(1);
         }
-        
-        // Remove query parameters for file path resolution
-        let filePath = url;
-        if (url.includes('?')) {
-            filePath = url.split('?')[0];
-        }
-        
-        // Decode URL components
+        let filePath = url.split('?')[0];
         filePath = decodeURIComponent(filePath);
-        
-        // If the path doesn't exist, try to resolve it relative to __dirname
         const resolvedPath = path.isAbsolute(filePath) ? filePath : path.join(__dirname, filePath);
-        
-        console.log('Intercepted file request:', request.url);
-        console.log('Resolved to:', resolvedPath);
-        
         callback({ path: resolvedPath });
     });
 
