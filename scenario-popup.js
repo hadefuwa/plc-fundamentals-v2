@@ -290,7 +290,87 @@ document.addEventListener('DOMContentLoaded', () => {
 
         content.appendChild(soWhatSection);
 
-        // Add styles for the "So What?" section
+        // Add Questions and Answers section
+        const questionsSection = document.createElement('div');
+        questionsSection.className = 'questions-section';
+        
+        questionsSection.innerHTML = `
+            <h3 class="section-title">Questions & Answers</h3>
+            <div class="questions-content">
+                <p class="instructions">Answer the following questions based on your experience with the closed-loop system. Click "Submit Answer" to lock your answer and see the comparison with the correct answer.</p>
+                
+                <div class="question-form">
+                    <div class="question-item" data-question="1">
+                        <h4>Question 1:</h4>
+                        <p>What is the purpose of a closed-loop flow control system?</p>
+                        <textarea class="answer-input" data-question="1" placeholder="Type your answer here..."></textarea>
+                        <div class="question-actions">
+                            <button class="submit-question-btn" onclick="submitQuestion(1)">Submit Answer</button>
+                            <span class="submit-note">Answer will be locked after submission.</span>
+                        </div>
+                        <div class="individual-comparison hidden">
+                            <!-- Individual answer comparison will appear here -->
+                        </div>
+                    </div>
+
+                    <div class="question-item" data-question="2">
+                        <h4>Question 2:</h4>
+                        <p>What must you check before starting the system?</p>
+                        <textarea class="answer-input" data-question="2" placeholder="Type your answer here..."></textarea>
+                        <div class="question-actions">
+                            <button class="submit-question-btn" onclick="submitQuestion(2)">Submit Answer</button>
+                            <span class="submit-note">Answer will be locked after submission.</span>
+                        </div>
+                        <div class="individual-comparison hidden">
+                            <!-- Individual answer comparison will appear here -->
+                        </div>
+                    </div>
+
+                    <div class="question-item" data-question="3">
+                        <h4>Question 3:</h4>
+                        <p>What happens when you restrict the flow using the hand valve?</p>
+                        <textarea class="answer-input" data-question="3" placeholder="Type your answer here..."></textarea>
+                        <div class="question-actions">
+                            <button class="submit-question-btn" onclick="submitQuestion(3)">Submit Answer</button>
+                            <span class="submit-note">Answer will be locked after submission.</span>
+                        </div>
+                        <div class="individual-comparison hidden">
+                            <!-- Individual answer comparison will appear here -->
+                        </div>
+                    </div>
+
+                    <div class="question-item" data-question="4">
+                        <h4>Question 4:</h4>
+                        <p>What role does the PLC play in the system?</p>
+                        <textarea class="answer-input" data-question="4" placeholder="Type your answer here..."></textarea>
+                        <div class="question-actions">
+                            <button class="submit-question-btn" onclick="submitQuestion(4)">Submit Answer</button>
+                            <span class="submit-note">Answer will be locked after submission.</span>
+                        </div>
+                        <div class="individual-comparison hidden">
+                            <!-- Individual answer comparison will appear here -->
+                        </div>
+                    </div>
+
+                    <div class="question-item" data-question="5">
+                        <h4>Question 5:</h4>
+                        <p>Why should you avoid making rapid changes to the valve?</p>
+                        <textarea class="answer-input" data-question="5" placeholder="Type your answer here..."></textarea>
+                        <div class="question-actions">
+                            <button class="submit-question-btn" onclick="submitQuestion(5)">Submit Answer</button>
+                            <span class="submit-note">Answer will be locked after submission.</span>
+                        </div>
+                        <div class="individual-comparison hidden">
+                            <!-- Individual answer comparison will appear here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        content.appendChild(questionsSection);
+
+        // Add styles for the "So What?" section and Questions section
         const style = document.createElement('style');
         style.textContent = `
             .so-what-section {
@@ -362,9 +442,188 @@ document.addEventListener('DOMContentLoaded', () => {
                 margin: 0;
                 color: #FFFFFF;
             }
+
+            /* Questions and Answers Section Styles */
+            .questions-section {
+                background: #2d2d2d;
+                border-radius: 8px;
+                padding: 20px;
+                margin-top: 30px;
+                border-left: 4px solid #2196F3;
+            }
+
+            .questions-section .section-title {
+                color: #FFFFFF;
+                font-size: 24px;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .questions-section .section-title::before {
+                content: "❓";
+                font-size: 28px;
+            }
+
+            .questions-content {
+                color: #FFFFFF;
+                font-size: 16px;
+                line-height: 1.6;
+            }
+
+            .instructions {
+                background: rgba(33, 150, 243, 0.1);
+                padding: 15px;
+                border-radius: 6px;
+                margin-bottom: 25px;
+                border-left: 3px solid #2196F3;
+            }
+
+            .question-item {
+                background: #333;
+                border-radius: 6px;
+                padding: 20px;
+                margin-bottom: 20px;
+                border-left: 3px solid #2196F3;
+                position: relative;
+            }
+
+            .question-item h4 {
+                color: #2196F3;
+                margin: 0 0 10px 0;
+                font-size: 18px;
+            }
+
+            .question-item p {
+                color: #FFFFFF;
+                margin: 0 0 15px 0;
+                font-size: 16px;
+            }
+
+            .answer-input {
+                width: 100%;
+                min-height: 80px;
+                padding: 12px;
+                border: 2px solid #555;
+                border-radius: 4px;
+                background: #1a1a1a;
+                color: #FFFFFF;
+                font-size: 14px;
+                font-family: inherit;
+                resize: vertical;
+                transition: border-color 0.3s ease;
+            }
+
+            .answer-input:focus {
+                outline: none;
+                border-color: #2196F3;
+                box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
+            }
+
+            .answer-input:disabled {
+                background: #2a2a2a;
+                border-color: #666;
+                cursor: not-allowed;
+            }
+
+            /* Ensure textareas are always clickable unless disabled */
+            .answer-input:not(:disabled) {
+                pointer-events: auto;
+                z-index: 1;
+            }
+
+            .question-actions {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                margin-top: 15px;
+                padding: 10px 0;
+            }
+
+            .submit-question-btn {
+                background: #2196F3;
+                color: white;
+                border: none;
+                padding: 8px 16px;
+                border-radius: 4px;
+                font-size: 14px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+
+            .submit-question-btn:hover {
+                background: #1976D2;
+            }
+
+            .submit-question-btn:disabled {
+                background: #666;
+                cursor: not-allowed;
+            }
+
+            .submit-note {
+                color: #FFF;
+                font-size: 12px;
+                opacity: 0.8;
+                font-style: italic;
+            }
+
+            .individual-comparison {
+                margin-top: 15px;
+                padding: 15px;
+                background: #1a1a1a;
+                border-radius: 6px;
+                border-left: 3px solid #4CAF50;
+                pointer-events: none; /* Prevent interference with textareas */
+            }
+
+            .individual-comparison * {
+                pointer-events: none; /* Prevent child elements from interfering */
+            }
+
+            .individual-comparison h5 {
+                color: #4CAF50;
+                margin: 0 0 15px 0;
+                font-size: 14px;
+                font-weight: bold;
+            }
+
+            .your-answer {
+                background: rgba(33, 150, 243, 0.1);
+                padding: 12px;
+                border-radius: 4px;
+                margin-bottom: 15px;
+                border-left: 3px solid #2196F3;
+            }
+
+            .correct-answer {
+                background: rgba(76, 175, 80, 0.1);
+                padding: 12px;
+                border-radius: 4px;
+                border-left: 3px solid #4CAF50;
+            }
+
+            .answer-label {
+                font-weight: bold;
+                color: #FFFFFF;
+                margin-bottom: 8px;
+                display: block;
+            }
+
+            .answer-text {
+                color: #FFFFFF;
+                line-height: 1.4;
+            }
+
+            .hidden {
+                display: none;
+            }
         `;
 
         document.head.appendChild(style);
+
+        // Initialize Questions and Answers functionality
+        initQuestionsAndAnswers();
 
         // Initialize step completion functionality
         const stepCards = overToYouSection.querySelectorAll('.step-card');
@@ -412,6 +671,178 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.setItem(`worksheet1_step${stepNumber}_complete`, e.target.checked);
             });
         });
+
+        // Questions and Answers functionality
+        function initQuestionsAndAnswers() {
+            // Define the correct answers
+            const correctAnswers = {
+                1: "To continuously adjust flow using sensor feedback to meet a setpoint, maintaining accuracy and stability even if conditions change.",
+                2: "Ensure the hand valve is in the open position, with the handle in line with the piping.",
+                3: "The flow drops, the sensor detects this and sends data to the PLC, which increases pump speed and adjusts the valve to restore flow.",
+                4: "The PLC is a computer that makes real-time decisions based on sensor data to control devices like pumps and valves.",
+                5: "Rapid changes can cause oscillations in flow, making the system unstable; gradual adjustments help maintain smooth control."
+            };
+
+            // Load saved answers and submission status for each question
+            const savedAnswers = loadUserAnswers();
+            const submittedQuestions = getSubmittedQuestions();
+
+            // Restore user answers and submission states
+            if (savedAnswers) {
+                Object.keys(savedAnswers).forEach(questionNum => {
+                    const textarea = document.querySelector(`textarea[data-question="${questionNum}"]`);
+                    if (textarea) {
+                        textarea.value = savedAnswers[questionNum];
+                    }
+                });
+            }
+
+            // Restore submission states for each question
+            submittedQuestions.forEach(questionNum => {
+                lockQuestion(questionNum);
+                showIndividualComparison(questionNum, correctAnswers[questionNum]);
+            });
+
+            // Add click event listeners to ensure textareas remain clickable
+            document.querySelectorAll('.answer-input').forEach(textarea => {
+                textarea.addEventListener('click', function(e) {
+                    // Ensure the textarea can be focused
+                    if (!this.disabled) {
+                        e.stopPropagation();
+                        this.focus();
+                    }
+                });
+                
+                textarea.addEventListener('focus', function(e) {
+                    // Ensure proper focus handling
+                    if (!this.disabled) {
+                        e.stopPropagation();
+                    }
+                });
+            });
+
+            // Add the submitQuestion function to the global scope
+            window.submitQuestion = function(questionNum) {
+                const textarea = document.querySelector(`textarea[data-question="${questionNum}"]`);
+                const userAnswer = textarea.value.trim();
+
+                // Check if question is answered
+                if (userAnswer === '') {
+                    alert('Please provide an answer before submitting.');
+                    return;
+                }
+
+                // Submit immediately without confirmation dialog
+                // Save this individual answer
+                saveIndividualAnswer(questionNum, userAnswer);
+                
+                // Mark this question as submitted
+                markQuestionAsSubmitted(questionNum);
+                
+                // Lock this question
+                lockQuestion(questionNum);
+                
+                // Show comparison for this question
+                showIndividualComparison(questionNum, correctAnswers[questionNum]);
+                
+                // Focus the next available textarea
+                setTimeout(() => {
+                    focusNextAvailableTextarea(questionNum);
+                }, 100);
+            };
+
+            // Function to save an individual answer
+            function saveIndividualAnswer(questionNum, answer) {
+                const answers = loadUserAnswers() || {};
+                answers[questionNum] = answer;
+                localStorage.setItem('worksheet1_user_answers', JSON.stringify(answers));
+            }
+
+            // Function to load user answers
+            function loadUserAnswers() {
+                const saved = localStorage.getItem('worksheet1_user_answers');
+                return saved ? JSON.parse(saved) : {};
+            }
+
+            // Function to mark a question as submitted
+            function markQuestionAsSubmitted(questionNum) {
+                const submitted = getSubmittedQuestions();
+                if (!submitted.includes(questionNum)) {
+                    submitted.push(questionNum);
+                    localStorage.setItem('worksheet1_submitted_questions', JSON.stringify(submitted));
+                }
+            }
+
+            // Function to get list of submitted questions
+            function getSubmittedQuestions() {
+                const saved = localStorage.getItem('worksheet1_submitted_questions');
+                return saved ? JSON.parse(saved) : [];
+            }
+
+            // Function to lock a specific question
+            function lockQuestion(questionNum) {
+                const questionItem = document.querySelector(`div[data-question="${questionNum}"]`);
+                if (!questionItem) return;
+
+                const textarea = questionItem.querySelector('textarea');
+                const submitBtn = questionItem.querySelector('.submit-question-btn');
+                
+                if (textarea) {
+                    textarea.disabled = true;
+                }
+                
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'Submitted';
+                }
+            }
+
+            // Function to show individual answer comparison
+            function showIndividualComparison(questionNum, correctAnswer) {
+                const questionItem = document.querySelector(`div[data-question="${questionNum}"]`);
+                if (!questionItem) return;
+
+                const comparisonDiv = questionItem.querySelector('.individual-comparison');
+                if (!comparisonDiv) return;
+
+                const userAnswers = loadUserAnswers();
+                const userAnswer = userAnswers[questionNum] || 'No answer provided';
+
+                // Use a timeout to ensure DOM is stable before manipulation
+                setTimeout(() => {
+                    comparisonDiv.innerHTML = `
+                        <h5>Answer Comparison</h5>
+                        <div class="your-answer">
+                            <span class="answer-label">Your Answer:</span>
+                            <div class="answer-text">${escapeHtml(userAnswer)}</div>
+                        </div>
+                        <div class="correct-answer">
+                            <span class="answer-label">Correct Answer:</span>
+                            <div class="answer-text">${escapeHtml(correctAnswer)}</div>
+                        </div>
+                    `;
+
+                    // Show the comparison section
+                    comparisonDiv.classList.remove('hidden');
+                }, 50);
+            }
+
+            // Function to focus the next available textarea
+            function focusNextAvailableTextarea(currentQuestionNum) {
+                const submittedQuestions = getSubmittedQuestions();
+                
+                // Find the next available (non-submitted) question
+                for (let i = 1; i <= 5; i++) {
+                    if (!submittedQuestions.includes(i)) {
+                        const nextTextarea = document.querySelector(`textarea[data-question="${i}"]`);
+                        if (nextTextarea && !nextTextarea.disabled) {
+                            nextTextarea.focus();
+                            return;
+                        }
+                    }
+                }
+            }
+        }
 
         // Create the main simulation section with tabs for different features
         const simSection = document.createElement('div');
