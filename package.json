@@ -8,7 +8,8 @@
     "dev": "electron . --debug",
     "test": "electron run-pdf-tests.js",
     "test:pdf": "electron pdf-viewer-test.js",
-    "build": "electron-builder --publish always"
+    "build": "electron-builder",
+    "build-and-publish": "electron-builder --publish always"
   },
   "build": {
     "appId": "com.matrix.plc.interface",
