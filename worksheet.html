@@ -71,6 +71,41 @@
       box-shadow: 0 4px 15px rgba(33, 150, 243, 0.4);
     }
 
+    /* Back to Worksheets Button Styling */
+    .back-btn {
+      background: linear-gradient(135deg, #2196F3, #1976D2);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+    }
+
+    .back-btn:hover {
+      background: linear-gradient(135deg, #1976D2, #2196F3);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(33, 150, 243, 0.5);
+    }
+
+    .back-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 8px rgba(33, 150, 243, 0.3);
+    }
+
+    .back-btn i {
+      font-size: 16px;
+    }
+
     /* Responsive adjustments */
     @media (max-width: 768px) {
       .worksheet-box {
