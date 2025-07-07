@@ -108,6 +108,103 @@
     .hidden {
       display: none !important;
     }
+
+    /* Fallback styling for basic worksheets */
+    .worksheet-section {
+      margin-bottom: 30px;
+    }
+
+    .section-header {
+      color: #4CAF50;
+      margin-bottom: 20px;
+      font-size: 22px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .scenario-image {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Enhanced button styling */
+    .submit-question-btn {
+      background: linear-gradient(135deg, #4CAF50, #45a049);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+
+    .submit-question-btn:hover:not(:disabled) {
+      background: linear-gradient(135deg, #45a049, #4CAF50);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+    }
+
+    .submit-question-btn:disabled {
+      background: #666;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* Step card styling */
+    .step-card {
+      transition: all 0.3s ease;
+    }
+
+    .step-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+    }
+
+    .step-card.step-completed {
+      opacity: 0.7;
+      background: #2a2a2a;
+    }
+
+    /* Checkbox styling */
+    .step-checkbox input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: #4CAF50;
+      cursor: pointer;
+    }
+
+    /* Question item styling */
+    .question-item {
+      transition: all 0.3s ease;
+    }
+
+    .question-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Text styling improvements */
+    .worksheet-content p {
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+
+    .key-point {
+      transition: all 0.3s ease;
+    }
+
+    .key-point:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(76, 175, 80, 0.2);
+    }
   </style>
 </head>
 <body>
@@ -227,6 +324,10 @@
           return;
         }
 
+        // Log worksheet structure for debugging
+        console.log('Loading worksheet:', scenario.title);
+        console.log('Worksheet structure analysis:', analyzeWorksheetStructure(scenario));
+
         // Check if this worksheet has a special function to call
         if (scenario.functionCall && window[scenario.functionCall]) {
           console.log(`Calling special function: ${scenario.functionCall}`);
@@ -248,6 +349,32 @@
         // Update navigation buttons for all worksheets
         setTimeout(updateNavigationButtons, 100);
       }
+    }
+    
+    // Analyze worksheet structure for debugging
+    function analyzeWorksheetStructure(scenario) {
+      const analysis = {
+        hasTitle: !!scenario.title,
+        hasParagraphs: !!(scenario.paragraphs && scenario.paragraphs.length > 0),
+        hasImage: !!scenario.image,
+        hasSteps: !!(scenario.steps && scenario.steps.length > 0),
+        hasEducationalContent: !!(scenario.soWhat && (scenario.soWhat.content || scenario.soWhat.keyPoints)),
+        hasQuestions: !!(scenario.questions && scenario.questions.length > 0),
+        hasSimulation: !!scenario.simulation,
+        hasFunctionCall: !!scenario.functionCall,
+        sectionsToShow: []
+      };
+      
+      // Determine which sections will be shown
+      if (analysis.hasTitle) analysis.sectionsToShow.push('Title');
+      if (analysis.hasParagraphs) analysis.sectionsToShow.push('Introduction');
+      if (analysis.hasImage) analysis.sectionsToShow.push('System Diagram');
+      if (analysis.hasSteps) analysis.sectionsToShow.push('Steps');
+      if (analysis.hasEducationalContent) analysis.sectionsToShow.push('Educational Content');
+      if (analysis.hasQuestions) analysis.sectionsToShow.push('Questions');
+      if (analysis.hasSimulation) analysis.sectionsToShow.push('Simulation');
+      
+      return analysis;
     }
 
     // Render the interactive Worksheet 1 content directly to the container
@@ -820,48 +947,199 @@
     function renderWorksheet(scenario, type) {
       const container = document.getElementById('worksheet-content');
       
-      container.innerHTML = `
-        <h1 class="page-title">
-          ${type === 'fault' ? 'Fault Scenario' : 'Worksheet'} ${scenario.id}: ${scenario.title}
-        </h1>
-
-        <div class="worksheet-section">
-          <h2 class="section-header">Scenario Description</h2>
-          <div class="worksheet-content">
-            ${scenario.paragraphs.map(p => `<p>${p}</p>`).join('')}
+      // Build content sections based on available data
+      let contentSections = [];
+      
+      // Always include title
+      contentSections.push(`<h1 class="page-title">${type === 'fault' ? 'Fault Scenario' : 'Worksheet'} ${scenario.id}: ${scenario.title}</h1>`);
+      
+      // Introduction/Description section (always present if paragraphs exist)
+      if (scenario.paragraphs && scenario.paragraphs.length > 0) {
+        contentSections.push(`
+          <div class="worksheet-section introduction-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 2px solid #2196F3; box-shadow: 0 8px 20px rgba(33, 150, 243, 0.2);">
+            <h2 class="section-header" style="color: #2196F3; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;">
+              <i class="fas fa-info-circle"></i> Introduction
+            </h2>
+            <div class="worksheet-content">
+              ${scenario.paragraphs.map(p => `<p style="color: #FFFFFF; margin-bottom: 15px;">${p}</p>`).join('')}
+            </div>
           </div>
-        </div>
-
-        ${scenario.image ? `
-        <div class="worksheet-section">
-          <h2 class="section-header">System Diagram</h2>
-          <div class="worksheet-content">
-            <img src="assets/${type === 'fault' ? 'scenarios' : 'maintenance'}/${scenario.image}" 
-                 alt="${scenario.title}" class="scenario-image">
+        `);
+      }
+      
+      // System Diagram section (only if image exists)
+      if (scenario.image) {
+        contentSections.push(`
+          <div class="worksheet-section diagram-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 2px solid #FF9800; box-shadow: 0 8px 20px rgba(255, 152, 0, 0.2);">
+            <h2 class="section-header" style="color: #FF9800; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;">
+              <i class="fas fa-image"></i> System Diagram
+            </h2>
+            <div class="worksheet-content" style="text-align: center;">
+              <img src="assets/${type === 'fault' ? 'scenarios' : 'maintenance'}/${scenario.image}" 
+                   alt="${scenario.title}" class="scenario-image" style="max-width: 100%; height: auto; border-radius: 8px;">
+            </div>
           </div>
-        </div>
-        ` : ''}
-
-        <div class="worksheet-section">
-          <h2 class="section-header">Questions</h2>
-          <div class="questions-section">
-            ${scenario.questions.map((q, index) => `
-              <div class="question-item" data-question="${index + 1}">
-                <div class="question-text">${index + 1}. ${q.text}</div>
-                <textarea class="answer-input" data-question="${index + 1}" 
-                         placeholder="${q.placeholder || 'Enter your answer here...'}"></textarea>
-                <button class="submit-question-btn" onclick="submitAnswer(${index + 1})">
-                  Submit Answer
-                </button>
+        `);
+      }
+      
+      // Steps section (only if steps exist)
+      if (scenario.steps && scenario.steps.length > 0) {
+        contentSections.push(`
+          <div class="worksheet-section steps-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 2px solid #9C27B0; box-shadow: 0 8px 20px rgba(156, 39, 176, 0.2);">
+            <h2 class="section-header" style="color: #9C27B0; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;">
+              <i class="fas fa-list-ol"></i> Steps to Complete
+            </h2>
+            <div class="worksheet-content">
+              ${scenario.steps.map((step, index) => `
+                <div class="step-card" data-step="${index + 1}" style="background: #333; padding: 20px; margin: 15px 0; border-radius: 8px; border-left: 4px solid #4CAF50; display: flex; align-items: flex-start; gap: 15px; cursor: pointer;">
+                  <div class="step-number" style="background: #4CAF50; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">${index + 1}</div>
+                  <div class="step-content" style="flex: 1;">
+                    <div class="step-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                      <h4 style="color: #FFFFFF; margin: 0;">${step.title || `Step ${index + 1}`}</h4>
+                      <label class="step-checkbox">
+                        <input type="checkbox" class="step-complete-checkbox">
+                        <span class="checkmark" style="margin-left: 10px;"></span>
+                      </label>
+                    </div>
+                    <p style="color: #FFFFFF; margin: 0;">${step.description || step}</p>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `);
+      }
+      
+      // Educational content section (only if soWhat exists)
+      if (scenario.soWhat && (scenario.soWhat.content || scenario.soWhat.keyPoints)) {
+        contentSections.push(`
+          <div class="worksheet-section educational-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 2px solid #9C27B0; box-shadow: 0 8px 20px rgba(156, 39, 176, 0.2);">
+            <h2 class="section-header" style="color: #9C27B0; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;">
+              <i class="fas fa-lightbulb"></i> So What?
+            </h2>
+            <div class="worksheet-content">
+              ${scenario.soWhat.content ? `<p style="color: #FFFFFF; margin-bottom: 20px;">${scenario.soWhat.content}</p>` : ''}
+              ${scenario.soWhat.keyPoints ? scenario.soWhat.keyPoints.map(point => `
+                <div class="key-point" style="display: flex; align-items: flex-start; gap: 15px; margin-bottom: 20px; padding: 15px; background: #333; border-radius: 8px;">
+                  <i class="fas fa-lightbulb" style="color: #4CAF50; font-size: 20px; margin-top: 5px;"></i>
+                  <div>
+                    <strong style="color: #FFFFFF; display: block; margin-bottom: 5px;">${point.title}</strong>
+                    <p style="color: #FFFFFF; margin: 0;">${point.description}</p>
+                  </div>
+                </div>
+              `).join('') : ''}
+            </div>
+          </div>
+        `);
+      }
+      
+      // Questions section (only if questions exist)
+      if (scenario.questions && scenario.questions.length > 0) {
+        contentSections.push(`
+          <div class="worksheet-section questions-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 2px solid #4CAF50; box-shadow: 0 8px 20px rgba(76, 175, 80, 0.2);">
+            <h2 class="section-header" style="color: #4CAF50; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;">
+              <i class="fas fa-question-circle"></i> Questions
+            </h2>
+            <div class="worksheet-content">
+              ${scenario.questions.map((q, index) => `
+                <div class="question-item" data-question="${index + 1}" style="background: #333; padding: 20px; margin-bottom: 20px; border-radius: 8px;">
+                  <h4 style="color: #FFFFFF; margin-bottom: 10px;">${index + 1}. ${q.text}</h4>
+                  <textarea class="answer-input" data-question="${index + 1}" 
+                           placeholder="${q.placeholder || 'Enter your answer here...'}" 
+                           style="width: 100%; height: 100px; padding: 10px; border: 1px solid #555; border-radius: 4px; background: #222; color: #FFFFFF; resize: vertical;"></textarea>
+                  <div class="question-actions" style="margin-top: 15px;">
+                    <button class="submit-question-btn" onclick="submitAnswer(${index + 1})" 
+                            style="background: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer;">
+                      Submit Answer
+                    </button>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `);
+      }
+      
+      // Simulation section (only if simulation exists)
+      if (scenario.simulation) {
+        contentSections.push(`
+          <div class="worksheet-section simulation-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 2px solid #E91E63; box-shadow: 0 8px 20px rgba(233, 30, 99, 0.2);">
+            <h2 class="section-header" style="color: #E91E63; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;">
+              <i class="fas fa-chart-line"></i> ${scenario.simulation.title || 'Interactive Simulation'}
+            </h2>
+            <div class="worksheet-content">
+              <p style="color: #FFFFFF; margin-bottom: 20px;">${scenario.simulation.description || 'Interactive simulation content will be loaded here.'}</p>
+              <div id="simulation-container" style="background: #333; padding: 20px; border-radius: 8px;">
+                <p style="color: #FFFFFF; text-align: center;">Simulation functionality available for enhanced worksheets.</p>
               </div>
-            `).join('')}
+            </div>
           </div>
-        </div>
-      `;
-
+        `);
+      }
+      
+      // Combine all sections
+      container.innerHTML = contentSections.join('');
+      
+      // Initialize interactive features if steps exist
+      if (scenario.steps && scenario.steps.length > 0) {
+        initializeStepTracking();
+      }
+      
+      // Load saved answers
+      setTimeout(loadSavedAnswers, 100);
+      
       // Show the content
       document.getElementById('loading-container').style.display = 'none';
       document.getElementById('main-content').style.display = 'block';
+    }
+    
+    // Initialize step tracking for regular worksheets
+    function initializeStepTracking() {
+      const stepCards = document.querySelectorAll('.step-card');
+      stepCards.forEach(card => {
+        const checkbox = card.querySelector('.step-complete-checkbox');
+        const stepNumber = card.dataset.step;
+        
+        if (!checkbox) return;
+        
+        // Load saved state
+        const worksheetId = getUrlParameter('id');
+        const type = getUrlParameter('type') || 'maintenance';
+        const savedState = localStorage.getItem(`${type}_worksheet_${worksheetId}_step${stepNumber}_complete`);
+        
+        if (savedState === 'true') {
+          checkbox.checked = true;
+          card.style.opacity = '0.7';
+        }
+
+        // Function to toggle step completion
+        const toggleStep = (e) => {
+          // Don't toggle if clicking the checkbox itself
+          if (e.target.type === 'checkbox') return;
+          
+          checkbox.checked = !checkbox.checked;
+          
+          if (checkbox.checked) {
+            card.style.opacity = '0.7';
+          } else {
+            card.style.opacity = '1';
+          }
+          
+          localStorage.setItem(`${type}_worksheet_${worksheetId}_step${stepNumber}_complete`, checkbox.checked);
+        };
+
+        card.addEventListener('click', toggleStep);
+        
+        // Also handle checkbox changes
+        checkbox.addEventListener('change', (e) => {
+          if (e.target.checked) {
+            card.style.opacity = '0.7';
+          } else {
+            card.style.opacity = '1';
+          }
+          localStorage.setItem(`${type}_worksheet_${worksheetId}_step${stepNumber}_complete`, e.target.checked);
+        });
+      });
     }
 
     // Submit answer function for regular worksheets
@@ -870,17 +1148,59 @@
       const button = document.querySelector(`button[onclick="submitAnswer(${questionNum})"]`);
       
       if (textarea && button) {
+        const userAnswer = textarea.value.trim();
+        
+        if (userAnswer === '') {
+          alert('Please provide an answer before submitting.');
+          return;
+        }
+        
+        // Disable textarea and button
         textarea.disabled = true;
         button.textContent = 'Submitted';
         button.disabled = true;
         button.style.backgroundColor = '#4CAF50';
+        button.style.cursor = 'not-allowed';
         
         // Save answer
         const worksheetId = getUrlParameter('id');
         const type = getUrlParameter('type') || 'maintenance';
         const key = `${type}_worksheet_${worksheetId}_answer_${questionNum}`;
-        localStorage.setItem(key, textarea.value);
+        localStorage.setItem(key, userAnswer);
+        
+        // Load saved answers on page load
+        loadSavedAnswers();
+        
+        console.log('Answer submitted for question', questionNum, ':', userAnswer);
       }
+    }
+    
+    // Load saved answers when page loads
+    function loadSavedAnswers() {
+      const worksheetId = getUrlParameter('id');
+      const type = getUrlParameter('type') || 'maintenance';
+      
+      // Find all question textareas
+      const textareas = document.querySelectorAll('textarea[data-question]');
+      textareas.forEach(textarea => {
+        const questionNum = textarea.dataset.question;
+        const key = `${type}_worksheet_${worksheetId}_answer_${questionNum}`;
+        const savedAnswer = localStorage.getItem(key);
+        
+        if (savedAnswer) {
+          textarea.value = savedAnswer;
+          textarea.disabled = true;
+          
+          // Also disable the corresponding button
+          const button = document.querySelector(`button[onclick="submitAnswer(${questionNum})"]`);
+          if (button) {
+            button.textContent = 'Submitted';
+            button.disabled = true;
+            button.style.backgroundColor = '#4CAF50';
+            button.style.cursor = 'not-allowed';
+          }
+        }
+      });
     }
 
     // Show error message
