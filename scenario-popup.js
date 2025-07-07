@@ -468,6 +468,19 @@ function initEnhancedPIDSimulation() {
         }
     }
 
+    function resizeCanvas(canvas) {
+        // Get the display size (CSS pixels)
+        const displayWidth = canvas.clientWidth;
+        const displayHeight = canvas.clientHeight;
+        
+        // Check if the canvas is not the same size
+        if (canvas.width !== displayWidth || canvas.height !== displayHeight) {
+            // Make the canvas the same size
+            canvas.width = displayWidth;
+            canvas.height = displayHeight;
+        }
+    }
+
     function startSystemResponseTest() {
         // Stop any existing test
         if (isTestRunning && currentTestTimeout) {
@@ -484,6 +497,9 @@ function initEnhancedPIDSimulation() {
             console.error('Response elements not found');
             return;
         }
+
+        // Make canvas responsive
+        resizeCanvas(responseCanvas);
 
         const inputType = inputTypeSelect.value;
         const responseCtx = responseCanvas.getContext('2d');
@@ -607,7 +623,7 @@ function initEnhancedPIDSimulation() {
         ctx.beginPath();
         testData.input.forEach((input, i) => {
             const x = (testData.time[i] / 10) * canvas.width;
-            const y = canvas.height - ((input - 20) / 80) * canvas.height;
+            const y = canvas.height - ((Math.max(0, Math.min(100, input)) - 20) / 80) * canvas.height;
             if (i === 0) ctx.moveTo(x, y);
             else ctx.lineTo(x, y);
         });
@@ -619,7 +635,7 @@ function initEnhancedPIDSimulation() {
         ctx.beginPath();
         testData.output.forEach((output, i) => {
             const x = (testData.time[i] / 10) * canvas.width;
-            const y = canvas.height - ((output - 20) / 80) * canvas.height;
+            const y = canvas.height - ((Math.max(0, Math.min(100, output)) - 20) / 80) * canvas.height;
             if (i === 0) ctx.moveTo(x, y);
             else ctx.lineTo(x, y);
         });
@@ -639,6 +655,9 @@ function initEnhancedPIDSimulation() {
     }
     
     function animate() {
+        // Make main canvas responsive
+        resizeCanvas(canvas);
+        
         // Calculate PID control values
         const error = setpoint - processVariable;
         integral += error * 0.1; // dt = 0.1 seconds
