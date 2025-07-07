@@ -328,17 +328,17 @@
         console.log('Loading worksheet:', scenario.title);
         console.log('Worksheet structure analysis:', analyzeWorksheetStructure(scenario));
 
-        // Check if this worksheet has a special function to call
-        if (scenario.functionCall && window[scenario.functionCall]) {
-          console.log(`Calling special function: ${scenario.functionCall}`);
-          // Call the special interactive function directly to the worksheet container
-          renderInteractiveWorksheet1();
-        } else if (scenario.functionCall) {
-          console.warn(`Function ${scenario.functionCall} not found, using fallback`);
-          // Function specified but not found, use fallback
-          renderWorksheet1Fallback();
+        // Check worksheet type and render accordingly
+        if (type === 'maintenance') {
+          // All maintenance worksheets use enhanced format
+          console.log(`Rendering enhanced maintenance worksheet: ${scenario.title}`);
+          renderEnhancedMaintenanceWorksheet(scenario);
+        } else if (type === 'fault') {
+          // Fault scenarios use basic format (to be enhanced later)
+          console.log(`Rendering fault scenario: ${scenario.title}`);
+          renderFaultScenario(scenario);
         } else {
-          // Regular worksheet with JSON content
+          // Fallback for any other types
           renderWorksheet(scenario, type);
         }
         
@@ -375,6 +375,440 @@
       if (analysis.hasSimulation) analysis.sectionsToShow.push('Simulation');
       
       return analysis;
+    }
+
+    // Generate enhanced content based on worksheet topic
+    function generateEnhancedContent(scenario) {
+      const worksheetId = scenario.id;
+      const title = scenario.title;
+      
+      // Define content templates for each worksheet
+      const contentTemplates = {
+        1: {
+          instructions: "Select Start and observe the system start up. Once the pump is running you should see water flow through the flow gauge. Ensure the hand valve is in the open position, (the handle should be in line with the piping).",
+          steps: [
+            { title: "Set a Flow Rate", description: "Enter a target flow rate on the HMI. You can adjust in increments of 20 using the +/- buttons." },
+            { title: "Observe Feedback", description: "Watch the flow sensor reading on the HMI and compare it to the setpoint." },
+            { title: "Watch the System Adjust", description: "Note how the pump speed and valve position change to bring the flow rate to the setpoint." },
+            { title: "Introduce a Disturbance", description: "Temporarily restrict the flow (e.g., partially close the shut-off valve) and observe how the system reacts to maintain the flow rate." }
+          ],
+          soWhat: {
+            intro: "This is part of a control system, which automates processes in Industry. At the heart of this system is a PLC (Programmable Logic Controller), a computer that makes real-time decisions based on sensor data. The HMI (Human-Machine Interface) allows you to monitor and adjust settings easily.",
+            keyPoints: [
+              { title: "Feedback Control", description: "The system continuously measures the actual flow rate and compares it to the desired setpoint. If there's a difference, it automatically adjusts the pump speed or valve position to correct it." },
+              { title: "Real-Time Automation", description: "The PLC processes sensor data and makes control decisions in milliseconds, far faster than any human could react. This ensures consistent, accurate control even when conditions change." },
+              { title: "Stability & Reliability", description: "Closed-loop systems are self-correcting. If something tries to disturb the process (like partially closing a valve), the system automatically compensates to maintain the desired flow rate." },
+              { title: "Industrial Applications", description: "These principles are used everywhere in industry - from temperature control in manufacturing to pressure regulation in chemical plants. Understanding this system gives you insight into how modern automation works." }
+            ]
+          }
+        },
+        2: {
+          instructions: "Examine the emergency stop systems located throughout the facility. These critical safety devices must be tested regularly to ensure they function properly when needed.",
+          steps: [
+            { title: "Visual Inspection", description: "Check each E-stop button for physical damage, proper mounting, and clear labeling. Ensure the button is not stuck or damaged." },
+            { title: "Mechanical Test", description: "Press each E-stop button to verify it latches properly and requires intentional rotation to reset." },
+            { title: "Circuit Verification", description: "Use a multimeter to verify the E-stop contacts open properly when activated and close when reset." },
+            { title: "System Response Test", description: "Test that the system properly shuts down when E-stop is activated and requires proper reset sequence to restart." }
+          ],
+          soWhat: {
+            intro: "Emergency stop systems are the last line of defense in industrial safety. They must be 100% reliable because lives depend on them. Understanding how they work and how to maintain them is crucial for any maintenance technician.",
+            keyPoints: [
+              { title: "Safety First", description: "E-stop systems are designed to fail safe - if anything goes wrong with the system, it defaults to the stopped state to protect people and equipment." },
+              { title: "Redundancy", description: "Critical systems often have multiple E-stop buttons and redundant safety circuits to ensure the system can always be stopped, even if one component fails." },
+              { title: "Compliance", description: "E-stop systems must meet strict safety standards (like ISO 13850) and require regular testing and documentation to maintain safety certification." },
+              { title: "Maintenance Responsibility", description: "As a maintenance technician, you're responsible for ensuring these systems work when needed. Regular testing and proper documentation can save lives." }
+            ]
+          }
+        },
+        3: {
+          instructions: "Observe the various LED indicators on the control panel. These visual signals provide instant feedback about system status and are essential for quick diagnosis.",
+          steps: [
+            { title: "Identify LED Functions", description: "Document what each LED indicates - power, run status, alarms, communication, etc. Check the system documentation if needed." },
+            { title: "Test LED Operation", description: "Verify each LED illuminates properly by changing system conditions or using test functions if available." },
+            { title: "Check Visibility", description: "Ensure all LEDs are clearly visible from the operator position and not obscured by dirt, labels, or other equipment." },
+            { title: "Verify Color Coding", description: "Confirm LEDs follow standard color conventions (green=normal, red=alarm, yellow=warning, blue=information)." }
+          ],
+          soWhat: {
+            intro: "Status LEDs are the simplest form of human-machine interface, providing instant visual feedback about system conditions. They're often the first indication of problems and are crucial for quick troubleshooting.",
+            keyPoints: [
+              { title: "Instant Feedback", description: "LEDs provide immediate visual indication of system status without needing to navigate through screens or menus - critical for emergency situations." },
+              { title: "Standard Color Coding", description: "Industrial LEDs follow international standards for colors, making it easier for technicians to quickly understand system status regardless of the specific equipment." },
+              { title: "Diagnostic Tool", description: "LED patterns can indicate specific fault conditions, helping technicians quickly identify problems without needing complex diagnostic equipment." },
+              { title: "Maintenance Indicator", description: "Many systems use LEDs to indicate when maintenance is due, helping prevent unexpected failures through predictive maintenance." }
+            ]
+          }
+        },
+        4: {
+          instructions: "Examine the PLC (Programmable Logic Controller) that controls the automation system. This is the 'brain' of the operation and requires careful maintenance.",
+          steps: [
+            { title: "Physical Inspection", description: "Check the PLC cabinet for proper ventilation, clean filters, secure mounting, and no signs of overheating or corrosion." },
+            { title: "Power Supply Check", description: "Verify input voltage is within specifications and check backup battery status if equipped." },
+            { title: "I/O Module Status", description: "Check all input/output modules for proper LED indication and verify no loose connections." },
+            { title: "Program Backup", description: "Ensure the PLC program is backed up and verify the backup is current and complete." }
+          ],
+          soWhat: {
+            intro: "The PLC is the central nervous system of modern industrial automation. It makes thousands of decisions per second, controlling everything from simple on/off functions to complex process control algorithms.",
+            keyPoints: [
+              { title: "Central Control", description: "The PLC coordinates all system functions, reading sensors, making control decisions, and operating actuators - all in real-time with precise timing." },
+              { title: "Programmable Logic", description: "Unlike hardwired control systems, PLCs can be reprogrammed to change system behavior without rewiring, making them incredibly flexible for different applications." },
+              { title: "Reliability", description: "Industrial PLCs are designed to operate 24/7 in harsh environments for years without failure, but they require proper maintenance to achieve this reliability." },
+              { title: "Diagnostic Capabilities", description: "Modern PLCs provide extensive diagnostic information, helping technicians quickly identify and resolve problems before they cause system failures." }
+            ]
+          }
+        },
+        5: {
+          instructions: "Interact with the HMI (Human-Machine Interface) touchscreen. This is how operators monitor and control the system, so it must be properly maintained.",
+          steps: [
+            { title: "Screen Calibration", description: "Test touchscreen accuracy by pressing various buttons and verify the system responds to the correct touch points." },
+            { title: "Display Quality", description: "Check for dead pixels, scratches, or areas of poor visibility that could affect operator ability to read information." },
+            { title: "Navigation Test", description: "Navigate through all available screens to ensure proper operation and verify all functions are accessible." },
+            { title: "Alarm Testing", description: "Test alarm acknowledgment and verify that critical alarms are properly displayed and cannot be missed." }
+          ],
+          soWhat: {
+            intro: "The HMI is the primary interface between humans and the automated system. It must be intuitive, reliable, and always available because operators depend on it to monitor and control critical processes.",
+            keyPoints: [
+              { title: "Human Factors", description: "HMI design follows human factors engineering principles to reduce operator error and improve response time during normal and emergency conditions." },
+              { title: "Process Visualization", description: "Good HMI design provides clear, intuitive visualization of complex processes, helping operators understand system status at a glance." },
+              { title: "Alarm Management", description: "The HMI manages alarms and alerts, prioritizing critical information and guiding operators through proper response procedures." },
+              { title: "Data Logging", description: "HMIs often log operator actions and system events, providing valuable data for troubleshooting and process improvement." }
+            ]
+          }
+        },
+        6: {
+          instructions: "Examine the pump system that circulates fluid through the process. Pumps are critical components that require regular maintenance to prevent costly failures.",
+          steps: [
+            { title: "Performance Monitoring", description: "Record pump flow rate, pressure, and power consumption. Compare to baseline values to identify performance degradation." },
+            { title: "Vibration Analysis", description: "Check for excessive vibration that could indicate bearing wear, impeller damage, or misalignment." },
+            { title: "Seal Inspection", description: "Examine mechanical seals for leakage and check seal flush systems if equipped." },
+            { title: "Cavitation Check", description: "Listen for cavitation noise and check suction pressure to ensure adequate NPSH (Net Positive Suction Head)." }
+          ],
+          soWhat: {
+            intro: "Pumps are the workhorses of industrial processes, moving fluids where they need to go. Understanding pump operation and maintenance is essential because pump failures can shut down entire processes.",
+            keyPoints: [
+              { title: "Energy Efficiency", description: "Properly maintained pumps operate more efficiently, reducing energy costs. A worn pump can consume significantly more power while delivering less flow." },
+              { title: "Predictive Maintenance", description: "Monitoring pump performance parameters allows you to predict failures before they occur, scheduling maintenance during planned downtime rather than emergency shutdowns." },
+              { title: "System Impact", description: "Pump performance affects the entire process. Understanding pump curves and system curves helps optimize performance and identify problems early." },
+              { title: "Cost of Failure", description: "Unexpected pump failures can cost thousands in lost production, emergency repairs, and potential safety hazards. Proper maintenance prevents these costly surprises." }
+            ]
+          }
+        },
+        7: {
+          instructions: "Examine the control valve that regulates flow in the system. Valves are precision instruments that require careful maintenance to maintain accuracy.",
+          steps: [
+            { title: "Position Accuracy", description: "Test valve positioning by commanding different positions and verifying actual position matches commanded position." },
+            { title: "Response Time", description: "Time how quickly the valve responds to position changes and compare to specifications." },
+            { title: "Seal Integrity", description: "Check for internal and external leakage, paying special attention to packing glands and seat sealing." },
+            { title: "Actuator Function", description: "Test actuator operation, check air pressure (pneumatic) or electrical connections (electric), and verify proper calibration." }
+          ],
+          soWhat: {
+            intro: "Control valves are the 'muscles' of process control systems, actually doing the work of controlling flow, pressure, or temperature. They must be precise and reliable because they directly affect product quality and safety.",
+            keyPoints: [
+              { title: "Process Control", description: "Control valves are the final control elements in most process control loops, directly manipulating the process variable to maintain desired setpoints." },
+              { title: "Precision Required", description: "Many processes require very precise control, and valve performance directly affects product quality, energy efficiency, and safety." },
+              { title: "Wear and Tear", description: "Valves experience constant wear from fluid flow, pressure changes, and cycling, making regular maintenance essential for continued accuracy." },
+              { title: "Safety Critical", description: "In many applications, control valves are safety-critical components that must fail to a safe position and respond quickly to emergency shutdown commands." }
+            ]
+          }
+        },
+        8: {
+          instructions: "Examine the float switch used for level detection. These simple but critical devices must be properly maintained to ensure reliable level control.",
+          steps: [
+            { title: "Float Movement", description: "Manually lift and lower the float to verify smooth movement without binding or sticking." },
+            { title: "Switch Operation", description: "Test the electrical switch by moving the float through its operating range and verifying proper switching action." },
+            { title: "Mounting Security", description: "Check that the float switch is securely mounted and properly positioned for accurate level detection." },
+            { title: "Electrical Connections", description: "Inspect wiring and connections for corrosion, looseness, or damage that could cause intermittent operation." }
+          ],
+          soWhat: {
+            intro: "Float switches are simple but essential safety devices that prevent tank overflows and pump dry-running. Despite their simplicity, they must be properly maintained because failures can cause expensive damage or safety hazards.",
+            keyPoints: [
+              { title: "Simple but Critical", description: "Float switches have few moving parts but perform critical safety functions like preventing tank overflows or protecting pumps from running dry." },
+              { title: "Environmental Challenges", description: "Float switches often operate in harsh environments with corrosive fluids, extreme temperatures, or debris that can affect operation." },
+              { title: "Fail-Safe Design", description: "Properly designed float switch systems fail in a safe condition - if the switch fails, the system shuts down safely rather than causing damage." },
+              { title: "Regular Testing", description: "Because float switches are often in remote or difficult-to-access locations, regular testing ensures they'll work when needed." }
+            ]
+          }
+        },
+        9: {
+          instructions: "Examine the proximity switch used for position detection. These non-contact sensors are essential for automation but require proper setup and maintenance.",
+          steps: [
+            { title: "Sensing Distance", description: "Test the sensing distance by moving a target object toward the sensor and noting the exact switching point." },
+            { title: "Target Material Effect", description: "Test with different target materials (steel, aluminum, brass) to understand how material affects sensing distance." },
+            { title: "Environmental Factors", description: "Check for interference from nearby metal objects, electrical noise, or environmental conditions that could affect operation." },
+            { title: "Wiring Integrity", description: "Inspect cables for damage and verify proper electrical connections, especially in areas subject to vibration or movement." }
+          ],
+          soWhat: {
+            intro: "Proximity switches are the eyes and ears of automation systems, detecting position and presence without physical contact. They enable precise control and safety functions that would be impossible with mechanical switches.",
+            keyPoints: [
+              { title: "Non-Contact Operation", description: "Proximity switches detect objects without physical contact, eliminating wear and enabling detection of fragile objects or in harsh environments." },
+              { title: "Precision Positioning", description: "Modern proximity switches can detect position changes as small as 0.1mm, enabling precise control of automated equipment." },
+              { title: "Speed Capability", description: "Proximity switches can detect objects moving at high speeds, making them ideal for counting, sorting, and high-speed automation applications." },
+              { title: "Reliability", description: "With no moving parts, proximity switches are extremely reliable when properly applied, but they require understanding of their limitations and proper installation." }
+            ]
+          }
+        },
+        10: {
+          instructions: "Examine the flow sensor that measures fluid flow rate. Accurate flow measurement is critical for process control and must be properly maintained.",
+          steps: [
+            { title: "Calibration Check", description: "Compare sensor reading to a known flow rate using a calibrated reference or by timing a known volume." },
+            { title: "Installation Verification", description: "Verify proper installation with correct upstream and downstream straight pipe lengths and proper orientation." },
+            { title: "Signal Quality", description: "Check the electrical signal output for proper voltage/current levels and verify signal stability." },
+            { title: "Physical Condition", description: "Inspect the sensor for damage, corrosion, or fouling that could affect accuracy." }
+          ],
+          soWhat: {
+            intro: "Flow measurement is fundamental to process control - you can't control what you can't measure. Flow sensors provide the feedback necessary for precise control of chemical processes, energy systems, and manufacturing operations.",
+            keyPoints: [
+              { title: "Process Control", description: "Flow measurement is essential for material balance, quality control, and safety in chemical processes. Inaccurate flow measurement can result in off-spec products or dangerous conditions." },
+              { title: "Energy Management", description: "Flow sensors help optimize energy consumption by measuring fuel, steam, and cooling water flows, enabling efficient operation and cost control." },
+              { title: "Custody Transfer", description: "In many applications, flow sensors are used for custody transfer - buying and selling fluids based on measured quantities, requiring high accuracy and legal traceability." },
+              { title: "Maintenance Indicators", description: "Changes in flow sensor readings can indicate developing problems like pipe blockages, pump wear, or valve problems, enabling predictive maintenance." }
+            ]
+          }
+        },
+        11: {
+          instructions: "Examine the temperature sensor that monitors process temperature. Temperature measurement is critical for quality, safety, and efficiency.",
+          steps: [
+            { title: "Calibration Verification", description: "Compare sensor reading to a calibrated reference thermometer at known temperature points." },
+            { title: "Response Time Test", description: "Test sensor response time by subjecting it to a rapid temperature change and measuring how quickly it responds." },
+            { title: "Installation Check", description: "Verify proper installation depth, thermal contact, and insulation to ensure accurate measurement." },
+            { title: "Signal Integrity", description: "Check electrical connections and verify proper signal conditioning for the type of sensor (RTD, thermocouple, etc.)." }
+          ],
+          soWhat: {
+            intro: "Temperature control is fundamental to most industrial processes. Whether it's maintaining product quality, ensuring safety, or optimizing energy efficiency, accurate temperature measurement is essential.",
+            keyPoints: [
+              { title: "Product Quality", description: "Many manufacturing processes require precise temperature control to produce consistent, high-quality products. Temperature variations can result in defects, waste, or off-spec products." },
+              { title: "Safety Critical", description: "Temperature monitoring prevents dangerous conditions like overheating, thermal runaway, or exposure to extreme temperatures that could harm personnel or equipment." },
+              { title: "Energy Efficiency", description: "Accurate temperature control minimizes energy waste by maintaining optimal operating conditions without excessive heating or cooling." },
+              { title: "Process Optimization", description: "Temperature data helps optimize reaction rates, cure times, and other process parameters to maximize efficiency and minimize costs." }
+            ]
+          }
+        },
+        12: {
+          instructions: "Examine the digital sensors that provide on/off status information. These binary sensors are the foundation of industrial automation logic.",
+          steps: [
+            { title: "Switch Point Testing", description: "Test each digital sensor by activating it and verifying clean switching between on and off states." },
+            { title: "Signal Quality", description: "Use a multimeter or oscilloscope to verify clean digital signals without noise or intermittent switching." },
+            { title: "Wiring Verification", description: "Check all connections for proper voltage levels, secure connections, and proper grounding." },
+            { title: "Response Time", description: "Test sensor response time to ensure it's fast enough for the application requirements." }
+          ],
+          soWhat: {
+            intro: "Digital sensors are the building blocks of automation logic, providing the binary (on/off) information that PLCs use to make control decisions. They must be absolutely reliable because automation depends on them.",
+            keyPoints: [
+              { title: "Logic Foundation", description: "Digital sensors provide the binary inputs that form the foundation of all automation logic - every decision starts with digital sensor information." },
+              { title: "Safety Systems", description: "Many safety systems rely on digital sensors for emergency stops, safety interlocks, and protective functions that must work reliably every time." },
+              { title: "Sequence Control", description: "Digital sensors enable precise sequence control, ensuring operations happen in the correct order and at the right time." },
+              { title: "Diagnostic Capability", description: "Digital sensors often provide diagnostic information about system status, helping technicians quickly identify and resolve problems." }
+            ]
+          }
+        },
+        13: {
+          instructions: "Examine the analog sensors that provide continuous measurement values. These sensors provide the precise measurements needed for process control.",
+          steps: [
+            { title: "Calibration Check", description: "Verify sensor accuracy by comparing readings to known reference values across the full measurement range." },
+            { title: "Signal Conditioning", description: "Check signal conditioning circuits, amplifiers, and converters to ensure proper signal processing." },
+            { title: "Noise Analysis", description: "Look for electrical noise, interference, or signal drift that could affect measurement accuracy." },
+            { title: "Loop Testing", description: "Test the complete measurement loop including sensor, wiring, and receiving instrument." }
+          ],
+          soWhat: {
+            intro: "Analog sensors provide the continuous measurements that enable precise process control. Unlike digital sensors that are simply on or off, analog sensors provide the exact values needed for accurate control.",
+            keyPoints: [
+              { title: "Precise Control", description: "Analog sensors enable precise control by providing exact measurements rather than just on/off information, allowing for fine-tuning of process parameters." },
+              { title: "Trend Analysis", description: "Continuous analog measurements allow for trend analysis, helping predict problems before they occur and optimize process performance." },
+              { title: "Quality Control", description: "Analog measurements are essential for quality control, ensuring products meet specifications and detecting variations that could indicate problems." },
+              { title: "Process Optimization", description: "Analog sensor data enables advanced control strategies like PID control, feedforward control, and model predictive control for optimal process performance." }
+            ]
+          }
+        },
+        14: {
+          instructions: "Learn systematic approaches to fault diagnosis and troubleshooting. Effective troubleshooting requires a methodical approach and understanding of system interactions.",
+          steps: [
+            { title: "Gather Information", description: "Collect all available information about the fault - when it occurred, what symptoms are present, and what was happening when it started." },
+            { title: "Analyze Symptoms", description: "Systematically analyze symptoms to develop theories about possible causes, starting with the most likely based on experience." },
+            { title: "Test Theories", description: "Test each theory systematically, starting with the easiest and most likely causes before moving to more complex possibilities." },
+            { title: "Implement Solution", description: "Once the root cause is identified, implement a permanent solution and verify that the problem is completely resolved." }
+          ],
+          soWhat: {
+            intro: "Effective troubleshooting is both an art and a science. It requires systematic thinking, technical knowledge, and experience to quickly identify and resolve problems that can cost thousands of dollars per hour in lost production.",
+            keyPoints: [
+              { title: "Systematic Approach", description: "Random troubleshooting wastes time and can make problems worse. A systematic approach ensures you find the real cause quickly and efficiently." },
+              { title: "Root Cause Analysis", description: "Fixing symptoms without addressing root causes leads to recurring problems. Effective troubleshooting identifies and eliminates the underlying cause." },
+              { title: "Documentation", description: "Proper documentation of faults and solutions builds organizational knowledge and helps prevent similar problems in the future." },
+              { title: "Continuous Learning", description: "Every fault is a learning opportunity. Understanding why problems occur helps prevent them and makes you a more effective troubleshooter." }
+            ]
+          }
+        }
+      };
+      
+      // Return the content for the specific worksheet, or default content if not found
+      return contentTemplates[worksheetId] || {
+        instructions: `Follow the maintenance procedures for ${title.toLowerCase()} as outlined in the system documentation.`,
+        steps: [
+          { title: "Initial Inspection", description: "Perform a visual inspection of the system components." },
+          { title: "Functional Testing", description: "Test the system operation according to procedures." },
+          { title: "Documentation", description: "Record all observations and measurements." },
+          { title: "Corrective Actions", description: "Implement any necessary corrective actions." }
+        ],
+        soWhat: {
+          intro: `Understanding ${title.toLowerCase()} is important for maintaining reliable industrial systems.`,
+          keyPoints: [
+            { title: "System Reliability", description: "Proper maintenance ensures reliable operation and prevents unexpected failures." },
+            { title: "Safety", description: "Well-maintained systems operate safely and protect personnel and equipment." },
+            { title: "Efficiency", description: "Regular maintenance maintains system efficiency and reduces operating costs." },
+            { title: "Compliance", description: "Proper maintenance ensures compliance with safety and regulatory requirements." }
+          ]
+        }
+      };
+    }
+
+    // Render enhanced maintenance worksheet with interactive sections
+    function renderEnhancedMaintenanceWorksheet(scenario) {
+      const container = document.getElementById('worksheet-content');
+      
+      // Generate enhanced content based on worksheet topic
+      const enhancedContent = generateEnhancedContent(scenario);
+      
+      container.innerHTML = `
+        <h1 class="page-title">${scenario.title}</h1>
+
+        <div class="worksheet-section introduction-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 2px solid #2196F3; box-shadow: 0 8px 20px rgba(33, 150, 243, 0.2);">
+          <h2 class="section-header" style="color: #2196F3; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-info-circle"></i> 1. Introduction</h2>
+          <div class="worksheet-content">
+            ${scenario.paragraphs.map(p => `<p style="color: #FFFFFF; margin-bottom: 15px;">${p}</p>`).join('')}
+            
+            ${scenario.image ? `
+            <div class="system-diagram" style="text-align: center; margin: 20px 0;">
+              <figure>
+                <img src="assets/maintenance/${scenario.image}" alt="${scenario.title}" style="max-width: 400px; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);">
+                <figcaption style="color: #FFFFFF; margin-top: 10px; font-style: italic;">${scenario.title} System Diagram</figcaption>
+              </figure>
+            </div>
+            ` : ''}
+          </div>
+        </div>
+
+        <div class="worksheet-section over-to-you-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 2px solid #FF9800; box-shadow: 0 8px 20px rgba(255, 152, 0, 0.2);">
+          <h2 class="section-header" style="color: #FF9800; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-hands-helping"></i> 2. Over To You</h2>
+          <div class="worksheet-content">
+            <p style="color: #FFFFFF; margin-bottom: 20px; font-weight: bold;">${enhancedContent.instructions}</p>
+            
+            <div class="steps-container">
+              ${enhancedContent.steps.map((step, index) => `
+                <div class="step-card" data-step="${index + 1}" style="background: #333; padding: 20px; margin: 15px 0; border-radius: 8px; border-left: 4px solid #4CAF50; display: flex; align-items: flex-start; gap: 15px; cursor: pointer;">
+                  <div class="step-number" style="background: #4CAF50; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">${index + 1}</div>
+                  <div class="step-content" style="flex: 1;">
+                    <div class="step-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                      <h4 style="color: #FFFFFF; margin: 0;">${step.title}</h4>
+                      <label class="step-checkbox">
+                        <input type="checkbox" class="step-complete-checkbox">
+                        <span class="checkmark" style="margin-left: 10px;"></span>
+                      </label>
+                    </div>
+                    <p style="color: #FFFFFF; margin: 0;">${step.description}</p>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+
+        <div class="so-what-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-top: 40px; margin-bottom: 40px; border: 2px solid #9C27B0; box-shadow: 0 8px 20px rgba(156, 39, 176, 0.2);">
+          <h2 class="section-header" style="color: #9C27B0; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-lightbulb"></i> 3. So What?</h2>
+          <div class="so-what-content">
+            <p style="color: #FFFFFF; margin-bottom: 20px;">${enhancedContent.soWhat.intro}</p>
+            
+            ${enhancedContent.soWhat.keyPoints.map(point => `
+              <div class="key-point" style="display: flex; align-items: flex-start; gap: 15px; margin-bottom: 20px; padding: 15px; background: #333; border-radius: 8px;">
+                <i class="fas fa-lightbulb" style="color: #4CAF50; font-size: 20px; margin-top: 5px;"></i>
+                <div>
+                  <strong style="color: #FFFFFF; display: block; margin-bottom: 5px;">${point.title}</strong>
+                  <p style="color: #FFFFFF; margin: 0;">${point.description}</p>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <div class="questions-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 2px solid #4CAF50; box-shadow: 0 8px 20px rgba(76, 175, 80, 0.3);">
+          <h2 class="section-header" style="color: #4CAF50; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-question-circle"></i> 4. Questions & Answers</h2>
+          <div class="questions-content">
+            <div class="instructions" style="background: #333; padding: 15px; border-radius: 8px; margin-bottom: 20px; color: #FFFFFF;">
+              <strong>Instructions:</strong> Answer each question based on your observations and understanding of the ${scenario.title.toLowerCase()} system. Your answers will be saved automatically.
+            </div>
+            
+            ${scenario.questions.map((q, index) => `
+              <div class="question-item" data-question="${index + 1}" style="background: #333; padding: 20px; margin-bottom: 20px; border-radius: 8px;">
+                <h4 style="color: #FFFFFF; margin-bottom: 10px;">Question ${index + 1}: ${q.text}</h4>
+                <textarea class="answer-input" data-question="${index + 1}" placeholder="${q.placeholder}" style="width: 100%; height: 100px; padding: 10px; border: 1px solid #555; border-radius: 4px; background: #222; color: #FFFFFF; resize: vertical;"></textarea>
+                <div class="question-actions" style="margin-top: 15px;">
+                  <button class="submit-question-btn" onclick="submitAnswer(${index + 1})" style="background: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer;">Submit Answer</button>
+                  <span class="submit-note" style="color: #AAA; margin-left: 10px;">Your answer will be saved automatically.</span>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+
+      // Initialize interactive features
+      setTimeout(() => {
+        initializeStepTracking();
+        loadSavedAnswers();
+      }, 100);
+      
+      // Show the content
+      document.getElementById('loading-container').style.display = 'none';
+      document.getElementById('main-content').style.display = 'block';
+    }
+
+    // Render fault scenario (basic format for now)
+    function renderFaultScenario(scenario) {
+      const container = document.getElementById('worksheet-content');
+      
+      container.innerHTML = `
+        <h1 class="page-title">Fault Scenario ${scenario.id}: ${scenario.title}</h1>
+
+        <div class="worksheet-section introduction-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 2px solid #f44336; box-shadow: 0 8px 20px rgba(244, 67, 54, 0.2);">
+          <h2 class="section-header" style="color: #f44336; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-exclamation-triangle"></i> Fault Scenario</h2>
+          <div class="worksheet-content">
+            ${scenario.paragraphs.map(p => `<p style="color: #FFFFFF; margin-bottom: 15px;">${p}</p>`).join('')}
+            
+            ${scenario.image ? `
+            <div class="system-diagram" style="text-align: center; margin: 20px 0;">
+              <figure>
+                <img src="assets/scenarios/${scenario.image}" alt="${scenario.title}" style="max-width: 400px; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);">
+                <figcaption style="color: #FFFFFF; margin-top: 10px; font-style: italic;">${scenario.title} Fault Scenario</figcaption>
+              </figure>
+            </div>
+            ` : ''}
+          </div>
+        </div>
+
+        <div class="questions-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 2px solid #4CAF50; box-shadow: 0 8px 20px rgba(76, 175, 80, 0.2);">
+          <h2 class="section-header" style="color: #4CAF50; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-question-circle"></i> Troubleshooting Questions</h2>
+          <div class="worksheet-content">
+            ${scenario.questions.map((q, index) => `
+              <div class="question-item" data-question="${index + 1}" style="background: #333; padding: 20px; margin-bottom: 20px; border-radius: 8px;">
+                <h4 style="color: #FFFFFF; margin-bottom: 10px;">${index + 1}. ${q.text}</h4>
+                <textarea class="answer-input" data-question="${index + 1}" 
+                         placeholder="${q.placeholder || 'Enter your answer here...'}" 
+                         style="width: 100%; height: 100px; padding: 10px; border: 1px solid #555; border-radius: 4px; background: #222; color: #FFFFFF; resize: vertical;"></textarea>
+                <div class="question-actions" style="margin-top: 15px;">
+                  <button class="submit-question-btn" onclick="submitAnswer(${index + 1})" 
+                          style="background: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer;">
+                    Submit Answer
+                  </button>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+
+      // Load saved answers
+      setTimeout(loadSavedAnswers, 100);
+      
+      // Show the content
+      document.getElementById('loading-container').style.display = 'none';
+      document.getElementById('main-content').style.display = 'block';
     }
 
     // Render the interactive Worksheet 1 content directly to the container
