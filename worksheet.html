@@ -330,9 +330,15 @@
 
         // Check worksheet type and render accordingly
         if (type === 'maintenance') {
-          // All maintenance worksheets use enhanced format
-          console.log(`Rendering enhanced maintenance worksheet: ${scenario.title}`);
-          renderEnhancedMaintenanceWorksheet(scenario);
+          if (scenario.id === 1) {
+            // Worksheet 1 has special interactive content (CAD images, PID simulation, etc.)
+            console.log(`Rendering special interactive Worksheet 1: ${scenario.title}`);
+            renderInteractiveWorksheet1();
+          } else {
+            // Worksheets 2-14 use enhanced format
+            console.log(`Rendering enhanced maintenance worksheet: ${scenario.title}`);
+            renderEnhancedMaintenanceWorksheet(scenario);
+          }
         } else if (type === 'fault') {
           // Fault scenarios use basic format (to be enhanced later)
           console.log(`Rendering fault scenario: ${scenario.title}`);
