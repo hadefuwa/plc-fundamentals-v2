@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portal - Answer Review</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid #4CAF50;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #4CAF50;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .controls {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .filter-section {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-section label {
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        .filter-section select, .filter-section input {
+            padding: 8px 12px;
+            border: 1px solid #555;
+            border-radius: 4px;
+            background: #333;
+            color: #ffffff;
+            font-size: 14px;
+        }
+
+        .export-section {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #45a049;
+        }
+
+        .btn-secondary {
+            background: #2196F3;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #1976D2;
+        }
+
+        .btn-danger {
+            background: #f44336;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #d32f2f;
+        }
+
+        .stats-bar {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            border-bottom: 1px solid #555;
+        }
+
+        .stat-item {
+            flex: 1;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        .content {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .worksheet-group {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            border: 1px solid #555;
+        }
+
+        .worksheet-header {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .worksheet-header:hover {
+            background: linear-gradient(135deg, #45a049, #4CAF50);
+        }
+
+        .worksheet-title {
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        .worksheet-progress {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .progress-bar {
+            width: 100px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #ffffff;
+            transition: width 0.3s;
+        }
+
+        .worksheet-content {
+            display: none;
+            padding: 20px;
+        }
+
+        .worksheet-content.expanded {
+            display: block;
+        }
+
+        .question-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid #4CAF50;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .question-text {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+
+        .question-id {
+            font-size: 0.9em;
+            color: #AAA;
+            margin-bottom: 15px;
+        }
+
+        .answer-section {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+
+        .answer-label {
+            font-weight: bold;
+            color: #4CAF50;
+            margin-bottom: 8px;
+        }
+
+        .answer-text {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #555;
+            min-height: 60px;
+            word-wrap: break-word;
+        }
+
+        .answer-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .status-answered {
+            color: #4CAF50;
+        }
+
+        .status-unanswered {
+            color: #f44336;
+        }
+
+        .answer-timestamp {
+            font-size: 0.9em;
+            color: #AAA;
+        }
+
+        .no-answers {
+            text-align: center;
+            padding: 40px;
+            color: #AAA;
+        }
+
+        .search-highlight {
+            background: yellow;
+            color: black;
+            padding: 2px 4px;
+            border-radius: 2px;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+
+        .back-button:hover {
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-section {
+                justify-content: center;
+            }
+
+            .stats-bar {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .worksheet-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="back-button" onclick="goBack()">
+        <i class="fas fa-arrow-left"></i> Back
+    </button>
+
+    <div class="header">
+        <h1><i class="fas fa-user-graduate"></i> Student Portal</h1>
+        <p>Review all your answers across maintenance worksheets and fault scenarios</p>
+    </div>
+
+    <div class="controls">
+        <div class="filter-section">
+            <label for="worksheetFilter">Filter by Type:</label>
+            <select id="worksheetFilter">
+                <option value="all">All Worksheets</option>
+                <option value="maintenance">Maintenance Only</option>
+                <option value="fault">Fault Scenarios Only</option>
+            </select>
+
+            <label for="statusFilter">Filter by Status:</label>
+            <select id="statusFilter">
+                <option value="all">All Questions</option>
+                <option value="answered">Answered Only</option>
+                <option value="unanswered">Unanswered Only</option>
+            </select>
+
+            <label for="searchInput">Search:</label>
+            <input type="text" id="searchInput" placeholder="Search questions or answers...">
+        </div>
+
+        <div class="export-section">
+            <button class="btn btn-primary" onclick="exportToJSON()">
+                <i class="fas fa-download"></i> Export JSON
+            </button>
+            <button class="btn btn-secondary" onclick="exportToCSV()">
+                <i class="fas fa-file-csv"></i> Export CSV
+            </button>
+            <button class="btn btn-danger" onclick="clearAllAnswers()">
+                <i class="fas fa-trash"></i> Clear All
+            </button>
+        </div>
+    </div>
+
+    <div class="stats-bar">
+        <div class="stat-item">
+            <div class="stat-number" id="totalQuestions">0</div>
+            <div class="stat-label">Total Questions</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number" id="answeredQuestions">0</div>
+            <div class="stat-label">Answered</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number" id="completionRate">0%</div>
+            <div class="stat-label">Completion Rate</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number" id="lastActivity">Never</div>
+            <div class="stat-label">Last Activity</div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div id="worksheetContainer">
+            <!-- Worksheet groups will be populated here -->
+        </div>
+        
+        <div id="noAnswers" class="no-answers" style="display: none;">
+            <i class="fas fa-clipboard-question" style="font-size: 4em; margin-bottom: 20px; opacity: 0.5;"></i>
+            <h2>No Answers Found</h2>
+            <p>Start answering questions in the worksheets to see your progress here.</p>
+        </div>
+    </div>
+
+    <script>
+        // Load worksheet data
+        let maintenanceData = null;
+        let faultData = null;
+
+        // Load JSON data
+        async function loadWorksheetData() {
+            try {
+                const [maintenanceResponse, faultResponse] = await Promise.all([
+                    fetch('dbMaintenanceScenarios.json'),
+                    fetch('dbFaultScenarios.json')
+                ]);
+                
+                maintenanceData = await maintenanceResponse.json();
+                faultData = await faultResponse.json();
+                
+                displayAnswers();
+                updateStats();
+            } catch (error) {
+                console.error('Error loading worksheet data:', error);
+            }
+        }
+
+        // Display all answers
+        function displayAnswers() {
+            const container = document.getElementById('worksheetContainer');
+            const noAnswers = document.getElementById('noAnswers');
+            
+            container.innerHTML = '';
+            
+            const allWorksheets = [];
+            
+            // Add maintenance worksheets
+            if (maintenanceData) {
+                maintenanceData.scenarios.forEach(scenario => {
+                    allWorksheets.push({
+                        ...scenario,
+                        type: 'maintenance'
+                    });
+                });
+            }
+            
+            // Add fault scenarios
+            if (faultData) {
+                faultData.scenarios.forEach(scenario => {
+                    allWorksheets.push({
+                        ...scenario,
+                        type: 'fault'
+                    });
+                });
+            }
+            
+            if (allWorksheets.length === 0) {
+                noAnswers.style.display = 'block';
+                return;
+            }
+            
+            allWorksheets.forEach(worksheet => {
+                const worksheetElement = createWorksheetElement(worksheet);
+                container.appendChild(worksheetElement);
+            });
+            
+            applyFilters();
+        }
+
+        // Create worksheet element
+        function createWorksheetElement(worksheet) {
+            const div = document.createElement('div');
+            div.className = 'worksheet-group';
+            div.dataset.type = worksheet.type;
+            
+            const answers = getWorksheetAnswers(worksheet);
+            const totalQuestions = worksheet.questions.length;
+            const answeredQuestions = answers.filter(a => a.answer).length;
+            const completionRate = totalQuestions > 0 ? Math.round((answeredQuestions / totalQuestions) * 100) : 0;
+            
+            div.innerHTML = `
+                <div class="worksheet-header" onclick="toggleWorksheet(this)">
+                    <div class="worksheet-title">
+                        <i class="fas fa-${worksheet.type === 'maintenance' ? 'tools' : 'exclamation-triangle'}"></i>
+                        ${worksheet.type === 'maintenance' ? 'Maintenance' : 'Fault'} ${worksheet.id}: ${worksheet.title}
+                    </div>
+                    <div class="worksheet-progress">
+                        <span>${answeredQuestions}/${totalQuestions}</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${completionRate}%"></div>
+                        </div>
+                        <span>${completionRate}%</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+                <div class="worksheet-content">
+                    ${worksheet.questions.map((question, index) => {
+                        const answer = answers[index];
+                        return createQuestionElement(question, answer, worksheet.type, worksheet.id);
+                    }).join('')}
+                </div>
+            `;
+            
+            return div;
+        }
+
+        // Create question element
+        function createQuestionElement(question, answer, worksheetType, worksheetId) {
+            const isAnswered = answer && answer.answer;
+            const timestamp = answer && answer.timestamp ? new Date(answer.timestamp).toLocaleString() : 'Never';
+            
+            return `
+                <div class="question-item" data-answered="${isAnswered ? 'true' : 'false'}">
+                    <div class="question-id">Question ID: ${question.id}</div>
+                    <div class="question-text">${question.text}</div>
+                    
+                    <div class="answer-section">
+                        <div class="answer-label">Your Answer:</div>
+                        <div class="answer-text">
+                            ${isAnswered ? answer.answer : '<em>No answer provided</em>'}
+                        </div>
+                        <div class="answer-status">
+                            <span class="${isAnswered ? 'status-answered' : 'status-unanswered'}">
+                                <i class="fas fa-${isAnswered ? 'check-circle' : 'times-circle'}"></i>
+                                ${isAnswered ? 'Answered' : 'Not Answered'}
+                            </span>
+                            <span class="answer-timestamp">
+                                <i class="fas fa-clock"></i> ${timestamp}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Get worksheet answers from localStorage
+        function getWorksheetAnswers(worksheet) {
+            const answers = [];
+            
+            worksheet.questions.forEach((question, index) => {
+                const questionNum = index + 1;
+                let answer = null;
+                let timestamp = null;
+                
+                if (worksheet.type === 'maintenance') {
+                    // Try different storage formats
+                    const key1 = `maintenance_worksheet_${worksheet.id}_answer_${questionNum}`;
+                    const key2 = `worksheet${worksheet.id}_answer_${questionNum}`;
+                    const key3 = `worksheet${worksheet.id}_interactive_answer_${questionNum}`;
+                    
+                    answer = localStorage.getItem(key1) || localStorage.getItem(key2) || localStorage.getItem(key3);
+                    
+                    // Try to get timestamp
+                    const timestampKey = `${key1}_timestamp`;
+                    timestamp = localStorage.getItem(timestampKey);
+                } else {
+                    // Fault scenarios
+                    const key = `fault_worksheet_${worksheet.id}_answer_${questionNum}`;
+                    answer = localStorage.getItem(key);
+                    
+                    const timestampKey = `${key}_timestamp`;
+                    timestamp = localStorage.getItem(timestampKey);
+                }
+                
+                answers.push({
+                    answer: answer,
+                    timestamp: timestamp
+                });
+            });
+            
+            return answers;
+        }
+
+        // Toggle worksheet expansion
+        function toggleWorksheet(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.fa-chevron-down');
+            
+            content.classList.toggle('expanded');
+            icon.style.transform = content.classList.contains('expanded') ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
+
+        // Apply filters
+        function applyFilters() {
+            const worksheetFilter = document.getElementById('worksheetFilter').value;
+            const statusFilter = document.getElementById('statusFilter').value;
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            
+            const worksheets = document.querySelectorAll('.worksheet-group');
+            
+            worksheets.forEach(worksheet => {
+                let showWorksheet = true;
+                
+                // Filter by type
+                if (worksheetFilter !== 'all' && worksheet.dataset.type !== worksheetFilter) {
+                    showWorksheet = false;
+                }
+                
+                // Filter by status
+                if (statusFilter !== 'all') {
+                    const questions = worksheet.querySelectorAll('.question-item');
+                    const hasMatchingQuestions = Array.from(questions).some(question => {
+                        const isAnswered = question.dataset.answered === 'true';
+                        return statusFilter === 'answered' ? isAnswered : !isAnswered;
+                    });
+                    
+                    if (!hasMatchingQuestions) {
+                        showWorksheet = false;
+                    }
+                }
+                
+                // Search filter
+                if (searchTerm && showWorksheet) {
+                    const text = worksheet.textContent.toLowerCase();
+                    if (!text.includes(searchTerm)) {
+                        showWorksheet = false;
+                    }
+                }
+                
+                worksheet.style.display = showWorksheet ? 'block' : 'none';
+            });
+            
+            // Highlight search terms
+            if (searchTerm) {
+                highlightSearchTerms(searchTerm);
+            } else {
+                removeHighlights();
+            }
+        }
+
+        // Highlight search terms
+        function highlightSearchTerms(term) {
+            const elements = document.querySelectorAll('.question-text, .answer-text');
+            elements.forEach(element => {
+                const text = element.textContent;
+                const regex = new RegExp(`(${term})`, 'gi');
+                element.innerHTML = text.replace(regex, '<span class="search-highlight">$1</span>');
+            });
+        }
+
+        // Remove highlights
+        function removeHighlights() {
+            const highlights = document.querySelectorAll('.search-highlight');
+            highlights.forEach(highlight => {
+                highlight.outerHTML = highlight.textContent;
+            });
+        }
+
+        // Update statistics
+        function updateStats() {
+            let totalQuestions = 0;
+            let answeredQuestions = 0;
+            let lastActivity = null;
+            
+            // Count all questions and answers
+            const allData = [];
+            if (maintenanceData) allData.push(...maintenanceData.scenarios.map(s => ({...s, type: 'maintenance'})));
+            if (faultData) allData.push(...faultData.scenarios.map(s => ({...s, type: 'fault'})));
+            
+            allData.forEach(worksheet => {
+                totalQuestions += worksheet.questions.length;
+                const answers = getWorksheetAnswers(worksheet);
+                answeredQuestions += answers.filter(a => a.answer).length;
+                
+                // Find latest activity
+                answers.forEach(answer => {
+                    if (answer.timestamp) {
+                        const timestamp = new Date(answer.timestamp);
+                        if (!lastActivity || timestamp > lastActivity) {
+                            lastActivity = timestamp;
+                        }
+                    }
+                });
+            });
+            
+            const completionRate = totalQuestions > 0 ? Math.round((answeredQuestions / totalQuestions) * 100) : 0;
+            
+            document.getElementById('totalQuestions').textContent = totalQuestions;
+            document.getElementById('answeredQuestions').textContent = answeredQuestions;
+            document.getElementById('completionRate').textContent = completionRate + '%';
+            document.getElementById('lastActivity').textContent = lastActivity ? 
+                lastActivity.toLocaleDateString() : 'Never';
+        }
+
+        // Export to JSON
+        function exportToJSON() {
+            const data = collectAllAnswers();
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            downloadFile(blob, 'student-answers.json');
+        }
+
+        // Export to CSV
+        function exportToCSV() {
+            const data = collectAllAnswers();
+            const csv = convertToCSV(data);
+            const blob = new Blob([csv], { type: 'text/csv' });
+            downloadFile(blob, 'student-answers.csv');
+        }
+
+        // Collect all answers
+        function collectAllAnswers() {
+            const allAnswers = [];
+            
+            const allData = [];
+            if (maintenanceData) allData.push(...maintenanceData.scenarios.map(s => ({...s, type: 'maintenance'})));
+            if (faultData) allData.push(...faultData.scenarios.map(s => ({...s, type: 'fault'})));
+            
+            allData.forEach(worksheet => {
+                const answers = getWorksheetAnswers(worksheet);
+                
+                worksheet.questions.forEach((question, index) => {
+                    const answer = answers[index];
+                    
+                    allAnswers.push({
+                        worksheetType: worksheet.type,
+                        worksheetId: worksheet.id,
+                        worksheetTitle: worksheet.title,
+                        questionId: question.id,
+                        questionText: question.text,
+                        answer: answer.answer || '',
+                        timestamp: answer.timestamp || '',
+                        isAnswered: !!answer.answer
+                    });
+                });
+            });
+            
+            return {
+                exportDate: new Date().toISOString(),
+                studentId: 'student_' + Date.now(), // Could be enhanced with actual student ID
+                totalQuestions: allAnswers.length,
+                answeredQuestions: allAnswers.filter(a => a.isAnswered).length,
+                answers: allAnswers
+            };
+        }
+
+        // Convert to CSV
+        function convertToCSV(data) {
+            const headers = [
+                'Worksheet Type',
+                'Worksheet ID',
+                'Worksheet Title',
+                'Question ID',
+                'Question Text',
+                'Answer',
+                'Timestamp',
+                'Is Answered'
+            ];
+            
+            const rows = data.answers.map(answer => [
+                answer.worksheetType,
+                answer.worksheetId,
+                answer.worksheetTitle,
+                answer.questionId,
+                `"${answer.questionText.replace(/"/g, '""')}"`,
+                `"${answer.answer.replace(/"/g, '""')}"`,
+                answer.timestamp,
+                answer.isAnswered
+            ]);
+            
+            return [headers, ...rows].map(row => row.join(',')).join('\n');
+        }
+
+        // Download file
+        function downloadFile(blob, filename) {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Clear all answers
+        function clearAllAnswers() {
+            if (confirm('Are you sure you want to clear all answers? This action cannot be undone.')) {
+                // Clear all localStorage items related to answers
+                const keys = Object.keys(localStorage);
+                keys.forEach(key => {
+                    if (key.includes('_answer_') || key.includes('worksheet') || key.includes('maintenance') || key.includes('fault')) {
+                        localStorage.removeItem(key);
+                    }
+                });
+                
+                // Refresh the display
+                displayAnswers();
+                updateStats();
+                
+                alert('All answers have been cleared.');
+            }
+        }
+
+        // Go back to main menu
+        function goBack() {
+            if (window.electron) {
+                window.electron.navigate('index.html');
+            } else {
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Event listeners
+        document.getElementById('worksheetFilter').addEventListener('change', applyFilters);
+        document.getElementById('statusFilter').addEventListener('change', applyFilters);
+        document.getElementById('searchInput').addEventListener('input', applyFilters);
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', loadWorksheetData);
+    </script>
+</body>
+</html> 

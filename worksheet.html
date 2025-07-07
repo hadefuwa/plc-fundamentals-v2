@@ -1627,9 +1627,11 @@
           comparisonDiv.classList.remove('hidden');
         }
         
-        // Save answer
+        // Save answer with timestamp
         const key = `${type}_worksheet_${worksheetId}_answer_${questionNum}`;
+        const timestampKey = `${key}_timestamp`;
         localStorage.setItem(key, userAnswer);
+        localStorage.setItem(timestampKey, new Date().toISOString());
         
         console.log('Answer submitted for question', questionNum, ':', userAnswer);
       }
@@ -2058,9 +2060,11 @@
           comparison.classList.remove('hidden');
         }
         
-        // Save answer
+        // Save answer with timestamp
         const key = `worksheet1_interactive_answer_${questionNum}`;
+        const timestampKey = `${key}_timestamp`;
         localStorage.setItem(key, userAnswer);
+        localStorage.setItem(timestampKey, new Date().toISOString());
         
         console.log('Interactive question', questionNum, 'submitted:', userAnswer);
       }
