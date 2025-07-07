@@ -746,7 +746,10 @@
                 <textarea class="answer-input" data-question="${index + 1}" placeholder="${q.placeholder}" style="width: 100%; height: 100px; padding: 10px; border: 1px solid #555; border-radius: 4px; background: #222; color: #FFFFFF; resize: vertical;"></textarea>
                 <div class="question-actions" style="margin-top: 15px;">
                   <button class="submit-question-btn" onclick="submitAnswer(${index + 1})" style="background: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer;">Submit Answer</button>
-                  <span class="submit-note" style="color: #AAA; margin-left: 10px;">Your answer will be saved automatically.</span>
+                  <span class="submit-note" style="color: #AAA; margin-left: 10px;">Your answer will be saved and compared to the correct answer.</span>
+                </div>
+                <div class="answer-comparison hidden" style="margin-top: 15px; padding: 15px; background: rgba(76, 175, 80, 0.1); border-radius: 4px; border-left: 3px solid #4CAF50;">
+                  <!-- Comparison content will be inserted here -->
                 </div>
               </div>
             `).join('')}
@@ -1586,8 +1589,9 @@
     function submitAnswer(questionNum) {
       const textarea = document.querySelector(`textarea[data-question="${questionNum}"]`);
       const button = document.querySelector(`button[onclick="submitAnswer(${questionNum})"]`);
+      const questionItem = document.querySelector(`.question-item[data-question="${questionNum}"]`);
       
-      if (textarea && button) {
+      if (textarea && button && questionItem) {
         const userAnswer = textarea.value.trim();
         
         if (userAnswer === '') {
@@ -1602,17 +1606,113 @@
         button.style.backgroundColor = '#4CAF50';
         button.style.cursor = 'not-allowed';
         
-        // Save answer
+        // Get correct answer for this worksheet and question
         const worksheetId = getUrlParameter('id');
         const type = getUrlParameter('type') || 'maintenance';
+        const correctAnswer = getCorrectAnswer(worksheetId, questionNum);
+        
+        // Show answer comparison
+        const comparisonDiv = questionItem.querySelector('.answer-comparison');
+        if (comparisonDiv) {
+          comparisonDiv.innerHTML = `
+            <div style="margin-bottom: 15px;">
+              <strong style="color: #4CAF50; display: block; margin-bottom: 8px;">You answered:</strong>
+              <p style="color: #FFFFFF; margin: 0; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 4px;">${escapeHtml(userAnswer)}</p>
+            </div>
+            <div>
+              <strong style="color: #4CAF50; display: block; margin-bottom: 8px;">Correct Answer:</strong>
+              <p style="color: #FFFFFF; margin: 0; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 4px;">${escapeHtml(correctAnswer)}</p>
+            </div>
+          `;
+          comparisonDiv.classList.remove('hidden');
+        }
+        
+        // Save answer
         const key = `${type}_worksheet_${worksheetId}_answer_${questionNum}`;
         localStorage.setItem(key, userAnswer);
         
-        // Load saved answers on page load
-        loadSavedAnswers();
-        
         console.log('Answer submitted for question', questionNum, ':', userAnswer);
       }
+    }
+    
+    // Get correct answer for a specific worksheet and question
+    function getCorrectAnswer(worksheetId, questionNum) {
+      const correctAnswers = {
+        2: { // Emergency Stop Systems
+          1: "Check each E-stop button for physical damage, proper mounting, and clear labeling. Ensure the button is not stuck or damaged and is easily accessible.",
+          2: "Use a multimeter to verify the E-stop contacts open properly when activated and close when reset. Test during a planned shutdown to avoid disrupting production.",
+          3: "E-stop system maintenance requires documentation of all tests performed, any defects found, corrective actions taken, and verification that the system meets safety standards like ISO 13850."
+        },
+        3: { // Status LED Indicators
+          1: "Test LED operation by changing system conditions or using test functions if available. Verify each LED illuminates properly and corresponds to the correct system state.",
+          2: "If an LED is lit but showing incorrect status, check the signal source, verify wiring connections, and confirm the LED is receiving the correct input signal from the control system.",
+          3: "LED indicators should be checked daily during routine inspections and tested monthly during preventive maintenance to ensure they provide accurate status information when needed."
+        },
+        4: { // PLC Maintenance
+          1: "Check the PLC cabinet for proper ventilation, clean filters, secure mounting, verify input voltage is within specifications, and inspect for signs of overheating or corrosion.",
+          2: "Connect to the PLC with programming software, compare the current program with the master backup, verify all program blocks are present, and check the program creation/modification dates.",
+          3: "Monitor cabinet temperature, humidity levels, ensure proper ventilation and air filtration, check for dust accumulation, and verify the cabinet is properly sealed against environmental contaminants."
+        },
+        5: { // HMI System
+          1: "Use the built-in calibration utility or press specific screen areas to test touch accuracy. Verify the system responds to touches at the correct locations without drift or offset.",
+          2: "Check for software updates, verify communication with the PLC, test alarm acknowledgment functions, and ensure all screens load properly without errors or missing graphics.",
+          3: "Navigate through all available screens systematically, test all buttons and input fields, verify data entry functions work correctly, and confirm all process graphics display properly."
+        },
+        6: { // Pump Maintenance
+          1: "Record flow rate, discharge pressure, suction pressure, motor current, vibration levels, and operating temperature. Compare these values to baseline measurements and manufacturer specifications.",
+          2: "Listen for irregular noise patterns, use vibration analysis equipment to detect bearing frequencies, check for excessive noise that indicates cavitation or air entrainment.",
+          3: "Replace wear rings, impeller inspection and balancing, bearing lubrication and replacement, alignment checks, seal replacement, and motor maintenance according to the maintenance schedule."
+        },
+        7: { // Control Valve Maintenance
+          1: "Command the valve to various positions using the control system and verify the actual position feedback matches the commanded position within acceptable tolerance limits.",
+          2: "Time the valve stroke from fully open to fully closed and compare to manufacturer specifications. Typical control valves should respond within 15-60 seconds depending on size and application.",
+          3: "Visual inspection for external leakage at packing glands, actuator connections, and body joints. Test for internal leakage by checking if the valve can maintain shutoff when required."
+        },
+        8: { // Float Switch
+          1: "Manually lift and lower the float through its full range of motion, checking for smooth operation without binding, sticking, or excessive resistance that could prevent proper operation.",
+          2: "Use a multimeter to verify the switch contacts change state at the correct float positions and provide clean switching without intermittent operation or contact bounce.",
+          3: "Clean the float and switch mechanism, check mounting hardware for tightness, inspect cables for damage, and verify the switch is positioned correctly for the required level control."
+        },
+        9: { // Proximity Switch
+          1: "Move a target object slowly toward the sensor and measure the exact distance where switching occurs. Verify this distance matches the sensor specifications and is consistent.",
+          2: "Test with different target materials (steel, aluminum, brass) to understand how material type affects sensing distance and ensure the sensor works properly with the actual application materials.",
+          3: "Regular cleaning of the sensor face, protection from mechanical damage, verification of mounting security, and periodic testing to ensure consistent operation and proper sensing distance."
+        },
+        10: { // Flow Sensor
+          1: "Use a calibrated reference flow meter or time a known volume to verify sensor accuracy. Check calibration at multiple flow rates across the sensor's operating range.",
+          2: "Verify proper installation with adequate straight pipe runs upstream and downstream, correct orientation, and proper grounding. Check for pipe stress or misalignment affecting the sensor.",
+          3: "Regular cleaning of sensor elements, verification of electrical connections, checking for pipe deposits or scaling that could affect accuracy, and periodic calibration verification."
+        },
+        11: { // Temperature Sensor
+          1: "Use a calibrated reference thermometer to compare readings at known temperature points. Check accuracy across the sensor's operating range, typically at 25%, 50%, and 75% of span.",
+          2: "Subject the sensor to a rapid temperature change and measure how quickly it reaches 63% of the final value. Compare response time to manufacturer specifications.",
+          3: "Regular inspection of sensor housing and connections, verification of proper installation depth and thermal contact, checking signal conditioning equipment, and periodic calibration verification."
+        },
+        12: { // Digital Sensors
+          1: "Activate each sensor and verify clean switching between on and off states using a multimeter or oscilloscope to check for proper voltage levels and clean transitions.",
+          2: "Use an oscilloscope to verify digital signals are clean without noise, contact bounce, or intermittent switching that could cause false signals to the control system.",
+          3: "Regular cleaning of sensor faces, checking mounting security, verifying proper voltage levels, testing response time, and ensuring proper grounding and shielding of signal cables."
+        },
+        13: { // Analogue Sensors
+          1: "Use calibrated reference standards to verify sensor accuracy at multiple points across the measurement range, typically 0%, 25%, 50%, 75%, and 100% of span.",
+          2: "Check amplifiers, signal conditioners, and analog-to-digital converters for proper operation, correct gain settings, and freedom from drift or offset errors.",
+          3: "Regular inspection of sensor elements, verification of signal conditioning circuits, checking for electrical noise or interference, and periodic calibration using traceable standards."
+        },
+        14: { // Faults
+          1: "Common faults include sensor failures, actuator malfunctions, communication errors, power supply problems, software errors, and environmental issues like overheating or contamination.",
+          2: "Use a systematic approach: gather information about symptoms, analyze possible causes, test theories starting with the most likely, and verify the solution addresses the root cause.",
+          3: "Regular calibration of instruments, proper environmental controls, scheduled replacement of wear items, trending of performance data, and maintaining spare parts inventory."
+        }
+      };
+      
+      return correctAnswers[worksheetId]?.[questionNum] || "This is a maintenance-related question that requires understanding of industrial systems and proper maintenance procedures.";
+    }
+    
+    // Helper function to escape HTML characters
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
     }
     
     // Load saved answers when page loads
@@ -1638,6 +1738,24 @@
             button.disabled = true;
             button.style.backgroundColor = '#4CAF50';
             button.style.cursor = 'not-allowed';
+          }
+          
+          // Show the answer comparison
+          const questionItem = document.querySelector(`.question-item[data-question="${questionNum}"]`);
+          const comparisonDiv = questionItem?.querySelector('.answer-comparison');
+          if (comparisonDiv) {
+            const correctAnswer = getCorrectAnswer(worksheetId, parseInt(questionNum));
+            comparisonDiv.innerHTML = `
+              <div style="margin-bottom: 15px;">
+                <strong style="color: #4CAF50; display: block; margin-bottom: 8px;">You answered:</strong>
+                <p style="color: #FFFFFF; margin: 0; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 4px;">${escapeHtml(savedAnswer)}</p>
+              </div>
+              <div>
+                <strong style="color: #4CAF50; display: block; margin-bottom: 8px;">Correct Answer:</strong>
+                <p style="color: #FFFFFF; margin: 0; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 4px;">${escapeHtml(correctAnswer)}</p>
+              </div>
+            `;
+            comparisonDiv.classList.remove('hidden');
           }
         }
       });
@@ -1822,6 +1940,43 @@
           submitInteractiveQuestion(parseInt(questionNum));
         });
       });
+      
+      // Load saved answers for Worksheet 1
+      for (let i = 1; i <= 5; i++) {
+        const savedAnswer = localStorage.getItem(`worksheet1_interactive_answer_${i}`);
+        if (savedAnswer) {
+          const textarea = document.querySelector(`textarea[data-question="${i}"]`);
+          const button = document.querySelector(`button[onclick*="${i}"]`);
+          const questionItem = document.querySelector(`.question-item[data-question="${i}"]`);
+          
+          if (textarea && button && questionItem) {
+            textarea.value = savedAnswer;
+            textarea.disabled = true;
+            button.textContent = 'Submitted';
+            button.disabled = true;
+            button.style.backgroundColor = '#4CAF50';
+            
+            // Show the comparison
+            const comparison = questionItem.querySelector('.individual-comparison');
+            if (comparison) {
+              const correctAnswer = getWorksheet1CorrectAnswer(i);
+              comparison.innerHTML = `
+                <div style="background: rgba(76, 175, 80, 0.1); padding: 15px; border-radius: 4px; margin-top: 15px; border-left: 3px solid #4CAF50;">
+                  <div style="margin-bottom: 15px;">
+                    <strong style="color: #4CAF50; display: block; margin-bottom: 8px;">You answered:</strong>
+                    <p style="color: #FFFFFF; margin: 0; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 4px;">${escapeHtml(savedAnswer)}</p>
+                  </div>
+                  <div>
+                    <strong style="color: #4CAF50; display: block; margin-bottom: 8px;">Correct Answer:</strong>
+                    <p style="color: #FFFFFF; margin: 0; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 4px;">${escapeHtml(correctAnswer)}</p>
+                  </div>
+                </div>
+              `;
+              comparison.classList.remove('hidden');
+            }
+          }
+        }
+      }
 
       // Initialize tab system
       const tabButtons = document.querySelectorAll('.tab-button');
@@ -1882,13 +2037,22 @@
         button.disabled = true;
         button.style.backgroundColor = '#4CAF50';
         
-        // Show a simple confirmation
+        // Get correct answer for Worksheet 1
+        const correctAnswer = getWorksheet1CorrectAnswer(questionNum);
+        
+        // Show answer comparison
         const comparison = questionItem.querySelector('.individual-comparison');
         if (comparison) {
           comparison.innerHTML = `
             <div style="background: rgba(76, 175, 80, 0.1); padding: 15px; border-radius: 4px; margin-top: 15px; border-left: 3px solid #4CAF50;">
-              <strong style="color: #4CAF50;">Answer Submitted!</strong>
-              <p style="color: #FFFFFF; margin: 5px 0 0 0;">Your answer has been saved. Great job working through this question!</p>
+              <div style="margin-bottom: 15px;">
+                <strong style="color: #4CAF50; display: block; margin-bottom: 8px;">You answered:</strong>
+                <p style="color: #FFFFFF; margin: 0; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 4px;">${escapeHtml(userAnswer)}</p>
+              </div>
+              <div>
+                <strong style="color: #4CAF50; display: block; margin-bottom: 8px;">Correct Answer:</strong>
+                <p style="color: #FFFFFF; margin: 0; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 4px;">${escapeHtml(correctAnswer)}</p>
+              </div>
             </div>
           `;
           comparison.classList.remove('hidden');
@@ -1900,6 +2064,19 @@
         
         console.log('Interactive question', questionNum, 'submitted:', userAnswer);
       }
+    }
+    
+    // Get correct answers for Worksheet 1 questions
+    function getWorksheet1CorrectAnswer(questionNum) {
+      const correctAnswers = {
+        1: "To continuously monitor and adjust system parameters using sensor feedback to maintain desired setpoints, ensuring accuracy and stability even when conditions change.",
+        2: "Ensure the hand valve is in the fully open position, with the handle aligned with the piping direction, to allow unrestricted flow through the system.",
+        3: "The flow sensor detects the reduced flow and sends this information to the PLC, which then increases pump speed and adjusts the control valve to restore the desired flow rate.",
+        4: "The system uses sensor feedback - the flow sensor continuously measures actual flow and sends this data to the PLC, which compares it to the setpoint and makes adjustments to maintain control.",
+        5: "Key components include: flow sensor (measures actual flow), PLC (processes data and makes control decisions), pump (provides flow), control valve (regulates flow), and HMI (operator interface)."
+      };
+      
+      return correctAnswers[questionNum] || "This question relates to understanding closed-loop control systems and their practical applications in industrial maintenance.";
     }
 
     // Global function for Worksheet 1 questions (called from original popup code)
