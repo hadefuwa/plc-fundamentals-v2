@@ -359,6 +359,14 @@ function initEnhancedPIDSimulation() {
                 switchTab(tabName);
             });
         });
+
+        // System Response Start Test button setup
+        const startResponseButton = document.getElementById('start-response');
+        if (startResponseButton) {
+            startResponseButton.addEventListener('click', () => {
+                startSystemResponseTest();
+            });
+        }
     }
 
     function resetMetrics() {
@@ -454,6 +462,158 @@ function initEnhancedPIDSimulation() {
         if (selectedButton) {
             selectedButton.classList.add('active');
         }
+    }
+
+    function startSystemResponseTest() {
+        // Get the selected input type
+        const inputTypeSelect = document.getElementById('input-type');
+        const responseCanvas = document.getElementById('response-canvas');
+        
+        if (!inputTypeSelect || !responseCanvas) {
+            console.error('Response elements not found');
+            return;
+        }
+
+        const inputType = inputTypeSelect.value;
+        const responseCtx = responseCanvas.getContext('2d');
+        
+        // Clear the response canvas
+        responseCtx.fillStyle = '#222';
+        responseCtx.fillRect(0, 0, responseCanvas.width, responseCanvas.height);
+        
+        // Reset the system for testing
+        resetMetrics();
+        
+        // Run the selected test
+        runResponseTest(inputType, responseCanvas, responseCtx);
+    }
+
+    function runResponseTest(inputType, canvas, ctx) {
+        // Variables for response test
+        let testTime = 0;
+        let testData = {
+            time: [],
+            input: [],
+            output: []
+        };
+        
+        // Test parameters
+        const testDuration = 10; // 10 seconds
+        const timeStep = 0.1; // 100ms steps
+        
+        // Run the test simulation
+        function testLoop() {
+            // Generate input signal based on type
+            let inputSignal;
+            switch(inputType) {
+                case 'step':
+                    inputSignal = testTime > 1 ? 75 : 50; // Step from 50 to 75 at t=1s
+                    break;
+                case 'ramp':
+                    inputSignal = 50 + (testTime * 5); // Ramp from 50 at 5 units/second
+                    break;
+                case 'sine':
+                    inputSignal = 50 + 20 * Math.sin(2 * Math.PI * 0.2 * testTime); // Sine wave
+                    break;
+                default:
+                    inputSignal = 50;
+            }
+            
+            // Simulate system response with current PID settings
+            const error = inputSignal - processVariable;
+            integral += error * timeStep;
+            const derivative = (error - lastError) / timeStep;
+            
+            const output = Kp * error + Ki * integral + Kd * derivative;
+            processVariable += output * timeStep;
+            lastError = error;
+            
+            // Add some noise
+            processVariable += (Math.random() - 0.5) * 0.1;
+            
+            // Store test data
+            testData.time.push(testTime);
+            testData.input.push(inputSignal);
+            testData.output.push(processVariable);
+            
+            // Draw the current state
+            drawResponseTest(canvas, ctx, testData);
+            
+            // Continue test
+            testTime += timeStep;
+            if (testTime < testDuration) {
+                setTimeout(testLoop, 100); // 100ms delay
+            } else {
+                console.log('Response test completed');
+            }
+        }
+        
+        // Start the test
+        testLoop();
+    }
+
+    function drawResponseTest(canvas, ctx, testData) {
+        // Clear canvas
+        ctx.fillStyle = '#222';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        // Draw grid
+        ctx.strokeStyle = '#333';
+        ctx.lineWidth = 1;
+        
+        // Vertical grid lines
+        for (let i = 0; i < canvas.width; i += 50) {
+            ctx.beginPath();
+            ctx.moveTo(i, 0);
+            ctx.lineTo(i, canvas.height);
+            ctx.stroke();
+        }
+        
+        // Horizontal grid lines
+        for (let i = 0; i < canvas.height; i += 50) {
+            ctx.beginPath();
+            ctx.moveTo(0, i);
+            ctx.lineTo(canvas.width, i);
+            ctx.stroke();
+        }
+        
+        if (testData.time.length < 2) return;
+        
+        // Draw input signal (green line)
+        ctx.strokeStyle = '#4CAF50';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        testData.input.forEach((input, i) => {
+            const x = (testData.time[i] / 10) * canvas.width;
+            const y = canvas.height - ((input - 20) / 80) * canvas.height;
+            if (i === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+        });
+        ctx.stroke();
+        
+        // Draw output signal (blue line)
+        ctx.strokeStyle = '#2196F3';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        testData.output.forEach((output, i) => {
+            const x = (testData.time[i] / 10) * canvas.width;
+            const y = canvas.height - ((output - 20) / 80) * canvas.height;
+            if (i === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+        });
+        ctx.stroke();
+        
+        // Draw legend
+        ctx.fillStyle = '#FFFFFF';
+        ctx.font = '14px Arial';
+        ctx.fillText('Input Signal', 10, 20);
+        ctx.fillStyle = '#4CAF50';
+        ctx.fillRect(100, 12, 20, 3);
+        
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillText('System Response', 10, 40);
+        ctx.fillStyle = '#2196F3';
+        ctx.fillRect(130, 32, 20, 3);
     }
     
     function animate() {
