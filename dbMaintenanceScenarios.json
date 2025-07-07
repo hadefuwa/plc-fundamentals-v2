@@ -3,6 +3,7 @@
         {
             "id": 1,
             "title": "Closed-Loop Control Systems",
+            "functionCall": "showInteractiveWorksheet1",
             "paragraphs": [
                 "You are tasked with performing routine maintenance on a closed-loop control system in a manufacturing plant.",
                 "The system controls the temperature of a critical process using a PID controller.",

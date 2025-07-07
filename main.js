@@ -814,7 +814,23 @@ ipcMain.handle('save-settings', async (event, newSettings) => {
 // Handle navigation between pages
 ipcMain.on('navigate', (_, page) => {
     if (win && !win.isDestroyed()) {
-        win.loadFile(page);
+        // Check if the page has query parameters
+        if (page.includes('?')) {
+            const [filename, queryString] = page.split('?');
+            // Load the file and then navigate to add the query parameters
+            win.loadFile(filename).then(() => {
+                // After the file loads, navigate to the URL with parameters
+                const fullUrl = `file://${path.join(__dirname, filename)}?${queryString}`;
+                win.webContents.executeJavaScript(`
+                    window.history.replaceState({}, '', '?${queryString}');
+                    if (typeof loadWorksheet === 'function') {
+                        loadWorksheet();
+                    }
+                `);
+            });
+        } else {
+            win.loadFile(page);
+        }
     }
 });
 

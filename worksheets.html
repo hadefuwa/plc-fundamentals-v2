@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Worksheets - Matrix Training</title>
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">
+  <style>
+    .page-title {
+      text-align: center;
+      color: #FFFFFF;
+      font-size: 32px;
+      font-weight: bold;
+      margin-bottom: 30px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    }
+
+    /* Navigation Styles */
+    .main-navigation {
+      background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+      border-bottom: 3px solid #FFFFFF;
+      padding: 0;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    .nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 15px 0;
+    }
+    
+    .nav-logo img {
+      height: 40px;
+      width: auto;
+    }
+    
+    .nav-logo h1 {
+      color: #FFFFFF;
+      font-size: 24px;
+      font-weight: bold;
+      margin: 0;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+    
+    .nav-menu {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: 5px;
+    }
+    
+    .nav-item {
+      position: relative;
+    }
+    
+    .nav-link {
+      display: block;
+      padding: 15px 25px;
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      border-radius: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      background: linear-gradient(135deg, #333333, #555555);
+      border: 2px solid transparent;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+    }
+    
+    .nav-link:hover {
+      background: linear-gradient(135deg, #FFFFFF, #F5F5F5);
+      color: #000;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
+      border: 2px solid #FFFFFF;
+    }
+    
+    .nav-link.active {
+      background: linear-gradient(135deg, #FFFFFF, #F5F5F5);
+      color: #000;
+      font-weight: bold;
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.5);
+      border: 2px solid #FFFFFF;
+    }
+
+    /* Worksheets Section */
+    .worksheets-section {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #2d2d2d;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+
+    .worksheets-header {
+      color: #FFFFFF;
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 30px;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    }
+
+    .worksheets-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 20px 0;
+    }
+
+    .worksheet-card {
+      background: linear-gradient(135deg, #333333, #444444);
+      border-radius: 8px;
+      padding: 20px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: 2px solid transparent;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .worksheet-card:hover {
+      transform: translateY(-5px);
+      background: linear-gradient(135deg, #3a3a3a, #4a4a4a);
+      border-color: #FFFFFF;
+      box-shadow: 0 8px 25px rgba(255, 255, 255, 0.1);
+    }
+
+    .worksheet-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: #4CAF50;
+      opacity: 0.8;
+    }
+
+    .worksheet-title {
+      color: #FFFFFF;
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .worksheet-number {
+      color: #FFFFFF;
+      opacity: 0.7;
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .worksheet-description {
+      color: #CCCCCC;
+      font-size: 14px;
+      line-height: 1.4;
+      margin-top: 10px;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .worksheets-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .nav-menu {
+        flex-wrap: wrap;
+        gap: 2px;
+      }
+      
+      .nav-link {
+        padding: 10px 15px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="main-navigation">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <img src="assets/matrix-logo.png" alt="Matrix Logo">
+      </div>
+      <ul class="nav-menu" id="nav-menu">
+        <li class="nav-item">
+          <a href="#" onclick="window.electron.navigate('index.html')" class="nav-link">
+            <i class="fas fa-home"></i> HOME
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" onclick="window.electron.navigate('worksheets.html')" class="nav-link active">
+            <i class="fas fa-book-open"></i> WORKSHEETS
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" onclick="window.electron.navigate('plc-controls.html')" class="nav-link">
+            <i class="fas fa-cogs"></i> PLC CONTROLS
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" onclick="window.electron.navigate('settings.html')" class="nav-link">
+            <i class="fas fa-gear"></i> SETTINGS
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <h1 class="page-title">
+    <i class="fas fa-book-open"></i> CP0539 - Industrial Maintenance Worksheets
+  </h1>
+
+  <!-- Main Container -->
+  <div class="main-container">
+    <!-- Worksheets Section -->
+    <section class="worksheets-section">
+        <h2 class="worksheets-header">
+            <i class="fas fa-book-open"></i> Industrial Maintenance of Closed Loop Systems
+        </h2>
+        <div class="worksheets-grid">
+            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=1&type=maintenance')">
+                <div class="worksheet-number">Worksheet 1</div>
+                <div class="worksheet-title">Closed-Loop Control Systems</div>
+                <div class="worksheet-description">Learn about PID control, feedback loops, and system response analysis with interactive simulations.</div>
+            </div>
+            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=2&type=maintenance')">
+                <div class="worksheet-number">Worksheet 2</div>
+                <div class="worksheet-title">Emergency Stops</div>
+                <div class="worksheet-description">Understanding emergency stop systems, safety circuits, and proper reset procedures.</div>
+            </div>
+            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=3&type=maintenance')">
+                <div class="worksheet-number">Worksheet 3</div>
+                <div class="worksheet-title">Status LED</div>
+                <div class="worksheet-description">Interpreting LED indicators, status codes, and visual diagnostic systems.</div>
+            </div>
+            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=4&type=maintenance')">
+                <div class="worksheet-number">Worksheet 4</div>
+                <div class="worksheet-title">PLC</div>
+                <div class="worksheet-description">Programmable Logic Controller fundamentals, programming, and troubleshooting.</div>
+            </div>
+            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=5&type=maintenance')">
+                <div class="worksheet-number">Worksheet 5</div>
+                <div class="worksheet-title">HMI</div>
+                <div class="worksheet-description">Human Machine Interface design, operation, and maintenance procedures.</div>
+            </div>
+            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=6&type=maintenance')">
+                <div class="worksheet-number">Worksheet 6</div>
+                <div class="worksheet-title">Pump</div>
+                <div class="worksheet-description">Pump systems, performance curves, cavitation, and maintenance schedules.</div>
+            </div>
+            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=7&type=maintenance')">
+                <div class="worksheet-number">Worksheet 7</div>
+                <div class="worksheet-title">Valve</div>
+                <div class="worksheet-description">Valve types, actuators, control characteristics, and calibration procedures.</div>
+            </div>
+            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=8&type=maintenance')">
+                <div class="worksheet-number">Worksheet 8</div>
+                <div class="worksheet-title">Float Switch</div>
+                <div class="worksheet-description">Level sensing with float switches, installation, and troubleshooting techniques.</div>
+            </div>
+            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=9&type=maintenance')">
+                <div class="worksheet-number">Worksheet 9</div>
+                <div class="worksheet-title">Proximity Switch</div>
+                <div class="worksheet-description">Proximity sensors, detection methods, and proper mounting considerations.</div>
+            </div>
+            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=10&type=maintenance')">
+                <div class="worksheet-number">Worksheet 10</div>
+                <div class="worksheet-title">Flow Sensor</div>
+                <div class="worksheet-description">Flow measurement principles, sensor types, and calibration procedures.</div>
+            </div>
+            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=11&type=maintenance')">
+                <div class="worksheet-number">Worksheet 11</div>
+                <div class="worksheet-title">Temperature Sensor</div>
+                <div class="worksheet-description">Temperature measurement, RTDs, thermocouples, and signal conditioning.</div>
+            </div>
+            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=12&type=maintenance')">
+                <div class="worksheet-number">Worksheet 12</div>
+                <div class="worksheet-title">Digital Sensors</div>
+                <div class="worksheet-description">Digital input devices, signal processing, and interface requirements.</div>
+            </div>
+            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=13&type=maintenance')">
+                <div class="worksheet-number">Worksheet 13</div>
+                <div class="worksheet-title">Analogue Sensors</div>
+                <div class="worksheet-description">Analog signal processing, 4-20mA loops, and signal conditioning circuits.</div>
+            </div>
+            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=14&type=maintenance')">
+                <div class="worksheet-number">Worksheet 14</div>
+                <div class="worksheet-title">Faults</div>
+                <div class="worksheet-description">Fault detection, diagnosis techniques, and systematic troubleshooting approaches.</div>
+            </div>
+        </div>
+    </section>
+  </div>
+
+  <!-- Load dependencies -->
+  <script src="node_modules/jquery/dist/jquery.min.js"></script>
+  <script defer src="preload.js"></script>
+</body>
+</html> 

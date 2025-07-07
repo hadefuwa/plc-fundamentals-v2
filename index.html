@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Matrix Closed Loop Maintenance</title>
+  <title>Matrix Training Platform</title>
   <link rel="stylesheet" href="main.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">
@@ -481,12 +481,16 @@
     <div class="nav-container">
       <div class="nav-logo">
         <img src="assets/matrix-logo.png" alt="Matrix Logo">
-        <h1>Matrix Closed Loop Maintenance</h1>
       </div>
       <ul class="nav-menu" id="nav-menu">
         <li class="nav-item">
           <a href="#" onclick="window.electron.navigate('index.html')" class="nav-link active">
             <i class="fas fa-home"></i> HOME
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" onclick="window.electron.navigate('worksheets.html')" class="nav-link">
+            <i class="fas fa-book-open"></i> WORKSHEETS
           </a>
         </li>
         <li class="nav-item">
@@ -591,59 +595,59 @@
             <i class="fas fa-book-open"></i> CP0539 - Industrial Maintenance of Closed Loop Systems
         </h2>
         <div class="worksheets-grid">
-            <div class="worksheet-card" onclick="openWorksheet(1)">
+            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=1&type=maintenance')">
                 <div class="worksheet-number">Worksheet 1</div>
                 <div class="worksheet-title">Closed-Loop Control Systems</div>
             </div>
-            <div class="worksheet-card" onclick="openWorksheet(2)">
+            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=2&type=maintenance')">
                 <div class="worksheet-number">Worksheet 2</div>
                 <div class="worksheet-title">Emergency Stops</div>
             </div>
-            <div class="worksheet-card" onclick="openWorksheet(3)">
+            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=3&type=maintenance')">
                 <div class="worksheet-number">Worksheet 3</div>
                 <div class="worksheet-title">Status LED</div>
             </div>
-            <div class="worksheet-card" onclick="openWorksheet(4)">
+            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=4&type=maintenance')">
                 <div class="worksheet-number">Worksheet 4</div>
                 <div class="worksheet-title">PLC</div>
             </div>
-            <div class="worksheet-card" onclick="openWorksheet(5)">
+            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=5&type=maintenance')">
                 <div class="worksheet-number">Worksheet 5</div>
                 <div class="worksheet-title">HMI</div>
             </div>
-            <div class="worksheet-card" onclick="openWorksheet(6)">
+            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=6&type=maintenance')">
                 <div class="worksheet-number">Worksheet 6</div>
                 <div class="worksheet-title">Pump</div>
             </div>
-            <div class="worksheet-card" onclick="openWorksheet(7)">
+            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=7&type=maintenance')">
                 <div class="worksheet-number">Worksheet 7</div>
                 <div class="worksheet-title">Valve</div>
             </div>
-            <div class="worksheet-card" onclick="openWorksheet(8)">
+            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=8&type=maintenance')">
                 <div class="worksheet-number">Worksheet 8</div>
                 <div class="worksheet-title">Float Switch</div>
             </div>
-            <div class="worksheet-card" onclick="openWorksheet(9)">
+            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=9&type=maintenance')">
                 <div class="worksheet-number">Worksheet 9</div>
                 <div class="worksheet-title">Proximity Switch</div>
             </div>
-            <div class="worksheet-card" onclick="openWorksheet(10)">
+            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=10&type=maintenance')">
                 <div class="worksheet-number">Worksheet 10</div>
                 <div class="worksheet-title">Flow Sensor</div>
             </div>
-            <div class="worksheet-card" onclick="openWorksheet(11)">
+            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=11&type=maintenance')">
                 <div class="worksheet-number">Worksheet 11</div>
                 <div class="worksheet-title">Temperature Sensor</div>
             </div>
-            <div class="worksheet-card" onclick="openWorksheet(12)">
+            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=12&type=maintenance')">
                 <div class="worksheet-number">Worksheet 12</div>
                 <div class="worksheet-title">Digital Sensors</div>
             </div>
-            <div class="worksheet-card" onclick="openWorksheet(13)">
+            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=13&type=maintenance')">
                 <div class="worksheet-number">Worksheet 13</div>
                 <div class="worksheet-title">Analogue Sensors</div>
             </div>
-            <div class="worksheet-card" onclick="openWorksheet(14)">
+            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=14&type=maintenance')">
                 <div class="worksheet-number">Worksheet 14</div>
                 <div class="worksheet-title">Faults</div>
             </div>
@@ -657,42 +661,42 @@
       </h2>
       <div class="scenarios-grid">
         <!-- Fault scenario cards -->
-        <div class="worksheet-card" onclick="showScenario(1, 'fault')">
+        <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=1&type=fault')">
           <div class="worksheet-number">Fault Scenario 1</div>
           <div class="worksheet-title">Titanium Forging Temperature Control</div>
         </div>
 
-        <div class="worksheet-card" onclick="showScenario(2, 'fault')">
+        <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=2&type=fault')">
           <div class="worksheet-number">Fault Scenario 2</div>
           <div class="worksheet-title">Pharmaceutical Clean Room HVAC</div>
         </div>
 
-        <div class="worksheet-card" onclick="showScenario(3, 'fault')">
+        <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=3&type=fault')">
           <div class="worksheet-number">Fault Scenario 3</div>
           <div class="worksheet-title">CNC Machines Factory Cooling</div>
         </div>
 
-        <div class="worksheet-card" onclick="showScenario(4, 'fault')">
+        <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=4&type=fault')">
           <div class="worksheet-number">Fault Scenario 4</div>
           <div class="worksheet-title">Server Room Temperature Control</div>
         </div>
 
-        <div class="worksheet-card" onclick="showScenario(5, 'fault')">
+        <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=5&type=fault')">
           <div class="worksheet-number">Fault Scenario 5</div>
           <div class="worksheet-title">Potash Mine Brine System</div>
         </div>
 
-        <div class="worksheet-card" onclick="showScenario(6, 'fault')">
+        <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=6&type=fault')">
           <div class="worksheet-number">Fault Scenario 6</div>
           <div class="worksheet-title">Food Processing Sterilizer</div>
         </div>
 
-        <div class="worksheet-card" onclick="showScenario(7, 'fault')">
+        <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=7&type=fault')">
           <div class="worksheet-number">Fault Scenario 7</div>
           <div class="worksheet-title">Injection Molding Temperature</div>
         </div>
 
-        <div class="worksheet-card" onclick="showScenario(8, 'fault')">
+        <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=8&type=fault')">
           <div class="worksheet-number">Fault Scenario 8</div>
           <div class="worksheet-title">Chemical Reactor pH Control</div>
         </div>
