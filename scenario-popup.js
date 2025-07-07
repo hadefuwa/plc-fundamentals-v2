@@ -284,6 +284,10 @@ function initEnhancedPIDSimulation() {
         error: []  // Error
     };
 
+    // Response test control variables
+    let currentTestTimeout = null;
+    let isTestRunning = false;
+
     // Initialize all interactive controls
     setupControls();
     
@@ -465,6 +469,13 @@ function initEnhancedPIDSimulation() {
     }
 
     function startSystemResponseTest() {
+        // Stop any existing test
+        if (isTestRunning && currentTestTimeout) {
+            clearTimeout(currentTestTimeout);
+            isTestRunning = false;
+            console.log('Stopped previous test');
+        }
+
         // Get the selected input type
         const inputTypeSelect = document.getElementById('input-type');
         const responseCanvas = document.getElementById('response-canvas');
@@ -489,6 +500,9 @@ function initEnhancedPIDSimulation() {
     }
 
     function runResponseTest(inputType, canvas, ctx) {
+        // Mark test as running
+        isTestRunning = true;
+        
         // Variables for response test
         let testTime = 0;
         let testData = {
@@ -503,6 +517,12 @@ function initEnhancedPIDSimulation() {
         
         // Run the test simulation
         function testLoop() {
+            // Check if test should stop
+            if (!isTestRunning) {
+                console.log('Test stopped');
+                return;
+            }
+            
             // Generate input signal based on type
             let inputSignal;
             switch(inputType) {
@@ -542,9 +562,11 @@ function initEnhancedPIDSimulation() {
             // Continue test
             testTime += timeStep;
             if (testTime < testDuration) {
-                setTimeout(testLoop, 100); // 100ms delay
+                currentTestTimeout = setTimeout(testLoop, 100); // 100ms delay
             } else {
                 console.log('Response test completed');
+                isTestRunning = false;
+                currentTestTimeout = null;
             }
         }
         
