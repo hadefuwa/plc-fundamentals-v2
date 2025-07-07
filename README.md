@@ -6,6 +6,24 @@ A comprehensive Electron.js application designed for industrial maintenance oper
 
 ![Closed Loop Maintenance Interface](https://github.com/user-attachments/assets/ce9a4d07-aa5c-4dae-85c7-8898fb86b566)
 
+## 🆕 What's New in Version 0.5.0
+
+### 🎓 **Complete Student & Teacher Management System**
+- **Student Portal** with comprehensive answer review and progress tracking
+- **Teacher Dashboard** with analytics, export capabilities, and performance insights
+- **Answer Comparison System** showing detailed feedback for all 66 questions across 22 worksheets
+
+### 📚 **Enhanced Interactive Learning**
+- **All 14 Maintenance Worksheets** now feature enhanced format with interactive steps
+- **PID Control Simulation** with real-time parameter tuning and performance metrics
+- **Educational "So What?" Sections** explaining real-world significance for each topic
+- **Interactive Step Guides** with hands-on activities for practical learning
+
+### 🎨 **Improved User Experience**
+- **Consistent Navigation** across all screens with Student Portal and Teacher Dashboard access
+- **Professional Styling** with modern gradients, hover effects, and responsive design
+- **Enhanced Visual Design** with better section organization and visual hierarchy
+
 ## 🎓 Training Curriculum
 
 ### 📘 **CP0539 - Industrial Maintenance**
@@ -51,6 +69,13 @@ Each scenario includes:
 - **Live Data Monitoring** - Analogue inputs, digital I/O, and system status tracking
 - **Interactive Dashboard** - Drag-and-drop modular interface with real-time charts
 
+### 🎓 **NEW: Student Portal & Teacher Dashboard**
+- **Student Portal** - Complete answer review across all 22 worksheets (14 maintenance + 8 fault scenarios)
+- **Teacher Dashboard** - Comprehensive analytics, progress tracking, and data export capabilities
+- **Answer Tracking** - Detailed comparison of student answers vs. correct answers with timestamps
+- **Export Functionality** - Multiple export formats (JSON, CSV, Teacher Reports) for assessment
+- **Progress Analytics** - Visual progress indicators, completion statistics, and performance metrics
+
 ### 📊 **Analytics & Monitoring**
 - **Real-time Charts** - Analogue input visualization with Chart.js
 - **Connection History** - PLC status tracking and historical data
@@ -65,13 +90,15 @@ Each scenario includes:
 - **Persistent Settings** - User preferences saved between sessions
 - **Customizable HMI View** - Adjustable zoom levels with automatic persistence
 
-### 📚 **Training Features**
-- **Interactive Worksheets** - Hands-on learning with real-world scenarios
-- **Progress Tracking** - Save and resume your training progress
-- **Visual Learning** - SVG diagrams for each topic
-- **Practical Scenarios** - Real industrial fault-finding exercises
-- **Answer Storage** - Local storage for worksheet responses
-- **Organized Curriculum** - Structured learning path with clear progression
+### 📚 **Enhanced Training Features**
+- **Interactive Worksheets** - All 14 maintenance worksheets with enhanced format and interactive content
+- **PID Simulation** - Real-time PID control system simulation with parameter tuning in Worksheet 1
+- **Answer Comparison** - Detailed feedback showing student answers vs. correct answers for all questions
+- **Progress Tracking** - Save and resume your training progress with timestamps
+- **Visual Learning** - CAD diagrams, system images, and interactive step-by-step guides
+- **Practical Scenarios** - Real industrial fault-finding exercises with comprehensive feedback
+- **Educational Content** - "So What?" sections explaining real-world significance for each topic
+- **Organized Curriculum** - Structured learning path with clear progression and completion tracking
 
 ### ⚙️ **Settings & Customization**
 - **Application Settings** - Centralized settings page for all configurations
@@ -152,9 +179,11 @@ npm start
 
 ### **Dashboard Navigation**
 - **Home** - Overview and quick access to main features
+- **Worksheets** - Access all 14 maintenance worksheets and 8 fault scenarios
 - **PLC Controls** - Monitor and control PLC operations
 - **Settings** - Configure application preferences
-- **HMI Interface** - Full-screen process visualization and control
+- **Student Portal** - Review all answers and track progress across worksheets
+- **Teacher Dashboard** - Comprehensive analytics and student progress management
 
 ### **HMI Interface Features**
 - **Zoom Controls** - Adjust view size with persistent settings
