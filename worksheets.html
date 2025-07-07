@@ -107,9 +107,14 @@
       max-width: 1200px;
       margin: 40px auto;
       padding: 20px;
-      background: #2d2d2d;
+      background: rgba(44, 48, 51, 0.85);
       border-radius: 8px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      backdrop-filter: blur(5px);
+    }
+
+    .worksheets-section + .worksheets-section {
+      margin-top: 60px; /* Add more space between sections */
     }
 
     .worksheets-header {
@@ -121,6 +126,20 @@
       text-transform: uppercase;
       letter-spacing: 2px;
       text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+      position: relative;
+      padding-bottom: 15px;
+    }
+
+    .worksheets-header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background: #FFFFFF;
+      opacity: 0.3;
     }
 
     .worksheets-grid {
@@ -159,6 +178,23 @@
       opacity: 0.8;
     }
 
+    /* Different colors for maintenance vs fault scenarios */
+    .worksheets-section:nth-child(1) .worksheet-card::before {
+      background: #4CAF50; /* Green accent for maintenance */
+    }
+
+    .worksheets-section:nth-child(2) .worksheet-card::before {
+      background: #FF5722; /* Orange accent for troubleshooting */
+    }
+
+    .worksheets-section:nth-child(2) .worksheet-card {
+      background: linear-gradient(135deg, #3a3333, #444444);
+    }
+
+    .worksheets-section:nth-child(2) .worksheet-card:hover {
+      background: linear-gradient(135deg, #403333, #4a4444);
+    }
+
     .worksheet-title {
       color: #FFFFFF;
       font-size: 18px;
@@ -180,6 +216,33 @@
       margin-top: 10px;
     }
 
+    /* Background pattern animation */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      z-index: 0;
+      background-image: url('./assets/matrix-logo.png');
+      background-size: 150px;
+      background-repeat: repeat;
+      opacity: 0.03;
+      transform: rotate(-45deg);
+      pointer-events: none;
+      animation: slideBackground 120s linear infinite;
+    }
+
+    @keyframes slideBackground {
+      0% {
+        transform: rotate(-45deg) translate(0, 0);
+      }
+      100% {
+        transform: rotate(-45deg) translate(-150px, -150px);
+      }
+    }
+
     /* Responsive design */
     @media (max-width: 768px) {
       .worksheets-grid {
@@ -198,7 +261,7 @@
     }
   </style>
 </head>
-<body>
+<body style="background: linear-gradient(135deg, #2c3033 0%, #1a1d20 100%);">
   <!-- Navigation -->
   <nav class="main-navigation">
     <div class="nav-container">
@@ -324,10 +387,60 @@
             </div>
         </div>
     </section>
+
+    <!-- CP6773 Fault Scenarios Section -->
+    <section class="worksheets-section">
+        <h2 class="worksheets-header">
+            <i class="fas fa-exclamation-triangle"></i> CP6773 - Troubleshooting & Fault-Finding Closed Loop Systems
+        </h2>
+        <div class="worksheets-grid">
+            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=1&type=fault')">
+                <div class="worksheet-number">Fault Scenario 1</div>
+                <div class="worksheet-title">Titanium Forging Temperature Control</div>
+                <div class="worksheet-description">Troubleshoot temperature control issues in a titanium forging factory producing Boeing airplane frames.</div>
+            </div>
+            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=2&type=fault')">
+                <div class="worksheet-number">Fault Scenario 2</div>
+                <div class="worksheet-title">Pharmaceutical Clean Room HVAC</div>
+                <div class="worksheet-description">Diagnose HVAC system issues in a pharmaceutical clean room environment.</div>
+            </div>
+            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=3&type=fault')">
+                <div class="worksheet-number">Fault Scenario 3</div>
+                <div class="worksheet-title">CNC Machines Factory Cooling</div>
+                <div class="worksheet-description">Investigate cooling system problems affecting multiple CNC machines.</div>
+            </div>
+            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=4&type=fault')">
+                <div class="worksheet-number">Fault Scenario 4</div>
+                <div class="worksheet-title">Server Room Temperature Control</div>
+                <div class="worksheet-description">Troubleshoot server room cooling issues with new high-performance equipment.</div>
+            </div>
+            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=5&type=fault')">
+                <div class="worksheet-number">Fault Scenario 5</div>
+                <div class="worksheet-title">Potash Mine Brine System</div>
+                <div class="worksheet-description">Analyze flow control problems in a potash mine brine injection system.</div>
+            </div>
+            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=6&type=fault')">
+                <div class="worksheet-number">Fault Scenario 6</div>
+                <div class="worksheet-title">Food Processing Sterilizer</div>
+                <div class="worksheet-description">Diagnose steam sterilization system temperature control issues.</div>
+                </div>
+            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=7&type=fault')">
+                <div class="worksheet-number">Fault Scenario 7</div>
+                <div class="worksheet-title">Injection Molding Temperature</div>
+                <div class="worksheet-description">Troubleshoot temperature control problems in plastic injection molding.</div>
+            </div>
+            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=8&type=fault')">
+                <div class="worksheet-number">Fault Scenario 8</div>
+                <div class="worksheet-title">Chemical Reactor pH Control</div>
+                <div class="worksheet-description">Investigate pH control system issues in chemical reactor operations.</div>
+            </div>
+        </div>
+    </section>
   </div>
 
   <!-- Load dependencies -->
   <script src="node_modules/jquery/dist/jquery.min.js"></script>
   <script defer src="preload.js"></script>
+  <script src="scenario-popup.js"></script>
 </body>
 </html> 

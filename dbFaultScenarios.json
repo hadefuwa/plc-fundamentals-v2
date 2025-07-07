@@ -4,10 +4,8 @@
             "id": 1,
             "title": "Titanium Forging Temperature Control",
             "paragraphs": [
-                "You are working at a titanium forging plant where precise temperature control is critical for the material properties of the final product.",
-                "The operators have reported that the temperature control system has been behaving erratically over the past shift.",
-                "Initial investigation shows that the PID controller output seems to be oscillating more than usual, and the temperature is not maintaining steady state.",
-                "The system was working perfectly fine last week, and no changes have been made to the PID parameters."
+                "Navigate to the Main Menu and select the \"Fault Scenarios\" page then select Scenario 1. Press the Reset button to clear any previous faults, to avoid confusion.",
+                "You work night shifts in a titanium forging factory that produces frames for Boeing aeroplanes. As you start your shift, you're told the system won't run, and no one knows why. The day shift maintenance engineer tells you they had a problem earlier in the day because the oil was too cold. Harry, the Marketing Manager, thinks it's just the Wi-Fi acting up again."
             ],
             "image": "titanium-forge.png",
             "questions": [
