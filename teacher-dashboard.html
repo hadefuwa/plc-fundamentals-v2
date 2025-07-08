@@ -19,6 +19,155 @@
             min-height: 100vh;
         }
 
+        /* Login Screen Styles */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-header h1 {
+            color: #FF6B6B;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
+        }
+
+        .login-header p {
+            opacity: 0.8;
+            font-size: 1.1em;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            color: #FF6B6B;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .form-group input {
+            padding: 12px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #FF6B6B;
+            box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.2);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .form-group input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .login-btn {
+            background: linear-gradient(135deg, #FF6B6B, #ff5252);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .login-btn:hover {
+            background: linear-gradient(135deg, #ff5252, #FF6B6B);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .login-btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .login-error {
+            background: rgba(244, 67, 54, 0.2);
+            color: #ffcdd2;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid rgba(244, 67, 54, 0.3);
+            margin-top: 10px;
+            display: none;
+        }
+
+        .login-error.show {
+            display: block;
+        }
+
+        .dashboard-container {
+            display: none;
+        }
+
+        .dashboard-container.authenticated {
+            display: block;
+        }
+
+        .logout-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: #FF6B6B;
+        }
+
         .header {
             background: rgba(0, 0, 0, 0.3);
             padding: 20px;
@@ -354,14 +503,51 @@
     </style>
 </head>
 <body>
-    <button class="back-button" onclick="goBack()">
-        <i class="fas fa-arrow-left"></i> Back
-    </button>
-
-    <div class="header">
-        <h1><i class="fas fa-chalkboard-teacher"></i> Teacher Dashboard</h1>
-        <p>Manage student answers, export data, and view learning analytics</p>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <h1><i class="fas fa-chalkboard-teacher"></i> Teacher Portal</h1>
+                <p>Enter your credentials to access the dashboard</p>
+            </div>
+            
+            <form class="login-form" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" placeholder="Enter username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" placeholder="Enter password" required>
+                </div>
+                
+                <button type="submit" class="login-btn" id="loginBtn">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+                
+                <div class="login-error" id="loginError">
+                    <i class="fas fa-exclamation-triangle"></i> 
+                    Invalid credentials. Please try again.
+                </div>
+            </form>
+        </div>
     </div>
+
+    <!-- Dashboard Content -->
+    <div id="dashboardContent" class="dashboard-container">
+        <button class="logout-btn" onclick="logout()">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+
+        <button class="back-button" onclick="goBack()">
+            <i class="fas fa-arrow-left"></i> Back
+        </button>
+
+        <div class="header">
+            <h1><i class="fas fa-chalkboard-teacher"></i> Teacher Dashboard</h1>
+            <p>Manage student answers, export data, and view learning analytics</p>
+        </div>
 
     <div class="dashboard-nav">
         <div class="nav-tab active" onclick="switchTab('overview')">
@@ -1088,6 +1274,85 @@
                 window.location.href = 'index.html';
             }
         }
+
+        // Authentication functions
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const loginBtn = document.getElementById('loginBtn');
+            const loginError = document.getElementById('loginError');
+            
+            // Reset error state
+            loginError.classList.remove('show');
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
+            
+            // Simulate loading delay for better UX
+            setTimeout(() => {
+                // Check credentials
+                if (username === 'Matrix' && password === 'Matrix123') {
+                    // Successful login
+                    sessionStorage.setItem('teacherAuthenticated', 'true');
+                    showDashboard();
+                } else {
+                    // Failed login
+                    loginError.classList.add('show');
+                    loginBtn.disabled = false;
+                    loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
+                    
+                    // Clear password field
+                    document.getElementById('password').value = '';
+                    document.getElementById('password').focus();
+                }
+            }, 1000);
+        }
+
+        function showDashboard() {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('dashboardContent').classList.add('authenticated');
+            
+            // Initialize dashboard data
+            loadWorksheetData();
+        }
+
+        function logout() {
+            sessionStorage.removeItem('teacherAuthenticated');
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('dashboardContent').classList.remove('authenticated');
+            
+            // Clear form
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            document.getElementById('loginError').classList.remove('show');
+            document.getElementById('loginBtn').disabled = false;
+            document.getElementById('loginBtn').innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
+        }
+
+        function checkAuthentication() {
+            const isAuthenticated = sessionStorage.getItem('teacherAuthenticated') === 'true';
+            
+            if (isAuthenticated) {
+                showDashboard();
+            } else {
+                document.getElementById('loginScreen').style.display = 'flex';
+                document.getElementById('dashboardContent').classList.remove('authenticated');
+            }
+        }
+
+        // Initialize authentication check when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuthentication();
+            
+            // Add Enter key support for login form
+            document.getElementById('password').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    handleLogin(e);
+                }
+            });
+        });
     </script>
+    </div> <!-- Close dashboard-container -->
 </body>
 </html> 

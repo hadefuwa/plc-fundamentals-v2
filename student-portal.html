@@ -187,6 +187,40 @@
             transition: width 0.3s;
         }
 
+        .go-to-worksheet-btn {
+            background: linear-gradient(135deg, #2196F3, #1976D2);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-left: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(33, 150, 243, 0.3);
+        }
+
+        .go-to-worksheet-btn:hover {
+            background: linear-gradient(135deg, #1976D2, #2196F3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.5);
+        }
+
+        .go-to-worksheet-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(33, 150, 243, 0.3);
+        }
+
+        .go-to-worksheet-btn i {
+            font-size: 12px;
+        }
+
         .worksheet-content {
             display: none;
             padding: 20px;
@@ -497,6 +531,10 @@
                             <div class="progress-fill" style="width: ${completionRate}%"></div>
                         </div>
                         <span>${completionRate}%</span>
+                        <button class="go-to-worksheet-btn" onclick="event.stopPropagation(); window.electron.navigate('worksheet.html?id=${worksheet.id}&type=${worksheet.type}')">
+                            <i class="fas fa-external-link-alt"></i>
+                            Go to Worksheet
+                        </button>
                         <i class="fas fa-chevron-down"></i>
                     </div>
                 </div>
