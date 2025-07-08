@@ -466,7 +466,7 @@
     function analyzeWorksheetStructure(scenario) {
       const analysis = {
         hasTitle: !!scenario.title,
-        hasParagraphs: !!(scenario.paragraphs && scenario.paragraphs.length > 0),
+        hasParagraphs: !!((scenario.introduction || scenario.paragraphs) && (scenario.introduction || scenario.paragraphs).length > 0),
         hasImage: !!scenario.image,
         hasSteps: !!(scenario.steps && scenario.steps.length > 0),
         hasEducationalContent: !!(scenario.soWhat && (scenario.soWhat.content || scenario.soWhat.keyPoints)),
@@ -783,7 +783,7 @@
         <div class="worksheet-section introduction-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 2px solid #2196F3; box-shadow: 0 8px 20px rgba(33, 150, 243, 0.2);">
           <h2 class="section-header" style="color: #2196F3; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-info-circle"></i> 1. Introduction</h2>
           <div class="worksheet-content">
-            ${scenario.paragraphs.map(p => `<p style="color: #FFFFFF; margin-bottom: 15px;">${p}</p>`).join('')}
+            ${(scenario.introduction || scenario.paragraphs || []).map(p => `<p style="color: #FFFFFF; margin-bottom: 15px;">${p}</p>`).join('')}
             
             ${scenario.image ? `
             <div class="system-diagram" style="text-align: center; margin: 20px 0;">
@@ -878,86 +878,98 @@
       const container = document.getElementById('worksheet-content');
       
       container.innerHTML = `
-        <h1 class="page-title">Fault Scenario ${scenario.id}: ${scenario.title}</h1>
+        <h1 class="page-title">Scenario ${scenario.id}: ${scenario.title}</h1>
+        ${scenario.subtitle ? `<h2 class="page-subtitle" style="color: #AAA; margin-bottom: 30px; font-size: 18px; text-align: center;">${scenario.subtitle}</h2>` : ''}
 
         <!-- Interactive System Simulator Section -->
         <!-- (REMOVED: interactive simulator) -->
 
-        <!-- Interactive System Diagram -->
-        <div class="interactive-diagram-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 2px solid #9C27B0; box-shadow: 0 8px 20px rgba(156, 39, 176, 0.2);">
-          <h2 class="section-header" style="color: #9C27B0; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;">
-            <i class="fas fa-sitemap"></i> Interactive System Diagram
-          </h2>
-          
-          <div class="diagram-container" style="position: relative; text-align: center; margin: 20px 0;">
-            ${scenario.image ? `
-            <div class="system-diagram" style="position: relative; display: inline-block;">
-              <img src="assets/scenarios/${scenario.image}" alt="${scenario.title}" style="max-width: 600px; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);">
-              
-              <!-- Interactive Hotspots -->
-              <div class="hotspot" data-component="pump" style="position: absolute; top: 20%; left: 30%; width: 60px; height: 60px; background: rgba(76, 175, 80, 0.3); border: 2px solid #4CAF50; border-radius: 50%; cursor: pointer; transition: all 0.3s ease;" title="Click to inspect pump">
-                <i class="fas fa-cog" style="color: #4CAF50; font-size: 24px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></i>
-              </div>
-              
-              <div class="hotspot" data-component="valve" style="position: absolute; top: 40%; left: 60%; width: 60px; height: 60px; background: rgba(33, 150, 243, 0.3); border: 2px solid #2196F3; border-radius: 50%; cursor: pointer; transition: all 0.3s ease;" title="Click to inspect valve">
-                <i class="fas fa-toggle-on" style="color: #2196F3; font-size: 24px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></i>
-              </div>
-              
-              <div class="hotspot" data-component="sensor" style="position: absolute; top: 60%; left: 20%; width: 60px; height: 60px; background: rgba(255, 193, 7, 0.3); border: 2px solid #FFC107; border-radius: 50%; cursor: pointer; transition: all 0.3s ease;" title="Click to inspect sensor">
-                <i class="fas fa-thermometer-half" style="color: #FFC107; font-size: 24px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></i>
-              </div>
-              
-              <div class="hotspot" data-component="tank" style="position: absolute; top: 30%; left: 80%; width: 60px; height: 60px; background: rgba(156, 39, 176, 0.3); border: 2px solid #9C27B0; border-radius: 50%; cursor: pointer; transition: all 0.3s ease;" title="Click to inspect tank">
-                <i class="fas fa-tint" style="color: #9C27B0; font-size: 24px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></i>
-              </div>
-            </div>
-            ` : ''}
-          </div>
-          
-          <!-- Component Details Panel -->
-          <div id="component-details" style="background: #333; padding: 20px; border-radius: 8px; margin-top: 20px; display: none;">
-            <h3 id="component-title" style="color: #FFFFFF; margin-bottom: 15px;"></h3>
-            <div id="component-info" style="color: #FFFFFF; line-height: 1.6;"></div>
-          </div>
-        </div>
+
 
         <!-- Scenario Introduction -->
         <div class="worksheet-section introduction-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 2px solid #f44336; box-shadow: 0 8px 20px rgba(244, 67, 54, 0.2);">
-          <h2 class="section-header" style="color: #f44336; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-exclamation-triangle"></i> Fault Scenario</h2>
+          <h2 class="section-header" style="color: #f44336; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-exclamation-triangle"></i> Scenario</h2>
           <div class="worksheet-content">
-            ${scenario.paragraphs.map(p => `<p style="color: #FFFFFF; margin-bottom: 15px;">${p}</p>`).join('')}
+            ${(scenario.introduction || scenario.paragraphs || []).map(p => `<p style="color: #FFFFFF; margin-bottom: 15px;">${p}</p>`).join('')}
+          </div>
+                </div>
+
+        <!-- System Overview Section -->
+        ${scenario.system_overview ? `
+        <div class="system-overview-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 2px solid #2196F3; box-shadow: 0 8px 20px rgba(33, 150, 243, 0.2);">
+          <h2 class="section-header" style="color: #2196F3; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;">
+            <i class="fas fa-tachometer-alt"></i> Current System Status
+          </h2>
+          <div class="status-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+            ${scenario.system_overview.components ? scenario.system_overview.components.map(component => `
+            <div class="component-status" style="background: #333; padding: 20px; border-radius: 8px; border-left: 4px solid ${component.status.includes('normal') ? '#4CAF50' : component.status.includes('critical') || component.status.includes('alarm') ? '#f44336' : '#FF9800'};">
+              <h4 style="color: #FFFFFF; margin-bottom: 10px;">${component.name}</h4>
+              <p style="color: #AAA; margin-bottom: 8px;">Location: ${component.location}</p>
+              <p style="color: #AAA; margin-bottom: 8px;">Status: <span style="color: ${component.status.includes('normal') ? '#4CAF50' : component.status.includes('critical') || component.status.includes('alarm') ? '#f44336' : '#FF9800'};">${component.status}</span></p>
+              ${component.reading ? `<p style="color: #AAA;">Reading: ${component.reading}</p>` : ''}
+            </div>
+            `).join('') : ''}
           </div>
         </div>
+        ` : ''}
 
-        <!-- Step-by-Step Troubleshooting Wizard -->
-        <div class="troubleshooting-wizard" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 2px solid #FF9800; box-shadow: 0 8px 20px rgba(255, 152, 0, 0.2);">
+        <!-- Investigation Tools Section -->
+        ${scenario.interactive_elements && scenario.interactive_elements.investigation_tools ? `
+        <div class="investigation-tools-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 2px solid #FF9800; box-shadow: 0 8px 20px rgba(255, 152, 0, 0.2);">
           <h2 class="section-header" style="color: #FF9800; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;">
-            <i class="fas fa-magic"></i> Troubleshooting Wizard
+            <i class="fas fa-tools"></i> Investigation Tools
           </h2>
-          
-          <div class="wizard-progress" style="margin-bottom: 30px;">
-            <div class="progress-bar" style="background: #333; height: 8px; border-radius: 4px; overflow: hidden;">
-              <div id="wizard-progress" style="background: linear-gradient(90deg, #FF9800, #FF5722); height: 100%; width: 0%; transition: width 0.3s ease;"></div>
-            </div>
-            <div style="display: flex; justify-content: space-between; margin-top: 10px; color: #FFFFFF;">
-              <span>Step <span id="current-step">1</span> of <span id="total-steps">5</span></span>
-              <span id="wizard-score">Score: 0</span>
-            </div>
+          <p style="color: #FFFFFF; margin-bottom: 20px;">Use these tools to investigate the problem and gather information:</p>
+          <div class="tools-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+            ${scenario.interactive_elements.investigation_tools.tools.map(tool => `
+            <button class="investigation-tool" onclick="useTool('${tool.id}')" style="background: #333; color: white; border: 2px solid #FF9800; padding: 20px; border-radius: 8px; cursor: pointer; text-align: left; transition: all 0.3s ease;">
+              <h4 style="color: #FF9800; margin-bottom: 10px;">${tool.name}</h4>
+              <p style="color: #FFFFFF; margin: 0; font-size: 14px;">${tool.description}</p>
+            </button>
+            `).join('')}
           </div>
           
-          <div id="wizard-content">
-            <div class="wizard-step" data-step="1" style="display: block;">
-              <h3 style="color: #FFFFFF; margin-bottom: 15px;">Step 1: Initial Assessment</h3>
-              <p style="color: #FFFFFF; margin-bottom: 20px;">What is the first thing you should check when the system won't start?</p>
-              <div class="wizard-options">
-                <button class="wizard-option" onclick="selectWizardOption(1, 'safety')" style="background: #333; color: white; border: 1px solid #555; padding: 15px; margin: 10px; border-radius: 8px; cursor: pointer; width: 100%; text-align: left;">A) Check safety systems and emergency stops</button>
-                <button class="wizard-option" onclick="selectWizardOption(1, 'power')" style="background: #333; color: white; border: 1px solid #555; padding: 15px; margin: 10px; border-radius: 8px; cursor: pointer; width: 100%; text-align: left;">B) Check power supply and circuit breakers</button>
-                <button class="wizard-option" onclick="selectWizardOption(1, 'oil')" style="background: #333; color: white; border: 1px solid #555; padding: 15px; margin: 10px; border-radius: 8px; cursor: pointer; width: 100%; text-align: left;">C) Check oil level and temperature</button>
-                <button class="wizard-option" onclick="selectWizardOption(1, 'wifi')" style="background: #333; color: white; border: 1px solid #555; padding: 15px; margin: 10px; border-radius: 8px; cursor: pointer; width: 100%; text-align: left;">D) Check Wi-Fi connection</button>
+          <div id="tool-results" style="margin-top: 30px; padding: 20px; background: #333; border-radius: 8px; display: none;">
+            <h3 style="color: #FFFFFF; margin-bottom: 15px;">Investigation Results</h3>
+            <div id="tool-results-content" style="color: #FFFFFF;"></div>
+          </div>
+        </div>
+        ` : ''}
+
+        <!-- Learning Scenarios Section -->
+        ${scenario.learning_scenarios ? `
+        <div class="learning-scenarios-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 2px solid #9C27B0; box-shadow: 0 8px 20px rgba(156, 39, 176, 0.2);">
+          <h2 class="section-header" style="color: #9C27B0; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;">
+            <i class="fas fa-graduation-cap"></i> Learning Journey
+          </h2>
+          <div class="learning-progress" style="margin-bottom: 30px;">
+            <div class="progress-bar" style="background: #333; height: 8px; border-radius: 4px; overflow: hidden;">
+              <div id="learning-progress" style="background: linear-gradient(90deg, #9C27B0, #E91E63); height: 100%; width: 0%; transition: width 0.3s ease;"></div>
+            </div>
+            <div style="color: #FFFFFF; margin-top: 10px;">Progress: <span id="learning-score">0</span> / ${scenario.learning_scenarios.reduce((total, phase) => total + phase.points, 0)} points</div>
+          </div>
+          
+          <div class="learning-phases">
+            ${scenario.learning_scenarios.map((phase, index) => `
+            <div class="learning-phase" data-phase="${index + 1}" style="background: #333; padding: 20px; margin-bottom: 20px; border-radius: 8px; border-left: 4px solid #9C27B0;">
+              <div class="phase-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 style="color: #FFFFFF; margin: 0;">Phase ${index + 1}: ${phase.title}</h3>
+                <span class="phase-points" style="background: #9C27B0; color: white; padding: 5px 10px; border-radius: 15px; font-size: 12px;">${phase.points} pts</span>
+              </div>
+              <p style="color: #AAA; margin-bottom: 15px;">${phase.description}</p>
+              <div class="phase-tasks">
+                ${phase.tasks.map((task, taskIndex) => `
+                <div class="task-item" style="display: flex; align-items: center; margin-bottom: 10px;">
+                  <input type="checkbox" id="task-${index}-${taskIndex}" style="margin-right: 10px;">
+                  <label for="task-${index}-${taskIndex}" style="color: #FFFFFF; cursor: pointer;">${task}</label>
+                </div>
+                `).join('')}
               </div>
             </div>
+            `).join('')}
           </div>
         </div>
+        ` : ''}
 
         <!-- Enhanced Questions Section -->
         <div class="questions-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 2px solid #4CAF50; box-shadow: 0 8px 20px rgba(76, 175, 80, 0.2);">
@@ -982,25 +994,13 @@
         </div>
       `;
 
-      // Initialize interactive features
-      initializeInteractiveFeatures();
+      // Load saved answers
+      setTimeout(loadSavedAnswers, 100);
       
-          // Load saved answers
-    setTimeout(loadSavedAnswers, 100);
-    
-    // Show the content
-    document.getElementById('loading-container').style.display = 'none';
-    document.getElementById('main-content').style.display = 'block';
-  }
-
-  // Initialize all interactive features
-  function initializeInteractiveFeatures() {
-    initializeSystemControls();
-    initializeHotspots();
-    initializeWizard();
-    initializeChart();
-    startSystemSimulation();
-  }
+      // Show the content
+      document.getElementById('loading-container').style.display = 'none';
+      document.getElementById('main-content').style.display = 'block';
+    }
 
   // System Controls
   function initializeSystemControls() {
@@ -1022,57 +1022,71 @@
     });
   }
 
-  // Interactive Hotspots
-  function initializeHotspots() {
-    const hotspots = document.querySelectorAll('.hotspot');
-    hotspots.forEach(hotspot => {
-      hotspot.addEventListener('click', () => {
-        const component = hotspot.dataset.component;
-        showComponentDetails(component);
-      });
-
-      hotspot.addEventListener('mouseenter', () => {
-        hotspot.style.transform = 'scale(1.2)';
-        hotspot.style.boxShadow = '0 0 20px rgba(255, 255, 255, 0.5)';
-      });
-
-      hotspot.addEventListener('mouseleave', () => {
-        hotspot.style.transform = 'scale(1)';
-        hotspot.style.boxShadow = 'none';
-      });
-    });
-  }
-
-  // Component Details
-  function showComponentDetails(component) {
-    const detailsPanel = document.getElementById('component-details');
-    const title = document.getElementById('component-title');
-    const info = document.getElementById('component-info');
-
-    const componentData = {
-      pump: {
-        title: 'Hydraulic Pump',
-        info: 'Main system pump providing hydraulic pressure. Current status: Running at 75% capacity. Temperature: 65°C. Oil level: 85%.'
-      },
-      valve: {
-        title: 'Control Valve',
-        info: 'Proportional control valve regulating flow. Position: 60% open. Response time: 2.3s. No faults detected.'
-      },
-      sensor: {
-        title: 'Temperature Sensor',
-        info: 'RTD temperature sensor monitoring system temperature. Current reading: 150°C. Calibration: Valid until 2025. Signal: 4-20mA.'
-      },
-      tank: {
-        title: 'Oil Reservoir',
-        info: 'Main hydraulic oil tank. Capacity: 100L. Current level: 80%. Oil condition: Good. Last change: 3 months ago.'
-      }
+  // Investigation Tools
+  function useTool(toolId) {
+    const resultsDiv = document.getElementById('tool-results');
+    const contentDiv = document.getElementById('tool-results-content');
+    
+    if (!resultsDiv || !contentDiv) return;
+    
+    // Tool results based on the enhanced scenarios
+    const toolResults = {
+      // Tank Temperature Control (Scenario 1)
+      'check_offset': 'Controller Investigation: Found +5°C offset applied to temperature reading. This offset makes the controller think the tank is 5°C cooler than it actually is.',
+      'use_thermometer': 'Portable Thermometer Reading: 80°C (actual tank temperature), while controller displays 75°C. Confirms 5°C discrepancy.',
+      'review_reports': 'Quality Reports: Batch reports show temperature consistently 5°C higher than setpoint. Product quality declining over past week.',
+      'adjust_offset': 'Offset Adjustment: Removing the +5°C offset immediately corrects the temperature reading. Tank now shows actual 80°C.',
+      
+      // Cleanroom Temperature Control (Scenario 2)
+      'check_heat_load': 'Heat Load Analysis: Current production generates 95kW heat load, exceeding design capacity of 85kW by 12%.',
+      'verify_chiller_capacity': 'Chiller Performance: Operating at 100% capacity but struggling. Supply temperature 7°C higher than design.',
+      'analyze_production_schedule': 'Production Correlation: Temperature deviations occur only during peak production hours (9AM-5PM).',
+      'inspect_airflow_distribution': 'Airflow Inspection: Some supply ducts partially blocked, reducing cooling efficiency by 15%.',
+      
+      // CNC Coolant System (Scenario 3)
+      'analyze_coolant_quality': 'Coolant Analysis: pH elevated, contamination present. Extended operation degraded coolant chemistry.',
+      'inspect_heat_exchanger': 'Heat Exchanger: 40% fouling detected. Reduced thermal efficiency causing poor cooling performance.',
+      'monitor_temperature_cycles': 'Temperature Monitoring: Coolant temperature rises steadily during 24hr operation, no recovery time.',
+      'verify_flow_distribution': 'Flow Distribution: Uneven flow to machines. Some receiving 70% of design flow rate.',
+      
+      // Server Room Cooling (Scenario 4)
+      'thermal_imaging': 'Thermal Imaging: Hot spots identified around new server racks. Temperature variations up to 8°C across room.',
+      'airflow_analysis': 'Airflow Analysis: New servers disrupted airflow patterns. Cold air bypassing hot equipment.',
+      'power_consumption_review': 'Power Analysis: New servers added 25% heat load, exceeding cooling system design capacity.',
+      'emergency_load_balancing': 'Load Balancing: Moving critical processes to cooler areas reduced hot spot temperatures by 3°C.',
+      
+      // Brine Flow Control (Scenario 5)
+      'analyze_valve_characteristics': 'Valve Analysis: Control valve undersized for high-temperature brine conditions. Cv too small.',
+      'check_cavitation_conditions': 'Cavitation Check: High brine temperature reduces vapor pressure margin. Cavitation occurring at 67% valve position.',
+      'review_controller_tuning': 'Controller Tuning: PID parameters too aggressive for cavitating conditions. Causing hunting behavior.',
+      'monitor_temperature_effects': 'Temperature Effects: Flow instability increases with brine temperature above 40°C.',
+      
+      // Steam Sterilization (Scenario 6)
+      'check_power_supply': 'Power Supply: Voltage fluctuations detected. 24V supply dropping to 21V causing display flickering.',
+      'inspect_wiring': 'Wiring Inspection: Loose terminal connection on thermocouple input. Intermittent contact affecting reading.',
+      'verify_actual_temperature': 'Temperature Verification: Portable meter reads 121°C, controller reads 115°C. 6°C sensor error.',
+      'test_controller_calibration': 'Calibration Test: Controller offset by -6°C. Requires recalibration or sensor replacement.',
+      
+      // Injection Molding Temperature (Scenario 7)
+      'thermal_mapping': 'Thermal Mapping: Cavity temperatures: 79°C, 82°C, 77°C, 84°C. 7°C variation across mold.',
+      'cooling_circuit_analysis': 'Cooling Circuits: Uneven flow rates. Circuit 4 has 40% more flow than Circuit 3.',
+      'quality_correlation': 'Quality Analysis: Defective parts correlate with cavities having temperature >82°C or <78°C.',
+      'extended_run_monitoring': 'Extended Run Data: Temperature variation increases to 9°C after 4 hours of continuous operation.',
+      
+      // pH Control System (Scenario 8)
+      'analyze_ph_response': 'pH Response: Sensor response time 45 seconds, too slow for effective control. Standard should be <15 seconds.',
+      'review_control_tuning': 'Control Tuning: Proportional gain too high for slow process. Causing oscillations around setpoint.',
+      'check_mixing_efficiency': 'Mixing Analysis: Poor mixing efficiency. Acid addition not uniformly distributed in reactor.',
+      'validate_sensor_installation': 'Sensor Installation: pH sensor located in dead zone with poor mixing. Reading not representative.'
     };
-
-    if (componentData[component]) {
-      title.textContent = componentData[component].title;
-      info.textContent = componentData[component].info;
-      detailsPanel.style.display = 'block';
-    }
+    
+    const result = toolResults[toolId] || 'Investigation in progress... This tool provides valuable diagnostic information.';
+    
+    contentDiv.innerHTML = `<p>${result}</p>`;
+    resultsDiv.style.display = 'block';
+    
+    // Scroll to results
+    resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
   // Troubleshooting Wizard
@@ -1990,14 +2004,15 @@
       contentSections.push(`<h1 class="page-title">${type === 'fault' ? 'Fault Scenario' : 'Worksheet'} ${scenario.id}: ${scenario.title}</h1>`);
       
       // Introduction/Description section (always present if paragraphs exist)
-      if (scenario.paragraphs && scenario.paragraphs.length > 0) {
+      const introContent = scenario.introduction || scenario.paragraphs;
+      if (introContent && introContent.length > 0) {
         contentSections.push(`
           <div class="worksheet-section introduction-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 2px solid #2196F3; box-shadow: 0 8px 20px rgba(33, 150, 243, 0.2);">
             <h2 class="section-header" style="color: #2196F3; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;">
               <i class="fas fa-info-circle"></i> Introduction
             </h2>
             <div class="worksheet-content">
-              ${scenario.paragraphs.map(p => `<p style="color: #FFFFFF; margin-bottom: 15px;">${p}</p>`).join('')}
+              ${introContent.map(p => `<p style="color: #FFFFFF; margin-bottom: 15px;">${p}</p>`).join('')}
             </div>
           </div>
         `);

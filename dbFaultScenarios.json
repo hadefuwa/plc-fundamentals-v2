@@ -209,225 +209,1455 @@
         },
         {
             "id": 2,
-            "title": "Pharmaceutical Clean Room HVAC",
-            "paragraphs": [
+            "title": "Cleanroom Temperature Control System",
+            "subtitle": "Pharmaceutical Manufacturing Facility",
+            "scenario_type": "hvac_capacity_insufficient",
+            "difficulty": "intermediate",
+            "estimated_time": "25-35 minutes",
+            "learning_objectives": [
+                "Understand heat load calculations and system capacity",
+                "Learn about load-based control system problems",
+                "Recognize thermal lag effects in large systems",
+                "Practice capacity vs control diagnostics"
+            ],
+            "background": {
+                "company": "BioPharma Solutions Ltd.",
+                "process": "Sterile drug manufacturing cleanroom",
+                "shift": "Day shift during peak production",
+                "urgency": "High - GMP compliance at risk"
+            },
+            "introduction": [
                 "A pharmaceutical plant's clean room temperature control system is showing signs of deviation from setpoint.",
                 "The facility manager has noticed that the temperature is gradually rising above setpoint during peak production hours.",
-                "The clean room must maintain a temperature of 20°C ±0.5°C for product quality.",
-                "The system uses a water-cooled chiller with redundant pumps.",
-                "Maintenance logs show all preventive maintenance is up to date."
+                "The clean room must maintain a temperature of 20°C ±0.5°C for product quality and GMP compliance.",
+                "The system uses a water-cooled chiller with redundant pumps, and maintenance logs show all preventive maintenance is up to date."
             ],
-            "image": "pharma-cleanroom.png",
+            "system_overview": {
+                "setpoint": 20,
+                "current_temp": 21.3,
+                "tolerance": 0.5,
+                "cooling_capacity": 85,
+                "heat_load": "HIGH",
+                "chiller_status": "RUNNING",
+                "compliance_status": "OUT OF SPEC",
+                "components": [
+                    {
+                        "name": "Chiller Unit CH-001",
+                        "type": "cooling_system",
+                        "location": "Mechanical room",
+                        "status": "running_max",
+                        "capacity": "85%",
+                        "temperature": "7°C supply"
+                    },
+                    {
+                        "name": "AHU Temperature Controller",
+                        "type": "controller",
+                        "location": "AHU control panel",
+                        "status": "normal",
+                        "output": "100%",
+                        "mode": "cooling"
+                    },
+                    {
+                        "name": "Room Temperature Sensors",
+                        "type": "temperature_sensor",
+                        "location": "Multiple room locations",
+                        "status": "normal",
+                        "reading": 21.3,
+                        "trend": "rising"
+                    }
+                ]
+            },
+            "interactive_elements": {
+                "simulation": {
+                    "enabled": true,
+                    "parameters": {
+                        "setpoint": { "min": 18, "max": 22, "default": 20 },
+                        "current_temp": { "min": 19, "max": 23, "default": 21.3 },
+                        "cooling_capacity": { "min": 0, "max": 100, "default": 85 },
+                        "heat_load": { "min": 50, "max": 120, "default": 95 }
+                    }
+                },
+                "investigation_tools": {
+                    "enabled": true,
+                    "tools": [
+                        {
+                            "id": "check_heat_load",
+                            "name": "Calculate Current Heat Load",
+                            "description": "Measure equipment load and occupancy heat generation",
+                            "reveals": "heat_load_analysis"
+                        },
+                        {
+                            "id": "verify_chiller_capacity",
+                            "name": "Verify Chiller Performance",
+                            "description": "Check chiller temperatures, pressures, and efficiency",
+                            "reveals": "chiller_performance"
+                        },
+                        {
+                            "id": "analyze_production_schedule",
+                            "name": "Analyze Production Schedule",
+                            "description": "Review when temperature issues occur vs production activity",
+                            "reveals": "production_correlation"
+                        },
+                        {
+                            "id": "inspect_airflow_distribution",
+                            "name": "Inspect Airflow Distribution",
+                            "description": "Check ductwork, filters, and air distribution patterns",
+                            "reveals": "airflow_issues"
+                        }
+                    ]
+                }
+            },
+            "learning_scenarios": [
+                {
+                    "id": "observation",
+                    "title": "System Observation Phase",
+                    "description": "Understand when and how the temperature problem occurs",
+                    "tasks": [
+                        "Review temperature trends vs production schedule",
+                        "Check current system operating parameters",
+                        "Identify the pattern of temperature deviations",
+                        "Assess the urgency and impact on production"
+                    ],
+                    "interactive": true,
+                    "points": 20
+                },
+                {
+                    "id": "investigation",
+                    "title": "Capacity Investigation Phase", 
+                    "description": "Determine if the issue is capacity or control related",
+                    "tasks": [
+                        "Calculate the current heat load in the cleanroom",
+                        "Verify chiller performance and capacity",
+                        "Analyze correlation between production activity and temperature",
+                        "Inspect airflow distribution and any restrictions"
+                    ],
+                    "interactive": true,
+                    "points": 30
+                },
+                {
+                    "id": "diagnosis",
+                    "title": "Root Cause Diagnosis Phase",
+                    "description": "Identify whether the system is undersized or malfunctioning",
+                    "tasks": [
+                        "Compare design capacity vs actual heat load",
+                        "Determine if increased production exceeded design assumptions",
+                        "Check for any recent changes that increased heat load",
+                        "Assess whether the problem is temporary or permanent"
+                    ],
+                    "interactive": true,
+                    "points": 30
+                },
+                {
+                    "id": "solution",
+                    "title": "Solution Development Phase",
+                    "description": "Develop short-term and long-term solutions",
+                    "tasks": [
+                        "Implement immediate measures to regain temperature control",
+                        "Plan capacity upgrades or load reduction strategies",
+                        "Optimize existing system operation for better efficiency",
+                        "Develop monitoring to prevent future occurrences"
+                    ],
+                    "interactive": true,
+                    "points": 20
+                }
+            ],
             "questions": [
                 {
                     "id": "2.1",
-                    "text": "What could be causing the gradual temperature rise during peak hours?",
-                    "type": "text",
-                    "placeholder": "Consider all possible factors..."
+                    "text": "What is most likely causing the temperature rise during peak production hours?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "The temperature sensor is reading incorrectly",
+                        "The heat load exceeds the cooling system capacity",
+                        "The chiller has a refrigerant leak",
+                        "The controller settings are wrong"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "When temperature problems occur specifically during peak production, it indicates the cooling system cannot handle the increased heat load from equipment and personnel."
                 },
                 {
                     "id": "2.2",
-                    "text": "How would you determine if the issue is related to cooling capacity or control system?",
-                    "type": "text",
-                    "placeholder": "Explain your diagnostic approach..."
+                    "text": "How would you determine if the issue is capacity-related vs control system related?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "Check if the controller output is at maximum (100%)",
+                        "Replace the temperature sensor",
+                        "Restart the chiller system",
+                        "Adjust the PID tuning parameters"
+                    ],
+                    "correct_answer": 0,
+                    "explanation": "If the controller output is at 100% and temperature is still rising, it indicates a capacity problem rather than a control problem."
                 },
                 {
                     "id": "2.3",
-                    "text": "What data would you collect to troubleshoot this issue?",
+                    "text": "What immediate actions would you take to regain temperature control while investigating?",
                     "type": "text",
-                    "placeholder": "List the key parameters..."
+                    "placeholder": "List immediate steps to reduce heat load and restore temperature control..."
+                }
+            ],
+            "image": "pharma-cleanroom.png",
+            "real_world_examples": [
+                {
+                    "industry": "Pharmaceutical",
+                    "problem": "Cleanroom temperature deviations during production caused batch rejection",
+                    "cost": "$3.8M in lost product and regulatory investigation"
+                },
+                {
+                    "industry": "Semiconductor",
+                    "problem": "Fab cleanroom overheating affected yield and quality",
+                    "cost": "6-month capacity loss and equipment damage"
+                },
+                {
+                    "industry": "Medical Device",
+                    "problem": "Assembly area temperature exceeded specs during peak shifts",
+                    "cost": "Product recall and FDA warning letter"
                 }
             ]
         },
         {
             "id": 3,
-            "title": "CNC Machines Factory Cooling",
-            "paragraphs": [
-                "You're called to investigate a CNC machining facility where multiple machines are reporting spindle temperature warnings.",
-                "The central coolant system that supplies all CNC machines shows normal pressure readings.",
-                "Operators report that the issue started gradually over the past month.",
-                "The facility recently increased production hours from 8 to 24 hours per day.",
-                "Temperature logs show higher than normal readings during the night shift."
+            "title": "CNC Coolant System Performance",
+            "subtitle": "Precision Machining Facility",
+            "scenario_type": "coolant_degradation_analysis",
+            "difficulty": "intermediate",
+            "estimated_time": "30-40 minutes",
+            "learning_objectives": [
+                "Understand coolant system maintenance requirements",
+                "Learn about thermal cycling and system degradation",
+                "Recognize the impact of operational changes on system performance",
+                "Practice systematic coolant system diagnostics"
             ],
-            "image": "cnc-cooling.png",
+            "background": {
+                "company": "Precision Manufacturing Inc.",
+                "process": "High-precision CNC machining operations",
+                "shift": "Investigation during day shift, problem occurs nights",
+                "urgency": "Medium - Production quality declining, potential equipment damage"
+            },
+            "introduction": [
+                "You're called to investigate a CNC machining facility where multiple machines are reporting spindle temperature warnings.",
+                "The central coolant system that supplies all CNC machines shows normal pressure readings, but something isn't right.",
+                "Operators report that the issue started gradually over the past month, coinciding with increased production demands.",
+                "The facility recently increased production hours from 8 to 24 hours per day to meet customer demand."
+            ],
+            "system_overview": {
+                "coolant_temperature": 28,
+                "target_temperature": 22,
+                "coolant_pressure": 4.2,
+                "target_pressure": 4.0,
+                "flow_rate": 85,
+                "target_flow_rate": 100,
+                "system_efficiency": "DECLINING",
+                "night_shift_performance": "POOR",
+                "components": [
+                    {
+                        "name": "Central Coolant Tank",
+                        "type": "storage_tank",
+                        "location": "Basement mechanical room",
+                        "status": "normal_pressure",
+                        "temperature": 28,
+                        "capacity": "2000L"
+                    },
+                    {
+                        "name": "Coolant Pumps (Primary/Backup)",
+                        "type": "circulation_system",
+                        "location": "Mechanical room",
+                        "status": "running_continuous",
+                        "flow_rate": "85%",
+                        "runtime": "24/7 operation"
+                    },
+                    {
+                        "name": "Heat Exchanger HX-001",
+                        "type": "cooling_system",
+                        "location": "Mechanical room",
+                        "status": "reduced_efficiency",
+                        "condition": "suspect_fouling",
+                        "temperature_delta": "reduced"
+                    }
+                ]
+            },
+            "interactive_elements": {
+                "simulation": {
+                    "enabled": true,
+                    "parameters": {
+                        "coolant_temp": { "min": 20, "max": 35, "default": 28 },
+                        "flow_rate": { "min": 60, "max": 100, "default": 85 },
+                        "heat_exchanger_efficiency": { "min": 40, "max": 100, "default": 65 },
+                        "operating_hours": { "min": 8, "max": 24, "default": 24 }
+                    }
+                },
+                "investigation_tools": {
+                    "enabled": true,
+                    "tools": [
+                        {
+                            "id": "analyze_coolant_quality",
+                            "name": "Analyze Coolant Quality",
+                            "description": "Test coolant chemistry, pH, and contamination levels",
+                            "reveals": "coolant_degradation"
+                        },
+                        {
+                            "id": "inspect_heat_exchanger",
+                            "name": "Inspect Heat Exchanger",
+                            "description": "Check for fouling, scaling, and thermal efficiency",
+                            "reveals": "heat_exchanger_condition"
+                        },
+                        {
+                            "id": "monitor_temperature_cycles",
+                            "name": "Monitor Temperature Cycles",
+                            "description": "Track system temperature over 24-hour periods",
+                            "reveals": "thermal_cycling_pattern"
+                        },
+                        {
+                            "id": "verify_flow_distribution",
+                            "name": "Verify Flow Distribution",
+                            "description": "Check flow rates to individual CNC machines",
+                            "reveals": "flow_distribution_issues"
+                        }
+                    ]
+                }
+            },
+            "learning_scenarios": [
+                {
+                    "id": "pattern_recognition",
+                    "title": "Problem Pattern Recognition",
+                    "description": "Identify the relationship between operational changes and cooling problems",
+                    "tasks": [
+                        "Analyze when the cooling problems started vs operational changes",
+                        "Compare day shift vs night shift performance patterns",
+                        "Review the correlation with 24-hour operation implementation",
+                        "Identify which machines are most affected"
+                    ],
+                    "interactive": true,
+                    "points": 25
+                },
+                {
+                    "id": "system_investigation",
+                    "title": "Coolant System Investigation",
+                    "description": "Systematically check all components of the cooling system",
+                    "tasks": [
+                        "Analyze coolant quality and chemistry",
+                        "Inspect heat exchanger condition and efficiency",
+                        "Monitor temperature cycling patterns over 24 hours",
+                        "Verify proper flow distribution to all machines"
+                    ],
+                    "interactive": true,
+                    "points": 30
+                },
+                {
+                    "id": "root_cause_analysis",
+                    "title": "Root Cause Analysis",
+                    "description": "Determine why 24-hour operation is causing cooling issues",
+                    "tasks": [
+                        "Determine if the system was designed for continuous operation",
+                        "Identify thermal cycling effects and cumulative heat buildup",
+                        "Assess coolant degradation from extended operation",
+                        "Evaluate heat exchanger fouling from continuous use"
+                    ],
+                    "interactive": true,
+                    "points": 25
+                },
+                {
+                    "id": "solution_implementation",
+                    "title": "Solution Implementation",
+                    "description": "Develop solutions for reliable 24-hour cooling operation",
+                    "tasks": [
+                        "Implement coolant system maintenance schedule",
+                        "Upgrade or clean heat exchanger components",
+                        "Establish coolant quality monitoring procedures",
+                        "Plan system modifications for continuous operation"
+                    ],
+                    "interactive": true,
+                    "points": 20
+                }
+            ],
             "questions": [
                 {
                     "id": "3.1",
                     "text": "Why might the temperature issues be more prominent during night shift?",
-                    "type": "text",
-                    "placeholder": "Consider environmental and operational factors..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Night shift operators are less experienced",
+                        "Ambient temperature is lower, affecting the cooling system",
+                        "Heat buildup accumulates throughout the day with no cooling recovery time",
+                        "Different CNC programs run at night"
+                    ],
+                    "correct_answer": 2,
+                    "explanation": "With 24-hour operation, the cooling system has no recovery time. Heat builds up throughout the day, and by night shift, the system struggles to maintain proper temperatures."
                 },
                 {
                     "id": "3.2",
-                    "text": "What maintenance checks would you perform on the central coolant system?",
-                    "type": "text",
-                    "placeholder": "List specific checks and measurements..."
+                    "text": "What is the most likely root cause of the cooling system degradation?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "Coolant pump mechanical failure",
+                        "Heat exchanger fouling from continuous operation",
+                        "Incorrect coolant chemical mixture",
+                        "Electrical problems with temperature sensors"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Continuous 24-hour operation without maintenance windows leads to heat exchanger fouling, reducing thermal efficiency and causing temperature rise."
                 },
                 {
                     "id": "3.3",
-                    "text": "How would you verify if the coolant flow is adequate for 24-hour operation?",
+                    "text": "What systematic approach would you use to verify coolant system performance?",
                     "type": "text",
-                    "placeholder": "Describe your testing approach..."
+                    "placeholder": "Describe your step-by-step testing and verification process for the coolant system..."
+                }
+            ],
+            "image": "cnc-cooling.png",
+            "real_world_examples": [
+                {
+                    "industry": "Automotive Manufacturing",
+                    "problem": "CNC coolant system failure led to spindle bearing damage on 12 machines",
+                    "cost": "$450,000 in repairs and 2-week production shutdown"
+                },
+                {
+                    "industry": "Aerospace",
+                    "problem": "Overheating CNC machines produced out-of-tolerance parts",
+                    "cost": "Critical component rejection and delivery delays"
+                },
+                {
+                    "industry": "Tool & Die",
+                    "problem": "Heat exchanger fouling reduced cooling capacity by 40%",
+                    "cost": "Quality issues and increased tool wear costs"
                 }
             ]
         },
         {
             "id": 4,
-            "title": "Server Room Temperature Control",
-            "paragraphs": [
-                "A marketing company's server room cooling system has triggered multiple high-temperature alarms.",
-                "The building management system shows the HVAC is running at maximum capacity.",
-                "IT staff report that several new high-performance servers were installed last week.",
-                "The room temperature sensors show uneven readings across different areas.",
-                "Some server racks are showing significantly higher intake temperatures than others."
+            "title": "Server Room Cooling Crisis",
+            "subtitle": "Data Center Emergency Response",
+            "scenario_type": "airflow_management_failure",
+            "difficulty": "advanced",
+            "estimated_time": "35-45 minutes",
+            "learning_objectives": [
+                "Understand data center cooling principles",
+                "Learn about airflow management and hot spots",
+                "Recognize thermal emergency response procedures",
+                "Practice load balancing and capacity planning"
             ],
-            "image": "server-room.png",
+            "background": {
+                "company": "TechCorp Marketing Agency",
+                "process": "Mission-critical server operations",
+                "shift": "Emergency response - weekend call-out",
+                "urgency": "CRITICAL - Server shutdown imminent"
+            },
+            "introduction": [
+                "A marketing company's server room cooling system has triggered multiple high-temperature alarms.",
+                "The building management system shows the HVAC is running at maximum capacity but struggling to maintain temperature.",
+                "IT staff report that several new high-performance servers were installed last week to handle increased data processing.",
+                "The room temperature sensors show uneven readings across different areas, with some server racks showing critically high intake temperatures."
+            ],
+            "system_overview": {
+                "max_temperature": 32,
+                "critical_threshold": 30,
+                "target_temperature": 22,
+                "hvac_capacity": 100,
+                "power_consumption": 125,
+                "design_capacity": 100,
+                "alarm_status": "CRITICAL",
+                "shutdown_risk": "HIGH",
+                "components": [
+                    {
+                        "name": "CRAC Unit 1",
+                        "type": "cooling_system",
+                        "location": "North wall",
+                        "status": "running_max",
+                        "capacity": "100%",
+                        "supply_temp": "12°C"
+                    },
+                    {
+                        "name": "Server Rack A1-A6",
+                        "type": "heat_load",
+                        "location": "North section",
+                        "status": "normal",
+                        "intake_temp": "24°C",
+                        "power_draw": "Normal"
+                    },
+                    {
+                        "name": "Server Rack B1-B6",
+                        "type": "heat_load",
+                        "location": "Center section",
+                        "status": "hot_spot",
+                        "intake_temp": "31°C",
+                        "power_draw": "High (new servers)"
+                    }
+                ]
+            },
+            "interactive_elements": {
+                "simulation": {
+                    "enabled": true,
+                    "parameters": {
+                        "server_load": { "min": 50, "max": 150, "default": 125 },
+                        "hvac_capacity": { "min": 80, "max": 120, "default": 100 },
+                        "airflow_efficiency": { "min": 40, "max": 100, "default": 60 },
+                        "rack_temperature": { "min": 20, "max": 35, "default": 31 }
+                    }
+                },
+                "investigation_tools": {
+                    "enabled": true,
+                    "tools": [
+                        {
+                            "id": "thermal_imaging",
+                            "name": "Thermal Imaging Survey",
+                            "description": "Use thermal camera to identify hot spots and airflow patterns",
+                            "reveals": "thermal_mapping"
+                        },
+                        {
+                            "id": "airflow_analysis",
+                            "name": "Airflow Pattern Analysis",
+                            "description": "Check for air circulation issues and blocked pathways",
+                            "reveals": "airflow_problems"
+                        },
+                        {
+                            "id": "power_consumption_review",
+                            "name": "Power Consumption Review",
+                            "description": "Analyze power draw vs cooling capacity",
+                            "reveals": "capacity_overload"
+                        },
+                        {
+                            "id": "emergency_load_balancing",
+                            "name": "Emergency Load Balancing",
+                            "description": "Redistribute server loads to reduce hot spots",
+                            "reveals": "load_distribution"
+                        }
+                    ]
+                }
+            },
+            "learning_scenarios": [
+                {
+                    "id": "emergency_response",
+                    "title": "Emergency Response Phase",
+                    "description": "Take immediate action to prevent server damage",
+                    "tasks": [
+                        "Identify servers at risk of thermal shutdown",
+                        "Implement immediate cooling measures",
+                        "Prioritize critical vs non-critical systems",
+                        "Establish monitoring for temperature trends"
+                    ],
+                    "interactive": true,
+                    "points": 25
+                },
+                {
+                    "id": "problem_investigation",
+                    "title": "Root Cause Investigation",
+                    "description": "Determine why the cooling system is failing",
+                    "tasks": [
+                        "Perform thermal imaging survey of the server room",
+                        "Analyze airflow patterns and identify restrictions",
+                        "Review power consumption vs cooling capacity",
+                        "Assess the impact of new server installations"
+                    ],
+                    "interactive": true,
+                    "points": 30
+                },
+                {
+                    "id": "solution_development",
+                    "title": "Solution Development",
+                    "description": "Develop immediate and long-term solutions",
+                    "tasks": [
+                        "Design airflow optimization strategy",
+                        "Plan emergency load balancing procedures",
+                        "Calculate additional cooling capacity requirements",
+                        "Develop hot spot mitigation strategies"
+                    ],
+                    "interactive": true,
+                    "points": 25
+                },
+                {
+                    "id": "prevention_planning",
+                    "title": "Prevention Planning",
+                    "description": "Prevent future thermal emergencies",
+                    "tasks": [
+                        "Establish capacity planning procedures",
+                        "Implement thermal monitoring systems",
+                        "Create airflow management standards",
+                        "Develop emergency response protocols"
+                    ],
+                    "interactive": true,
+                    "points": 20
+                }
+            ],
             "questions": [
                 {
                     "id": "4.1",
-                    "text": "What immediate steps would you take to protect the server equipment?",
-                    "type": "text",
-                    "placeholder": "List immediate actions..."
+                    "text": "What is the most immediate action to protect server equipment?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "Shut down all servers immediately",
+                        "Reduce server load by moving processes to cooler racks",
+                        "Increase HVAC fan speed",
+                        "Open all doors and windows"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Moving processes from hot racks to cooler areas provides immediate relief while maintaining operations. Complete shutdown should be a last resort."
                 },
                 {
                     "id": "4.2",
-                    "text": "How would you investigate the uneven temperature distribution?",
-                    "type": "text",
-                    "placeholder": "Describe your investigation process..."
+                    "text": "What is most likely causing the uneven temperature distribution?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "One of the temperature sensors is broken",
+                        "The new high-power servers created hot spots that exceed airflow capacity",
+                        "The HVAC system is completely broken",
+                        "The server room door was left open"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "New high-power servers increase heat density in specific areas, creating hot spots that exceed the local airflow capacity to remove heat."
                 },
                 {
                     "id": "4.3",
-                    "text": "What long-term solutions would you propose to prevent this issue?",
+                    "text": "What long-term solution would you recommend to prevent this issue?",
                     "type": "text",
-                    "placeholder": "List potential solutions..."
+                    "placeholder": "Describe your comprehensive strategy for server room thermal management..."
+                }
+            ],
+            "image": "server-room.png",
+            "real_world_examples": [
+                {
+                    "industry": "Financial Services",
+                    "problem": "Server room overheating caused trading system downtime",
+                    "cost": "$2.1M in lost trading revenue and regulatory fines"
+                },
+                {
+                    "industry": "E-commerce",
+                    "problem": "Data center cooling failure during peak shopping season",
+                    "cost": "Website downtime and customer service impacts"
+                },
+                {
+                    "industry": "Healthcare",
+                    "problem": "Hospital server room overheating affected patient records system",
+                    "cost": "Patient care delays and compliance issues"
                 }
             ]
         },
         {
             "id": 5,
-            "title": "Potash Mine Brine System",
-            "paragraphs": [
-                "At a potash mine, the brine injection system's flow control loop is showing inconsistent behavior.",
-                "Operators report that the flow rate fluctuates despite a constant setpoint.",
-                "The control valve position indicator shows frequent movement.",
-                "Pressure sensors upstream and downstream of the control valve show stable readings.",
-                "The issue appears to be worse when the brine temperature is higher."
+            "title": "Brine Flow Control System",
+            "subtitle": "Potash Mining Operation",
+            "scenario_type": "flow_control_instability",
+            "difficulty": "advanced",
+            "estimated_time": "35-45 minutes",
+            "learning_objectives": [
+                "Understand flow control valve behavior",
+                "Learn about process variable interactions",
+                "Recognize control loop instability symptoms",
+                "Practice systematic flow control troubleshooting"
             ],
-            "image": "brine-system.png",
+            "background": {
+                "company": "Northern Potash Mining Ltd.",
+                "process": "Brine injection system for potash extraction",
+                "shift": "Day shift operation",
+                "urgency": "Medium - Production efficiency declining"
+            },
+            "introduction": [
+                "At a potash mine, the brine injection system's flow control loop is showing inconsistent behavior.",
+                "Operators report that the flow rate fluctuates despite a constant setpoint, affecting the extraction process efficiency.",
+                "The control valve position indicator shows frequent movement, suggesting the system is 'hunting' for the correct position.",
+                "Pressure sensors upstream and downstream of the control valve show stable readings, ruling out pressure-related issues."
+            ],
+            "system_overview": {
+                "flow_setpoint": 250,
+                "current_flow": 248,
+                "flow_variation": 15,
+                "valve_position": 67,
+                "valve_movement": "HUNTING",
+                "brine_temperature": 45,
+                "control_stability": "POOR",
+                "extraction_efficiency": "DECLINING",
+                "components": [
+                    {
+                        "name": "Flow Control Valve FCV-001",
+                        "type": "control_valve",
+                        "location": "Brine injection line",
+                        "status": "constantly_moving",
+                        "position": "67%",
+                        "condition": "suspect_cavitation"
+                    },
+                    {
+                        "name": "Flow Transmitter FT-001",
+                        "type": "flow_sensor",
+                        "location": "Downstream of valve",
+                        "status": "normal",
+                        "reading": "248 L/min",
+                        "signal_noise": "moderate"
+                    },
+                    {
+                        "name": "Temperature Sensor TE-001",
+                        "type": "temperature_sensor",
+                        "location": "Brine supply line",
+                        "status": "normal",
+                        "reading": "45°C",
+                        "trend": "variable"
+                    }
+                ]
+            },
+            "interactive_elements": {
+                "simulation": {
+                    "enabled": true,
+                    "parameters": {
+                        "flow_rate": { "min": 220, "max": 280, "default": 248 },
+                        "valve_position": { "min": 40, "max": 90, "default": 67 },
+                        "brine_temperature": { "min": 35, "max": 55, "default": 45 },
+                        "control_stability": { "min": 30, "max": 100, "default": 45 }
+                    }
+                },
+                "investigation_tools": {
+                    "enabled": true,
+                    "tools": [
+                        {
+                            "id": "analyze_valve_characteristics",
+                            "name": "Analyze Valve Flow Characteristics",
+                            "description": "Check valve sizing and flow characteristics vs system requirements",
+                            "reveals": "valve_sizing_issues"
+                        },
+                        {
+                            "id": "check_cavitation_conditions",
+                            "name": "Check for Cavitation Conditions",
+                            "description": "Evaluate pressure drop and vapor pressure conditions",
+                            "reveals": "cavitation_analysis"
+                        },
+                        {
+                            "id": "review_controller_tuning",
+                            "name": "Review Controller Tuning",
+                            "description": "Check PID parameters and control loop response",
+                            "reveals": "tuning_parameters"
+                        },
+                        {
+                            "id": "monitor_temperature_effects",
+                            "name": "Monitor Temperature Effects",
+                            "description": "Analyze how brine temperature affects flow characteristics",
+                            "reveals": "temperature_correlation"
+                        }
+                    ]
+                }
+            },
+            "learning_scenarios": [
+                {
+                    "id": "symptom_analysis",
+                    "title": "Control Loop Symptom Analysis",
+                    "description": "Understand the symptoms of flow control instability",
+                    "tasks": [
+                        "Analyze the flow rate fluctuation pattern",
+                        "Observe valve position hunting behavior",
+                        "Correlate instability with brine temperature changes",
+                        "Review process impact on extraction efficiency"
+                    ],
+                    "interactive": true,
+                    "points": 25
+                },
+                {
+                    "id": "root_cause_investigation",
+                    "title": "Root Cause Investigation",
+                    "description": "Identify the source of control loop instability",
+                    "tasks": [
+                        "Analyze valve flow characteristics and sizing",
+                        "Check for cavitation conditions in the valve",
+                        "Review controller tuning parameters",
+                        "Monitor temperature effects on system behavior"
+                    ],
+                    "interactive": true,
+                    "points": 30
+                },
+                {
+                    "id": "solution_development",
+                    "title": "Solution Development",
+                    "description": "Develop fixes for the control instability",
+                    "tasks": [
+                        "Determine if valve replacement or modification is needed",
+                        "Adjust controller tuning for improved stability",
+                        "Address cavitation issues if present",
+                        "Consider temperature compensation strategies"
+                    ],
+                    "interactive": true,
+                    "points": 25
+                },
+                {
+                    "id": "system_optimization",
+                    "title": "System Optimization",
+                    "description": "Optimize the control system for reliable operation",
+                    "tasks": [
+                        "Implement improved control strategies",
+                        "Establish monitoring for early problem detection",
+                        "Create maintenance procedures for flow control components",
+                        "Document system operating parameters"
+                    ],
+                    "interactive": true,
+                    "points": 20
+                }
+            ],
             "questions": [
                 {
                     "id": "5.1",
-                    "text": "Why might the valve position be constantly changing?",
-                    "type": "text",
-                    "placeholder": "List possible causes..."
+                    "text": "What is the most likely cause of the valve position constantly changing?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "The valve actuator is mechanically damaged",
+                        "The controller PID tuning is causing instability",
+                        "The flow transmitter is giving incorrect readings",
+                        "The valve is experiencing cavitation due to high temperature"
+                    ],
+                    "correct_answer": 3,
+                    "explanation": "High brine temperature reduces vapor pressure margin, causing cavitation in the control valve. This creates unstable flow conditions that cause the controller to hunt for the correct position."
                 },
                 {
                     "id": "5.2",
                     "text": "How does brine temperature affect the control system?",
-                    "type": "text",
-                    "placeholder": "Explain the relationship..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Higher temperature increases fluid viscosity",
+                        "Higher temperature reduces the valve's cavitation margin",
+                        "Higher temperature damages the controller electronics",
+                        "Higher temperature has no effect on flow control"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Higher brine temperature reduces the pressure margin before cavitation occurs in the valve, leading to unstable flow conditions and control hunting."
                 },
                 {
                     "id": "5.3",
-                    "text": "What maintenance procedures would you recommend?",
+                    "text": "What comprehensive approach would you use to solve this flow control problem?",
                     "type": "text",
-                    "placeholder": "Detail your maintenance plan..."
+                    "placeholder": "Describe your systematic approach to diagnose and fix the brine flow control instability..."
+                }
+            ],
+            "image": "brine-system.png",
+            "real_world_examples": [
+                {
+                    "industry": "Mining",
+                    "problem": "Potash brine system instability reduced extraction efficiency by 15%",
+                    "cost": "$800,000 in lost production over 6 months"
+                },
+                {
+                    "industry": "Chemical Processing",
+                    "problem": "Flow control hunting caused product quality variations",
+                    "cost": "Batch rejections and customer complaints"
+                },
+                {
+                    "industry": "Water Treatment",
+                    "problem": "Brine injection control instability affected treatment effectiveness",
+                    "cost": "Regulatory violations and system shutdown"
                 }
             ]
         },
         {
             "id": 6,
-            "title": "Food Processing Sterilizer",
-            "paragraphs": [
-                "You've just started as a maintenance technician at a food processing plant.",
-                "During your first day, an operator reports that the steam sterilization system isn't reaching temperature.",
-                "The system should maintain 121°C for sterilization, but it's only reaching 115°C.",
-                "The steam pressure gauge shows normal supply pressure.",
-                "You notice the temperature controller display occasionally flickers."
+            "title": "Steam Sterilization System",
+            "subtitle": "Food Processing Plant",
+            "scenario_type": "temperature_control_electronics",
+            "difficulty": "beginner",
+            "estimated_time": "20-30 minutes",
+            "learning_objectives": [
+                "Understand sterilization temperature requirements",
+                "Learn about electrical troubleshooting in process control",
+                "Recognize sensor and controller failure modes",
+                "Practice systematic troubleshooting approach"
             ],
-            "image": "sterilizer.png",
+            "background": {
+                "company": "Fresh Foods Processing Inc.",
+                "process": "Steam sterilization for food safety",
+                "shift": "First day as maintenance technician",
+                "urgency": "High - Food safety compliance required"
+            },
+            "introduction": [
+                "You've just started as a maintenance technician at a food processing plant.",
+                "During your first day, an operator reports that the steam sterilization system isn't reaching the required temperature.",
+                "The system should maintain 121°C for proper sterilization, but it's only reaching 115°C.",
+                "The steam pressure gauge shows normal supply pressure, but something is clearly wrong with the temperature control."
+            ],
+            "system_overview": {
+                "target_temperature": 121,
+                "current_temperature": 115,
+                "steam_pressure": 2.1,
+                "required_pressure": 2.0,
+                "controller_status": "FLICKERING",
+                "sterilization_status": "INADEQUATE",
+                "food_safety_compliance": "FAILED",
+                "components": [
+                    {
+                        "name": "Steam Supply",
+                        "type": "steam_system",
+                        "location": "Plant boiler",
+                        "status": "normal",
+                        "pressure": "2.1 bar",
+                        "temperature": "125°C"
+                    },
+                    {
+                        "name": "Temperature Controller TIC-001",
+                        "type": "electronic_controller",
+                        "location": "Control panel",
+                        "status": "display_flickering",
+                        "reading": "115°C",
+                        "power_supply": "suspect"
+                    },
+                    {
+                        "name": "Temperature Sensor TE-001",
+                        "type": "temperature_sensor",
+                        "location": "Sterilizer chamber",
+                        "status": "unknown",
+                        "reading": "115°C",
+                        "wiring": "suspect"
+                    }
+                ]
+            },
+            "interactive_elements": {
+                "simulation": {
+                    "enabled": true,
+                    "parameters": {
+                        "controller_temperature": { "min": 100, "max": 130, "default": 115 },
+                        "actual_temperature": { "min": 110, "max": 130, "default": 121 },
+                        "display_stability": { "min": 0, "max": 100, "default": 30 },
+                        "steam_pressure": { "min": 1.8, "max": 2.3, "default": 2.1 }
+                    }
+                },
+                "investigation_tools": {
+                    "enabled": true,
+                    "tools": [
+                        {
+                            "id": "check_power_supply",
+                            "name": "Check Controller Power Supply",
+                            "description": "Verify voltage and power quality to the controller",
+                            "reveals": "power_supply_issues"
+                        },
+                        {
+                            "id": "inspect_wiring",
+                            "name": "Inspect Sensor Wiring",
+                            "description": "Check thermocouple wiring and connections",
+                            "reveals": "wiring_problems"
+                        },
+                        {
+                            "id": "verify_actual_temperature",
+                            "name": "Verify Actual Temperature",
+                            "description": "Use portable thermometer to check real sterilizer temperature",
+                            "reveals": "temperature_discrepancy"
+                        },
+                        {
+                            "id": "test_controller_calibration",
+                            "name": "Test Controller Calibration",
+                            "description": "Check if controller is reading sensor correctly",
+                            "reveals": "calibration_error"
+                        }
+                    ]
+                }
+            },
+            "learning_scenarios": [
+                {
+                    "id": "safety_assessment",
+                    "title": "Safety Assessment Phase",
+                    "description": "Ensure safe troubleshooting practices around steam systems",
+                    "tasks": [
+                        "Identify steam and high temperature hazards",
+                        "Review food safety and sterilization requirements",
+                        "Understand the importance of proper sterilization temperatures",
+                        "Plan safe approach to electrical troubleshooting"
+                    ],
+                    "interactive": true,
+                    "points": 20
+                },
+                {
+                    "id": "problem_investigation",
+                    "title": "Problem Investigation Phase",
+                    "description": "Systematically investigate the temperature control issue",
+                    "tasks": [
+                        "Check controller power supply and electrical connections",
+                        "Inspect sensor wiring and terminal connections",
+                        "Verify actual temperature using independent measurement",
+                        "Test controller calibration and accuracy"
+                    ],
+                    "interactive": true,
+                    "points": 30
+                },
+                {
+                    "id": "diagnosis_solution",
+                    "title": "Diagnosis and Solution Phase",
+                    "description": "Identify the root cause and implement a fix",
+                    "tasks": [
+                        "Determine if the problem is electrical or sensor-related",
+                        "Identify whether controller or sensor needs replacement",
+                        "Fix the electrical connection or component issue",
+                        "Verify proper sterilization temperature is achieved"
+                    ],
+                    "interactive": true,
+                    "points": 30
+                },
+                {
+                    "id": "verification_documentation",
+                    "title": "Verification and Documentation Phase",
+                    "description": "Verify fix and document for food safety compliance",
+                    "tasks": [
+                        "Confirm sterilization temperature is consistently achieved",
+                        "Document the repair for food safety records",
+                        "Test the system under normal operating conditions",
+                        "Brief operators on any changes or precautions"
+                    ],
+                    "interactive": true,
+                    "points": 20
+                }
+            ],
             "questions": [
                 {
                     "id": "6.1",
-                    "text": "What safety considerations should you keep in mind when troubleshooting?",
-                    "type": "text",
-                    "placeholder": "List safety precautions..."
+                    "text": "What is the most likely cause of the flickering temperature display?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "The steam pressure is too low",
+                        "Poor electrical connections or power supply issues",
+                        "The sterilizer chamber door is not sealed properly",
+                        "The operator is using the wrong sterilization program"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "A flickering display typically indicates electrical problems such as loose connections, poor power supply, or failing controller electronics."
                 },
                 {
                     "id": "6.2",
-                    "text": "What could cause the temperature controller display to flicker?",
-                    "type": "text",
-                    "placeholder": "Consider possible causes..."
+                    "text": "Why is it critical to achieve exactly 121°C for sterilization?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "To save energy and reduce steam consumption",
+                        "To meet food safety regulations and eliminate pathogens",
+                        "To prevent damage to the sterilizer equipment",
+                        "To speed up the sterilization process"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "121°C is the minimum temperature required to effectively kill harmful bacteria and ensure food safety. Lower temperatures may not eliminate pathogens, creating health risks."
                 },
                 {
                     "id": "6.3",
-                    "text": "How would you systematically troubleshoot this issue?",
+                    "text": "What systematic troubleshooting approach would you use for this electrical issue?",
                     "type": "text",
-                    "placeholder": "Outline your troubleshooting steps..."
+                    "placeholder": "Describe your step-by-step approach to diagnose and fix the temperature controller problem..."
+                }
+            ],
+            "image": "sterilizer.png",
+            "real_world_examples": [
+                {
+                    "industry": "Food Processing",
+                    "problem": "Sterilizer temperature control failure led to product contamination",
+                    "cost": "$1.2M product recall and FDA penalties"
+                },
+                {
+                    "industry": "Pharmaceutical",
+                    "problem": "Temperature sensor failure in sterilization process",
+                    "cost": "Batch rejection and regulatory investigation"
+                },
+                {
+                    "industry": "Medical Device",
+                    "problem": "Sterilizer control system malfunction affected device safety",
+                    "cost": "Product recall and FDA warning letter"
                 }
             ]
         },
         {
             "id": 7,
-            "title": "Injection Molding Temperature",
-            "paragraphs": [
-                "A plastic injection molding machine is producing parts with inconsistent quality.",
-                "The mold temperature control unit shows the temperature is within specification.",
-                "Quality control reports that parts from certain cavities are showing signs of incomplete filling.",
-                "The issue seems to be worse after extended production runs.",
-                "The cooling water temperature and pressure are within normal ranges."
+            "title": "Injection Molding Temperature Control",
+            "subtitle": "Plastics Manufacturing Plant",
+            "scenario_type": "thermal_distribution_analysis",
+            "difficulty": "intermediate",
+            "estimated_time": "25-35 minutes",
+            "learning_objectives": [
+                "Understand injection molding temperature requirements",
+                "Learn about thermal uniformity in manufacturing",
+                "Recognize temperature distribution problems",
+                "Practice systematic quality issue troubleshooting"
             ],
-            "image": "injection-mold.png",
+            "background": {
+                "company": "Precision Plastics Manufacturing",
+                "process": "High-precision injection molding",
+                "shift": "Quality issue investigation",
+                "urgency": "Medium - Customer quality complaints"
+            },
+            "introduction": [
+                "A plastic injection molding machine is producing parts with inconsistent quality.",
+                "The mold temperature control unit shows the temperature is within specification at 80°C.",
+                "Quality control reports that parts from certain cavities are showing signs of incomplete filling and surface defects.",
+                "The issue seems to be worse after extended production runs, suggesting a thermal-related problem."
+            ],
+            "system_overview": {
+                "mold_temperature_setpoint": 80,
+                "displayed_temperature": 80,
+                "actual_cavity_temperatures": [79, 82, 77, 84],
+                "cooling_water_temp": 25,
+                "cooling_water_pressure": 3.2,
+                "quality_status": "DECLINING",
+                "thermal_uniformity": "POOR",
+                "components": [
+                    {
+                        "name": "Mold Temperature Controller MTC-001",
+                        "type": "temperature_controller",
+                        "location": "Control cabinet",
+                        "status": "normal",
+                        "reading": "80°C",
+                        "sensor_location": "Single point"
+                    },
+                    {
+                        "name": "Cooling Circuits 1-4",
+                        "type": "cooling_system",
+                        "location": "Mold cavities",
+                        "status": "uneven_flow",
+                        "temperatures": "[79, 82, 77, 84]°C",
+                        "flow_rates": "varying"
+                    },
+                    {
+                        "name": "Mold Cavities 1-4",
+                        "type": "molding_cavity",
+                        "location": "Injection mold",
+                        "status": "temperature_variation",
+                        "quality": "inconsistent",
+                        "defect_pattern": "cavity_specific"
+                    }
+                ]
+            },
+            "interactive_elements": {
+                "simulation": {
+                    "enabled": true,
+                    "parameters": {
+                        "controller_temp": { "min": 75, "max": 85, "default": 80 },
+                        "cavity_temp_variation": { "min": 1, "max": 8, "default": 7 },
+                        "cooling_efficiency": { "min": 60, "max": 100, "default": 75 },
+                        "quality_score": { "min": 40, "max": 100, "default": 65 }
+                    }
+                },
+                "investigation_tools": {
+                    "enabled": true,
+                    "tools": [
+                        {
+                            "id": "thermal_mapping",
+                            "name": "Thermal Mapping of Mold",
+                            "description": "Use thermal imaging to map temperature across all cavities",
+                            "reveals": "temperature_distribution"
+                        },
+                        {
+                            "id": "cooling_circuit_analysis",
+                            "name": "Cooling Circuit Analysis",
+                            "description": "Check flow rates and temperatures in each cooling circuit",
+                            "reveals": "cooling_imbalance"
+                        },
+                        {
+                            "id": "quality_correlation",
+                            "name": "Quality vs Temperature Correlation",
+                            "description": "Analyze which cavities have quality issues vs temperature",
+                            "reveals": "quality_temperature_link"
+                        },
+                        {
+                            "id": "extended_run_monitoring",
+                            "name": "Extended Run Monitoring",
+                            "description": "Monitor temperature stability during long production runs",
+                            "reveals": "thermal_drift_pattern"
+                        }
+                    ]
+                }
+            },
+            "learning_scenarios": [
+                {
+                    "id": "quality_analysis",
+                    "title": "Quality Issue Analysis",
+                    "description": "Understand the relationship between temperature and part quality",
+                    "tasks": [
+                        "Analyze quality reports for cavity-specific patterns",
+                        "Identify which cavities are producing defective parts",
+                        "Review the impact of extended production runs",
+                        "Correlate temperature control with part quality"
+                    ],
+                    "interactive": true,
+                    "points": 25
+                },
+                {
+                    "id": "thermal_investigation",
+                    "title": "Thermal Investigation",
+                    "description": "Investigate temperature distribution across the mold",
+                    "tasks": [
+                        "Perform thermal mapping of the entire mold",
+                        "Analyze cooling circuit flow rates and temperatures",
+                        "Compare controller reading vs actual cavity temperatures",
+                        "Monitor thermal stability during extended runs"
+                    ],
+                    "interactive": true,
+                    "points": 30
+                },
+                {
+                    "id": "root_cause_identification",
+                    "title": "Root Cause Identification",
+                    "description": "Identify why temperature distribution is uneven",
+                    "tasks": [
+                        "Determine if cooling circuits are properly balanced",
+                        "Identify blockages or restrictions in cooling channels",
+                        "Assess if controller sensor location is representative",
+                        "Evaluate thermal design adequacy for production demands"
+                    ],
+                    "interactive": true,
+                    "points": 25
+                },
+                {
+                    "id": "solution_implementation",
+                    "title": "Solution Implementation",
+                    "description": "Implement solutions for consistent temperature control",
+                    "tasks": [
+                        "Balance cooling circuit flow rates",
+                        "Optimize controller sensor placement",
+                        "Implement multi-point temperature monitoring",
+                        "Establish quality monitoring procedures"
+                    ],
+                    "interactive": true,
+                    "points": 20
+                }
+            ],
             "questions": [
                 {
                     "id": "7.1",
-                    "text": "What could cause temperature variations between mold cavities?",
-                    "type": "text",
-                    "placeholder": "List potential causes..."
+                    "text": "What is the most likely cause of temperature variations between mold cavities?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "The temperature controller is broken",
+                        "Uneven cooling water flow distribution between cavities",
+                        "The plastic material has changed properties",
+                        "Ambient temperature is affecting the mold"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Uneven cooling water flow creates temperature variations between cavities. Some cavities receive more cooling than others, causing temperature differences that affect part quality."
                 },
                 {
                     "id": "7.2",
-                    "text": "How would you verify the temperature readings are accurate?",
-                    "type": "text",
-                    "placeholder": "Describe verification steps..."
+                    "text": "Why might the temperature controller show correct temperature while parts are defective?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "The controller is reading from only one location, not all cavities",
+                        "The quality control standards are too strict",
+                        "The injection pressure is too low",
+                        "The cooling water temperature is wrong"
+                    ],
+                    "correct_answer": 0,
+                    "explanation": "Single-point temperature measurement can be misleading. The controller might read correct temperature at one location while other cavities have different temperatures."
                 },
                 {
                     "id": "7.3",
-                    "text": "What maintenance procedures would you recommend?",
+                    "text": "What comprehensive approach would you use to solve this thermal uniformity problem?",
                     "type": "text",
-                    "placeholder": "Detail maintenance plan..."
+                    "placeholder": "Describe your systematic approach to achieve consistent temperature across all mold cavities..."
+                }
+            ],
+            "image": "injection-mold.png",
+            "real_world_examples": [
+                {
+                    "industry": "Automotive",
+                    "problem": "Injection molding temperature variations caused part warpage",
+                    "cost": "$200,000 in rejected parts and tooling modifications"
+                },
+                {
+                    "industry": "Consumer Electronics",
+                    "problem": "Inconsistent mold temperatures led to surface defects",
+                    "cost": "Customer complaints and product recalls"
+                },
+                {
+                    "industry": "Medical Device",
+                    "problem": "Temperature control issues affected dimensional accuracy",
+                    "cost": "FDA investigation and production shutdown"
                 }
             ]
         },
         {
             "id": 8,
-            "title": "Chemical Reactor pH Control",
-            "paragraphs": [
-                "A chemical reactor's pH control system is showing unstable behavior.",
-                "The pH value oscillates around the setpoint more than usual.",
-                "The control valve for acid addition appears to be hunting.",
-                "The pH sensor was calibrated last week and shows correct buffer readings.",
-                "The reactor temperature and level are stable at their setpoints."
+            "title": "Chemical Reactor pH Control System",
+            "subtitle": "Chemical Processing Plant",
+            "scenario_type": "ph_control_instability",
+            "difficulty": "advanced",
+            "estimated_time": "35-45 minutes",
+            "learning_objectives": [
+                "Understand pH control system dynamics",
+                "Learn about process control hunting and oscillations",
+                "Recognize pH measurement and calibration issues",
+                "Practice advanced control system troubleshooting"
             ],
-            "image": "ph-control.png",
+            "background": {
+                "company": "ChemTech Processing Solutions",
+                "process": "Chemical neutralization reactor",
+                "shift": "Day shift production",
+                "urgency": "High - Product quality affected"
+            },
+            "introduction": [
+                "A chemical reactor's pH control system is showing unstable behavior during critical production runs.",
+                "The pH value oscillates around the setpoint more than usual, affecting product quality and consistency.",
+                "The control valve for acid addition appears to be hunting, constantly adjusting position.",
+                "The pH sensor was calibrated last week and shows correct buffer readings, but something is clearly wrong."
+            ],
+            "system_overview": {
+                "ph_setpoint": 7.0,
+                "current_ph": 7.1,
+                "ph_oscillation": 0.4,
+                "valve_position": 52,
+                "valve_hunting": "ACTIVE",
+                "reactor_temperature": 85,
+                "reactor_level": 75,
+                "control_stability": "POOR",
+                "product_quality": "DECLINING",
+                "components": [
+                    {
+                        "name": "pH Sensor pHE-001",
+                        "type": "ph_sensor",
+                        "location": "Reactor wall",
+                        "status": "calibrated",
+                        "reading": "7.1",
+                        "response_time": "slow"
+                    },
+                    {
+                        "name": "pH Controller pHIC-001",
+                        "type": "ph_controller",
+                        "location": "Control room",
+                        "status": "hunting",
+                        "output": "52%",
+                        "tuning": "aggressive"
+                    },
+                    {
+                        "name": "Acid Addition Valve pHV-001",
+                        "type": "control_valve",
+                        "location": "Acid feed line",
+                        "status": "constantly_moving",
+                        "position": "52%",
+                        "flow_characteristic": "linear"
+                    }
+                ]
+            },
+            "interactive_elements": {
+                "simulation": {
+                    "enabled": true,
+                    "parameters": {
+                        "ph_value": { "min": 6.5, "max": 7.5, "default": 7.1 },
+                        "ph_oscillation": { "min": 0.1, "max": 0.8, "default": 0.4 },
+                        "valve_position": { "min": 30, "max": 70, "default": 52 },
+                        "control_stability": { "min": 20, "max": 100, "default": 35 }
+                    }
+                },
+                "investigation_tools": {
+                    "enabled": true,
+                    "tools": [
+                        {
+                            "id": "analyze_ph_response",
+                            "name": "Analyze pH Response Time",
+                            "description": "Test pH sensor response time and accuracy",
+                            "reveals": "sensor_response_issues"
+                        },
+                        {
+                            "id": "review_control_tuning",
+                            "name": "Review Control Tuning",
+                            "description": "Check PID parameters and control loop stability",
+                            "reveals": "tuning_problems"
+                        },
+                        {
+                            "id": "check_mixing_efficiency",
+                            "name": "Check Mixing Efficiency",
+                            "description": "Verify proper mixing of acid addition",
+                            "reveals": "mixing_issues"
+                        },
+                        {
+                            "id": "validate_sensor_installation",
+                            "name": "Validate Sensor Installation",
+                            "description": "Check sensor location and installation quality",
+                            "reveals": "installation_problems"
+                        }
+                    ]
+                }
+            },
+            "learning_scenarios": [
+                {
+                    "id": "control_behavior_analysis",
+                    "title": "Control Behavior Analysis",
+                    "description": "Understand the symptoms of pH control instability",
+                    "tasks": [
+                        "Analyze pH oscillation patterns and frequency",
+                        "Observe control valve hunting behavior",
+                        "Review the impact on product quality",
+                        "Correlate process conditions with instability"
+                    ],
+                    "interactive": true,
+                    "points": 25
+                },
+                {
+                    "id": "system_investigation",
+                    "title": "pH System Investigation",
+                    "description": "Systematically investigate all components of the pH control system",
+                    "tasks": [
+                        "Analyze pH sensor response time and accuracy",
+                        "Review controller tuning parameters",
+                        "Check mixing efficiency and acid distribution",
+                        "Validate sensor installation and location"
+                    ],
+                    "interactive": true,
+                    "points": 30
+                },
+                {
+                    "id": "root_cause_determination",
+                    "title": "Root Cause Determination",
+                    "description": "Identify the primary cause of control instability",
+                    "tasks": [
+                        "Determine if issue is sensor, controller, or process related",
+                        "Assess if mixing is adequate for control response",
+                        "Evaluate controller tuning appropriateness",
+                        "Check for process interactions affecting pH"
+                    ],
+                    "interactive": true,
+                    "points": 25
+                },
+                {
+                    "id": "solution_optimization",
+                    "title": "Solution and Optimization",
+                    "description": "Implement solutions for stable pH control",
+                    "tasks": [
+                        "Optimize controller tuning for stable operation",
+                        "Improve mixing for better pH response",
+                        "Relocate or upgrade pH sensor if needed",
+                        "Implement advanced control strategies"
+                    ],
+                    "interactive": true,
+                    "points": 20
+                }
+            ],
             "questions": [
                 {
                     "id": "8.1",
-                    "text": "What could cause the pH control instability?",
-                    "type": "text",
-                    "placeholder": "List potential causes..."
+                    "text": "What is the most likely cause of the pH control instability?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "The pH sensor is giving incorrect readings",
+                        "Poor mixing causes slow pH response and control hunting",
+                        "The acid concentration is too high",
+                        "The reactor temperature is affecting pH"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Poor mixing creates slow pH response and uneven distribution of acid addition. This causes the controller to hunt as it tries to control a system with significant dead time and lag."
                 },
                 {
                     "id": "8.2",
                     "text": "How would you verify the pH measurement is reliable?",
-                    "type": "text",
-                    "placeholder": "Describe verification steps..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Check only the calibration buffers",
+                        "Use a portable pH meter to verify readings at the same location",
+                        "Increase the controller gain",
+                        "Replace the pH sensor immediately"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Using a portable pH meter at the same location provides independent verification of the installed sensor accuracy under actual process conditions."
                 },
                 {
                     "id": "8.3",
-                    "text": "What maintenance procedures would you recommend?",
+                    "text": "What comprehensive approach would you use to stabilize this pH control system?",
                     "type": "text",
-                    "placeholder": "Detail maintenance plan..."
+                    "placeholder": "Describe your systematic approach to diagnose and solve the pH control instability..."
+                }
+            ],
+            "image": "ph-control.png",
+            "real_world_examples": [
+                {
+                    "industry": "Chemical Processing",
+                    "problem": "pH control instability caused batch rejection and product waste",
+                    "cost": "$300,000 in lost product and process downtime"
+                },
+                {
+                    "industry": "Water Treatment",
+                    "problem": "pH oscillations led to treatment process failures",
+                    "cost": "Regulatory violations and environmental fines"
+                },
+                {
+                    "industry": "Food Processing",
+                    "problem": "pH control issues affected food safety and quality",
+                    "cost": "Product recall and FDA investigation"
                 }
             ]
         }
