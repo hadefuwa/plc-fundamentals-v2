@@ -942,6 +942,58 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // HMI Offline Overlay Functions
+    function showHmiOfflineOverlay() {
+        let overlay = document.getElementById('hmi-offline-overlay');
+        if (!overlay) {
+            overlay = createHmiOfflineOverlay();
+        }
+        overlay.classList.remove('hidden');
+    }
+
+    function hideHmiOfflineOverlay() {
+        const overlay = document.getElementById('hmi-offline-overlay');
+        if (overlay) {
+            overlay.classList.add('hidden');
+        }
+    }
+
+    function createHmiOfflineOverlay() {
+        const hmiContainer = document.getElementById('hmi-container');
+        if (!hmiContainer) return null;
+
+        const overlay = document.createElement('div');
+        overlay.id = 'hmi-offline-overlay';
+        overlay.className = 'hmi-offline-overlay';
+        overlay.innerHTML = `
+            <div class="hmi-offline-content">
+                <div class="hmi-offline-icon">
+                    <i class="fas fa-wifi-slash"></i>
+                </div>
+                <h3>No HMI Available</h3>
+                <p>Unable to connect to HMI server</p>
+                <div class="hmi-offline-details">
+                    <p><strong>Server:</strong> https://192.168.7.101/device/WebRH</p>
+                    <p><strong>Status:</strong> Connection Timeout</p>
+                </div>
+                <button id="refresh-hmi-connection" class="hmi-refresh-btn">
+                    <i class="fas fa-sync-alt"></i> Refresh Connection
+                </button>
+            </div>
+        `;
+
+        // Add click event to refresh button
+        overlay.querySelector('#refresh-hmi-connection').addEventListener('click', function() {
+            showHmiStatus('Attempting to reconnect...');
+            if (hmiWebview) {
+                hmiWebview.reload();
+            }
+        });
+
+        hmiContainer.appendChild(overlay);
+        return overlay;
+    }
+
     // Webview event listeners
     if (hmiWebview) {
         // Set initial zoom level
@@ -966,16 +1018,28 @@ document.addEventListener('DOMContentLoaded', function() {
             setDefaultZoom();
             // Set zoom again after a short delay to ensure it sticks
             setTimeout(setDefaultZoom, 500);
+            hideHmiOfflineOverlay();
         });
 
         hmiWebview.addEventListener('did-start-loading', function() {
             console.log('HMI interface loading...');
             showHmiStatus('Loading HMI Interface...', 5000);
+            hideHmiOfflineOverlay();
+            
+            // Set a timeout to show offline overlay if connection takes too long
+            setTimeout(() => {
+                if (!hmiWebview.src || hmiWebview.src.includes('192.168.7.101')) {
+                    // Check if still trying to load the HMI URL
+                    console.log('HMI connection timeout, showing offline overlay');
+                    showHmiOfflineOverlay();
+                }
+            }, 10000); // 10 second timeout
         });
 
         hmiWebview.addEventListener('did-fail-load', function(event) {
             console.error('HMI interface failed to load:', event.errorDescription);
             showHmiStatus('Failed to load HMI Interface', 5000);
+            showHmiOfflineOverlay();
         });
     }
 
@@ -984,6 +1048,7 @@ document.addEventListener('DOMContentLoaded', function() {
         refreshHmiBtn.addEventListener('click', function() {
             console.log('Refreshing HMI interface');
             showHmiStatus('Refreshing...');
+            hideHmiOfflineOverlay();
             if (hmiWebview) {
                 hmiWebview.reload();
             }

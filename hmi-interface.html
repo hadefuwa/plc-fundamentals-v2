@@ -107,6 +107,116 @@
         .back-btn:hover {
             background: #dd3333;
         }
+
+        /* HMI Offline Overlay */
+        .hmi-offline-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
+            transition: opacity 0.3s ease;
+        }
+
+        .hmi-offline-overlay.hidden {
+            display: none;
+        }
+
+        .hmi-offline-content {
+            text-align: center;
+            color: #FFFFFF;
+            background: rgba(44, 48, 51, 0.95);
+            padding: 40px;
+            border-radius: 12px;
+            border: 2px solid rgba(255, 68, 68, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            max-width: 400px;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hmi-offline-icon {
+            font-size: 48px;
+            color: #FF4444;
+            margin-bottom: 20px;
+        }
+
+        .hmi-offline-content h3 {
+            color: #FFFFFF;
+            font-size: 24px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .hmi-offline-content p {
+            color: #CCCCCC;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .hmi-offline-details {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #FF4444;
+        }
+
+        .hmi-offline-details p {
+            color: #FFFFFF;
+            font-size: 14px;
+            margin-bottom: 8px;
+            font-family: monospace;
+        }
+
+        .hmi-offline-details p:last-child {
+            margin-bottom: 0;
+        }
+
+        .hmi-refresh-btn {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+        }
+
+        .hmi-refresh-btn:hover {
+            background: linear-gradient(135deg, #45a049, #4CAF50);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(76, 175, 80, 0.4);
+        }
+
+        .hmi-refresh-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+        }
+
+        .hmi-refresh-btn i {
+            margin-right: 8px;
+        }
     </style>
 </head>
 <body>
@@ -153,6 +263,59 @@
             }
         }
 
+        // HMI Offline Overlay Functions
+        function showHmiOfflineOverlay() {
+            let overlay = document.getElementById('hmi-offline-overlay');
+            if (!overlay) {
+                overlay = createHmiOfflineOverlay();
+            }
+            overlay.classList.remove('hidden');
+        }
+
+        function hideHmiOfflineOverlay() {
+            const overlay = document.getElementById('hmi-offline-overlay');
+            if (overlay) {
+                overlay.classList.add('hidden');
+            }
+        }
+
+        function createHmiOfflineOverlay() {
+            const hmiContainer = document.querySelector('.hmi-container');
+            if (!hmiContainer) return null;
+
+            const overlay = document.createElement('div');
+            overlay.id = 'hmi-offline-overlay';
+            overlay.className = 'hmi-offline-overlay';
+            overlay.innerHTML = `
+                <div class="hmi-offline-content">
+                    <div class="hmi-offline-icon">
+                        <i class="fas fa-wifi-slash"></i>
+                    </div>
+                    <h3>No HMI Available</h3>
+                    <p>Unable to connect to HMI server</p>
+                    <div class="hmi-offline-details">
+                        <p><strong>Server:</strong> https://192.168.7.101/device/WebRH</p>
+                        <p><strong>Status:</strong> Connection Timeout</p>
+                    </div>
+                    <button id="refresh-hmi-connection" class="hmi-refresh-btn">
+                        <i class="fas fa-sync-alt"></i> Refresh Connection
+                    </button>
+                </div>
+            `;
+
+            // Add click event to refresh button
+            overlay.querySelector('#refresh-hmi-connection').addEventListener('click', function() {
+                showStatus('Attempting to reconnect...');
+                hideHmiOfflineOverlay();
+                if (hmiWebview) {
+                    hmiWebview.reload();
+                }
+            });
+
+            hmiContainer.appendChild(overlay);
+            return overlay;
+        }
+
         // Webview event listeners
         if (hmiWebview) {
             hmiWebview.addEventListener('dom-ready', function() {
@@ -163,16 +326,19 @@
                 const zoomPercent = Math.round(Math.pow(1.2, currentZoomLevel) * 100);
                 console.log('Setting default zoom level:', currentZoomLevel, 'Zoom:', zoomPercent + '%');
                 showStatus('HMI Interface Ready - Zoom: 96%');
+                hideHmiOfflineOverlay();
             });
 
             hmiWebview.addEventListener('did-start-loading', function() {
                 console.log('HMI interface loading...');
                 showStatus('Loading HMI Interface...', 5000);
+                hideHmiOfflineOverlay();
             });
 
             hmiWebview.addEventListener('did-fail-load', function(event) {
                 console.error('HMI interface failed to load:', event.errorDescription);
                 showStatus('Failed to load HMI Interface', 5000);
+                showHmiOfflineOverlay();
             });
         }
 
@@ -181,6 +347,7 @@
             refreshBtn.addEventListener('click', function() {
                 console.log('Refreshing HMI interface');
                 showStatus('Refreshing...');
+                hideHmiOfflineOverlay();
                 if (hmiWebview) {
                     hmiWebview.reload();
                 }

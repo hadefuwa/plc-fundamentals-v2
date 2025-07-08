@@ -1321,6 +1321,116 @@ h1 {
     display: none;
 }
 
+/* HMI Offline Overlay */
+.hmi-offline-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    border-radius: 8px;
+    backdrop-filter: blur(5px);
+    transition: opacity 0.3s ease;
+}
+
+.hmi-offline-overlay.hidden {
+    display: none;
+}
+
+.hmi-offline-content {
+    text-align: center;
+    color: #FFFFFF;
+    background: rgba(44, 48, 51, 0.95);
+    padding: 40px;
+    border-radius: 12px;
+    border: 2px solid rgba(255, 68, 68, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    max-width: 400px;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hmi-offline-icon {
+    font-size: 48px;
+    color: #FF4444;
+    margin-bottom: 20px;
+}
+
+.hmi-offline-content h3 {
+    color: #FFFFFF;
+    font-size: 24px;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.hmi-offline-content p {
+    color: #CCCCCC;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.hmi-offline-details {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border-left: 4px solid #FF4444;
+}
+
+.hmi-offline-details p {
+    color: #FFFFFF;
+    font-size: 14px;
+    margin-bottom: 8px;
+    font-family: monospace;
+}
+
+.hmi-offline-details p:last-child {
+    margin-bottom: 0;
+}
+
+.hmi-refresh-btn {
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.hmi-refresh-btn:hover {
+    background: linear-gradient(135deg, #45a049, #4CAF50);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(76, 175, 80, 0.4);
+}
+
+.hmi-refresh-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+}
+
+.hmi-refresh-btn i {
+    margin-right: 8px;
+}
+
 /* Full-screen modal styles */
 .hmi-fullscreen-modal {
     position: fixed;
