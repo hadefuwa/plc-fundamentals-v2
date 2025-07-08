@@ -438,14 +438,20 @@
             console.log(`Rendering enhanced maintenance worksheet: ${scenario.title}`);
             renderEnhancedMaintenanceWorksheet(scenario);
           }
-        } else if (type === 'fault') {
-          // Fault scenarios use basic format (to be enhanced later)
+              } else if (type === 'fault') {
+        // Check if this is the enhanced fault scenario 1
+        if (scenario.id === 1) {
+          console.log(`Rendering interactive fault scenario: ${scenario.title}`);
+          renderInteractiveFaultScenario1(scenario);
+        } else {
+          // Other fault scenarios use basic format (to be enhanced later)
           console.log(`Rendering fault scenario: ${scenario.title}`);
           renderFaultScenario(scenario);
-        } else {
-          // Fallback for any other types
-          renderWorksheet(scenario, type);
         }
+      } else {
+        // Fallback for any other types
+        renderWorksheet(scenario, type);
+      }
         
       } catch (error) {
         console.error('Error loading worksheet:', error);
@@ -2603,6 +2609,706 @@
       if (selectedButton) {
         selectedButton.classList.add('active');
         selectedButton.style.background = '#E91E63';
+      }
+    }
+
+    // Interactive Fault Scenario 1 - Tank Temperature Control with Operator Offset Error
+    function renderInteractiveFaultScenario1(scenario) {
+      const container = document.getElementById('worksheet-content');
+      
+      container.innerHTML = `
+        <h1 class="page-title">
+          <i class="fas fa-thermometer-half"></i> ${scenario.title}
+          <div style="font-size: 18px; font-weight: normal; color: #FFA726; margin-top: 10px;">
+            ${scenario.subtitle} • ${scenario.difficulty.toUpperCase()} • ${scenario.estimated_time}
+          </div>
+        </h1>
+
+
+
+
+
+        <!-- Scenario -->
+        <div class="worksheet-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 2px solid #FF5722;">
+          <h2 class="section-header" style="color: #FF5722; margin-bottom: 20px; font-size: 24px;">
+            <i class="fas fa-info-circle"></i> Scenario
+          </h2>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+            <div style="background: rgba(255, 255, 255, 0.1); padding: 15px; border-radius: 8px;">
+              <strong style="color: #FFA726;">Company:</strong> ${scenario.background.company}<br>
+              <strong style="color: #FFA726;">Process:</strong> ${scenario.background.process}<br>
+              <strong style="color: #FFA726;">Shift:</strong> ${scenario.background.shift}<br>
+              <strong style="color: #FFA726;">Urgency:</strong> ${scenario.background.urgency}
+            </div>
+            <div style="text-align: center;">
+              <img src="assets/scenarios/${scenario.image}" alt="${scenario.title}" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);">
+            </div>
+          </div>
+          <div style="color: #FFFFFF; line-height: 1.6;">
+            ${scenario.introduction.map(para => `<p style="margin-bottom: 15px;">${para}</p>`).join('')}
+          </div>
+        </div>
+
+        <!-- Interactive Tank Temperature System -->
+        <div class="worksheet-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 2px solid #4CAF50;">
+          <h2 class="section-header" style="color: #4CAF50; margin-bottom: 20px; font-size: 24px;">
+            <i class="fas fa-thermometer-half"></i> Interactive Tank Temperature Control System
+          </h2>
+          
+          <!-- System Status Display -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px;">
+            <div class="sim-card" style="background: #333; padding: 20px; border-radius: 8px; text-align: center;">
+              <label style="color: #FFFFFF; font-weight: bold; display: block; margin-bottom: 10px;">Setpoint</label>
+              <div style="font-size: 24px; color: #4CAF50; font-weight: bold;">${scenario.system_overview.setpoint}°C</div>
+            </div>
+            <div class="sim-card" style="background: #333; padding: 20px; border-radius: 8px; text-align: center;">
+              <label style="color: #FFFFFF; font-weight: bold; display: block; margin-bottom: 10px;">Displayed Temperature</label>
+              <div id="displayed-temp" style="font-size: 24px; color: #4CAF50; font-weight: bold;">${scenario.system_overview.displayed_temp}°C</div>
+              <div style="font-size: 12px; color: #888; margin-top: 5px;">What controller sees</div>
+            </div>
+            <div class="sim-card" style="background: #333; padding: 20px; border-radius: 8px; text-align: center;">
+              <label style="color: #FFFFFF; font-weight: bold; display: block; margin-bottom: 10px;">Actual Temperature</label>
+              <div id="actual-temp" style="font-size: 24px; color: #FF5722; font-weight: bold;">${scenario.system_overview.actual_temp}°C</div>
+              <div style="font-size: 12px; color: #888; margin-top: 5px;">Real tank temperature</div>
+            </div>
+            <div class="sim-card" style="background: #333; padding: 20px; border-radius: 8px; text-align: center;">
+              <label style="color: #FFFFFF; font-weight: bold; display: block; margin-bottom: 10px;">Temperature Offset</label>
+              <div id="temp-offset" style="font-size: 24px; color: #FF9800; font-weight: bold;">+${scenario.system_overview.offset_applied}°C</div>
+              <div style="font-size: 12px; color: #888; margin-top: 5px;">Applied adjustment</div>
+            </div>
+            <div class="sim-card" style="background: #333; padding: 20px; border-radius: 8px; text-align: center;">
+              <label style="color: #FFFFFF; font-weight: bold; display: block; margin-bottom: 10px;">Cooling System</label>
+              <div id="cooling-load" style="font-size: 18px; color: #2196F3; font-weight: bold;">${scenario.system_overview.cooling_load}</div>
+              <div style="font-size: 12px; color: #888; margin-top: 5px;">Working harder than normal</div>
+            </div>
+            <div class="sim-card" style="background: #333; padding: 20px; border-radius: 8px; text-align: center;">
+              <label style="color: #FFFFFF; font-weight: bold; display: block; margin-bottom: 10px;">Quality Status</label>
+              <div id="quality-status" style="font-size: 18px; color: #FF5722; font-weight: bold;">ISSUES DETECTED</div>
+              <div style="font-size: 12px; color: #888; margin-top: 5px;">Signs of overheating</div>
+            </div>
+          </div>
+
+          <!-- Interactive Investigation Tools -->
+          <div style="margin-bottom: 30px;">
+            <h3 style="color: #FFFFFF; margin-bottom: 15px;">Investigation Tools</h3>
+            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+              <button onclick="checkControllerOffset()" style="background: #2196F3; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+                <i class="fas fa-search"></i> Check Controller Offset
+              </button>
+              <button onclick="usePortableThermometer()" style="background: #FF9800; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+                <i class="fas fa-thermometer-half"></i> Use Portable Thermometer
+              </button>
+              <button onclick="reviewQualityReports()" style="background: #9C27B0; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+                <i class="fas fa-chart-line"></i> Review Quality Reports
+              </button>
+              <button onclick="adjustOffset()" style="background: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+                <i class="fas fa-cog"></i> Adjust Offset
+              </button>
+            </div>
+          </div>
+
+          <!-- Temperature Chart -->
+          <div style="background: #222; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+            <h3 style="color: #FFFFFF; margin-bottom: 15px;">Temperature Trend (Displayed vs Actual)</h3>
+            <canvas id="temperature-chart" width="800" height="300" style="width: 100%; height: 200px; background: #111; border-radius: 4px;"></canvas>
+          </div>
+
+          <!-- Component Status -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+            ${scenario.system_overview.components.map(component => `
+              <div class="component-card" style="background: #333; padding: 20px; border-radius: 8px; border-left: 4px solid #4CAF50;">
+                <h4 style="color: #4CAF50; margin-bottom: 10px;">${component.name}</h4>
+                <div style="color: #FFFFFF; font-size: 14px; line-height: 1.5;">
+                  <strong>Type:</strong> ${component.type.replace('_', ' ')}<br>
+                  <strong>Location:</strong> ${component.location}<br>
+                  <strong>Status:</strong> <span style="color: #FF5722;">${component.status.toUpperCase()}</span>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <!-- Interactive Learning Scenarios -->
+        <div class="worksheet-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 2px solid #9C27B0;">
+          <h2 class="section-header" style="color: #9C27B0; margin-bottom: 20px; font-size: 24px;">
+            <i class="fas fa-tools"></i> Interactive Learning Journey
+          </h2>
+          
+          <!-- Progress Bar -->
+          <div style="background: #333; border-radius: 10px; margin-bottom: 30px; overflow: hidden;">
+            <div id="learning-progress" style="background: linear-gradient(90deg, #9C27B0, #E91E63); height: 8px; width: 0%; transition: width 0.3s ease;"></div>
+          </div>
+          
+          <!-- Step Counter and Score -->
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+            <div style="color: #FFFFFF;">
+              Phase <span id="current-learning-phase">1</span> of ${scenario.learning_scenarios.length}
+            </div>
+            <div style="color: #FFFFFF;">
+              Score: <span id="learning-score" style="color: #4CAF50; font-weight: bold;">0</span>/100
+            </div>
+          </div>
+
+          <!-- Learning Phase Content -->
+          <div id="learning-content">
+            <!-- Dynamic content will be loaded here -->
+          </div>
+        </div>
+
+        <!-- Real-World Examples -->
+        <div class="worksheet-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 2px solid #FFC107;">
+          <h2 class="section-header" style="color: #FFC107; margin-bottom: 20px; font-size: 24px;">
+            <i class="fas fa-industry"></i> Real-World Examples - When This Goes Wrong
+          </h2>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+            ${scenario.real_world_examples.map(example => `
+              <div style="background: #333; padding: 20px; border-radius: 8px; border-left: 4px solid #FFC107;">
+                <h4 style="color: #FFC107; margin-bottom: 10px;">${example.industry}</h4>
+                <p style="color: #FFFFFF; margin-bottom: 10px; font-size: 14px;">${example.problem}</p>
+                <div style="color: #FF5722; font-weight: bold; font-size: 14px;">Cost: ${example.cost}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <!-- Enhanced Questions -->
+        <div class="worksheet-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 2px solid #FF9800;">
+          <h2 class="section-header" style="color: #FF9800; margin-bottom: 20px; font-size: 24px;">
+            <i class="fas fa-question-circle"></i> Assessment Questions
+          </h2>
+          
+          ${scenario.questions.map((question, index) => `
+            <div class="question-item" style="background: #333; padding: 25px; border-radius: 8px; margin-bottom: 20px;">
+              <h3 style="color: #FF9800; margin-bottom: 15px;">Question ${index + 1}</h3>
+              <p style="color: #FFFFFF; margin-bottom: 15px; line-height: 1.6;">${question.text}</p>
+              
+              ${question.type === 'multiple_choice' ? `
+                <div style="margin-bottom: 15px;">
+                  ${question.options.map((option, optIndex) => `
+                    <label style="display: block; color: #FFFFFF; margin-bottom: 10px; cursor: pointer; padding: 10px; border-radius: 5px; background: rgba(255,255,255,0.1); transition: background 0.3s;">
+                      <input type="radio" name="question_${question.id}" value="${optIndex}" style="margin-right: 10px;">
+                      ${option}
+                    </label>
+                  `).join('')}
+                </div>
+                <button onclick="submitMultipleChoice('${question.id}', ${question.correct_answer})" style="background: #FF9800; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-weight: bold;">
+                  Submit Answer
+                </button>
+                <div id="explanation_${question.id}" style="display: none; background: rgba(76, 175, 80, 0.1); padding: 15px; border-radius: 8px; margin-top: 15px; border-left: 3px solid #4CAF50;">
+                  <strong style="color: #4CAF50;">Explanation:</strong><br>
+                  <span style="color: #FFFFFF;">${question.explanation}</span>
+                </div>
+              ` : `
+                <textarea placeholder="${question.placeholder}" style="width: 100%; height: 100px; padding: 12px; border: 1px solid #555; border-radius: 6px; background: #222; color: #FFFFFF; resize: vertical; font-family: inherit;" data-question="${question.id}"></textarea>
+                <button onclick="submitTextAnswer('${question.id}')" style="background: #FF9800; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 10px;">
+                  Submit Answer
+                </button>
+              `}
+            </div>
+          `).join('')}
+        </div>
+      `;
+
+      // Initialize the tank temperature system simulation
+      initializeTankTemperatureSystem();
+      
+      // Initialize the learning journey
+      initializeLearningJourney(scenario);
+      
+      // Show the content and hide loading
+      document.getElementById('main-content').style.display = 'block';
+      document.getElementById('loading-container').style.display = 'none';
+      
+      // Update navigation buttons
+      updateNavigationButtons();
+    }
+
+    // Tank Temperature System Functions
+    let tankData = {
+      setpoint: 75,
+      actualTemp: 80,
+      displayedTemp: 75,
+      offset: 5,
+      coolingLoad: 'HIGH',
+      qualityIssues: true,
+      chartData: [],
+      offsetDiscovered: false,
+      actualTempDiscovered: false
+    };
+
+    function initializeTankTemperatureSystem() {
+      // Initialize the temperature chart
+      const canvas = document.getElementById('temperature-chart');
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        canvas.width = 800;
+        canvas.height = 300;
+        
+        // Start the tank temperature simulation
+        setInterval(updateTankTemperatureSystem, 1000);
+      }
+    }
+
+    function updateTankTemperatureSystem() {
+      const displayedTempElement = document.getElementById('displayed-temp');
+      const actualTempElement = document.getElementById('actual-temp');
+      const offsetElement = document.getElementById('temp-offset');
+      const coolingLoadElement = document.getElementById('cooling-load');
+      const qualityStatusElement = document.getElementById('quality-status');
+      
+      // Calculate displayed temperature (actual minus offset)
+      tankData.displayedTemp = tankData.actualTemp - tankData.offset;
+      
+      // Update display elements
+      if (displayedTempElement) {
+        displayedTempElement.textContent = tankData.displayedTemp + '°C';
+        displayedTempElement.style.color = Math.abs(tankData.displayedTemp - tankData.setpoint) < 2 ? '#4CAF50' : '#FF5722';
+      }
+      
+      if (actualTempElement) {
+        actualTempElement.textContent = tankData.actualTemp + '°C';
+        actualTempElement.style.color = tankData.actualTemp > tankData.setpoint + 2 ? '#FF5722' : '#4CAF50';
+      }
+      
+      if (offsetElement) {
+        offsetElement.textContent = (tankData.offset > 0 ? '+' : '') + tankData.offset + '°C';
+        offsetElement.style.color = Math.abs(tankData.offset) > 0 ? '#FF9800' : '#4CAF50';
+      }
+      
+      if (coolingLoadElement) {
+        coolingLoadElement.textContent = tankData.coolingLoad;
+        coolingLoadElement.style.color = tankData.coolingLoad === 'HIGH' ? '#FF5722' : '#4CAF50';
+      }
+      
+      if (qualityStatusElement) {
+        qualityStatusElement.textContent = tankData.qualityIssues ? 'ISSUES DETECTED' : 'NORMAL';
+        qualityStatusElement.style.color = tankData.qualityIssues ? '#FF5722' : '#4CAF50';
+      }
+      
+      // Update chart
+      updateTankTemperatureChart();
+    }
+
+    function updateTankTemperatureChart() {
+      const canvas = document.getElementById('temperature-chart');
+      if (!canvas) return;
+      
+      const ctx = canvas.getContext('2d');
+      const now = Date.now();
+      
+      // Add new data point
+      tankData.chartData.push({
+        time: now,
+        displayedTemp: tankData.displayedTemp,
+        actualTemp: tankData.actualTemp,
+        setpoint: tankData.setpoint
+      });
+      
+      // Keep only last 50 points
+      if (tankData.chartData.length > 50) {
+        tankData.chartData.shift();
+      }
+      
+      // Clear canvas
+      ctx.fillStyle = '#111';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      // Draw grid
+      ctx.strokeStyle = '#333';
+      ctx.lineWidth = 1;
+      for (let i = 0; i < canvas.width; i += 50) {
+        ctx.beginPath();
+        ctx.moveTo(i, 0);
+        ctx.lineTo(i, canvas.height);
+        ctx.stroke();
+      }
+      for (let i = 0; i < canvas.height; i += 30) {
+        ctx.beginPath();
+        ctx.moveTo(0, i);
+        ctx.lineTo(canvas.width, i);
+        ctx.stroke();
+      }
+      
+      // Draw temperature lines
+      if (tankData.chartData.length > 1) {
+        // Draw displayed temperature line (what controller sees)
+        ctx.strokeStyle = '#4CAF50';
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        tankData.chartData.forEach((point, index) => {
+          const x = (index / (tankData.chartData.length - 1)) * canvas.width;
+          const y = canvas.height - ((point.displayedTemp - 60) / 30) * canvas.height;
+          if (index === 0) {
+            ctx.moveTo(x, y);
+          } else {
+            ctx.lineTo(x, y);
+          }
+        });
+        ctx.stroke();
+        
+        // Draw actual temperature line (real tank temperature)
+        ctx.strokeStyle = '#FF5722';
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        tankData.chartData.forEach((point, index) => {
+          const x = (index / (tankData.chartData.length - 1)) * canvas.width;
+          const y = canvas.height - ((point.actualTemp - 60) / 30) * canvas.height;
+          if (index === 0) {
+            ctx.moveTo(x, y);
+          } else {
+            ctx.lineTo(x, y);
+          }
+        });
+        ctx.stroke();
+        
+        // Draw setpoint line
+        ctx.strokeStyle = '#FFC107';
+        ctx.lineWidth = 2;
+        ctx.setLineDash([5, 5]);
+        ctx.beginPath();
+        const setpointY = canvas.height - ((tankData.setpoint - 60) / 30) * canvas.height;
+        ctx.moveTo(0, setpointY);
+        ctx.lineTo(canvas.width, setpointY);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+      
+      // Draw legend
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = '12px Arial';
+      ctx.fillText('Displayed Temp', 10, 20);
+      ctx.fillText('Actual Temp', 10, 35);
+      ctx.fillText('Setpoint', 10, 50);
+      
+      ctx.fillStyle = '#4CAF50';
+      ctx.fillRect(110, 12, 20, 3);
+      ctx.fillStyle = '#FF5722';
+      ctx.fillRect(110, 27, 20, 3);
+      ctx.fillStyle = '#FFC107';
+      ctx.fillRect(110, 42, 20, 3);
+    }
+
+    // Interactive Investigation Functions
+    function checkControllerOffset() {
+      tankData.offsetDiscovered = true;
+      showFeedback('Controller offset discovered: +5°C is currently applied!', '#2196F3');
+      
+      // Show a detailed popup
+      const popup = document.createElement('div');
+      popup.style.cssText = `
+        position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+        background: #333; color: white; padding: 30px; border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); z-index: 1000;
+        max-width: 500px; text-align: center;
+      `;
+      popup.innerHTML = `
+        <h3 style="color: #2196F3; margin-bottom: 20px;">Controller Offset Settings</h3>
+        <p style="margin-bottom: 15px;">Current offset: <strong>+5°C</strong></p>
+        <p style="margin-bottom: 15px;">This means the controller subtracts 5°C from the sensor reading.</p>
+        <p style="margin-bottom: 20px;">Note from day shift: "Added +5°C offset to compensate for slow sensor response."</p>
+        <button onclick="this.parentElement.remove()" style="background: #2196F3; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+          Close
+        </button>
+      `;
+      document.body.appendChild(popup);
+    }
+
+    function usePortableThermometer() {
+      tankData.actualTempDiscovered = true;
+      showFeedback('Portable thermometer reading: 80°C - The tank is actually hotter than displayed!', '#FF9800');
+      
+      // Show a detailed popup
+      const popup = document.createElement('div');
+      popup.style.cssText = `
+        position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+        background: #333; color: white; padding: 30px; border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); z-index: 1000;
+        max-width: 500px; text-align: center;
+      `;
+      popup.innerHTML = `
+        <h3 style="color: #FF9800; margin-bottom: 20px;">Portable Thermometer Reading</h3>
+        <p style="margin-bottom: 15px;">Actual tank temperature: <strong>80°C</strong></p>
+        <p style="margin-bottom: 15px;">Controller displays: <strong>75°C</strong></p>
+        <p style="margin-bottom: 20px;">The tank is running 5°C hotter than the controller thinks!</p>
+        <button onclick="this.parentElement.remove()" style="background: #FF9800; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+          Close
+        </button>
+      `;
+      document.body.appendChild(popup);
+    }
+
+    function reviewQualityReports() {
+      showFeedback('Quality reports show signs of overheating in recent batches!', '#9C27B0');
+      
+      // Show a detailed popup
+      const popup = document.createElement('div');
+      popup.style.cssText = `
+        position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+        background: #333; color: white; padding: 30px; border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); z-index: 1000;
+        max-width: 500px; text-align: center;
+      `;
+      popup.innerHTML = `
+        <h3 style="color: #9C27B0; margin-bottom: 20px;">Quality Report Analysis</h3>
+        <ul style="text-align: left; margin-bottom: 20px;">
+          <li style="margin-bottom: 10px;">Batch 1247: Product showed signs of thermal degradation</li>
+          <li style="margin-bottom: 10px;">Batch 1248: Color changes indicating overheating</li>
+          <li style="margin-bottom: 10px;">Batch 1249: Viscosity higher than specification</li>
+        </ul>
+        <p style="margin-bottom: 20px;">All issues started appearing after the day shift made their "adjustment"</p>
+        <button onclick="this.parentElement.remove()" style="background: #9C27B0; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+          Close
+        </button>
+      `;
+      document.body.appendChild(popup);
+    }
+
+    function adjustOffset() {
+      // Show offset adjustment interface
+      const popup = document.createElement('div');
+      popup.style.cssText = `
+        position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+        background: #333; color: white; padding: 30px; border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); z-index: 1000;
+        max-width: 500px; text-align: center;
+      `;
+      popup.innerHTML = `
+        <h3 style="color: #4CAF50; margin-bottom: 20px;">Adjust Temperature Offset</h3>
+        <p style="margin-bottom: 15px;">Current offset: <span id="popup-offset">+${tankData.offset}°C</span></p>
+        <div style="margin-bottom: 20px;">
+          <input type="range" id="offset-slider" min="-10" max="10" value="${tankData.offset}" 
+                 style="width: 300px;" oninput="updateOffsetPreview(this.value)">
+          <div style="margin-top: 10px;">
+            <span style="font-size: 12px;">-10°C</span>
+            <span style="float: right; font-size: 12px;">+10°C</span>
+          </div>
+        </div>
+        <div style="margin-bottom: 20px;">
+          <button onclick="applyOffset()" style="background: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-right: 10px;">
+            Apply Offset
+          </button>
+          <button onclick="closeOffsetPopup()" style="background: #666; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+            Cancel
+          </button>
+        </div>
+        <p style="font-size: 12px; color: #888;">Gradually reduce the offset to prevent thermal shock to the system</p>
+      `;
+      document.body.appendChild(popup);
+    }
+
+    function updateOffsetPreview(value) {
+      document.getElementById('popup-offset').textContent = (value > 0 ? '+' : '') + value + '°C';
+    }
+
+    function closeOffsetPopup() {
+      const popup = document.querySelector('div[style*="position: fixed"]');
+      if (popup) popup.remove();
+    }
+
+    function applyOffset() {
+      const newOffset = parseFloat(document.getElementById('offset-slider').value);
+      tankData.offset = newOffset;
+      
+      // Update quality issues based on offset
+      tankData.qualityIssues = Math.abs(tankData.actualTemp - tankData.setpoint) > 2;
+      tankData.coolingLoad = Math.abs(tankData.actualTemp - tankData.setpoint) > 3 ? 'HIGH' : 'NORMAL';
+      
+      // Close popup
+      const popup = document.querySelector('div[style*="position: fixed"]');
+      if (popup) popup.remove();
+      
+      showFeedback(`Offset adjusted to ${newOffset > 0 ? '+' : ''}${newOffset}°C`, '#4CAF50');
+    }
+
+    function showFeedback(message, color = '#FF5722') {
+      const feedback = document.createElement('div');
+      feedback.style.cssText = `
+        position: fixed; top: 20px; right: 20px; z-index: 1000;
+        background: ${color}; color: white; padding: 15px 20px;
+        border-radius: 8px; font-weight: bold; max-width: 300px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      `;
+      feedback.textContent = message;
+      document.body.appendChild(feedback);
+      
+      setTimeout(() => feedback.remove(), 4000);
+    }
+
+    // Learning Journey Functions
+    let learningState = {
+      currentPhase: 1,
+      score: 0,
+      maxScore: 100,
+      scenario: null
+    };
+
+    function initializeLearningJourney(scenario) {
+      learningState.scenario = scenario;
+      learningState.currentPhase = 1;
+      learningState.score = 0;
+      
+      showLearningPhase(1);
+    }
+
+    function showLearningPhase(phaseNumber) {
+      const phase = learningState.scenario.learning_scenarios[phaseNumber - 1];
+      if (!phase) return;
+      
+      const content = document.getElementById('learning-content');
+      content.innerHTML = `
+        <div style="background: #333; padding: 25px; border-radius: 8px; margin-bottom: 20px;">
+          <h3 style="color: #9C27B0; margin-bottom: 15px;">${phase.title}</h3>
+          <p style="color: #FFFFFF; margin-bottom: 20px; line-height: 1.6;">${phase.description}</p>
+          
+          <div style="margin-bottom: 20px;">
+            <h4 style="color: #FFFFFF; margin-bottom: 15px;">Learning Tasks:</h4>
+            <ul style="color: #FFFFFF; line-height: 1.6;">
+              ${phase.tasks.map(task => `<li style="margin-bottom: 8px;">${task}</li>`).join('')}
+            </ul>
+          </div>
+          
+          <div style="margin-bottom: 20px;">
+            <h4 style="color: #FFFFFF; margin-bottom: 15px;">What did you learn from this phase?</h4>
+            <textarea id="phase-insights" placeholder="Describe what you discovered and learned in this phase..." style="width: 100%; height: 80px; padding: 12px; border: 1px solid #555; border-radius: 6px; background: #222; color: #FFFFFF; resize: vertical;"></textarea>
+          </div>
+          
+          <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+            <button onclick="submitLearningPhase(${phaseNumber})" style="background: #9C27B0; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-weight: bold;">
+              <i class="fas fa-check"></i> Complete Phase
+            </button>
+            ${phaseNumber > 1 ? `<button onclick="showLearningPhase(${phaseNumber - 1})" style="background: #666; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer;">Previous</button>` : ''}
+          </div>
+        </div>
+      `;
+      
+      // Update progress
+      const progress = (phaseNumber / learningState.scenario.learning_scenarios.length) * 100;
+      document.getElementById('learning-progress').style.width = progress + '%';
+      document.getElementById('current-learning-phase').textContent = phaseNumber;
+      document.getElementById('learning-score').textContent = learningState.score;
+    }
+
+    function submitLearningPhase(phaseNumber) {
+      const insights = document.getElementById('phase-insights').value.trim();
+      if (!insights) {
+        alert('Please describe what you learned before proceeding.');
+        return;
+      }
+      
+      const phase = learningState.scenario.learning_scenarios[phaseNumber - 1];
+      learningState.score += phase.points;
+      
+      // Save the response
+      localStorage.setItem(`fault_scenario_1_phase_${phaseNumber}`, insights);
+      
+      if (phaseNumber < learningState.scenario.learning_scenarios.length) {
+        showLearningPhase(phaseNumber + 1);
+      } else {
+        showLearningComplete();
+      }
+    }
+
+    function showLearningComplete() {
+      const content = document.getElementById('learning-content');
+      content.innerHTML = `
+        <div style="text-align: center; background: #333; padding: 30px; border-radius: 8px;">
+          <h3 style="color: #4CAF50; margin-bottom: 20px;">🎉 Learning Journey Complete!</h3>
+          <p style="color: #FFFFFF; font-size: 18px; margin-bottom: 20px;">
+            Final Score: <span style="color: #4CAF50; font-weight: bold;">${learningState.score}/${learningState.maxScore}</span>
+          </p>
+          <p style="color: #FFFFFF; margin-bottom: 20px;">
+            You've successfully completed the learning journey about operator offset errors!
+          </p>
+          <div style="background: rgba(76, 175, 80, 0.1); padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #4CAF50;">
+            <h4 style="color: #4CAF50; margin-bottom: 15px;">Key Takeaways:</h4>
+            <ul style="text-align: left; color: #FFFFFF; line-height: 1.6;">
+              <li style="margin-bottom: 8px;">Always document temporary adjustments with clear removal instructions</li>
+              <li style="margin-bottom: 8px;">Use independent measurements to verify controller readings</li>
+              <li style="margin-bottom: 8px;">Look for indirect signs of problems (quality issues, system strain)</li>
+              <li style="margin-bottom: 8px;">Remove offsets gradually to prevent system shock</li>
+            </ul>
+          </div>
+          <button onclick="restartLearning()" style="background: #4CAF50; color: white; border: none; padding: 15px 30px; border-radius: 8px; cursor: pointer; font-weight: bold;">
+            <i class="fas fa-redo"></i> Try Again
+          </button>
+        </div>
+      `;
+      
+      document.getElementById('learning-progress').style.width = '100%';
+      document.getElementById('learning-score').textContent = learningState.score;
+    }
+
+    function restartLearning() {
+      learningState.currentPhase = 1;
+      learningState.score = 0;
+      tankData.offset = 5; // Reset to original problem state
+      tankData.offsetDiscovered = false;
+      tankData.actualTempDiscovered = false;
+      showLearningPhase(1);
+    }
+
+    // Question Functions
+    function submitMultipleChoice(questionId, correctAnswer) {
+      const selectedOption = document.querySelector(`input[name="question_${questionId}"]:checked`);
+      if (!selectedOption) {
+        alert('Please select an answer before submitting.');
+        return;
+      }
+      
+      const selectedValue = parseInt(selectedOption.value);
+      const isCorrect = selectedValue === correctAnswer;
+      
+      // Disable all options
+      const allOptions = document.querySelectorAll(`input[name="question_${questionId}"]`);
+      allOptions.forEach(option => {
+        option.disabled = true;
+        const label = option.parentElement;
+        if (parseInt(option.value) === correctAnswer) {
+          label.style.background = 'rgba(76, 175, 80, 0.3)';
+          label.style.border = '2px solid #4CAF50';
+        } else if (option.checked && !isCorrect) {
+          label.style.background = 'rgba(244, 67, 54, 0.3)';
+          label.style.border = '2px solid #f44336';
+        }
+      });
+      
+      // Show explanation
+      const explanation = document.getElementById(`explanation_${questionId}`);
+      if (explanation) {
+        explanation.style.display = 'block';
+      }
+      
+      // Disable submit button
+      const submitButton = document.querySelector(`button[onclick="submitMultipleChoice('${questionId}', ${correctAnswer})"]`);
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.style.background = isCorrect ? '#4CAF50' : '#f44336';
+        submitButton.textContent = isCorrect ? '✓ Correct!' : '✗ Incorrect';
+      }
+      
+      // Save answer
+      localStorage.setItem(`fault_scenario_1_question_${questionId}`, selectedValue);
+    }
+
+    function submitTextAnswer(questionId) {
+      const textarea = document.querySelector(`textarea[data-question="${questionId}"]`);
+      const button = document.querySelector(`button[onclick="submitTextAnswer('${questionId}')"]`);
+      
+      if (textarea && button) {
+        const answer = textarea.value.trim();
+        if (!answer) {
+          alert('Please provide an answer before submitting.');
+          return;
+        }
+        
+        // Disable textarea and button
+        textarea.disabled = true;
+        button.disabled = true;
+        button.style.background = '#4CAF50';
+        button.textContent = '✓ Submitted';
+        
+        // Save answer
+        localStorage.setItem(`fault_scenario_1_text_${questionId}`, answer);
       }
     }
 

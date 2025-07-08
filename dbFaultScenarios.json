@@ -2,30 +2,208 @@
     "scenarios": [
         {
             "id": 1,
-            "title": "Titanium Forging Temperature Control",
-            "paragraphs": [
-                "Navigate to the Main Menu and select the \"Fault Scenarios\" page then select Scenario 1. Press the Reset button to clear any previous faults, to avoid confusion.",
-                "You work night shifts in a titanium forging factory that produces frames for Boeing aeroplanes. As you start your shift, you're told the system won't run, and no one knows why. The day shift maintenance engineer tells you they had a problem earlier in the day because the oil was too cold. Harry, the Marketing Manager, thinks it's just the Wi-Fi acting up again."
+            "title": "Tank Temperature Control System",
+            "subtitle": "Industrial Process Tank Management",
+            "scenario_type": "temperature_control_offset",
+            "difficulty": "beginner",
+            "estimated_time": "20-30 minutes",
+            "learning_objectives": [
+                "Understand how operator adjustments affect temperature control",
+                "Learn about temporary offsets and their dangers",
+                "Recognize the symptoms of forgotten calibration adjustments",
+                "Practice proper offset management procedures"
             ],
-            "image": "titanium-forge.png",
+            "background": {
+                "company": "Industrial Chemical Processing Ltd.",
+                "process": "Chemical reaction tank temperature control",
+                "shift": "Day shift handover to night shift",
+                "urgency": "Medium - Process running hot, quality concerns"
+            },
+            "user_explanation": "Tank Temperature Too High - A mistake like this is common in industry because operators sometimes add temporary offsets to compensate for sensor errors or delays in heating. If they forget to remove the offset after troubleshooting, the system continues to run with incorrect temperature readings, causing overheating or process failures.",
+            "introduction": [
+                "You're taking over the night shift at a chemical processing plant. The day shift operator mentions they had some 'sensor issues' earlier and 'made a small adjustment' to keep production running.",
+                "The tank temperature controller shows 75°C, which is the correct setpoint for the chemical process. However, you notice the product quality reports show signs of overheating, and the cooling system is working harder than usual.",
+                "The day shift operator left a note: 'Added +5°C offset to compensate for slow sensor response. Should be fine now.' But they forgot to mention when this was supposed to be removed."
+            ],
+            "system_overview": {
+                "setpoint": 75,
+                "displayed_temp": 75,
+                "actual_temp": 80,
+                "offset_applied": 5,
+                "tolerance": 2,
+                "alarm_status": "NORMAL",
+                "quality_issues": true,
+                "cooling_load": "HIGH",
+                "components": [
+                    {
+                        "name": "Temperature Sensor PT-100",
+                        "type": "temperature_sensor",
+                        "location": "Tank bottom",
+                        "status": "normal",
+                        "reading": 80,
+                        "displayed_reading": 75
+                    },
+                    {
+                        "name": "Temperature Controller TIC-001",
+                        "type": "controller",
+                        "location": "Control room",
+                        "status": "normal",
+                        "offset": "+5°C",
+                        "output": "15%"
+                    },
+                    {
+                        "name": "Cooling Valve CV-001",
+                        "type": "final_element",
+                        "location": "Cooling line",
+                        "status": "working_hard",
+                        "position": "85%"
+                    }
+                ]
+            },
+            "interactive_elements": {
+                "simulation": {
+                    "enabled": true,
+                    "parameters": {
+                        "setpoint": { "min": 70, "max": 80, "default": 75 },
+                        "actual_temp": { "min": 70, "max": 85, "default": 80 },
+                        "offset": { "min": -10, "max": 10, "default": 5 },
+                        "cooling_valve": { "min": 0, "max": 100, "default": 85 }
+                    }
+                },
+                "operator_actions": {
+                    "enabled": true,
+                    "actions": [
+                        {
+                            "id": "view_offset",
+                            "name": "Check Controller Offset",
+                            "description": "View current offset settings in controller",
+                            "reveals": "offset_settings"
+                        },
+                        {
+                            "id": "adjust_offset",
+                            "name": "Adjust Temperature Offset",
+                            "description": "Modify the temperature offset value",
+                            "interactive": true
+                        },
+                        {
+                            "id": "check_quality",
+                            "name": "Review Quality Reports",
+                            "description": "Check recent product quality data",
+                            "reveals": "quality_data"
+                        },
+                        {
+                            "id": "verify_sensor",
+                            "name": "Verify Sensor Reading",
+                            "description": "Use portable thermometer to check actual temperature",
+                            "reveals": "actual_temperature"
+                        }
+                    ]
+                }
+            },
+            "learning_scenarios": [
+                {
+                    "id": "discovery",
+                    "title": "The Discovery Phase",
+                    "description": "You need to figure out what's really happening with the temperature control",
+                    "tasks": [
+                        "Check the controller display - what temperature does it show?",
+                        "Look at the cooling system - is it working harder than normal?",
+                        "Review quality reports - are there signs of overheating?",
+                        "Check if any offsets have been applied to the controller"
+                    ],
+                    "interactive": true,
+                    "points": 25
+                },
+                {
+                    "id": "investigation",
+                    "title": "The Investigation Phase",
+                    "description": "Now you need to understand the root cause",
+                    "tasks": [
+                        "Use a portable thermometer to check the actual tank temperature",
+                        "Compare the actual temperature with what the controller displays",
+                        "Check the controller's offset settings",
+                        "Understand why the offset was originally applied"
+                    ],
+                    "interactive": true,
+                    "points": 30
+                },
+                {
+                    "id": "solution",
+                    "title": "The Solution Phase",
+                    "description": "Time to fix the problem safely",
+                    "tasks": [
+                        "Gradually remove the offset to avoid shocking the system",
+                        "Monitor the actual temperature as you make changes",
+                        "Verify the system stabilizes at the correct temperature",
+                        "Document what was done and why"
+                    ],
+                    "interactive": true,
+                    "points": 35
+                },
+                {
+                    "id": "prevention",
+                    "title": "The Prevention Phase",
+                    "description": "Prevent this from happening again",
+                    "tasks": [
+                        "Create a logbook entry about the offset removal",
+                        "Set up a reminder system for temporary adjustments",
+                        "Brief the next shift about what happened",
+                        "Consider if the sensor needs calibration"
+                    ],
+                    "interactive": true,
+                    "points": 10
+                }
+            ],
             "questions": [
                 {
                     "id": "1.1",
-                    "text": "What are the potential causes of the oscillating behavior in the temperature control system?",
-                    "type": "text",
-                    "placeholder": "List potential causes..."
+                    "text": "Why didn't the temperature controller alarm even though the tank was too hot?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "The controller was broken",
+                        "The offset made the controller think the temperature was correct",
+                        "The alarm was disabled",
+                        "The sensor was reading incorrectly"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "The +5°C offset made the controller subtract 5°C from the actual reading. So when the tank was actually 80°C, the controller saw 75°C (80-5=75), which matched the setpoint perfectly."
                 },
                 {
                     "id": "1.2",
-                    "text": "Which components would you check first and why?",
-                    "type": "text",
-                    "placeholder": "Describe your initial troubleshooting steps..."
+                    "text": "What should the day shift operator have done differently?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "Not applied any offset at all",
+                        "Applied a larger offset",
+                        "Set a reminder to remove the offset and documented it properly",
+                        "Ignored the sensor problem"
+                    ],
+                    "correct_answer": 2,
+                    "explanation": "Temporary offsets can be useful for troubleshooting, but they must be properly documented with clear instructions on when to remove them. A reminder system or logbook entry would have prevented this issue."
                 },
                 {
                     "id": "1.3",
-                    "text": "How would you verify if the thermocouple is functioning correctly?",
+                    "text": "How would you safely remove the offset to fix this problem?",
                     "type": "text",
-                    "placeholder": "Explain your verification process..."
+                    "placeholder": "Describe the step-by-step process you would use to safely correct the temperature..."
+                }
+            ],
+            "image": "ph-control.png",
+            "real_world_examples": [
+                {
+                    "industry": "Chemical Processing",
+                    "problem": "Reactor temperature offset left on for 3 days, caused batch contamination",
+                    "cost": "$50,000 in lost product"
+                },
+                {
+                    "industry": "Food Processing",
+                    "problem": "Pasteurization temperature offset caused under-processing",
+                    "cost": "Product recall and FDA investigation"
+                },
+                {
+                    "industry": "Pharmaceutical",
+                    "problem": "Incubator temperature offset affected drug potency",
+                    "cost": "Entire batch had to be destroyed"
                 }
             ]
         },
