@@ -9,9 +9,28 @@ function escapeHtml(text) {
 function showInteractiveWorksheet1() {
     console.log('showInteractiveWorksheet1 called');
     
+    // Create dark overlay
+    const overlay = document.createElement('div');
+    overlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 999;
+    `;
+    
     // Create the popup container
     const popup = document.createElement('div');
     popup.className = 'scenario-popup';
+    
+    // Add overlay click to close
+    overlay.onclick = (e) => {
+        if (e.target === overlay) {
+            document.body.removeChild(overlay);
+        }
+    };
     
     // Create content container for the worksheet
     const content = document.createElement('div');
@@ -21,7 +40,10 @@ function showInteractiveWorksheet1() {
     const closeButton = document.createElement('button');
     closeButton.className = 'close-button';
     closeButton.innerHTML = '×';
-    closeButton.onclick = () => popup.remove();
+    closeButton.onclick = () => {
+        document.body.removeChild(overlay);
+        popup.remove();
+    };
     content.appendChild(closeButton);
     
     // Add worksheet title
@@ -234,8 +256,11 @@ function showInteractiveWorksheet1() {
     // Add the content to the popup
     popup.appendChild(content);
     
+    // Add popup to overlay
+    overlay.appendChild(popup);
+    
     // Add to the document
-    document.body.appendChild(popup);
+    document.body.appendChild(overlay);
     
     // Initialize step tracking
     initStepTracking();
