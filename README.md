@@ -4,7 +4,8 @@
 
 A comprehensive Electron.js application designed for industrial maintenance operations, featuring real-time PLC communication, integrated HMI web interface, and advanced analytics dashboard.
 
-![Closed Loop Maintenance Interface](https://github.com/user-attachments/assets/ce9a4d07-aa5c-4dae-85c7-8898fb86b566)
+![image](https://github.com/user-attachments/assets/10d6e646-9ce5-4f1e-bf02-3da5c571e8c1)
+
 
 ## 🆕 What's New in Version 0.5.0
 
