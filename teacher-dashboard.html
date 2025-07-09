@@ -1244,10 +1244,10 @@
                     } else if (file.name.endsWith('.csv')) {
                         importCSVData(content);
                     } else {
-                        alert('Unsupported file format. Please use JSON or CSV files.');
+                        showInlineNotification('Unsupported file format. Please use JSON or CSV files.', 'error');
                     }
                 } catch (error) {
-                    alert('Error reading file: ' + error.message);
+                    showInlineNotification('Error reading file: ' + error.message, 'error');
                 }
             };
             
@@ -1257,13 +1257,13 @@
         function importJSONData(data) {
             // Implementation for importing JSON data
             console.log('Importing JSON data:', data);
-            alert('JSON import functionality will be implemented based on your specific needs.');
+            showInlineNotification('JSON import functionality will be implemented based on your specific needs.', 'info');
         }
 
         function importCSVData(content) {
             // Implementation for importing CSV data
             console.log('Importing CSV data:', content);
-            alert('CSV import functionality will be implemented based on your specific needs.');
+            showInlineNotification('CSV import functionality will be implemented based on your specific needs.', 'info');
         }
 
         // Go back to main menu
@@ -1352,6 +1352,37 @@
                 }
             });
         });
+
+        // Inline Notification Functions (no focus issues)
+        function showInlineNotification(message, type = 'info', duration = 4000) {
+            const existingNotification = document.querySelector('.inline-notification');
+            if (existingNotification) {
+                existingNotification.remove();
+            }
+            
+            const notification = document.createElement('div');
+            notification.className = `inline-notification ${type}`;
+            
+            notification.innerHTML = `
+                <button class="notification-close" onclick="this.parentElement.remove()">×</button>
+                <div class="notification-message">${message}</div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            if (duration > 0) {
+                setTimeout(() => {
+                    if (notification.parentElement) {
+                        notification.classList.add('fade-out');
+                        setTimeout(() => {
+                            if (notification.parentElement) {
+                                notification.remove();
+                            }
+                        }, 300);
+                    }
+                }, duration);
+            }
+        }
     </script>
     </div> <!-- Close dashboard-container -->
 </body>

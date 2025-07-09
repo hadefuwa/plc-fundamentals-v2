@@ -2347,7 +2347,7 @@
         const userAnswer = textarea.value.trim();
         
         if (userAnswer === '') {
-          alert('Please provide an answer before submitting.');
+          showInlineNotification('Please provide an answer before submitting.', 'error');
           return;
         }
         
@@ -2586,7 +2586,7 @@
         const userAnswer = textarea.value.trim();
         
         if (userAnswer === '') {
-          alert('Please provide an answer before submitting.');
+          showInlineNotification('Please provide an answer before submitting.', 'error');
           return;
         }
         
@@ -3350,7 +3350,7 @@
     function submitLearningPhase(phaseNumber) {
       const insights = document.getElementById('phase-insights').value.trim();
       if (!insights) {
-        alert('Please describe what you learned before proceeding.');
+        showInlineNotification('Please describe what you learned before proceeding.', 'error');
         return;
       }
       
@@ -3410,7 +3410,7 @@
     function submitMultipleChoice(questionId, correctAnswer) {
       const selectedOption = document.querySelector(`input[name="question_${questionId}"]:checked`);
       if (!selectedOption) {
-        alert('Please select an answer before submitting.');
+        showInlineNotification('Please select an answer before submitting.', 'error');
         return;
       }
       
@@ -3456,7 +3456,7 @@
       if (textarea && button) {
         const answer = textarea.value.trim();
         if (!answer) {
-          alert('Please provide an answer before submitting.');
+          showInlineNotification('Please provide an answer before submitting.', 'error');
           return;
         }
         
@@ -3481,7 +3481,7 @@
         const userAnswer = textarea.value.trim();
         
         if (userAnswer === '') {
-          alert('Please provide an answer before submitting.');
+          showInlineNotification('Please provide an answer before submitting.', 'error');
           return;
         }
         
@@ -3540,6 +3540,37 @@
       // This will be handled by the original popup code
       console.log('Question submitted:', questionNum);
     };
+
+    // Inline Notification Functions (no focus issues)
+    function showInlineNotification(message, type = 'info', duration = 4000) {
+        const existingNotification = document.querySelector('.inline-notification');
+        if (existingNotification) {
+            existingNotification.remove();
+        }
+        
+        const notification = document.createElement('div');
+        notification.className = `inline-notification ${type}`;
+        
+        notification.innerHTML = `
+            <button class="notification-close" onclick="this.parentElement.remove()">×</button>
+            <div class="notification-message">${message}</div>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        if (duration > 0) {
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.classList.add('fade-out');
+                    setTimeout(() => {
+                        if (notification.parentElement) {
+                            notification.remove();
+                        }
+                    }, 300);
+                }
+            }, duration);
+        }
+    }
   </script>
 </body>
 </html> 

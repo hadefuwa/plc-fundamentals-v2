@@ -819,21 +819,27 @@
 
         // Clear all answers
         function clearAllAnswers() {
-            if (confirm('Are you sure you want to clear all answers? This action cannot be undone.')) {
-                // Clear all localStorage items related to answers
-                const keys = Object.keys(localStorage);
-                keys.forEach(key => {
-                    if (key.includes('_answer_') || key.includes('worksheet') || key.includes('maintenance') || key.includes('fault')) {
-                        localStorage.removeItem(key);
-                    }
-                });
-                
-                // Refresh the display
-                displayAnswers();
-                updateStats();
-                
-                alert('All answers have been cleared.');
-            }
+            showInlineConfirm(
+                'Are you sure you want to clear all answers? This action cannot be undone.',
+                function() {
+                    // On confirm - clear answers
+                    const keys = Object.keys(localStorage);
+                    keys.forEach(key => {
+                        if (key.includes('_answer_') || key.includes('worksheet') || key.includes('maintenance') || key.includes('fault')) {
+                            localStorage.removeItem(key);
+                        }
+                    });
+                    
+                    // Refresh the display
+                    displayAnswers();
+                    updateStats();
+                    
+                    showInlineNotification('All answers have been cleared.', 'success');
+                },
+                function() {
+                    // On cancel - do nothing
+                }
+            );
         }
 
         // Go back to main menu
@@ -852,6 +858,94 @@
 
         // Initialize
         document.addEventListener('DOMContentLoaded', loadWorksheetData);
+
+        // Inline Notification Functions (no focus issues)
+        function showInlineNotification(message, type = 'info', duration = 4000) {
+            const existingNotification = document.querySelector('.inline-notification');
+            if (existingNotification) {
+                existingNotification.remove();
+            }
+            
+            const notification = document.createElement('div');
+            notification.className = `inline-notification ${type}`;
+            
+            notification.innerHTML = `
+                <button class="notification-close" onclick="this.parentElement.remove()">×</button>
+                <div class="notification-message">${message}</div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            if (duration > 0) {
+                setTimeout(() => {
+                    if (notification.parentElement) {
+                        notification.classList.add('fade-out');
+                        setTimeout(() => {
+                            if (notification.parentElement) {
+                                notification.remove();
+                            }
+                        }, 300);
+                    }
+                }, duration);
+            }
+        }
+
+        function showInlineConfirm(message, onConfirm = null, onCancel = null) {
+            const existingNotification = document.querySelector('.inline-notification');
+            if (existingNotification) {
+                existingNotification.remove();
+            }
+            
+            const notification = document.createElement('div');
+            notification.className = 'inline-notification warning';
+            
+            notification.innerHTML = `
+                <div class="notification-message">${message}</div>
+                <div style="margin-top: 10px; text-align: right;">
+                    <button style="background: #6c757d; color: white; border: none; padding: 5px 10px; border-radius: 4px; margin-right: 5px; cursor: pointer;" onclick="handleInlineCancel()">Cancel</button>
+                    <button style="background: #f44336; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;" onclick="handleInlineConfirm()">Confirm</button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            window.inlineNotificationCallbacks = {
+                onConfirm: onConfirm,
+                onCancel: onCancel
+            };
+        }
+
+        function handleInlineConfirm() {
+            const callbacks = window.inlineNotificationCallbacks;
+            const notification = document.querySelector('.inline-notification');
+            if (notification) {
+                notification.remove();
+            }
+            
+            if (callbacks && callbacks.onConfirm) {
+                callbacks.onConfirm();
+            }
+            
+            if (window.inlineNotificationCallbacks) {
+                delete window.inlineNotificationCallbacks;
+            }
+        }
+
+        function handleInlineCancel() {
+            const callbacks = window.inlineNotificationCallbacks;
+            const notification = document.querySelector('.inline-notification');
+            if (notification) {
+                notification.remove();
+            }
+            
+            if (callbacks && callbacks.onCancel) {
+                callbacks.onCancel();
+            }
+            
+            if (window.inlineNotificationCallbacks) {
+                delete window.inlineNotificationCallbacks;
+            }
+        }
     </script>
 </body>
 </html> 

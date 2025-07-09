@@ -197,6 +197,54 @@ npm start
 - **Print Charts** - Generate printable reports of analogue data
 - **Fault Management** - Acknowledge and track system faults
 
+## 🏗️ Building and Releasing
+
+### **For Development**
+```bash
+# Start development server
+npm start
+
+# Run in debug mode
+npm run dev
+```
+
+### **Building for Distribution**
+```bash
+# Build executable
+npm run build
+
+# Or use the helper script
+create-release.bat
+```
+
+### **Creating GitHub Releases**
+
+#### **Option A: Automatic Release (Recommended)**
+```bash
+# Build and publish to GitHub automatically
+npm run build-and-publish
+```
+*Note: Requires GH_TOKEN environment variable set with GitHub personal access token*
+
+#### **Option B: Manual Release**
+1. Run `npm run build` to create the executable
+2. Go to [GitHub Releases](https://github.com/hadefuwa/closed-loop-maint/releases)
+3. Click "Create a new release"
+4. Upload the `.exe` file from the `dist` folder
+
+#### **Option C: Automated via GitHub Actions**
+Push a tag to trigger automatic build and release:
+```bash
+git tag v0.5.2
+git push origin v0.5.2
+```
+
+### **Built Files Location**
+After running `npm run build`, find your executable at:
+```
+dist/Matrix Closed Loop Maintenance Setup 0.5.2.exe
+```
+
 ## 🔧 Configuration
 
 ### **PLC Settings**

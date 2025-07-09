@@ -1019,6 +1019,12 @@ document.addEventListener('DOMContentLoaded', function() {
             // Set zoom again after a short delay to ensure it sticks
             setTimeout(setDefaultZoom, 500);
             hideHmiOfflineOverlay();
+            
+            // Clear any existing timeout since the page loaded successfully
+            if (window.hmiTimeoutId) {
+                clearTimeout(window.hmiTimeoutId);
+                window.hmiTimeoutId = null;
+            }
         });
 
         hmiWebview.addEventListener('did-start-loading', function() {
@@ -1026,20 +1032,34 @@ document.addEventListener('DOMContentLoaded', function() {
             showHmiStatus('Loading HMI Interface...', 5000);
             hideHmiOfflineOverlay();
             
+            // Clear any existing timeout before setting a new one
+            if (window.hmiTimeoutId) {
+                clearTimeout(window.hmiTimeoutId);
+            }
+            
             // Set a timeout to show offline overlay if connection takes too long
-            setTimeout(() => {
-                if (!hmiWebview.src || hmiWebview.src.includes('192.168.7.101')) {
-                    // Check if still trying to load the HMI URL
-                    console.log('HMI connection timeout, showing offline overlay');
+            // Give users 60 seconds to enter login credentials
+            window.hmiTimeoutId = setTimeout(() => {
+                // Check if the webview is still loading and hasn't completed
+                if (hmiWebview.isLoading && hmiWebview.isLoading()) {
+                    console.log('HMI still loading after 60 seconds, showing offline overlay');
+                    showHmiStatus('HMI taking longer than expected - check connection', 3000);
                     showHmiOfflineOverlay();
                 }
-            }, 10000); // 10 second timeout
+                window.hmiTimeoutId = null;
+            }, 60000); // 60 second timeout - enough time for login
         });
 
         hmiWebview.addEventListener('did-fail-load', function(event) {
             console.error('HMI interface failed to load:', event.errorDescription);
             showHmiStatus('Failed to load HMI Interface', 5000);
             showHmiOfflineOverlay();
+            
+            // Clear any existing timeout since the page failed to load
+            if (window.hmiTimeoutId) {
+                clearTimeout(window.hmiTimeoutId);
+                window.hmiTimeoutId = null;
+            }
         });
     }
 
@@ -1191,20 +1211,29 @@ document.addEventListener('DOMContentLoaded', function() {
             };
 
             if (saveSettings(newSettings)) {
-                alert('Settings saved successfully!');
-                // Reload the page to apply new settings
-                window.location.reload();
+                showInlineNotification('Settings saved successfully! The page will reload to apply changes.', 'success');
+                // Reload the page to apply new settings after a short delay
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
             } else {
-                alert('Failed to save settings. Please try again.');
+                showInlineNotification('Failed to save settings. Please try again.', 'error');
             }
         });
 
         // Reset settings button
         document.getElementById('reset-settings').addEventListener('click', function() {
-            if (confirm('Are you sure you want to reset all settings to default values?')) {
-                saveSettings(defaultSettings);
-                window.location.reload();
-            }
+            showInlineConfirm(
+                'Are you sure you want to reset all settings to default values? This action cannot be undone.',
+                function() {
+                    // On confirm
+                    saveSettings(defaultSettings);
+                    window.location.reload();
+                },
+                function() {
+                    // On cancel - do nothing
+                }
+            );
         });
     }
 });
@@ -1262,5 +1291,107 @@ function openWorksheet(number) {
 
 // Make the function available globally
 window.openWorksheet = openWorksheet;
+
+// Inline Notification System - No Popups, No Focus Issues
+// Shows notifications directly in the UI without stealing focus
+
+function showInlineNotification(message, type = 'info', duration = 4000) {
+    // Remove any existing notification
+    const existingNotification = document.querySelector('.inline-notification');
+    if (existingNotification) {
+        existingNotification.remove();
+    }
+    
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `inline-notification ${type}`;
+    
+    // Set notification content
+    notification.innerHTML = `
+        <button class="notification-close" onclick="this.parentElement.remove()">×</button>
+        <div class="notification-message">${message}</div>
+    `;
+    
+    // Add to page
+    document.body.appendChild(notification);
+    
+    // Auto-remove after duration
+    if (duration > 0) {
+        setTimeout(() => {
+            if (notification.parentElement) {
+                notification.classList.add('fade-out');
+                setTimeout(() => {
+                    if (notification.parentElement) {
+                        notification.remove();
+                    }
+                }, 300);
+            }
+        }, duration);
+    }
+}
+
+function showInlineConfirm(message, onConfirm = null, onCancel = null) {
+    // Remove any existing notification
+    const existingNotification = document.querySelector('.inline-notification');
+    if (existingNotification) {
+        existingNotification.remove();
+    }
+    
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = 'inline-notification warning';
+    
+    // Set notification content
+    notification.innerHTML = `
+        <div class="notification-message">${message}</div>
+        <div style="margin-top: 10px; text-align: right;">
+            <button style="background: #6c757d; color: white; border: none; padding: 5px 10px; border-radius: 4px; margin-right: 5px; cursor: pointer;" onclick="handleInlineCancel()">Cancel</button>
+            <button style="background: #f44336; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;" onclick="handleInlineConfirm()">Confirm</button>
+        </div>
+    `;
+    
+    // Add to page
+    document.body.appendChild(notification);
+    
+    // Store callbacks
+    window.inlineNotificationCallbacks = {
+        onConfirm: onConfirm,
+        onCancel: onCancel
+    };
+}
+
+function handleInlineConfirm() {
+    const callbacks = window.inlineNotificationCallbacks;
+    const notification = document.querySelector('.inline-notification');
+    if (notification) {
+        notification.remove();
+    }
+    
+    if (callbacks && callbacks.onConfirm) {
+        callbacks.onConfirm();
+    }
+    
+    // Clear callbacks
+    if (window.inlineNotificationCallbacks) {
+        delete window.inlineNotificationCallbacks;
+    }
+}
+
+function handleInlineCancel() {
+    const callbacks = window.inlineNotificationCallbacks;
+    const notification = document.querySelector('.inline-notification');
+    if (notification) {
+        notification.remove();
+    }
+    
+    if (callbacks && callbacks.onCancel) {
+        callbacks.onCancel();
+    }
+    
+    // Clear callbacks
+    if (window.inlineNotificationCallbacks) {
+        delete window.inlineNotificationCallbacks;
+    }
+}
 
 

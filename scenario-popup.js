@@ -5,6 +5,37 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
+// Inline Notification Functions (no focus issues)
+function showInlineNotification(message, type = 'info', duration = 4000) {
+    const existingNotification = document.querySelector('.inline-notification');
+    if (existingNotification) {
+        existingNotification.remove();
+    }
+    
+    const notification = document.createElement('div');
+    notification.className = `inline-notification ${type}`;
+    
+    notification.innerHTML = `
+        <button class="notification-close" onclick="this.parentElement.remove()">×</button>
+        <div class="notification-message">${message}</div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    if (duration > 0) {
+        setTimeout(() => {
+            if (notification.parentElement) {
+                notification.classList.add('fade-out');
+                setTimeout(() => {
+                    if (notification.parentElement) {
+                        notification.remove();
+                    }
+                }, 300);
+            }
+        }, duration);
+    }
+}
+
 // Global interactive worksheet function - moved to global scope for easy access
 function showInteractiveWorksheet1() {
     console.log('showInteractiveWorksheet1 called');
@@ -835,7 +866,7 @@ function initQuestionsAndAnswers() {
         const userAnswer = textarea.value.trim();
         
         if (!userAnswer) {
-            alert('Please enter an answer before submitting.');
+            showInlineNotification('Please enter an answer before submitting.', 'error');
             return;
         }
         
