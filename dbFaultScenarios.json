@@ -70,32 +70,80 @@
                         "cooling_valve": { "min": 0, "max": 100, "default": 85 }
                     }
                 },
-                "operator_actions": {
+                "investigation_tools": {
                     "enabled": true,
-                    "actions": [
+                    "tools": [
                         {
-                            "id": "view_offset",
+                            "id": "check_offset",
                             "name": "Check Controller Offset",
-                            "description": "View current offset settings in controller",
+                            "description": "View current offset settings in temperature controller",
                             "reveals": "offset_settings"
+                        },
+                        {
+                            "id": "use_thermometer",
+                            "name": "Use Portable Thermometer",
+                            "description": "Check actual tank temperature with calibrated instrument",
+                            "reveals": "actual_temperature"
+                        },
+                        {
+                            "id": "review_reports",
+                            "name": "Review Quality Reports",
+                            "description": "Check recent product quality data for temperature trends",
+                            "reveals": "quality_data"
                         },
                         {
                             "id": "adjust_offset",
                             "name": "Adjust Temperature Offset",
-                            "description": "Modify the temperature offset value",
-                            "interactive": true
+                            "description": "Remove or modify the temperature offset setting",
+                            "reveals": "offset_adjustment"
                         },
                         {
-                            "id": "check_quality",
-                            "name": "Review Quality Reports",
-                            "description": "Check recent product quality data",
-                            "reveals": "quality_data"
+                            "id": "inspect_sensor_wiring",
+                            "name": "Inspect Sensor Wiring",
+                            "description": "Check thermocouple connections and cable integrity",
+                            "reveals": "wiring_condition"
                         },
                         {
-                            "id": "verify_sensor",
-                            "name": "Verify Sensor Reading",
-                            "description": "Use portable thermometer to check actual temperature",
-                            "reveals": "actual_temperature"
+                            "id": "check_cooling_system",
+                            "name": "Check Cooling System Performance",
+                            "description": "Verify cooling water flow rates and temperatures",
+                            "reveals": "cooling_analysis"
+                        },
+                        {
+                            "id": "review_maintenance_log",
+                            "name": "Review Maintenance History",
+                            "description": "Check recent maintenance activities and sensor calibrations",
+                            "reveals": "maintenance_records"
+                        },
+                        {
+                            "id": "test_backup_sensor",
+                            "name": "Test Backup Temperature Sensor",
+                            "description": "Compare readings with redundant temperature measurement",
+                            "reveals": "backup_sensor_reading"
+                        },
+                        {
+                            "id": "analyze_trend_data",
+                            "name": "Analyze Historical Trends",
+                            "description": "Review temperature data over the past week",
+                            "reveals": "trending_analysis"
+                        },
+                        {
+                            "id": "check_power_supply",
+                            "name": "Check Controller Power Supply",
+                            "description": "Verify electrical power quality to temperature controller",
+                            "reveals": "power_analysis"
+                        },
+                        {
+                            "id": "test_control_valve",
+                            "name": "Test Control Valve Operation",
+                            "description": "Manually operate cooling valve to verify function",
+                            "reveals": "valve_operation"
+                        },
+                        {
+                            "id": "check_insulation",
+                            "name": "Inspect Tank Insulation",
+                            "description": "Check for damaged or missing tank insulation",
+                            "reveals": "insulation_condition"
                         }
                     ]
                 }
@@ -188,7 +236,7 @@
                     "placeholder": "Describe the step-by-step process you would use to safely correct the temperature..."
                 }
             ],
-            "image": "ph-control.png",
+            "image": "titanium-forge.png",
             "real_world_examples": [
                 {
                     "industry": "Chemical Processing",

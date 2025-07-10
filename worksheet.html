@@ -1180,6 +1180,14 @@
       'use_thermometer': 'Portable Thermometer Reading: 80°C (actual tank temperature), while controller displays 75°C. Confirms 5°C discrepancy.',
       'review_reports': 'Quality Reports: Batch reports show temperature consistently 5°C higher than setpoint. Product quality declining over past week.',
       'adjust_offset': 'Offset Adjustment: Removing the +5°C offset immediately corrects the temperature reading. Tank now shows actual 80°C.',
+      'inspect_sensor_wiring': 'Wiring Inspection: All thermocouple connections are secure and properly terminated. Cable insulation intact, no signs of damage or moisture intrusion.',
+      'check_cooling_system': 'Cooling System Check: Cooling water flow rate is 95% of design, inlet temperature 15°C, outlet temperature 18°C. System operating within normal parameters.',
+      'review_maintenance_log': 'Maintenance Records: Last sensor calibration was 6 months ago, within tolerance. No recent maintenance activities on temperature system.',
+      'test_backup_sensor': 'Backup Sensor Test: Secondary temperature sensor also reads 80°C actual temperature. Confirms primary sensor is reading correctly.',
+      'analyze_trend_data': 'Trend Analysis: Temperature data shows consistent 5°C difference between setpoint and actual temperature started exactly 1 week ago.',
+      'check_power_supply': 'Power Supply Check: Controller receiving stable 24VDC power, no voltage fluctuations detected. Power quality is excellent.',
+      'test_control_valve': 'Control Valve Test: Cooling valve responds properly to manual commands. Valve position feedback matches commanded position.',
+      'check_insulation': 'Insulation Inspection: Tank insulation is intact with no visible damage. Thermal imaging shows no unexpected heat loss areas.',
       
       // Cleanroom Temperature Control (Scenario 2)
       'check_heat_load': 'Heat Load Analysis: Current production generates 95kW heat load, exceeding design capacity of 85kW by 12%.',
@@ -2850,7 +2858,7 @@
           <!-- Interactive Investigation Tools -->
           <div style="margin-bottom: 30px;">
             <h3 style="color: #FFFFFF; margin-bottom: 15px;">Investigation Tools</h3>
-            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
               <button onclick="checkControllerOffset()" style="background: #2196F3; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
                 <i class="fas fa-search"></i> Check Controller Offset
               </button>
@@ -2862,6 +2870,30 @@
               </button>
               <button onclick="adjustOffset()" style="background: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
                 <i class="fas fa-cog"></i> Adjust Offset
+              </button>
+              <button onclick="inspectSensorWiring()" style="background: #607D8B; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+                <i class="fas fa-plug"></i> Inspect Sensor Wiring
+              </button>
+              <button onclick="checkCoolingSystem()" style="background: #795548; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+                <i class="fas fa-snowflake"></i> Check Cooling System
+              </button>
+              <button onclick="reviewMaintenanceLog()" style="background: #546E7A; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+                <i class="fas fa-clipboard-list"></i> Review Maintenance Log
+              </button>
+              <button onclick="testBackupSensor()" style="background: #5D4037; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+                <i class="fas fa-thermometer-quarter"></i> Test Backup Sensor
+              </button>
+              <button onclick="analyzeTrendData()" style="background: #424242; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+                <i class="fas fa-chart-area"></i> Analyze Trend Data
+              </button>
+              <button onclick="checkPowerSupply()" style="background: #37474F; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+                <i class="fas fa-bolt"></i> Check Power Supply
+              </button>
+              <button onclick="testControlValve()" style="background: #455A64; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+                <i class="fas fa-valve"></i> Test Control Valve
+              </button>
+              <button onclick="checkInsulation()" style="background: #3E2723; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+                <i class="fas fa-shield-alt"></i> Check Tank Insulation
               </button>
             </div>
           </div>
@@ -3291,6 +3323,203 @@
       document.body.appendChild(feedback);
       
       setTimeout(() => feedback.remove(), 4000);
+    }
+
+    // Additional Red Herring Investigation Functions
+    function inspectSensorWiring() {
+      showFeedback('Sensor wiring inspection complete - All connections are secure!', '#607D8B');
+      
+      const popup = document.createElement('div');
+      popup.style.cssText = `
+        position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+        background: #333; color: white; padding: 30px; border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); z-index: 1000;
+        max-width: 500px; text-align: center;
+      `;
+      popup.innerHTML = `
+        <h3 style="color: #607D8B; margin-bottom: 20px;">Sensor Wiring Inspection</h3>
+        <p style="margin-bottom: 15px;">All thermocouple connections are secure and properly terminated.</p>
+        <p style="margin-bottom: 15px;">Cable insulation is intact with no signs of damage or moisture intrusion.</p>
+        <p style="margin-bottom: 20px;">Wiring is not the cause of the temperature issue.</p>
+        <button onclick="this.parentElement.remove()" style="background: #607D8B; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+          Close
+        </button>
+      `;
+      document.body.appendChild(popup);
+    }
+
+    function checkCoolingSystem() {
+      showFeedback('Cooling system operating within normal parameters!', '#795548');
+      
+      const popup = document.createElement('div');
+      popup.style.cssText = `
+        position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+        background: #333; color: white; padding: 30px; border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); z-index: 1000;
+        max-width: 500px; text-align: center;
+      `;
+      popup.innerHTML = `
+        <h3 style="color: #795548; margin-bottom: 20px;">Cooling System Performance</h3>
+        <ul style="text-align: left; margin-bottom: 20px;">
+          <li style="margin-bottom: 10px;">Flow rate: 95% of design capacity</li>
+          <li style="margin-bottom: 10px;">Inlet temperature: 15°C</li>
+          <li style="margin-bottom: 10px;">Outlet temperature: 18°C</li>
+          <li style="margin-bottom: 10px;">Pump operation: Normal</li>
+        </ul>
+        <p style="margin-bottom: 20px;">The cooling system is working properly and not causing the temperature issue.</p>
+        <button onclick="this.parentElement.remove()" style="background: #795548; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+          Close
+        </button>
+      `;
+      document.body.appendChild(popup);
+    }
+
+    function reviewMaintenanceLog() {
+      showFeedback('Maintenance records reviewed - No recent issues found!', '#546E7A');
+      
+      const popup = document.createElement('div');
+      popup.style.cssText = `
+        position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+        background: #333; color: white; padding: 30px; border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); z-index: 1000;
+        max-width: 500px; text-align: center;
+      `;
+      popup.innerHTML = `
+        <h3 style="color: #546E7A; margin-bottom: 20px;">Maintenance History</h3>
+        <ul style="text-align: left; margin-bottom: 20px;">
+          <li style="margin-bottom: 10px;">Last sensor calibration: 6 months ago (within tolerance)</li>
+          <li style="margin-bottom: 10px;">Pump maintenance: 3 months ago (routine)</li>
+          <li style="margin-bottom: 10px;">Heat exchanger cleaning: 2 months ago</li>
+          <li style="margin-bottom: 10px;">No recent work orders on temperature system</li>
+        </ul>
+        <p style="margin-bottom: 20px;">Maintenance history shows no recent activities that could cause this issue.</p>
+        <button onclick="this.parentElement.remove()" style="background: #546E7A; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+          Close
+        </button>
+      `;
+      document.body.appendChild(popup);
+    }
+
+    function testBackupSensor() {
+      showFeedback('Backup sensor confirms primary sensor is reading correctly!', '#5D4037');
+      
+      const popup = document.createElement('div');
+      popup.style.cssText = `
+        position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+        background: #333; color: white; padding: 30px; border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); z-index: 1000;
+        max-width: 500px; text-align: center;
+      `;
+      popup.innerHTML = `
+        <h3 style="color: #5D4037; margin-bottom: 20px;">Backup Sensor Test</h3>
+        <p style="margin-bottom: 15px;">Secondary temperature sensor reading: <strong>80°C</strong></p>
+        <p style="margin-bottom: 15px;">Primary sensor reading: <strong>80°C</strong></p>
+        <p style="margin-bottom: 20px;">Both sensors agree - they're reading the actual temperature correctly!</p>
+        <button onclick="this.parentElement.remove()" style="background: #5D4037; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+          Close
+        </button>
+      `;
+      document.body.appendChild(popup);
+    }
+
+    function analyzeTrendData() {
+      showFeedback('Trend analysis reveals when the problem started!', '#424242');
+      
+      const popup = document.createElement('div');
+      popup.style.cssText = `
+        position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+        background: #333; color: white; padding: 30px; border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); z-index: 1000;
+        max-width: 500px; text-align: center;
+      `;
+      popup.innerHTML = `
+        <h3 style="color: #424242; margin-bottom: 20px;">Historical Trend Analysis</h3>
+        <p style="margin-bottom: 15px;">The 5°C temperature discrepancy started exactly <strong>1 week ago</strong></p>
+        <p style="margin-bottom: 15px;">Before that, displayed and actual temperatures matched perfectly</p>
+        <p style="margin-bottom: 20px;">This suggests something changed in the system configuration a week ago.</p>
+        <button onclick="this.parentElement.remove()" style="background: #424242; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+          Close
+        </button>
+      `;
+      document.body.appendChild(popup);
+    }
+
+    function checkPowerSupply() {
+      showFeedback('Power supply is stable and within specifications!', '#37474F');
+      
+      const popup = document.createElement('div');
+      popup.style.cssText = `
+        position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+        background: #333; color: white; padding: 30px; border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); z-index: 1000;
+        max-width: 500px; text-align: center;
+      `;
+      popup.innerHTML = `
+        <h3 style="color: #37474F; margin-bottom: 20px;">Power Supply Analysis</h3>
+        <ul style="text-align: left; margin-bottom: 20px;">
+          <li style="margin-bottom: 10px;">Controller voltage: 24.1 VDC (nominal 24 VDC)</li>
+          <li style="margin-bottom: 10px;">Voltage stability: Excellent (±0.1V)</li>
+          <li style="margin-bottom: 10px;">No power fluctuations detected</li>
+          <li style="margin-bottom: 10px;">Power quality: Within specifications</li>
+        </ul>
+        <p style="margin-bottom: 20px;">Electrical power is not the cause of the temperature issue.</p>
+        <button onclick="this.parentElement.remove()" style="background: #37474F; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+          Close
+        </button>
+      `;
+      document.body.appendChild(popup);
+    }
+
+    function testControlValve() {
+      showFeedback('Control valve responding properly to commands!', '#455A64');
+      
+      const popup = document.createElement('div');
+      popup.style.cssText = `
+        position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+        background: #333; color: white; padding: 30px; border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); z-index: 1000;
+        max-width: 500px; text-align: center;
+      `;
+      popup.innerHTML = `
+        <h3 style="color: #455A64; margin-bottom: 20px;">Control Valve Test</h3>
+        <ul style="text-align: left; margin-bottom: 20px;">
+          <li style="margin-bottom: 10px;">Valve responds to manual commands: ✓</li>
+          <li style="margin-bottom: 10px;">Position feedback matches commanded position: ✓</li>
+          <li style="margin-bottom: 10px;">No mechanical binding or sticking: ✓</li>
+          <li style="margin-bottom: 10px;">Actuator operation: Normal</li>
+        </ul>
+        <p style="margin-bottom: 20px;">The control valve is functioning properly and not causing the temperature issue.</p>
+        <button onclick="this.parentElement.remove()" style="background: #455A64; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+          Close
+        </button>
+      `;
+      document.body.appendChild(popup);
+    }
+
+    function checkInsulation() {
+      showFeedback('Tank insulation is intact with no heat loss issues!', '#3E2723');
+      
+      const popup = document.createElement('div');
+      popup.style.cssText = `
+        position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+        background: #333; color: white; padding: 30px; border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); z-index: 1000;
+        max-width: 500px; text-align: center;
+      `;
+      popup.innerHTML = `
+        <h3 style="color: #3E2723; margin-bottom: 20px;">Tank Insulation Inspection</h3>
+        <ul style="text-align: left; margin-bottom: 20px;">
+          <li style="margin-bottom: 10px;">Insulation integrity: Excellent</li>
+          <li style="margin-bottom: 10px;">No visible damage or missing sections</li>
+          <li style="margin-bottom: 10px;">Thermal imaging shows no unexpected heat loss</li>
+          <li style="margin-bottom: 10px;">Insulation thickness: Within specifications</li>
+        </ul>
+        <p style="margin-bottom: 20px;">Tank insulation is not contributing to the temperature control issue.</p>
+        <button onclick="this.parentElement.remove()" style="background: #3E2723; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+          Close
+        </button>
+      `;
+      document.body.appendChild(popup);
     }
 
     // Learning Journey Functions
