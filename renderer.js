@@ -198,8 +198,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     lastEstopState = currentEstopState;
                 }
 
-                // Analogue updates
-                if (charts.analogue && !isChartPaused) {
+                // Analogue updates - only if we're still on the PLC controls page
+                if (charts.analogue && !isChartPaused && charts.analogue.data && charts.analogue.data.datasets && 
+                    document.getElementById('analogueChart') && document.getElementById('statusChart')) {
                     const now = new Date();
                     
                     // Update digital displays
@@ -224,31 +225,46 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     // Update chart if analogue data exists
                     if (data.db1.analogue.ai0 && data.db1.analogue.ai1) {
-                        charts.analogue.data.datasets[0].data.push({
-                            x: now,
-                            y: data.db1.analogue.ai0.scaled
-                        });
-                        charts.analogue.data.datasets[1].data.push({
-                            x: now,
-                            y: data.db1.analogue.ai1.scaled
-                        });
+                        try {
+                            charts.analogue.data.datasets[0].data.push({
+                                x: now,
+                                y: data.db1.analogue.ai0.scaled
+                            });
+                            charts.analogue.data.datasets[1].data.push({
+                                x: now,
+                                y: data.db1.analogue.ai1.scaled
+                            });
 
-                        // Keep only last 30 seconds of data
-                        const cutoff = now.getTime() - (30 * 1000);
-                        charts.analogue.data.datasets.forEach(dataset => {
-                            dataset.data = dataset.data.filter(point => point.x.getTime() > cutoff);
-                        });
+                            // Keep only last 30 seconds of data
+                            const cutoff = now.getTime() - (30 * 1000);
+                            charts.analogue.data.datasets.forEach(dataset => {
+                                dataset.data = dataset.data.filter(point => point.x.getTime() > cutoff);
+                            });
 
-                        // Find the maximum value in both datasets
-                        const maxValue = Math.max(
-                            ...charts.analogue.data.datasets[0].data.map(point => point.y),
-                            ...charts.analogue.data.datasets[1].data.map(point => point.y)
-                        );
-                        
-                        // Update the Y axis max with some headroom
-                        charts.analogue.options.scales.y.max = Math.ceil(maxValue * 1.1);
-                        
-                        charts.analogue.update('none');
+                            // Find the maximum value in both datasets
+                            const maxValue = Math.max(
+                                ...charts.analogue.data.datasets[0].data.map(point => point.y),
+                                ...charts.analogue.data.datasets[1].data.map(point => point.y)
+                            );
+                            
+                            // Update the Y axis max with some headroom
+                            if (charts.analogue.options && charts.analogue.options.scales && charts.analogue.options.scales.y) {
+                                charts.analogue.options.scales.y.max = Math.ceil(maxValue * 1.1);
+                            }
+                            
+                            // Only update if chart is still valid
+                            if (charts.analogue && typeof charts.analogue.update === 'function') {
+                                charts.analogue.update('none');
+                            }
+                        } catch (chartError) {
+                            console.warn('Chart update error:', chartError);
+                            // If chart is broken, reinitialize it
+                            setTimeout(() => {
+                                if (document.getElementById('analogueChart')) {
+                                    initializeCharts();
+                                }
+                            }, 1000);
+                        }
                     }
                 }
             }
@@ -326,11 +342,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Add to your existing event listeners
     document.querySelectorAll('.grid-item').forEach(item => {
+        console.log('Setting up event listener for grid item:', item.textContent);
         item.addEventListener('click', () => {
+            console.log('Grid item clicked:', item.textContent);
             const dataType = item.getAttribute('data-type');
+            
+            // Clean up charts before navigation
+            if (charts.status) {
+                try {
+                    charts.status.destroy();
+                    charts.status = null;
+                } catch (error) {
+                    console.warn('Error destroying status chart:', error);
+                }
+            }
+            if (charts.analogue) {
+                try {
+                    charts.analogue.destroy();
+                    charts.analogue = null;
+                } catch (error) {
+                    console.warn('Error destroying analogue chart:', error);
+                }
+            }
+            
+            // Clear any intervals
+            if (chartUpdateInterval) {
+                clearInterval(chartUpdateInterval);
+                chartUpdateInterval = null;
+            }
+            
+            console.log('Navigating to plc-details.html');
             window.location.href = 'plc-details.html';
         });
     });
+    
+    // (No event listeners or navigation code for the View All PLC Tags button)
 
     // Add to your data update function
     function updatePLCData(data) {
@@ -418,13 +464,18 @@ document.addEventListener('DOMContentLoaded', () => {
 function initializeCharts() {
     console.log('Initializing charts...');
     
-    // Initialize Status Chart
-    const statusCtx = document.getElementById('statusChart');
-    if (statusCtx) {
-        if (charts.status) {
-            charts.status.destroy();
-        }
-        charts.status = new Chart(statusCtx, {
+    try {
+        // Initialize Status Chart
+        const statusCtx = document.getElementById('statusChart');
+        if (statusCtx) {
+            if (charts.status) {
+                try {
+                    charts.status.destroy();
+                } catch (destroyError) {
+                    console.warn('Error destroying status chart:', destroyError);
+                }
+            }
+            charts.status = new Chart(statusCtx, {
             type: 'line',
             data: {
                 datasets: [{
@@ -494,13 +545,17 @@ function initializeCharts() {
         });
     }
 
-    // Initialize Analogue Chart
-    const analogueCtx = document.getElementById('analogueChart');
-    if (analogueCtx) {
-        if (charts.analogue) {
-            charts.analogue.destroy();
-        }
-        charts.analogue = new Chart(analogueCtx, {
+        // Initialize Analogue Chart
+        const analogueCtx = document.getElementById('analogueChart');
+        if (analogueCtx) {
+            if (charts.analogue) {
+                try {
+                    charts.analogue.destroy();
+                } catch (destroyError) {
+                    console.warn('Error destroying analogue chart:', destroyError);
+                }
+            }
+            charts.analogue = new Chart(analogueCtx, {
             type: 'line',
             data: {
                 datasets: [
@@ -582,6 +637,17 @@ function initializeCharts() {
 
     // Start updates for both charts
     startChartUpdates();
+    
+    } catch (error) {
+        console.error('Error initializing charts:', error);
+        // Try to reinitialize after a delay
+        setTimeout(() => {
+            if (document.getElementById('statusChart') || document.getElementById('analogueChart')) {
+                console.log('Retrying chart initialization...');
+                initializeCharts();
+            }
+        }, 2000);
+    }
 }
 
 // Add page visibility handling
@@ -607,16 +673,31 @@ window.addEventListener('beforeunload', () => {
 
 function setupDataListeners() {
     window.electron.receiveStats((stats) => {
-        if (charts.status && stats.connectionStats.connectionHistory) {
-            // Convert connection history to chart data points
-            const newData = stats.connectionStats.connectionHistory.map(item => ({
-                x: new Date(item.time),
-                y: item.connected ? 1 : 0
-            }));
+        if (charts.status && charts.status.data && charts.status.data.datasets && stats.connectionStats.connectionHistory && 
+            document.getElementById('statusChart')) {
+            try {
+                // Convert connection history to chart data points
+                const newData = stats.connectionStats.connectionHistory.map(item => ({
+                    x: new Date(item.time),
+                    y: item.connected ? 1 : 0
+                }));
 
-            // Update the chart with the new data
-            charts.status.data.datasets[0].data = newData;
-            charts.status.update('quiet');
+                // Update the chart with the new data
+                charts.status.data.datasets[0].data = newData;
+                
+                // Only update if chart is still valid
+                if (charts.status && typeof charts.status.update === 'function') {
+                    charts.status.update('quiet');
+                }
+            } catch (chartError) {
+                console.warn('Status chart update error:', chartError);
+                // If chart is broken, reinitialize it
+                setTimeout(() => {
+                    if (document.getElementById('statusChart')) {
+                        initializeCharts();
+                    }
+                }, 1000);
+            }
         }
     });
 }
@@ -665,9 +746,23 @@ window.electron.onConnectionChange((status) => {
 function updateStatusChart(connected) {
     addConnectionDataPoint(connected);
     
-    if (charts.status) {
-        charts.status.data.datasets[0].data = [...connectionHistoryBuffer];
-        charts.status.update('none');
+    if (charts.status && charts.status.data && charts.status.data.datasets && document.getElementById('statusChart')) {
+        try {
+            charts.status.data.datasets[0].data = [...connectionHistoryBuffer];
+            
+            // Only update if chart is still valid
+            if (charts.status && typeof charts.status.update === 'function') {
+                charts.status.update('none');
+            }
+        } catch (chartError) {
+            console.warn('Status chart update error:', chartError);
+            // If chart is broken, reinitialize it
+            setTimeout(() => {
+                if (document.getElementById('statusChart')) {
+                    initializeCharts();
+                }
+            }, 1000);
+        }
     }
 }
 
@@ -710,9 +805,23 @@ function startChartUpdates() {
         
         addConnectionDataPoint(statusValue);
         
-        if (charts.status) {
-            charts.status.data.datasets[0].data = [...connectionHistoryBuffer];
-            charts.status.update('none');
+        if (charts.status && charts.status.data && charts.status.data.datasets && document.getElementById('statusChart')) {
+            try {
+                charts.status.data.datasets[0].data = [...connectionHistoryBuffer];
+                
+                // Only update if chart is still valid
+                if (charts.status && typeof charts.status.update === 'function') {
+                    charts.status.update('none');
+                }
+            } catch (chartError) {
+                console.warn('Status chart update error:', chartError);
+                // If chart is broken, reinitialize it
+                setTimeout(() => {
+                    if (document.getElementById('statusChart')) {
+                        initializeCharts();
+                    }
+                }, 1000);
+            }
         }
     }, 1000);
 }

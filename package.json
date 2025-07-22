@@ -9,7 +9,8 @@
     "test": "electron run-pdf-tests.js",
     "test:pdf": "electron pdf-viewer-test.js",
     "build": "electron-builder",
-    "build-and-publish": "electron-builder --publish always"
+    "build-and-publish": "electron-builder --publish always",
+    "release": "gh release create v0.5.0 \"Matrix Closed Loop Maintenance Setup 0.5.0.exe\" --title \"Release 0.5.0\" --notes-file RELEASE_NOTES_v0.5.0.md"
   },
   "build": {
     "appId": "com.matrix.plc.interface",

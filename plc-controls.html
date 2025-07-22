@@ -239,9 +239,12 @@
     <div class="dashboard-item" draggable="true">
         <h3 class="chart-title">PLC DATA OVERVIEW</h3>
         <div class="plc-data-grid">
-            <button class="grid-item">View All PLC Tags</button>
+            <button id="view-plc-tags-btn" class="grid-item" onclick="window.electron.navigate('plc-details.html')">View All PLC Tags</button>
         </div>
     </div>
+
+    <!-- TEST BUTTON: Should navigate to plc-details.html using Electron navigation -->
+    <!-- (Test button removed) -->
 
     <!-- PLC Configuration -->
     <div class="dashboard-item" draggable="true">
@@ -324,6 +327,8 @@
                 container.appendChild(draggingItem);
             }
         });
+        
+        // (No extra event listener for the View All PLC Tags button)
     });
 </script>
 
