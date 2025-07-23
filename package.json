@@ -1,50 +1,31 @@
 {
-  "name": "matrix-plc-interface",
-  "version": "0.5.2",
-  "description": "HMI interface for Matrix Closed Loop Maintenance Product with PDF Integration",
+  "name": "matrix-training-platform",
+  "version": "2.0.0",
+  "description": "Matrix Training Platform for Closed Loop Maintenance Curriculum",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "dev": "electron . --debug",
-    "test": "electron run-pdf-tests.js",
-    "test:pdf": "electron pdf-viewer-test.js",
     "build": "electron-builder",
-    "build-and-publish": "electron-builder --publish always",
-    "release": "gh release create v0.5.0 \"Matrix Closed Loop Maintenance Setup 0.5.0.exe\" --title \"Release 0.5.0\" --notes-file RELEASE_NOTES_v0.5.0.md"
+    "build-and-publish": "electron-builder --publish always"
   },
   "build": {
-    "appId": "com.matrix.plc.interface",
-    "productName": "Matrix Closed Loop Maintenance",
+    "appId": "com.matrix.training.platform",
+    "productName": "Matrix Training Platform",
     "files": [
       "main.js",
       "index.html",
-      "renderer.js",
-      "preload.js",
-      "package.json",
-      "db1.json",
-      "db1Handler.js",
-      "dbFaults.json",
-      "dbFaultsHandler.js",
-      "dbMaintenanceScenarios.json",
-      "dbFaultScenarios.json",
-      "fault-banner.js",
-      "forcing-banner.js",
-      "jquery.notification-banner.js",
-      "main.css",
-      "plc-details.css",
-      "plc-details.html",
-      "plc-controls.html",
       "worksheets.html",
       "worksheet.html",
-      "settings.html",
-      "student-portal.html",
-      "teacher-dashboard.html",
-      "hmi-interface.html",
       "scenario-popup.js",
       "pdf-popup.js",
+      "preload.js",
+      "package.json",
+      "dbMaintenanceScenarios.json",
+      "dbFaultScenarios.json",
+      "main.css",
       "assets/**/*",
       "docs/**/*",
-      "dist/**/*",
       "LICENSE",
       "README.md"
     ],
@@ -76,22 +57,20 @@
   "license": "MIT",
   "dependencies": {
     "animejs": "^3.2.2",
-    "chart.js": "^4.4.6",
-    "datatables.net": "^2.1.8",
-    "datatables.net-buttons": "^3.1.2",
-    "electron-pdf-window": "^1.0.12",
-    "html2canvas": "^1.4.1",
     "jquery": "^3.7.1",
-    "nodes7": "^0.3.18",
     "pdfjs-dist": "^5.3.31"
   },
   "devDependencies": {
     "electron": "^25.9.8",
-    "electron-builder": "^24.6.3",
-    "webpack": "^5.x.x",
-    "webpack-cli": "^4.x.x"
+    "electron-builder": "^24.6.3"
   },
-  "keywords": [],
+  "keywords": [
+    "training",
+    "education",
+    "maintenance",
+    "curriculum",
+    "industrial"
+  ],
   "bugs": {
     "url": "https://github.com/hadefuwa/closed-loop-maint/issues"
   },

@@ -11,20 +11,12 @@
   <script src="node_modules/jquery/dist/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
   <!-- Load app-specific scripts after dependencies -->
-  <script defer src="jquery.notification-banner.js"></script>
-  <script defer src="forcing-banner.js"></script>
-  <script defer src="fault-banner.js"></script>
   <script defer src="scenario-popup.js"></script>
   <script defer src="pdf-popup.js"></script>
-  <script defer src="renderer.js"></script>
   <style>
     .hidden {
       opacity: 0;
       pointer-events: none;
-    }
-    
-    .hmi-section button:hover {
-      background: #555 !important;
     }
 
     /* Navigation Styles */
@@ -110,8 +102,8 @@
       border: 2px solid #FFFFFF;
     }
 
-    /* HMI-CENTERED LAYOUT */
-    .hmi-main {
+    /* Main Content Layout */
+    .main-content {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -122,44 +114,12 @@
       margin-bottom: 20px;
     }
 
-    /* HMI CONTAINER - MOST IMPORTANT */
-    .hmi-container {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      border: 2px solid #FFFFFF;
-      border-radius: 4px;
-      overflow: hidden;
-      background: #1f2937;
-    }
-
-    .hmi-frame {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-
-    .hmi-status {
-      position: absolute;
-      top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0, 0, 0, 0.8);
-      color: #8A2BE2;
-      padding: 8px 16px;
-      border-radius: 5px;
-      font-size: 14px;
-      z-index: 1000;
-      transition: opacity 0.3s;
-    }
-
-    /* SIDE ELEMENTS - ADAPTIVE */
+    /* Side Content */
     .side-content {
       display: flex;
       flex-direction: column;
       gap: 20px;
-      width: 200px;
-      flex-shrink: 1; /* Can shrink */
+      width: 300px;
       margin: 0 20px;
     }
 
@@ -195,261 +155,126 @@
       flex-shrink: 1;
     }
 
-    .button-group {
+    .button-container {
       display: flex;
       flex-direction: column;
       gap: 15px;
     }
 
-    .pdf-button {
-      padding: 16px 12px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 14px;
-      transition: all 0.3s ease;
+    .side-button {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 8px;
-      min-height: 80px;
-      justify-content: center;
-    }
-
-    .pdf-button.curriculum {
-      background: linear-gradient(135deg, #8A2BE2, #6B1FB3);
-      color: #000;
-      box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3);
-    }
-
-    .pdf-button.curriculum:hover {
-      transform: scale(1.05);
-      box-shadow: 0 6px 20px rgba(138, 43, 226, 0.5);
-    }
-
-    .pdf-button.documentation {
-      background: linear-gradient(135deg, #4a9eff, #2d7dd2);
-      color: white;
-      box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3);
-    }
-
-    .pdf-button.documentation:hover {
-      transform: scale(1.05);
-      box-shadow: 0 6px 20px rgba(74, 158, 255, 0.5);
-    }
-
-    .pdf-button i {
-      font-size: 20px;
-    }
-
-    /* RESPONSIVE BREAKPOINTS */
-    
-    /* Large screens: Full horizontal layout */
-    @media (min-width: 1400px) {
-      .hmi-main {
-        justify-content: space-between;
-      }
-      .hmi-container {
-        width: 1000px;
-        height: 650px;
-      }
-      .side-content {
-        width: 220px;
-      }
-    }
-
-    /* Medium screens: Reduce side content */
-    @media (max-width: 1399px) and (min-width: 1000px) {
-      .side-content {
-        width: 180px;
-        margin: 0 15px;
-      }
-      .cad-image {
-        height: 150px;
-      }
-      .hmi-container {
-        width: 800px;
-        height: 550px;
-      }
-    }
-
-    /* Small screens: Stack everything vertically, HMI stays centered */
-    @media (max-width: 999px) {
-      .hmi-main {
-        flex-direction: column;
-        gap: 30px;
-      }
-      
-      .hmi-container {
-        width: 90vw;
-        height: 60vh;
-        order: 1; /* HMI first */
-      }
-      
-      .side-content {
-        width: 90vw;
-        order: 2; /* Everything else after */
-        margin: 0;
-      }
-      
-      .button-group {
-        flex-direction: row;
-        justify-content: center;
-        flex-wrap: wrap;
-      }
-      
-      .pdf-button {
-        flex: 1;
-        min-width: 150px;
-        margin: 5px;
-      }
-      
-      .cad-image {
-        height: 120px;
-        margin: 0 auto;
-        max-width: 200px;
-      }
-    }
-
-    /* Very small screens: Minimal layout */
-    @media (max-width: 600px) {
-      .hmi-container {
-        width: 95vw;
-        height: 50vh;
-      }
-      
-      .pdf-button {
-        padding: 12px;
-        font-size: 12px;
-        min-height: 60px;
-      }
-      
-      .pdf-button i {
-        font-size: 16px;
-      }
-      
-      .cad-image {
-        height: 100px;
-      }
-    }
-
-    .loading-progress {
-      height: 100%;
-      width: 0;
-      background: linear-gradient(90deg, #FFFFFF, #F5F5F5);
-      border-radius: 10px;
-      transition: width 0.3s ease;
-    }
-
-    /* Worksheets Section */
-    .worksheets-section {
-      max-width: 1200px;
-      margin: 40px auto;
       padding: 20px;
-      background: #2d2d2d;
+      background: linear-gradient(135deg, #333333, #555555);
+      border: 2px solid #666666;
       border-radius: 8px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      color: #FFFFFF;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
 
-    .worksheets-header {
-      color: #FFFFFF;
-      font-size: 28px;
+    .side-button:hover {
+      background: linear-gradient(135deg, #FFFFFF, #F5F5F5);
+      color: #000;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(255, 255, 255, 0.4);
+      border: 2px solid #FFFFFF;
+    }
+
+    .side-button i {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .button-text {
       font-weight: bold;
-      margin-bottom: 30px;
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+
+    .side-button small {
+      opacity: 0.7;
+      font-size: 12px;
+    }
+
+    /* Center Content */
+    .center-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       text-align: center;
+      padding: 40px;
+      background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+      border-radius: 12px;
+      border: 2px solid #FFFFFF;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+      max-width: 600px;
+    }
+
+    .center-title {
+      color: #FFFFFF;
+      font-size: 32px;
+      font-weight: bold;
+      margin-bottom: 20px;
       text-transform: uppercase;
       letter-spacing: 2px;
       text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
     }
 
-    .worksheets-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      padding: 20px 0;
+    .center-subtitle {
+      color: #CCCCCC;
+      font-size: 18px;
+      margin-bottom: 30px;
+      line-height: 1.6;
     }
 
-    .worksheet-card {
-      background: linear-gradient(135deg, #333333, #444444);
+    .curriculum-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    .curriculum-card {
+      background: linear-gradient(135deg, #333333, #555555);
+      border: 2px solid #666666;
       border-radius: 8px;
-      padding: 20px;
+      padding: 25px;
+      text-align: center;
       transition: all 0.3s ease;
       cursor: pointer;
-      border: 2px solid transparent;
-      position: relative;
-      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
 
-    .worksheet-card:hover {
+    .curriculum-card:hover {
+      background: linear-gradient(135deg, #FFFFFF, #F5F5F5);
+      color: #000;
       transform: translateY(-5px);
-      background: linear-gradient(135deg, #3a3a3a, #4a4a4a);
-      border-color: #FFFFFF;
-      box-shadow: 0 8px 25px rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 25px rgba(255, 255, 255, 0.4);
+      border: 2px solid #FFFFFF;
     }
 
-    .worksheet-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 4px;
-      height: 100%;
-      background: #FFFFFF;
-      opacity: 0.5;
+    .curriculum-card i {
+      font-size: 36px;
+      margin-bottom: 15px;
+      display: block;
     }
 
-    .worksheet-title {
-      color: #FFFFFF;
-      font-size: 18px;
+    .curriculum-card h3 {
+      font-size: 20px;
       font-weight: bold;
       margin-bottom: 10px;
     }
 
-    .worksheet-number {
-      color: #FFFFFF;
-      opacity: 0.7;
+    .curriculum-card p {
       font-size: 14px;
-      margin-bottom: 5px;
-    }
-
-    /* Additional styles for fault scenarios */
-    .worksheets-section + .worksheets-section {
-      margin-top: 60px; /* Add more space between sections */
-    }
-
-    .worksheets-header {
-      position: relative;
-      padding-bottom: 15px;
-    }
-
-    .worksheets-header::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100px;
-      height: 3px;
-      background: #FFFFFF;
-      opacity: 0.3;
-    }
-
-    /* Make cards more distinct between sections */
-    .worksheets-section:nth-child(1) .worksheet-card::before {
-      background: #4CAF50; /* Green accent for maintenance */
-    }
-
-    .worksheets-section:nth-child(2) .worksheet-card::before {
-      background: #FF5722; /* Orange accent for troubleshooting */
-    }
-
-    .worksheets-section:nth-child(2) .worksheet-card {
-      background: linear-gradient(135deg, #3a3333, #444444);
-    }
-
-    .worksheets-section:nth-child(2) .worksheet-card:hover {
-      background: linear-gradient(135deg, #403333, #4a4444);
+      opacity: 0.8;
+      line-height: 1.4;
     }
 
     .page-title {
@@ -466,13 +291,16 @@
 </head>
 <body class="home-page">
 
+  <!-- Hexagon Background -->
+  <div id="hexagon-background"></div>
+  
   <div id="splash-screen">
     <div class="splash-content">
       <img src="assets/matrix-logo.png" alt="Matrix Logo" class="splash-logo">
       <div class="loading-bar">
         <div class="loading-progress"></div>
       </div>
-      <div class="loading-text">Initializing Matrix's Closed Loop Maintenance Interface...</div>
+      <div class="loading-text">Initializing Matrix's Closed Loop Maintenance Training Platform...</div>
     </div>
   </div>
 
@@ -481,6 +309,7 @@
     <div class="nav-container">
       <div class="nav-logo">
         <img src="assets/matrix-logo.png" alt="Matrix Logo">
+        <h1>Training Platform</h1>
       </div>
       <ul class="nav-menu" id="nav-menu">
         <li class="nav-item">
@@ -493,51 +322,29 @@
             <i class="fas fa-book-open"></i> WORKSHEETS
           </a>
         </li>
-        <li class="nav-item">
-          <a href="#" onclick="window.electron.navigate('plc-controls.html')" class="nav-link">
-            <i class="fas fa-cogs"></i> PLC CONTROLS
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="#" onclick="window.electron.navigate('student-portal.html')" class="nav-link">
-            <i class="fas fa-user-graduate"></i> STUDENT PORTAL
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="#" onclick="window.electron.navigate('teacher-dashboard.html')" class="nav-link">
-            <i class="fas fa-chalkboard-teacher"></i> TEACHER
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="#" onclick="window.electron.navigate('settings.html')" class="nav-link">
-            <i class="fas fa-gear"></i> SETTINGS
-          </a>
-        </li>
       </ul>
     </div>
   </nav>
 
   <h1 class="page-title">
-    <i class="fas fa-home"></i> Closed Loop Maintenance Dashboard
+    <i class="fas fa-graduation-cap"></i> Closed Loop Maintenance Training
   </h1>
-
-  <div id="error-message" class="error-message"></div>
 
   <!-- Main Container -->
   <div class="main-container">
-    <!-- HMI CENTERED LAYOUT -->
-    <div class="hmi-main">
+    <!-- Main Content Layout -->
+    <div class="main-content">
         <!-- LEFT SIDE - CURRICULUM -->
         <div class="side-content">
-            <h2 class="side-header">CURRICULUM</h2>
+            <h2 class="side-header curriculum">CURRICULUM</h2>
             <img src="assets/cad.png" alt="CAD Diagram 1" class="cad-image">
             <div class="button-container">
-                <a href="#" class="side-button" onclick="openPDF('docs/CP6773 - Troubleshooting & Fault-Finding Closed Loop Systems.pdf')">
+                <a href="#" class="side-button" onclick="window.electron.openPDF('docs/CP6773 - Troubleshooting & Fault-Finding Closed Loop Systems.pdf')">
                     <i class="fas fa-exclamation-triangle"></i>
                     <span class="button-text">Fault Scenarios</span>
                     <small>(CP6773)</small>
                 </a>
-                <a href="#" class="side-button" onclick="openPDF('docs/CP0539 - Industrial Maintenance of Closed Loop Systems.pdf')">
+                <a href="#" class="side-button" onclick="window.electron.openPDF('docs/CP0539 - Industrial Maintenance of Closed Loop Systems.pdf')">
                     <i class="fas fa-cogs"></i>
                     <span class="button-text">Industrial Maintenance</span>
                     <small>(CP0539)</small>
@@ -545,52 +352,40 @@
             </div>
         </div>
 
-        <!-- HMI CENTER -->
-        <div class="hmi-section">
-            <div class="hmi-container" id="hmi-container">
-                <div class="hmi-status hidden" id="hmi-status">Loading HMI Interface...</div>
-                <div class="hmi-frame">
-                    <webview 
-                        id="hmi-webview" 
-                        src="https://192.168.7.101/device/WebRH" 
-                        partition="persist:hmi"
-                        allowpopups
-                        disablewebsecurity
-                        webpreferences="allowRunningInsecureContent=yes"
-                        style="width: 100%; height: 100%; border: none; border-radius: 4px;">
-                    </webview>
+        <!-- CENTER CONTENT -->
+        <div class="center-content">
+            <h2 class="center-title">Welcome to Matrix Training</h2>
+            <p class="center-subtitle">
+                Comprehensive training platform for industrial maintenance technicians. 
+                Master closed-loop control systems through interactive worksheets and real-world scenarios.
+            </p>
+            
+            <div class="curriculum-grid">
+                <div class="curriculum-card" onclick="window.electron.navigate('worksheets.html')">
+                    <i class="fas fa-cogs"></i>
+                    <h3>CP0539 - Industrial Maintenance</h3>
+                    <p>14 comprehensive worksheets covering control systems, emergency stops, PLC maintenance, and more.</p>
+                </div>
+                
+                <div class="curriculum-card" onclick="window.electron.navigate('worksheets.html')">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>CP6773 - Troubleshooting</h3>
+                    <p>8 real-world fault scenarios for practical training in temperature control, HVAC, and process systems.</p>
                 </div>
             </div>
-            <div class="hmi-controls">
-                <button class="control-btn" id="zoom-out-hmi" title="Zoom Out">
-                    <i class="fas fa-search-minus"></i>
-                </button>
-                <button class="control-btn" id="zoom-in-hmi" title="Zoom In">
-                    <i class="fas fa-search-plus"></i>
-                </button>
-                <button class="control-btn" id="reset-zoom-hmi" title="Reset Zoom">
-                    <i class="fas fa-sync-alt"></i>
-                </button>
-                <button class="fullscreen-btn" id="fullscreen-btn" title="Enter Fullscreen">
-                    <i class="fas fa-expand"></i>
-                </button>
-            </div>
-            <button class="fullscreen-btn exit-fullscreen-btn" id="exit-fullscreen-btn" title="Exit Fullscreen">
-                <i class="fas fa-compress"></i>
-            </button>
         </div>
 
         <!-- RIGHT SIDE - DOCUMENTATION -->
         <div class="side-content">
-            <h2 class="side-header">DOCUMENTATION</h2>
+            <h2 class="side-header documentation">DOCUMENTATION</h2>
             <img src="assets/cad2.png" alt="CAD Diagram 2" class="cad-image">
             <div class="button-container">
-                <a href="#" class="side-button" onclick="openPDF('docs/IM0004 - Maintenance of Closed Loop Systems User Manual.pdf')">
+                <a href="#" class="side-button" onclick="window.electron.openPDF('docs/IM0004 - Maintenance of Closed Loop Systems User Manual.pdf')">
                     <i class="fas fa-book"></i>
                     <span class="button-text">User Manual</span>
                     <small>(IM0004)</small>
                 </a>
-                <a href="#" class="side-button" onclick="openPDF('docs/IM0004 Electrical Drawings RevG.pdf')">
+                <a href="#" class="side-button" onclick="window.electron.openPDF('docs/IM0004 Electrical Drawings RevG.pdf')">
                     <i class="fas fa-bolt"></i>
                     <span class="button-text">Electrical Drawings</span>
                     <small>(RevG)</small>
@@ -598,348 +393,125 @@
             </div>
         </div>
     </div>
-
-    <!-- Worksheets Section -->
-    <section class="worksheets-section">
-        <h2 class="worksheets-header">
-            <i class="fas fa-book-open"></i> CP0539 - Industrial Maintenance of Closed Loop Systems
-        </h2>
-        <div class="worksheets-grid">
-            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=1&type=maintenance')">
-                <div class="worksheet-number">Worksheet 1</div>
-                <div class="worksheet-title">Closed-Loop Control Systems</div>
-            </div>
-            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=2&type=maintenance')">
-                <div class="worksheet-number">Worksheet 2</div>
-                <div class="worksheet-title">Emergency Stops</div>
-            </div>
-            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=3&type=maintenance')">
-                <div class="worksheet-number">Worksheet 3</div>
-                <div class="worksheet-title">Status LED</div>
-            </div>
-            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=4&type=maintenance')">
-                <div class="worksheet-number">Worksheet 4</div>
-                <div class="worksheet-title">PLC</div>
-            </div>
-            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=5&type=maintenance')">
-                <div class="worksheet-number">Worksheet 5</div>
-                <div class="worksheet-title">HMI</div>
-            </div>
-            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=6&type=maintenance')">
-                <div class="worksheet-number">Worksheet 6</div>
-                <div class="worksheet-title">Pump</div>
-            </div>
-            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=7&type=maintenance')">
-                <div class="worksheet-number">Worksheet 7</div>
-                <div class="worksheet-title">Valve</div>
-            </div>
-            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=8&type=maintenance')">
-                <div class="worksheet-number">Worksheet 8</div>
-                <div class="worksheet-title">Float Switch</div>
-            </div>
-            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=9&type=maintenance')">
-                <div class="worksheet-number">Worksheet 9</div>
-                <div class="worksheet-title">Proximity Switch</div>
-            </div>
-            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=10&type=maintenance')">
-                <div class="worksheet-number">Worksheet 10</div>
-                <div class="worksheet-title">Flow Sensor</div>
-            </div>
-            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=11&type=maintenance')">
-                <div class="worksheet-number">Worksheet 11</div>
-                <div class="worksheet-title">Temperature Sensor</div>
-            </div>
-            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=12&type=maintenance')">
-                <div class="worksheet-number">Worksheet 12</div>
-                <div class="worksheet-title">Digital Sensors</div>
-            </div>
-            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=13&type=maintenance')">
-                <div class="worksheet-number">Worksheet 13</div>
-                <div class="worksheet-title">Analogue Sensors</div>
-            </div>
-            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=14&type=maintenance')">
-                <div class="worksheet-number">Worksheet 14</div>
-                <div class="worksheet-title">Faults</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CP6773 Fault Scenarios Section -->
-    <section class="scenarios-section">
-      <h2 class="section-header">
-        <i class="fas fa-exclamation-triangle"></i> CP6773 - Troubleshooting & Fault-Finding Closed Loop Systems
-      </h2>
-      <div class="scenarios-grid">
-        <!-- Fault scenario cards -->
-        <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=1&type=fault')">
-          <div class="worksheet-number">Fault Scenario 1</div>
-          <div class="worksheet-title">Titanium Forging Temperature Control</div>
-        </div>
-
-        <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=2&type=fault')">
-          <div class="worksheet-number">Fault Scenario 2</div>
-          <div class="worksheet-title">Pharmaceutical Clean Room HVAC</div>
-        </div>
-
-        <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=3&type=fault')">
-          <div class="worksheet-number">Fault Scenario 3</div>
-          <div class="worksheet-title">CNC Machines Factory Cooling</div>
-        </div>
-
-        <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=4&type=fault')">
-          <div class="worksheet-number">Fault Scenario 4</div>
-          <div class="worksheet-title">Server Room Temperature Control</div>
-        </div>
-
-        <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=5&type=fault')">
-          <div class="worksheet-number">Fault Scenario 5</div>
-          <div class="worksheet-title">Potash Mine Brine System</div>
-        </div>
-
-        <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=6&type=fault')">
-          <div class="worksheet-number">Fault Scenario 6</div>
-          <div class="worksheet-title">Food Processing Sterilizer</div>
-        </div>
-
-        <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=7&type=fault')">
-          <div class="worksheet-number">Fault Scenario 7</div>
-          <div class="worksheet-title">Injection Molding Temperature</div>
-        </div>
-
-        <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=8&type=fault')">
-          <div class="worksheet-number">Fault Scenario 8</div>
-          <div class="worksheet-title">Chemical Reactor pH Control</div>
-        </div>
-      </div>
-    </section>
   </div>
 
-  <!-- External Libraries -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
-
-  <!-- Custom Plugins -->
-  <script src="./jquery.notification-banner.js"></script>
-  <script src="./forcing-banner.js"></script>
-
-  <!-- Application Code -->
+  <!-- Load dependencies -->
+  <script src="node_modules/jquery/dist/jquery.min.js"></script>
   <script src="scenario-popup.js"></script>
   
+  <!-- Splash Screen Logic -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // Splash screen animation
-        const splashScreen = {
-          init() {
-            // Logo animation
-            anime({
-              targets: '.splash-logo',
-              scale: [0.5, 1],
-              opacity: [0, 1],
-              duration: 1000,
-              easing: 'easeOutExpo'
-            });
-
-            // Loading text animation
-            anime({
-              targets: '.loading-text',
-              opacity: [0, 1],
-              duration: 800,
-              delay: 300,
-              easing: 'easeOutExpo'
-            });
-
-            // Progress bar animation
-            anime({
-              targets: '.loading-progress',
-              width: ['0%', '100%'],
-              duration: 2000,
-              easing: 'easeInOutQuart',
-              complete: () => {
-                // Fade out splash screen
-                anime({
-                  targets: '#splash-screen',
-                  opacity: [1, 0],
-                  duration: 800,
-                  easing: 'easeOutExpo',
-                  complete: () => {
-                    document.getElementById('splash-screen').style.display = 'none';
-                  }
-                });
-              }
-            });
-          }
-        };
-
-        // Check if this is the first boot in this session
-        const isFirstBoot = !sessionStorage.getItem('hasBooted');
-        
+      const splashScreen = document.getElementById('splash-screen');
+      const loadingProgress = document.querySelector('.loading-progress');
+      
+      // Check if this is the first boot in this session
+      const isFirstBoot = !sessionStorage.getItem('hasBooted');
+      
+      if (!isFirstBoot) {
         // If it's not first boot, hide splash screen immediately
-        if (!isFirstBoot) {
-            const splashElement = document.getElementById('splash-screen');
-            if (splashElement) {
-                splashElement.style.display = 'none';
-            }
-        } else {
-            // Initialize splash screen only on first boot
-            splashScreen.init();
-            // Mark that we've booted
-            sessionStorage.setItem('hasBooted', 'true');
-        }
-    });
-</script>
-
-<!-- Fault Banner -->
-<script>
-    $(document).ready(function() {
-        console.log('Document ready, initializing ForcingBanner');
-        if (typeof ForcingBanner === 'undefined') {
-            console.error('ForcingBanner not loaded');
-        } else {
-            ForcingBanner.init();
-        }
-    });
-</script>
-  
-<!-- Fault Banner -->
-<div id="fault-banner" class="fault-banner hidden">
-    <div class="fault-banner-content">
-        <span id="fault-message"></span>
-        <button id="acknowledge-fault" class="acknowledge-button">Acknowledge</button>
-    </div>
-</div>
-
-<!-- Fault Banner Script -->
-<script src="fault-banner.js"></script>
-
-<!-- PDF Loading Popup -->
-<div id="pdf-loading-popup" style="
-  display: none;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: rgba(0, 0, 0, 0.9);
-  color: white;
-  padding: 20px 40px;
-  border-radius: 8px;
-  z-index: 99999;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
-  text-align: center;
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  min-width: 200px;
-">
-  <div style="margin-bottom: 15px; font-size: 18px; font-weight: 500;">Opening PDF...</div>
-  <div class="loading-spinner" style="
-    width: 40px;
-    height: 40px;
-    margin: 0 auto;
-    border: 4px solid rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    border-top: 4px solid #8A2BE2;
-    animation: spin 1s linear infinite;
-  "></div>
-</div>
-
-<style>
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  
-  #pdf-loading-popup {
-    opacity: 0;
-    transition: opacity 0.2s ease-in-out;
-  }
-  
-  #pdf-loading-popup.visible {
-    opacity: 1;
-  }
-</style>
-
-<!-- PDF Navigation Functions -->
-<script>
-    function openPDF(pdfPath) {
-        console.log('Opening PDF:', pdfPath);
-        
-        // Show loading popup with fade in
-        const popup = document.getElementById('pdf-loading-popup');
-        popup.style.display = 'block';
-        // Force a reflow to enable the transition
-        popup.offsetHeight;
-        popup.classList.add('visible');
-        
-        // Use the IPC method to open PDF in the system's default viewer
-        if (window.electron && window.electron.openPDF) {
-            window.electron.openPDF(pdfPath);
-        }
-        
-        // Hide popup after 2 seconds with fade out
-        setTimeout(() => {
-            popup.classList.remove('visible');
+        splashScreen.style.display = 'none';
+      } else {
+        // Initialize splash screen only on first boot
+        // Animate the loading progress
+        let progress = 0;
+        const progressInterval = setInterval(() => {
+          progress += 2;
+          loadingProgress.style.width = progress + '%';
+          
+          if (progress >= 100) {
+            clearInterval(progressInterval);
+            
+            // Fade out splash screen
             setTimeout(() => {
-                popup.style.display = 'none';
-            }, 200); // Wait for fade out animation
-        }, 2000);
+              splashScreen.style.opacity = '0';
+              setTimeout(() => {
+                splashScreen.style.display = 'none';
+              }, 500);
+            }, 500);
+          }
+        }, 50); // Update every 50ms for smooth animation
+        
+        // Fallback: Force hide splash screen after 10 seconds if something goes wrong
+        setTimeout(() => {
+          if (splashScreen.style.display !== 'none') {
+            splashScreen.style.opacity = '0';
+            setTimeout(() => {
+              splashScreen.style.display = 'none';
+            }, 500);
+          }
+        }, 10000);
+        
+        // Mark that we've booted
+        sessionStorage.setItem('hasBooted', 'true');
+      }
+    });
+    
+    // Additional fallback: Hide splash screen on any click or keypress
+    document.addEventListener('click', () => {
+      const splashScreen = document.getElementById('splash-screen');
+      if (splashScreen && splashScreen.style.display !== 'none') {
+        splashScreen.style.opacity = '0';
+        setTimeout(() => {
+          splashScreen.style.display = 'none';
+        }, 500);
+      }
+    });
+    
+    document.addEventListener('keydown', () => {
+      const splashScreen = document.getElementById('splash-screen');
+      if (splashScreen && splashScreen.style.display !== 'none') {
+        splashScreen.style.opacity = '0';
+        setTimeout(() => {
+          splashScreen.style.display = 'none';
+        }, 500);
+      }
+    });
+    
+    // Ensure background animation is running
+    function ensureBackgroundAnimation() {
+      const body = document.body;
+      
+      // Add the animation class to ensure it's running
+      body.classList.add('background-animation');
+      
+      // Force a reflow to restart animation if needed
+      body.offsetHeight;
+      
+      // Log animation status for debugging
+      console.log('Background animation ensured');
     }
-</script>
-
-<script>
-// Initialize zoom level
-let currentZoom = 1.16; // Start at 116%
-const webview = document.getElementById('hmi-webview');
-
-// Function to set zoom level
-function setZoomLevel(zoom) {
-    webview.setZoomLevel(zoom);
-    currentZoom = zoom;
-}
-
-// Set initial zoom after webview is ready
-webview.addEventListener('dom-ready', () => {
-    // Wait a short moment to ensure webview is fully loaded
-    setTimeout(() => {
-        setZoomLevel(currentZoom);
-    }, 100);
-});
-
-// Also set zoom when webview finishes loading
-webview.addEventListener('did-finish-load', () => {
-    setZoomLevel(currentZoom);
-});
-
-// Fullscreen controls
-document.getElementById('fullscreen-btn').addEventListener('click', function() {
-    const container = document.getElementById('hmi-container');
-    container.classList.add('fullscreen');
-});
-
-document.getElementById('exit-fullscreen-btn').addEventListener('click', function() {
-    const container = document.getElementById('hmi-container');
-    container.classList.remove('fullscreen');
-});
-
-// ESC key to exit fullscreen
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        const container = document.getElementById('hmi-container');
-        container.classList.remove('fullscreen');
-    }
-});
-
-// Zoom controls
-document.getElementById('zoom-in-hmi').addEventListener('click', function() {
-    setZoomLevel(currentZoom + 0.1);
-});
-
-document.getElementById('zoom-out-hmi').addEventListener('click', function() {
-    setZoomLevel(currentZoom - 0.1);
-});
-
-document.getElementById('reset-zoom-hmi').addEventListener('click', function() {
-    setZoomLevel(1.16); // Reset to 116%
-});
-</script>
+    
+    // Initialize background animation immediately
+    document.addEventListener('DOMContentLoaded', () => {
+      ensureBackgroundAnimation();
+      
+      // Force animation restart after a short delay
+      setTimeout(() => {
+        const body = document.body;
+        body.style.animation = 'none';
+        body.offsetHeight;
+        body.style.animation = null;
+        ensureBackgroundAnimation();
+      }, 100);
+    });
+    
+    // Check animation status periodically
+    setInterval(ensureBackgroundAnimation, 5000);
+    
+    // Also check when page becomes visible
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) {
+        ensureBackgroundAnimation();
+      }
+    });
+    
+    // Restart animation on window focus
+    window.addEventListener('focus', ensureBackgroundAnimation);
+    
+    // Restart animation on any user interaction
+    document.addEventListener('click', ensureBackgroundAnimation);
+    document.addEventListener('keydown', ensureBackgroundAnimation);
+  </script>
 </body>
 </html>
