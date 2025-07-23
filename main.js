@@ -21,7 +21,7 @@
  */
 
 // Import required Electron modules for app management and window creation
-const { app, BrowserWindow, ipcMain, protocol } = require('electron');
+const { app, BrowserWindow, ipcMain, protocol, shell } = require('electron');
 
 // Import path and fs modules for settings management
 const path = require('path');
@@ -144,12 +144,18 @@ ipcMain.handle('navigate', (event, page) => {
     }
 });
 
-// Handle PDF opening
-ipcMain.handle('open-pdf', (event, pdfPath) => {
+// Handle PDF opening with native OS viewer
+ipcMain.handle('open-pdf', async (event, pdfPath) => {
     const fullPath = path.join(__dirname, pdfPath);
     if (fs.existsSync(fullPath)) {
-        win.loadFile('pdf-viewer.html', { query: { pdf: fullPath } });
-        return { success: true, path: fullPath };
+        try {
+            // Open PDF in the system's default PDF viewer
+            await shell.openPath(fullPath);
+            return { success: true, path: fullPath };
+        } catch (error) {
+            console.error('Error opening PDF:', error);
+            return { success: false, error: 'Failed to open PDF in native viewer' };
+        }
     } else {
         return { success: false, error: 'PDF file not found' };
     }
