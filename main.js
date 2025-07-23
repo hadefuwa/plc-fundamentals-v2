@@ -146,7 +146,9 @@ ipcMain.on('navigate', (event, page) => {
         if (page.includes('worksheet.html')) {
             const queryString = page.split('?')[1];
             if (queryString) {
-                win.loadFile('worksheet.html', { query: queryString });
+                // Use loadURL with file:// protocol to properly handle query parameters
+                const filePath = path.join(__dirname, 'worksheet.html');
+                win.loadURL(`file://${filePath}?${queryString}`);
             } else {
                 win.loadFile('worksheet.html');
             }

@@ -523,8 +523,15 @@
     // Load worksheet data
     async function loadWorksheet() {
       try {
+        // Debug: Log the current URL and search parameters
+        console.log('Current URL:', window.location.href);
+        console.log('Search params:', window.location.search);
+        
         const worksheetId = getUrlParameter('id');
         const type = getUrlParameter('type') || 'maintenance';
+        
+        console.log('Worksheet ID:', worksheetId);
+        console.log('Type:', type);
         
         if (!worksheetId) {
           showError('No worksheet ID specified');
