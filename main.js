@@ -104,6 +104,8 @@ function createWindow() {
         const pathname = parsedUrl.pathname.toLowerCase();
         if (pathname.endsWith('index.html') || 
             pathname.endsWith('worksheets.html') ||
+            pathname.endsWith('cp0539-worksheets.html') ||
+            pathname.endsWith('cp6773-worksheets.html') ||
             pathname.endsWith('worksheet.html')) {
             // Allow navigation to our app pages
         } else {
