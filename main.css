@@ -211,6 +211,55 @@ h1 {
     }
 }
 
+/* PDF Opening Popup */
+.pdf-popup {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+    border: 2px solid #4a9eff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    z-index: 10000;
+    opacity: 0;
+    transform: translateX(400px);
+    transition: all 0.5s ease;
+    max-width: 350px;
+    backdrop-filter: blur(10px);
+}
+
+.pdf-popup.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.pdf-popup-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.pdf-popup-content i {
+    font-size: 32px;
+    color: #4a9eff;
+    flex-shrink: 0;
+}
+
+.pdf-popup-text h3 {
+    color: #FFFFFF;
+    margin: 0 0 5px 0;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.pdf-popup-text p {
+    color: #CCCCCC;
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
 /* Splash Screen */
 #splash-screen {
     position: fixed;

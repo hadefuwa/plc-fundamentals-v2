@@ -420,8 +420,53 @@
     </section>
   </div>
 
+  <!-- PDF Opening Popup -->
+  <div id="pdf-popup" class="pdf-popup">
+    <div class="pdf-popup-content">
+      <i class="fas fa-file-pdf"></i>
+      <div class="pdf-popup-text">
+        <h3>Opening PDF Document</h3>
+        <p id="pdf-popup-filename">Document will open in your default PDF viewer...</p>
+      </div>
+    </div>
+  </div>
+
   <!-- Load dependencies -->
   <script src="node_modules/jquery/dist/jquery.min.js"></script>
   <script src="scenario-popup.js"></script>
+  
+  <!-- PDF Opening Popup Functionality -->
+  <script>
+    // PDF Opening Popup Functionality
+    function showPDFPopup(pdfPath) {
+      const popup = document.getElementById('pdf-popup');
+      const filename = document.getElementById('pdf-popup-filename');
+      
+      // Extract filename from path
+      const pathParts = pdfPath.split('/');
+      const fileName = pathParts[pathParts.length - 1];
+      
+      // Update popup text
+      filename.textContent = `Opening: ${fileName}`;
+      
+      // Show popup
+      popup.classList.add('show');
+      
+      // Hide popup after 5 seconds
+      setTimeout(() => {
+        popup.classList.remove('show');
+      }, 5000);
+    }
+    
+    // Override the default PDF opening to show popup
+    const originalOpenPDF = window.electron.openPDF;
+    window.electron.openPDF = async (pdfPath) => {
+      // Show popup first
+      showPDFPopup(pdfPath);
+      
+      // Then open PDF
+      return await originalOpenPDF(pdfPath);
+    };
+  </script>
 </body>
 </html> 
