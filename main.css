@@ -12,7 +12,7 @@ body {
     min-height: 100vh;
 }
 
-/* Hexagon background pattern - tessellating design */
+/* Matrix logo background pattern */
 body::before {
     content: '';
     position: fixed;
@@ -21,82 +21,28 @@ body::before {
     width: 200%;
     height: 200%;
     z-index: -1;
-    background-image: 
-        /* Perfect tessellating hexagon pattern */
-        linear-gradient(60deg, rgba(255,255,255,0.08) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.08) 75%),
-        linear-gradient(-60deg, rgba(255,255,255,0.08) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.08) 75%);
-    background-size: 80px 80px;
-    background-position: 0 0, 40px 40px;
+    background-image: url('./assets/matrix-logo.png');
+    background-size: 150px;
+    background-repeat: repeat;
+    opacity: 0.05;
+    transform: rotate(-45deg);
     pointer-events: none;
-    animation: hexagonSlide 100s linear infinite;
+    animation: slideBackground 120s linear infinite;
     will-change: transform;
 }
 
-/* Hexagon outlines for clean edges */
-body::after {
-    content: '';
-    position: fixed;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    z-index: -2;
-    background-image: 
-        /* Hexagon outlines */
-        linear-gradient(60deg, transparent 24%, rgba(255,255,255,0.12) 24%, rgba(255,255,255,0.12) 26%, transparent 26%, transparent 74%, rgba(255,255,255,0.12) 74%, rgba(255,255,255,0.12) 76%, transparent 76%),
-        linear-gradient(-60deg, transparent 24%, rgba(255,255,255,0.12) 24%, rgba(255,255,255,0.12) 26%, transparent 26%, transparent 74%, rgba(255,255,255,0.12) 74%, rgba(255,255,255,0.12) 76%, transparent 76%);
-    background-size: 80px 80px;
-    background-position: 0 0, 40px 40px;
-    pointer-events: none;
-    animation: hexagonSlide 100s linear infinite;
-    will-change: transform;
-}
 
-/* Alternative background animation class */
-body.background-animation::before {
-    animation: hexagonSlide 60s linear infinite;
-}
 
-body.background-animation::after {
-    animation: hexagonRotate 120s linear infinite;
-}
-
-@keyframes hexagonSlide {
+@keyframes slideBackground {
     0% {
-        transform: translate(0, 0);
+        transform: rotate(-45deg) translate(0, 0);
     }
     100% {
-        transform: translate(-80px, -80px);
+        transform: rotate(-45deg) translate(-150px, -150px);
     }
 }
 
-@keyframes hexagonRotate {
-    0% {
-        transform: translate(0, 0);
-    }
-    100% {
-        transform: translate(-80px, -80px);
-    }
-}
 
-/* Dedicated hexagon background element - tessellating pattern */
-#hexagon-background {
-    position: fixed;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    z-index: -3;
-    background-image: 
-        /* Tessellating hexagon fill */
-        linear-gradient(60deg, rgba(255,255,255,0.06) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.06) 75%),
-        linear-gradient(-60deg, rgba(255,255,255,0.06) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.06) 75%);
-    background-size: 80px 80px;
-    background-position: 0 0, 40px 40px;
-    pointer-events: none;
-    animation: hexagonSlide 120s linear infinite;
-    will-change: transform;
-}
 
 h1 {
     color: #9da5b1;            /* Light gray color for headings */

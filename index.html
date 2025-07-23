@@ -291,8 +291,7 @@
 </head>
 <body class="home-page">
 
-  <!-- Hexagon Background -->
-  <div id="hexagon-background"></div>
+
   
   <div id="splash-screen">
     <div class="splash-content">
@@ -472,32 +471,20 @@
     function ensureBackgroundAnimation() {
       const body = document.body;
       
-      // Add the animation class to ensure it's running
-      body.classList.add('background-animation');
-      
       // Force a reflow to restart animation if needed
       body.offsetHeight;
       
       // Log animation status for debugging
-      console.log('Background animation ensured');
+      console.log('Matrix background animation ensured');
     }
     
     // Initialize background animation immediately
     document.addEventListener('DOMContentLoaded', () => {
       ensureBackgroundAnimation();
-      
-      // Force animation restart after a short delay
-      setTimeout(() => {
-        const body = document.body;
-        body.style.animation = 'none';
-        body.offsetHeight;
-        body.style.animation = null;
-        ensureBackgroundAnimation();
-      }, 100);
     });
     
     // Check animation status periodically
-    setInterval(ensureBackgroundAnimation, 5000);
+    setInterval(ensureBackgroundAnimation, 10000);
     
     // Also check when page becomes visible
     document.addEventListener('visibilitychange', () => {
@@ -508,10 +495,6 @@
     
     // Restart animation on window focus
     window.addEventListener('focus', ensureBackgroundAnimation);
-    
-    // Restart animation on any user interaction
-    document.addEventListener('click', ensureBackgroundAnimation);
-    document.addEventListener('keydown', ensureBackgroundAnimation);
   </script>
 </body>
 </html>
