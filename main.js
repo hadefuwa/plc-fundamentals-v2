@@ -138,7 +138,7 @@ ipcMain.handle('save-settings', (event, newSettings) => {
     return { success: true };
 });
 
-ipcMain.handle('navigate', (event, page) => {
+ipcMain.on('navigate', (event, page) => {
     if (win) {
         // Handle query parameters for worksheet navigation
         if (page.includes('worksheet.html')) {
