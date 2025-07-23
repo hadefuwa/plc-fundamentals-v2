@@ -140,7 +140,12 @@ ipcMain.handle('save-settings', (event, newSettings) => {
 
 ipcMain.handle('navigate', (event, page) => {
     if (win) {
-        win.loadFile(page);
+        // Handle query parameters for worksheet navigation
+        if (page.includes('worksheet.html')) {
+            win.loadFile('worksheet.html', { query: page.split('?')[1] });
+        } else {
+            win.loadFile(page);
+        }
     }
 });
 
