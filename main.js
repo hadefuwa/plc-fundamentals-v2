@@ -144,7 +144,12 @@ ipcMain.on('navigate', (event, page) => {
     if (win) {
         // Handle query parameters for worksheet navigation
         if (page.includes('worksheet.html')) {
-            win.loadFile('worksheet.html', { query: page.split('?')[1] });
+            const queryString = page.split('?')[1];
+            if (queryString) {
+                win.loadFile('worksheet.html', { query: queryString });
+            } else {
+                win.loadFile('worksheet.html');
+            }
         } else {
             win.loadFile(page);
         }
