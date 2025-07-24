@@ -1,4 +1,4 @@
-const CACHE_NAME = 'matrix-training-cache-v2';
+const CACHE_NAME = 'matrix-training-cache-v3';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -7,15 +7,15 @@ const urlsToCache = [
   '/cp6773-worksheets.html',
   '/settings.html',
   '/worksheet.html',
-  '/pdf-viewer.html',
   '/main.css',
-  '/main.js',
   '/manifest.json',
   '/scenario-popup.js',
   '/pdf-popup.js',
   '/dbMaintenanceScenarios.json',
   '/dbFaultScenarios.json',
-  'https://code.jquery.com/jquery-3.7.1.min.js',
+  '/assets/icons/matrix-icon-192.png',
+  '/assets/icons/matrix-icon-512.png',
+  'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js',
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css',
   'https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js'
 ];
