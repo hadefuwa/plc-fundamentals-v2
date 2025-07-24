@@ -1232,21 +1232,138 @@
 
           <!-- System Response Testing Interface -->
           <div class="tab-content hidden" id="response-tab">
-              <div class="response-controls" style="display: flex; gap: 20px; align-items: center; margin-bottom: 25px; background: #333; padding: 20px; border-radius: 8px;">
-                  <div class="control-group" style="display: flex; align-items: center; gap: 10px;">
-                      <label style="color: #FFFFFF; font-weight: bold;">Input Type:</label>
-                      <select id="input-type" style="padding: 8px; border-radius: 4px; border: 1px solid #555; background: #222; color: #FFFFFF; font-weight: bold;">
-                          <option value="step">Step</option>
-                          <option value="ramp">Ramp</option>
-                          <option value="sine">Sinusoidal</option>
-                      </select>
+              <!-- Enhanced Control Panel -->
+              <div class="response-control-panel" style="background: linear-gradient(135deg, #2a2a2a, #3a3a3a); border-radius: 12px; padding: 30px; margin-bottom: 30px; border: 2px solid #E91E63; box-shadow: 0 8px 20px rgba(233, 30, 99, 0.2);">
+                  <h4 style="color: #E91E63; margin-bottom: 25px; font-size: 20px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-sliders-h"></i> Test Configuration</h4>
+                  
+                  <div class="control-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-bottom: 25px;">
+                      <!-- Input Type Selection -->
+                      <div class="control-section" style="background: #333; padding: 20px; border-radius: 8px;">
+                          <h5 style="color: #FFFFFF; margin-bottom: 15px; font-size: 16px;"><i class="fas fa-wave-square"></i> Input Signal Type</h5>
+                          <div class="input-type-options" style="display: flex; flex-direction: column; gap: 12px;">
+                              <label class="radio-option" style="display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 10px; border-radius: 6px; transition: all 0.3s ease;">
+                                  <input type="radio" name="input-type" value="step" checked style="accent-color: #E91E63;">
+                                  <span style="color: #FFFFFF; font-weight: 500;">Step Response</span>
+                                  <span style="color: #AAA; font-size: 12px; margin-left: auto;">Instant change</span>
+                              </label>
+                              <label class="radio-option" style="display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 10px; border-radius: 6px; transition: all 0.3s ease;">
+                                  <input type="radio" name="input-type" value="ramp" style="accent-color: #E91E63;">
+                                  <span style="color: #FFFFFF; font-weight: 500;">Ramp Response</span>
+                                  <span style="color: #AAA; font-size: 12px; margin-left: auto;">Linear increase</span>
+                              </label>
+                              <label class="radio-option" style="display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 10px; border-radius: 6px; transition: all 0.3s ease;">
+                                  <input type="radio" name="input-type" value="sine" style="accent-color: #E91E63;">
+                                  <span style="color: #FFFFFF; font-weight: 500;">Sinusoidal Response</span>
+                                  <span style="color: #AAA; font-size: 12px; margin-left: auto;">Oscillating input</span>
+                              </label>
+                          </div>
+                      </div>
+                      
+                      <!-- Test Parameters -->
+                      <div class="control-section" style="background: #333; padding: 20px; border-radius: 8px;">
+                          <h5 style="color: #FFFFFF; margin-bottom: 15px; font-size: 16px;"><i class="fas fa-cog"></i> Test Parameters</h5>
+                          <div class="parameter-controls" style="display: flex; flex-direction: column; gap: 15px;">
+                              <div class="parameter-group" style="display: flex; align-items: center; gap: 10px;">
+                                  <label style="color: #FFFFFF; min-width: 80px; font-weight: 500;">Amplitude:</label>
+                                  <input type="range" id="test-amplitude" min="10" max="50" value="25" style="flex: 1;">
+                                  <span id="amplitude-value" class="value-display" style="color: #E91E63; font-weight: bold; min-width: 50px;">25°C</span>
+                              </div>
+                              <div class="parameter-group" style="display: flex; align-items: center; gap: 10px;">
+                                  <label style="color: #FFFFFF; min-width: 80px; font-weight: 500;">Duration:</label>
+                                  <input type="range" id="test-duration" min="5" max="30" value="15" style="flex: 1;">
+                                  <span id="duration-value" class="value-display" style="color: #E91E63; font-weight: bold; min-width: 50px;">15s</span>
+                              </div>
+                              <div class="parameter-group" style="display: flex; align-items: center; gap: 10px;">
+                                  <label style="color: #FFFFFF; min-width: 80px; font-weight: 500;">Frequency:</label>
+                                  <input type="range" id="test-frequency" min="0.1" max="2" step="0.1" value="0.5" style="flex: 1;">
+                                  <span id="frequency-value" class="value-display" style="color: #E91E63; font-weight: bold; min-width: 50px;">0.5Hz</span>
+                              </div>
+                          </div>
+                      </div>
+                      
+                      <!-- Current PID Settings Display -->
+                      <div class="control-section" style="background: #333; padding: 20px; border-radius: 8px;">
+                          <h5 style="color: #FFFFFF; margin-bottom: 15px; font-size: 16px;"><i class="fas fa-tachometer-alt"></i> Current PID Settings</h5>
+                          <div class="pid-display" style="display: flex; flex-direction: column; gap: 10px;">
+                              <div class="pid-value" style="display: flex; justify-content: space-between; align-items: center;">
+                                  <span style="color: #AAA;">Proportional (Kp):</span>
+                                  <span id="display-kp" style="color: #E91E63; font-weight: bold;">0.5</span>
+                              </div>
+                              <div class="pid-value" style="display: flex; justify-content: space-between; align-items: center;">
+                                  <span style="color: #AAA;">Integral (Ki):</span>
+                                  <span id="display-ki" style="color: #E91E63; font-weight: bold;">0.1</span>
+                              </div>
+                              <div class="pid-value" style="display: flex; justify-content: space-between; align-items: center;">
+                                  <span style="color: #AAA;">Derivative (Kd):</span>
+                                  <span id="display-kd" style="color: #E91E63; font-weight: bold;">0.2</span>
+                              </div>
+                          </div>
+                      </div>
                   </div>
-                  <button id="start-response" class="action-button" style="background: #E91E63; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: all 0.3s ease;">
-                      Start Test
-                  </button>
+                  
+                  <!-- Action Buttons -->
+                  <div class="action-buttons" style="display: flex; gap: 15px; justify-content: center;">
+                      <button id="start-response" class="action-button primary" style="background: linear-gradient(135deg, #E91E63, #C2185B); color: white; border: none; padding: 15px 30px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px; transition: all 0.3s ease; display: flex; align-items: center; gap: 10px;">
+                          <i class="fas fa-play"></i> Start Test
+                      </button>
+                      <button id="stop-response" class="action-button secondary" style="background: #555; color: white; border: none; padding: 15px 30px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px; transition: all 0.3s ease; display: flex; align-items: center; gap: 10px;">
+                          <i class="fas fa-stop"></i> Stop Test
+                      </button>
+                      <button id="reset-response" class="action-button secondary" style="background: #555; color: white; border: none; padding: 15px 30px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px; transition: all 0.3s ease; display: flex; align-items: center; gap: 10px;">
+                          <i class="fas fa-redo"></i> Reset
+                      </button>
+                  </div>
               </div>
-              <div class="response-graphs">
-                  <canvas id="response-canvas" class="simulation-canvas" width="800" height="300" style="background: #222; border-radius: 8px; width: 100%; height: 300px; border: 2px solid #555;"></canvas>
+              
+              <!-- Enhanced Response Graph -->
+              <div class="response-graph-container" style="background: linear-gradient(135deg, #2a2a2a, #3a3a3a); border-radius: 12px; padding: 30px; border: 2px solid #E91E63; box-shadow: 0 8px 20px rgba(233, 30, 99, 0.2);">
+                  <h4 style="color: #E91E63; margin-bottom: 25px; font-size: 20px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-chart-line"></i> System Response Analysis</h4>
+                  
+                  <div class="graph-wrapper" style="position: relative;">
+                      <canvas id="response-canvas" class="simulation-canvas" width="800" height="400" style="background: #222; border-radius: 8px; width: 100%; height: 400px; border: 2px solid #555;"></canvas>
+                      
+                      <!-- Enhanced Legend -->
+                      <div class="graph-legend" style="position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.8); padding: 15px; border-radius: 8px; border: 1px solid #555;">
+                          <h6 style="color: #FFFFFF; margin-bottom: 10px; font-size: 14px; text-align: center;">Signal Legend</h6>
+                          <div style="display: flex; flex-direction: column; gap: 8px;">
+                              <div style="display: flex; align-items: center; gap: 8px;">
+                                  <div style="width: 15px; height: 3px; background: #E91E63;"></div>
+                                  <span style="color: #FFFFFF; font-size: 12px;">Input Signal</span>
+                              </div>
+                              <div style="display: flex; align-items: center; gap: 8px;">
+                                  <div style="width: 15px; height: 3px; background: #2196F3;"></div>
+                                  <span style="color: #FFFFFF; font-size: 12px;">System Response</span>
+                              </div>
+                              <div style="display: flex; align-items: center; gap: 8px;">
+                                  <div style="width: 15px; height: 3px; background: #4CAF50;"></div>
+                                  <span style="color: #FFFFFF; font-size: 12px;">Error Signal</span>
+                              </div>
+                          </div>
+                      </div>
+                      
+                      <!-- Performance Metrics Overlay -->
+                      <div class="performance-overlay" style="position: absolute; top: 15px; left: 15px; background: rgba(0,0,0,0.8); padding: 15px; border-radius: 8px; border: 1px solid #555; min-width: 200px;">
+                          <h6 style="color: #FFFFFF; margin-bottom: 10px; font-size: 14px; text-align: center;">Performance Metrics</h6>
+                          <div style="display: flex; flex-direction: column; gap: 8px;">
+                              <div style="display: flex; justify-content: space-between; align-items: center;">
+                                  <span style="color: #AAA; font-size: 12px;">Rise Time:</span>
+                                  <span id="response-rise-time" style="color: #4CAF50; font-weight: bold; font-size: 12px;">--</span>
+                              </div>
+                              <div style="display: flex; justify-content: space-between; align-items: center;">
+                                  <span style="color: #AAA; font-size: 12px;">Overshoot:</span>
+                                  <span id="response-overshoot" style="color: #FF9800; font-weight: bold; font-size: 12px;">--</span>
+                              </div>
+                              <div style="display: flex; justify-content: space-between; align-items: center;">
+                                  <span style="color: #AAA; font-size: 12px;">Settling Time:</span>
+                                  <span id="response-settling-time" style="color: #2196F3; font-weight: bold; font-size: 12px;">--</span>
+                              </div>
+                              <div style="display: flex; justify-content: space-between; align-items: center;">
+                                  <span style="color: #AAA; font-size: 12px;">Steady State Error:</span>
+                                  <span id="response-steady-error" style="color: #E91E63; font-weight: bold; font-size: 12px;">--</span>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
               </div>
           </div>
 
@@ -3205,6 +3322,7 @@
       const setpointValue = document.getElementById('setpoint-value');
       if (setpointSlider && setpointValue) {
         setpointSlider.addEventListener('input', function() {
+          simulationData.setpoint = parseFloat(this.value);
           setpointValue.textContent = this.value + '.0°C';
           updatePIDSimulation();
         });
@@ -3214,6 +3332,7 @@
       const kpValue = document.getElementById('kp-value');
       if (kpSlider && kpValue) {
         kpSlider.addEventListener('input', function() {
+          simulationData.kp = parseFloat(this.value);
           kpValue.textContent = this.value;
           updatePIDSimulation();
         });
@@ -3223,6 +3342,7 @@
       const kiValue = document.getElementById('ki-value');
       if (kiSlider && kiValue) {
         kiSlider.addEventListener('input', function() {
+          simulationData.ki = parseFloat(this.value);
           kiValue.textContent = this.value;
           updatePIDSimulation();
         });
@@ -3232,16 +3352,70 @@
       const kdValue = document.getElementById('kd-value');
       if (kdSlider && kdValue) {
         kdSlider.addEventListener('input', function() {
+          simulationData.kd = parseFloat(this.value);
           kdValue.textContent = this.value;
           updatePIDSimulation();
         });
       }
       
-      // Initialize response test button
+      // Initialize response test controls
+      const amplitudeSlider = document.getElementById('test-amplitude');
+      const durationSlider = document.getElementById('test-duration');
+      const frequencySlider = document.getElementById('test-frequency');
+      
+      if (amplitudeSlider) {
+        amplitudeSlider.addEventListener('input', function() {
+          document.getElementById('amplitude-value').textContent = this.value + '°C';
+        });
+      }
+      
+      if (durationSlider) {
+        durationSlider.addEventListener('input', function() {
+          document.getElementById('duration-value').textContent = this.value + 's';
+        });
+      }
+      
+      if (frequencySlider) {
+        frequencySlider.addEventListener('input', function() {
+          document.getElementById('frequency-value').textContent = this.value + 'Hz';
+        });
+      }
+      
+      // Initialize response test buttons
       const startResponseBtn = document.getElementById('start-response');
+      const stopResponseBtn = document.getElementById('stop-response');
+      const resetResponseBtn = document.getElementById('reset-response');
+      
       if (startResponseBtn) {
         startResponseBtn.addEventListener('click', function() {
           runResponseTest();
+        });
+      }
+      
+      if (stopResponseBtn) {
+        stopResponseBtn.addEventListener('click', function() {
+          if (simulationData.responseAnimationInterval) {
+            clearInterval(simulationData.responseAnimationInterval);
+          }
+        });
+      }
+      
+      if (resetResponseBtn) {
+        resetResponseBtn.addEventListener('click', function() {
+          const canvas = document.getElementById('response-canvas');
+          if (canvas) {
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#222';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            drawEnhancedGrid(ctx, canvas.width, canvas.height, 15);
+          }
+          
+          // Reset metrics
+          const metrics = ['response-rise-time', 'response-overshoot', 'response-settling-time', 'response-steady-error'];
+          metrics.forEach(id => {
+            const element = document.getElementById(id);
+            if (element) element.textContent = '--';
+          });
         });
       }
       
@@ -3367,8 +3541,6 @@
     // Run response test simulation
     function runResponseTest() {
       const canvas = document.getElementById('response-canvas');
-      const inputType = document.getElementById('input-type').value;
-      
       if (!canvas) return;
       
       const ctx = canvas.getContext('2d');
@@ -3379,26 +3551,36 @@
       ctx.fillStyle = '#222';
       ctx.fillRect(0, 0, width, height);
       
-      // Draw grid
-      drawGrid(ctx, width, height);
+      // Get input type from radio buttons
+      const inputType = document.querySelector('input[name="input-type"]:checked').value;
       
-      // Generate and draw response data
-      const data = generateResponseData(inputType);
-      drawResponseCurve(ctx, data, width, height);
+      // Get test parameters
+      const amplitude = parseFloat(document.getElementById('test-amplitude').value);
+      const duration = parseFloat(document.getElementById('test-duration').value);
+      const frequency = parseFloat(document.getElementById('test-frequency').value);
       
-      // Add labels
-      drawLabels(ctx, width, height, inputType);
+      // Update PID display
+      updatePIDDisplay();
       
-      // Animate the response
-      animateResponse(ctx, data, width, height, inputType);
+      // Draw enhanced grid
+      drawEnhancedGrid(ctx, width, height, duration);
+      
+      // Generate enhanced response data
+      const data = generateEnhancedResponseData(inputType, amplitude, duration, frequency);
+      
+      // Draw and animate response
+      animateEnhancedResponse(ctx, data, width, height, inputType, duration);
+      
+      // Calculate and display performance metrics
+      calculateResponseMetrics(data);
     }
 
-    // Draw grid on canvas
-    function drawGrid(ctx, width, height) {
+    // Draw enhanced grid on canvas
+    function drawEnhancedGrid(ctx, width, height, duration) {
       ctx.strokeStyle = '#444';
       ctx.lineWidth = 1;
       
-      // Vertical lines
+      // Vertical lines (time)
       for (let x = 0; x <= width; x += width / 10) {
         ctx.beginPath();
         ctx.moveTo(x, 0);
@@ -3406,59 +3588,173 @@
         ctx.stroke();
       }
       
-      // Horizontal lines
+      // Horizontal lines (temperature)
       for (let y = 0; y <= height; y += height / 8) {
         ctx.beginPath();
         ctx.moveTo(0, y);
         ctx.lineTo(width, y);
         ctx.stroke();
       }
+      
+      // Add labels
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = '12px Arial';
+      ctx.textAlign = 'center';
+      
+      // Y-axis labels (temperature)
+      for (let i = 0; i <= 8; i++) {
+        const y = height - (i * height / 8);
+        const temp = i * 12.5; // 0 to 100°C
+        ctx.fillText(temp + '°C', 30, y + 4);
+      }
+      
+      // X-axis labels (time)
+      for (let i = 0; i <= 10; i++) {
+        const x = i * width / 10;
+        const time = i * duration / 10;
+        ctx.fillText(time.toFixed(1) + 's', x, height - 5);
+      }
     }
 
-    // Generate response data based on input type
-    function generateResponseData(inputType) {
-      const data = [];
-      const timeSteps = 100;
+    // Generate enhanced response data based on input type and parameters
+    function generateEnhancedResponseData(inputType, amplitude, duration, frequency) {
+      const data = {
+        input: [],
+        response: [],
+        error: []
+      };
+      
+      const timeSteps = 200;
+      const baseTemp = 25; // Base temperature
       
       for (let i = 0; i < timeSteps; i++) {
-        const time = (i / timeSteps) * 10; // 10 second simulation
-        let value = 0;
+        const time = (i / timeSteps) * duration;
+        let inputValue = baseTemp;
+        let responseValue = baseTemp;
         
+        // Generate input signal
         switch (inputType) {
           case 'step':
-            value = i > 20 ? 80 : 20; // Step at 2 seconds
+            inputValue = baseTemp + (time > duration * 0.2 ? amplitude : 0);
             break;
           case 'ramp':
-            value = 20 + (time * 6); // Ramp from 20 to 80 over 10 seconds
+            inputValue = baseTemp + (time / duration) * amplitude;
             break;
           case 'sine':
-            value = 50 + 30 * Math.sin(time * 0.5); // Sine wave
+            inputValue = baseTemp + amplitude * Math.sin(2 * Math.PI * frequency * time);
             break;
         }
         
-        data.push({ time, value });
+        // Generate system response (simplified PID simulation)
+        const error = inputValue - responseValue;
+        const kp = simulationData.kp;
+        const ki = simulationData.ki;
+        const kd = simulationData.kd;
+        
+        // Simple first-order system response
+        const tau = 2.0; // time constant
+        const dt = duration / timeSteps;
+        
+        if (i > 0) {
+          const prevResponse = data.response[i - 1];
+          const controlOutput = kp * error + ki * error * dt + kd * (error - (data.input[i - 1] - prevResponse)) / dt;
+          responseValue = prevResponse + (controlOutput - prevResponse) * dt / tau;
+          
+          // Add some realistic noise
+          responseValue += (Math.random() - 0.5) * 2;
+        }
+        
+        const errorValue = inputValue - responseValue;
+        
+        data.input.push({ time, value: inputValue });
+        data.response.push({ time, value: responseValue });
+        data.error.push({ time, value: errorValue });
       }
       
       return data;
     }
 
-    // Draw response curve on canvas
-    function drawResponseCurve(ctx, data, width, height) {
+    // Animate enhanced response
+    function animateEnhancedResponse(ctx, data, width, height, inputType, duration) {
+      if (simulationData.responseAnimationInterval) {
+        clearInterval(simulationData.responseAnimationInterval);
+      }
+      
+      let currentIndex = 0;
+      const totalPoints = data.input.length;
+      
+      simulationData.responseAnimationInterval = setInterval(() => {
+        if (currentIndex >= totalPoints) {
+          clearInterval(simulationData.responseAnimationInterval);
+          return;
+        }
+        
+        // Clear canvas and redraw grid
+        ctx.fillStyle = '#222';
+        ctx.fillRect(0, 0, width, height);
+        drawEnhancedGrid(ctx, width, height, duration);
+        
+        // Draw curves up to current point
+        drawResponseCurves(ctx, data, width, height, duration, currentIndex);
+        
+        currentIndex++;
+      }, 50); // Update every 50ms for smooth animation
+    }
+    
+    // Draw response curves
+    function drawResponseCurves(ctx, data, width, height, duration, maxIndex) {
+      const tempMin = 0;
+      const tempMax = 100;
+      const tempRange = tempMax - tempMin;
+      
+      // Draw input signal (pink)
       ctx.strokeStyle = '#E91E63';
       ctx.lineWidth = 3;
       ctx.beginPath();
-      
-      data.forEach((point, index) => {
-        const x = (point.time / 10) * width;
-        const y = height - ((point.value - 0) / 100) * height;
-        
-        if (index === 0) {
+      for (let i = 0; i <= maxIndex && i < data.input.length; i++) {
+        const point = data.input[i];
+        const x = (point.time / duration) * width;
+        const y = height - ((point.value - tempMin) / tempRange) * height;
+        if (i === 0) {
           ctx.moveTo(x, y);
         } else {
           ctx.lineTo(x, y);
         }
-      });
+      }
+      ctx.stroke();
       
+      // Draw system response (blue)
+      ctx.strokeStyle = '#2196F3';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      for (let i = 0; i <= maxIndex && i < data.response.length; i++) {
+        const point = data.response[i];
+        const x = (point.time / duration) * width;
+        const y = height - ((point.value - tempMin) / tempRange) * height;
+        if (i === 0) {
+          ctx.moveTo(x, y);
+        } else {
+          ctx.lineTo(x, y);
+        }
+      }
+      ctx.stroke();
+      
+      // Draw error signal (green, scaled)
+      ctx.strokeStyle = '#4CAF50';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      for (let i = 0; i <= maxIndex && i < data.error.length; i++) {
+        const point = data.error[i];
+        const x = (point.time / duration) * width;
+        // Scale error to fit in temperature range
+        const scaledError = 50 + point.value * 2; // Center at 50°C, scale by 2
+        const y = height - ((scaledError - tempMin) / tempRange) * height;
+        if (i === 0) {
+          ctx.moveTo(x, y);
+        } else {
+          ctx.lineTo(x, y);
+        }
+      }
       ctx.stroke();
     }
 
@@ -3503,6 +3799,61 @@
       
       // X-axis label
       ctx.fillText('Time (seconds)', width / 2, height - 10);
+    }
+    
+    // Update PID display in response tab
+    function updatePIDDisplay() {
+      const kpDisplay = document.getElementById('display-kp');
+      const kiDisplay = document.getElementById('display-ki');
+      const kdDisplay = document.getElementById('display-kd');
+      
+      if (kpDisplay) kpDisplay.textContent = simulationData.kp.toFixed(2);
+      if (kiDisplay) kiDisplay.textContent = simulationData.ki.toFixed(2);
+      if (kdDisplay) kdDisplay.textContent = simulationData.kd.toFixed(2);
+    }
+    
+    // Calculate and display response metrics
+    function calculateResponseMetrics(data) {
+      // Calculate rise time (time to reach 90% of final value)
+      const finalValue = data.response[data.response.length - 1].value;
+      const targetValue = finalValue * 0.9;
+      let riseTime = 0;
+      
+      for (let i = 0; i < data.response.length; i++) {
+        if (data.response[i].value >= targetValue) {
+          riseTime = data.response[i].time;
+          break;
+        }
+      }
+      
+      // Calculate overshoot
+      const maxValue = Math.max(...data.response.map(p => p.value));
+      const overshoot = ((maxValue - finalValue) / finalValue) * 100;
+      
+      // Calculate settling time (time to stay within 5% of final value)
+      let settlingTime = 0;
+      const tolerance = finalValue * 0.05;
+      
+      for (let i = data.response.length - 1; i >= 0; i--) {
+        if (Math.abs(data.response[i].value - finalValue) > tolerance) {
+          settlingTime = data.response[i].time;
+          break;
+        }
+      }
+      
+      // Calculate steady state error
+      const steadyError = Math.abs(data.error[data.error.length - 1].value);
+      
+      // Update display
+      const riseTimeElement = document.getElementById('response-rise-time');
+      const overshootElement = document.getElementById('response-overshoot');
+      const settlingTimeElement = document.getElementById('response-settling-time');
+      const steadyErrorElement = document.getElementById('response-steady-error');
+      
+      if (riseTimeElement) riseTimeElement.textContent = riseTime.toFixed(2) + 's';
+      if (overshootElement) overshootElement.textContent = overshoot.toFixed(1) + '%';
+      if (settlingTimeElement) settlingTimeElement.textContent = settlingTime.toFixed(2) + 's';
+      if (steadyErrorElement) steadyErrorElement.textContent = steadyError.toFixed(2) + '°C';
     }
 
     // Start challenge
