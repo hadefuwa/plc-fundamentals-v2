@@ -1238,7 +1238,7 @@
                           </div>
                           <div style="display: flex; align-items: center; gap: 8px;">
                               <div style="width: 12px; height: 2px; background: #4CAF50;"></div>
-                              <span style="color: #FFFFFF; font-size: 12px;">Control Output</span>
+                              <span style="color: #FFFFFF; font-size: 12px;">Control Output (%)</span>
                           </div>
                       </div>
                   </div>
@@ -4007,7 +4007,9 @@
       for (let i = 0; i <= 8; i++) {
         const y = height - (i * height / 8);
         const temp = tempMin + (i * (tempMax - tempMin) / 8);
-        ctx.fillText(temp.toFixed(1) + '°C', 30, y + 4);
+        // Show appropriate units based on the data range
+        const unit = tempMax > 100 ? '' : '°C';
+        ctx.fillText(temp.toFixed(1) + unit, 30, y + 4);
       }
       
       // X-axis labels (time) - now scrolls with the window
@@ -4058,8 +4060,8 @@
         if (time >= startTime && time <= currentTime) {
           allValues.push(simulationData.graphData.setpoint[index]);
           allValues.push(simulationData.graphData.processVariable[index]);
-          // Scale control output to temperature range for display
-          allValues.push(Math.max(0, Math.min(100, simulationData.graphData.controlOutput[index] + 50)));
+          // Include control output in its full range for proper scaling
+          allValues.push(simulationData.graphData.controlOutput[index]);
         }
       });
       
@@ -4067,9 +4069,9 @@
       const dataMin = Math.min(...allValues);
       const dataMax = Math.max(...allValues);
       const dataRange = dataMax - dataMin;
-      const padding = dataRange * 0.1; // 10% padding
-      const tempMin = Math.max(0, dataMin - padding);
-      const tempMax = Math.min(100, dataMax + padding);
+      const padding = dataRange * 0.15; // 15% padding for better visibility
+      const tempMin = dataMin - padding;
+      const tempMax = dataMax + padding;
       const tempRange = tempMax - tempMin;
       
       // Draw grid with auto-scaling
@@ -4114,7 +4116,7 @@
       });
       ctx.stroke();
       
-      // Draw control output line (scaled to fit in temperature range)
+      // Draw control output line (using full range)
       ctx.strokeStyle = '#4CAF50';
       ctx.lineWidth = 2;
       ctx.beginPath();
@@ -4122,9 +4124,8 @@
       simulationData.graphData.time.forEach((time, index) => {
         if (time >= startTime && time <= currentTime) {
           const x = ((time - startTime) / timeWindow) * width;
-          // Scale control output to fit in temperature range (0-100)
-          const scaledOutput = Math.max(0, Math.min(100, simulationData.graphData.controlOutput[index] + 50));
-          const y = height - ((scaledOutput - tempMin) / tempRange) * height;
+          // Use control output in its full range
+          const y = height - ((simulationData.graphData.controlOutput[index] - tempMin) / tempRange) * height;
           if (firstPoint) {
             ctx.moveTo(x, y);
             firstPoint = false;
