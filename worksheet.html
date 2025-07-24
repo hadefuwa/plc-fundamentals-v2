@@ -685,20 +685,9 @@
 
         // Check worksheet type and render accordingly
         if (type === 'maintenance') {
-          // Check if the scenario has multiple choice questions
-          const hasMultipleChoice = scenario.questions && scenario.questions.some(q => q.type === 'multiple_choice');
-          
-          if (hasMultipleChoice) {
-            // All worksheets with multiple choice questions use interactive format
-            console.log(`Rendering interactive worksheet: ${scenario.title}`);
-            const urlParams = new URLSearchParams(window.location.search);
-            const worksheetId = parseInt(urlParams.get('id'));
-            renderInteractiveWorksheet(worksheetId);
-          } else {
-            // Worksheets without multiple choice use enhanced format
-            console.log(`Rendering enhanced maintenance worksheet: ${scenario.title}`);
-            renderEnhancedMaintenanceWorksheet(scenario);
-          }
+          // All maintenance worksheets use the enhanced format with all sections
+          console.log(`Rendering enhanced maintenance worksheet: ${scenario.title}`);
+          renderEnhancedMaintenanceWorksheet(scenario);
               } else if (type === 'fault') {
         // Check if this is the enhanced fault scenario 1
         if (scenario.id === 1) {
@@ -1109,22 +1098,22 @@
             ${scenario.questions.map((q, index) => {
               if (q.type === 'multiple_choice') {
                 return `
-                  <div class="question-item" data-question="${index + 1}" style="background: #333; padding: 20px; margin-bottom: 20px; border-radius: 8px;">
+                  <div class="question-item" data-question="${q.id}" style="background: #333; padding: 20px; margin-bottom: 20px; border-radius: 8px;">
                     <h4 style="color: #FFFFFF; margin-bottom: 10px;">Question ${index + 1}: ${q.text}</h4>
                     <div class="multiple-choice-options" style="margin-bottom: 15px;">
                       ${q.options.map((option, optionIndex) => `
                         <label class="option-label" style="display: block; margin-bottom: 10px; cursor: pointer; padding: 10px; border: 2px solid #555; border-radius: 6px; background: #222; transition: all 0.3s ease;">
-                          <input type="radio" name="question-${index + 1}" value="${optionIndex}" class="option-radio" style="margin-right: 10px;">
+                          <input type="radio" name="question-${q.id}" value="${optionIndex}" class="option-radio" style="margin-right: 10px;">
                           <span style="color: #FFFFFF;">${option}</span>
                         </label>
                       `).join('')}
                     </div>
                     <div class="question-actions" style="margin-top: 15px;">
-                      <button class="submit-question-btn" onclick="submitMultipleChoiceAnswer(${index + 1})" style="background: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer;">Submit Answer</button>
+                      <button class="submit-question-btn" onclick="submitMultipleChoiceQuestion('${q.id}')" style="background: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer;">Submit Answer</button>
                       <span class="submit-note" style="color: #AAA; margin-left: 10px;">Select an option and click submit to see the correct answer.</span>
                     </div>
-                    <div class="answer-comparison hidden" style="margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
-                      <!-- Comparison content will be inserted here -->
+                    <div class="answer-feedback hidden" style="margin-top: 15px; padding: 15px; border-radius: 4px; display: none;">
+                      <div class="feedback-content"></div>
                     </div>
                   </div>
                 `;
