@@ -1024,6 +1024,9 @@
     function renderEnhancedMaintenanceWorksheet(scenario) {
       const container = document.getElementById('worksheet-content');
       
+      // Get worksheet ID from scenario
+      const worksheetId = scenario.id;
+      
       // Generate enhanced content based on worksheet topic
       const enhancedContent = generateEnhancedContent(scenario);
       
