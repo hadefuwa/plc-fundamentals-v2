@@ -3586,7 +3586,7 @@
     }
 
     // Draw grid for tuning graph
-    function drawTuningGrid(ctx, width, height) {
+    function drawTuningGrid(ctx, width, height, startTime = 0, timeWindow = 20) {
       ctx.strokeStyle = '#444';
       ctx.lineWidth = 1;
       
@@ -3618,11 +3618,11 @@
         ctx.fillText(temp + '°C', 30, y + 4);
       }
       
-      // X-axis labels (time)
+      // X-axis labels (time) - now scrolls with the window
       for (let i = 0; i <= 10; i++) {
         const x = i * width / 10;
-        const time = i * 2; // 0 to 20 seconds
-        ctx.fillText(time + 's', x, height - 5);
+        const time = startTime + (i * timeWindow / 10);
+        ctx.fillText(time.toFixed(1) + 's', x, height - 5);
       }
     }
 
@@ -3655,26 +3655,35 @@
       ctx.fillStyle = '#222';
       ctx.fillRect(0, 0, width, height);
       
-      // Draw grid
-      drawTuningGrid(ctx, width, height);
+      // Calculate time window for scrolling
+      const currentTime = simulationData.time;
+      const timeWindow = 20; // 20 second window
+      const startTime = Math.max(0, currentTime - timeWindow);
       
-      // Find data range for scaling
-      const allValues = [...simulationData.graphData.setpoint, ...simulationData.graphData.processVariable, ...simulationData.graphData.controlOutput];
-      const minVal = Math.min(...allValues);
-      const maxVal = Math.max(...allValues);
-      const range = maxVal - minVal || 100;
+      // Draw grid with scrolling
+      drawTuningGrid(ctx, width, height, startTime, timeWindow);
+      
+      // Find data range for scaling (temperature range)
+      const tempMin = 0;
+      const tempMax = 100;
+      const tempRange = tempMax - tempMin;
       
       // Draw setpoint line
       ctx.strokeStyle = '#E91E63';
       ctx.lineWidth = 2;
       ctx.beginPath();
+      let firstPoint = true;
       simulationData.graphData.time.forEach((time, index) => {
-        const x = (time / 20) * width; // 20 second window
-        const y = height - ((simulationData.graphData.setpoint[index] - minVal) / range) * height;
-        if (index === 0) {
-          ctx.moveTo(x, y);
-        } else {
-          ctx.lineTo(x, y);
+        // Only draw points within the visible window
+        if (time >= startTime && time <= currentTime) {
+          const x = ((time - startTime) / timeWindow) * width;
+          const y = height - ((simulationData.graphData.setpoint[index] - tempMin) / tempRange) * height;
+          if (firstPoint) {
+            ctx.moveTo(x, y);
+            firstPoint = false;
+          } else {
+            ctx.lineTo(x, y);
+          }
         }
       });
       ctx.stroke();
@@ -3683,28 +3692,38 @@
       ctx.strokeStyle = '#2196F3';
       ctx.lineWidth = 2;
       ctx.beginPath();
+      firstPoint = true;
       simulationData.graphData.time.forEach((time, index) => {
-        const x = (time / 20) * width;
-        const y = height - ((simulationData.graphData.processVariable[index] - minVal) / range) * height;
-        if (index === 0) {
-          ctx.moveTo(x, y);
-        } else {
-          ctx.lineTo(x, y);
+        if (time >= startTime && time <= currentTime) {
+          const x = ((time - startTime) / timeWindow) * width;
+          const y = height - ((simulationData.graphData.processVariable[index] - tempMin) / tempRange) * height;
+          if (firstPoint) {
+            ctx.moveTo(x, y);
+            firstPoint = false;
+          } else {
+            ctx.lineTo(x, y);
+          }
         }
       });
       ctx.stroke();
       
-      // Draw control output line
+      // Draw control output line (scaled to fit in temperature range)
       ctx.strokeStyle = '#4CAF50';
       ctx.lineWidth = 2;
       ctx.beginPath();
+      firstPoint = true;
       simulationData.graphData.time.forEach((time, index) => {
-        const x = (time / 20) * width;
-        const y = height - ((simulationData.graphData.controlOutput[index] - minVal) / range) * height;
-        if (index === 0) {
-          ctx.moveTo(x, y);
-        } else {
-          ctx.lineTo(x, y);
+        if (time >= startTime && time <= currentTime) {
+          const x = ((time - startTime) / timeWindow) * width;
+          // Scale control output to fit in temperature range (0-100)
+          const scaledOutput = Math.max(0, Math.min(100, simulationData.graphData.controlOutput[index] + 50));
+          const y = height - ((scaledOutput - tempMin) / tempRange) * height;
+          if (firstPoint) {
+            ctx.moveTo(x, y);
+            firstPoint = false;
+          } else {
+            ctx.lineTo(x, y);
+          }
         }
       });
       ctx.stroke();
