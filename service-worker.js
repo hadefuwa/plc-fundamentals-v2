@@ -1,4 +1,4 @@
-const CACHE_NAME = 'matrix-training-cache-v3';
+const CACHE_NAME = 'matrix-training-cache-v4';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -14,7 +14,10 @@ const urlsToCache = [
   '/dbMaintenanceScenarios.json',
   '/dbFaultScenarios.json',
   '/assets/icons/matrix-icon-192.png',
-  '/assets/icons/matrix-icon-512.png',
+  '/assets/icons/matrix-icon-512.png'
+];
+
+const externalUrlsToCache = [
   'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js',
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css',
   'https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js'
@@ -25,7 +28,24 @@ self.addEventListener('install', event => {
     caches.open(CACHE_NAME)
       .then(cache => {
         console.log('Opened cache');
-        return cache.addAll(urlsToCache);
+        
+        // Cache local files first (these should always work)
+        const localCachePromises = urlsToCache.map(url => 
+          cache.add(url).catch(err => {
+            console.warn('Failed to cache local file:', url, err);
+            return null;
+          })
+        );
+        
+        // Cache external files with error handling
+        const externalCachePromises = externalUrlsToCache.map(url => 
+          cache.add(url).catch(err => {
+            console.warn('Failed to cache external file:', url, err);
+            return null;
+          })
+        );
+        
+        return Promise.all([...localCachePromises, ...externalCachePromises]);
       })
   );
 });
@@ -35,13 +55,22 @@ self.addEventListener('fetch', event => {
     caches.match(event.request)
       .then(response => {
         // Return cached version or fetch from network
-        return response || fetch(event.request);
+        return response || fetch(event.request).catch(err => {
+          console.warn('Failed to fetch:', event.request.url, err);
+          // If both cache and network fail, return a fallback for documents
+          if (event.request.destination === 'document') {
+            return caches.match('/index.html');
+          }
+          return null;
+        });
       })
-      .catch(() => {
-        // If both cache and network fail, return a fallback
+      .catch(err => {
+        console.warn('Cache match failed:', event.request.url, err);
+        // If both cache and network fail, return a fallback for documents
         if (event.request.destination === 'document') {
           return caches.match('/index.html');
         }
+        return null;
       })
   );
 });
