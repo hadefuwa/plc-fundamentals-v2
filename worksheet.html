@@ -1247,134 +1247,66 @@
 
           <!-- System Response Testing Interface -->
           <div class="tab-content hidden" id="response-tab">
-              <!-- Enhanced Control Panel -->
-              <div class="response-control-panel" style="background: linear-gradient(135deg, #2a2a2a, #3a3a3a); border-radius: 12px; padding: 30px; margin-bottom: 30px; border: 2px solid #E91E63; box-shadow: 0 8px 20px rgba(233, 30, 99, 0.2);">
-                  <h4 style="color: #E91E63; margin-bottom: 25px; font-size: 20px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-sliders-h"></i> Test Configuration</h4>
+              <!-- Simplified System Response Explanation -->
+              <div class="response-explanation" style="background: linear-gradient(135deg, #2a2a2a, #3a3a3a); border-radius: 12px; padding: 30px; margin-bottom: 30px; border: 2px solid #E91E63; box-shadow: 0 8px 20px rgba(233, 30, 99, 0.2);">
+                  <h4 style="color: #E91E63; margin-bottom: 25px; font-size: 20px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-info-circle"></i> Understanding System Response</h4>
                   
-                  <div class="control-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-bottom: 25px;">
-                      <!-- Input Type Selection -->
-                      <div class="control-section" style="background: #333; padding: 20px; border-radius: 8px;">
-                          <h5 style="color: #FFFFFF; margin-bottom: 15px; font-size: 16px;"><i class="fas fa-wave-square"></i> Input Signal Type</h5>
-                          <div class="input-type-options" style="display: flex; flex-direction: column; gap: 12px;">
-                              <label class="radio-option" style="display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 10px; border-radius: 6px; transition: all 0.3s ease;">
-                                  <input type="radio" name="input-type" value="step" checked style="accent-color: #E91E63;">
-                                  <span style="color: #FFFFFF; font-weight: 500;">Step Response</span>
-                                  <span style="color: #AAA; font-size: 12px; margin-left: auto;">Instant change</span>
-                              </label>
-                              <label class="radio-option" style="display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 10px; border-radius: 6px; transition: all 0.3s ease;">
-                                  <input type="radio" name="input-type" value="ramp" style="accent-color: #E91E63;">
-                                  <span style="color: #FFFFFF; font-weight: 500;">Ramp Response</span>
-                                  <span style="color: #AAA; font-size: 12px; margin-left: auto;">Linear increase</span>
-                              </label>
-                              <label class="radio-option" style="display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 10px; border-radius: 6px; transition: all 0.3s ease;">
-                                  <input type="radio" name="input-type" value="sine" style="accent-color: #E91E63;">
-                                  <span style="color: #FFFFFF; font-weight: 500;">Sinusoidal Response</span>
-                                  <span style="color: #AAA; font-size: 12px; margin-left: auto;">Oscillating input</span>
-                              </label>
-                          </div>
-                      </div>
+                  <div style="color: #FFFFFF; line-height: 1.6;">
+                      <p style="margin-bottom: 20px;"><strong>What is System Response?</strong></p>
+                      <p style="margin-bottom: 15px;">System response shows how your PID controller behaves when the setpoint changes. It's like watching how quickly and smoothly your car responds when you press the accelerator or brake.</p>
                       
-                      <!-- Test Parameters -->
-                      <div class="control-section" style="background: #333; padding: 20px; border-radius: 8px;">
-                          <h5 style="color: #FFFFFF; margin-bottom: 15px; font-size: 16px;"><i class="fas fa-cog"></i> Test Parameters</h5>
-                          <div class="parameter-controls" style="display: flex; flex-direction: column; gap: 15px;">
-                              <div class="parameter-group" style="display: flex; align-items: center; gap: 10px;">
-                                  <label style="color: #FFFFFF; min-width: 80px; font-weight: 500;">Amplitude:</label>
-                                  <input type="range" id="test-amplitude" min="10" max="50" value="25" style="flex: 1;">
-                                  <span id="amplitude-value" class="value-display" style="color: #E91E63; font-weight: bold; min-width: 50px;">25°C</span>
+                      <div style="background: #333; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                          <h5 style="color: #E91E63; margin-bottom: 15px; font-size: 16px;"><i class="fas fa-chart-line"></i> Key Performance Indicators</h5>
+                          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                              <div style="background: #222; padding: 15px; border-radius: 6px; border-left: 3px solid #4CAF50;">
+                                  <strong style="color: #4CAF50;">Rise Time</strong>
+                                  <p style="color: #AAA; margin: 5px 0 0 0; font-size: 14px;">How quickly the system reaches 90% of the target. Faster is better.</p>
                               </div>
-                              <div class="parameter-group" style="display: flex; align-items: center; gap: 10px;">
-                                  <label style="color: #FFFFFF; min-width: 80px; font-weight: 500;">Duration:</label>
-                                  <input type="range" id="test-duration" min="5" max="30" value="15" style="flex: 1;">
-                                  <span id="duration-value" class="value-display" style="color: #E91E63; font-weight: bold; min-width: 50px;">15s</span>
+                              <div style="background: #222; padding: 15px; border-radius: 6px; border-left: 3px solid #FF9800;">
+                                  <strong style="color: #FF9800;">Overshoot</strong>
+                                  <p style="color: #AAA; margin: 5px 0 0 0; font-size: 14px;">How much the system goes above the target. Lower is better.</p>
                               </div>
-                              <div class="parameter-group" style="display: flex; align-items: center; gap: 10px;">
-                                  <label style="color: #FFFFFF; min-width: 80px; font-weight: 500;">Frequency:</label>
-                                  <input type="range" id="test-frequency" min="0.1" max="2" step="0.1" value="0.5" style="flex: 1;">
-                                  <span id="frequency-value" class="value-display" style="color: #E91E63; font-weight: bold; min-width: 50px;">0.5Hz</span>
+                              <div style="background: #222; padding: 15px; border-radius: 6px; border-left: 3px solid #2196F3;">
+                                  <strong style="color: #2196F3;">Settling Time</strong>
+                                  <p style="color: #AAA; margin: 5px 0 0 0; font-size: 14px;">How long it takes to stay within 5% of the target. Faster is better.</p>
+                              </div>
+                              <div style="background: #222; padding: 15px; border-radius: 6px; border-left: 3px solid #9C27B0;">
+                                  <strong style="color: #9C27B0;">Steady State Error</strong>
+                                  <p style="color: #AAA; margin: 5px 0 0 0; font-size: 14px;">Final difference from the target. Lower is better.</p>
                               </div>
                           </div>
                       </div>
                       
-                      <!-- Current PID Settings Display -->
-                      <div class="control-section" style="background: #333; padding: 20px; border-radius: 8px;">
-                          <h5 style="color: #FFFFFF; margin-bottom: 15px; font-size: 16px;"><i class="fas fa-tachometer-alt"></i> Current PID Settings</h5>
-                          <div class="pid-display" style="display: flex; flex-direction: column; gap: 10px;">
-                              <div class="pid-value" style="display: flex; justify-content: space-between; align-items: center;">
-                                  <span style="color: #AAA;">Proportional (Kp):</span>
-                                  <span id="display-kp" style="color: #E91E63; font-weight: bold;">0.5</span>
-                              </div>
-                              <div class="pid-value" style="display: flex; justify-content: space-between; align-items: center;">
-                                  <span style="color: #AAA;">Integral (Ki):</span>
-                                  <span id="display-ki" style="color: #E91E63; font-weight: bold;">0.1</span>
-                              </div>
-                              <div class="pid-value" style="display: flex; justify-content: space-between; align-items: center;">
-                                  <span style="color: #AAA;">Derivative (Kd):</span>
-                                  <span id="display-kd" style="color: #E91E63; font-weight: bold;">0.2</span>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  
-                  <!-- Action Buttons -->
-                  <div class="action-buttons" style="display: flex; gap: 15px; justify-content: center;">
-                      <button id="start-response" class="action-button primary" style="background: linear-gradient(135deg, #E91E63, #C2185B); color: white; border: none; padding: 15px 30px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px; transition: all 0.3s ease; display: flex; align-items: center; gap: 10px;">
-                          <i class="fas fa-play"></i> Start Test
-                      </button>
-                      <button id="stop-response" class="action-button secondary" style="background: #555; color: white; border: none; padding: 15px 30px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px; transition: all 0.3s ease; display: flex; align-items: center; gap: 10px;">
-                          <i class="fas fa-stop"></i> Stop Test
-                      </button>
-                      <button id="reset-response" class="action-button secondary" style="background: #555; color: white; border: none; padding: 15px 30px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px; transition: all 0.3s ease; display: flex; align-items: center; gap: 10px;">
-                          <i class="fas fa-redo"></i> Reset
-                      </button>
+                      <p style="margin-bottom: 15px;"><strong>How to Use This Section:</strong></p>
+                      <ul style="margin-bottom: 15px; padding-left: 20px;">
+                          <li>First, tune your PID parameters in the "PID Tuning" tab</li>
+                          <li>Then come here to see how well your tuning performs</li>
+                          <li>The graph shows the input signal (what you want) vs. the system response (what you get)</li>
+                          <li>Good tuning means the blue line follows the pink line closely</li>
+                      </ul>
+                      
+                      <p><strong>Learning Goal:</strong> Understand how different PID settings affect system performance and learn to recognize good vs. poor control behavior.</p>
                   </div>
               </div>
               
-              <!-- Enhanced Response Graph -->
+              <!-- Simple Response Graph -->
               <div class="response-graph-container" style="background: linear-gradient(135deg, #2a2a2a, #3a3a3a); border-radius: 12px; padding: 30px; border: 2px solid #E91E63; box-shadow: 0 8px 20px rgba(233, 30, 99, 0.2);">
-                  <h4 style="color: #E91E63; margin-bottom: 25px; font-size: 20px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-chart-line"></i> System Response Analysis</h4>
+                  <h4 style="color: #E91E63; margin-bottom: 25px; font-size: 20px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-chart-line"></i> System Response Graph</h4>
                   
                   <div class="graph-wrapper" style="position: relative;">
                       <canvas id="response-canvas" class="simulation-canvas" width="800" height="400" style="background: #222; border-radius: 8px; width: 100%; height: 400px; border: 2px solid #555;"></canvas>
                       
-                      <!-- Enhanced Legend -->
+                      <!-- Simple Legend -->
                       <div class="graph-legend" style="position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.8); padding: 15px; border-radius: 8px; border: 1px solid #555;">
-                          <h6 style="color: #FFFFFF; margin-bottom: 10px; font-size: 14px; text-align: center;">Signal Legend</h6>
+                          <h6 style="color: #FFFFFF; margin-bottom: 10px; font-size: 14px; text-align: center;">Graph Legend</h6>
                           <div style="display: flex; flex-direction: column; gap: 8px;">
                               <div style="display: flex; align-items: center; gap: 8px;">
                                   <div style="width: 15px; height: 3px; background: #E91E63;"></div>
-                                  <span style="color: #FFFFFF; font-size: 12px;">Input Signal</span>
+                                  <span style="color: #FFFFFF; font-size: 12px;">Target (Setpoint)</span>
                               </div>
                               <div style="display: flex; align-items: center; gap: 8px;">
                                   <div style="width: 15px; height: 3px; background: #2196F3;"></div>
-                                  <span style="color: #FFFFFF; font-size: 12px;">System Response</span>
-                              </div>
-                              <div style="display: flex; align-items: center; gap: 8px;">
-                                  <div style="width: 15px; height: 3px; background: #4CAF50;"></div>
-                                  <span style="color: #FFFFFF; font-size: 12px;">Error Signal</span>
-                              </div>
-                          </div>
-                      </div>
-                      
-                      <!-- Performance Metrics Overlay -->
-                      <div class="performance-overlay" style="position: absolute; top: 15px; left: 15px; background: rgba(0,0,0,0.8); padding: 15px; border-radius: 8px; border: 1px solid #555; min-width: 200px;">
-                          <h6 style="color: #FFFFFF; margin-bottom: 10px; font-size: 14px; text-align: center;">Performance Metrics</h6>
-                          <div style="display: flex; flex-direction: column; gap: 8px;">
-                              <div style="display: flex; justify-content: space-between; align-items: center;">
-                                  <span style="color: #AAA; font-size: 12px;">Rise Time:</span>
-                                  <span id="response-rise-time" style="color: #4CAF50; font-weight: bold; font-size: 12px;">--</span>
-                              </div>
-                              <div style="display: flex; justify-content: space-between; align-items: center;">
-                                  <span style="color: #AAA; font-size: 12px;">Overshoot:</span>
-                                  <span id="response-overshoot" style="color: #FF9800; font-weight: bold; font-size: 12px;">--</span>
-                              </div>
-                              <div style="display: flex; justify-content: space-between; align-items: center;">
-                                  <span style="color: #AAA; font-size: 12px;">Settling Time:</span>
-                                  <span id="response-settling-time" style="color: #2196F3; font-weight: bold; font-size: 12px;">--</span>
-                              </div>
-                              <div style="display: flex; justify-content: space-between; align-items: center;">
-                                  <span style="color: #AAA; font-size: 12px;">Steady State Error:</span>
-                                  <span id="response-steady-error" style="color: #E91E63; font-weight: bold; font-size: 12px;">--</span>
+                                  <span style="color: #FFFFFF; font-size: 12px;">Actual Response</span>
                               </div>
                           </div>
                       </div>
@@ -1451,20 +1383,25 @@
                   <!-- System Response Explanation -->
                   <div class="explanation-content" id="response-explanation" style="display: none;">
                       <div style="color: #FFFFFF; line-height: 1.6;">
-                          <p style="margin-bottom: 15px;"><strong>System Response Testing:</strong> This tab allows you to test how your PID controller responds to different types of input signals:</p>
+                          <p style="margin-bottom: 15px;"><strong>System Response Analysis:</strong> This tab shows you how well your PID controller is performing. Think of it like a report card for your tuning skills!</p>
+                          
+                          <p style="margin-bottom: 15px;"><strong>What You'll See:</strong></p>
                           <ul style="margin-bottom: 15px; padding-left: 20px;">
-                              <li><strong>Step Response:</strong> Tests how quickly the system reaches a new setpoint. Good for measuring rise time and settling time.</li>
-                              <li><strong>Ramp Response:</strong> Tests how well the system follows a gradually changing setpoint. Good for measuring tracking performance.</li>
-                              <li><strong>Sinusoidal Response:</strong> Tests how well the system follows an oscillating setpoint. Good for measuring frequency response.</li>
+                              <li><strong>Target Line (Pink):</strong> This is what you want the system to achieve - your goal</li>
+                              <li><strong>Actual Response (Blue):</strong> This is what the system actually does - the reality</li>
+                              <li><strong>Good Tuning:</strong> The blue line follows the pink line closely with minimal overshoot</li>
+                              <li><strong>Poor Tuning:</strong> The blue line oscillates, overshoots, or takes too long to settle</li>
                           </ul>
-                          <p style="margin-bottom: 15px;"><strong>Performance Metrics:</strong></p>
+                          
+                          <p style="margin-bottom: 15px;"><strong>Key Concepts:</strong></p>
                           <ul style="margin-bottom: 15px; padding-left: 20px;">
-                              <li><strong>Rise Time:</strong> Time to reach 90% of the final value (faster is better)</li>
-                              <li><strong>Overshoot:</strong> Maximum deviation above the setpoint (lower is better)</li>
-                              <li><strong>Settling Time:</strong> Time to stay within 5% of the setpoint (faster is better)</li>
-                              <li><strong>Steady State Error:</strong> Final difference from setpoint (lower is better)</li>
+                              <li><strong>Rise Time:</strong> How quickly the system responds to changes (faster is usually better)</li>
+                              <li><strong>Overshoot:</strong> How much the system goes above the target (less is better)</li>
+                              <li><strong>Settling Time:</strong> How long it takes to stabilize at the target (faster is better)</li>
+                              <li><strong>Steady State Error:</strong> The final difference from the target (less is better)</li>
                           </ul>
-                          <p><strong>Use:</strong> Adjust your PID parameters in the tuning tab, then test the response here to see the improvement.</p>
+                          
+                          <p><strong>Learning Goal:</strong> Practice tuning in the "PID Tuning" tab, then check your results here. Over time, you'll learn to recognize good vs. poor control behavior and understand how each PID parameter affects performance.</p>
                       </div>
                   </div>
                   
