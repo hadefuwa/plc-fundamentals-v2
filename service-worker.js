@@ -1,4 +1,4 @@
-const CACHE_NAME = 'matrix-training-cache-v4';
+const CACHE_NAME = 'matrix-training-cache-v5';
 const urlsToCache = [
   '/',
   '/index.html',
