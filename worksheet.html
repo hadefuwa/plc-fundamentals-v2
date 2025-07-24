@@ -1803,6 +1803,10 @@
           </div>
         `;
         
+        // Hide loading and show content
+        document.getElementById('loading-container').style.display = 'none';
+        document.getElementById('main-content').style.display = 'block';
+        
         // Update navigation buttons
         setTimeout(updateNavigationButtons, 100);
         
