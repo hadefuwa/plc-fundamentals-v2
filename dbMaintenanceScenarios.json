@@ -15,20 +15,41 @@
                 {
                     "id": "1.1",
                     "text": "What are the key components you would inspect in this closed-loop system?",
-                    "type": "text",
-                    "placeholder": "List the components and explain why they need inspection..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only the temperature sensor and controller",
+                        "Sensors, actuators, control elements, and safety systems",
+                        "Just the PID controller and display",
+                        "Only the electrical connections"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "A comprehensive closed-loop system inspection should include sensors (temperature, pressure, flow), actuators (valves, motors), control elements (PID controller, displays), and safety systems (alarms, emergency stops). This ensures the entire control loop is functioning properly."
                 },
                 {
                     "id": "1.2",
                     "text": "How would you verify the accuracy of the temperature sensor?",
-                    "type": "text",
-                    "placeholder": "Describe your calibration process..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Just check if the display shows a reading",
+                        "Compare with a calibrated reference thermometer at multiple points",
+                        "Only test at room temperature",
+                        "Rely on the controller's built-in diagnostics"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Proper sensor verification requires comparing the sensor reading with a calibrated reference thermometer at multiple temperature points across the sensor's operating range. This ensures accuracy throughout the entire measurement range."
                 },
                 {
                     "id": "1.3",
                     "text": "What documentation would you maintain during this maintenance?",
-                    "type": "text",
-                    "placeholder": "List the important records to keep..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only record the final readings",
+                        "Maintenance logs, calibration certificates, test results, and any adjustments made",
+                        "Just the date and time of inspection",
+                        "Only document if problems are found"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Complete documentation should include maintenance logs with all readings, calibration certificates for reference instruments, test results showing before/after values, and detailed records of any adjustments made. This provides a complete audit trail for quality assurance and troubleshooting."
                 }
             ]
         },

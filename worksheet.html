@@ -1067,19 +1067,44 @@
               <strong>Instructions:</strong> Answer each question based on your observations and understanding of the ${scenario.title.toLowerCase()} system. Your answers will be saved automatically.
             </div>
             
-            ${scenario.questions.map((q, index) => `
-              <div class="question-item" data-question="${index + 1}" style="background: #333; padding: 20px; margin-bottom: 20px; border-radius: 8px;">
-                <h4 style="color: #FFFFFF; margin-bottom: 10px;">Question ${index + 1}: ${q.text}</h4>
-                <textarea class="answer-input" data-question="${index + 1}" placeholder="${q.placeholder}" style="width: 100%; height: 100px; padding: 10px; border: 1px solid #555; border-radius: 4px; background: #222; color: #FFFFFF; resize: vertical;"></textarea>
-                <div class="question-actions" style="margin-top: 15px;">
-                  <button class="submit-question-btn" onclick="submitAnswer(${index + 1})" style="background: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer;">Submit Answer</button>
-                  <span class="submit-note" style="color: #AAA; margin-left: 10px;">Your answer will be saved and compared to the correct answer.</span>
-                </div>
-                <div class="answer-comparison hidden" style="margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
-                  <!-- Comparison content will be inserted here -->
-                </div>
-              </div>
-            `).join('')}
+            ${scenario.questions.map((q, index) => {
+              if (q.type === 'multiple_choice') {
+                return `
+                  <div class="question-item" data-question="${index + 1}" style="background: #333; padding: 20px; margin-bottom: 20px; border-radius: 8px;">
+                    <h4 style="color: #FFFFFF; margin-bottom: 10px;">Question ${index + 1}: ${q.text}</h4>
+                    <div class="multiple-choice-options" style="margin-bottom: 15px;">
+                      ${q.options.map((option, optionIndex) => `
+                        <label class="option-label" style="display: block; margin-bottom: 10px; cursor: pointer; padding: 10px; border: 2px solid #555; border-radius: 6px; background: #222; transition: all 0.3s ease;">
+                          <input type="radio" name="question-${index + 1}" value="${optionIndex}" class="option-radio" style="margin-right: 10px;">
+                          <span style="color: #FFFFFF;">${option}</span>
+                        </label>
+                      `).join('')}
+                    </div>
+                    <div class="question-actions" style="margin-top: 15px;">
+                      <button class="submit-question-btn" onclick="submitMultipleChoiceAnswer(${index + 1})" style="background: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer;">Submit Answer</button>
+                      <span class="submit-note" style="color: #AAA; margin-left: 10px;">Select an option and click submit to see the correct answer.</span>
+                    </div>
+                    <div class="answer-comparison hidden" style="margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+                      <!-- Comparison content will be inserted here -->
+                    </div>
+                  </div>
+                `;
+              } else {
+                return `
+                  <div class="question-item" data-question="${index + 1}" style="background: #333; padding: 20px; margin-bottom: 20px; border-radius: 8px;">
+                    <h4 style="color: #FFFFFF; margin-bottom: 10px;">Question ${index + 1}: ${q.text}</h4>
+                    <textarea class="answer-input" data-question="${index + 1}" placeholder="${q.placeholder}" style="width: 100%; height: 100px; padding: 10px; border: 1px solid #555; border-radius: 4px; background: #222; color: #FFFFFF; resize: vertical;"></textarea>
+                    <div class="question-actions" style="margin-top: 15px;">
+                      <button class="submit-question-btn" onclick="submitAnswer(${index + 1})" style="background: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer;">Submit Answer</button>
+                      <span class="submit-note" style="color: #AAA; margin-left: 10px;">Your answer will be saved and compared to the correct answer.</span>
+                    </div>
+                    <div class="answer-comparison hidden" style="margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+                      <!-- Comparison content will be inserted here -->
+                    </div>
+                  </div>
+                `;
+              }
+            }).join('')}
           </div>
         </div>
       `;
@@ -2481,10 +2506,104 @@
         console.log('Answer submitted for question', questionNum, ':', userAnswer);
       }
     }
+
+    // Add CSS for multiple choice styling
+    const style = document.createElement('style');
+    style.textContent = `
+      .option-label:hover {
+        border-color: var(--accent-color, #4a9eff) !important;
+        background: #333 !important;
+      }
+      .option-label input[type="radio"]:checked + span {
+        color: var(--accent-color, #4a9eff) !important;
+      }
+      .option-label input[type="radio"]:checked {
+        accent-color: var(--accent-color, #4a9eff);
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Submit multiple choice answer function
+    function submitMultipleChoiceAnswer(questionNum) {
+      const selectedOption = document.querySelector(`input[name="question-${questionNum}"]:checked`);
+      const button = document.querySelector(`button[onclick="submitMultipleChoiceAnswer(${questionNum})"]`);
+      const questionItem = document.querySelector(`.question-item[data-question="${questionNum}"]`);
+      
+      if (!selectedOption) {
+        showInlineNotification('Please select an answer before submitting.', 'error');
+        return;
+      }
+      
+      if (button && questionItem) {
+        const selectedIndex = parseInt(selectedOption.value);
+        const selectedText = selectedOption.parentElement.querySelector('span').textContent;
+        
+        // Disable all radio buttons and button
+        const radioButtons = questionItem.querySelectorAll('input[type="radio"]');
+        radioButtons.forEach(radio => radio.disabled = true);
+        button.textContent = 'Submitted';
+        button.disabled = true;
+        button.style.backgroundColor = '#4CAF50';
+        button.style.cursor = 'not-allowed';
+        
+        // Get correct answer for this worksheet and question
+        const worksheetId = getUrlParameter('id');
+        const type = getUrlParameter('type') || 'maintenance';
+        const correctAnswer = getCorrectAnswer(worksheetId, questionNum);
+        
+        // Show answer comparison
+        const comparisonDiv = questionItem.querySelector('.answer-comparison');
+        if (comparisonDiv) {
+          const isCorrect = selectedIndex === correctAnswer.correct_answer;
+          comparisonDiv.innerHTML = `
+            <div style="margin-bottom: 15px;">
+              <strong style="color: ${isCorrect ? '#4CAF50' : '#f44336'}; display: block; margin-bottom: 8px;">
+                ${isCorrect ? '✓ Correct!' : '✗ Incorrect'}
+              </strong>
+              <p style="color: #FFFFFF; margin: 0; padding: 10px; background: #333; border-radius: 4px;">${escapeHtml(selectedText)}</p>
+            </div>
+            <div style="margin-bottom: 15px;">
+              <strong style="color: #4CAF50; display: block; margin-bottom: 8px;">Correct Answer:</strong>
+              <p style="color: #FFFFFF; margin: 0; padding: 10px; background: #333; border-radius: 4px;">${escapeHtml(correctAnswer.correct_text)}</p>
+            </div>
+            <div>
+              <strong style="color: #4CAF50; display: block; margin-bottom: 8px;">Explanation:</strong>
+              <p style="color: #FFFFFF; margin: 0; padding: 10px; background: #333; border-radius: 4px;">${escapeHtml(correctAnswer.explanation)}</p>
+            </div>
+          `;
+          comparisonDiv.classList.remove('hidden');
+        }
+        
+        // Save answer with timestamp
+        const key = `${type}_worksheet_${worksheetId}_answer_${questionNum}`;
+        const timestampKey = `${key}_timestamp`;
+        localStorage.setItem(key, selectedText);
+        localStorage.setItem(timestampKey, new Date().toISOString());
+        
+        console.log('Multiple choice answer submitted for question', questionNum, ':', selectedText);
+      }
+    }
     
     // Get correct answer for a specific worksheet and question
     function getCorrectAnswer(worksheetId, questionNum) {
       const correctAnswers = {
+        1: { // Closed-Loop Control Systems (Multiple Choice)
+          1: {
+            correct_answer: 1,
+            correct_text: "Sensors, actuators, control elements, and safety systems",
+            explanation: "A comprehensive closed-loop system inspection should include sensors (temperature, pressure, flow), actuators (valves, motors), control elements (PID controller, displays), and safety systems (alarms, emergency stops). This ensures the entire control loop is functioning properly."
+          },
+          2: {
+            correct_answer: 1,
+            correct_text: "Compare with a calibrated reference thermometer at multiple points",
+            explanation: "Proper sensor verification requires comparing the sensor reading with a calibrated reference thermometer at multiple temperature points across the sensor's operating range. This ensures accuracy throughout the entire measurement range."
+          },
+          3: {
+            correct_answer: 1,
+            correct_text: "Maintenance logs, calibration certificates, test results, and any adjustments made",
+            explanation: "Complete documentation should include maintenance logs with all readings, calibration certificates for reference instruments, test results showing before/after values, and detailed records of any adjustments made. This provides a complete audit trail for quality assurance and troubleshooting."
+          }
+        },
         2: { // Emergency Stop Systems
           1: "Check each E-stop button for physical damage, proper mounting, and clear labeling. Ensure the button is not stuck or damaged and is easily accessible.",
           2: "Use a multimeter to verify the E-stop contacts open properly when activated and close when reset. Test during a planned shutdown to avoid disrupting production.",
