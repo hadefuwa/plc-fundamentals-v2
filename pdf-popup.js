@@ -79,6 +79,17 @@ function openPDF(pdfPath) {
         pdfPopup.show(filename);
     }
     
-    // Open PDF in new tab using PDF.js viewer
-    window.open(`pdf-viewer.html?file=${encodeURIComponent(pdfPath)}`, '_blank');
+    // Try to open PDF directly in browser, with fallback to download
+    const link = document.createElement('a');
+    link.href = pdfPath;
+    link.target = '_blank';
+    link.download = filename;
+    
+    // Try to open in new tab first
+    const newWindow = window.open(pdfPath, '_blank');
+    
+    // If that fails, trigger download
+    if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
+        link.click();
+    }
 } 
