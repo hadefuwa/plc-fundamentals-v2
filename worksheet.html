@@ -1409,6 +1409,70 @@
                       </button>
                   </div>
               </div>
+              
+              <!-- Educational Explanation Section -->
+              <div class="simulation-explanation" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-top: 30px; border: 2px solid #E91E63; box-shadow: 0 8px 20px rgba(233, 30, 99, 0.2);">
+                  <h4 style="color: #E91E63; margin-bottom: 20px; font-size: 18px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-lightbulb"></i> Understanding PID Control</h4>
+                  
+                  <!-- PID Tuning Explanation -->
+                  <div class="explanation-content" id="tuning-explanation" style="display: block;">
+                      <div style="color: #FFFFFF; line-height: 1.6;">
+                          <p style="margin-bottom: 15px;"><strong>Real-time PID Tuning:</strong> This graph shows how your PID controller responds to setpoint changes in real-time. The three lines represent:</p>
+                          <ul style="margin-bottom: 15px; padding-left: 20px;">
+                              <li><strong style="color: #E91E63;">Pink Line (Setpoint):</strong> Your target temperature - what you want the system to achieve</li>
+                              <li><strong style="color: #2196F3;">Blue Line (Process Variable):</strong> The actual temperature - how the system is currently performing</li>
+                              <li><strong style="color: #4CAF50;">Green Line (Control Output):</strong> The controller's effort - how hard the PID is working</li>
+                          </ul>
+                          <p style="margin-bottom: 15px;"><strong>How to Tune:</strong></p>
+                          <ul style="margin-bottom: 15px; padding-left: 20px;">
+                              <li><strong>Proportional (Kp):</strong> Controls response speed. Higher values = faster response but more overshoot</li>
+                              <li><strong>Integral (Ki):</strong> Eliminates steady-state error. Higher values = less error but slower response</li>
+                              <li><strong>Derivative (Kd):</strong> Reduces overshoot. Higher values = less oscillation but can amplify noise</li>
+                          </ul>
+                          <p><strong>Goal:</strong> Make the blue line follow the pink line as closely as possible with minimal overshoot and fast settling time.</p>
+                      </div>
+                  </div>
+                  
+                  <!-- System Response Explanation -->
+                  <div class="explanation-content" id="response-explanation" style="display: none;">
+                      <div style="color: #FFFFFF; line-height: 1.6;">
+                          <p style="margin-bottom: 15px;"><strong>System Response Testing:</strong> This tab allows you to test how your PID controller responds to different types of input signals:</p>
+                          <ul style="margin-bottom: 15px; padding-left: 20px;">
+                              <li><strong>Step Response:</strong> Tests how quickly the system reaches a new setpoint. Good for measuring rise time and settling time.</li>
+                              <li><strong>Ramp Response:</strong> Tests how well the system follows a gradually changing setpoint. Good for measuring tracking performance.</li>
+                              <li><strong>Sinusoidal Response:</strong> Tests how well the system follows an oscillating setpoint. Good for measuring frequency response.</li>
+                          </ul>
+                          <p style="margin-bottom: 15px;"><strong>Performance Metrics:</strong></p>
+                          <ul style="margin-bottom: 15px; padding-left: 20px;">
+                              <li><strong>Rise Time:</strong> Time to reach 90% of the final value (faster is better)</li>
+                              <li><strong>Overshoot:</strong> Maximum deviation above the setpoint (lower is better)</li>
+                              <li><strong>Settling Time:</strong> Time to stay within 5% of the setpoint (faster is better)</li>
+                              <li><strong>Steady State Error:</strong> Final difference from setpoint (lower is better)</li>
+                          </ul>
+                          <p><strong>Use:</strong> Adjust your PID parameters in the tuning tab, then test the response here to see the improvement.</p>
+                      </div>
+                  </div>
+                  
+                  <!-- Challenges Explanation -->
+                  <div class="explanation-content" id="challenges-explanation" style="display: none;">
+                      <div style="color: #FFFFFF; line-height: 1.6;">
+                          <p style="margin-bottom: 15px;"><strong>PID Tuning Challenges:</strong> These challenges test your understanding of PID control principles:</p>
+                          <ul style="margin-bottom: 15px; padding-left: 20px;">
+                              <li><strong>Challenge 1 - Minimal Overshoot:</strong> Achieve less than 5% overshoot. This requires careful balance of Kp and Kd to prevent the system from overshooting the target.</li>
+                              <li><strong>Challenge 2 - Fast Settling Time:</strong> Achieve settling time under 2 seconds. This requires higher Kp for speed and proper Kd to control overshoot.</li>
+                              <li><strong>Challenge 3 - Disturbance Rejection:</strong> Maintain setpoint within ±2°C during disturbances. This requires sufficient Kp and Ki to reject external disturbances.</li>
+                          </ul>
+                          <p style="margin-bottom: 15px;"><strong>Tuning Strategy:</strong></p>
+                          <ul style="margin-bottom: 15px; padding-left: 20px;">
+                              <li><strong>Start with Kp:</strong> Increase until you get good response speed</li>
+                              <li><strong>Add Ki:</strong> Increase to eliminate steady-state error</li>
+                              <li><strong>Add Kd:</strong> Increase to reduce overshoot and improve settling time</li>
+                              <li><strong>Fine-tune:</strong> Make small adjustments to optimize performance</li>
+                          </ul>
+                          <p><strong>Learning Goal:</strong> Understand how each PID parameter affects system performance and learn to balance them for optimal control.</p>
+                      </div>
+                  </div>
+              </div>
           </div>
         </div>
         ` : ''}
@@ -4131,6 +4195,17 @@
       if (selectedButton) {
         selectedButton.classList.add('active');
         selectedButton.style.background = '#E91E63';
+      }
+      
+      // Show/hide appropriate explanations
+      const explanations = document.querySelectorAll('.explanation-content');
+      explanations.forEach(explanation => {
+        explanation.style.display = 'none';
+      });
+      
+      const activeExplanation = document.getElementById(tabName + '-explanation');
+      if (activeExplanation) {
+        activeExplanation.style.display = 'block';
       }
     }
 
