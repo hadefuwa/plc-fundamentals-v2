@@ -362,6 +362,52 @@
       cursor: pointer;
       padding: 0;
       width: 20px;
+    }
+
+    /* Disable theme button styles */
+    .settings-disable-btn {
+      background: linear-gradient(135deg, #6c757d, #495057);
+      color: #ffffff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      margin-top: 10px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .settings-disable-btn:hover {
+      background: linear-gradient(135deg, #5a6268, #343a40);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(108, 117, 125, 0.4);
+    }
+
+    /* Disabled color input styles */
+    .settings-input:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      filter: grayscale(50%);
+    }
+
+    .settings-input:disabled + .color-preview {
+      opacity: 0.5;
+      filter: grayscale(50%);
+    }
+
+    /* Disabled label styles */
+    .settings-group:has(.settings-input:disabled) .settings-label {
+      opacity: 0.6;
+      color: #6c757d;
+    }
+
+    .inline-notification .notification-close {
       height: 20px;
       display: flex;
       align-items: center;
@@ -422,14 +468,14 @@
     <div class="settings-group">
       <label class="settings-label" for="background-color">Background Color</label>
       <div class="settings-color-row">
-        <input type="color" id="background-color" class="settings-input" onchange="updatePreview('background')">
+        <input type="color" id="background-color" class="settings-input" onchange="updatePreview('background')" disabled>
         <div class="color-preview" id="background-preview"></div>
       </div>
     </div>
     <div class="settings-group">
       <label class="settings-label" for="accent-color">Accent Color</label>
       <div class="settings-color-row">
-        <input type="color" id="accent-color" class="settings-input" onchange="updatePreview('accent')">
+        <input type="color" id="accent-color" class="settings-input" onchange="updatePreview('accent')" disabled>
         <div class="color-preview" id="accent-preview"></div>
       </div>
     </div>
@@ -450,8 +496,12 @@
         <option value="dark" selected>Dark</option>
         <option value="darker">Darker</option>
         <option value="blue-dark">Blue Dark</option>
-                    <option value="purple-dark">Purple Dark</option>
+        <option value="purple-dark">Purple Dark</option>
+        <option value="custom">Custom</option>
       </select>
+      <button id="disable-theme-btn" class="settings-disable-btn" onclick="disableTheme()" style="display: none;">
+        <i class="fas fa-palette"></i> Disable Theme (Use Custom Colors)
+      </button>
     </div>
     
     <div class="settings-group">
@@ -531,6 +581,21 @@
       document.getElementById('theme').value = theme;
       applyTheme(theme);
       
+      // Handle initial state of color inputs based on theme
+      const bgInput = document.getElementById('background-color');
+      const accentInput = document.getElementById('accent-color');
+      const disableBtn = document.getElementById('disable-theme-btn');
+      
+      if (theme !== 'custom') {
+        bgInput.disabled = true;
+        accentInput.disabled = true;
+        disableBtn.style.display = 'block';
+      } else {
+        bgInput.disabled = false;
+        accentInput.disabled = false;
+        disableBtn.style.display = 'none';
+      }
+      
       // Load toggle settings
       document.getElementById('animations').checked = settings.animations !== false;
       document.getElementById('notifications').checked = settings.notifications !== false;
@@ -564,12 +629,50 @@
     function updateTheme() {
       const theme = document.getElementById('theme').value;
       applyTheme(theme);
+      
+      // Disable custom color inputs when theme is selected
+      const bgInput = document.getElementById('background-color');
+      const accentInput = document.getElementById('accent-color');
+      const disableBtn = document.getElementById('disable-theme-btn');
+      
+      if (theme !== 'custom') {
+        bgInput.disabled = true;
+        accentInput.disabled = true;
+        disableBtn.style.display = 'block';
+      } else {
+        bgInput.disabled = false;
+        accentInput.disabled = false;
+        disableBtn.style.display = 'none';
+      }
     }
     
     // Apply theme
     function applyTheme(theme) {
       document.body.className = document.body.className.replace(/theme-\w+/g, '');
       document.body.classList.add(`theme-${theme}`);
+    }
+
+    // Disable theme and enable custom colors
+    function disableTheme() {
+      // Set theme to custom
+      document.getElementById('theme').value = 'custom';
+      
+      // Enable color inputs
+      document.getElementById('background-color').disabled = false;
+      document.getElementById('accent-color').disabled = false;
+      
+      // Hide disable button
+      document.getElementById('disable-theme-btn').style.display = 'none';
+      
+      // Remove theme classes
+      document.body.className = document.body.className.replace(/theme-\w+/g, '');
+      
+      // Apply current custom colors
+      const bgColor = document.getElementById('background-color').value;
+      const accentColor = document.getElementById('accent-color').value;
+      applySettings(bgColor, accentColor);
+      
+      showNotification('Theme disabled. You can now use custom colors.', 'info');
     }
     
     // Apply settings to the document
