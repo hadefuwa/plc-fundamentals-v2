@@ -1220,6 +1220,13 @@
                           <span id="settling-time" class="metric-value" style="color: #E91E63; font-weight: bold; font-size: 16px;">0.0s</span>
                       </div>
                   </div>
+                  
+                  <!-- Reset Button -->
+                  <div class="reset-controls" style="display: flex; justify-content: center; margin-top: 20px;">
+                      <button id="reset-pid" class="reset-button" style="background: linear-gradient(135deg, #FF9800, #F57C00); color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 14px; transition: all 0.3s ease; display: flex; align-items: center; gap: 8px;">
+                          <i class="fas fa-redo"></i> Reset to Defaults
+                      </button>
+                  </div>
               </div>
               
               <!-- Real-time PID Tuning Graph -->
@@ -3495,6 +3502,14 @@
         });
       });
       
+      // Initialize reset button
+      const resetPidBtn = document.getElementById('reset-pid');
+      if (resetPidBtn) {
+        resetPidBtn.addEventListener('click', function() {
+          resetPIDToDefaults();
+        });
+      }
+      
       // Initialize simulation
       updatePIDSimulation();
       
@@ -3542,6 +3557,79 @@
         
         // Calculate performance metrics
         calculatePerformanceMetrics();
+      }
+    }
+
+    // Reset PID parameters to default values
+    function resetPIDToDefaults() {
+      // Default values
+      const defaults = {
+        setpoint: 50,
+        kp: 0.5,
+        ki: 0.1,
+        kd: 0.2
+      };
+      
+      // Reset sliders
+      const setpointSlider = document.getElementById('setpoint-slider');
+      const kpSlider = document.getElementById('kp-slider');
+      const kiSlider = document.getElementById('ki-slider');
+      const kdSlider = document.getElementById('kd-slider');
+      
+      if (setpointSlider) {
+        setpointSlider.value = defaults.setpoint;
+        document.getElementById('setpoint-value').textContent = defaults.setpoint + '.0°C';
+      }
+      
+      if (kpSlider) {
+        kpSlider.value = defaults.kp;
+        document.getElementById('kp-value').textContent = defaults.kp;
+      }
+      
+      if (kiSlider) {
+        kiSlider.value = defaults.ki;
+        document.getElementById('ki-value').textContent = defaults.ki;
+      }
+      
+      if (kdSlider) {
+        kdSlider.value = defaults.kd;
+        document.getElementById('kd-value').textContent = defaults.kd;
+      }
+      
+      // Reset simulation data
+      simulationData.setpoint = defaults.setpoint;
+      simulationData.kp = defaults.kp;
+      simulationData.ki = defaults.ki;
+      simulationData.kd = defaults.kd;
+      simulationData.integral = 0;
+      simulationData.derivative = 0;
+      simulationData.output = 0;
+      simulationData.lastError = 0;
+      
+      // Clear graph data
+      simulationData.graphData.setpoint = [];
+      simulationData.graphData.processVariable = [];
+      simulationData.graphData.controlOutput = [];
+      simulationData.graphData.time = [];
+      simulationData.time = 0;
+      
+      // Update simulation
+      updatePIDSimulation();
+      
+      // Reinitialize graph
+      initPIDTuningGraph();
+      
+      // Show feedback
+      const resetBtn = document.getElementById('reset-pid');
+      if (resetBtn) {
+        const originalText = resetBtn.innerHTML;
+        resetBtn.innerHTML = '<i class="fas fa-check"></i> Reset Complete!';
+        resetBtn.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
+        
+        setTimeout(() => {
+          resetBtn.innerHTML = originalText;
+          resetBtn.style.background = 'linear-gradient(135deg, #FF9800, #F57C00)';
+        }, 2000);
       }
     }
 
