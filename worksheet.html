@@ -1730,13 +1730,18 @@
 
     // Render the interactive worksheet content directly to the container
     async function renderInteractiveWorksheet(worksheetId) {
+      console.log('renderInteractiveWorksheet called with worksheetId:', worksheetId);
       const container = document.getElementById('worksheet-content');
       
       try {
+        console.log('Fetching dbMaintenanceScenarios.json...');
         // Load the questions from the JSON file
         const response = await fetch('dbMaintenanceScenarios.json');
+        console.log('Response status:', response.status);
         const data = await response.json();
+        console.log('JSON data loaded, scenarios count:', data.scenarios ? data.scenarios.length : 'undefined');
         const scenario = data.scenarios.find(s => s.id === worksheetId);
+        console.log('Found scenario:', scenario ? scenario.title : 'NOT FOUND');
         
         if (!scenario || !scenario.questions) {
           console.error(`Could not load questions for worksheet ${worksheetId}`);
@@ -1803,15 +1808,21 @@
           </div>
         `;
         
+        console.log('Worksheet content rendered successfully');
+        
         // Hide loading and show content
         document.getElementById('loading-container').style.display = 'none';
         document.getElementById('main-content').style.display = 'block';
+        
+        console.log('Loading container hidden, main content shown');
         
         // Update navigation buttons
         setTimeout(updateNavigationButtons, 100);
         
       } catch (error) {
         console.error('Error rendering interactive worksheet:', error);
+        console.error('Error details:', error.message);
+        console.error('Error stack:', error.stack);
         renderWorksheet1Fallback();
       }
     }
