@@ -43,11 +43,66 @@ A comprehensive Electron.js application designed for industrial maintenance oper
 
 ---
 
-## 🛠️ Technology Stack
+## 🧑‍💻 Technology Stack (Detailed)
 
-- **Frontend**: Electron.js, HTML5, CSS3, JavaScript ES6+
-- **Settings Storage**: JSON config file (`settings.json`)
-- **UI Framework**: Custom CSS Grid, responsive design
+### ⚡ Electron
+- **Electron Version:** 25.x (see `package.json`)
+- **Main Process:** Handles window creation, navigation, security, and settings management
+- **Preload Script:** Uses `contextBridge` to safely expose APIs (settings, navigation, PDF opening) to the renderer
+- **IPC (Inter-Process Communication):**
+  - `ipcMain` and `ipcRenderer` for secure communication between renderer and main
+  - Used for reading/writing settings (`settings.json`), navigation, and file operations
+- **Security Features:**
+  - `contextIsolation: true` (renderer and preload are isolated)
+  - `sandbox: false` (for compatibility, but context isolation is enforced)
+  - `webSecurity: false` (for local file access, but only trusted files are loaded)
+  - `nodeIntegration: false` (no direct Node.js access in renderer)
+  - Custom preload script for all privileged operations
+- **Window Management:**
+  - Single main window, maximized on launch
+  - Custom navigation via exposed API (`window.electron.navigate`)
+- **PDF Handling:**
+  - Securely opens PDFs in the user's default viewer via main process
+- **Settings Storage:**
+  - All user preferences (theme, etc.) are saved to `settings.json` via IPC and Node.js `fs` module
+- **Packaging:**
+  - Built and distributed with `electron-builder` for Windows, Mac, and Linux
+
+### 🟢 Node.js & npm
+- **Node.js:** v16+ required
+- **npm:** v8+ required
+- **Key dependencies:**
+  - `electron`, `electron-builder`, `jquery`, `animejs`, `pdfjs-dist`
+
+### 🌐 Frontend
+- **HTML5, CSS3, JavaScript (ES6+)**
+- **Custom CSS Grid** for layout
+- **Responsive Design:** Uses CSS `clamp()`, media queries, and flex/grid for all screen sizes
+- **Branding:** Matrix logo, custom icons, and "Inspiring the next generation of Engineers" header
+- **Dynamic Theming:** CSS variables for background and accent color, updated via settings
+- **Libraries:**
+  - **jQuery:** For DOM manipulation and event handling
+  - **anime.js:** For splash screen and subtle animations
+  - **Font Awesome:** For icons
+  - **Chart.js:** (if used for analytics/dashboard)
+
+### 🗂️ File System & Config
+- **Settings:**
+  - All user preferences are stored in `settings.json` in the app directory
+  - Read/written via Electron IPC and Node.js `fs` module
+- **Data:**
+  - Training content and scenarios in JSON files (`dbMaintenanceScenarios.json`, `dbFaultScenarios.json`)
+
+### 🔒 Security Practices
+- **No remote code execution**
+- **No nodeIntegration in renderer**
+- **All privileged operations go through preload/contextBridge and IPC**
+- **Only trusted local files are loaded**
+
+### 🏗️ Build & Release
+- **electron-builder** for packaging and code signing
+- **Cross-platform:** Windows, Mac, Linux
+- **Release scripts:** See `scripts/` and `package.json`
 
 ---
 
