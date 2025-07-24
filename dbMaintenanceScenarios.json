@@ -551,51 +551,77 @@
             "id": 8,
             "title": "Float Switch",
             "paragraphs": [
-                "Float switches are used for level detection in tanks and vessels.",
-                "These switches provide critical level control and safety functions.",
-                "Regular maintenance ensures reliable operation and accurate switching.",
-                "You need to verify both mechanical operation and electrical signals."
+                "Float switches detect liquid levels in a tank and trigger actions.",
+                "They can stop a pump or sound an alarm based on level conditions.",
+                "Understanding normally open (NO) and normally closed (NC) configurations is essential.",
+                "Float switches are critical for preventing dry running and overflow conditions."
             ],
             "image": "float-switch.png",
             "questions": [
                 {
                     "id": "8.1",
-                    "text": "What mechanical checks would you perform on a float switch?",
+                    "text": "What is the main purpose of a float switch in an industrial system?",
                     "type": "multiple_choice",
                     "options": [
-                        "Only check if the switch is mounted",
-                        "Check float movement, mounting security, and electrical connections",
-                        "Just test the electrical signal",
-                        "Only inspect the float"
+                        "To control the temperature",
+                        "To detect liquid levels in a tank and trigger actions such as stopping a pump or sounding an alarm",
+                        "To measure the flow rate",
+                        "To control the valve position"
                     ],
                     "correct_answer": 1,
-                    "explanation": "Mechanical float switch checks should include verifying smooth float movement without binding, checking mounting security and proper positioning, and inspecting electrical connections for corrosion or damage."
+                    "explanation": "The main purpose of a float switch in an industrial system is to detect liquid levels in a tank and trigger actions such as stopping a pump or sounding an alarm."
                 },
                 {
                     "id": "8.2",
-                    "text": "How would you test float switch operation?",
+                    "text": "What is the difference between a normally open (NO) and a normally closed (NC) float switch?",
                     "type": "multiple_choice",
                     "options": [
-                        "Only check if the switch responds",
-                        "Manually move the float through its range and verify switching action",
-                        "Just test the electrical circuit",
-                        "Assume the switch works if it's mounted"
+                        "There is no difference",
+                        "A NO switch only sends a signal when activated (float is lifted). An NC switch sends a signal when inactivated and breaks the signal when lifted",
+                        "They work the same way",
+                        "One is for high level, one is for low level"
                     ],
                     "correct_answer": 1,
-                    "explanation": "Float switch testing involves manually moving the float through its operating range and verifying that the electrical switch contacts open and close properly at the correct level points."
+                    "explanation": "A NO switch only sends a signal when activated (float is lifted). An NC switch sends a signal when inactivated and breaks the signal when lifted."
                 },
                 {
                     "id": "8.3",
-                    "text": "What maintenance is required for float switches?",
+                    "text": "Why is the low-level float switch normally open (NO)?",
                     "type": "multiple_choice",
                     "options": [
-                        "Only replace when they fail",
-                        "Regular cleaning, float inspection, and electrical testing",
-                        "Just clean the float",
-                        "Only check the wiring"
+                        "It doesn't matter",
+                        "So, the pump only runs when there is enough fluid. If the level drops, the circuit opens and stops the pump to prevent dry running",
+                        "To save power",
+                        "To make it simpler"
                     ],
                     "correct_answer": 1,
-                    "explanation": "Float switch maintenance should include regular cleaning to prevent fouling, inspection of the float for damage or corrosion, and periodic electrical testing to ensure reliable switching operation."
+                    "explanation": "The low-level float switch is normally open (NO) so the pump only runs when there is enough fluid. If the level drops, the circuit opens and stops the pump to prevent dry running."
+                },
+                {
+                    "id": "8.4",
+                    "text": "Why is the high-level float switch normally closed (NC)?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "It doesn't matter",
+                        "So, the system constantly monitors for overflow. If the tank gets too full, the circuit breaks and stops the filling process or triggers an alarm",
+                        "To save power",
+                        "To make it simpler"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "The high-level float switch is normally closed (NC) so the system constantly monitors for overflow. If the tank gets too full, the circuit breaks and stops the filling process or triggers an alarm."
+                },
+                {
+                    "id": "8.5",
+                    "text": "What are some common float switch faults, and how can they be identified?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "There are no common faults",
+                        "Sticking, misalignment, or contact failure. These can be identified by testing float movement and checking IO screen signals",
+                        "Only electrical faults",
+                        "Only mechanical faults"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Common float switch faults include sticking, misalignment, or contact failure. These can be identified by testing float movement and checking IO screen signals."
                 }
             ]
         },
@@ -603,51 +629,77 @@
             "id": 9,
             "title": "Proximity Switch",
             "paragraphs": [
-                "Proximity switches detect object presence without contact.",
-                "These sensors are crucial for position detection and counting.",
-                "Regular maintenance ensures reliable detection and signal output.",
-                "You need to verify both sensor operation and wiring integrity."
+                "A proximity switch detects the presence of an object without physical contact.",
+                "It helps with automation, positioning, and safety applications.",
+                "Different types of proximity sensors detect different materials.",
+                "Understanding proximity switch operation is essential for system safety."
             ],
             "image": "proximity-switch.png",
             "questions": [
                 {
                     "id": "9.1",
-                    "text": "How would you test proximity switch operation?",
+                    "text": "What is the main function of a proximity switch in an automated system?",
                     "type": "multiple_choice",
                     "options": [
-                        "Only check if the switch is powered",
-                        "Move target objects toward the sensor and verify switching distance and response",
-                        "Just test the electrical output",
-                        "Assume the switch works if it's mounted"
+                        "To control the temperature",
+                        "To detect the presence of an object without physical contact, helping with automation, positioning, and safety",
+                        "To measure the flow rate",
+                        "To control the valve position"
                     ],
                     "correct_answer": 1,
-                    "explanation": "Proximity switch testing involves moving target objects toward the sensor at different distances and verifying the switching point, response time, and proper electrical output when objects are detected."
+                    "explanation": "The main function of a proximity switch in an automated system is to detect the presence of an object without physical contact, helping with automation, positioning, and safety."
                 },
                 {
                     "id": "9.2",
-                    "text": "What factors affect proximity switch performance?",
+                    "text": "What type of object does an inductive proximity sensor detect?",
                     "type": "multiple_choice",
                     "options": [
-                        "Only the target material",
-                        "Target material, distance, environmental conditions, and electrical interference",
-                        "Just the mounting position",
-                        "Only the power supply"
+                        "All objects",
+                        "It detects metal objects only",
+                        "Only plastic objects",
+                        "Only wood objects"
                     ],
                     "correct_answer": 1,
-                    "explanation": "Proximity switch performance is affected by target material (steel, aluminum, brass), sensing distance, environmental conditions (temperature, humidity), and electrical interference from nearby equipment."
+                    "explanation": "An inductive proximity sensor detects metal objects only. It uses electromagnetic induction to detect metallic targets."
                 },
                 {
                     "id": "9.3",
-                    "text": "What maintenance is needed for proximity switches?",
+                    "text": "Why is the proximity sensor used to detect the tank lid in this system?",
                     "type": "multiple_choice",
                     "options": [
-                        "Only replace when they fail",
-                        "Regular cleaning, alignment checks, and performance testing",
-                        "Just clean the sensor face",
-                        "Only check the wiring"
+                        "To measure the temperature",
+                        "To ensure the tank lid is in place before the system runs, preventing water from being pumped without the lid",
+                        "To control the flow rate",
+                        "To measure the level"
                     ],
                     "correct_answer": 1,
-                    "explanation": "Proximity switch maintenance should include regular cleaning of the sensor face, checking alignment with target objects, and periodic performance testing to ensure reliable detection within specified ranges."
+                    "explanation": "The proximity sensor is used to detect the tank lid to ensure the tank lid is in place before the system runs, preventing water from being pumped without the lid."
+                },
+                {
+                    "id": "9.4",
+                    "text": "What are three types of proximity sensors and what do they detect?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "All detect the same things",
+                        "Inductive (metal), capacitive (metal and non-metal), and photoelectric (uses light to detect objects)",
+                        "Only inductive sensors",
+                        "Only capacitive sensors"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Three types of proximity sensors are inductive (metal), capacitive (metal and non-metal), and photoelectric (uses light to detect objects)."
+                },
+                {
+                    "id": "9.5",
+                    "text": "What common issues can cause a proximity sensor to give false readings?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "Nothing can cause false readings",
+                        "Misalignment, poor mounting, wiring faults, dust, or moisture",
+                        "Only electrical faults",
+                        "Only mechanical faults"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Common issues that can cause a proximity sensor to give false readings include misalignment, poor mounting, wiring faults, dust, or moisture."
                 }
             ]
         },
