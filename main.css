@@ -638,11 +638,11 @@ h1 {
 
 /* Different colors for maintenance vs fault scenarios */
 .worksheets-section:nth-child(1) .worksheet-card::before {
-    background: #4CAF50; /* Green accent for maintenance */
+    background: var(--accent-color); /* Accent color for maintenance */
 }
 
 .worksheets-section:nth-child(2) .worksheet-card::before {
-    background: #FF5722; /* Orange accent for troubleshooting */
+    background: var(--accent-color); /* Accent color for troubleshooting */
 }
 
 .worksheets-section:nth-child(2) .worksheet-card {
@@ -650,7 +650,7 @@ h1 {
 }
 
 .worksheets-section:nth-child(2) .worksheet-card:hover {
-    background: linear-gradient(135deg, #403333, #4a4444);
+    background: linear-gradient(135deg, var(--accent-color), #3a8ce6);
 }
 
 .worksheet-title {
