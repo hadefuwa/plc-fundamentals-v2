@@ -1748,6 +1748,9 @@
           return;
         }
         
+        console.log('Scenario questions count:', scenario.questions.length);
+        console.log('Scenario has image:', scenario.image);
+        
         // Generate multiple choice questions HTML
         const questionsHTML = scenario.questions.map((question, index) => {
           if (question.type === 'multiple_choice') {
@@ -1796,6 +1799,15 @@
             <h2 class="section-header" style="color: #2196F3; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-info-circle"></i> Introduction</h2>
             <div class="worksheet-content">
               ${scenario.paragraphs.map(paragraph => `<p style="color: #FFFFFF; margin-bottom: 15px;">${paragraph}</p>`).join('')}
+              
+              ${scenario.image ? `
+              <div class="system-diagram" style="text-align: center; margin: 20px 0;">
+                <figure>
+                  <img src="assets/maintenance/${scenario.image}" alt="${scenario.title}" style="max-width: 400px; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);">
+                  <figcaption style="color: #FFFFFF; margin-top: 10px; font-style: italic;">${scenario.title} System Diagram</figcaption>
+                </figure>
+              </div>
+              ` : ''}
             </div>
           </div>
           ` : ''}
