@@ -193,10 +193,14 @@
       cursor: pointer;
       font-size: 14px;
       color: #ccc;
+      position: relative;
     }
     
     .settings-toggle {
-      display: none;
+      display: none !important;
+      opacity: 0 !important;
+      position: absolute !important;
+      pointer-events: none !important;
     }
     
     .toggle-slider {
@@ -206,6 +210,8 @@
       background: #555;
       border-radius: 12px;
       transition: background 0.3s ease;
+      display: inline-block;
+      vertical-align: middle;
     }
     
     .toggle-slider:before {
