@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Matrix Training Platform - Worksheet</title>
+  <title>Matrix TSL - Worksheet</title>
   <link rel="stylesheet" href="main.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">
@@ -439,7 +439,7 @@
     <div class="nav-container">
       <div class="nav-logo">
         <img src="assets/matrix-logo.png" alt="Matrix Logo">
-        <h1>Training Platform</h1>
+        <h1>Inspiring the next generation of Engineers</h1>
       </div>
       <ul class="nav-menu">
         <li class="nav-item">
@@ -448,11 +448,20 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" onclick="window.electron.navigate('worksheets.html')" class="nav-link active">
-            <i class="fas fa-book-open"></i> WORKSHEETS
+          <a href="#" onclick="window.electron.navigate('cp0539-worksheets.html')" class="nav-link">
+            <i class="fas fa-cogs"></i> CP0539
           </a>
         </li>
-
+        <li class="nav-item">
+          <a href="#" onclick="window.electron.navigate('cp6773-worksheets.html')" class="nav-link">
+            <i class="fas fa-exclamation-triangle"></i> CP6773
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" onclick="window.electron.navigate('settings.html')" class="nav-link">
+            <i class="fas fa-gear"></i> SETTINGS
+          </a>
+        </li>
       </ul>
     </div>
   </nav>
@@ -475,30 +484,33 @@
   </div>
 
   <!-- Main Content -->
-  <div id="main-content" class="worksheet-container" style="display: none;">
-    <!-- Back Navigation -->
-    <div class="back-nav">
-      <button class="back-btn" onclick="window.electron.navigate('worksheets.html')">
-        <i class="fas fa-arrow-left"></i> Back to Worksheets
-      </button>
-    </div>
+  <div class="main-content">
+    <h1 style="color:#fff; font-size:32px; font-weight:bold; margin-bottom:32px;"><i class="fas fa-graduation-cap"></i> Worksheet</h1>
+    <div id="main-content" class="worksheet-container" style="display: none;">
+      <!-- Back Navigation -->
+      <div class="back-nav">
+        <button class="back-btn" onclick="window.electron.navigate('worksheets.html')">
+          <i class="fas fa-arrow-left"></i> Back to Worksheets
+        </button>
+      </div>
 
-    <!-- Boxed Worksheet Content -->
-    <div class="worksheet-box">
-      <!-- Dynamic Content Will Be Loaded Here -->
-      <div id="worksheet-content"></div>
-      
-      <!-- Navigation Buttons -->
-      <div class="worksheet-navigation">
-        <button class="nav-btn prev-btn" onclick="navigateWorksheet('prev')">
-          <i class="fas fa-chevron-left"></i> Previous Worksheet
-        </button>
-        <button class="nav-btn next-btn" onclick="navigateWorksheet('next')">
-          Next Worksheet <i class="fas fa-chevron-right"></i>
-        </button>
-        <button class="nav-btn back-to-list-btn" onclick="window.electron.navigate('worksheets.html')">
-          <i class="fas fa-list"></i> All Worksheets
-        </button>
+      <!-- Boxed Worksheet Content -->
+      <div class="worksheet-box">
+        <!-- Dynamic Content Will Be Loaded Here -->
+        <div id="worksheet-content"></div>
+        
+        <!-- Navigation Buttons -->
+        <div class="worksheet-navigation">
+          <button class="nav-btn prev-btn" onclick="navigateWorksheet('prev')">
+            <i class="fas fa-chevron-left"></i> Previous Worksheet
+          </button>
+          <button class="nav-btn next-btn" onclick="navigateWorksheet('next')">
+            Next Worksheet <i class="fas fa-chevron-right"></i>
+          </button>
+          <button class="nav-btn back-to-list-btn" onclick="window.electron.navigate('worksheets.html')">
+            <i class="fas fa-list"></i> All Worksheets
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -3789,6 +3801,16 @@
             }, duration);
         }
     }
+  </script>
+  <script>
+    // Apply user theme from config file
+    (async function() {
+      if (window.settingsAPI && window.settingsAPI.getSettings) {
+        const settings = await window.settingsAPI.getSettings();
+        if (settings.appBackground) document.documentElement.style.setProperty('--background-color', settings.appBackground);
+        if (settings.appAccent) document.documentElement.style.setProperty('--accent-color', settings.appAccent);
+      }
+    })();
   </script>
 </body>
 </html> 

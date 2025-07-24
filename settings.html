@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings - Matrix TSL</title>
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">
+  <style>
+    .settings-container {
+      max-width: 500px;
+      margin: 40px auto;
+      background: #23272b;
+      border-radius: 12px;
+      padding: 40px 30px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+      color: #fff;
+    }
+    .settings-title {
+      text-align: center;
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 30px;
+      color: var(--accent-color, #4a9eff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .settings-group {
+      margin-bottom: 25px;
+    }
+    .settings-label {
+      display: block;
+      font-size: 16px;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    .settings-color-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .settings-input[type="color"] {
+      width: 48px;
+      height: 32px;
+      border: none;
+      background: none;
+      padding: 0;
+      cursor: pointer;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .color-preview {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      border: 2px solid #444;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+      background: var(--preview-color, #2c3033);
+    }
+    .settings-actions {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .settings-save-btn {
+      background: var(--accent-color, #4a9eff);
+      color: #fff;
+      border: none;
+      padding: 12px 32px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .settings-save-btn:hover {
+      background: #357ad6;
+    }
+  </style>
+</head>
+<body>
+  <nav class="main-navigation">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <img src="assets/matrix-logo.png" alt="Matrix Logo">
+        <h1>Inspiring the next generation of Engineers</h1>
+      </div>
+      <ul class="nav-menu">
+        <li class="nav-item">
+          <a href="#" onclick="window.electron.navigate('index.html')" class="nav-link">
+            <i class="fas fa-home"></i> HOME
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" onclick="window.electron.navigate('cp0539-worksheets.html')" class="nav-link">
+            <i class="fas fa-cogs"></i> CP0539
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" onclick="window.electron.navigate('cp6773-worksheets.html')" class="nav-link">
+            <i class="fas fa-exclamation-triangle"></i> CP6773
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" onclick="window.electron.navigate('settings.html')" class="nav-link active">
+            <i class="fas fa-gear"></i> SETTINGS
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="settings-container">
+    <div class="settings-title"><i class="fas fa-gear"></i> App Settings</div>
+    <div class="settings-group">
+      <label class="settings-label" for="background-color">Background Color</label>
+      <div class="settings-color-row">
+        <input type="color" id="background-color" class="settings-input" onchange="updatePreview('background')">
+        <div class="color-preview" id="background-preview"></div>
+      </div>
+    </div>
+    <div class="settings-group">
+      <label class="settings-label" for="accent-color">Accent Color</label>
+      <div class="settings-color-row">
+        <input type="color" id="accent-color" class="settings-input" onchange="updatePreview('accent')">
+        <div class="color-preview" id="accent-preview"></div>
+      </div>
+    </div>
+    <div class="settings-actions">
+      <button class="settings-save-btn" onclick="saveSettings()"><i class="fas fa-save"></i> Save</button>
+    </div>
+  </div>
+  <script>
+    // Load settings from config file
+    async function loadSettings() {
+      let settings = await window.settingsAPI.getSettings();
+      const bg = settings.appBackground || '#2c3033';
+      const accent = settings.appAccent || '#4a9eff';
+      document.getElementById('background-color').value = bg;
+      document.getElementById('accent-color').value = accent;
+      updatePreview('background', bg);
+      updatePreview('accent', accent);
+      applySettings(bg, accent);
+    }
+    // Update color preview
+    function updatePreview(type, value) {
+      if (!value) {
+        value = document.getElementById(type + '-color').value;
+      }
+      document.getElementById(type + '-preview').style.background = value;
+    }
+    // Apply settings to the document
+    function applySettings(bg, accent) {
+      document.documentElement.style.setProperty('--background-color', bg);
+      document.documentElement.style.setProperty('--accent-color', accent);
+      document.body.style.background = bg;
+    }
+    // Save settings to config file
+    async function saveSettings() {
+      const bg = document.getElementById('background-color').value;
+      const accent = document.getElementById('accent-color').value;
+      await window.settingsAPI.saveSettings({ appBackground: bg, appAccent: accent });
+      applySettings(bg, accent);
+      alert('Settings saved!');
+    }
+    // On page load
+    window.onload = loadSettings;
+  </script>
+</body>
+</html> 

@@ -38,6 +38,7 @@ process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true';
 // Initialize main application variables
 let win;                          // Main application window
 let settings = {};                // Application settings
+const settingsFilePath = path.join(__dirname, 'settings.json');
 
 // Default settings
 const defaultSettings = {
@@ -49,9 +50,8 @@ const defaultSettings = {
 // Load settings from file
 function loadSettings() {
     try {
-        const settingsPath = path.join(__dirname, 'settings.json');
-        if (fs.existsSync(settingsPath)) {
-            const data = fs.readFileSync(settingsPath, 'utf8');
+        if (fs.existsSync(settingsFilePath)) {
+            const data = fs.readFileSync(settingsFilePath, 'utf8');
             settings = { ...defaultSettings, ...JSON.parse(data) };
         } else {
             settings = defaultSettings;
@@ -66,8 +66,7 @@ function loadSettings() {
 // Save settings to file
 function saveSettings() {
     try {
-        const settingsPath = path.join(__dirname, 'settings.json');
-        fs.writeFileSync(settingsPath, JSON.stringify(settings, null, 2));
+        fs.writeFileSync(settingsFilePath, JSON.stringify(settings, null, 2), 'utf8');
     } catch (error) {
         console.error('Error saving settings:', error);
     }
@@ -130,14 +129,26 @@ function createWindow() {
 }
 
 // IPC handlers for communication with renderer process
-ipcMain.handle('get-settings', () => {
-    return settings;
+ipcMain.handle('get-settings', async () => {
+  try {
+    if (fs.existsSync(settingsFilePath)) {
+      const data = fs.readFileSync(settingsFilePath, 'utf8');
+      return JSON.parse(data);
+    } else {
+      return {};
+    }
+  } catch (err) {
+    return {};
+  }
 });
 
-ipcMain.handle('save-settings', (event, newSettings) => {
-    settings = { ...settings, ...newSettings };
-    saveSettings();
+ipcMain.handle('save-settings', async (event, settings) => {
+  try {
+    fs.writeFileSync(settingsFilePath, JSON.stringify(settings, null, 2), 'utf8');
     return { success: true };
+  } catch (err) {
+    return { success: false, error: err.message };
+  }
 });
 
 ipcMain.on('navigate', (event, page) => {
