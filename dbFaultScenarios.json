@@ -446,8 +446,15 @@
                 {
                     "id": "2.3",
                     "text": "What immediate actions would you take to regain temperature control while investigating?",
-                    "type": "text",
-                    "placeholder": "List immediate steps to reduce heat load and restore temperature control..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Do nothing and wait for the system to stabilize",
+                        "Reduce heat load by adjusting production schedules, check for equipment generating excess heat, and verify chiller operation",
+                        "Increase the temperature setpoint to compensate",
+                        "Turn off all equipment in the cleanroom"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Immediate actions should include reducing heat load by adjusting production schedules, checking for equipment generating excess heat, and verifying chiller operation. This addresses the capacity issue while maintaining production."
                 }
             ],
             "image": "pharma-cleanroom.png",
@@ -654,8 +661,15 @@
                 {
                     "id": "3.3",
                     "text": "What systematic approach would you use to verify coolant system performance?",
-                    "type": "text",
-                    "placeholder": "Describe your step-by-step testing and verification process for the coolant system..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only check the temperature readings",
+                        "Measure temperature differential across heat exchanger, check flow rates, verify pump performance, and inspect for fouling",
+                        "Just restart the system",
+                        "Only check the pressure readings"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "A systematic approach includes measuring temperature differential across heat exchanger, checking flow rates, verifying pump performance, and inspecting for fouling. This provides a complete picture of system performance."
                 }
             ],
             "image": "cnc-cooling.png",
@@ -862,8 +876,15 @@
                 {
                     "id": "4.3",
                     "text": "What long-term solution would you recommend to prevent this issue?",
-                    "type": "text",
-                    "placeholder": "Describe your comprehensive strategy for server room thermal management..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Do nothing and hope it doesn't happen again",
+                        "Implement proper airflow management, add capacity planning procedures, and install thermal monitoring systems",
+                        "Only add more cooling units",
+                        "Only reduce the number of servers"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Long-term solutions include implementing proper airflow management, adding capacity planning procedures, and installing thermal monitoring systems to prevent future thermal issues."
                 }
             ],
             "image": "server-room.png",
@@ -1070,8 +1091,15 @@
                 {
                     "id": "5.3",
                     "text": "What comprehensive approach would you use to solve this flow control problem?",
-                    "type": "text",
-                    "placeholder": "Describe your systematic approach to diagnose and fix the brine flow control instability..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only adjust the PID settings",
+                        "Reduce brine temperature, check valve condition, verify sensor accuracy, and adjust control parameters",
+                        "Only replace the valve",
+                        "Only check the flow sensor"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "A comprehensive approach includes reducing brine temperature, checking valve condition, verifying sensor accuracy, and adjusting control parameters to resolve the flow control instability."
                 }
             ],
             "image": "brine-system.png",
@@ -1277,8 +1305,15 @@
                 {
                     "id": "6.3",
                     "text": "What systematic troubleshooting approach would you use for this electrical issue?",
-                    "type": "text",
-                    "placeholder": "Describe your step-by-step approach to diagnose and fix the temperature controller problem..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only check the temperature sensor",
+                        "Check power supply, verify electrical connections, test controller operation, and inspect for loose wiring",
+                        "Only restart the system",
+                        "Only replace the controller"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "A systematic approach includes checking power supply, verifying electrical connections, testing controller operation, and inspecting for loose wiring to resolve the electrical issue."
                 }
             ],
             "image": "sterilizer.png",
@@ -1693,8 +1728,15 @@
                 {
                     "id": "8.3",
                     "text": "What comprehensive approach would you use to stabilize this pH control system?",
-                    "type": "text",
-                    "placeholder": "Describe your systematic approach to diagnose and solve the pH control instability..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only adjust the controller settings",
+                        "Improve mixing efficiency, verify sensor accuracy, optimize controller tuning, and check acid distribution",
+                        "Only replace the pH sensor",
+                        "Only increase the acid flow rate"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "A comprehensive approach includes improving mixing efficiency, verifying sensor accuracy, optimizing controller tuning, and checking acid distribution to stabilize the pH control system."
                 }
             ],
             "image": "ph-control.png",
