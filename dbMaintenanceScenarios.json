@@ -237,209 +237,313 @@
         },
         {
             "id": 4,
-            "title": "PLC Maintenance",
+            "title": "PLC",
             "paragraphs": [
-                "The facility's automation system is controlled by a Siemens S7-1200 PLC.",
-                "Regular PLC maintenance is essential for reliable system operation.",
-                "You need to check both hardware components and program integrity.",
-                "This includes inspecting connections, backup batteries, and program backups."
+                "A Programmable Logic Controller (PLC) is an industrial computer designed for real-time control.",
+                "It operates in harsh environments and controls machines and processes.",
+                "The PLC has status LEDs that show real-time feedback of input and output signals.",
+                "Understanding the PLC's role and indicators is essential for system operation."
             ],
             "image": "plc.png",
             "questions": [
                 {
                     "id": "4.1",
-                    "text": "What physical inspections would you perform on the PLC?",
+                    "text": "What is a PLC and what is it designed for?",
                     "type": "multiple_choice",
                     "options": [
-                        "Only check if the PLC is powered on",
-                        "Check ventilation, mounting, connections, and backup battery status",
-                        "Just verify the display works",
-                        "Only inspect the cabinet door"
+                        "A personal computer for office use",
+                        "A Programmable Logic Controller (PLC) is an industrial computer designed for real-time control of machines and processes in harsh environments",
+                        "A temperature sensor",
+                        "A flow control valve"
                     ],
                     "correct_answer": 1,
-                    "explanation": "Physical PLC inspections should include checking ventilation and air filters, verifying secure mounting, inspecting all electrical connections for tightness and corrosion, and checking backup battery status to ensure the PLC can maintain operation during power interruptions."
+                    "explanation": "A Programmable Logic Controller (PLC) is an industrial computer designed for real-time control of machines and processes in harsh environments. It's specifically built for industrial automation."
                 },
                 {
                     "id": "4.2",
-                    "text": "How would you verify the program backup is current and complete?",
+                    "text": "What do the status LEDs on the PLC indicate?",
                     "type": "multiple_choice",
                     "options": [
-                        "Assume the backup is current",
-                        "Compare backup date with last program changes and verify backup integrity",
-                        "Only check if the backup file exists",
-                        "Ignore backup verification"
+                        "The power status only",
+                        "They show real-time feedback of input and output signals, helping verify if components are functioning correctly",
+                        "The temperature readings",
+                        "The flow rate values"
                     ],
                     "correct_answer": 1,
-                    "explanation": "To verify program backup currency and completeness, compare the backup date with the last known program changes, verify the backup file integrity by attempting to restore it to a test environment, and ensure all program modules and configurations are included."
+                    "explanation": "The status LEDs on the PLC show real-time feedback of input and output signals, helping verify if components are functioning correctly. They provide immediate visual feedback about system status."
                 },
                 {
                     "id": "4.3",
-                    "text": "What environmental factors should be monitored in the PLC cabinet?",
+                    "text": "What does it mean if an input LED expected to be on is not lit?",
                     "type": "multiple_choice",
                     "options": [
-                        "Only temperature",
-                        "Temperature, humidity, dust levels, and vibration",
-                        "Just the lighting",
-                        "Only the door seal"
+                        "The system is working normally",
+                        "It could indicate a faulty sensor, wiring problem, or failed connection",
+                        "The LED is just dirty",
+                        "The power is off"
                     ],
                     "correct_answer": 1,
-                    "explanation": "Environmental monitoring should include temperature (to prevent overheating), humidity (to prevent condensation), dust levels (to maintain proper ventilation), and vibration (to prevent connection loosening). These factors directly affect PLC reliability and lifespan."
+                    "explanation": "If an input LED expected to be on is not lit, it could indicate a faulty sensor, wiring problem, or failed connection. This helps identify issues quickly."
+                },
+                {
+                    "id": "4.4",
+                    "text": "What should you observe on the output LEDs when the system starts?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "All LEDs should turn off",
+                        "One of the output LEDs will flash briefly, this represents the system's status LED",
+                        "All LEDs should stay solid",
+                        "The LEDs don't change"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "When the system starts, one of the output LEDs will flash briefly, this represents the system's status LED. This indicates the system is initializing properly."
+                },
+                {
+                    "id": "4.5",
+                    "text": "How can you tell the flow sensor is working by looking at the PLC?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "The temperature LED will flash",
+                        "One of the input LEDs will flash rapidly; if flow is reduced, it slows down, and if flow increases, it nearly goes solid, showing the sensor is active",
+                        "The power LED will turn green",
+                        "All LEDs will turn off"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "You can tell the flow sensor is working by looking at the PLC because one of the input LEDs will flash rapidly; if flow is reduced, it slows down, and if flow increases, it nearly goes solid, showing the sensor is active."
                 }
             ]
         },
         {
             "id": 5,
-            "title": "HMI System",
+            "title": "HMI",
             "paragraphs": [
-                "The operator interface consists of a touchscreen HMI panel.",
-                "The HMI provides critical process information and control capabilities.",
-                "Regular maintenance ensures reliable operation and accurate display.",
-                "You need to verify both hardware functionality and software configuration."
+                "A Human-Machine Interface (HMI) allows operators to interact with the system.",
+                "It provides live data, control settings, and fault diagnosis capabilities.",
+                "The HMI has different sections for faults, alarms, and system information.",
+                "Understanding the HMI is essential for system operation and troubleshooting."
             ],
             "image": "hmi.png",
             "questions": [
                 {
                     "id": "5.1",
-                    "text": "How would you test the touchscreen calibration?",
+                    "text": "What is the purpose of a Human-Machine Interface (HMI)?",
                     "type": "multiple_choice",
                     "options": [
-                        "Only check if the screen responds to touch",
-                        "Use calibration software to test multiple touch points and verify accuracy",
-                        "Just tap the screen randomly",
-                        "Ignore calibration as it's not important"
+                        "To control the temperature only",
+                        "To allow operators to interact with the system, view live data, control settings, and diagnose faults",
+                        "To measure the flow rate",
+                        "To turn the system on and off"
                     ],
                     "correct_answer": 1,
-                    "explanation": "Touchscreen calibration testing should use dedicated calibration software to test multiple touch points across the screen, verifying that each touch registers at the correct location. This ensures accurate operator input and prevents control errors."
+                    "explanation": "A Human-Machine Interface (HMI) allows operators to interact with the system, view live data, control settings, and diagnose faults. It's the primary interface between humans and the automated system."
                 },
                 {
                     "id": "5.2",
-                    "text": "What software checks should be performed?",
+                    "text": "Where can you view system faults and alarms on the HMI?",
                     "type": "multiple_choice",
                     "options": [
-                        "Only check if the HMI boots up",
-                        "Verify software version, check for updates, and test all communication links",
-                        "Just restart the HMI",
-                        "Ignore software maintenance"
+                        "Only on the main screen",
+                        "Faults are shown in the Faults section; alarms are shown in the Alarms section of the HMI",
+                        "Only in the settings menu",
+                        "Only when the system is off"
                     ],
                     "correct_answer": 1,
-                    "explanation": "Software checks should include verifying the current software version, checking for available updates, testing all communication links to PLCs and other devices, and ensuring all alarm and control functions are properly configured."
+                    "explanation": "Faults are shown in the Faults section; alarms are shown in the Alarms section of the HMI. These sections provide organized access to system status information."
                 },
                 {
                     "id": "5.3",
-                    "text": "How would you verify all HMI screens are functioning correctly?",
+                    "text": "What happens when you adjust the High or Low Temperature Cutout settings beyond the current temperature?",
                     "type": "multiple_choice",
                     "options": [
-                        "Only check the main screen",
-                        "Navigate through all screens, test all buttons and displays, and verify data accuracy",
-                        "Just look at the screen",
-                        "Assume all screens work if the main one does"
+                        "Nothing happens",
+                        "The system shuts down and displays a fault; it will not restart until the settings are returned to safe values",
+                        "The temperature changes automatically",
+                        "The flow rate increases"
                     ],
                     "correct_answer": 1,
-                    "explanation": "To verify all HMI screens function correctly, systematically navigate through all available screens, test all buttons and control elements, verify that displays show accurate data, and ensure proper screen transitions and alarm displays."
+                    "explanation": "When you adjust the High or Low Temperature Cutout settings beyond the current temperature, the system shuts down and displays a fault; it will not restart until the settings are returned to safe values."
+                },
+                {
+                    "id": "5.4",
+                    "text": "How does the HMI assist with troubleshooting and maintenance?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "It only shows the current temperature",
+                        "It logs alarms, shows sensor readings, lets engineers adjust settings, and helps detect issues like hardware faults or inefficiencies",
+                        "It only controls the pump",
+                        "It only measures flow"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "The HMI assists with troubleshooting and maintenance by logging alarms, showing sensor readings, letting engineers adjust settings, and helping detect issues like hardware faults or inefficiencies."
+                },
+                {
+                    "id": "5.5",
+                    "text": "What real-time information can be seen on the main page of the HMI during system operation?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only the temperature",
+                        "The main screen displays the current water temperature in the top left, along with the system diagram. It also shows flow rate, valve position, and pump demand in real time",
+                        "Only the flow rate",
+                        "Only the valve position"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "The main screen displays the current water temperature in the top left, along with the system diagram. It also shows flow rate, valve position, and pump demand in real time."
                 }
             ]
         },
         {
             "id": 6,
-            "title": "Pump Maintenance",
+            "title": "Pump",
             "paragraphs": [
-                "The system includes several centrifugal pumps for fluid circulation.",
-                "These pumps are critical for maintaining proper flow rates.",
-                "Regular maintenance prevents unexpected failures and ensures efficiency.",
-                "You need to check mechanical components and monitor performance metrics."
+                "A pump moves fluids through a system by creating flow and pressure.",
+                "It supports process control and system regulation.",
+                "Pumps can be controlled by varying voltage, PWM signals, or VFDs.",
+                "Understanding pump operation and protection is essential for system reliability."
             ],
             "image": "pump.png",
             "questions": [
                 {
                     "id": "6.1",
-                    "text": "What are the key measurements to take during pump inspection?",
+                    "text": "What is the function of a pump in an industrial system?",
                     "type": "multiple_choice",
                     "options": [
-                        "Only check if the pump is running",
-                        "Flow rate, pressure, vibration, temperature, and power consumption",
-                        "Just measure the temperature",
-                        "Only check the motor current"
+                        "To control the temperature",
+                        "To move fluids through a system by creating flow and pressure, supporting process control and system regulation",
+                        "To measure the flow rate",
+                        "To control the valve position"
                     ],
                     "correct_answer": 1,
-                    "explanation": "Key pump measurements should include flow rate (to verify performance), pressure (to check system resistance), vibration (to detect mechanical issues), temperature (to monitor bearing and seal condition), and power consumption (to assess efficiency)."
+                    "explanation": "The function of a pump in an industrial system is to move fluids through a system by creating flow and pressure, supporting process control and system regulation."
                 },
                 {
                     "id": "6.2",
-                    "text": "How would you check for pump cavitation?",
+                    "text": "How can a pump be controlled to vary its speed?",
                     "type": "multiple_choice",
                     "options": [
-                        "Only listen for noise",
-                        "Listen for characteristic noise, check suction pressure, and monitor flow fluctuations",
-                        "Just check the discharge pressure",
-                        "Ignore cavitation as it's not important"
+                        "Only by turning it on and off",
+                        "By varying the voltage (0–24V), using PWM signals, or through a Variable Frequency Drive (VFD) to adjust speed proportionally",
+                        "Only by changing the temperature",
+                        "Only by adjusting the flow sensor"
                     ],
                     "correct_answer": 1,
-                    "explanation": "Cavitation detection involves listening for the characteristic rattling or popping noise, checking suction pressure to ensure adequate NPSH (Net Positive Suction Head), and monitoring flow fluctuations that indicate unstable operation."
+                    "explanation": "A pump can be controlled to vary its speed by varying the voltage (0–24V), using PWM signals, or through a Variable Frequency Drive (VFD) to adjust speed proportionally."
                 },
                 {
                     "id": "6.3",
-                    "text": "What preventive maintenance tasks should be performed?",
+                    "text": "What might it indicate if a pump is running at full speed but still not meeting the setpoint?",
                     "type": "multiple_choice",
                     "options": [
-                        "Only replace parts when they fail",
-                        "Lubrication, seal inspection, alignment checks, and performance monitoring",
-                        "Just clean the pump",
-                        "Only check the motor"
+                        "The pump is working normally",
+                        "It could signal a system fault such as a partially closed valve, clogged filter, or restriction in the piping",
+                        "The temperature is too high",
+                        "The flow sensor is broken"
                     ],
                     "correct_answer": 1,
-                    "explanation": "Preventive maintenance should include regular lubrication of bearings, inspection of mechanical seals for leakage, alignment checks between pump and motor, and continuous performance monitoring to detect degradation before failure."
+                    "explanation": "If a pump is running at full speed but still not meeting the setpoint, it could signal a system fault such as a partially closed valve, clogged filter, or restriction in the piping."
+                },
+                {
+                    "id": "6.4",
+                    "text": "Why must pumps not be run dry, and what protects against this?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "It doesn't matter if they run dry",
+                        "Pumps use the fluid as coolant and lubricant; running dry can cause overheating or damage. A low-level sensor in the tank prevents this",
+                        "It will only affect the temperature",
+                        "It will only affect the flow rate"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Pumps must not be run dry because they use the fluid as coolant and lubricant; running dry can cause overheating or damage. A low-level sensor in the tank prevents this."
+                },
+                {
+                    "id": "6.5",
+                    "text": "What are some signs that maintenance engineers should look for to detect pump issues early?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only check if the pump is running",
+                        "Gradual drops in flow with rising power use, unusual noises, or excessive vibration are signs of potential pump problems",
+                        "Only check the temperature",
+                        "Only check the pressure"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Signs that maintenance engineers should look for to detect pump issues early include gradual drops in flow with rising power use, unusual noises, or excessive vibration."
                 }
             ]
         },
         {
             "id": 7,
-            "title": "Control Valve Maintenance",
+            "title": "Valve",
             "paragraphs": [
-                "The process uses several control valves for flow regulation.",
-                "These valves are essential for maintaining precise process control.",
-                "Regular maintenance ensures accurate valve positioning and sealing.",
-                "You need to check both mechanical operation and control signals."
+                "A valve controls the flow of fluids by opening, closing, or partially restricting the passage.",
+                "Valve position is controlled using Pulse Width Modulation (PWM).",
+                "Understanding valve behavior and deadband is essential for system control.",
+                "Valve operation during emergency stops is critical for safety."
             ],
             "image": "valve.png",
             "questions": [
                 {
                     "id": "7.1",
-                    "text": "What mechanical checks would you perform on the valve?",
+                    "text": "What is the main function of a valve in an industrial system?",
                     "type": "multiple_choice",
                     "options": [
-                        "Only check if the valve moves",
-                        "Check packing, stem movement, seat condition, and actuator operation",
-                        "Just test the electrical signal",
-                        "Only inspect the valve body"
+                        "To measure the flow rate",
+                        "To control the flow of fluids by opening, closing, or partially restricting the passage through the system",
+                        "To control the temperature",
+                        "To measure the pressure"
                     ],
                     "correct_answer": 1,
-                    "explanation": "Mechanical valve checks should include inspecting packing for leakage, verifying smooth stem movement, checking seat condition for proper sealing, and testing actuator operation for proper response to control signals."
+                    "explanation": "The main function of a valve in an industrial system is to control the flow of fluids by opening, closing, or partially restricting the passage through the system."
                 },
                 {
                     "id": "7.2",
-                    "text": "How would you verify valve positioning accuracy?",
+                    "text": "How is the valve position controlled in this system?",
                     "type": "multiple_choice",
                     "options": [
-                        "Only check if the valve responds",
-                        "Command different positions and verify actual position matches commanded position",
-                        "Just test the feedback signal",
-                        "Assume the valve is accurate"
+                        "By turning it on and off only",
+                        "By using Pulse Width Modulation (PWM) to vary voltage, which proportionally adjusts how open or closed the valve is",
+                        "By changing the temperature",
+                        "By adjusting the pump speed"
                     ],
                     "correct_answer": 1,
-                    "explanation": "Valve positioning accuracy verification involves commanding the valve to different positions (0%, 25%, 50%, 75%, 100%) and verifying that the actual valve position matches the commanded position within acceptable tolerances."
+                    "explanation": "The valve position is controlled by using Pulse Width Modulation (PWM) to vary voltage, which proportionally adjusts how open or closed the valve is."
                 },
                 {
                     "id": "7.3",
-                    "text": "What signs indicate valve maintenance is needed?",
+                    "text": "What is meant by the term \"deadband\" in valve control?",
                     "type": "multiple_choice",
                     "options": [
-                        "Only when the valve fails completely",
-                        "Sticking, slow response, excessive leakage, and poor control performance",
-                        "Just when the actuator fails",
-                        "Only when the positioner fails"
+                        "The valve is broken",
+                        "Deadband refers to the range (typically 0–10% demand) where the valve remains shut and doesn't begin opening until demand exceeds this threshold",
+                        "The valve is fully open",
+                        "The valve is fully closed"
                     ],
                     "correct_answer": 1,
-                    "explanation": "Signs indicating valve maintenance is needed include sticking or binding during operation, slow response to control signals, excessive leakage through the valve, and poor control performance with oscillations or overshoot."
+                    "explanation": "Deadband refers to the range (typically 0–10% demand) where the valve remains shut and doesn't begin opening until demand exceeds this threshold."
+                },
+                {
+                    "id": "7.4",
+                    "text": "What should you do to check if a valve is active during operation?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "Look at the HMI only",
+                        "Carefully feel for warmth on the valve's electrical connector, it typically gets warm when active (never check for leaks by hand)",
+                        "Listen for noise only",
+                        "Check the temperature only"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "To check if a valve is active during operation, carefully feel for warmth on the valve's electrical connector, it typically gets warm when active (never check for leaks by hand)."
+                },
+                {
+                    "id": "7.5",
+                    "text": "Why is it important to observe valve behaviour during an Emergency Stop?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "To see if it's working",
+                        "To ensure the valve fails to the correct position (open or closed) for safety, in this system, it should go fully closed",
+                        "To check the temperature",
+                        "To measure the flow"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "It's important to observe valve behaviour during an Emergency Stop to ensure the valve fails to the correct position (open or closed) for safety, in this system, it should go fully closed."
                 }
             ]
         },
