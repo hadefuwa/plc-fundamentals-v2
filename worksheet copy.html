@@ -3235,9 +3235,6 @@
       // Initialize simulation
       updatePIDSimulation();
       
-      // Start real-time simulation
-      startRealTimeSimulation();
-      
       console.log('PID simulation initialized');
     }
 
@@ -3252,9 +3249,7 @@
       error: 0,
       integral: 0,
       derivative: 0,
-      output: 0,
-      lastError: 0,
-      simulationInterval: null
+      output: 0
     };
 
     // Update PID simulation with current values
@@ -3272,6 +3267,12 @@
         
         // Calculate performance metrics
         calculatePerformanceMetrics();
+        
+        // Update process variable display
+        const pvValue = document.getElementById('pv-value');
+        if (pvValue) {
+          pvValue.textContent = simulationData.processVariable.toFixed(1) + '°C';
+        }
       }
     }
 
@@ -3289,41 +3290,6 @@
       if (riseTimeElement) riseTimeElement.textContent = riseTime.toFixed(1) + 's';
       if (overshootElement) overshootElement.textContent = overshoot.toFixed(1) + '%';
       if (settlingTimeElement) settlingTimeElement.textContent = settlingTime.toFixed(1) + 's';
-    }
-
-    // Start real-time PID simulation
-    function startRealTimeSimulation() {
-      if (simulationData.simulationInterval) {
-        clearInterval(simulationData.simulationInterval);
-      }
-      
-      simulationData.simulationInterval = setInterval(() => {
-        // Calculate PID control
-        const error = simulationData.setpoint - simulationData.processVariable;
-        simulationData.integral += error * 0.1; // dt = 0.1
-        simulationData.derivative = (error - simulationData.lastError) / 0.1;
-        
-        // PID output
-        simulationData.output = simulationData.kp * error + 
-                               simulationData.ki * simulationData.integral + 
-                               simulationData.kd * simulationData.derivative;
-        
-        // Update process variable (simplified first-order system)
-        const tau = 2.0; // time constant
-        simulationData.processVariable += (simulationData.output - simulationData.processVariable) * 0.1 / tau;
-        
-        // Add some noise
-        simulationData.processVariable += (Math.random() - 0.5) * 0.5;
-        
-        // Update display
-        const pvValue = document.getElementById('pv-value');
-        if (pvValue) {
-          pvValue.textContent = simulationData.processVariable.toFixed(1) + '°C';
-        }
-        
-        simulationData.lastError = error;
-        simulationData.time += 0.1;
-      }, 100); // Update every 100ms
     }
 
     // Run response test simulation
@@ -3350,9 +3316,6 @@
       
       // Add labels
       drawLabels(ctx, width, height, inputType);
-      
-      // Animate the response
-      animateResponse(ctx, data, width, height, inputType);
     }
 
     // Draw grid on canvas
@@ -3424,29 +3387,6 @@
       ctx.stroke();
     }
 
-    // Animate response curve
-    function animateResponse(ctx, data, width, height, inputType) {
-      let currentIndex = 0;
-      const animationInterval = setInterval(() => {
-        if (currentIndex >= data.length) {
-          clearInterval(animationInterval);
-          return;
-        }
-        
-        const point = data[currentIndex];
-        const x = (point.time / 10) * width;
-        const y = height - ((point.value - 0) / 100) * height;
-        
-        // Draw point
-        ctx.fillStyle = '#4CAF50';
-        ctx.beginPath();
-        ctx.arc(x, y, 4, 0, 2 * Math.PI);
-        ctx.fill();
-        
-        currentIndex++;
-      }, 50); // Update every 50ms
-    }
-
     // Draw labels on canvas
     function drawLabels(ctx, width, height, inputType) {
       ctx.fillStyle = '#FFFFFF';
@@ -3475,53 +3415,20 @@
       const statusIndicator = challengeCard.querySelector('.status-indicator');
       const statusText = challengeCard.querySelector('.challenge-status span:last-child');
       
-      // Reset status
-      statusIndicator.style.background = '#FF9800';
-      statusText.textContent = 'Evaluating...';
-      statusText.style.color = '#FF9800';
-      
-      // Evaluate based on current PID settings
+      // Simulate challenge evaluation
       setTimeout(() => {
-        let success = false;
-        
-        switch (challengeId) {
-          case '1': // Minimal Overshoot
-            const overshoot = Math.max(0, 15 - simulationData.kp * 5 + simulationData.ki * 10);
-            success = overshoot < 5;
-            break;
-          case '2': // Fast Settling Time
-            const settlingTime = Math.max(1.0, 5.0 - simulationData.kp * 1.5 + simulationData.ki * 2);
-            success = settlingTime < 2;
-            break;
-          case '3': // Disturbance Rejection
-            success = simulationData.kp > 0.8 && simulationData.ki > 0.05;
-            break;
-        }
+        const success = Math.random() > 0.3; // 70% success rate for demo
         
         if (success) {
           statusIndicator.style.background = '#4CAF50';
-          statusText.textContent = 'Completed!';
+          statusText.textContent = 'Completed';
           statusText.style.color = '#4CAF50';
-          
-          // Add success animation
-          challengeCard.style.transform = 'scale(1.02)';
-          challengeCard.style.boxShadow = '0 8px 25px rgba(76, 175, 80, 0.4)';
-          setTimeout(() => {
-            challengeCard.style.transform = 'scale(1)';
-            challengeCard.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.3)';
-          }, 500);
         } else {
           statusIndicator.style.background = '#f44336';
           statusText.textContent = 'Failed';
           statusText.style.color = '#f44336';
-          
-          // Add failure animation
-          challengeCard.style.transform = 'scale(0.98)';
-          setTimeout(() => {
-            challengeCard.style.transform = 'scale(1)';
-          }, 200);
         }
-      }, 1500);
+      }, 1000);
     }
 
     // Tab switching function for PID simulation
