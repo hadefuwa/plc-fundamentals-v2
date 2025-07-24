@@ -67,20 +67,41 @@
                 {
                     "id": "2.1",
                     "text": "What physical checks would you perform on each E-stop button?",
-                    "type": "text",
-                    "placeholder": "Detail the mechanical inspection steps..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only check if the button is visible",
+                        "Check for damage, proper mounting, clear labeling, and smooth operation",
+                        "Just test the electrical circuit",
+                        "Only verify the button color"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Physical checks should include inspecting for physical damage, ensuring proper mounting and security, verifying clear and readable labeling, and testing that the button operates smoothly without sticking or binding. These checks ensure the E-stop will function reliably when needed."
                 },
                 {
                     "id": "2.2",
                     "text": "How would you test the E-stop circuit without disrupting production?",
-                    "type": "text",
-                    "placeholder": "Explain your testing procedure..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Activate the E-stop during normal operation",
+                        "Use a multimeter to test contacts and verify circuit integrity during planned downtime",
+                        "Ignore testing to avoid any disruption",
+                        "Only test during emergency situations"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "The safest approach is to use a multimeter to test the E-stop contacts and verify circuit integrity during planned downtime or maintenance windows. This ensures the circuit functions properly without risking production disruption or safety incidents."
                 },
                 {
                     "id": "2.3",
                     "text": "What documentation is required for E-stop system maintenance?",
-                    "type": "text",
-                    "placeholder": "List required safety records..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only record the test date",
+                        "Maintenance logs, test results, inspection reports, and safety compliance records",
+                        "Just the technician's signature",
+                        "Only document if problems are found"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Complete documentation should include detailed maintenance logs, test results showing before/after conditions, inspection reports with findings, and safety compliance records. This provides a complete audit trail for safety certification and regulatory compliance."
                 }
             ]
         },
@@ -98,20 +119,41 @@
                 {
                     "id": "3.1",
                     "text": "How would you test each LED indicator?",
-                    "type": "text",
-                    "placeholder": "Describe your testing method..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Just check if the LED is visible",
+                        "Verify illumination, test with different system conditions, and check signal integrity",
+                        "Only test during power-up",
+                        "Ignore LED testing as it's not critical"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "LED testing should include verifying proper illumination, testing with different system conditions to ensure correct status indication, and checking the underlying signal integrity to ensure the LED accurately represents the system state."
                 },
                 {
                     "id": "3.2",
                     "text": "What would you check if an LED is lit but showing incorrect status?",
-                    "type": "text",
-                    "placeholder": "List potential issues to investigate..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only replace the LED",
+                        "Check wiring, signal source, and controller logic for the incorrect indication",
+                        "Ignore the issue as long as the LED works",
+                        "Just clean the LED lens"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "If an LED shows incorrect status, you should check the wiring connections, verify the signal source is providing correct information, and examine the controller logic to identify why the LED is not accurately reflecting the system state."
                 },
                 {
                     "id": "3.3",
                     "text": "How often should LED indicators be checked and why?",
-                    "type": "text",
-                    "placeholder": "Explain the maintenance frequency..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only when they fail",
+                        "Regularly during routine maintenance to ensure reliable status indication",
+                        "Once per year",
+                        "Never, as LEDs don't need maintenance"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "LED indicators should be checked regularly during routine maintenance because they provide critical status information to operators. Regular checks ensure they function correctly and provide accurate system status indication when needed."
                 }
             ]
         },
@@ -129,20 +171,41 @@
                 {
                     "id": "4.1",
                     "text": "What physical inspections would you perform on the PLC?",
-                    "type": "text",
-                    "placeholder": "List hardware checks..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only check if the PLC is powered on",
+                        "Check ventilation, mounting, connections, and backup battery status",
+                        "Just verify the display works",
+                        "Only inspect the cabinet door"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Physical PLC inspections should include checking ventilation and air filters, verifying secure mounting, inspecting all electrical connections for tightness and corrosion, and checking backup battery status to ensure the PLC can maintain operation during power interruptions."
                 },
                 {
                     "id": "4.2",
                     "text": "How would you verify the program backup is current and complete?",
-                    "type": "text",
-                    "placeholder": "Describe backup verification steps..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Assume the backup is current",
+                        "Compare backup date with last program changes and verify backup integrity",
+                        "Only check if the backup file exists",
+                        "Ignore backup verification"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "To verify program backup currency and completeness, compare the backup date with the last known program changes, verify the backup file integrity by attempting to restore it to a test environment, and ensure all program modules and configurations are included."
                 },
                 {
                     "id": "4.3",
                     "text": "What environmental factors should be monitored in the PLC cabinet?",
-                    "type": "text",
-                    "placeholder": "List environmental considerations..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only temperature",
+                        "Temperature, humidity, dust levels, and vibration",
+                        "Just the lighting",
+                        "Only the door seal"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Environmental monitoring should include temperature (to prevent overheating), humidity (to prevent condensation), dust levels (to maintain proper ventilation), and vibration (to prevent connection loosening). These factors directly affect PLC reliability and lifespan."
                 }
             ]
         },
@@ -160,20 +223,41 @@
                 {
                     "id": "5.1",
                     "text": "How would you test the touchscreen calibration?",
-                    "type": "text",
-                    "placeholder": "Describe calibration process..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only check if the screen responds to touch",
+                        "Use calibration software to test multiple touch points and verify accuracy",
+                        "Just tap the screen randomly",
+                        "Ignore calibration as it's not important"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Touchscreen calibration testing should use dedicated calibration software to test multiple touch points across the screen, verifying that each touch registers at the correct location. This ensures accurate operator input and prevents control errors."
                 },
                 {
                     "id": "5.2",
                     "text": "What software checks should be performed?",
-                    "type": "text",
-                    "placeholder": "List software maintenance tasks..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only check if the HMI boots up",
+                        "Verify software version, check for updates, and test all communication links",
+                        "Just restart the HMI",
+                        "Ignore software maintenance"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Software checks should include verifying the current software version, checking for available updates, testing all communication links to PLCs and other devices, and ensuring all alarm and control functions are properly configured."
                 },
                 {
                     "id": "5.3",
                     "text": "How would you verify all HMI screens are functioning correctly?",
-                    "type": "text",
-                    "placeholder": "Explain your testing approach..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only check the main screen",
+                        "Navigate through all screens, test all buttons and displays, and verify data accuracy",
+                        "Just look at the screen",
+                        "Assume all screens work if the main one does"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "To verify all HMI screens function correctly, systematically navigate through all available screens, test all buttons and control elements, verify that displays show accurate data, and ensure proper screen transitions and alarm displays."
                 }
             ]
         },
@@ -191,20 +275,41 @@
                 {
                     "id": "6.1",
                     "text": "What are the key measurements to take during pump inspection?",
-                    "type": "text",
-                    "placeholder": "List important measurements..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only check if the pump is running",
+                        "Flow rate, pressure, vibration, temperature, and power consumption",
+                        "Just measure the temperature",
+                        "Only check the motor current"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Key pump measurements should include flow rate (to verify performance), pressure (to check system resistance), vibration (to detect mechanical issues), temperature (to monitor bearing and seal condition), and power consumption (to assess efficiency)."
                 },
                 {
                     "id": "6.2",
                     "text": "How would you check for pump cavitation?",
-                    "type": "text",
-                    "placeholder": "Describe detection methods..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only listen for noise",
+                        "Listen for characteristic noise, check suction pressure, and monitor flow fluctuations",
+                        "Just check the discharge pressure",
+                        "Ignore cavitation as it's not important"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Cavitation detection involves listening for the characteristic rattling or popping noise, checking suction pressure to ensure adequate NPSH (Net Positive Suction Head), and monitoring flow fluctuations that indicate unstable operation."
                 },
                 {
                     "id": "6.3",
                     "text": "What preventive maintenance tasks should be performed?",
-                    "type": "text",
-                    "placeholder": "List maintenance procedures..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only replace parts when they fail",
+                        "Lubrication, seal inspection, alignment checks, and performance monitoring",
+                        "Just clean the pump",
+                        "Only check the motor"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Preventive maintenance should include regular lubrication of bearings, inspection of mechanical seals for leakage, alignment checks between pump and motor, and continuous performance monitoring to detect degradation before failure."
                 }
             ]
         },
@@ -222,20 +327,41 @@
                 {
                     "id": "7.1",
                     "text": "What mechanical checks would you perform on the valve?",
-                    "type": "text",
-                    "placeholder": "List mechanical inspections..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only check if the valve moves",
+                        "Check packing, stem movement, seat condition, and actuator operation",
+                        "Just test the electrical signal",
+                        "Only inspect the valve body"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Mechanical valve checks should include inspecting packing for leakage, verifying smooth stem movement, checking seat condition for proper sealing, and testing actuator operation for proper response to control signals."
                 },
                 {
                     "id": "7.2",
                     "text": "How would you verify valve positioning accuracy?",
-                    "type": "text",
-                    "placeholder": "Describe calibration process..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only check if the valve responds",
+                        "Command different positions and verify actual position matches commanded position",
+                        "Just test the feedback signal",
+                        "Assume the valve is accurate"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Valve positioning accuracy verification involves commanding the valve to different positions (0%, 25%, 50%, 75%, 100%) and verifying that the actual valve position matches the commanded position within acceptable tolerances."
                 },
                 {
                     "id": "7.3",
                     "text": "What signs indicate valve maintenance is needed?",
-                    "type": "text",
-                    "placeholder": "List warning signs..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only when the valve fails completely",
+                        "Sticking, slow response, excessive leakage, and poor control performance",
+                        "Just when the actuator fails",
+                        "Only when the positioner fails"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Signs indicating valve maintenance is needed include sticking or binding during operation, slow response to control signals, excessive leakage through the valve, and poor control performance with oscillations or overshoot."
                 }
             ]
         },
@@ -253,20 +379,41 @@
                 {
                     "id": "8.1",
                     "text": "What mechanical checks would you perform on a float switch?",
-                    "type": "text",
-                    "placeholder": "List mechanical inspections..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only check if the switch is mounted",
+                        "Check float movement, mounting security, and electrical connections",
+                        "Just test the electrical signal",
+                        "Only inspect the float"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Mechanical float switch checks should include verifying smooth float movement without binding, checking mounting security and proper positioning, and inspecting electrical connections for corrosion or damage."
                 },
                 {
                     "id": "8.2",
                     "text": "How would you test float switch operation?",
-                    "type": "text",
-                    "placeholder": "Describe testing procedure..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only check if the switch responds",
+                        "Manually move the float through its range and verify switching action",
+                        "Just test the electrical circuit",
+                        "Assume the switch works if it's mounted"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Float switch testing involves manually moving the float through its operating range and verifying that the electrical switch contacts open and close properly at the correct level points."
                 },
                 {
                     "id": "8.3",
                     "text": "What maintenance is required for float switches?",
-                    "type": "text",
-                    "placeholder": "List maintenance tasks..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only replace when they fail",
+                        "Regular cleaning, float inspection, and electrical testing",
+                        "Just clean the float",
+                        "Only check the wiring"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Float switch maintenance should include regular cleaning to prevent fouling, inspection of the float for damage or corrosion, and periodic electrical testing to ensure reliable switching operation."
                 }
             ]
         },
@@ -284,20 +431,41 @@
                 {
                     "id": "9.1",
                     "text": "How would you test proximity switch operation?",
-                    "type": "text",
-                    "placeholder": "Describe testing methods..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only check if the switch is powered",
+                        "Move target objects toward the sensor and verify switching distance and response",
+                        "Just test the electrical output",
+                        "Assume the switch works if it's mounted"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Proximity switch testing involves moving target objects toward the sensor at different distances and verifying the switching point, response time, and proper electrical output when objects are detected."
                 },
                 {
                     "id": "9.2",
                     "text": "What factors affect proximity switch performance?",
-                    "type": "text",
-                    "placeholder": "List influencing factors..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only the target material",
+                        "Target material, distance, environmental conditions, and electrical interference",
+                        "Just the mounting position",
+                        "Only the power supply"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Proximity switch performance is affected by target material (steel, aluminum, brass), sensing distance, environmental conditions (temperature, humidity), and electrical interference from nearby equipment."
                 },
                 {
                     "id": "9.3",
                     "text": "What maintenance is needed for proximity switches?",
-                    "type": "text",
-                    "placeholder": "Detail maintenance requirements..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only replace when they fail",
+                        "Regular cleaning, alignment checks, and performance testing",
+                        "Just clean the sensor face",
+                        "Only check the wiring"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Proximity switch maintenance should include regular cleaning of the sensor face, checking alignment with target objects, and periodic performance testing to ensure reliable detection within specified ranges."
                 }
             ]
         },
@@ -315,20 +483,41 @@
                 {
                     "id": "10.1",
                     "text": "How would you calibrate a flow sensor?",
-                    "type": "text",
-                    "placeholder": "Describe calibration process..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only check if the sensor shows a reading",
+                        "Compare sensor reading with a calibrated reference at multiple flow rates",
+                        "Just adjust the display",
+                        "Assume the sensor is accurate"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Flow sensor calibration involves comparing the sensor reading with a calibrated reference instrument at multiple flow rates across the sensor's operating range to ensure accuracy throughout the measurement range."
                 },
                 {
                     "id": "10.2",
                     "text": "What affects flow sensor accuracy?",
-                    "type": "text",
-                    "placeholder": "List influencing factors..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only the fluid type",
+                        "Fluid properties, installation conditions, and environmental factors",
+                        "Just the mounting position",
+                        "Only the power supply"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Flow sensor accuracy is affected by fluid properties (viscosity, density), installation conditions (straight pipe lengths, orientation), and environmental factors (temperature, pressure, vibration)."
                 },
                 {
                     "id": "10.3",
                     "text": "What maintenance is required for flow sensors?",
-                    "type": "text",
-                    "placeholder": "Detail maintenance tasks..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only replace when they fail",
+                        "Regular cleaning, calibration checks, and performance monitoring",
+                        "Just clean the sensor",
+                        "Only check the wiring"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Flow sensor maintenance should include regular cleaning to prevent fouling, periodic calibration checks to maintain accuracy, and continuous performance monitoring to detect degradation."
                 }
             ]
         },
@@ -346,20 +535,41 @@
                 {
                     "id": "11.1",
                     "text": "How would you calibrate a temperature sensor?",
-                    "type": "text",
-                    "placeholder": "Describe calibration process..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only check if the sensor shows a reading",
+                        "Compare sensor reading with a calibrated reference at multiple temperature points",
+                        "Just adjust the display",
+                        "Assume the sensor is accurate"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Temperature sensor calibration involves comparing the sensor reading with a calibrated reference thermometer at multiple temperature points across the sensor's operating range to ensure accuracy throughout the measurement range."
                 },
                 {
                     "id": "11.2",
                     "text": "What affects temperature sensor accuracy?",
-                    "type": "text",
-                    "placeholder": "List influencing factors..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only the ambient temperature",
+                        "Installation depth, thermal contact, environmental conditions, and electrical interference",
+                        "Just the mounting position",
+                        "Only the power supply"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Temperature sensor accuracy is affected by installation depth (for immersion sensors), thermal contact with the measured medium, environmental conditions (humidity, vibration), and electrical interference from nearby equipment."
                 },
                 {
                     "id": "11.3",
                     "text": "What maintenance is required for temperature sensors?",
-                    "type": "text",
-                    "placeholder": "Detail maintenance tasks..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only replace when they fail",
+                        "Regular calibration checks, cleaning, and performance monitoring",
+                        "Just clean the sensor",
+                        "Only check the wiring"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Temperature sensor maintenance should include regular calibration checks to maintain accuracy, cleaning to prevent fouling, and continuous performance monitoring to detect drift or degradation."
                 }
             ]
         },
@@ -377,20 +587,41 @@
                 {
                     "id": "12.1",
                     "text": "How would you test digital sensor operation?",
-                    "type": "text",
-                    "placeholder": "Describe testing methods..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only check if the sensor is powered",
+                        "Test switching action, response time, and signal integrity",
+                        "Just test the electrical output",
+                        "Assume the sensor works if it's mounted"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Digital sensor testing should include verifying proper switching action (on/off states), measuring response time to changes, and checking signal integrity to ensure reliable binary output."
                 },
                 {
                     "id": "12.2",
                     "text": "What affects digital sensor reliability?",
-                    "type": "text",
-                    "placeholder": "List influencing factors..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only the power supply",
+                        "Environmental conditions, mechanical wear, and electrical interference",
+                        "Just the mounting position",
+                        "Only the sensor type"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Digital sensor reliability is affected by environmental conditions (temperature, humidity, vibration), mechanical wear from repeated operation, and electrical interference from nearby equipment."
                 },
                 {
                     "id": "12.3",
                     "text": "What maintenance is required for digital sensors?",
-                    "type": "text",
-                    "placeholder": "Detail maintenance tasks..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only replace when they fail",
+                        "Regular cleaning, mechanical inspection, and performance testing",
+                        "Just clean the sensor",
+                        "Only check the wiring"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Digital sensor maintenance should include regular cleaning to prevent fouling, mechanical inspection for wear or damage, and periodic performance testing to ensure reliable switching operation."
                 }
             ]
         },
@@ -408,20 +639,41 @@
                 {
                     "id": "13.1",
                     "text": "How would you calibrate analogue sensors?",
-                    "type": "text",
-                    "placeholder": "Describe calibration process..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only check if the sensor shows a reading",
+                        "Compare sensor output with calibrated reference at multiple points across the range",
+                        "Just adjust the display",
+                        "Assume the sensor is accurate"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Analogue sensor calibration involves comparing the sensor's output signal with a calibrated reference instrument at multiple points across the sensor's operating range to ensure linearity and accuracy."
                 },
                 {
                     "id": "13.2",
                     "text": "What affects analogue sensor accuracy?",
-                    "type": "text",
-                    "placeholder": "List influencing factors..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only the power supply",
+                        "Environmental conditions, signal conditioning, and electrical interference",
+                        "Just the mounting position",
+                        "Only the sensor type"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Analogue sensor accuracy is affected by environmental conditions (temperature, humidity), signal conditioning quality, and electrical interference from nearby equipment that can distort the analogue signal."
                 },
                 {
                     "id": "13.3",
                     "text": "What maintenance is required for analogue sensors?",
-                    "type": "text",
-                    "placeholder": "Detail maintenance tasks..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only replace when they fail",
+                        "Regular calibration, signal verification, and performance monitoring",
+                        "Just clean the sensor",
+                        "Only check the wiring"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Analogue sensor maintenance should include regular calibration to maintain accuracy, signal verification to ensure proper output, and continuous performance monitoring to detect drift or degradation."
                 }
             ]
         },
@@ -439,20 +691,41 @@
                 {
                     "id": "14.1",
                     "text": "What are common control system faults?",
-                    "type": "text",
-                    "placeholder": "List common faults..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only sensor failures",
+                        "Sensor failures, wiring issues, controller problems, and actuator faults",
+                        "Just controller failures",
+                        "Only actuator problems"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Common control system faults include sensor failures (drift, calibration issues), wiring problems (loose connections, corrosion), controller issues (program errors, communication failures), and actuator faults (sticking, positioning errors)."
                 },
                 {
                     "id": "14.2",
                     "text": "How would you diagnose system faults?",
-                    "type": "text",
-                    "placeholder": "Describe diagnostic approach..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only check the display",
+                        "Use systematic approach: check symptoms, isolate components, and verify signals",
+                        "Just restart the system",
+                        "Assume it's a sensor problem"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Systematic fault diagnosis involves checking symptoms and error messages, isolating components to identify the fault location, and verifying signals at each point in the control loop to determine the root cause."
                 },
                 {
                     "id": "14.3",
                     "text": "What preventive maintenance reduces faults?",
-                    "type": "text",
-                    "placeholder": "List preventive measures..."
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only replace parts when they fail",
+                        "Regular maintenance, calibration, environmental monitoring, and training",
+                        "Just clean the equipment",
+                        "Only check the wiring"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Preventive measures include regular maintenance schedules, periodic calibration of sensors and instruments, environmental monitoring and control, and proper training of maintenance personnel to identify potential issues early."
                 }
             ]
         }
