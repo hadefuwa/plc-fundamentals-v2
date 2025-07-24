@@ -1206,6 +1206,28 @@
                       </div>
                   </div>
               </div>
+              
+              <!-- Real-time PID Tuning Graph -->
+              <div class="pid-tuning-graph" style="background: #333; padding: 25px; border-radius: 8px; margin-bottom: 25px;">
+                  <h4 style="color: #FFFFFF; margin-bottom: 20px; font-size: 18px;">Real-time System Response</h4>
+                  <div class="graph-container" style="position: relative;">
+                      <canvas id="pid-tuning-canvas" width="800" height="300" style="background: #222; border-radius: 8px; width: 100%; height: 300px; border: 2px solid #555;"></canvas>
+                      <div class="graph-legend" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.7); padding: 10px; border-radius: 5px;">
+                          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 5px;">
+                              <div style="width: 12px; height: 2px; background: #E91E63;"></div>
+                              <span style="color: #FFFFFF; font-size: 12px;">Setpoint</span>
+                          </div>
+                          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 5px;">
+                              <div style="width: 12px; height: 2px; background: #2196F3;"></div>
+                              <span style="color: #FFFFFF; font-size: 12px;">Process Variable</span>
+                          </div>
+                          <div style="display: flex; align-items: center; gap: 8px;">
+                              <div style="width: 12px; height: 2px; background: #4CAF50;"></div>
+                              <span style="color: #FFFFFF; font-size: 12px;">Control Output</span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
           </div>
 
           <!-- System Response Testing Interface -->
@@ -3254,7 +3276,14 @@
       derivative: 0,
       output: 0,
       lastError: 0,
-      simulationInterval: null
+      simulationInterval: null,
+      graphData: {
+        setpoint: [],
+        processVariable: [],
+        controlOutput: [],
+        time: []
+      },
+      maxDataPoints: 200
     };
 
     // Update PID simulation with current values
@@ -3297,6 +3326,9 @@
         clearInterval(simulationData.simulationInterval);
       }
       
+      // Initialize graph
+      initPIDTuningGraph();
+      
       simulationData.simulationInterval = setInterval(() => {
         // Calculate PID control
         const error = simulationData.setpoint - simulationData.processVariable;
@@ -3320,6 +3352,12 @@
         if (pvValue) {
           pvValue.textContent = simulationData.processVariable.toFixed(1) + '°C';
         }
+        
+        // Add data to graph
+        addGraphData();
+        
+        // Draw graph
+        drawPIDTuningGraph();
         
         simulationData.lastError = error;
         simulationData.time += 0.1;
@@ -3522,6 +3560,154 @@
           }, 200);
         }
       }, 1500);
+    }
+
+    // Initialize PID tuning graph
+    function initPIDTuningGraph() {
+      const canvas = document.getElementById('pid-tuning-canvas');
+      if (!canvas) return;
+      
+      const ctx = canvas.getContext('2d');
+      const width = canvas.width;
+      const height = canvas.height;
+      
+      // Clear canvas
+      ctx.fillStyle = '#222';
+      ctx.fillRect(0, 0, width, height);
+      
+      // Draw grid
+      drawTuningGrid(ctx, width, height);
+      
+      // Clear graph data
+      simulationData.graphData.setpoint = [];
+      simulationData.graphData.processVariable = [];
+      simulationData.graphData.controlOutput = [];
+      simulationData.graphData.time = [];
+    }
+
+    // Draw grid for tuning graph
+    function drawTuningGrid(ctx, width, height) {
+      ctx.strokeStyle = '#444';
+      ctx.lineWidth = 1;
+      
+      // Vertical lines (time)
+      for (let x = 0; x <= width; x += width / 10) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, height);
+        ctx.stroke();
+      }
+      
+      // Horizontal lines (temperature)
+      for (let y = 0; y <= height; y += height / 8) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(width, y);
+        ctx.stroke();
+      }
+      
+      // Add labels
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = '12px Arial';
+      ctx.textAlign = 'center';
+      
+      // Y-axis labels (temperature)
+      for (let i = 0; i <= 8; i++) {
+        const y = height - (i * height / 8);
+        const temp = i * 12.5; // 0 to 100°C
+        ctx.fillText(temp + '°C', 30, y + 4);
+      }
+      
+      // X-axis labels (time)
+      for (let i = 0; i <= 10; i++) {
+        const x = i * width / 10;
+        const time = i * 2; // 0 to 20 seconds
+        ctx.fillText(time + 's', x, height - 5);
+      }
+    }
+
+    // Add data point to graph
+    function addGraphData() {
+      simulationData.graphData.time.push(simulationData.time);
+      simulationData.graphData.setpoint.push(simulationData.setpoint);
+      simulationData.graphData.processVariable.push(simulationData.processVariable);
+      simulationData.graphData.controlOutput.push(simulationData.output);
+      
+      // Keep only the last maxDataPoints
+      if (simulationData.graphData.time.length > simulationData.maxDataPoints) {
+        simulationData.graphData.time.shift();
+        simulationData.graphData.setpoint.shift();
+        simulationData.graphData.processVariable.shift();
+        simulationData.graphData.controlOutput.shift();
+      }
+    }
+
+    // Draw PID tuning graph
+    function drawPIDTuningGraph() {
+      const canvas = document.getElementById('pid-tuning-canvas');
+      if (!canvas || simulationData.graphData.time.length < 2) return;
+      
+      const ctx = canvas.getContext('2d');
+      const width = canvas.width;
+      const height = canvas.height;
+      
+      // Clear canvas
+      ctx.fillStyle = '#222';
+      ctx.fillRect(0, 0, width, height);
+      
+      // Draw grid
+      drawTuningGrid(ctx, width, height);
+      
+      // Find data range for scaling
+      const allValues = [...simulationData.graphData.setpoint, ...simulationData.graphData.processVariable, ...simulationData.graphData.controlOutput];
+      const minVal = Math.min(...allValues);
+      const maxVal = Math.max(...allValues);
+      const range = maxVal - minVal || 100;
+      
+      // Draw setpoint line
+      ctx.strokeStyle = '#E91E63';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      simulationData.graphData.time.forEach((time, index) => {
+        const x = (time / 20) * width; // 20 second window
+        const y = height - ((simulationData.graphData.setpoint[index] - minVal) / range) * height;
+        if (index === 0) {
+          ctx.moveTo(x, y);
+        } else {
+          ctx.lineTo(x, y);
+        }
+      });
+      ctx.stroke();
+      
+      // Draw process variable line
+      ctx.strokeStyle = '#2196F3';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      simulationData.graphData.time.forEach((time, index) => {
+        const x = (time / 20) * width;
+        const y = height - ((simulationData.graphData.processVariable[index] - minVal) / range) * height;
+        if (index === 0) {
+          ctx.moveTo(x, y);
+        } else {
+          ctx.lineTo(x, y);
+        }
+      });
+      ctx.stroke();
+      
+      // Draw control output line
+      ctx.strokeStyle = '#4CAF50';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      simulationData.graphData.time.forEach((time, index) => {
+        const x = (time / 20) * width;
+        const y = height - ((simulationData.graphData.controlOutput[index] - minVal) / range) * height;
+        if (index === 0) {
+          ctx.moveTo(x, y);
+        } else {
+          ctx.lineTo(x, y);
+        }
+      });
+      ctx.stroke();
     }
 
     // Tab switching function for PID simulation
