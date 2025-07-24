@@ -4,7 +4,7 @@
 
 A comprehensive Electron.js application for industrial maintenance training, featuring interactive worksheets, advanced analytics dashboard, dynamic theming, and a modern, unified user experience.
 
-![image](https://github.com/user-attachments/assets/10d6e646-9ce5-4f1e-bf02-3da5c571e8c1)
+<img width="1383" height="845" alt="image" src="https://github.com/user-attachments/assets/47d14b85-c53a-4bb7-9268-192e1b7649f9" />
 
 ---
 
