@@ -194,12 +194,30 @@
       font-size: 14px;
       color: #ccc;
       position: relative;
+      user-select: none;
+    }
+    
+    /* Override any browser default checkbox styles */
+    input[type="checkbox"] {
+      -webkit-appearance: none !important;
+      -moz-appearance: none !important;
+      appearance: none !important;
+      display: none !important;
     }
     
     .settings-toggle {
       display: none !important;
       opacity: 0 !important;
       position: absolute !important;
+      left: -9999px !important;
+      top: -9999px !important;
+      width: 1px !important;
+      height: 1px !important;
+      margin: -1px !important;
+      padding: 0 !important;
+      border: 0 !important;
+      clip: rect(0, 0, 0, 0) !important;
+      overflow: hidden !important;
       pointer-events: none !important;
     }
     
@@ -212,6 +230,8 @@
       transition: background 0.3s ease;
       display: inline-block;
       vertical-align: middle;
+      margin-right: 12px;
+      flex-shrink: 0;
     }
     
     .toggle-slider:before {
