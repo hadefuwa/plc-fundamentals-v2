@@ -2,7 +2,7 @@
 
 > **Inspiring the next generation of Engineers**
 
-A comprehensive Electron.js application designed for industrial maintenance operations, featuring real-time PLC communication, integrated HMI web interface, advanced analytics dashboard, and a modern, unified user experience.
+A comprehensive Electron.js application for industrial maintenance training, featuring interactive worksheets, advanced analytics dashboard, dynamic theming, and a modern, unified user experience.
 
 ![image](https://github.com/user-attachments/assets/10d6e646-9ce5-4f1e-bf02-3da5c571e8c1)
 
@@ -35,8 +35,6 @@ A comprehensive Electron.js application designed for industrial maintenance oper
 - **Branding**: "Inspiring the next generation of Engineers" header
 - **Responsive UI**: Header text resizes, boxed content areas, and modern design
 - **Settings Page**: Change theme, all preferences saved to `settings.json`
-- **Real-time PLC Communication**: Direct connection to Siemens S7-1200/1500 PLCs
-- **Integrated HMI Web Interface**
 - **Interactive Worksheets & Fault Scenarios**
 - **Student Portal & Teacher Dashboard**
 - **Persistent Progress & Analytics**
