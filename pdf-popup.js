@@ -69,19 +69,16 @@ document.addEventListener('DOMContentLoaded', () => {
     pdfPopup = new PDFPopup();
 });
 
-// Override the openPDF function to show popup
-if (window.electron && window.electron.openPDF) {
-    const originalOpenPDF = window.electron.openPDF;
-    window.electron.openPDF = async (pdfPath) => {
-        // Extract filename from path
-        const filename = pdfPath.split('/').pop() || pdfPath.split('\\').pop() || 'PDF Document';
-        
-        // Show popup
-        if (pdfPopup) {
-            pdfPopup.show(filename);
-        }
-        
-        // Call original function
-        return await originalOpenPDF(pdfPath);
-    };
+// PWA PDF opening function
+function openPDF(pdfPath) {
+    // Extract filename from path
+    const filename = pdfPath.split('/').pop() || pdfPath.split('\\').pop() || 'PDF Document';
+    
+    // Show popup if available
+    if (pdfPopup) {
+        pdfPopup.show(filename);
+    }
+    
+    // Open PDF in new tab using PDF.js viewer
+    window.open(`pdf-viewer.html?file=${encodeURIComponent(pdfPath)}`, '_blank');
 } 

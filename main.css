@@ -219,6 +219,25 @@ h1 {
     }
 }
 
+/* Offline Indicator */
+.offline-indicator {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #ff5722;
+  color: white;
+  text-align: center;
+  padding: 8px;
+  z-index: 10000;
+  transform: translateY(-100%);
+  transition: transform 0.3s ease;
+}
+
+.offline .offline-indicator {
+  transform: translateY(0);
+}
+
 /* PDF Opening Popup */
 .pdf-popup {
     position: fixed;

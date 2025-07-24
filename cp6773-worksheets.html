@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="main.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">
+  <link rel="manifest" href="manifest.json">
   <style>
     .page-title {
       text-align: center;
@@ -239,22 +240,22 @@
       </div>
       <ul class="nav-menu">
         <li class="nav-item">
-          <a href="#" onclick="window.electron.navigate('index.html')" class="nav-link">
+          <a href="#" onclick="window.location='index.html'" class="nav-link">
             <i class="fas fa-home"></i> HOME
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" onclick="window.electron.navigate('cp0539-worksheets.html')" class="nav-link">
+          <a href="#" onclick="window.location='cp0539-worksheets.html'" class="nav-link">
             <i class="fas fa-cogs"></i> CP0539
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" onclick="window.electron.navigate('cp6773-worksheets.html')" class="nav-link active">
+          <a href="#" onclick="window.location='cp6773-worksheets.html'" class="nav-link active">
             <i class="fas fa-exclamation-triangle"></i> CP6773
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" onclick="window.electron.navigate('settings.html')" class="nav-link">
+          <a href="#" onclick="window.location='settings.html'" class="nav-link">
             <i class="fas fa-gear"></i> SETTINGS
           </a>
         </li>
@@ -270,42 +271,42 @@
             <i class="fas fa-exclamation-triangle"></i> CP6773 - Troubleshooting & Fault-Finding Closed Loop Systems
         </h2>
         <div class="worksheets-grid">
-            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=1&type=fault')">
+            <div class="worksheet-card" onclick="window.location='worksheet.html?id=1&type=fault'">
                 <div class="worksheet-number">Fault Scenario 1</div>
                 <div class="worksheet-title">Titanium Forging Temperature Control</div>
                 <div class="worksheet-description">Troubleshoot temperature control issues in a titanium forging factory producing Boeing airplane frames.</div>
             </div>
-            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=2&type=fault')">
+            <div class="worksheet-card" onclick="window.location='worksheet.html?id=2&type=fault'">
                 <div class="worksheet-number">Fault Scenario 2</div>
                 <div class="worksheet-title">Pharmaceutical Clean Room HVAC</div>
                 <div class="worksheet-description">Diagnose HVAC system issues in a pharmaceutical clean room environment.</div>
             </div>
-            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=3&type=fault')">
+            <div class="worksheet-card" onclick="window.location='worksheet.html?id=3&type=fault'">
                 <div class="worksheet-number">Fault Scenario 3</div>
                 <div class="worksheet-title">CNC Machines Factory Cooling</div>
                 <div class="worksheet-description">Investigate cooling system problems affecting multiple CNC machines.</div>
             </div>
-            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=4&type=fault')">
+            <div class="worksheet-card" onclick="window.location='worksheet.html?id=4&type=fault'">
                 <div class="worksheet-number">Fault Scenario 4</div>
                 <div class="worksheet-title">Server Room Temperature Control</div>
                 <div class="worksheet-description">Troubleshoot server room cooling issues with new high-performance equipment.</div>
             </div>
-            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=5&type=fault')">
+            <div class="worksheet-card" onclick="window.location='worksheet.html?id=5&type=fault'">
                 <div class="worksheet-number">Fault Scenario 5</div>
                 <div class="worksheet-title">Potash Mine Brine System</div>
                 <div class="worksheet-description">Analyze flow control problems in a potash mine brine injection system.</div>
             </div>
-            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=6&type=fault')">
+            <div class="worksheet-card" onclick="window.location='worksheet.html?id=6&type=fault'">
                 <div class="worksheet-number">Fault Scenario 6</div>
                 <div class="worksheet-title">Food Processing Sterilizer</div>
                 <div class="worksheet-description">Diagnose steam sterilization system temperature control issues.</div>
             </div>
-            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=7&type=fault')">
+            <div class="worksheet-card" onclick="window.location='worksheet.html?id=7&type=fault'">
                 <div class="worksheet-number">Fault Scenario 7</div>
                 <div class="worksheet-title">Injection Molding Temperature</div>
                 <div class="worksheet-description">Troubleshoot temperature control problems in plastic injection molding.</div>
             </div>
-            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=8&type=fault')">
+            <div class="worksheet-card" onclick="window.location='worksheet.html?id=8&type=fault'">
                 <div class="worksheet-number">Fault Scenario 8</div>
                 <div class="worksheet-title">Chemical Reactor pH Control</div>
                 <div class="worksheet-description">Investigate pH control system issues in chemical reactor operations.</div>
@@ -326,7 +327,7 @@
   </div>
 
   <!-- Load dependencies -->
-  <script src="node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="scenario-popup.js"></script>
   
   <!-- PDF Opening Popup Functionality -->
@@ -352,25 +353,30 @@
       }, 5000);
     }
     
-    // Override the default PDF opening to show popup
-    const originalOpenPDF = window.electron.openPDF;
-    window.electron.openPDF = async (pdfPath) => {
+    // PDF opening function for PWA
+    function openPDF(pdfPath) {
       // Show popup first
       showPDFPopup(pdfPath);
       
-      // Then open PDF
-      return await originalOpenPDF(pdfPath);
-    };
+      // Then open PDF in new tab
+      window.open(`pdf-viewer.html?file=${encodeURIComponent(pdfPath)}`, '_blank');
+    }
   </script>
 
   <script>
-    // Apply user theme from config file
-    (async function() {
-      if (window.settingsAPI && window.settingsAPI.getSettings) {
-        const settings = await window.settingsAPI.getSettings();
-        if (settings.appBackground) document.documentElement.style.setProperty('--background-color', settings.appBackground);
-        if (settings.appAccent) document.documentElement.style.setProperty('--accent-color', settings.appAccent);
-      }
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('service-worker.js');
+      });
+    }
+  </script>
+
+  <script>
+    // Apply user theme from localStorage
+    (function() {
+      const settings = JSON.parse(localStorage.getItem('appSettings')) || {};
+      if (settings.appBackground) document.documentElement.style.setProperty('--background-color', settings.appBackground);
+      if (settings.appAccent) document.documentElement.style.setProperty('--accent-color', settings.appAccent);
     })();
   </script>
 </body>

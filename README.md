@@ -149,3 +149,39 @@ A comprehensive Electron.js application for industrial maintenance training, fea
 This application is developed by Matrix for industrial maintenance operations. For support or inquiries, please contact our development team.
 
 **Built with ❤️ for Industrial Maintenance Professionals**
+
+---
+
+## 🌐 Web & PWA Version (2024+)
+
+This project is now a Progressive Web App (PWA) and can be deployed as a static website (e.g., GitHub Pages, Netlify, Vercel).
+
+### 🚀 Features
+- Installable on desktop and mobile (Add to Home Screen)
+- Offline support (service worker caching)
+- In-browser PDF viewing (PDF.js)
+- Settings and theme stored in browser (localStorage)
+- Responsive, touch-friendly UI
+
+### 📦 Deployment (GitHub Pages)
+1. **Push your code to the `main` branch** (or `gh-pages` if you prefer).
+2. In your repository settings, set GitHub Pages to serve from the root or `/docs` folder.
+3. Make sure all paths are relative (already configured).
+4. Add the PDF.js viewer files to `pdfjs/web/` (see below).
+5. Visit `https://<your-username>.github.io/<repo-name>/` to use the app.
+
+### 📄 PDF.js Integration
+- Download the latest PDF.js release from https://github.com/mozilla/pdf.js/releases
+- Copy the `web/` folder to `pdfjs/web/` in your project
+- The app will use `pdf-viewer.html` to display PDFs in-browser
+
+### 📝 Manifest & Service Worker
+- `manifest.json` and `service-worker.js` are included for PWA installability and offline support
+- App icons should be placed in `assets/icons/` (192x192 and 512x512 PNG recommended)
+
+### ⚠️ Electron Deprecation
+- All Electron/Node.js code has been removed
+- No main process, preload, or IPC code remains
+- Settings are now stored in browser storage
+
+---

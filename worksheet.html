@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="main.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">
+  <link rel="manifest" href="manifest.json">
   
   <style>
     /* Keep the standard app background with Matrix logo scrolling */
@@ -443,22 +444,22 @@
       </div>
       <ul class="nav-menu">
         <li class="nav-item">
-          <a href="#" onclick="window.electron.navigate('index.html')" class="nav-link">
+          <a href="#" onclick="window.location='index.html'" class="nav-link">
             <i class="fas fa-home"></i> HOME
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" onclick="window.electron.navigate('cp0539-worksheets.html')" class="nav-link">
+          <a href="#" onclick="window.location='cp0539-worksheets.html'" class="nav-link">
             <i class="fas fa-cogs"></i> CP0539
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" onclick="window.electron.navigate('cp6773-worksheets.html')" class="nav-link">
+          <a href="#" onclick="window.location='cp6773-worksheets.html'" class="nav-link">
             <i class="fas fa-exclamation-triangle"></i> CP6773
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" onclick="window.electron.navigate('settings.html')" class="nav-link">
+          <a href="#" onclick="window.location='settings.html'" class="nav-link">
             <i class="fas fa-gear"></i> SETTINGS
           </a>
         </li>
@@ -478,18 +479,18 @@
   <div id="error-container" class="error-container" style="display: none;">
     <h3><i class="fas fa-exclamation-triangle"></i> Worksheet Not Found</h3>
     <p>The requested worksheet could not be loaded.</p>
-    <button class="back-btn" onclick="window.electron.navigate('worksheets.html')">
+    <button class="back-btn" onclick="window.location='worksheets.html'">
       <i class="fas fa-arrow-left"></i> Back to Worksheets
     </button>
   </div>
 
   <!-- Main Content -->
   <div class="main-content">
-    <h1 style="color:#fff; font-size:32px; font-weight:bold; margin-bottom:32px;"><i class="fas fa-graduation-cap"></i> Worksheet</h1>
+    
     <div id="main-content" class="worksheet-container" style="display: none;">
       <!-- Back Navigation -->
       <div class="back-nav">
-        <button class="back-btn" onclick="window.electron.navigate('worksheets.html')">
+        <button class="back-btn" onclick="window.location='worksheets.html'">
           <i class="fas fa-arrow-left"></i> Back to Worksheets
         </button>
       </div>
@@ -507,7 +508,7 @@
           <button class="nav-btn next-btn" onclick="navigateWorksheet('next')">
             Next Worksheet <i class="fas fa-chevron-right"></i>
           </button>
-          <button class="nav-btn back-to-list-btn" onclick="window.electron.navigate('worksheets.html')">
+          <button class="nav-btn back-to-list-btn" onclick="window.location='worksheets.html'">
             <i class="fas fa-list"></i> All Worksheets
           </button>
         </div>
@@ -516,7 +517,7 @@
   </div>
 
   <!-- Load dependencies -->
-  <script src="node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="scenario-popup.js"></script>
   
   <script>
@@ -2629,7 +2630,7 @@
       }
       
       if (nextId && nextId !== currentId) {
-        window.electron.navigate(`worksheet.html?id=${nextId}&type=${currentType}`);
+        window.location.href = `worksheet.html?id=${nextId}&type=${currentType}`;
       }
     }
 
@@ -3803,14 +3804,19 @@
     }
   </script>
   <script>
-    // Apply user theme from config file
-    (async function() {
-      if (window.settingsAPI && window.settingsAPI.getSettings) {
-        const settings = await window.settingsAPI.getSettings();
-        if (settings.appBackground) document.documentElement.style.setProperty('--background-color', settings.appBackground);
-        if (settings.appAccent) document.documentElement.style.setProperty('--accent-color', settings.appAccent);
-      }
+    // Apply user theme from localStorage
+    (function() {
+      const settings = JSON.parse(localStorage.getItem('appSettings')) || {};
+      if (settings.appBackground) document.documentElement.style.setProperty('--background-color', settings.appBackground);
+      if (settings.appAccent) document.documentElement.style.setProperty('--accent-color', settings.appAccent);
     })();
+  </script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('service-worker.js');
+      });
+    }
   </script>
 </body>
 </html> 

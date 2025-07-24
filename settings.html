@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="main.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">
+  <link rel="manifest" href="manifest.json">
   <style>
     .settings-container {
       max-width: 500px;
@@ -89,22 +90,22 @@
       </div>
       <ul class="nav-menu">
         <li class="nav-item">
-          <a href="#" onclick="window.electron.navigate('index.html')" class="nav-link">
+          <a href="#" onclick="window.location='index.html'" class="nav-link">
             <i class="fas fa-home"></i> HOME
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" onclick="window.electron.navigate('cp0539-worksheets.html')" class="nav-link">
+          <a href="#" onclick="window.location='cp0539-worksheets.html'" class="nav-link">
             <i class="fas fa-cogs"></i> CP0539
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" onclick="window.electron.navigate('cp6773-worksheets.html')" class="nav-link">
+          <a href="#" onclick="window.location='cp6773-worksheets.html'" class="nav-link">
             <i class="fas fa-exclamation-triangle"></i> CP6773
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" onclick="window.electron.navigate('settings.html')" class="nav-link active">
+          <a href="#" onclick="window.location='settings.html'" class="nav-link active">
             <i class="fas fa-gear"></i> SETTINGS
           </a>
         </li>
@@ -132,9 +133,14 @@
     </div>
   </div>
   <script>
-    // Load settings from config file
-    async function loadSettings() {
-      let settings = await window.settingsAPI.getSettings();
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('service-worker.js');
+      });
+    }
+    // Load settings from localStorage
+    function loadSettings() {
+      let settings = JSON.parse(localStorage.getItem('appSettings')) || {};
       const bg = settings.appBackground || '#2c3033';
       const accent = settings.appAccent || '#4a9eff';
       document.getElementById('background-color').value = bg;
@@ -156,11 +162,11 @@
       document.documentElement.style.setProperty('--accent-color', accent);
       document.body.style.background = bg;
     }
-    // Save settings to config file
-    async function saveSettings() {
+    // Save settings to localStorage
+    function saveSettings() {
       const bg = document.getElementById('background-color').value;
       const accent = document.getElementById('accent-color').value;
-      await window.settingsAPI.saveSettings({ appBackground: bg, appAccent: accent });
+      localStorage.setItem('appSettings', JSON.stringify({ appBackground: bg, appAccent: accent }));
       applySettings(bg, accent);
       alert('Settings saved!');
     }

@@ -2,12 +2,10 @@
   "name": "matrix-training-platform",
   "version": "2.0.0",
   "description": "Matrix Training Platform for Closed Loop Maintenance Curriculum",
-  "main": "main.js",
+  "main": "index.html",
   "scripts": {
-    "start": "electron .",
-    "dev": "electron . --debug",
-    "build": "electron-builder",
-    "build-and-publish": "electron-builder --publish always"
+    "start": "echo 'No Electron. Open index.html in browser.'",
+    "build": "echo 'No build step needed for static PWA.'"
   },
   "build": {
     "appId": "com.matrix.training.platform",

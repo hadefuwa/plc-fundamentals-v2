@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="main.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">
+  <link rel="manifest" href="manifest.json">
   <style>
     .page-title {
       text-align: center;
@@ -239,22 +240,22 @@
       </div>
       <ul class="nav-menu">
         <li class="nav-item">
-          <a href="#" onclick="window.electron.navigate('index.html')" class="nav-link">
+          <a href="#" onclick="window.location='index.html'" class="nav-link">
             <i class="fas fa-home"></i> HOME
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" onclick="window.electron.navigate('cp0539-worksheets.html')" class="nav-link active">
+          <a href="#" onclick="window.location='cp0539-worksheets.html'" class="nav-link active">
             <i class="fas fa-cogs"></i> CP0539
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" onclick="window.electron.navigate('cp6773-worksheets.html')" class="nav-link">
+          <a href="#" onclick="window.location='cp6773-worksheets.html'" class="nav-link">
             <i class="fas fa-exclamation-triangle"></i> CP6773
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" onclick="window.electron.navigate('settings.html')" class="nav-link">
+          <a href="#" onclick="window.location='settings.html'" class="nav-link">
             <i class="fas fa-gear"></i> SETTINGS
           </a>
         </li>
@@ -270,72 +271,72 @@
             <i class="fas fa-cogs"></i> CP0539 - Industrial Maintenance of Closed Loop Systems
         </h2>
         <div class="worksheets-grid">
-            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=1&type=maintenance')">
+            <div class="worksheet-card" onclick="window.location='worksheet.html?id=1&type=maintenance'">
                 <div class="worksheet-number">Worksheet 1</div>
                 <div class="worksheet-title">Closed-Loop Control Systems</div>
                 <div class="worksheet-description">Learn about PID control, feedback loops, and system response analysis with interactive simulations.</div>
             </div>
-            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=2&type=maintenance')">
+            <div class="worksheet-card" onclick="window.location='worksheet.html?id=2&type=maintenance'">
                 <div class="worksheet-number">Worksheet 2</div>
                 <div class="worksheet-title">Emergency Stops</div>
                 <div class="worksheet-description">Understanding emergency stop systems, safety circuits, and proper reset procedures.</div>
             </div>
-            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=3&type=maintenance')">
+            <div class="worksheet-card" onclick="window.location='worksheet.html?id=3&type=maintenance'">
                 <div class="worksheet-number">Worksheet 3</div>
                 <div class="worksheet-title">Status LED</div>
                 <div class="worksheet-description">Interpreting LED indicators, status codes, and visual diagnostic systems.</div>
             </div>
-            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=4&type=maintenance')">
+            <div class="worksheet-card" onclick="window.location='worksheet.html?id=4&type=maintenance'">
                 <div class="worksheet-number">Worksheet 4</div>
                 <div class="worksheet-title">PLC</div>
                 <div class="worksheet-description">Programmable Logic Controller fundamentals, programming, and troubleshooting.</div>
             </div>
-            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=5&type=maintenance')">
+            <div class="worksheet-card" onclick="window.location='worksheet.html?id=5&type=maintenance'">
                 <div class="worksheet-number">Worksheet 5</div>
                 <div class="worksheet-title">HMI</div>
                 <div class="worksheet-description">Human Machine Interface design, operation, and maintenance procedures.</div>
             </div>
-            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=6&type=maintenance')">
+            <div class="worksheet-card" onclick="window.location='worksheet.html?id=6&type=maintenance'">
                 <div class="worksheet-number">Worksheet 6</div>
                 <div class="worksheet-title">Pump</div>
                 <div class="worksheet-description">Pump systems, performance curves, cavitation, and maintenance schedules.</div>
             </div>
-            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=7&type=maintenance')">
+            <div class="worksheet-card" onclick="window.location='worksheet.html?id=7&type=maintenance'">
                 <div class="worksheet-number">Worksheet 7</div>
                 <div class="worksheet-title">Valve</div>
                 <div class="worksheet-description">Valve types, actuators, control characteristics, and calibration procedures.</div>
             </div>
-            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=8&type=maintenance')">
+            <div class="worksheet-card" onclick="window.location='worksheet.html?id=8&type=maintenance'">
                 <div class="worksheet-number">Worksheet 8</div>
                 <div class="worksheet-title">Float Switch</div>
                 <div class="worksheet-description">Level sensing with float switches, installation, and troubleshooting techniques.</div>
             </div>
-            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=9&type=maintenance')">
+            <div class="worksheet-card" onclick="window.location='worksheet.html?id=9&type=maintenance'">
                 <div class="worksheet-number">Worksheet 9</div>
                 <div class="worksheet-title">Proximity Switch</div>
                 <div class="worksheet-description">Proximity sensors, detection methods, and proper mounting considerations.</div>
             </div>
-            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=10&type=maintenance')">
+            <div class="worksheet-card" onclick="window.location='worksheet.html?id=10&type=maintenance'">
                 <div class="worksheet-number">Worksheet 10</div>
                 <div class="worksheet-title">Flow Sensor</div>
                 <div class="worksheet-description">Flow measurement principles, sensor types, and calibration procedures.</div>
             </div>
-            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=11&type=maintenance')">
+            <div class="worksheet-card" onclick="window.location='worksheet.html?id=11&type=maintenance'">
                 <div class="worksheet-number">Worksheet 11</div>
                 <div class="worksheet-title">Temperature Sensor</div>
                 <div class="worksheet-description">Temperature measurement, RTDs, thermocouples, and signal conditioning.</div>
             </div>
-            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=12&type=maintenance')">
+            <div class="worksheet-card" onclick="window.location='worksheet.html?id=12&type=maintenance'">
                 <div class="worksheet-number">Worksheet 12</div>
                 <div class="worksheet-title">Digital Sensors</div>
                 <div class="worksheet-description">Digital input devices, signal processing, and interface requirements.</div>
             </div>
-            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=13&type=maintenance')">
+            <div class="worksheet-card" onclick="window.location='worksheet.html?id=13&type=maintenance'">
                 <div class="worksheet-number">Worksheet 13</div>
                 <div class="worksheet-title">Analogue Sensors</div>
                 <div class="worksheet-description">Analog signal processing, 4-20mA loops, and signal conditioning circuits.</div>
             </div>
-            <div class="worksheet-card" onclick="window.electron.navigate('worksheet.html?id=14&type=maintenance')">
+            <div class="worksheet-card" onclick="window.location='worksheet.html?id=14&type=maintenance'">
                 <div class="worksheet-number">Worksheet 14</div>
                 <div class="worksheet-title">Faults</div>
                 <div class="worksheet-description">Fault detection, diagnosis techniques, and systematic troubleshooting approaches.</div>
@@ -356,7 +357,7 @@
   </div>
 
   <!-- Load dependencies -->
-  <script src="node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="scenario-popup.js"></script>
   
   <!-- PDF Opening Popup Functionality -->
@@ -382,25 +383,30 @@
       }, 5000);
     }
     
-    // Override the default PDF opening to show popup
-    const originalOpenPDF = window.electron.openPDF;
-    window.electron.openPDF = async (pdfPath) => {
+    // PDF opening function for PWA
+    function openPDF(pdfPath) {
       // Show popup first
       showPDFPopup(pdfPath);
       
-      // Then open PDF
-      return await originalOpenPDF(pdfPath);
-    };
+      // Then open PDF in new tab
+      window.open(`pdf-viewer.html?file=${encodeURIComponent(pdfPath)}`, '_blank');
+    }
   </script>
 
   <script>
-    // Apply user theme from config file
-    (async function() {
-      if (window.settingsAPI && window.settingsAPI.getSettings) {
-        const settings = await window.settingsAPI.getSettings();
-        if (settings.appBackground) document.documentElement.style.setProperty('--background-color', settings.appBackground);
-        if (settings.appAccent) document.documentElement.style.setProperty('--accent-color', settings.appAccent);
-      }
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('service-worker.js');
+      });
+    }
+  </script>
+
+  <script>
+    // Apply user theme from localStorage
+    (function() {
+      const settings = JSON.parse(localStorage.getItem('appSettings')) || {};
+      if (settings.appBackground) document.documentElement.style.setProperty('--background-color', settings.appBackground);
+      if (settings.appAccent) document.documentElement.style.setProperty('--accent-color', settings.appAccent);
     })();
   </script>
 </body>
