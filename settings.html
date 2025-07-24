@@ -9,6 +9,89 @@
   <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">
   <link rel="manifest" href="manifest.json">
   <style>
+    /* Navigation Styles */
+    .main-navigation {
+      background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+      border-bottom: 3px solid #FFFFFF;
+      padding: 0;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    .nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 15px 0;
+    }
+    
+    .nav-logo img {
+      height: 40px;
+      width: auto;
+    }
+    
+    .nav-logo h1 {
+      color: #FFFFFF;
+      font-size: 18px;
+      font-weight: bold;
+      margin: 0;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+    
+    .nav-menu {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: 5px;
+    }
+    
+    .nav-item {
+      position: relative;
+    }
+    
+    .nav-link {
+      display: block;
+      padding: 15px 25px;
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      border-radius: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      background: linear-gradient(135deg, #333333, #555555);
+      border: 2px solid transparent;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+    }
+    
+    .nav-link:hover {
+      background: linear-gradient(135deg, #FFFFFF, #F5F5F5);
+      color: #000;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
+      border: 2px solid #FFFFFF;
+    }
+    
+    .nav-link.active {
+      background: linear-gradient(135deg, #FFFFFF, #F5F5F5);
+      color: #000;
+      font-weight: bold;
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.5);
+      border: 2px solid #FFFFFF;
+    }
+
     .settings-container {
       max-width: 500px;
       margin: 40px auto;
