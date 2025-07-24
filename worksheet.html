@@ -3180,6 +3180,7 @@
       if (setpointSlider && setpointValue) {
         setpointSlider.addEventListener('input', function() {
           setpointValue.textContent = this.value + '.0°C';
+          updatePIDSimulation();
         });
       }
       
@@ -3188,6 +3189,7 @@
       if (kpSlider && kpValue) {
         kpSlider.addEventListener('input', function() {
           kpValue.textContent = this.value;
+          updatePIDSimulation();
         });
       }
       
@@ -3196,6 +3198,7 @@
       if (kiSlider && kiValue) {
         kiSlider.addEventListener('input', function() {
           kiValue.textContent = this.value;
+          updatePIDSimulation();
         });
       }
       
@@ -3204,10 +3207,224 @@
       if (kdSlider && kdValue) {
         kdSlider.addEventListener('input', function() {
           kdValue.textContent = this.value;
+          updatePIDSimulation();
         });
       }
       
+      // Initialize response test button
+      const startResponseBtn = document.getElementById('start-response');
+      if (startResponseBtn) {
+        startResponseBtn.addEventListener('click', function() {
+          runResponseTest();
+        });
+      }
+      
+      // Initialize challenge cards
+      const challengeCards = document.querySelectorAll('.challenge-card');
+      challengeCards.forEach(card => {
+        card.addEventListener('click', function() {
+          const challengeId = this.getAttribute('data-challenge');
+          startChallenge(challengeId);
+        });
+      });
+      
+      // Initialize simulation
+      updatePIDSimulation();
+      
       console.log('PID simulation initialized');
+    }
+
+    // PID Simulation Variables
+    let simulationData = {
+      setpoint: 50,
+      processVariable: 25,
+      kp: 0.5,
+      ki: 0.1,
+      kd: 0.2,
+      time: 0,
+      error: 0,
+      integral: 0,
+      derivative: 0,
+      output: 0
+    };
+
+    // Update PID simulation with current values
+    function updatePIDSimulation() {
+      const setpointSlider = document.getElementById('setpoint-slider');
+      const kpSlider = document.getElementById('kp-slider');
+      const kiSlider = document.getElementById('ki-slider');
+      const kdSlider = document.getElementById('kd-slider');
+      
+      if (setpointSlider && kpSlider && kiSlider && kdSlider) {
+        simulationData.setpoint = parseFloat(setpointSlider.value);
+        simulationData.kp = parseFloat(kpSlider.value);
+        simulationData.ki = parseFloat(kiSlider.value);
+        simulationData.kd = parseFloat(kdSlider.value);
+        
+        // Calculate performance metrics
+        calculatePerformanceMetrics();
+        
+        // Update process variable display
+        const pvValue = document.getElementById('pv-value');
+        if (pvValue) {
+          pvValue.textContent = simulationData.processVariable.toFixed(1) + '°C';
+        }
+      }
+    }
+
+    // Calculate performance metrics based on PID parameters
+    function calculatePerformanceMetrics() {
+      const riseTime = Math.max(0.5, 2.0 - simulationData.kp * 0.8);
+      const overshoot = Math.max(0, 15 - simulationData.kp * 5 + simulationData.ki * 10);
+      const settlingTime = Math.max(1.0, 5.0 - simulationData.kp * 1.5 + simulationData.ki * 2);
+      
+      // Update metric displays
+      const riseTimeElement = document.getElementById('rise-time');
+      const overshootElement = document.getElementById('overshoot');
+      const settlingTimeElement = document.getElementById('settling-time');
+      
+      if (riseTimeElement) riseTimeElement.textContent = riseTime.toFixed(1) + 's';
+      if (overshootElement) overshootElement.textContent = overshoot.toFixed(1) + '%';
+      if (settlingTimeElement) settlingTimeElement.textContent = settlingTime.toFixed(1) + 's';
+    }
+
+    // Run response test simulation
+    function runResponseTest() {
+      const canvas = document.getElementById('response-canvas');
+      const inputType = document.getElementById('input-type').value;
+      
+      if (!canvas) return;
+      
+      const ctx = canvas.getContext('2d');
+      const width = canvas.width;
+      const height = canvas.height;
+      
+      // Clear canvas
+      ctx.fillStyle = '#222';
+      ctx.fillRect(0, 0, width, height);
+      
+      // Draw grid
+      drawGrid(ctx, width, height);
+      
+      // Generate and draw response data
+      const data = generateResponseData(inputType);
+      drawResponseCurve(ctx, data, width, height);
+      
+      // Add labels
+      drawLabels(ctx, width, height, inputType);
+    }
+
+    // Draw grid on canvas
+    function drawGrid(ctx, width, height) {
+      ctx.strokeStyle = '#444';
+      ctx.lineWidth = 1;
+      
+      // Vertical lines
+      for (let x = 0; x <= width; x += width / 10) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, height);
+        ctx.stroke();
+      }
+      
+      // Horizontal lines
+      for (let y = 0; y <= height; y += height / 8) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(width, y);
+        ctx.stroke();
+      }
+    }
+
+    // Generate response data based on input type
+    function generateResponseData(inputType) {
+      const data = [];
+      const timeSteps = 100;
+      
+      for (let i = 0; i < timeSteps; i++) {
+        const time = (i / timeSteps) * 10; // 10 second simulation
+        let value = 0;
+        
+        switch (inputType) {
+          case 'step':
+            value = i > 20 ? 80 : 20; // Step at 2 seconds
+            break;
+          case 'ramp':
+            value = 20 + (time * 6); // Ramp from 20 to 80 over 10 seconds
+            break;
+          case 'sine':
+            value = 50 + 30 * Math.sin(time * 0.5); // Sine wave
+            break;
+        }
+        
+        data.push({ time, value });
+      }
+      
+      return data;
+    }
+
+    // Draw response curve on canvas
+    function drawResponseCurve(ctx, data, width, height) {
+      ctx.strokeStyle = '#E91E63';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      
+      data.forEach((point, index) => {
+        const x = (point.time / 10) * width;
+        const y = height - ((point.value - 0) / 100) * height;
+        
+        if (index === 0) {
+          ctx.moveTo(x, y);
+        } else {
+          ctx.lineTo(x, y);
+        }
+      });
+      
+      ctx.stroke();
+    }
+
+    // Draw labels on canvas
+    function drawLabels(ctx, width, height, inputType) {
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = '14px Arial';
+      ctx.textAlign = 'center';
+      
+      // Title
+      ctx.fillText(`${inputType.charAt(0).toUpperCase() + inputType.slice(1)} Response Test`, width / 2, 20);
+      
+      // Y-axis label
+      ctx.save();
+      ctx.translate(20, height / 2);
+      ctx.rotate(-Math.PI / 2);
+      ctx.fillText('Temperature (°C)', 0, 0);
+      ctx.restore();
+      
+      // X-axis label
+      ctx.fillText('Time (seconds)', width / 2, height - 10);
+    }
+
+    // Start challenge
+    function startChallenge(challengeId) {
+      const challengeCard = document.querySelector(`[data-challenge="${challengeId}"]`);
+      if (!challengeCard) return;
+      
+      const statusIndicator = challengeCard.querySelector('.status-indicator');
+      const statusText = challengeCard.querySelector('.challenge-status span:last-child');
+      
+      // Simulate challenge evaluation
+      setTimeout(() => {
+        const success = Math.random() > 0.3; // 70% success rate for demo
+        
+        if (success) {
+          statusIndicator.style.background = '#4CAF50';
+          statusText.textContent = 'Completed';
+          statusText.style.color = '#4CAF50';
+        } else {
+          statusIndicator.style.background = '#f44336';
+          statusText.textContent = 'Failed';
+          statusText.style.color = '#f44336';
+        }
+      }, 1000);
     }
 
     // Tab switching function for PID simulation
