@@ -3968,7 +3968,7 @@
       ctx.fillRect(0, 0, width, height);
       
       // Draw grid
-      drawTuningGrid(ctx, width, height);
+      drawTuningGrid(ctx, width, height, 0, 20, 0, 100);
       
       // Clear graph data
       simulationData.graphData.setpoint = [];
@@ -3978,7 +3978,7 @@
     }
 
     // Draw grid for tuning graph
-    function drawTuningGrid(ctx, width, height, startTime = 0, timeWindow = 20) {
+    function drawTuningGrid(ctx, width, height, startTime = 0, timeWindow = 20, tempMin = 0, tempMax = 100) {
       ctx.strokeStyle = '#444';
       ctx.lineWidth = 1;
       
@@ -4003,11 +4003,11 @@
       ctx.font = '12px Arial';
       ctx.textAlign = 'center';
       
-      // Y-axis labels (temperature)
+      // Y-axis labels (temperature) - now uses dynamic range
       for (let i = 0; i <= 8; i++) {
         const y = height - (i * height / 8);
-        const temp = i * 12.5; // 0 to 100°C
-        ctx.fillText(temp + '°C', 30, y + 4);
+        const temp = tempMin + (i * (tempMax - tempMin) / 8);
+        ctx.fillText(temp.toFixed(1) + '°C', 30, y + 4);
       }
       
       // X-axis labels (time) - now scrolls with the window
@@ -4052,13 +4052,28 @@
       const timeWindow = 20; // 20 second window
       const startTime = Math.max(0, currentTime - timeWindow);
       
-      // Draw grid with scrolling
-      drawTuningGrid(ctx, width, height, startTime, timeWindow);
+      // Find data range for auto-scaling
+      let allValues = [];
+      simulationData.graphData.time.forEach((time, index) => {
+        if (time >= startTime && time <= currentTime) {
+          allValues.push(simulationData.graphData.setpoint[index]);
+          allValues.push(simulationData.graphData.processVariable[index]);
+          // Scale control output to temperature range for display
+          allValues.push(Math.max(0, Math.min(100, simulationData.graphData.controlOutput[index] + 50)));
+        }
+      });
       
-      // Find data range for scaling (temperature range)
-      const tempMin = 0;
-      const tempMax = 100;
+      // Calculate auto-scaling with padding
+      const dataMin = Math.min(...allValues);
+      const dataMax = Math.max(...allValues);
+      const dataRange = dataMax - dataMin;
+      const padding = dataRange * 0.1; // 10% padding
+      const tempMin = Math.max(0, dataMin - padding);
+      const tempMax = Math.min(100, dataMax + padding);
       const tempRange = tempMax - tempMin;
+      
+      // Draw grid with auto-scaling
+      drawTuningGrid(ctx, width, height, startTime, timeWindow, tempMin, tempMax);
       
       // Draw setpoint line
       ctx.strokeStyle = '#E91E63';
