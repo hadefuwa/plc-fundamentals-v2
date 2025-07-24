@@ -5,51 +5,77 @@
             "title": "Closed-Loop Control Systems",
             "functionCall": "showInteractiveWorksheet1",
             "paragraphs": [
-                "You are tasked with performing routine maintenance on a closed-loop control system in a manufacturing plant.",
-                "The system controls the temperature of a critical process using a PID controller.",
-                "Regular maintenance is essential to ensure accurate temperature control and prevent process deviations.",
-                "You need to check various components including sensors, actuators, and control elements."
+                "You are working with a closed-loop flow control system that continuously adjusts flow using sensor feedback to meet a setpoint.",
+                "The system maintains accuracy and stability even when conditions change.",
+                "You need to understand the system components and their interactions.",
+                "This includes the PLC, sensors, actuators, and control elements."
             ],
             "image": "closed-loop-control.png",
             "questions": [
                 {
                     "id": "1.1",
-                    "text": "What are the key components you would inspect in this closed-loop system?",
+                    "text": "What is the purpose of a closed-loop flow control system?",
                     "type": "multiple_choice",
                     "options": [
-                        "Only the temperature sensor and controller",
-                        "Sensors, actuators, control elements, and safety systems",
-                        "Just the PID controller and display",
-                        "Only the electrical connections"
+                        "To turn the system on and off automatically",
+                        "To continuously adjust flow using sensor feedback to meet a setpoint, maintaining accuracy and stability even if conditions change",
+                        "To only control temperature, not flow",
+                        "To provide basic on/off control"
                     ],
                     "correct_answer": 1,
-                    "explanation": "A comprehensive closed-loop system inspection should include sensors (temperature, pressure, flow), actuators (valves, motors), control elements (PID controller, displays), and safety systems (alarms, emergency stops). This ensures the entire control loop is functioning properly."
+                    "explanation": "A closed-loop flow control system continuously adjusts flow using sensor feedback to meet a setpoint, maintaining accuracy and stability even if conditions change. This is different from simple on/off control."
                 },
                 {
                     "id": "1.2",
-                    "text": "How would you verify the accuracy of the temperature sensor?",
+                    "text": "What must you check before starting the system?",
                     "type": "multiple_choice",
                     "options": [
-                        "Just check if the display shows a reading",
-                        "Compare with a calibrated reference thermometer at multiple points",
-                        "Only test at room temperature",
-                        "Rely on the controller's built-in diagnostics"
+                        "Only check if the power is on",
+                        "Ensure the hand valve is in the open position, with the handle in line with the piping",
+                        "Just check the temperature sensor",
+                        "Only verify the pump is working"
                     ],
                     "correct_answer": 1,
-                    "explanation": "Proper sensor verification requires comparing the sensor reading with a calibrated reference thermometer at multiple temperature points across the sensor's operating range. This ensures accuracy throughout the entire measurement range."
+                    "explanation": "Before starting the system, you must ensure the hand valve is in the open position, with the handle in line with the piping. This allows proper flow through the system."
                 },
                 {
                     "id": "1.3",
-                    "text": "What documentation would you maintain during this maintenance?",
+                    "text": "What happens when you restrict the flow using the hand valve?",
                     "type": "multiple_choice",
                     "options": [
-                        "Only record the final readings",
-                        "Maintenance logs, calibration certificates, test results, and any adjustments made",
-                        "Just the date and time of inspection",
-                        "Only document if problems are found"
+                        "Nothing happens to the system",
+                        "The flow drops, the sensor detects this and sends data to the PLC, which increases pump speed and adjusts the valve to restore flow",
+                        "The system shuts down immediately",
+                        "Only the temperature changes"
                     ],
                     "correct_answer": 1,
-                    "explanation": "Complete documentation should include maintenance logs with all readings, calibration certificates for reference instruments, test results showing before/after values, and detailed records of any adjustments made. This provides a complete audit trail for quality assurance and troubleshooting."
+                    "explanation": "When you restrict the flow using the hand valve, the flow drops, the sensor detects this and sends data to the PLC, which increases pump speed and adjusts the valve to restore flow. This demonstrates the closed-loop control in action."
+                },
+                {
+                    "id": "1.4",
+                    "text": "What role does the PLC play in the system?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "It only displays information",
+                        "The PLC is a computer that makes real-time decisions based on sensor data to control devices like pumps and valves",
+                        "It only controls the temperature",
+                        "It only monitors the flow sensor"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "The PLC is a computer that makes real-time decisions based on sensor data to control devices like pumps and valves. It processes the feedback from sensors and adjusts the system accordingly."
+                },
+                {
+                    "id": "1.5",
+                    "text": "Why should you avoid making rapid changes to the valve?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "It doesn't matter how fast you change it",
+                        "Rapid changes can cause oscillations in flow, making the system unstable; gradual adjustments help maintain smooth control",
+                        "It will damage the valve",
+                        "It will only affect the temperature"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Rapid changes can cause oscillations in flow, making the system unstable; gradual adjustments help maintain smooth control. This is important for maintaining system stability."
                 }
             ]
         },
@@ -57,51 +83,77 @@
             "id": 2,
             "title": "Emergency Stop Systems",
             "paragraphs": [
-                "As part of your monthly safety checks, you need to inspect and test all emergency stop systems.",
-                "The facility has multiple E-stop buttons located at critical points around the equipment.",
-                "These safety systems must function perfectly to protect both personnel and equipment.",
-                "You need to verify both the mechanical operation and the electrical circuit integrity."
+                "Emergency Stop (E-Stop) systems are critical safety components in industrial automation.",
+                "These systems must function perfectly to protect both personnel and equipment.",
+                "You need to understand how E-Stops work and how to properly test them.",
+                "This includes understanding the reset procedure and safety features."
             ],
             "image": "emergency-stops.png",
             "questions": [
                 {
                     "id": "2.1",
-                    "text": "What physical checks would you perform on each E-stop button?",
+                    "text": "What is the main purpose of an Emergency Stop (E-Stop)?",
                     "type": "multiple_choice",
                     "options": [
-                        "Only check if the button is visible",
-                        "Check for damage, proper mounting, clear labeling, and smooth operation",
-                        "Just test the electrical circuit",
-                        "Only verify the button color"
+                        "To turn the system on and off normally",
+                        "To quickly stop a machine or system in an emergency to protect people and equipment",
+                        "To control the flow rate",
+                        "To adjust the temperature"
                     ],
                     "correct_answer": 1,
-                    "explanation": "Physical checks should include inspecting for physical damage, ensuring proper mounting and security, verifying clear and readable labeling, and testing that the button operates smoothly without sticking or binding. These checks ensure the E-stop will function reliably when needed."
+                    "explanation": "The main purpose of an Emergency Stop (E-Stop) is to quickly stop a machine or system in an emergency to protect people and equipment. It provides immediate shutdown capability."
                 },
                 {
                     "id": "2.2",
-                    "text": "How would you test the E-stop circuit without disrupting production?",
+                    "text": "How do you reset the E-Stop after it has been pressed?",
                     "type": "multiple_choice",
                     "options": [
-                        "Activate the E-stop during normal operation",
-                        "Use a multimeter to test contacts and verify circuit integrity during planned downtime",
-                        "Ignore testing to avoid any disruption",
-                        "Only test during emergency situations"
+                        "Just press the E-Stop again",
+                        "Twist the E-Stop anti-clockwise, then press the blue reset button or the HMI reset button",
+                        "Turn the power off and on",
+                        "Wait for it to reset automatically"
                     ],
                     "correct_answer": 1,
-                    "explanation": "The safest approach is to use a multimeter to test the E-stop contacts and verify circuit integrity during planned downtime or maintenance windows. This ensures the circuit functions properly without risking production disruption or safety incidents."
+                    "explanation": "To reset the E-Stop after it has been pressed, you must twist the E-Stop anti-clockwise, then press the blue reset button or the HMI reset button. This ensures the system is properly reset."
                 },
                 {
                     "id": "2.3",
-                    "text": "What documentation is required for E-stop system maintenance?",
+                    "text": "What makes an E-Stop more reliable than a normal stop button?",
                     "type": "multiple_choice",
                     "options": [
-                        "Only record the test date",
-                        "Maintenance logs, test results, inspection reports, and safety compliance records",
-                        "Just the technician's signature",
-                        "Only document if problems are found"
+                        "It's bigger and more visible",
+                        "It has two contact channels; both must be closed for operation, and either opening will stop the system, this redundancy ensures safety",
+                        "It's made of better materials",
+                        "It has a different color"
                     ],
                     "correct_answer": 1,
-                    "explanation": "Complete documentation should include detailed maintenance logs, test results showing before/after conditions, inspection reports with findings, and safety compliance records. This provides a complete audit trail for safety certification and regulatory compliance."
+                    "explanation": "An E-Stop has two contact channels; both must be closed for operation, and either opening will stop the system. This redundancy ensures safety and makes it more reliable than a normal stop button."
+                },
+                {
+                    "id": "2.4",
+                    "text": "When should an E-Stop be used?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "For regular stopping of the machine",
+                        "Only during emergencies, not for regular stopping of the machine",
+                        "Whenever you want to stop the system",
+                        "To test the system"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "An E-Stop should only be used during emergencies, not for regular stopping of the machine. It's a safety device for emergency situations only."
+                },
+                {
+                    "id": "2.5",
+                    "text": "Why is it important to regularly inspect the E-Stop?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "To keep it clean",
+                        "To ensure it is free from damage or faults and will work properly when needed",
+                        "To make sure it's visible",
+                        "To test the wiring"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "It's important to regularly inspect the E-Stop to ensure it is free from damage or faults and will work properly when needed. Regular inspection prevents failures during emergencies."
                 }
             ]
         },
@@ -109,51 +161,77 @@
             "id": 3,
             "title": "Status LED Indicators",
             "paragraphs": [
-                "The control panel has multiple LED indicators showing various system states.",
-                "These indicators are crucial for operators to monitor system status at a glance.",
-                "Regular maintenance ensures all indicators are functioning correctly and visible.",
-                "You need to verify both the LED operation and the underlying signal integrity."
+                "The Status LED is a crucial indicator that shows the system's condition.",
+                "It helps quickly identify faults and safety issues for efficient maintenance.",
+                "Understanding the LED colors and their meanings is essential for system monitoring.",
+                "You need to know how to interpret the LED behavior and trigger test conditions."
             ],
             "image": "status-led.png",
             "questions": [
                 {
                     "id": "3.1",
-                    "text": "How would you test each LED indicator?",
+                    "text": "What is the purpose of the Status LED in the system?",
                     "type": "multiple_choice",
                     "options": [
-                        "Just check if the LED is visible",
-                        "Verify illumination, test with different system conditions, and check signal integrity",
-                        "Only test during power-up",
-                        "Ignore LED testing as it's not critical"
+                        "To make the system look more professional",
+                        "To indicate the system's condition and help quickly identify faults and safety issues for efficient maintenance",
+                        "To control the temperature",
+                        "To measure the flow rate"
                     ],
                     "correct_answer": 1,
-                    "explanation": "LED testing should include verifying proper illumination, testing with different system conditions to ensure correct status indication, and checking the underlying signal integrity to ensure the LED accurately represents the system state."
+                    "explanation": "The Status LED indicates the system's condition and helps quickly identify faults and safety issues for efficient maintenance. It provides immediate visual feedback about system status."
                 },
                 {
                     "id": "3.2",
-                    "text": "What would you check if an LED is lit but showing incorrect status?",
+                    "text": "What does a green Status LED indicate?",
                     "type": "multiple_choice",
                     "options": [
-                        "Only replace the LED",
-                        "Check wiring, signal source, and controller logic for the incorrect indication",
-                        "Ignore the issue as long as the LED works",
-                        "Just clean the LED lens"
+                        "The system is in fault mode",
+                        "Green means the system is operating normally",
+                        "The system is starting up",
+                        "The system is shutting down"
                     ],
                     "correct_answer": 1,
-                    "explanation": "If an LED shows incorrect status, you should check the wiring connections, verify the signal source is providing correct information, and examine the controller logic to identify why the LED is not accurately reflecting the system state."
+                    "explanation": "A green Status LED means the system is operating normally. This indicates all systems are functioning correctly and there are no active faults."
                 },
                 {
                     "id": "3.3",
-                    "text": "How often should LED indicators be checked and why?",
+                    "text": "What colour does the LED turn when a fault is detected, but the system may still function?",
                     "type": "multiple_choice",
                     "options": [
-                        "Only when they fail",
-                        "Regularly during routine maintenance to ensure reliable status indication",
-                        "Once per year",
-                        "Never, as LEDs don't need maintenance"
+                        "Red",
+                        "Orange, it signals a fault that needs investigation",
+                        "Blue",
+                        "Yellow"
                     ],
                     "correct_answer": 1,
-                    "explanation": "LED indicators should be checked regularly during routine maintenance because they provide critical status information to operators. Regular checks ensure they function correctly and provide accurate system status indication when needed."
+                    "explanation": "When a fault is detected but the system may still function, the LED turns orange. This signals a fault that needs investigation but doesn't require immediate shutdown."
+                },
+                {
+                    "id": "3.4",
+                    "text": "How can you trigger a safety fault to observe the LED behaviour?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "Turn off the power",
+                        "By pressing the Emergency Stop (E-Stop) to put the system into a safety error mode",
+                        "Change the temperature settings",
+                        "Adjust the flow rate"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "You can trigger a safety fault to observe the LED behaviour by pressing the Emergency Stop (E-Stop) to put the system into a safety error mode. This allows you to see how the LED responds to faults."
+                },
+                {
+                    "id": "3.5",
+                    "text": "Why is it important to monitor the Status LED regularly?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "To keep it clean",
+                        "Because it helps prevent downtime and ensures faults are addressed before escalating",
+                        "To test the wiring",
+                        "To check the power supply"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "It's important to monitor the Status LED regularly because it helps prevent downtime and ensures faults are addressed before escalating. Early detection of issues prevents more serious problems."
                 }
             ]
         },
