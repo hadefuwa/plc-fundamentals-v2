@@ -78,17 +78,142 @@
       <h2 class="section-header"><i class="fas fa-question-circle"></i> Questions & Answers</h2>
       <div class="questions-content">
         <div class="question-item" data-question="1">
-          <h4>Question 1: What are the key maintenance points for this valve system?</h4>
-          <textarea class="answer-input" data-question="1" placeholder="Describe the main maintenance requirements..."></textarea>
+          <h4>Question 1: What is the main function of a valve in an industrial system?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-1" value="A" class="option-radio">
+              <span class="option-text">A) To control the flow of fluids by opening, closing, or partially restricting the passage through the system</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-1" value="B" class="option-radio">
+              <span class="option-text">B) To measure the pressure of the fluid</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-1" value="C" class="option-radio">
+              <span class="option-text">C) To generate power for the system</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-1" value="D" class="option-radio">
+              <span class="option-text">D) To filter the fluid</span>
+            </label>
+          </div>
           <div class="question-actions">
             <button class="submit-question-btn" onclick="submitAnswer(1)">Submit Answer</button>
           </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) To control the flow of fluids by opening, closing, or partially restricting the passage through the system.
+          </div>
         </div>
+        
         <div class="question-item" data-question="2">
-          <h4>Question 2: How would you troubleshoot common issues with this system?</h4>
-          <textarea class="answer-input" data-question="2" placeholder="Explain your troubleshooting approach..."></textarea>
+          <h4>Question 2: How is the valve position controlled in this system?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-2" value="A" class="option-radio">
+              <span class="option-text">A) By using Pulse Width Modulation (PWM) to vary voltage, which proportionally adjusts how open or closed the valve is</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-2" value="B" class="option-radio">
+              <span class="option-text">B) By manually turning a handle</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-2" value="C" class="option-radio">
+              <span class="option-text">C) By changing the fluid temperature</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-2" value="D" class="option-radio">
+              <span class="option-text">D) By adjusting the pump speed</span>
+            </label>
+          </div>
           <div class="question-actions">
             <button class="submit-question-btn" onclick="submitAnswer(2)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) By using Pulse Width Modulation (PWM) to vary voltage, which proportionally adjusts how open or closed the valve is.
+          </div>
+        </div>
+        
+        <div class="question-item" data-question="3">
+          <h4>Question 3: What is meant by the term "deadband" in valve control?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-3" value="A" class="option-radio">
+              <span class="option-text">A) Deadband refers to the range (typically 0–10% demand) where the valve remains shut and doesn't begin opening until demand exceeds this threshold</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-3" value="B" class="option-radio">
+              <span class="option-text">B) Deadband is the maximum opening of the valve</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-3" value="C" class="option-radio">
+              <span class="option-text">C) Deadband is the minimum flow rate</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-3" value="D" class="option-radio">
+              <span class="option-text">D) Deadband is the valve's response time</span>
+            </label>
+          </div>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(3)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) Deadband refers to the range (typically 0–10% demand) where the valve remains shut and doesn't begin opening until demand exceeds this threshold.
+          </div>
+        </div>
+        
+        <div class="question-item" data-question="4">
+          <h4>Question 4: What should you do to check if a valve is active during operation?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-4" value="A" class="option-radio">
+              <span class="option-text">A) Carefully feel for warmth on the valve's electrical connector, it typically gets warm when active (never check for leaks by hand)</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-4" value="B" class="option-radio">
+              <span class="option-text">B) Touch the valve body directly</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-4" value="C" class="option-radio">
+              <span class="option-text">C) Listen for noise from the valve</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-4" value="D" class="option-radio">
+              <span class="option-text">D) Check the valve's color</span>
+            </label>
+          </div>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(4)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) Carefully feel for warmth on the valve's electrical connector, it typically gets warm when active (never check for leaks by hand).
+          </div>
+        </div>
+        
+        <div class="question-item" data-question="5">
+          <h4>Question 5: Why is it important to observe valve behaviour during an Emergency Stop?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-5" value="A" class="option-radio">
+              <span class="option-text">A) To ensure the valve fails to the correct position (open or closed) for safety, in this system, it should go fully closed</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-5" value="B" class="option-radio">
+              <span class="option-text">B) To see if the valve makes noise</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-5" value="C" class="option-radio">
+              <span class="option-text">C) To check if the valve changes color</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-5" value="D" class="option-radio">
+              <span class="option-text">D) To measure the valve's temperature</span>
+            </label>
+          </div>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(5)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) To ensure the valve fails to the correct position (open or closed) for safety, in this system, it should go fully closed.
           </div>
         </div>
       </div>
@@ -127,25 +252,41 @@
     });
     
     function submitAnswer(questionNumber) {
-      const input = document.querySelector('[data-question="' + questionNumber + '"]');
-      const answer = input.value.trim();
+      const questionItem = document.querySelector(`[data-question="${questionNumber}"]`);
+      const selectedOption = questionItem.querySelector('.option-radio:checked');
+      const answer = selectedOption ? selectedOption.value : '';
+      
       if (answer) {
         localStorage.setItem('worksheet7_answer' + questionNumber, answer);
         const button = event.target;
         const originalText = button.textContent;
         button.textContent = 'Saved!';
-        setTimeout(() => { button.textContent = originalText; }, 2000);
+        button.style.background = '#4CAF50';
+        setTimeout(() => { 
+          button.textContent = originalText; 
+          button.style.background = '';
+        }, 2000);
+
+        // Show correct answer
+        const correctAnswerDiv = questionItem.querySelector('.correct-answer');
+        correctAnswerDiv.style.display = 'block';
+
       } else {
-        alert('Please enter an answer before submitting.');
+        alert('Please select an answer before submitting.');
       }
     }
     
     function loadSavedAnswers() {
-      for (let i = 1; i <= 2; i++) {
+      for (let i = 1; i <= 5; i++) {
         const saved = localStorage.getItem('worksheet7_answer' + i);
         if (saved) {
-          const input = document.querySelector('[data-question="' + i + '"]');
-          if (input) input.value = saved;
+          const questionItem = document.querySelector(`[data-question="${i}"]`);
+          if (questionItem) {
+            const selectedOption = questionItem.querySelector(`.option-radio[value="${saved}"]`);
+            if (selectedOption) {
+              selectedOption.checked = true;
+            }
+          }
         }
       }
     }

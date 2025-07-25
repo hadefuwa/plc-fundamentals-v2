@@ -1086,22 +1086,59 @@ h1 {
 }
 
 /* Multiple Choice Question Styles */
+.multiple-choice-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 15px 0;
+}
+
 .option-label {
-    transition: all 0.3s ease !important;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px;
+    background: #444;
+    border: 2px solid #555;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
 }
 
 .option-label:hover {
-    background: #444 !important;
+    background: #555 !important;
     border-color: var(--accent-color) !important;
+    transform: translateX(5px);
 }
 
-.option-label input[type="radio"]:checked + span {
+.option-radio {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--accent-color);
+    cursor: pointer;
+}
+
+.option-text {
+    color: #FFFFFF;
+    font-size: 14px;
+    line-height: 1.4;
+    flex: 1;
+}
+
+.option-label input[type="radio"]:checked + .option-text {
     color: var(--accent-color) !important;
     font-weight: bold;
 }
 
 .option-label input[type="radio"]:checked {
     accent-color: var(--accent-color);
+}
+
+.option-label:has(input[type="radio"]:checked) {
+    background: #2a2a2a !important;
+    border-color: var(--accent-color) !important;
+    box-shadow: 0 0 10px rgba(74, 158, 255, 0.3);
 }
 
 .answer-feedback {

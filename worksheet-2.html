@@ -184,18 +184,142 @@
         </div>
         
         <div class="question-item" data-question="1">
-          <h4>Question 1: What should happen when an emergency stop button is pressed?</h4>
-          <textarea class="answer-input" data-question="1" placeholder="Describe the expected system response..."></textarea>
+          <h4>Question 1: What is the main purpose of an Emergency Stop (E-Stop)?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-1" value="A" class="option-radio">
+              <span class="option-text">A) To quickly stop a machine or system in an emergency to protect people and equipment</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-1" value="B" class="option-radio">
+              <span class="option-text">B) To slow down the system gradually</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-1" value="C" class="option-radio">
+              <span class="option-text">C) To display warning messages</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-1" value="D" class="option-radio">
+              <span class="option-text">D) To restart the system automatically</span>
+            </label>
+          </div>
           <div class="question-actions">
             <button class="submit-question-btn" onclick="submitAnswer(1)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) To quickly stop a machine or system in an emergency to protect people and equipment.
           </div>
         </div>
         
         <div class="question-item" data-question="2">
-          <h4>Question 2: Why must emergency stop buttons be "twist to release" design?</h4>
-          <textarea class="answer-input" data-question="2" placeholder="Explain the safety reasoning..."></textarea>
+          <h4>Question 2: How do you reset the E-Stop after it has been pressed?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-2" value="A" class="option-radio">
+              <span class="option-text">A) Twist the E-Stop anti-clockwise, then press the blue reset button or the HMI reset button</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-2" value="B" class="option-radio">
+              <span class="option-text">B) Simply press the E-Stop button again</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-2" value="C" class="option-radio">
+              <span class="option-text">C) Turn off the main power switch</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-2" value="D" class="option-radio">
+              <span class="option-text">D) Wait for the system to reset automatically</span>
+            </label>
+          </div>
           <div class="question-actions">
             <button class="submit-question-btn" onclick="submitAnswer(2)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) Twist the E-Stop anti-clockwise, then press the blue reset button or the HMI reset button.
+          </div>
+        </div>
+        
+        <div class="question-item" data-question="3">
+          <h4>Question 3: What makes an E-Stop more reliable than a normal stop button?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-3" value="A" class="option-radio">
+              <span class="option-text">A) It has two contact channels; both must be closed for operation, and either opening will stop the system, this redundancy ensures safety</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-3" value="B" class="option-radio">
+              <span class="option-text">B) It is larger and more visible</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-3" value="C" class="option-radio">
+              <span class="option-text">C) It uses higher voltage</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-3" value="D" class="option-radio">
+              <span class="option-text">D) It is made of stronger materials</span>
+            </label>
+          </div>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(3)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) It has two contact channels; both must be closed for operation, and either opening will stop the system, this redundancy ensures safety.
+          </div>
+        </div>
+        
+        <div class="question-item" data-question="4">
+          <h4>Question 4: When should an E-Stop be used?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-4" value="A" class="option-radio">
+              <span class="option-text">A) Only during emergencies, not for regular stopping of the machine</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-4" value="B" class="option-radio">
+              <span class="option-text">B) For normal shutdown procedures</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-4" value="C" class="option-radio">
+              <span class="option-text">C) To pause the system temporarily</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-4" value="D" class="option-radio">
+              <span class="option-text">D) To change system settings</span>
+            </label>
+          </div>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(4)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) Only during emergencies, not for regular stopping of the machine.
+          </div>
+        </div>
+        
+        <div class="question-item" data-question="5">
+          <h4>Question 5: Why is it important to regularly inspect the E-Stop?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-5" value="A" class="option-radio">
+              <span class="option-text">A) To ensure it is free from damage or faults and will work properly when needed</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-5" value="B" class="option-radio">
+              <span class="option-text">B) To clean the button surface</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-5" value="C" class="option-radio">
+              <span class="option-text">C) To change the button color</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-5" value="D" class="option-radio">
+              <span class="option-text">D) To adjust the button position</span>
+            </label>
+          </div>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(5)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) To ensure it is free from damage or faults and will work properly when needed.
           </div>
         </div>
       </div>
@@ -348,8 +472,9 @@
     }
     
     function submitAnswer(questionNumber) {
-      const input = document.querySelector(`[data-question="${questionNumber}"]`);
-      const answer = input.value.trim();
+      const questionItem = document.querySelector(`[data-question="${questionNumber}"]`);
+      const selectedOption = questionItem.querySelector('.option-radio:checked');
+      const answer = selectedOption ? selectedOption.value : '';
       
       if (answer) {
         localStorage.setItem(`worksheet2_answer${questionNumber}`, answer);
@@ -362,18 +487,26 @@
         setTimeout(() => {
           button.textContent = originalText;
         }, 2000);
+
+        // Show correct answer
+        const correctAnswerDiv = questionItem.querySelector('.correct-answer');
+        correctAnswerDiv.style.display = 'block';
+
       } else {
-        alert('Please enter an answer before submitting.');
+        alert('Please select an answer before submitting.');
       }
     }
     
     function loadSavedAnswers() {
-      for (let i = 1; i <= 2; i++) {
+      for (let i = 1; i <= 5; i++) {
         const saved = localStorage.getItem(`worksheet2_answer${i}`);
         if (saved) {
-          const input = document.querySelector(`[data-question="${i}"]`);
-          if (input) {
-            input.value = saved;
+          const questionItem = document.querySelector(`[data-question="${i}"]`);
+          if (questionItem) {
+            const selectedOption = questionItem.querySelector(`.option-radio[value="${saved}"]`);
+            if (selectedOption) {
+              selectedOption.checked = true;
+            }
           }
         }
       }

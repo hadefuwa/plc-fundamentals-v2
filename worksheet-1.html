@@ -191,29 +191,138 @@
         </div>
         
         <div class="question-item" data-question="1">
-          <h4>Question 1: What happens to the control valve when the flow rate drops below the setpoint?</h4>
-          <textarea class="answer-input" data-question="1" placeholder="Describe the valve response and control action..."></textarea>
+          <h4>Question 1: What is the purpose of a closed-loop flow control system?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-1" value="A" class="option-radio">
+              <span class="option-text">A) To continuously adjust flow using sensor feedback to meet a setpoint, maintaining accuracy and stability even if conditions change</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-1" value="B" class="option-radio">
+              <span class="option-text">B) To operate the system manually at all times</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-1" value="C" class="option-radio">
+              <span class="option-text">C) To increase the system's energy consumption</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-1" value="D" class="option-radio">
+              <span class="option-text">D) To reduce the need for sensors</span>
+            </label>
+          </div>
           <div class="question-actions">
             <button class="submit-question-btn" onclick="submitAnswer(1)">Submit Answer</button>
-            <span class="submit-note">Your answer will be saved automatically.</span>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) To continuously adjust flow using sensor feedback to meet a setpoint, maintaining accuracy and stability even if conditions change.
           </div>
         </div>
-        
         <div class="question-item" data-question="2">
-          <h4>Question 2: How does increasing the Proportional (P) gain affect system response?</h4>
-          <textarea class="answer-input" data-question="2" placeholder="Explain the effect of P gain on system behavior..."></textarea>
+          <h4>Question 2: What must you check before starting the system?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-2" value="A" class="option-radio">
+              <span class="option-text">A) Ensure the hand valve is in the open position, with the handle in line with the piping</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-2" value="B" class="option-radio">
+              <span class="option-text">B) Ensure the pump is off</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-2" value="C" class="option-radio">
+              <span class="option-text">C) Ensure the flow sensor is disconnected</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-2" value="D" class="option-radio">
+              <span class="option-text">D) Ensure the valve is closed</span>
+            </label>
+          </div>
           <div class="question-actions">
             <button class="submit-question-btn" onclick="submitAnswer(2)">Submit Answer</button>
-            <span class="submit-note">Your answer will be saved automatically.</span>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) Ensure the hand valve is in the open position, with the handle in line with the piping.
           </div>
         </div>
-        
         <div class="question-item" data-question="3">
-          <h4>Question 3: Why is regular maintenance of the flow sensor critical for system performance?</h4>
-          <textarea class="answer-input" data-question="3" placeholder="Discuss the importance of sensor maintenance..."></textarea>
+          <h4>Question 3: What happens when you restrict the flow using the hand valve?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-3" value="A" class="option-radio">
+              <span class="option-text">A) The flow drops, the sensor detects this and sends data to the PLC, which increases pump speed and adjusts the valve to restore flow</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-3" value="B" class="option-radio">
+              <span class="option-text">B) The system shuts down immediately</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-3" value="C" class="option-radio">
+              <span class="option-text">C) The valve closes further</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-3" value="D" class="option-radio">
+              <span class="option-text">D) The pump turns off</span>
+            </label>
+          </div>
           <div class="question-actions">
             <button class="submit-question-btn" onclick="submitAnswer(3)">Submit Answer</button>
-            <span class="submit-note">Your answer will be saved automatically.</span>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) The flow drops, the sensor detects this and sends data to the PLC, which increases pump speed and adjusts the valve to restore flow.
+          </div>
+        </div>
+        <div class="question-item" data-question="4">
+          <h4>Question 4: What role does the PLC play in the system?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-4" value="A" class="option-radio">
+              <span class="option-text">A) The PLC is a computer that makes real-time decisions based on sensor data to control devices like pumps and valves</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-4" value="B" class="option-radio">
+              <span class="option-text">B) The PLC only displays data on the HMI</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-4" value="C" class="option-radio">
+              <span class="option-text">C) The PLC is used for manual control only</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-4" value="D" class="option-radio">
+              <span class="option-text">D) The PLC is not involved in control</span>
+            </label>
+          </div>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(4)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) The PLC is a computer that makes real-time decisions based on sensor data to control devices like pumps and valves.
+          </div>
+        </div>
+        <div class="question-item" data-question="5">
+          <h4>Question 5: Why should you avoid making rapid changes to the valve?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-5" value="A" class="option-radio">
+              <span class="option-text">A) Rapid changes can cause oscillations in flow, making the system unstable; gradual adjustments help maintain smooth control</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-5" value="B" class="option-radio">
+              <span class="option-text">B) Rapid changes save energy</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-5" value="C" class="option-radio">
+              <span class="option-text">C) Rapid changes are required for safety</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-5" value="D" class="option-radio">
+              <span class="option-text">D) Rapid changes increase system accuracy</span>
+            </label>
+          </div>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(5)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) Rapid changes can cause oscillations in flow, making the system unstable; gradual adjustments help maintain smooth control.
           </div>
         </div>
       </div>
@@ -547,8 +656,9 @@
     
     // Submit answer
     function submitAnswer(questionNumber) {
-      const input = document.querySelector(`[data-question="${questionNumber}"]`);
-      const answer = input.value.trim();
+      const questionItem = document.querySelector(`[data-question="${questionNumber}"]`);
+      const selectedOption = questionItem.querySelector('.option-radio:checked');
+      const answer = selectedOption ? selectedOption.value : '';
       
       if (answer) {
         // Save answer
@@ -564,19 +674,27 @@
           button.textContent = originalText;
           button.style.background = '#4CAF50';
         }, 2000);
+
+        // Show correct answer
+        const correctAnswerDiv = questionItem.querySelector('.correct-answer');
+        correctAnswerDiv.style.display = 'block';
+
       } else {
-        alert('Please enter an answer before submitting.');
+        alert('Please select an answer before submitting.');
       }
     }
     
     // Load saved answers
     function loadSavedAnswers() {
-      for (let i = 1; i <= 3; i++) {
+      for (let i = 1; i <= 5; i++) {
         const saved = localStorage.getItem(`worksheet1_answer${i}`);
         if (saved) {
-          const input = document.querySelector(`[data-question="${i}"]`);
-          if (input) {
-            input.value = saved;
+          const questionItem = document.querySelector(`[data-question="${i}"]`);
+          if (questionItem) {
+            const selectedOption = questionItem.querySelector(`.option-radio[value="${saved}"]`);
+            if (selectedOption) {
+              selectedOption.checked = true;
+            }
           }
         }
       }

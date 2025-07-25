@@ -78,17 +78,142 @@
       <h2 class="section-header"><i class="fas fa-question-circle"></i> Questions & Answers</h2>
       <div class="questions-content">
         <div class="question-item" data-question="1">
-          <h4>Question 1: What are the key maintenance points for this float-switch system?</h4>
-          <textarea class="answer-input" data-question="1" placeholder="Describe the main maintenance requirements..."></textarea>
+          <h4>Question 1: What is the main purpose of a float switch in an industrial system?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-1" value="A" class="option-radio">
+              <span class="option-text">A) To detect liquid levels in a tank and trigger actions such as stopping a pump or sounding an alarm</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-1" value="B" class="option-radio">
+              <span class="option-text">B) To measure the temperature of the liquid</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-1" value="C" class="option-radio">
+              <span class="option-text">C) To control the flow rate of the liquid</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-1" value="D" class="option-radio">
+              <span class="option-text">D) To filter impurities from the liquid</span>
+            </label>
+          </div>
           <div class="question-actions">
             <button class="submit-question-btn" onclick="submitAnswer(1)">Submit Answer</button>
           </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) To detect liquid levels in a tank and trigger actions such as stopping a pump or sounding an alarm.
+          </div>
         </div>
+        
         <div class="question-item" data-question="2">
-          <h4>Question 2: How would you troubleshoot common issues with this system?</h4>
-          <textarea class="answer-input" data-question="2" placeholder="Explain your troubleshooting approach..."></textarea>
+          <h4>Question 2: What is the difference between a normally open (NO) and a normally closed (NC) float switch?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-2" value="A" class="option-radio">
+              <span class="option-text">A) A NO switch only sends a signal when activated (float is lifted). An NC switch sends a signal when inactivated and breaks the signal when lifted</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-2" value="B" class="option-radio">
+              <span class="option-text">B) A NO switch is always on, an NC switch is always off</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-2" value="C" class="option-radio">
+              <span class="option-text">C) A NO switch measures temperature, an NC switch measures pressure</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-2" value="D" class="option-radio">
+              <span class="option-text">D) There is no difference between them</span>
+            </label>
+          </div>
           <div class="question-actions">
             <button class="submit-question-btn" onclick="submitAnswer(2)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) A NO switch only sends a signal when activated (float is lifted). An NC switch sends a signal when inactivated and breaks the signal when lifted.
+          </div>
+        </div>
+        
+        <div class="question-item" data-question="3">
+          <h4>Question 3: Why is the low-level float switch normally open (NO)?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-3" value="A" class="option-radio">
+              <span class="option-text">A) So, the pump only runs when there is enough fluid. If the level drops, the circuit opens and stops the pump to prevent dry running</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-3" value="B" class="option-radio">
+              <span class="option-text">B) So the pump runs continuously</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-3" value="C" class="option-radio">
+              <span class="option-text">C) So the pump runs faster</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-3" value="D" class="option-radio">
+              <span class="option-text">D) So the pump uses less energy</span>
+            </label>
+          </div>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(3)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) So, the pump only runs when there is enough fluid. If the level drops, the circuit opens and stops the pump to prevent dry running.
+          </div>
+        </div>
+        
+        <div class="question-item" data-question="4">
+          <h4>Question 4: Why is the high-level float switch normally closed (NC)?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-4" value="A" class="option-radio">
+              <span class="option-text">A) So, the system constantly monitors for overflow. If the tank gets too full, the circuit breaks and stops the filling process or triggers an alarm</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-4" value="B" class="option-radio">
+              <span class="option-text">B) So the tank fills continuously</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-4" value="C" class="option-radio">
+              <span class="option-text">C) So the tank fills faster</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-4" value="D" class="option-radio">
+              <span class="option-text">D) So the tank uses less energy</span>
+            </label>
+          </div>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(4)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) So, the system constantly monitors for overflow. If the tank gets too full, the circuit breaks and stops the filling process or triggers an alarm.
+          </div>
+        </div>
+        
+        <div class="question-item" data-question="5">
+          <h4>Question 5: What are some common float switch faults, and how can they be identified?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-5" value="A" class="option-radio">
+              <span class="option-text">A) Sticking, misalignment, or contact failure. These can be identified by testing float movement and checking IO screen signals</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-5" value="B" class="option-radio">
+              <span class="option-text">B) High temperature, low pressure, or electrical noise</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-5" value="C" class="option-radio">
+              <span class="option-text">C) Fast flow, slow flow, or no flow</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-5" value="D" class="option-radio">
+              <span class="option-text">D) High voltage, low voltage, or no voltage</span>
+            </label>
+          </div>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(5)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) Sticking, misalignment, or contact failure. These can be identified by testing float movement and checking IO screen signals.
           </div>
         </div>
       </div>
@@ -127,25 +252,41 @@
     });
     
     function submitAnswer(questionNumber) {
-      const input = document.querySelector('[data-question="' + questionNumber + '"]');
-      const answer = input.value.trim();
+      const questionItem = document.querySelector(`[data-question="${questionNumber}"]`);
+      const selectedOption = questionItem.querySelector('.option-radio:checked');
+      const answer = selectedOption ? selectedOption.value : '';
+      
       if (answer) {
         localStorage.setItem('worksheet8_answer' + questionNumber, answer);
         const button = event.target;
         const originalText = button.textContent;
         button.textContent = 'Saved!';
-        setTimeout(() => { button.textContent = originalText; }, 2000);
+        button.style.background = '#4CAF50';
+        setTimeout(() => { 
+          button.textContent = originalText; 
+          button.style.background = '';
+        }, 2000);
+
+        // Show correct answer
+        const correctAnswerDiv = questionItem.querySelector('.correct-answer');
+        correctAnswerDiv.style.display = 'block';
+
       } else {
-        alert('Please enter an answer before submitting.');
+        alert('Please select an answer before submitting.');
       }
     }
     
     function loadSavedAnswers() {
-      for (let i = 1; i <= 2; i++) {
+      for (let i = 1; i <= 5; i++) {
         const saved = localStorage.getItem('worksheet8_answer' + i);
         if (saved) {
-          const input = document.querySelector('[data-question="' + i + '"]');
-          if (input) input.value = saved;
+          const questionItem = document.querySelector(`[data-question="${i}"]`);
+          if (questionItem) {
+            const selectedOption = questionItem.querySelector(`.option-radio[value="${saved}"]`);
+            if (selectedOption) {
+              selectedOption.checked = true;
+            }
+          }
         }
       }
     }

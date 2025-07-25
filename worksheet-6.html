@@ -78,17 +78,142 @@
       <h2 class="section-header"><i class="fas fa-question-circle"></i> Questions & Answers</h2>
       <div class="questions-content">
         <div class="question-item" data-question="1">
-          <h4>Question 1: What are the key maintenance points for this pump system?</h4>
-          <textarea class="answer-input" data-question="1" placeholder="Describe the main maintenance requirements..."></textarea>
+          <h4>Question 1: What is the function of a pump in an industrial system?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-1" value="A" class="option-radio">
+              <span class="option-text">A) To move fluids through a system by creating flow and pressure, supporting process control and system regulation</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-1" value="B" class="option-radio">
+              <span class="option-text">B) To measure the flow rate of the fluid</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-1" value="C" class="option-radio">
+              <span class="option-text">C) To control the temperature of the fluid</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-1" value="D" class="option-radio">
+              <span class="option-text">D) To filter contaminants from the fluid</span>
+            </label>
+          </div>
           <div class="question-actions">
             <button class="submit-question-btn" onclick="submitAnswer(1)">Submit Answer</button>
           </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) To move fluids through a system by creating flow and pressure, supporting process control and system regulation.
+          </div>
         </div>
+        
         <div class="question-item" data-question="2">
-          <h4>Question 2: How would you troubleshoot common issues with this system?</h4>
-          <textarea class="answer-input" data-question="2" placeholder="Explain your troubleshooting approach..."></textarea>
+          <h4>Question 2: How can a pump be controlled to vary its speed?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-2" value="A" class="option-radio">
+              <span class="option-text">A) By varying the voltage (0–24V), using PWM signals, or through a Variable Frequency Drive (VFD) to adjust speed proportionally</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-2" value="B" class="option-radio">
+              <span class="option-text">B) By changing the fluid temperature</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-2" value="C" class="option-radio">
+              <span class="option-text">C) By adjusting the valve position</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-2" value="D" class="option-radio">
+              <span class="option-text">D) By changing the fluid type</span>
+            </label>
+          </div>
           <div class="question-actions">
             <button class="submit-question-btn" onclick="submitAnswer(2)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) By varying the voltage (0–24V), using PWM signals, or through a Variable Frequency Drive (VFD) to adjust speed proportionally.
+          </div>
+        </div>
+        
+        <div class="question-item" data-question="3">
+          <h4>Question 3: What might it indicate if a pump is running at full speed but still not meeting the setpoint?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-3" value="A" class="option-radio">
+              <span class="option-text">A) It could signal a system fault such as a partially closed valve, clogged filter, or restriction in the piping</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-3" value="B" class="option-radio">
+              <span class="option-text">B) It means the pump is working perfectly</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-3" value="C" class="option-radio">
+              <span class="option-text">C) It means the setpoint is too low</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-3" value="D" class="option-radio">
+              <span class="option-text">D) It means the fluid is too hot</span>
+            </label>
+          </div>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(3)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) It could signal a system fault such as a partially closed valve, clogged filter, or restriction in the piping.
+          </div>
+        </div>
+        
+        <div class="question-item" data-question="4">
+          <h4>Question 4: Why must pumps not be run dry, and what protects against this?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-4" value="A" class="option-radio">
+              <span class="option-text">A) Pumps use the fluid as coolant and lubricant; running dry can cause overheating or damage. A low-level sensor in the tank prevents this</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-4" value="B" class="option-radio">
+              <span class="option-text">B) Running dry saves energy</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-4" value="C" class="option-radio">
+              <span class="option-text">C) Running dry makes the pump quieter</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-4" value="D" class="option-radio">
+              <span class="option-text">D) Running dry increases pump efficiency</span>
+            </label>
+          </div>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(4)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) Pumps use the fluid as coolant and lubricant; running dry can cause overheating or damage. A low-level sensor in the tank prevents this.
+          </div>
+        </div>
+        
+        <div class="question-item" data-question="5">
+          <h4>Question 5: What are some signs that maintenance engineers should look for to detect pump issues early?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-5" value="A" class="option-radio">
+              <span class="option-text">A) Gradual drops in flow with rising power use, unusual noises, or excessive vibration are signs of potential pump problems</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-5" value="B" class="option-radio">
+              <span class="option-text">B) Increased flow rate is always a sign of problems</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-5" value="C" class="option-radio">
+              <span class="option-text">C) Lower power consumption indicates problems</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-5" value="D" class="option-radio">
+              <span class="option-text">D) Higher temperature always indicates problems</span>
+            </label>
+          </div>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(5)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) Gradual drops in flow with rising power use, unusual noises, or excessive vibration are signs of potential pump problems.
           </div>
         </div>
       </div>
@@ -127,25 +252,41 @@
     });
     
     function submitAnswer(questionNumber) {
-      const input = document.querySelector('[data-question="' + questionNumber + '"]');
-      const answer = input.value.trim();
+      const questionItem = document.querySelector(`[data-question="${questionNumber}"]`);
+      const selectedOption = questionItem.querySelector('.option-radio:checked');
+      const answer = selectedOption ? selectedOption.value : '';
+      
       if (answer) {
         localStorage.setItem('worksheet6_answer' + questionNumber, answer);
         const button = event.target;
         const originalText = button.textContent;
         button.textContent = 'Saved!';
-        setTimeout(() => { button.textContent = originalText; }, 2000);
+        button.style.background = '#4CAF50';
+        setTimeout(() => { 
+          button.textContent = originalText; 
+          button.style.background = '';
+        }, 2000);
+
+        // Show correct answer
+        const correctAnswerDiv = questionItem.querySelector('.correct-answer');
+        correctAnswerDiv.style.display = 'block';
+
       } else {
-        alert('Please enter an answer before submitting.');
+        alert('Please select an answer before submitting.');
       }
     }
     
     function loadSavedAnswers() {
-      for (let i = 1; i <= 2; i++) {
+      for (let i = 1; i <= 5; i++) { // Updated loop to 5 questions
         const saved = localStorage.getItem('worksheet6_answer' + i);
         if (saved) {
-          const input = document.querySelector('[data-question="' + i + '"]');
-          if (input) input.value = saved;
+          const questionItem = document.querySelector(`[data-question="${i}"]`);
+          if (questionItem) {
+            const selectedOption = questionItem.querySelector(`.option-radio[value="${saved}"]`);
+            if (selectedOption) {
+              selectedOption.checked = true;
+            }
+          }
         }
       }
     }

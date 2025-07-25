@@ -82,18 +82,142 @@
       <h2 class="section-header"><i class="fas fa-question-circle"></i> Questions & Answers</h2>
       <div class="questions-content">
         <div class="question-item" data-question="1">
-          <h4>Question 1: What are the key maintenance points for this PLC system?</h4>
-          <textarea class="answer-input" data-question="1" placeholder="Describe the main maintenance requirements..."></textarea>
+          <h4>Question 1: What is a PLC and what is it designed for?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-1" value="A" class="option-radio">
+              <span class="option-text">A) A Programmable Logic Controller (PLC) is an industrial computer designed for real-time control of machines and processes in harsh environments</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-1" value="B" class="option-radio">
+              <span class="option-text">B) A Personal Logic Computer designed for office use</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-1" value="C" class="option-radio">
+              <span class="option-text">C) A Portable Light Controller for lighting systems</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-1" value="D" class="option-radio">
+              <span class="option-text">D) A Power Level Controller for electrical systems</span>
+            </label>
+          </div>
           <div class="question-actions">
             <button class="submit-question-btn" onclick="submitAnswer(1)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) A Programmable Logic Controller (PLC) is an industrial computer designed for real-time control of machines and processes in harsh environments.
           </div>
         </div>
         
         <div class="question-item" data-question="2">
-          <h4>Question 2: How would you troubleshoot common issues with this system?</h4>
-          <textarea class="answer-input" data-question="2" placeholder="Explain your troubleshooting approach..."></textarea>
+          <h4>Question 2: What do the status LEDs on the PLC indicate?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-2" value="A" class="option-radio">
+              <span class="option-text">A) They show real-time feedback of input and output signals, helping verify if components are functioning correctly</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-2" value="B" class="option-radio">
+              <span class="option-text">B) They show the temperature of the PLC</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-2" value="C" class="option-radio">
+              <span class="option-text">C) They show the power consumption of the system</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-2" value="D" class="option-radio">
+              <span class="option-text">D) They show the time of day</span>
+            </label>
+          </div>
           <div class="question-actions">
             <button class="submit-question-btn" onclick="submitAnswer(2)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) They show real-time feedback of input and output signals, helping verify if components are functioning correctly.
+          </div>
+        </div>
+        
+        <div class="question-item" data-question="3">
+          <h4>Question 3: What does it mean if an input LED expected to be on is not lit?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-3" value="A" class="option-radio">
+              <span class="option-text">A) It could indicate a faulty sensor, wiring problem, or failed connection</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-3" value="B" class="option-radio">
+              <span class="option-text">B) It means the PLC is working normally</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-3" value="C" class="option-radio">
+              <span class="option-text">C) It means the system is in standby mode</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-3" value="D" class="option-radio">
+              <span class="option-text">D) It means the LED is broken</span>
+            </label>
+          </div>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(3)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) It could indicate a faulty sensor, wiring problem, or failed connection.
+          </div>
+        </div>
+        
+        <div class="question-item" data-question="4">
+          <h4>Question 4: What should you observe on the output LEDs when the system starts?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-4" value="A" class="option-radio">
+              <span class="option-text">A) One of the output LEDs will flash briefly, this represents the system's status LED</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-4" value="B" class="option-radio">
+              <span class="option-text">B) All output LEDs should turn off</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-4" value="C" class="option-radio">
+              <span class="option-text">C) All output LEDs should stay on continuously</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-4" value="D" class="option-radio">
+              <span class="option-text">D) The output LEDs should change color</span>
+            </label>
+          </div>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(4)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) One of the output LEDs will flash briefly, this represents the system's status LED.
+          </div>
+        </div>
+        
+        <div class="question-item" data-question="5">
+          <h4>Question 5: How can you tell the flow sensor is working by looking at the PLC?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-5" value="A" class="option-radio">
+              <span class="option-text">A) One of the input LEDs will flash rapidly; if flow is reduced, it slows down, and if flow increases, it nearly goes solid, showing the sensor is active</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-5" value="B" class="option-radio">
+              <span class="option-text">B) The input LED should stay off completely</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-5" value="C" class="option-radio">
+              <span class="option-text">C) The input LED should stay on continuously</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-5" value="D" class="option-radio">
+              <span class="option-text">D) The input LED should change color</span>
+            </label>
+          </div>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(5)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) One of the input LEDs will flash rapidly; if flow is reduced, it slows down, and if flow increases, it nearly goes solid, showing the sensor is active.
           </div>
         </div>
       </div>
@@ -138,8 +262,9 @@
     });
     
     function submitAnswer(questionNumber) {
-      const input = document.querySelector('[data-question="' + questionNumber + '"]');
-      const answer = input.value.trim();
+      const questionItem = document.querySelector(`[data-question="${questionNumber}"]`);
+      const selectedOption = questionItem.querySelector('.option-radio:checked');
+      const answer = selectedOption ? selectedOption.value : '';
       
       if (answer) {
         localStorage.setItem('worksheet4_answer' + questionNumber, answer);
@@ -152,18 +277,26 @@
         setTimeout(() => {
           button.textContent = originalText;
         }, 2000);
+
+        // Show correct answer
+        const correctAnswerDiv = questionItem.querySelector('.correct-answer');
+        correctAnswerDiv.style.display = 'block';
+
       } else {
-        alert('Please enter an answer before submitting.');
+        alert('Please select an answer before submitting.');
       }
     }
     
     function loadSavedAnswers() {
-      for (let i = 1; i <= 2; i++) {
+      for (let i = 1; i <= 5; i++) { // Updated to 5 for 5 questions
         const saved = localStorage.getItem('worksheet4_answer' + i);
         if (saved) {
-          const input = document.querySelector('[data-question="' + i + '"]');
-          if (input) {
-            input.value = saved;
+          const questionItem = document.querySelector(`[data-question="${i}"]`);
+          if (questionItem) {
+            const selectedOption = questionItem.querySelector(`.option-radio[value="${saved}"]`);
+            if (selectedOption) {
+              selectedOption.checked = true;
+            }
           }
         }
       }

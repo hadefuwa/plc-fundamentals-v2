@@ -59,24 +59,142 @@
       <h2 class="section-header"><i class="fas fa-question-circle"></i> Questions & Answers</h2>
       <div class="questions-content">
         <div class="question-item" data-question="1">
-          <h4>Question 1: What are the key maintenance points for temperature sensor systems?</h4>
-          <textarea class="answer-input" data-question="1" placeholder="Describe the main maintenance requirements for temperature sensors..."></textarea>
+          <h4>Question 1: What is the main purpose of a temperature sensor in an automated system?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-1" value="A" class="option-radio">
+              <span class="option-text">A) To monitor heat levels and prevent overheating or freezing, ensuring safe and efficient operation</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-1" value="B" class="option-radio">
+              <span class="option-text">B) To control the flow rate of fluids</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-1" value="C" class="option-radio">
+              <span class="option-text">C) To measure pressure levels</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-1" value="D" class="option-radio">
+              <span class="option-text">D) To control valve positions</span>
+            </label>
+          </div>
           <div class="question-actions">
             <button class="submit-question-btn" onclick="submitAnswer(1)">Submit Answer</button>
           </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) To monitor heat levels and prevent overheating or freezing, ensuring safe and efficient operation.
+          </div>
         </div>
+        
         <div class="question-item" data-question="2">
-          <h4>Question 2: How would you troubleshoot offset or drift in temperature sensors?</h4>
-          <textarea class="answer-input" data-question="2" placeholder="Explain your troubleshooting approach for sensor drift..."></textarea>
+          <h4>Question 2: How does an RTD temperature sensor work?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-2" value="A" class="option-radio">
+              <span class="option-text">A) It changes resistance based on temperature, which is then converted into a signal the PLC can read</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-2" value="B" class="option-radio">
+              <span class="option-text">B) It uses a magnetic field to measure temperature</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-2" value="C" class="option-radio">
+              <span class="option-text">C) It uses ultrasonic waves to measure temperature</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-2" value="D" class="option-radio">
+              <span class="option-text">D) It uses pressure to measure temperature</span>
+            </label>
+          </div>
           <div class="question-actions">
             <button class="submit-question-btn" onclick="submitAnswer(2)">Submit Answer</button>
           </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) It changes resistance based on temperature, which is then converted into a signal the PLC can read.
+          </div>
         </div>
+        
         <div class="question-item" data-question="3">
-          <h4>Question 3: What calibration procedures are required for temperature sensors?</h4>
-          <textarea class="answer-input" data-question="3" placeholder="Describe calibration procedures for temperature sensors..."></textarea>
+          <h4>Question 3: What happens if the temperature exceeds the high cutout limit set on the HMI?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-3" value="A" class="option-radio">
+              <span class="option-text">A) The system will shut down to protect against overheating or unsafe conditions</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-3" value="B" class="option-radio">
+              <span class="option-text">B) The system will continue running normally</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-3" value="C" class="option-radio">
+              <span class="option-text">C) The system will speed up</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-3" value="D" class="option-radio">
+              <span class="option-text">D) The system will slow down</span>
+            </label>
+          </div>
           <div class="question-actions">
             <button class="submit-question-btn" onclick="submitAnswer(3)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) The system will shut down to protect against overheating or unsafe conditions.
+          </div>
+        </div>
+        
+        <div class="question-item" data-question="4">
+          <h4>Question 4: What could cause a temperature sensor to give incorrect or no readings?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-4" value="A" class="option-radio">
+              <span class="option-text">A) Possible causes include wiring faults, sensor damage, dirt, vibration, or electrical interference</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-4" value="B" class="option-radio">
+              <span class="option-text">B) High flow rate, low pressure, or electrical noise</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-4" value="C" class="option-radio">
+              <span class="option-text">C) Fast movement, slow movement, or no movement</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-4" value="D" class="option-radio">
+              <span class="option-text">D) High voltage, low voltage, or no voltage</span>
+            </label>
+          </div>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(4)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) Possible causes include wiring faults, sensor damage, dirt, vibration, or electrical interference.
+          </div>
+        </div>
+        
+        <div class="question-item" data-question="5">
+          <h4>Question 5: Why is calibration important for temperature sensors?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-5" value="A" class="option-radio">
+              <span class="option-text">A) Calibration keeps the readings accurate and ensures the sensor responds correctly to real conditions</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-5" value="B" class="option-radio">
+              <span class="option-text">B) Calibration makes the sensor work faster</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-5" value="C" class="option-radio">
+              <span class="option-text">C) Calibration reduces energy consumption</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-5" value="D" class="option-radio">
+              <span class="option-text">D) Calibration makes the sensor quieter</span>
+            </label>
+          </div>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(5)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) Calibration keeps the readings accurate and ensures the sensor responds correctly to real conditions.
           </div>
         </div>
       </div>
@@ -115,25 +233,41 @@
     });
     
     function submitAnswer(questionNumber) {
-      const input = document.querySelector('[data-question="' + questionNumber + '"]');
-      const answer = input.value.trim();
+      const questionItem = document.querySelector(`[data-question="${questionNumber}"]`);
+      const selectedOption = questionItem.querySelector('.option-radio:checked');
+      const answer = selectedOption ? selectedOption.value : '';
+      
       if (answer) {
         localStorage.setItem('worksheet11_answer' + questionNumber, answer);
         const button = event.target;
         const originalText = button.textContent;
         button.textContent = 'Saved!';
-        setTimeout(() => { button.textContent = originalText; }, 2000);
+        button.style.background = '#4CAF50';
+        setTimeout(() => { 
+          button.textContent = originalText; 
+          button.style.background = '';
+        }, 2000);
+
+        // Show correct answer
+        const correctAnswerDiv = questionItem.querySelector('.correct-answer');
+        correctAnswerDiv.style.display = 'block';
+
       } else {
-        alert('Please enter an answer before submitting.');
+        alert('Please select an answer before submitting.');
       }
     }
     
     function loadSavedAnswers() {
-      for (let i = 1; i <= 3; i++) {
+      for (let i = 1; i <= 5; i++) {
         const saved = localStorage.getItem('worksheet11_answer' + i);
         if (saved) {
-          const input = document.querySelector('[data-question="' + i + '"]');
-          if (input) input.value = saved;
+          const questionItem = document.querySelector(`[data-question="${i}"]`);
+          if (questionItem) {
+            const selectedOption = questionItem.querySelector(`.option-radio[value="${saved}"]`);
+            if (selectedOption) {
+              selectedOption.checked = true;
+            }
+          }
         }
       }
     }
