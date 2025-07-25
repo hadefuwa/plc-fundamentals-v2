@@ -86,12 +86,55 @@
         {
             "id": 2,
             "title": "Emergency Stop Systems",
-            "paragraphs": [
-                "Emergency Stop (E-Stop) systems are critical safety components in industrial automation.",
-                "These systems must function perfectly to protect both personnel and equipment.",
-                "You need to understand how E-Stops work and how to properly test them.",
-                "This includes understanding the reset procedure and safety features."
-            ],
+            "introduction": {
+                "title": "Emergency Stop System Overview",
+                "paragraphs": [
+                    "Emergency Stop (E-Stop) systems are critical safety components in industrial automation.",
+                    "These systems must function perfectly to protect both personnel and equipment.",
+                    "You need to understand how E-Stops work and how to properly test them.",
+                    "This includes understanding the reset procedure and safety features."
+                ],
+                "keyPoints": [
+                    {
+                        "title": "Dual-Channel Safety",
+                        "description": "Modern E-Stop systems use redundant channels to ensure reliability. If one channel fails, the other continues to provide protection.",
+                        "icon": "fas fa-shield-alt",
+                        "color": "#4CAF50"
+                    },
+                    {
+                        "title": "Fault Detection",
+                        "description": "The system continuously monitors both channels for faults, including wire breaks, contact wear, and other potential failure modes.",
+                        "icon": "fas fa-exclamation-triangle",
+                        "color": "#FF9800"
+                    },
+                    {
+                        "title": "Reset Procedures",
+                        "description": "After an emergency stop, proper reset procedures must be followed to ensure system safety before restarting operations.",
+                        "icon": "fas fa-redo",
+                        "color": "#2196F3"
+                    }
+                ]
+            },
+            "overToYou": {
+                "title": "Your Task",
+                "description": "You will interact with a realistic Emergency Stop system simulation. Practice activating the E-Stop, injecting faults to test system response, and performing proper reset procedures.",
+                "objectives": [
+                    "Activate the emergency stop system",
+                    "Inject various fault conditions",
+                    "Practice the reset sequence",
+                    "Monitor system diagnostics"
+                ]
+            },
+            "soWhat": {
+                "title": "Why This Matters",
+                "description": "Emergency Stop systems are the last line of defense in industrial safety. Understanding their operation and being able to troubleshoot them quickly can prevent accidents and save lives.",
+                "keyLearnings": [
+                    "Safety system redundancy principles",
+                    "Fault detection and diagnosis",
+                    "Proper reset procedures",
+                    "System monitoring and maintenance"
+                ]
+            },
             "image": "emergency-stops.png",
             "questions": [
                 {
@@ -159,7 +202,33 @@
                     "correct_answer": 1,
                     "explanation": "It's important to regularly inspect the E-Stop to ensure it is free from damage or faults and will work properly when needed. Regular inspection prevents failures during emergencies."
                 }
-            ]
+            ],
+            "simulation": {
+                "title": "Emergency Stop System Simulation",
+                "description": "Interactive Emergency Stop system with dual-channel safety, fault injection, reset procedures, and diagnostic monitoring.",
+                "sections": [
+                    {
+                        "id": "emergency-stop-control-panel",
+                        "title": "Emergency Stop Control Panel",
+                        "description": "Main E-Stop controls with emergency stop button and reset functionality"
+                    },
+                    {
+                        "id": "fault-injection-panel",
+                        "title": "Fault Injection & Diagnostics",
+                        "description": "Inject various fault conditions to test system response"
+                    },
+                    {
+                        "id": "reset-sequence-panel",
+                        "title": "Reset Sequence Training",
+                        "description": "Practice proper reset procedures with twist and blue button sequence"
+                    },
+                    {
+                        "id": "fault-history-panel",
+                        "title": "Fault History & Diagnostics",
+                        "description": "Monitor system diagnostics and fault history"
+                    }
+                ]
+            }
         },
         {
             "id": 3,

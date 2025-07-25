@@ -2643,68 +2643,126 @@
             }
           }, 100);
           
-        } else if (worksheetId === 2) {
-          // Enhanced Worksheet 2: Emergency Stops
-          container.innerHTML = `
-            <h1 class="page-title">${scenario.title}</h1>
+        } else {
+          // Generic content for all worksheets using JSON structure
+          let worksheetHTML = `<h1 class="page-title">${scenario.title}</h1>`;
 
-            <div class="worksheet-section introduction-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 2px solid #2196F3; box-shadow: 0 8px 20px rgba(33, 150, 243, 0.2);">
-              <h2 class="section-header" style="color: #2196F3; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-info-circle"></i> Emergency Stop System Overview</h2>
-              <div class="worksheet-content">
-                <p style="color: #FFFFFF; margin-bottom: 20px;">This worksheet focuses on Emergency Stop (E-Stop) systems, which are critical safety components in industrial automation. E-Stop systems provide immediate shutdown capability in emergency situations to protect personnel and equipment.</p>
-                
-                <div class="key-points" style="margin: 20px 0;">
-                  <div class="key-point" style="display: flex; align-items: flex-start; gap: 15px; margin-bottom: 15px; padding: 15px; background: #333; border-radius: 8px;">
-                    <i class="fas fa-shield-alt" style="color: #4CAF50; font-size: 20px; margin-top: 5px;"></i>
-                    <div>
-                      <strong style="color: #FFFFFF; display: block; margin-bottom: 5px;">Dual-Channel Safety</strong>
-                      <p style="color: #FFFFFF; margin: 0;">Modern E-Stop systems use redundant channels to ensure reliability. If one channel fails, the other continues to provide protection.</p>
-                    </div>
-                  </div>
+          // Introduction Section
+          if (scenario.introduction) {
+            worksheetHTML += `
+              <div class="worksheet-section introduction-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 2px solid #2196F3; box-shadow: 0 8px 20px rgba(33, 150, 243, 0.2);">
+                <h2 class="section-header" style="color: #2196F3; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-info-circle"></i> ${scenario.introduction.title}</h2>
+                <div class="worksheet-content">
+                  ${scenario.introduction.paragraphs.map(paragraph => `<p style="color: #FFFFFF; margin-bottom: 15px;">${paragraph}</p>`).join('')}
                   
-                  <div class="key-point" style="display: flex; align-items: flex-start; gap: 15px; margin-bottom: 15px; padding: 15px; background: #333; border-radius: 8px;">
-                    <i class="fas fa-exclamation-triangle" style="color: #FF9800; font-size: 20px; margin-top: 5px;"></i>
-                    <div>
-                      <strong style="color: #FFFFFF; display: block; margin-bottom: 5px;">Fault Detection</strong>
-                      <p style="color: #FFFFFF; margin: 0;">The system continuously monitors both channels for faults, including wire breaks, contact wear, and other potential failure modes.</p>
+                  ${scenario.introduction.keyPoints ? `
+                    <div class="key-points" style="margin: 20px 0;">
+                      ${scenario.introduction.keyPoints.map(point => `
+                        <div class="key-point" style="display: flex; align-items: flex-start; gap: 15px; margin-bottom: 15px; padding: 15px; background: #333; border-radius: 8px;">
+                          <i class="${point.icon}" style="color: ${point.color}; font-size: 20px; margin-top: 5px;"></i>
+                          <div>
+                            <strong style="color: #FFFFFF; display: block; margin-bottom: 5px;">${point.title}</strong>
+                            <p style="color: #FFFFFF; margin: 0;">${point.description}</p>
+                          </div>
+                        </div>
+                      `).join('')}
                     </div>
-                  </div>
+                  ` : ''}
                   
-                  <div class="key-point" style="display: flex; align-items: flex-start; gap: 15px; margin-bottom: 15px; padding: 15px; background: #333; border-radius: 8px;">
-                    <i class="fas fa-redo" style="color: #2196F3; font-size: 20px; margin-top: 5px;"></i>
-                    <div>
-                      <strong style="color: #FFFFFF; display: block; margin-bottom: 5px;">Reset Procedures</strong>
-                      <p style="color: #FFFFFF; margin: 0;">After an emergency stop, proper reset procedures must be followed to ensure system safety before restarting operations.</p>
+                  ${scenario.image ? `
+                    <div class="system-diagram" style="text-align: center; margin: 20px 0;">
+                      <figure>
+                        <img src="assets/maintenance/${scenario.image}" alt="${scenario.title}" style="max-width: 400px; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);">
+                        <figcaption style="color: #FFFFFF; margin-top: 10px; font-style: italic;">${scenario.title} System Diagram</figcaption>
+                      </figure>
                     </div>
-                  </div>
+                  ` : ''}
                 </div>
               </div>
-            </div>
+            `;
+          } else if (scenario.paragraphs) {
+            // Fallback for old format
+            worksheetHTML += `
+              <div class="worksheet-section introduction-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 2px solid #2196F3; box-shadow: 0 8px 20px rgba(33, 150, 243, 0.2);">
+                <h2 class="section-header" style="color: #2196F3; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-info-circle"></i> Introduction</h2>
+                <div class="worksheet-content">
+                  ${scenario.paragraphs.map(paragraph => `<p style="color: #FFFFFF; margin-bottom: 15px;">${paragraph}</p>`).join('')}
+                  
+                  ${scenario.image ? `
+                    <div class="system-diagram" style="text-align: center; margin: 20px 0;">
+                      <figure>
+                        <img src="assets/maintenance/${scenario.image}" alt="${scenario.title}" style="max-width: 400px; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);">
+                        <figcaption style="color: #FFFFFF; margin-top: 10px; font-style: italic;">${scenario.title} System Diagram</figcaption>
+                      </figure>
+                    </div>
+                  ` : ''}
+                </div>
+              </div>
+            `;
+          }
 
-            <!-- Emergency Stop Control Panel -->
-            <div id="emergency-stop-control-panel" class="worksheet-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 2px solid #F44336; box-shadow: 0 8px 20px rgba(244, 67, 54, 0.3);">
-              <h2 class="section-header" style="color: #F44336; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-stop-circle"></i> Emergency Stop Control Panel</h2>
-              <!-- Control panel will be dynamically generated by emergency-stop-simulation.js -->
-            </div>
+          // Over To You Section
+          if (scenario.overToYou) {
+            worksheetHTML += `
+              <div class="worksheet-section over-to-you-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 2px solid #FF9800; box-shadow: 0 8px 20px rgba(255, 152, 0, 0.2);">
+                <h2 class="section-header" style="color: #FF9800; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-user-cog"></i> ${scenario.overToYou.title}</h2>
+                <div class="worksheet-content">
+                  <p style="color: #FFFFFF; margin-bottom: 20px;">${scenario.overToYou.description}</p>
+                  
+                  ${scenario.overToYou.objectives ? `
+                    <div class="objectives" style="margin: 20px 0;">
+                      <h3 style="color: #FF9800; margin-bottom: 15px;">Learning Objectives:</h3>
+                      <ul style="color: #FFFFFF; padding-left: 20px;">
+                        ${scenario.overToYou.objectives.map(objective => `<li style="margin-bottom: 8px;">${objective}</li>`).join('')}
+                      </ul>
+                    </div>
+                  ` : ''}
+                </div>
+              </div>
+            `;
+          }
 
-            <!-- Fault Injection Panel -->
-            <div id="fault-injection-panel" class="worksheet-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 2px solid #FF9800; box-shadow: 0 8px 20px rgba(255, 152, 0, 0.3);">
-              <h2 class="section-header" style="color: #FF9800; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-bug"></i> Fault Injection & Diagnostics</h2>
-              <!-- Fault injection controls will be dynamically generated by emergency-stop-simulation.js -->
-            </div>
+          // So What Section
+          if (scenario.soWhat) {
+            worksheetHTML += `
+              <div class="worksheet-section so-what-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 2px solid #9C27B0; box-shadow: 0 8px 20px rgba(156, 39, 176, 0.2);">
+                <h2 class="section-header" style="color: #9C27B0; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-lightbulb"></i> ${scenario.soWhat.title}</h2>
+                <div class="worksheet-content">
+                  <p style="color: #FFFFFF; margin-bottom: 20px;">${scenario.soWhat.description}</p>
+                  
+                  ${scenario.soWhat.keyLearnings ? `
+                    <div class="key-learnings" style="margin: 20px 0;">
+                      <h3 style="color: #9C27B0; margin-bottom: 15px;">Key Learnings:</h3>
+                      <ul style="color: #FFFFFF; padding-left: 20px;">
+                        ${scenario.soWhat.keyLearnings.map(learning => `<li style="margin-bottom: 8px;">${learning}</li>`).join('')}
+                      </ul>
+                    </div>
+                  ` : ''}
+                </div>
+              </div>
+            `;
+          }
 
-            <!-- Reset Sequence Training -->
-            <div id="reset-sequence-panel" class="worksheet-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 2px solid #4CAF50; box-shadow: 0 8px 20px rgba(76, 175, 80, 0.3);">
-              <h2 class="section-header" style="color: #4CAF50; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-redo"></i> Reset Sequence Training</h2>
-              <!-- Reset sequence controls will be dynamically generated by emergency-stop-simulation.js -->
-            </div>
+          // Simulation Sections
+          if (scenario.simulation && scenario.simulation.sections) {
+            scenario.simulation.sections.forEach(section => {
+              const colors = ['#F44336', '#FF9800', '#4CAF50', '#9C27B0', '#2196F3'];
+              const icons = ['fas fa-stop-circle', 'fas fa-bug', 'fas fa-redo', 'fas fa-history', 'fas fa-cogs'];
+              const colorIndex = scenario.simulation.sections.indexOf(section) % colors.length;
+              const iconIndex = scenario.simulation.sections.indexOf(section) % icons.length;
+              
+              worksheetHTML += `
+                <div id="${section.id}" class="worksheet-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 2px solid ${colors[colorIndex]}; box-shadow: 0 8px 20px ${colors[colorIndex]}33;">
+                  <h2 class="section-header" style="color: ${colors[colorIndex]}; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;"><i class="${icons[iconIndex]}"></i> ${section.title}</h2>
+                  <p style="color: #FFFFFF; margin-bottom: 15px;">${section.description}</p>
+                  <!-- ${section.title} will be dynamically generated by simulation script -->
+                </div>
+              `;
+            });
+          }
 
-            <!-- Fault History -->
-            <div id="fault-history-panel" class="worksheet-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 2px solid #9C27B0; box-shadow: 0 8px 20px rgba(156, 39, 176, 0.3);">
-              <h2 class="section-header" style="color: #9C27B0; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-history"></i> Fault History & Diagnostics</h2>
-              <!-- Fault history will be dynamically generated by emergency-stop-simulation.js -->
-            </div>
-
+          // Questions Section
+          worksheetHTML += `
             <div class="worksheet-section questions-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 2px solid #4CAF50; box-shadow: 0 8px 20px rgba(76, 175, 80, 0.2);">
               <h2 class="section-header" style="color: #4CAF50; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-question-circle"></i> Questions & Answers</h2>
               <div class="questions-content">
@@ -2712,47 +2770,19 @@
               </div>
             </div>
           `;
+
+          container.innerHTML = worksheetHTML;
           
-          // Initialize the Emergency Stop simulation
+          // Initialize simulation based on worksheet ID
           setTimeout(() => {
-            if (typeof initializeEmergencyStopSimulation === 'function') {
+            if (worksheetId === 2 && typeof initializeEmergencyStopSimulation === 'function') {
               initializeEmergencyStopSimulation();
-            } else {
-              console.error('initializeEmergencyStopSimulation function not found');
+            } else if (worksheetId === 1 && typeof initEnhancedPIDSimulation === 'function') {
+              initEnhancedPIDSimulation();
             }
           }, 100);
           
-        } else {
-          // Generic content for other worksheets
-          container.innerHTML = `
-            <h1 class="page-title">${scenario.title}</h1>
 
-            ${scenario.paragraphs ? `
-            <div class="worksheet-section introduction-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 2px solid #2196F3; box-shadow: 0 8px 20px rgba(33, 150, 243, 0.2);">
-              <h2 class="section-header" style="color: #2196F3; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-info-circle"></i> Introduction</h2>
-              <div class="worksheet-content">
-                ${scenario.paragraphs.map(paragraph => `<p style="color: #FFFFFF; margin-bottom: 15px;">${paragraph}</p>`).join('')}
-                
-                ${scenario.image ? `
-                <div class="system-diagram" style="text-align: center; margin: 20px 0;">
-                  <figure>
-                    <img src="assets/maintenance/${scenario.image}" alt="${scenario.title}" style="max-width: 400px; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);">
-                    <figcaption style="color: #FFFFFF; margin-top: 10px; font-style: italic;">${scenario.title} System Diagram</figcaption>
-                  </figure>
-                </div>
-                ` : ''}
-              </div>
-            </div>
-            ` : ''}
-
-            <div class="worksheet-section questions-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 2px solid #4CAF50; box-shadow: 0 8px 20px rgba(76, 175, 80, 0.2);">
-              <h2 class="section-header" style="color: #4CAF50; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-question-circle"></i> Questions & Answers</h2>
-              <div class="questions-content">
-                ${questionsHTML}
-              </div>
-            </div>
-          `;
-        }
         
         console.log('Worksheet content rendered successfully');
         
