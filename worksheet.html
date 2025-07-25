@@ -2765,6 +2765,40 @@
         // Update navigation buttons
         setTimeout(updateNavigationButtons, 100);
         
+        // Initialize simulations based on worksheet type
+        setTimeout(() => {
+          // Check if we're in maintenance mode
+          const urlParams = new URLSearchParams(window.location.search);
+          const isMaintenanceMode = urlParams.get('type') === 'maintenance';
+          
+          if (isMaintenanceMode) {
+            // Initialize maintenance procedures and scenarios
+            if (typeof initializeMaintenanceProcedures === 'function') {
+              initializeMaintenanceProcedures();
+            }
+            if (typeof initializeIndustrialMaintenanceScenario === 'function') {
+              initializeIndustrialMaintenanceScenario();
+            }
+          }
+          
+          // Initialize specific simulations based on scenario ID
+          if (scenario.id === 2 && typeof initializeEmergencyStopSimulation === 'function') {
+            initializeEmergencyStopSimulation();
+          } else if (scenario.id === 3 && typeof initializeStatusLEDSimulation === 'function') {
+            initializeStatusLEDSimulation();
+          } else if (scenario.id === 4 && typeof initializePLCSimulation === 'function') {
+            initializePLCSimulation();
+          } else if (scenario.id === 5 && typeof initializeHMISimulation === 'function') {
+            initializeHMISimulation();
+          } else if (scenario.id === 6 && typeof initializePumpSimulation === 'function') {
+            initializePumpSimulation();
+          } else if (scenario.id === 7 && typeof initializeValveSimulation === 'function') {
+            initializeValveSimulation();
+          } else if (scenario.id === 8 && typeof initializeFloatSwitchSimulation === 'function') {
+            initializeFloatSwitchSimulation();
+          }
+        }, 200);
+        
       } catch (error) {
         console.error('Error rendering interactive worksheet:', error);
         console.error('Error details:', error.message);
@@ -3144,9 +3178,71 @@
             </h2>
             <div class="worksheet-content">
               <p style="color: #FFFFFF; margin-bottom: 20px;">${scenario.simulation.description || 'Interactive simulation content will be loaded here.'}</p>
-              <div id="simulation-container" style="background: #333 !important; padding: 20px; border-radius: 8px;">
-                <p style="color: #FFFFFF; text-align: center;">Simulation functionality available for enhanced worksheets.</p>
-              </div>
+                       <div id="simulation-container" style="background: #333 !important; padding: 20px; border-radius: 8px;">
+           ${(() => {
+             const urlParams = new URLSearchParams(window.location.search);
+             const isMaintenanceMode = urlParams.get('type') === 'maintenance';
+             
+             if (isMaintenanceMode) {
+               return `
+                 <!-- Maintenance Training Panels -->
+                 <div id="maintenance-dashboard-panel"></div>
+                 <div id="scenario-selector-panel"></div>
+                 <div id="scenario-interface-panel"></div>
+                 <div id="troubleshooting-panel"></div>
+                 <div id="safety-procedures-panel"></div>
+                 <div id="maintenance-records-panel"></div>
+                 <div id="assessment-panel"></div>
+               `;
+             } else {
+               // Original simulation panels
+               if (scenario.id === 4) {
+                 return `
+                   <!-- PLC I/O Simulation Panels -->
+                   <div id="plc-io-panel"></div>
+                   <div id="plc-control-panel"></div>
+                   <div id="ladder-logic-panel"></div>
+                   <div id="plc-fault-panel"></div>
+                 `;
+               } else if (scenario.id === 5) {
+                 return `
+                   <!-- HMI Simulation Panels -->
+                   <div id="hmi-display-panel"></div>
+                   <div id="hmi-alarm-panel"></div>
+                   <div id="hmi-config-panel"></div>
+                 `;
+               } else if (scenario.id === 6) {
+                 return `
+                   <!-- Pump Simulation Panels -->
+                   <div id="pump-display-panel"></div>
+                   <div id="pump-control-panel"></div>
+                   <div id="pump-protection-panel"></div>
+                   <div id="pump-fault-panel"></div>
+                 `;
+               } else if (scenario.id === 7) {
+                 return `
+                   <!-- Valve Simulation Panels -->
+                   <div id="valve-display-panel"></div>
+                   <div id="valve-control-panel"></div>
+                   <div id="valve-calibration-panel"></div>
+                   <div id="valve-fault-panel"></div>
+                 `;
+               } else if (scenario.id === 8) {
+                 return `
+                   <!-- Float Switch Simulation Panels -->
+                   <div id="float-tank-panel"></div>
+                   <div id="float-control-panel"></div>
+                   <div id="float-logic-panel"></div>
+                   <div id="float-fault-panel"></div>
+                 `;
+               } else {
+                 return `
+                   <p style="color: #FFFFFF; text-align: center;">Simulation functionality available for enhanced worksheets.</p>
+                 `;
+               }
+             }
+           })()}
+         </div>
             </div>
           </div>
         `);
@@ -7123,6 +7219,26 @@
       });
     }
   </script>
-  <script src="emergency-stop-simulation.js"></script>
+      <script>
+      // Disable problematic service worker
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function(registrations) {
+          for (let registration of registrations) {
+            registration.unregister();
+          }
+        });
+      }
+    </script>
+    <script src="image-fallback.js"></script>
+    <script src="error-handler.js"></script>
+    <script src="emergency-stop-simulation.js"></script>
+  <script src="status-led-simulation.js"></script>
+  <script src="plc-simulation.js"></script>
+  <script src="hmi-simulation.js"></script>
+  <script src="pump-simulation.js"></script>
+  <script src="valve-simulation.js"></script>
+  <script src="float-switch-simulation.js"></script>
+  <script src="maintenance-procedures.js"></script>
+  <script src="industrial-maintenance-scenario.js"></script>
 </body>
 </html> 

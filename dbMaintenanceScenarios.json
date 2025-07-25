@@ -77,7 +77,11 @@
                     "correct_answer": 1,
                     "explanation": "Rapid changes can cause oscillations in flow, making the system unstable; gradual adjustments help maintain smooth control. This is important for maintaining system stability."
                 }
-            ]
+            ],
+            "simulation": {
+                "title": "HMI Interface Simulation",
+                "description": "Interactive HMI simulation with alarm management, configuration screens, and operator training scenarios."
+            }
         },
         {
             "id": 2,
@@ -233,7 +237,11 @@
                     "correct_answer": 1,
                     "explanation": "It's important to monitor the Status LED regularly because it helps prevent downtime and ensures faults are addressed before escalating. Early detection of issues prevents more serious problems."
                 }
-            ]
+            ],
+            "simulation": {
+                "title": "Pump Control Simulation",
+                "description": "Interactive pump simulation with PWM control, dry-run protection, and fault scenarios."
+            }
         },
         {
             "id": 4,
@@ -311,7 +319,11 @@
                     "correct_answer": 1,
                     "explanation": "You can tell the flow sensor is working by looking at the PLC because one of the input LEDs will flash rapidly; if flow is reduced, it slows down, and if flow increases, it nearly goes solid, showing the sensor is active."
                 }
-            ]
+            ],
+            "simulation": {
+                "title": "PLC I/O Simulation",
+                "description": "Interactive PLC simulation with real-time I/O monitoring, ladder logic visualization, and fault injection capabilities."
+            }
         },
         {
             "id": 5,
@@ -545,7 +557,11 @@
                     "correct_answer": 1,
                     "explanation": "It's important to observe valve behaviour during an Emergency Stop to ensure the valve fails to the correct position (open or closed) for safety, in this system, it should go fully closed."
                 }
-            ]
+            ],
+            "simulation": {
+                "title": "Valve Control Simulation",
+                "description": "Interactive valve simulation with proportional control, deadband effects, and calibration procedures."
+            }
         },
         {
             "id": 8,
@@ -623,7 +639,11 @@
                     "correct_answer": 1,
                     "explanation": "Common float switch faults include sticking, misalignment, or contact failure. These can be identified by testing float movement and checking IO screen signals."
                 }
-            ]
+            ],
+            "simulation": {
+                "title": "Float Switch Simulation",
+                "description": "Interactive float switch simulation with tank level monitoring, NO vs NC logic testing, and fault scenarios."
+            }
         },
         {
             "id": 9,

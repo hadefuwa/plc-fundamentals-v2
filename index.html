@@ -17,8 +17,20 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
   <!-- Load app-specific scripts after dependencies -->
+  <script defer src="image-fallback.js"></script>
   <script defer src="scenario-popup.js"></script>
   <script defer src="pdf-popup.js"></script>
+  <script>
+    // Clear any existing service worker registrations
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        for(let registration of registrations) {
+          registration.unregister();
+          console.log('Existing service worker unregistered');
+        }
+      });
+    }
+  </script>
   <style>
     .hidden {
       opacity: 0;
@@ -585,6 +597,8 @@
       window.electron = null;
     }
     
+    // Service worker temporarily disabled to fix image loading issues
+    /*
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function() {
         navigator.serviceWorker.register('service-worker.js')
@@ -596,6 +610,7 @@
           });
       });
     }
+    */
 
     // Add offline indicator
     window.addEventListener('online', function() {
