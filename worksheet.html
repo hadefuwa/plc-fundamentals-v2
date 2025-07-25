@@ -1353,6 +1353,8 @@
                   </div>
               </div>
               
+
+              
               <!-- System Response Explanation (at bottom) -->
               <div class="response-explanation" style="background: linear-gradient(135deg, #2a2a2a, #3a3a3a); border-radius: 12px; padding: 30px; margin-top: 30px; border: 2px solid #E91E63; box-shadow: 0 8px 20px rgba(233, 30, 99, 0.2);">
                   <h4 style="color: #E91E63; margin-bottom: 25px; font-size: 20px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-info-circle"></i> Understanding System Response</h4>
@@ -3534,6 +3536,8 @@
         responseKpSlider.addEventListener('input', function() {
           simulationData.responseKp = parseFloat(this.value);
           responseKpValue.textContent = this.value;
+          // PID values will be read dynamically in the continuous simulation
+          console.log('PID Kp changed to:', this.value);
         });
       }
       
@@ -3543,6 +3547,8 @@
         responseKiSlider.addEventListener('input', function() {
           simulationData.responseKi = parseFloat(this.value);
           responseKiValue.textContent = this.value;
+          // PID values will be read dynamically in the continuous simulation
+          console.log('PID Ki changed to:', this.value);
         });
       }
       
@@ -3552,8 +3558,23 @@
         responseKdSlider.addEventListener('input', function() {
           simulationData.responseKd = parseFloat(this.value);
           responseKdValue.textContent = this.value;
+          // PID values will be read dynamically in the continuous simulation
+          console.log('PID Kd changed to:', this.value);
         });
       }
+      
+      // Initialize input type radio buttons
+      const inputTypeRadios = document.querySelectorAll('input[name="input-type"]');
+      inputTypeRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+          console.log('Input type changed to:', this.value);
+          // Restart the simulation with new input type if it's running
+          if (simulationData.responseAnimationInterval) {
+            console.log('Restarting simulation with new input type');
+            runResponseTest();
+          }
+        });
+      });
       
       // Initialize response test buttons
       const startResponseBtn = document.getElementById('start-response');
@@ -3570,6 +3591,8 @@
         stopResponseBtn.addEventListener('click', function() {
           if (simulationData.responseAnimationInterval) {
             clearInterval(simulationData.responseAnimationInterval);
+            simulationData.responseAnimationInterval = null;
+            console.log('Stopped continuous response simulation');
           }
         });
       }
@@ -3600,6 +3623,30 @@
             responseChart.destroy();
             responseChart = null;
             console.log('Destroyed Chart.js chart for reset');
+          }
+          
+          // Reset PID sliders to default values
+          const kpSlider = document.getElementById('response-kp-slider');
+          const kiSlider = document.getElementById('response-ki-slider');
+          const kdSlider = document.getElementById('response-kd-slider');
+          const kpValue = document.getElementById('response-kp-value');
+          const kiValue = document.getElementById('response-ki-value');
+          const kdValue = document.getElementById('response-kd-value');
+          
+          if (kpSlider && kpValue) {
+            kpSlider.value = 0.5;
+            kpValue.textContent = '0.5';
+            simulationData.responseKp = 0.5;
+          }
+          if (kiSlider && kiValue) {
+            kiSlider.value = 0.1;
+            kiValue.textContent = '0.1';
+            simulationData.responseKi = 0.1;
+          }
+          if (kdSlider && kdValue) {
+            kdSlider.value = 0.2;
+            kdValue.textContent = '0.2';
+            simulationData.responseKd = 0.2;
           }
           
           // Reset metrics
@@ -3637,6 +3684,26 @@
       startRealTimeSimulation();
       
       console.log('PID simulation initialized');
+      
+      // Add debugging function to window for testing
+      window.debugPIDValues = function() {
+        const kp = (simulationData && simulationData.responseKp) || parseFloat(document.getElementById('response-kp-slider')?.value) || 0.5;
+        const ki = (simulationData && simulationData.responseKi) || parseFloat(document.getElementById('response-ki-slider')?.value) || 0.1;
+        const kd = (simulationData && simulationData.responseKd) || parseFloat(document.getElementById('response-kd-slider')?.value) || 0.2;
+        console.log('Current PID values - Kp:', kp, 'Ki:', ki, 'Kd:', kd);
+        return { kp, ki, kd };
+      };
+      
+      // Add test function to generate and display sample data
+      window.testResponseData = function() {
+        const data = generateResponseData('step', 25, 15, 0.5);
+        console.log('Test response data:', {
+          input: data.input.slice(0, 5),
+          response: data.response.slice(0, 5),
+          error: data.error.slice(0, 5)
+        });
+        return data;
+      };
     }
 
     // PID Simulation Variables
@@ -3857,8 +3924,13 @@
       // Update PID display
       updatePIDDisplay();
       
-      // Create or update Chart.js chart
-      createResponseChart(canvas, inputType, amplitude, duration, frequency);
+      // Stop any existing simulation
+      if (simulationData.responseAnimationInterval) {
+        clearInterval(simulationData.responseAnimationInterval);
+      }
+      
+      // Start continuous real-time simulation
+      startContinuousResponseSimulation(canvas, inputType, amplitude, duration, frequency);
     }
 
     // Create Chart.js response chart
@@ -3870,6 +3942,16 @@
       
       // Generate data based on input type
       const data = generateResponseData(inputType, amplitude, duration, frequency);
+      
+      // Debug: log the data being passed to the chart
+      console.log('Chart data generated:', {
+        inputLength: data.input.length,
+        responseLength: data.response.length,
+        errorLength: data.error.length,
+        sampleInput: data.input.slice(0, 3),
+        sampleResponse: data.response.slice(0, 3),
+        sampleError: data.error.slice(0, 3)
+      });
       
       // Create new Chart.js chart
       responseChart = new Chart(canvas, {
@@ -3986,6 +4068,8 @@
       const ki = (simulationData && simulationData.responseKi) || (simulationData && simulationData.ki) || parseFloat(document.getElementById('response-ki-slider')?.value) || parseFloat(document.getElementById('ki-slider')?.value) || 0.1;
       const kd = (simulationData && simulationData.responseKd) || (simulationData && simulationData.kd) || parseFloat(document.getElementById('response-kd-slider')?.value) || parseFloat(document.getElementById('kd-slider')?.value) || 0.2;
       
+      console.log('Generating response data with PID values - Kp:', kp, 'Ki:', ki, 'Kd:', kd);
+      
       const data = {
         input: [],
         response: [],
@@ -4014,8 +4098,7 @@
         const dt = duration / timeSteps;
         
         if (i > 0) {
-          const prevResponse = data.response[i - 1];
-          const prevInput = data.input[i - 1];
+          const prevResponse = data.response[i - 1].value;
           
           // Calculate error between input and current response
           const error = inputValue - prevResponse;
@@ -4029,15 +4112,15 @@
           // Calculate PID control output
           const controlOutput = kp * error + ki * integral + kd * derivative;
           
-          // Clamp control output to 0-100% range
-          const clampedControlOutput = Math.max(0, Math.min(100, controlOutput));
+          // Clamp control output to reasonable range
+          const clampedControlOutput = Math.max(-50, Math.min(50, controlOutput));
           
           // Update response using first-order system model
           const tau = 2.0; // time constant
-          responseValue = prevResponse + (clampedControlOutput - prevResponse) * dt / tau;
+          responseValue = prevResponse + clampedControlOutput * dt / tau;
           
           // Add some realistic noise
-          responseValue += (Math.random() - 0.5) * 1;
+          responseValue += (Math.random() - 0.5) * 0.5;
           
           // Update last error for next iteration
           lastError = error;
@@ -4054,6 +4137,249 @@
       }
       
       return data;
+    }
+
+    // Start continuous real-time simulation with Chart.js
+    function startContinuousResponseSimulation(canvas, inputType, amplitude, duration, frequency) {
+      console.log('Starting continuous response simulation');
+      
+      // Destroy existing chart if it exists
+      if (responseChart) {
+        responseChart.destroy();
+      }
+      
+      // Initialize simulation variables
+      let time = 0;
+      let responseValue = 25; // Base temperature
+      let integral = 0;
+      let lastError = 0;
+      const dt = 0.1; // Time step
+      const tau = 2.0; // System time constant
+      
+      // Initialize data arrays for chart
+      const chartData = {
+        labels: [],
+        input: [],
+        response: [],
+        error: []
+      };
+      
+      // Create initial chart
+      responseChart = new Chart(canvas, {
+        type: 'line',
+        data: {
+          labels: [],
+          datasets: [
+            {
+              label: 'Input Signal',
+              data: [],
+              borderColor: '#E91E63',
+              backgroundColor: 'rgba(233, 30, 99, 0.1)',
+              borderWidth: 2,
+              fill: false,
+              tension: 0.1
+            },
+            {
+              label: 'System Response',
+              data: [],
+              borderColor: '#2196F3',
+              backgroundColor: 'rgba(33, 150, 243, 0.1)',
+              borderWidth: 2,
+              fill: false,
+              tension: 0.1
+            },
+            {
+              label: 'Error Signal',
+              data: [],
+              borderColor: '#4CAF50',
+              backgroundColor: 'rgba(76, 175, 80, 0.1)',
+              borderWidth: 2,
+              fill: false,
+              tension: 0.1
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: {
+            duration: 0 // Disable animations for real-time updates
+          },
+          plugins: {
+            legend: {
+              position: 'top',
+              labels: {
+                color: '#FFFFFF',
+                font: {
+                  size: 12
+                }
+              }
+            },
+                         title: {
+               display: true,
+               text: `Real-time ${inputType.charAt(0).toUpperCase() + inputType.slice(1)} Response Analysis`,
+               color: '#FFFFFF',
+               font: {
+                 size: 16,
+                 weight: 'bold'
+               }
+             }
+          },
+          scales: {
+            x: {
+              title: {
+                display: true,
+                text: 'Time (seconds)',
+                color: '#FFFFFF'
+              },
+              ticks: {
+                color: '#FFFFFF'
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.1)'
+              }
+            },
+            y: {
+              title: {
+                display: true,
+                text: 'Temperature (°C)',
+                color: '#FFFFFF'
+              },
+              ticks: {
+                color: '#FFFFFF'
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.1)'
+              },
+              suggestedMin: 0,
+              suggestedMax: 80
+            }
+          },
+          interaction: {
+            intersect: false,
+            mode: 'index'
+          },
+          elements: {
+            point: {
+              radius: 0
+            }
+          }
+        }
+      });
+      
+      // Start continuous simulation
+      simulationData.responseAnimationInterval = setInterval(() => {
+        // Get current PID parameters dynamically
+        const kp = (simulationData && simulationData.responseKp) || parseFloat(document.getElementById('response-kp-slider')?.value) || 0.5;
+        const ki = (simulationData && simulationData.responseKi) || parseFloat(document.getElementById('response-ki-slider')?.value) || 0.1;
+        const kd = (simulationData && simulationData.responseKd) || parseFloat(document.getElementById('response-kd-slider')?.value) || 0.2;
+        
+        // Generate input signal based on type
+        let inputValue = 25; // Base temperature
+        switch (inputType) {
+          case 'step':
+            inputValue = 25 + (time > 3 ? amplitude : 0);
+            break;
+          case 'ramp':
+            const rampTime = time % 10; // Repeat every 10 seconds
+            inputValue = 25 + (rampTime / 10) * amplitude;
+            break;
+          case 'sine':
+            inputValue = 37.5 + (amplitude / 2) * Math.sin(2 * Math.PI * 0.2 * time);
+            break;
+        }
+        
+        // Calculate error
+        const error = inputValue - responseValue;
+        
+        // Update integral term
+        integral += error * dt;
+        
+        // Calculate derivative term
+        const derivative = (error - lastError) / dt;
+        
+        // Calculate PID control output
+        const controlOutput = kp * error + ki * integral + kd * derivative;
+        
+        // Clamp control output
+        const clampedControlOutput = Math.max(-50, Math.min(50, controlOutput));
+        
+        // Update system response
+        responseValue += clampedControlOutput * dt / tau;
+        
+        // Add some noise
+        responseValue += (Math.random() - 0.5) * 0.5;
+        
+        // Calculate error signal
+        const errorValue = inputValue - responseValue;
+        
+        // Add data to chart arrays
+        chartData.labels.push(time.toFixed(1) + 's');
+        chartData.input.push(inputValue);
+        chartData.response.push(responseValue);
+        chartData.error.push(errorValue);
+        
+        // Keep only last 150 points for smooth display
+        if (chartData.labels.length > 150) {
+          chartData.labels.shift();
+          chartData.input.shift();
+          chartData.response.shift();
+          chartData.error.shift();
+        }
+        
+        // Update chart data
+        responseChart.data.labels = chartData.labels;
+        responseChart.data.datasets[0].data = chartData.input;
+        responseChart.data.datasets[1].data = chartData.response;
+        responseChart.data.datasets[2].data = chartData.error;
+        
+        // Update the chart
+        responseChart.update('none'); // Use 'none' mode for better performance
+        
+        // Update time and last error
+        time += dt;
+        lastError = error;
+        
+        // Log occasionally for debugging
+        if (Math.floor(time * 10) % 50 === 0) {
+          console.log('Continuous simulation - Time:', time.toFixed(1), 'Input:', inputValue.toFixed(1), 'Response:', responseValue.toFixed(1), 'Error:', errorValue.toFixed(1));
+        }
+      }, 100); // Update every 100ms
+      
+      console.log('Continuous response simulation started');
+    }
+
+    // Update response chart with current PID values
+    function updateResponseChart() {
+      if (!responseChart) {
+        console.log('No response chart to update');
+        return;
+      }
+      
+      // Get current input type
+      const selectedRadio = document.querySelector('input[name="input-type"]:checked');
+      const inputType = selectedRadio ? selectedRadio.value : 'step';
+      
+      // Get current PID values for debugging
+      const kp = (simulationData && simulationData.responseKp) || parseFloat(document.getElementById('response-kp-slider')?.value) || 0.5;
+      const ki = (simulationData && simulationData.responseKi) || parseFloat(document.getElementById('response-ki-slider')?.value) || 0.1;
+      const kd = (simulationData && simulationData.responseKd) || parseFloat(document.getElementById('response-kd-slider')?.value) || 0.2;
+      
+      console.log('Updating response chart with PID values - Kp:', kp, 'Ki:', ki, 'Kd:', kd);
+      
+      // Generate new data with current PID values
+      const data = generateResponseData(inputType, 25, 15, 0.5);
+      
+      // Update chart data
+      responseChart.data.labels = data.input.map(point => point.time.toFixed(1) + 's');
+      responseChart.data.datasets[0].data = data.input.map(point => point.value);
+      responseChart.data.datasets[1].data = data.response.map(point => point.value);
+      responseChart.data.datasets[2].data = data.error.map(point => point.value);
+      
+      // Update the chart
+      responseChart.update();
+      
+      console.log('Response chart updated successfully');
     }
 
     // Draw enhanced grid on canvas
@@ -4216,8 +4542,7 @@
         const dt = duration / timeSteps;
         
         if (i > 0) {
-          const prevResponse = data.response[i - 1];
-          const prevInput = data.input[i - 1];
+          const prevResponse = data.response[i - 1].value;
           
           // Calculate error between input and current response
           const error = inputValue - prevResponse;
@@ -4231,15 +4556,15 @@
           // Calculate PID control output
           const controlOutput = kp * error + ki * integral + kd * derivative;
           
-          // Clamp control output to 0-100% range
-          const clampedControlOutput = Math.max(0, Math.min(100, controlOutput));
+          // Clamp control output to reasonable range
+          const clampedControlOutput = Math.max(-50, Math.min(50, controlOutput));
           
           // Update response using first-order system model
           const tau = 2.0; // time constant
-          responseValue = prevResponse + (clampedControlOutput - prevResponse) * dt / tau;
+          responseValue = prevResponse + clampedControlOutput * dt / tau;
           
           // Add some realistic noise
-          responseValue += (Math.random() - 0.5) * 1;
+          responseValue += (Math.random() - 0.5) * 0.5;
           
           // Update last error for next iteration
           lastError = error;
@@ -4278,10 +4603,7 @@
       const dt = 0.1; // Time step
       const tau = 2.0; // System time constant
       
-      // Get current PID parameters - use response-specific values if available, otherwise fall back to main values
-      const kp = (simulationData && simulationData.responseKp) || (simulationData && simulationData.kp) || parseFloat(document.getElementById('response-kp-slider')?.value) || parseFloat(document.getElementById('kp-slider')?.value) || 0.5;
-      const ki = (simulationData && simulationData.responseKi) || (simulationData && simulationData.ki) || parseFloat(document.getElementById('response-ki-slider')?.value) || parseFloat(document.getElementById('ki-slider')?.value) || 0.1;
-      const kd = (simulationData && simulationData.responseKd) || (simulationData && simulationData.kd) || parseFloat(document.getElementById('response-kd-slider')?.value) || parseFloat(document.getElementById('kd-slider')?.value) || 0.2;
+      // PID parameters will be read dynamically on each iteration
       
       // Store data for plotting
       const data = {
@@ -4346,6 +4668,16 @@
             // Create a sine wave that oscillates around 37.5°C (midpoint of 25-50°C)
             inputValue = 37.5 + (amplitude / 2) * Math.sin(2 * Math.PI * 0.2 * time); // 0.2 Hz = 5 second period
             break;
+        }
+        
+        // Get current PID parameters dynamically on each iteration
+        const kp = (simulationData && simulationData.responseKp) || (simulationData && simulationData.kp) || parseFloat(document.getElementById('response-kp-slider')?.value) || parseFloat(document.getElementById('kp-slider')?.value) || 0.5;
+        const ki = (simulationData && simulationData.responseKi) || (simulationData && simulationData.ki) || parseFloat(document.getElementById('response-ki-slider')?.value) || parseFloat(document.getElementById('ki-slider')?.value) || 0.1;
+        const kd = (simulationData && simulationData.responseKd) || (simulationData && simulationData.kd) || parseFloat(document.getElementById('response-kd-slider')?.value) || parseFloat(document.getElementById('kd-slider')?.value) || 0.2;
+        
+        // Debug: log PID values occasionally
+        if (Math.floor(time * 10) % 100 === 0) {
+          console.log('Real-time simulation PID values - Kp:', kp, 'Ki:', ki, 'Kd:', kd);
         }
         
         // Calculate error
