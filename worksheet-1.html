@@ -11,6 +11,38 @@
 </head>
 <body>
   <!-- Navigation -->
+  <nav class="main-navigation">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <img src="assets/matrix-logo.png" alt="Matrix Logo">
+        <h1>Inspiring the Next Generation of Engineers</h1>
+      </div>
+      <ul class="nav-menu">
+        <li class="nav-item">
+          <a href="#" onclick="window.location='index.html'" class="nav-link">
+            <i class="fas fa-home"></i> HOME
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" onclick="window.location='cp0539-worksheets.html'" class="nav-link active">
+            <i class="fas fa-cogs"></i> CP0539
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" onclick="window.location='cp6773-worksheets.html'" class="nav-link">
+            <i class="fas fa-exclamation-triangle"></i> CP6773
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" onclick="window.location='settings.html'" class="nav-link">
+            <i class="fas fa-gear"></i> SETTINGS
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Worksheet Navigation -->
   <nav class="nav-bar">
     <div class="nav-container">
       <div class="nav-left">
@@ -191,105 +223,95 @@
     <div class="simulation-section">
       <h2 class="section-header"><i class="fas fa-chart-line"></i> 5. Interactive PID Control System</h2>
       
-      <div class="pid-simulation-tabs">
-        <div class="tab-buttons">
-          <button class="tab-btn active" data-tab="tuning">PID Tuning</button>
-          <button class="tab-btn" data-tab="response">System Response</button>
-          <button class="tab-btn" data-tab="challenges">Challenges</button>
-        </div>
-        
-        <div class="tab-content" id="tuning-tab">
-          <div id="pid-tuning-container">
-            <div class="pid-controls">
-              <div class="control-group">
-                <label>Setpoint</label>
-                <input type="range" id="setpoint-slider" min="0" max="100" value="50">
-                <span id="setpoint-value">50</span>
-              </div>
-              
-              <div class="control-group">
-                <label>Proportional (P)</label>
-                <input type="range" id="p-gain-slider" min="0" max="5" step="0.1" value="1.0">
-                <span id="p-gain-value">1.0</span>
-              </div>
-              
-              <div class="control-group">
-                <label>Integral (I)</label>
-                <input type="range" id="i-gain-slider" min="0" max="2" step="0.01" value="0.1">
-                <span id="i-gain-value">0.1</span>
-              </div>
-              
-              <div class="control-group">
-                <label>Derivative (D)</label>
-                <input type="range" id="d-gain-slider" min="0" max="1" step="0.01" value="0.05">
-                <span id="d-gain-value">0.05</span>
-              </div>
-              
-              <div class="control-buttons">
-                <button id="start-simulation-btn">Start Simulation</button>
-                <button id="reset-pid-btn">Reset to Defaults</button>
-              </div>
-            </div>
-            
-            <div class="pid-chart-container">
-              <canvas id="pid-chart" width="800" height="400"></canvas>
-            </div>
+      <!-- PID Tuning Section -->
+      <div id="pid-tuning-container">
+        <h3>PID Tuning Controls</h3>
+        <div class="pid-controls">
+          <div class="control-group">
+            <label>Setpoint</label>
+            <input type="range" id="setpoint-slider" min="0" max="100" value="50">
+            <span id="setpoint-value">50</span>
+          </div>
+          
+          <div class="control-group">
+            <label>Proportional (P)</label>
+            <input type="range" id="p-gain-slider" min="0" max="5" step="0.1" value="1.0">
+            <span id="p-gain-value">1.0</span>
+          </div>
+          
+          <div class="control-group">
+            <label>Integral (I)</label>
+            <input type="range" id="i-gain-slider" min="0" max="2" step="0.01" value="0.1">
+            <span id="i-gain-value">0.1</span>
+          </div>
+          
+          <div class="control-group">
+            <label>Derivative (D)</label>
+            <input type="range" id="d-gain-slider" min="0" max="1" step="0.01" value="0.05">
+            <span id="d-gain-value">0.05</span>
+          </div>
+          
+          <div class="control-buttons">
+            <button id="start-simulation-btn">Start Simulation</button>
+            <button id="reset-pid-btn">Reset to Defaults</button>
           </div>
         </div>
         
-        <div class="tab-content" id="response-tab" style="display: none;">
-          <div id="response-analysis-container">
-            <h3>System Response Analysis</h3>
-            <div class="response-metrics">
-              <div class="metric-card">
-                <h4>Rise Time</h4>
-                <p id="rise-time">--</p>
-              </div>
-              <div class="metric-card">
-                <h4>Settling Time</h4>
-                <p id="settling-time">--</p>
-              </div>
-              <div class="metric-card">
-                <h4>Overshoot</h4>
-                <p id="overshoot">--</p>
-              </div>
-              <div class="metric-card">
-                <h4>Steady State Error</h4>
-                <p id="steady-state-error">--</p>
-              </div>
-            </div>
-            <div class="response-tips">
-              <h4>Response Characteristics:</h4>
-              <ul>
-                <li><strong>Fast Rise Time:</strong> High P gain, but may cause overshoot</li>
-                <li><strong>Low Overshoot:</strong> Moderate P gain with some D gain</li>
-                <li><strong>No Steady State Error:</strong> Include I gain to eliminate offset</li>
-                <li><strong>Stable Response:</strong> Balance all three parameters</li>
-              </ul>
-            </div>
+        <div class="pid-chart-container">
+          <canvas id="pid-chart" width="800" height="400"></canvas>
+        </div>
+      </div>
+      
+      <!-- System Response Analysis Section -->
+      <div id="response-analysis-container">
+        <h3>System Response Analysis</h3>
+        <div class="response-metrics">
+          <div class="metric-card">
+            <h4>Rise Time</h4>
+            <p id="rise-time">--</p>
+          </div>
+          <div class="metric-card">
+            <h4>Settling Time</h4>
+            <p id="settling-time">--</p>
+          </div>
+          <div class="metric-card">
+            <h4>Overshoot</h4>
+            <p id="overshoot">--</p>
+          </div>
+          <div class="metric-card">
+            <h4>Steady State Error</h4>
+            <p id="steady-state-error">--</p>
           </div>
         </div>
-        
-        <div class="tab-content" id="challenges-tab" style="display: none;">
-          <div id="challenges-container">
-            <h3>PID Tuning Challenges</h3>
-            <div class="challenge-list">
-              <div class="challenge-item">
-                <h4>Challenge 1: Aggressive Response</h4>
-                <p>Set the setpoint to 80 and tune the PID parameters to achieve a fast response with minimal overshoot (less than 5%).</p>
-                <button class="challenge-btn" onclick="loadChallenge(1)">Load Challenge</button>
-              </div>
-              <div class="challenge-item">
-                <h4>Challenge 2: Disturbance Rejection</h4>
-                <p>Tune the system to maintain the setpoint at 50 despite external disturbances. The system should recover quickly.</p>
-                <button class="challenge-btn" onclick="loadChallenge(2)">Load Challenge</button>
-              </div>
-              <div class="challenge-item">
-                <h4>Challenge 3: Conservative Tuning</h4>
-                <p>Create a slow but stable response with no overshoot. This is useful for processes that cannot tolerate overshoot.</p>
-                <button class="challenge-btn" onclick="loadChallenge(3)">Load Challenge</button>
-              </div>
-            </div>
+        <div class="response-tips">
+          <h4>Response Characteristics:</h4>
+          <ul>
+            <li><strong>Fast Rise Time:</strong> High P gain, but may cause overshoot</li>
+            <li><strong>Low Overshoot:</strong> Moderate P gain with some D gain</li>
+            <li><strong>No Steady State Error:</strong> Include I gain to eliminate offset</li>
+            <li><strong>Stable Response:</strong> Balance all three parameters</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- PID Tuning Challenges Section -->
+      <div id="challenges-container">
+        <h3>PID Tuning Challenges</h3>
+        <div class="challenge-list">
+          <div class="challenge-item">
+            <h4>Challenge 1: Aggressive Response</h4>
+            <p>Set the setpoint to 80 and tune the PID parameters to achieve a fast response with minimal overshoot (less than 5%).</p>
+            <button class="challenge-btn" onclick="loadChallenge(1)">Load Challenge</button>
+          </div>
+          <div class="challenge-item">
+            <h4>Challenge 2: Disturbance Rejection</h4>
+            <p>Tune the system to maintain the setpoint at 50 despite external disturbances. The system should recover quickly.</p>
+            <button class="challenge-btn" onclick="loadChallenge(2)">Load Challenge</button>
+          </div>
+          <div class="challenge-item">
+            <h4>Challenge 3: Conservative Tuning</h4>
+            <p>Create a slow but stable response with no overshoot. This is useful for processes that cannot tolerate overshoot.</p>
+            <button class="challenge-btn" onclick="loadChallenge(3)">Load Challenge</button>
           </div>
         </div>
       </div>
@@ -308,7 +330,6 @@
   <script>
     // Initialize PID simulation
     document.addEventListener('DOMContentLoaded', function() {
-      initializePIDTabs();
       initializePIDControls();
       initializeStepTracking();
       loadSavedAnswers();
@@ -319,32 +340,7 @@
     let simulationRunning = false;
     let simulationData = [];
     
-    // Initialize PID tabs
-    function initializePIDTabs() {
-      const tabButtons = document.querySelectorAll('.tab-btn');
-      const tabContents = document.querySelectorAll('.tab-content');
-      
-      tabButtons.forEach(button => {
-        button.addEventListener('click', function() {
-          const targetTab = this.getAttribute('data-tab');
-          
-          // Update button states
-          tabButtons.forEach(btn => {
-            btn.classList.remove('active');
-          });
-          this.classList.add('active');
-          
-          // Update tab content visibility
-          tabContents.forEach(content => {
-            content.style.display = 'none';
-          });
-          const targetTabContent = document.getElementById(`${targetTab}-tab`);
-          if (targetTabContent) {
-            targetTabContent.style.display = 'block';
-          }
-        });
-      });
-    }
+
     
     // Initialize PID controls
     function initializePIDControls() {
@@ -605,12 +601,6 @@
         document.getElementById('i-gain-value').textContent = challenge.i;
         document.getElementById('d-gain-slider').value = challenge.d;
         document.getElementById('d-gain-value').textContent = challenge.d;
-        
-        // Switch to tuning tab
-        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-        document.querySelector('[data-tab="tuning"]').classList.add('active');
-        document.querySelectorAll('.tab-content').forEach(content => content.style.display = 'none');
-        document.getElementById('tuning-tab').style.display = 'block';
         
         alert(`Loaded ${challenge.description}. Try to improve the response!`);
       }
