@@ -252,21 +252,21 @@
     });
     
         function submitAnswer(questionNumber) {
-      const questionItem = document.querySelector([data-question="${questionNumber}"]);
+      const questionItem = document.querySelector(`[data-question="${questionNumber}"]`);
       const selectedOption = questionItem.querySelector('.option-radio:checked');
       const answer = selectedOption ? selectedOption.value : '';
       
       if (answer) {
         // Define correct answers for worksheet 6
         const correctAnswers = {
-          1 : 'A',
-          2 : 'A',
-          3 : 'A',
-          4 : 'A',
-          5 : 'A'
+          1: 'A',
+          2: 'A',
+          3: 'A',
+          4: 'A',
+          5: 'A'
         };
         
-        localStorage.setItem(worksheet6_answer${questionNumber}, answer);
+        localStorage.setItem(`worksheet6_answer${questionNumber}`, answer);
         
         // Apply visual feedback
         const allOptions = questionItem.querySelectorAll('.option-label');
@@ -308,19 +308,19 @@
         function loadSavedAnswers() {
       // Define correct answers for worksheet 6
       const correctAnswers = {
-         1 : 'A',
-         2 : 'A',
-         3 : 'A',
-         4 : 'A',
-         5 : 'A'
+         1: 'A',
+         2: 'A',
+         3: 'A',
+         4: 'A',
+         5: 'A'
        };
       
       for (let i = 1; i <= 5; i++) {
-        const saved = localStorage.getItem(worksheet6_answer${i});
+        const saved = localStorage.getItem(`worksheet6_answer${i}`);
         if (saved) {
-          const questionItem = document.querySelector([data-question="${i}"]);
+          const questionItem = document.querySelector(`[data-question="${i}"]`);
           if (questionItem) {
-            const selectedOption = questionItem.querySelector(.option-radio[value="${saved}"]);
+            const selectedOption = questionItem.querySelector(`.option-radio[value="${saved}"]`);
             if (selectedOption) {
               selectedOption.checked = true;
               

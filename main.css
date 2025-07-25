@@ -1145,7 +1145,8 @@ h1 {
 .option-label.correct {
     background: #1a2f1a !important;
     border-color: #4CAF50 !important;
-    box-shadow: 0 0 15px rgba(76, 175, 80, 0.4);
+    color: #4CAF50 !important;
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
 }
 
 .option-label.correct .option-text {
@@ -1158,18 +1159,19 @@ h1 {
 }
 
 .option-label.incorrect {
-    background: #2f1a1a !important;
-    border-color: #f44336 !important;
-    box-shadow: 0 0 15px rgba(244, 67, 54, 0.4);
+    background: #2a1818 !important;
+    border-color: #E53935 !important;
+    color: #E53935 !important;
+    box-shadow: 0 0 10px rgba(229, 57, 53, 0.3);
 }
 
 .option-label.incorrect .option-text {
-    color: #f44336 !important;
+    color: #E53935 !important;
     font-weight: bold;
 }
 
 .option-label.incorrect input[type="radio"] {
-    accent-color: #f44336;
+    accent-color: #E53935;
 }
 
 /* Disable interaction after submission */
