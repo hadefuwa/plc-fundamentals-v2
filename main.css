@@ -102,16 +102,165 @@ h1 {
     margin: 0;  /* Remove default margins */
 }
 
-/* Navigation Styles */
+/* Navigation Styles - updated for consistency and responsiveness */
 .main-navigation {
-    background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
-    border-bottom: 3px solid #FFFFFF;
-    padding: 0;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    position: relative;
-    z-index: 10;
-    backdrop-filter: blur(5px);
+  background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+  border-bottom: 3px solid #FFFFFF;
+  padding: 0;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 10;
+  width: 100vw;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 0;
+  min-width: 0;
+  flex-shrink: 0;
+}
+
+.nav-logo img {
+  height: 40px;
+  width: auto;
+  flex-shrink: 0;
+}
+
+.nav-logo h1 {
+  color: #FFFFFF;
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 300px;
+}
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 5px;
+  flex-wrap: nowrap;
+  flex-shrink: 0;
+}
+
+.nav-item {
+  position: relative;
+}
+
+.nav-link {
+  display: block;
+  padding: 15px 20px;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: linear-gradient(135deg, #333333, #555555);
+  border: 2px solid transparent;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.nav-link:hover {
+  background: linear-gradient(135deg, #FFFFFF, #F5F5F5);
+  color: #000;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
+  border: 2px solid #FFFFFF;
+}
+
+.nav-link.active {
+  background: linear-gradient(135deg, #FFFFFF, #F5F5F5);
+  color: #000;
+  font-weight: bold;
+}
+
+@media (max-width: 1200px) {
+  .nav-logo h1 {
+    font-size: 16px;
+    max-width: 250px;
+  }
+  .nav-link {
+    padding: 12px 15px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 900px) {
+  .nav-logo h1 {
+    font-size: 14px;
+    max-width: 200px;
+  }
+  .nav-link {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 700px) {
+  .nav-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 0 10px;
+  }
+  .nav-logo {
+    justify-content: center;
+    padding: 10px 0 0 0;
+  }
+  .nav-logo h1 {
+    font-size: 13px;
+    max-width: 150px;
+  }
+  .nav-menu {
+    justify-content: center;
+    gap: 3px;
+  }
+  .nav-link {
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-container {
+    padding: 0 5px;
+  }
+  .nav-logo h1 {
+    font-size: 12px;
+    max-width: 120px;
+  }
+  .nav-link {
+    padding: 6px 8px;
+    font-size: 10px;
+  }
 }
 
 /* Worksheet Box Styling - Vertical Boxed Window Format */
