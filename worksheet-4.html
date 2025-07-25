@@ -261,21 +261,49 @@
       loadSavedAnswers();
     });
     
-    function submitAnswer(questionNumber) {
-      const questionItem = document.querySelector(`[data-question="${questionNumber}"]`);
+        function submitAnswer(questionNumber) {
+      const questionItem = document.querySelector([data-question="${questionNumber}"]);
       const selectedOption = questionItem.querySelector('.option-radio:checked');
       const answer = selectedOption ? selectedOption.value : '';
       
       if (answer) {
-        localStorage.setItem('worksheet4_answer' + questionNumber, answer);
+        // Define correct answers for worksheet 4
+        const correctAnswers = {
+          1 : 'A',
+          2 : 'A',
+          3 : 'A',
+          4 : 'A',
+          5 : 'A'
+        };
+        
+        localStorage.setItem(worksheet4_answer${questionNumber}, answer);
+        
+        // Apply visual feedback
+        const allOptions = questionItem.querySelectorAll('.option-label');
+        const correctAnswer = correctAnswers[questionNumber];
+        
+        allOptions.forEach(option => {
+          const radio = option.querySelector('.option-radio');
+          const optionValue = radio.value;
+          
+          if (optionValue === correctAnswer) {
+            option.classList.add('correct');
+          } else if (optionValue === answer && answer !== correctAnswer) {
+            option.classList.add('incorrect');
+          }
+        });
+        
+        // Mark question as submitted to disable further interaction
+        questionItem.classList.add('submitted');
         
         const button = event.target;
         const originalText = button.textContent;
-        button.textContent = 'Saved!';
-        button.style.background = '#4CAF50';
+        button.textContent = answer === correctAnswer ? 'Correct!' : 'Incorrect!';
+        button.style.background = answer === correctAnswer ? '#4CAF50' : '#f44336';
         
         setTimeout(() => {
           button.textContent = originalText;
+          button.style.background = '';
         }, 2000);
 
         // Show correct answer
@@ -287,15 +315,46 @@
       }
     }
     
-    function loadSavedAnswers() {
-      for (let i = 1; i <= 5; i++) { // Updated to 5 for 5 questions
-        const saved = localStorage.getItem('worksheet4_answer' + i);
+        function loadSavedAnswers() {
+      // Define correct answers for worksheet 4
+      const correctAnswers = {
+         1 : 'A',
+         2 : 'A',
+         3 : 'A',
+         4 : 'A',
+         5 : 'A'
+       };
+      
+      for (let i = 1; i <= 5; i++) {
+        const saved = localStorage.getItem(worksheet4_answer${i});
         if (saved) {
-          const questionItem = document.querySelector(`[data-question="${i}"]`);
+          const questionItem = document.querySelector([data-question="${i}"]);
           if (questionItem) {
-            const selectedOption = questionItem.querySelector(`.option-radio[value="${saved}"]`);
+            const selectedOption = questionItem.querySelector(.option-radio[value="${saved}"]);
             if (selectedOption) {
               selectedOption.checked = true;
+              
+              // Apply visual feedback for saved answers
+              const allOptions = questionItem.querySelectorAll('.option-label');
+              const correctAnswer = correctAnswers[i];
+              
+              allOptions.forEach(option => {
+                const radio = option.querySelector('.option-radio');
+                const optionValue = radio.value;
+                
+                if (optionValue === correctAnswer) {
+                  option.classList.add('correct');
+                } else if (optionValue === saved && saved !== correctAnswer) {
+                  option.classList.add('incorrect');
+                }
+              });
+              
+              // Mark question as submitted to disable further interaction
+              questionItem.classList.add('submitted');
+              
+              // Show correct answer
+              const correctAnswerDiv = questionItem.querySelector('.correct-answer');
+              correctAnswerDiv.style.display = 'block';
             }
           }
         }

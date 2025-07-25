@@ -661,18 +661,45 @@
       const answer = selectedOption ? selectedOption.value : '';
       
       if (answer) {
+        // Define correct answers for worksheet 1
+        const correctAnswers = {
+          1: 'A', // To continuously adjust flow using sensor feedback to meet a setpoint, maintaining accuracy and stability even if conditions change.
+          2: 'A', // Ensure the hand valve is in the open position, with the handle in line with the piping.
+          3: 'A', // The flow drops, the sensor detects this and sends data to the PLC, which increases pump speed and adjusts the valve to restore flow.
+          4: 'A', // The PLC is a computer that makes real-time decisions based on sensor data to control devices like pumps and valves.
+          5: 'A'  // Rapid changes can cause oscillations in flow, making the system unstable; gradual adjustments help maintain smooth control.
+        };
+        
         // Save answer
         localStorage.setItem(`worksheet1_answer${questionNumber}`, answer);
+        
+        // Apply visual feedback
+        const allOptions = questionItem.querySelectorAll('.option-label');
+        const correctAnswer = correctAnswers[questionNumber];
+        
+        allOptions.forEach(option => {
+          const radio = option.querySelector('.option-radio');
+          const optionValue = radio.value;
+          
+          if (optionValue === correctAnswer) {
+            option.classList.add('correct');
+          } else if (optionValue === answer && answer !== correctAnswer) {
+            option.classList.add('incorrect');
+          }
+        });
+        
+        // Mark question as submitted to disable further interaction
+        questionItem.classList.add('submitted');
         
         // Show confirmation
         const button = event.target;
         const originalText = button.textContent;
-        button.textContent = 'Saved!';
-        button.style.background = '#4CAF50';
+        button.textContent = answer === correctAnswer ? 'Correct!' : 'Incorrect!';
+        button.style.background = answer === correctAnswer ? '#4CAF50' : '#f44336';
         
         setTimeout(() => {
           button.textContent = originalText;
-          button.style.background = '#4CAF50';
+          button.style.background = '';
         }, 2000);
 
         // Show correct answer
@@ -686,6 +713,15 @@
     
     // Load saved answers
     function loadSavedAnswers() {
+      // Define correct answers for worksheet 1
+      const correctAnswers = {
+        1: 'A', // To continuously adjust flow using sensor feedback to meet a setpoint, maintaining accuracy and stability even if conditions change.
+        2: 'A', // Ensure the hand valve is in the open position, with the handle in line with the piping.
+        3: 'A', // The flow drops, the sensor detects this and sends data to the PLC, which increases pump speed and adjusts the valve to restore flow.
+        4: 'A', // The PLC is a computer that makes real-time decisions based on sensor data to control devices like pumps and valves.
+        5: 'A'  // Rapid changes can cause oscillations in flow, making the system unstable; gradual adjustments help maintain smooth control.
+      };
+      
       for (let i = 1; i <= 5; i++) {
         const saved = localStorage.getItem(`worksheet1_answer${i}`);
         if (saved) {
@@ -694,6 +730,28 @@
             const selectedOption = questionItem.querySelector(`.option-radio[value="${saved}"]`);
             if (selectedOption) {
               selectedOption.checked = true;
+              
+              // Apply visual feedback for saved answers
+              const allOptions = questionItem.querySelectorAll('.option-label');
+              const correctAnswer = correctAnswers[i];
+              
+              allOptions.forEach(option => {
+                const radio = option.querySelector('.option-radio');
+                const optionValue = radio.value;
+                
+                if (optionValue === correctAnswer) {
+                  option.classList.add('correct');
+                } else if (optionValue === saved && saved !== correctAnswer) {
+                  option.classList.add('incorrect');
+                }
+              });
+              
+              // Mark question as submitted to disable further interaction
+              questionItem.classList.add('submitted');
+              
+              // Show correct answer
+              const correctAnswerDiv = questionItem.querySelector('.correct-answer');
+              correctAnswerDiv.style.display = 'block';
             }
           }
         }

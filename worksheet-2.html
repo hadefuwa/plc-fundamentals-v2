@@ -477,15 +477,43 @@
       const answer = selectedOption ? selectedOption.value : '';
       
       if (answer) {
+        // Define correct answers for worksheet 2
+        const correctAnswers = {
+          1: 'A', // To quickly stop a machine or system in an emergency to protect people and equipment.
+          2: 'A', // Twist the E-Stop anti-clockwise, then press the blue reset button or the HMI reset button.
+          3: 'A', // It has two contact channels; both must be closed for operation, and either opening will stop the system, this redundancy ensures safety.
+          4: 'A', // Only during emergencies, not for regular stopping of the machine.
+          5: 'A'  // To ensure it is free from damage or faults and will work properly when needed.
+        };
+        
         localStorage.setItem(`worksheet2_answer${questionNumber}`, answer);
+        
+        // Apply visual feedback
+        const allOptions = questionItem.querySelectorAll('.option-label');
+        const correctAnswer = correctAnswers[questionNumber];
+        
+        allOptions.forEach(option => {
+          const radio = option.querySelector('.option-radio');
+          const optionValue = radio.value;
+          
+          if (optionValue === correctAnswer) {
+            option.classList.add('correct');
+          } else if (optionValue === answer && answer !== correctAnswer) {
+            option.classList.add('incorrect');
+          }
+        });
+        
+        // Mark question as submitted to disable further interaction
+        questionItem.classList.add('submitted');
         
         const button = event.target;
         const originalText = button.textContent;
-        button.textContent = 'Saved!';
-        button.style.background = '#4CAF50';
+        button.textContent = answer === correctAnswer ? 'Correct!' : 'Incorrect!';
+        button.style.background = answer === correctAnswer ? '#4CAF50' : '#f44336';
         
         setTimeout(() => {
           button.textContent = originalText;
+          button.style.background = '';
         }, 2000);
 
         // Show correct answer
@@ -498,6 +526,15 @@
     }
     
     function loadSavedAnswers() {
+      // Define correct answers for worksheet 2
+      const correctAnswers = {
+        1: 'A', // To quickly stop a machine or system in an emergency to protect people and equipment.
+        2: 'A', // Twist the E-Stop anti-clockwise, then press the blue reset button or the HMI reset button.
+        3: 'A', // It has two contact channels; both must be closed for operation, and either opening will stop the system, this redundancy ensures safety.
+        4: 'A', // Only during emergencies, not for regular stopping of the machine.
+        5: 'A'  // To ensure it is free from damage or faults and will work properly when needed.
+      };
+      
       for (let i = 1; i <= 5; i++) {
         const saved = localStorage.getItem(`worksheet2_answer${i}`);
         if (saved) {
@@ -506,6 +543,28 @@
             const selectedOption = questionItem.querySelector(`.option-radio[value="${saved}"]`);
             if (selectedOption) {
               selectedOption.checked = true;
+              
+              // Apply visual feedback for saved answers
+              const allOptions = questionItem.querySelectorAll('.option-label');
+              const correctAnswer = correctAnswers[i];
+              
+              allOptions.forEach(option => {
+                const radio = option.querySelector('.option-radio');
+                const optionValue = radio.value;
+                
+                if (optionValue === correctAnswer) {
+                  option.classList.add('correct');
+                } else if (optionValue === saved && saved !== correctAnswer) {
+                  option.classList.add('incorrect');
+                }
+              });
+              
+              // Mark question as submitted to disable further interaction
+              questionItem.classList.add('submitted');
+              
+              // Show correct answer
+              const correctAnswerDiv = questionItem.querySelector('.correct-answer');
+              correctAnswerDiv.style.display = 'block';
             }
           }
         }

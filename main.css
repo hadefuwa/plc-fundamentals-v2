@@ -1141,6 +1141,48 @@ h1 {
     box-shadow: 0 0 10px rgba(74, 158, 255, 0.3);
 }
 
+/* Answer feedback styles */
+.option-label.correct {
+    background: #1a2f1a !important;
+    border-color: #4CAF50 !important;
+    box-shadow: 0 0 15px rgba(76, 175, 80, 0.4);
+}
+
+.option-label.correct .option-text {
+    color: #4CAF50 !important;
+    font-weight: bold;
+}
+
+.option-label.correct input[type="radio"] {
+    accent-color: #4CAF50;
+}
+
+.option-label.incorrect {
+    background: #2f1a1a !important;
+    border-color: #f44336 !important;
+    box-shadow: 0 0 15px rgba(244, 67, 54, 0.4);
+}
+
+.option-label.incorrect .option-text {
+    color: #f44336 !important;
+    font-weight: bold;
+}
+
+.option-label.incorrect input[type="radio"] {
+    accent-color: #f44336;
+}
+
+/* Disable interaction after submission */
+.question-item.submitted .option-label {
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.question-item.submitted .option-radio {
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
 .answer-feedback {
     animation: slideDown 0.3s ease-out;
 }
