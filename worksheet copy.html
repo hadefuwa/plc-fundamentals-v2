@@ -596,7 +596,7 @@
   <div id="error-container" class="error-container" style="display: none;">
     <h3><i class="fas fa-exclamation-triangle"></i> Worksheet Not Found</h3>
     <p>The requested worksheet could not be loaded.</p>
-    <button class="back-btn" onclick="window.location='worksheets.html'">
+    <button class="back-btn">
       <i class="fas fa-arrow-left"></i> Back to Worksheets
     </button>
   </div>
@@ -607,7 +607,7 @@
     <div id="main-content" class="worksheet-container" style="display: none;">
       <!-- Back Navigation -->
       <div class="back-nav">
-        <button class="back-btn" onclick="window.location='worksheets.html'">
+        <button class="back-btn">
           <i class="fas fa-arrow-left"></i> Back to Worksheets
         </button>
       </div>
@@ -625,7 +625,7 @@
           <button class="nav-btn next-btn" onclick="navigateWorksheet('next')">
             Next Worksheet <i class="fas fa-chevron-right"></i>
           </button>
-          <button class="nav-btn back-to-list-btn" onclick="window.location='worksheets.html'">
+          <button class="nav-btn back-to-list-btn">
             <i class="fas fa-list"></i> All Worksheets
           </button>
         </div>
@@ -648,6 +648,24 @@
     function getUrlParameter(name) {
       const urlParams = new URLSearchParams(window.location.search);
       return urlParams.get(name);
+    }
+
+    // Get the correct worksheets page URL based on worksheet type
+    function getWorksheetsPageUrl() {
+      const type = getUrlParameter('type') || 'maintenance';
+      return type === 'fault' ? 'cp6773-worksheets.html' : 'cp0539-worksheets.html';
+    }
+
+    // Update back button destinations
+    function updateBackButtons() {
+      const worksheetsUrl = getWorksheetsPageUrl();
+      const backButtons = document.querySelectorAll('.back-btn, .back-to-list-btn');
+      
+      backButtons.forEach(button => {
+        button.onclick = function() {
+          window.location.href = worksheetsUrl;
+        };
+      });
     }
 
     // Load worksheet data
@@ -2951,7 +2969,10 @@
     // Initialize when page loads
     document.addEventListener('DOMContentLoaded', () => {
       // Small delay to allow URL parameters to be set by main process
-      setTimeout(loadWorksheet, 100);
+      setTimeout(() => {
+        loadWorksheet();
+        updateBackButtons();
+      }, 100);
     });
 
     // Initialize basic Worksheet 1 features for fallback

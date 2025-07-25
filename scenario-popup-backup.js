@@ -2220,8 +2220,11 @@ document.addEventListener('DOMContentLoaded', () => {
             // Calculate PID output
             const output = Kp * error + Ki * integral + Kd * derivative;
             
+            // Clamp output to 0-100% range
+            const clampedOutput = Math.max(0, Math.min(100, output));
+            
             // Update process variable based on control output
-            processVariable += output * 0.1;
+            processVariable += clampedOutput * 0.1;
             lastError = error;
             
             // Add some noise to simulate real-world conditions

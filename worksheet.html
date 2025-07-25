@@ -1251,21 +1251,7 @@
               <div class="pid-tuning-graph" style="background: #333; padding: 25px; border-radius: 8px; margin-bottom: 25px;">
                   <h4 style="color: #FFFFFF; margin-bottom: 20px; font-size: 18px;">Real-time System Response</h4>
                   <div class="graph-container" style="position: relative;">
-                      <canvas id="pid-tuning-canvas" width="800" height="300" style="background: #222; border-radius: 8px; width: 100%; height: 300px; border: 2px solid #555;"></canvas>
-                      <div class="graph-legend" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.7); padding: 10px; border-radius: 5px;">
-                          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 5px;">
-                              <div style="width: 12px; height: 2px; background: #E91E63;"></div>
-                              <span style="color: #FFFFFF; font-size: 12px;">Setpoint</span>
-                          </div>
-                          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 5px;">
-                              <div style="width: 12px; height: 2px; background: #2196F3;"></div>
-                              <span style="color: #FFFFFF; font-size: 12px;">Process Variable</span>
-                          </div>
-                          <div style="display: flex; align-items: center; gap: 8px;">
-                              <div style="width: 12px; height: 2px; background: #4CAF50;"></div>
-                              <span style="color: #FFFFFF; font-size: 12px;">Control Output (%)</span>
-                          </div>
-                      </div>
+                      <canvas id="pid-tuning-chart" style="background: #222; border-radius: 8px; width: 100%; height: 300px; border: 2px solid #555;"></canvas>
                   </div>
               </div>
           </div>
@@ -2344,8 +2330,8 @@
                               <span id="kd-value" class="value-display" style="color: #E91E63; font-weight: bold; min-width: 50px;">0.2</span>
                           </div>
                       </div>
-                      <!-- Real-time performance metrics display -->
-                      <div class="performance-metrics" style="display: flex; gap: 30px; flex-wrap: wrap; background: #222; padding: 20px; border-radius: 8px;">
+                      <!-- Enhanced Real-time Performance Metrics for Maintenance Assessment -->
+                      <div class="performance-metrics" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; background: #222; padding: 20px; border-radius: 8px;">
                           <div class="metric" style="display: flex; align-items: center; gap: 10px;">
                               <label style="color: #FFFFFF; font-weight: bold;">Rise Time:</label>
                               <span id="rise-time" class="metric-value" style="color: #E91E63; font-weight: bold; font-size: 16px;">0.0s</span>
@@ -2358,14 +2344,98 @@
                               <label style="color: #FFFFFF; font-weight: bold;">Settling Time:</label>
                               <span id="settling-time" class="metric-value" style="color: #E91E63; font-weight: bold; font-size: 16px;">0.0s</span>
                           </div>
+                          <div class="metric" style="display: flex; align-items: center; gap: 10px;">
+                              <label style="color: #FFFFFF; font-weight: bold;">Steady State Error:</label>
+                              <span id="steady-error" class="metric-value" style="color: #E91E63; font-weight: bold; font-size: 16px;">0.0°C</span>
+                          </div>
+                          <div class="metric" style="display: flex; align-items: center; gap: 10px;">
+                              <label style="color: #FFFFFF; font-weight: bold;">System Health:</label>
+                              <span id="system-health" class="metric-value" style="color: #4CAF50; font-weight: bold; font-size: 16px;">Excellent</span>
+                          </div>
+                          <div class="metric" style="display: flex; align-items: center; gap: 10px;">
+                              <label style="color: #FFFFFF; font-weight: bold;">Maintenance Due:</label>
+                              <span id="maintenance-due" class="metric-value" style="color: #FF9800; font-weight: bold; font-size: 16px;">30 days</span>
+                          </div>
+                      </div>
+                      
+                      <!-- Maintenance Assessment Panel -->
+                      <div class="maintenance-assessment" style="background: #333; padding: 20px; border-radius: 8px; margin-top: 20px;">
+                          <h5 style="color: #FFFFFF; margin-bottom: 15px; font-size: 16px;"><i class="fas fa-clipboard-check"></i> Maintenance Assessment</h5>
+                          <div class="assessment-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px;">
+                              <div class="assessment-item" style="background: #222; padding: 10px; border-radius: 6px; text-align: center;">
+                                  <div style="color: #4CAF50; font-size: 14px; font-weight: bold;">PID Performance</div>
+                                  <div id="pid-performance" style="color: #FFFFFF; font-size: 12px;">Optimal</div>
+                              </div>
+                              <div class="assessment-item" style="background: #222; padding: 10px; border-radius: 6px; text-align: center;">
+                                  <div style="color: #4CAF50; font-size: 14px; font-weight: bold;">System Stability</div>
+                                  <div id="system-stability" style="color: #FFFFFF; font-size: 12px;">Stable</div>
+                              </div>
+                              <div class="assessment-item" style="background: #222; padding: 10px; border-radius: 6px; text-align: center;">
+                                  <div style="color: #4CAF50; font-size: 14px; font-weight: bold;">Response Quality</div>
+                                  <div id="response-quality" style="color: #FFFFFF; font-size: 12px;">Good</div>
+                              </div>
+                              <div class="assessment-item" style="background: #222; padding: 10px; border-radius: 6px; text-align: center;">
+                                  <div style="color: #4CAF50; font-size: 14px; font-weight: bold;">Fault Tolerance</div>
+                                  <div id="fault-tolerance" style="color: #FFFFFF; font-size: 12px;">High</div>
+                              </div>
+                          </div>
                       </div>
                   </div>
               </div>
             </div>
 
-            <!-- System Response Section -->
+            <!-- Enhanced System Response Section with Industrial Maintenance Features -->
             <div class="simulation-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-top: 40px; border: 2px solid #E91E63; box-shadow: 0 8px 20px rgba(233, 30, 99, 0.3);">
-              <h2 class="section-header" style="color: #E91E63; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-chart-line"></i> 5.2 System Response</h2>
+              <h2 class="section-header" style="color: #E91E63; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-chart-line"></i> 5.2 Industrial System Response Analysis</h2>
+              
+              <!-- Maintenance Mode Selection -->
+              <div class="maintenance-mode-panel" style="background: linear-gradient(135deg, #2a2a2a, #3a3a3a); border-radius: 12px; padding: 25px; margin-bottom: 25px; border: 2px solid #FF9800; box-shadow: 0 8px 20px rgba(255, 152, 0, 0.2);">
+                <h4 style="color: #FF9800; margin-bottom: 20px; font-size: 18px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-tools"></i> Maintenance Mode Selection</h4>
+                <div class="mode-selection" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                  <label class="mode-option" style="display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 15px; background: #333; border-radius: 8px; border: 2px solid transparent; transition: all 0.3s ease;">
+                    <input type="radio" name="maintenance-mode" value="normal" checked style="accent-color: #FF9800;">
+                    <span style="color: #FFFFFF; font-weight: 500;">Normal Operation</span>
+                  </label>
+                  <label class="mode-option" style="display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 15px; background: #333; border-radius: 8px; border: 2px solid transparent; transition: all 0.3s ease;">
+                    <input type="radio" name="maintenance-mode" value="cold-start" style="accent-color: #FF9800;">
+                    <span style="color: #FFFFFF; font-weight: 500;">Cold Start</span>
+                  </label>
+                  <label class="mode-option" style="display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 15px; background: #333; border-radius: 8px; border: 2px solid transparent; transition: all 0.3s ease;">
+                    <input type="radio" name="maintenance-mode" value="maintenance" style="accent-color: #FF9800;">
+                    <span style="color: #FFFFFF; font-weight: 500;">Maintenance Mode</span>
+                  </label>
+                </div>
+              </div>
+              
+              <!-- Disturbance Injection Panel -->
+              <div class="disturbance-panel" style="background: linear-gradient(135deg, #2a2a2a, #3a3a3a); border-radius: 12px; padding: 25px; margin-bottom: 25px; border: 2px solid #F44336; box-shadow: 0 8px 20px rgba(244, 67, 54, 0.2);">
+                <h4 style="color: #F44336; margin-bottom: 20px; font-size: 18px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-exclamation-triangle"></i> Fault Injection & Disturbance Testing</h4>
+                <div class="disturbance-controls" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                  <div class="disturbance-group" style="background: #333; padding: 15px; border-radius: 8px;">
+                    <label style="color: #FFFFFF; font-weight: bold; display: block; margin-bottom: 10px;">Valve Blockage (%)</label>
+                    <input type="range" id="valve-blockage" min="0" max="80" value="0" style="width: 100%;">
+                    <span id="valve-blockage-value" style="color: #F44336; font-weight: bold;">0%</span>
+                  </div>
+                  <div class="disturbance-group" style="background: #333; padding: 15px; border-radius: 8px;">
+                    <label style="color: #FFFFFF; font-weight: bold; display: block; margin-bottom: 10px;">Pump Wear (%)</label>
+                    <input type="range" id="pump-wear" min="0" max="50" value="0" style="width: 100%;">
+                    <span id="pump-wear-value" style="color: #F44336; font-weight: bold;">0%</span>
+                  </div>
+                  <div class="disturbance-group" style="background: #333; padding: 15px; border-radius: 8px;">
+                    <label style="color: #FFFFFF; font-weight: bold; display: block; margin-bottom: 10px;">Sensor Drift (°C)</label>
+                    <input type="range" id="sensor-drift" min="-10" max="10" value="0" style="width: 100%;">
+                    <span id="sensor-drift-value" style="color: #F44336; font-weight: bold;">0°C</span>
+                  </div>
+                </div>
+                <div class="disturbance-buttons" style="display: flex; gap: 15px; margin-top: 20px; justify-content: center;">
+                  <button id="inject-disturbance" class="action-button" style="background: #F44336; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: all 0.3s ease;">
+                    <i class="fas fa-bolt"></i> Inject Disturbance
+                  </button>
+                  <button id="clear-disturbance" class="action-button" style="background: #555; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: all 0.3s ease;">
+                    <i class="fas fa-eraser"></i> Clear All
+                  </button>
+                </div>
+              </div>
               
               <!-- System Response Testing Interface -->
               <div class="tab-content" id="response-tab">
@@ -2476,9 +2546,91 @@
               </div>
             </div>
 
+            <!-- Industrial Flow Loop Behavior Simulation -->
+            <div class="simulation-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-top: 40px; border: 2px solid #2196F3; box-shadow: 0 8px 20px rgba(33, 150, 243, 0.3);">
+              <h2 class="section-header" style="color: #2196F3; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-water"></i> 5.4 Industrial Flow Loop Behavior</h2>
+              
+              <!-- Flow Loop Control Panel -->
+              <div class="flow-loop-panel" style="background: linear-gradient(135deg, #2a2a2a, #3a3a3a); border-radius: 12px; padding: 25px; margin-bottom: 25px; border: 2px solid #2196F3; box-shadow: 0 8px 20px rgba(33, 150, 243, 0.2);">
+                <h4 style="color: #2196F3; margin-bottom: 20px; font-size: 18px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-cogs"></i> Pump & Valve Coordination</h4>
+                
+                <div class="flow-controls" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 20px;">
+                  <div class="control-group" style="background: #333; padding: 15px; border-radius: 8px;">
+                    <label style="color: #FFFFFF; font-weight: bold; display: block; margin-bottom: 10px;">Flow Setpoint (L/min)</label>
+                    <input type="range" id="flow-setpoint" min="0" max="100" value="50" style="width: 100%;">
+                    <span id="flow-setpoint-value" style="color: #2196F3; font-weight: bold;">50 L/min</span>
+                  </div>
+                  <div class="control-group" style="background: #333; padding: 15px; border-radius: 8px;">
+                    <label style="color: #FFFFFF; font-weight: bold; display: block; margin-bottom: 10px;">Pump Speed (%)</label>
+                    <span id="pump-speed" style="color: #4CAF50; font-weight: bold; font-size: 18px;">75%</span>
+                    <div class="pump-status" style="color: #FFFFFF; font-size: 12px; margin-top: 5px;">Running</div>
+                  </div>
+                  <div class="control-group" style="background: #333; padding: 15px; border-radius: 8px;">
+                    <label style="color: #FFFFFF; font-weight: bold; display: block; margin-bottom: 10px;">Valve Position (%)</label>
+                    <span id="valve-position" style="color: #FF9800; font-weight: bold; font-size: 18px;">60%</span>
+                    <div class="valve-status" style="color: #FFFFFF; font-size: 12px; margin-top: 5px;">Open</div>
+                  </div>
+                </div>
+                
+                <div class="flow-metrics" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; background: #222; padding: 15px; border-radius: 8px;">
+                  <div class="metric">
+                    <label style="color: #FFFFFF; font-size: 12px;">Actual Flow</label>
+                    <div id="actual-flow" style="color: #2196F3; font-weight: bold; font-size: 16px;">48.5 L/min</div>
+                  </div>
+                  <div class="metric">
+                    <label style="color: #FFFFFF; font-size: 12px;">Pressure Drop</label>
+                    <div id="pressure-drop" style="color: #FF5722; font-weight: bold; font-size: 16px;">2.3 bar</div>
+                  </div>
+                  <div class="metric">
+                    <label style="color: #FFFFFF; font-size: 12px;">System Efficiency</label>
+                    <div id="system-efficiency" style="color: #4CAF50; font-weight: bold; font-size: 16px;">94%</div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Flow Loop Visualization -->
+              <div class="flow-visualization" style="background: #222; border-radius: 8px; padding: 20px; border: 2px solid #555;">
+                <canvas id="flow-loop-canvas" width="800" height="300" style="background: #222; border-radius: 8px; width: 100%; height: 300px; border: 2px solid #555;"></canvas>
+              </div>
+            </div>
+
+            <!-- Maintenance Scenarios Section -->
+            <div class="simulation-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-top: 40px; border: 2px solid #9C27B0; box-shadow: 0 8px 20px rgba(156, 39, 176, 0.3);">
+              <h2 class="section-header" style="color: #9C27B0; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-tools"></i> 5.5 Industrial Maintenance Scenarios</h2>
+              
+              <div class="maintenance-scenarios" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                <!-- Scenario 1: Cold Start -->
+                <div class="scenario-card" style="background: #333; padding: 20px; border-radius: 12px; border: 2px solid #9C27B0;">
+                  <h4 style="color: #9C27B0; margin-bottom: 15px; font-size: 18px;"><i class="fas fa-thermometer-empty"></i> Cold Start Scenario</h4>
+                  <p style="color: #FFFFFF; margin-bottom: 15px; font-size: 14px;">Simulate system startup from cold conditions. Observe how PID parameters affect recovery time and stability.</p>
+                  <button class="scenario-button" data-scenario="cold-start" style="background: #9C27B0; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: all 0.3s ease;">
+                    Start Cold Start
+                  </button>
+                </div>
+                
+                <!-- Scenario 2: Valve Maintenance -->
+                <div class="scenario-card" style="background: #333; padding: 20px; border-radius: 12px; border: 2px solid #9C27B0;">
+                  <h4 style="color: #9C27B0; margin-bottom: 15px; font-size: 18px;"><i class="fas fa-valve"></i> Valve Maintenance</h4>
+                  <p style="color: #FFFFFF; margin-bottom: 15px; font-size: 14px;">Simulate valve wear and maintenance procedures. Learn to identify valve-related performance issues.</p>
+                  <button class="scenario-button" data-scenario="valve-maintenance" style="background: #9C27B0; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: all 0.3s ease;">
+                    Start Valve Test
+                  </button>
+                </div>
+                
+                <!-- Scenario 3: Pump Performance -->
+                <div class="scenario-card" style="background: #333; padding: 20px; border-radius: 12px; border: 2px solid #9C27B0;">
+                  <h4 style="color: #9C27B0; margin-bottom: 15px; font-size: 18px;"><i class="fas fa-pump"></i> Pump Performance</h4>
+                  <p style="color: #FFFFFF; margin-bottom: 15px; font-size: 14px;">Analyze pump performance degradation over time. Understand predictive maintenance indicators.</p>
+                  <button class="scenario-button" data-scenario="pump-performance" style="background: #9C27B0; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: all 0.3s ease;">
+                    Start Pump Test
+                  </button>
+                </div>
+              </div>
+            </div>
+
             <!-- Main simulation canvas for real-time visualization -->
             <div class="simulation-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-top: 40px; border: 2px solid #E91E63; box-shadow: 0 8px 20px rgba(233, 30, 99, 0.3);">
-              <h2 class="section-header" style="color: #E91E63; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-chart-line"></i> 5.4 Real-Time Visualization</h2>
+              <h2 class="section-header" style="color: #E91E63; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-chart-line"></i> 5.6 Real-Time System Visualization</h2>
               <canvas id="simulation-canvas" class="simulation-canvas" width="800" height="200" style="background: #222; border-radius: 8px; width: 100%; height: 200px; margin: 25px 0; border: 2px solid #555;"></canvas>
             </div>
           `;
@@ -3618,11 +3770,16 @@
             simulationData.time = 0;
           }
           
-          // Destroy Chart.js chart if it exists
+          // Destroy Chart.js charts if they exist
           if (responseChart) {
             responseChart.destroy();
             responseChart = null;
-            console.log('Destroyed Chart.js chart for reset');
+            console.log('Destroyed response chart for reset');
+          }
+          if (pidTuningChart) {
+            pidTuningChart.destroy();
+            pidTuningChart = null;
+            console.log('Destroyed PID tuning chart for reset');
           }
           
           // Reset PID sliders to default values
@@ -3704,9 +3861,130 @@
         });
         return data;
       };
+      
+      // Initialize enhanced industrial maintenance features
+      initializeIndustrialMaintenanceFeatures();
+    }
+    
+    // Enhanced Industrial Maintenance Features
+    function initializeIndustrialMaintenanceFeatures() {
+      console.log('Initializing industrial maintenance features...');
+      
+      // Initialize maintenance mode selection
+      const maintenanceModeRadios = document.querySelectorAll('input[name="maintenance-mode"]');
+      maintenanceModeRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+          console.log('Maintenance mode changed to:', this.value);
+          updateMaintenanceMode(this.value);
+        });
+      });
+      
+      // Initialize disturbance controls
+      initializeDisturbanceControls();
+      
+      // Initialize flow loop controls
+      initializeFlowLoopControls();
+      
+      // Initialize maintenance scenarios
+      initializeMaintenanceScenarios();
+      
+      // Initialize enhanced performance metrics
+      initializeEnhancedMetrics();
+      
+      console.log('Industrial maintenance features initialized');
+    }
+    
+    // Initialize disturbance injection controls
+    function initializeDisturbanceControls() {
+      const valveBlockage = document.getElementById('valve-blockage');
+      const valveBlockageValue = document.getElementById('valve-blockage-value');
+      const pumpWear = document.getElementById('pump-wear');
+      const pumpWearValue = document.getElementById('pump-wear-value');
+      const sensorDrift = document.getElementById('sensor-drift');
+      const sensorDriftValue = document.getElementById('sensor-drift-value');
+      
+      if (valveBlockage && valveBlockageValue) {
+        valveBlockage.addEventListener('input', function() {
+          const value = parseFloat(this.value);
+          valveBlockageValue.textContent = value + '%';
+          simulationData.valveBlockage = value / 100;
+          updateDisturbanceEffects();
+        });
+      }
+      
+      if (pumpWear && pumpWearValue) {
+        pumpWear.addEventListener('input', function() {
+          const value = parseFloat(this.value);
+          pumpWearValue.textContent = value + '%';
+          simulationData.pumpWear = value / 100;
+          updateDisturbanceEffects();
+        });
+      }
+      
+      if (sensorDrift && sensorDriftValue) {
+        sensorDrift.addEventListener('input', function() {
+          const value = parseFloat(this.value);
+          sensorDriftValue.textContent = value + '°C';
+          simulationData.sensorDrift = value;
+          updateDisturbanceEffects();
+        });
+      }
+      
+      // Initialize disturbance buttons
+      const injectDisturbanceBtn = document.getElementById('inject-disturbance');
+      const clearDisturbanceBtn = document.getElementById('clear-disturbance');
+      
+      if (injectDisturbanceBtn) {
+        injectDisturbanceBtn.addEventListener('click', function() {
+          injectDisturbance();
+        });
+      }
+      
+      if (clearDisturbanceBtn) {
+        clearDisturbanceBtn.addEventListener('click', function() {
+          clearDisturbances();
+        });
+      }
+    }
+    
+    // Initialize flow loop controls
+    function initializeFlowLoopControls() {
+      const flowSetpoint = document.getElementById('flow-setpoint');
+      const flowSetpointValue = document.getElementById('flow-setpoint-value');
+      
+      if (flowSetpoint && flowSetpointValue) {
+        flowSetpoint.addEventListener('input', function() {
+          const value = parseFloat(this.value);
+          flowSetpointValue.textContent = value + ' L/min';
+          simulationData.flowSetpoint = value;
+          updateFlowLoopSimulation();
+        });
+      }
+      
+      // Start flow loop simulation
+      startFlowLoopSimulation();
+    }
+    
+    // Initialize maintenance scenarios
+    function initializeMaintenanceScenarios() {
+      const scenarioButtons = document.querySelectorAll('.scenario-button');
+      scenarioButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const scenario = this.getAttribute('data-scenario');
+          startMaintenanceScenario(scenario);
+        });
+      });
+    }
+    
+    // Initialize enhanced performance metrics
+    function initializeEnhancedMetrics() {
+      // Update metrics every second
+      setInterval(() => {
+        updateEnhancedMetrics();
+      }, 1000);
     }
 
-    // PID Simulation Variables
+    // Enhanced PID Simulation Variables with Industrial Maintenance Features
     let simulationData = {
       setpoint: 50,
       processVariable: 25,
@@ -3726,7 +4004,41 @@
         controlOutput: [],
         time: []
       },
-      maxDataPoints: 200
+      maxDataPoints: 200,
+      
+      // Industrial Maintenance Features
+      maintenanceMode: 'normal',
+      valveBlockage: 0,
+      pumpWear: 0,
+      sensorDrift: 0,
+      flowSetpoint: 50,
+      actualFlow: 48.5,
+      pumpSpeed: 75,
+      valvePosition: 60,
+      pressureDrop: 2.3,
+      systemEfficiency: 94,
+      systemHealth: 'Excellent',
+      maintenanceDue: 30,
+      
+      // Performance metrics
+      riseTime: 0,
+      overshoot: 0,
+      settlingTime: 0,
+      steadyStateError: 0,
+      pidPerformance: 'Optimal',
+      systemStability: 'Stable',
+      responseQuality: 'Good',
+      faultTolerance: 'High',
+      
+      // Flow loop simulation
+      flowLoopInterval: null,
+      flowLoopData: {
+        time: [],
+        setpoint: [],
+        actual: [],
+        pumpSpeed: [],
+        valvePosition: []
+      }
     };
 
     // Update PID simulation with current values
@@ -3901,8 +4213,9 @@
       }, 100); // Update every 100ms
     }
 
-    // Global Chart.js chart instance
+    // Global Chart.js chart instances
     let responseChart = null;
+    let pidTuningChart = null;
 
     // Run response test simulation with Chart.js
     function runResponseTest() {
@@ -5021,21 +5334,118 @@
       }, 1500);
     }
 
-    // Initialize PID tuning graph
+    // Initialize PID tuning graph with Chart.js
     function initPIDTuningGraph() {
-      const canvas = document.getElementById('pid-tuning-canvas');
+      const canvas = document.getElementById('pid-tuning-chart');
       if (!canvas) return;
       
-      const ctx = canvas.getContext('2d');
-      const width = canvas.width;
-      const height = canvas.height;
+      // Destroy existing chart if it exists
+      if (pidTuningChart) {
+        pidTuningChart.destroy();
+      }
       
-      // Clear canvas
-      ctx.fillStyle = '#222';
-      ctx.fillRect(0, 0, width, height);
-      
-      // Draw grid
-      drawTuningGrid(ctx, width, height, 0, 20, 0, 100);
+      // Create new Chart.js chart
+      pidTuningChart = new Chart(canvas, {
+        type: 'line',
+        data: {
+          labels: [],
+          datasets: [
+            {
+              label: 'Setpoint',
+              data: [],
+              borderColor: '#E91E63',
+              backgroundColor: 'rgba(233, 30, 99, 0.1)',
+              borderWidth: 2,
+              fill: false,
+              tension: 0.1
+            },
+            {
+              label: 'Process Variable',
+              data: [],
+              borderColor: '#2196F3',
+              backgroundColor: 'rgba(33, 150, 243, 0.1)',
+              borderWidth: 2,
+              fill: false,
+              tension: 0.1
+            },
+            {
+              label: 'Control Output (%)',
+              data: [],
+              borderColor: '#4CAF50',
+              backgroundColor: 'rgba(76, 175, 80, 0.1)',
+              borderWidth: 2,
+              fill: false,
+              tension: 0.1
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: {
+            duration: 0 // Disable animations for real-time updates
+          },
+          plugins: {
+            legend: {
+              position: 'top',
+              labels: {
+                color: '#FFFFFF',
+                font: {
+                  size: 12
+                }
+              }
+            },
+            title: {
+              display: true,
+              text: 'Real-time PID Tuning',
+              color: '#FFFFFF',
+              font: {
+                size: 16,
+                weight: 'bold'
+              }
+            }
+          },
+          scales: {
+            x: {
+              title: {
+                display: true,
+                text: 'Time (seconds)',
+                color: '#FFFFFF'
+              },
+              ticks: {
+                color: '#FFFFFF'
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.1)'
+              }
+            },
+            y: {
+              title: {
+                display: true,
+                text: 'Temperature (°C) / Control Output (%)',
+                color: '#FFFFFF'
+              },
+              ticks: {
+                color: '#FFFFFF'
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.1)'
+              },
+              suggestedMin: 0,
+              suggestedMax: 100
+            }
+          },
+          interaction: {
+            intersect: false,
+            mode: 'index'
+          },
+          elements: {
+            point: {
+              radius: 0
+            }
+          }
+        }
+      });
       
       // Clear graph data
       simulationData.graphData.setpoint = [];
@@ -5044,48 +5454,7 @@
       simulationData.graphData.time = [];
     }
 
-    // Draw grid for tuning graph
-    function drawTuningGrid(ctx, width, height, startTime = 0, timeWindow = 20, tempMin = 0, tempMax = 100) {
-      ctx.strokeStyle = '#444';
-      ctx.lineWidth = 1;
-      
-      // Vertical lines (time)
-      for (let x = 0; x <= width; x += width / 10) {
-        ctx.beginPath();
-        ctx.moveTo(x, 0);
-        ctx.lineTo(x, height);
-        ctx.stroke();
-      }
-      
-      // Horizontal lines (temperature)
-      for (let y = 0; y <= height; y += height / 8) {
-        ctx.beginPath();
-        ctx.moveTo(0, y);
-        ctx.lineTo(width, y);
-        ctx.stroke();
-      }
-      
-      // Add labels
-      ctx.fillStyle = '#FFFFFF';
-      ctx.font = '12px Arial';
-      ctx.textAlign = 'center';
-      
-      // Y-axis labels (temperature) - now uses dynamic range
-      for (let i = 0; i <= 8; i++) {
-        const y = height - (i * height / 8);
-        const temp = tempMin + (i * (tempMax - tempMin) / 8);
-        // Show appropriate units based on the data range
-        const unit = tempMax > 100 ? '' : '°C';
-        ctx.fillText(temp.toFixed(1) + unit, 30, y + 4);
-      }
-      
-      // X-axis labels (time) - now scrolls with the window
-      for (let i = 0; i <= 10; i++) {
-        const x = i * width / 10;
-        const time = startTime + (i * timeWindow / 10);
-        ctx.fillText(time.toFixed(1) + 's', x, height - 5);
-      }
-    }
+
 
     // Add data point to graph
     function addGraphData() {
@@ -5103,105 +5472,40 @@
       }
     }
 
-    // Draw PID tuning graph
+    // Update PID tuning graph with Chart.js
     function drawPIDTuningGraph() {
-      const canvas = document.getElementById('pid-tuning-canvas');
-      if (!canvas || simulationData.graphData.time.length < 2) return;
+      if (!pidTuningChart || simulationData.graphData.time.length < 2) return;
       
-      const ctx = canvas.getContext('2d');
-      const width = canvas.width;
-      const height = canvas.height;
-      
-      // Clear canvas
-      ctx.fillStyle = '#222';
-      ctx.fillRect(0, 0, width, height);
-      
-      // Calculate time window for scrolling
+      // Calculate time window for scrolling (keep last 20 seconds)
       const currentTime = simulationData.time;
       const timeWindow = 20; // 20 second window
       const startTime = Math.max(0, currentTime - timeWindow);
       
-      // Find data range for auto-scaling
-      let allValues = [];
+      // Filter data to show only the last 20 seconds
+      const filteredData = {
+        time: [],
+        setpoint: [],
+        processVariable: [],
+        controlOutput: []
+      };
+      
       simulationData.graphData.time.forEach((time, index) => {
         if (time >= startTime && time <= currentTime) {
-          allValues.push(simulationData.graphData.setpoint[index]);
-          allValues.push(simulationData.graphData.processVariable[index]);
-          // Include control output in its full range for proper scaling
-          allValues.push(simulationData.graphData.controlOutput[index]);
+          filteredData.time.push(time);
+          filteredData.setpoint.push(simulationData.graphData.setpoint[index]);
+          filteredData.processVariable.push(simulationData.graphData.processVariable[index]);
+          filteredData.controlOutput.push(simulationData.graphData.controlOutput[index]);
         }
       });
       
-      // Calculate auto-scaling with padding
-      const dataMin = Math.min(...allValues);
-      const dataMax = Math.max(...allValues);
-      const dataRange = dataMax - dataMin;
-      const padding = dataRange * 0.15; // 15% padding for better visibility
-      const tempMin = dataMin - padding;
-      const tempMax = dataMax + padding;
-      const tempRange = tempMax - tempMin;
+      // Update chart data
+      pidTuningChart.data.labels = filteredData.time.map(t => t.toFixed(1) + 's');
+      pidTuningChart.data.datasets[0].data = filteredData.setpoint;
+      pidTuningChart.data.datasets[1].data = filteredData.processVariable;
+      pidTuningChart.data.datasets[2].data = filteredData.controlOutput;
       
-      // Draw grid with auto-scaling
-      drawTuningGrid(ctx, width, height, startTime, timeWindow, tempMin, tempMax);
-      
-      // Draw setpoint line
-      ctx.strokeStyle = '#E91E63';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      let firstPoint = true;
-      simulationData.graphData.time.forEach((time, index) => {
-        // Only draw points within the visible window
-        if (time >= startTime && time <= currentTime) {
-          const x = ((time - startTime) / timeWindow) * width;
-          const y = height - ((simulationData.graphData.setpoint[index] - tempMin) / tempRange) * height;
-          if (firstPoint) {
-            ctx.moveTo(x, y);
-            firstPoint = false;
-          } else {
-            ctx.lineTo(x, y);
-          }
-        }
-      });
-      ctx.stroke();
-      
-      // Draw process variable line
-      ctx.strokeStyle = '#2196F3';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      firstPoint = true;
-      simulationData.graphData.time.forEach((time, index) => {
-        if (time >= startTime && time <= currentTime) {
-          const x = ((time - startTime) / timeWindow) * width;
-          const y = height - ((simulationData.graphData.processVariable[index] - tempMin) / tempRange) * height;
-          if (firstPoint) {
-            ctx.moveTo(x, y);
-            firstPoint = false;
-          } else {
-            ctx.lineTo(x, y);
-          }
-        }
-      });
-      ctx.stroke();
-      
-      // Draw control output line (using full range)
-      ctx.strokeStyle = '#4CAF50';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      firstPoint = true;
-      simulationData.graphData.time.forEach((time, index) => {
-        if (time >= startTime && time <= currentTime) {
-          const x = ((time - startTime) / timeWindow) * width;
-          // Use control output in its full range
-          const y = height - ((simulationData.graphData.controlOutput[index] - tempMin) / tempRange) * height;
-          if (firstPoint) {
-            ctx.moveTo(x, y);
-            firstPoint = false;
-          } else {
-            ctx.lineTo(x, y);
-          }
-        }
-      });
-      ctx.stroke();
+      // Update the chart
+      pidTuningChart.update('none'); // Use 'none' mode for better performance
     }
 
     // Tab switching function removed - sections are now displayed vertically
@@ -6320,6 +6624,397 @@
                 }
             }, duration);
         }
+    }
+    
+    // ========================================
+    // INDUSTRIAL MAINTENANCE FEATURE FUNCTIONS
+    // ========================================
+    
+    // Update maintenance mode
+    function updateMaintenanceMode(mode) {
+      simulationData.maintenanceMode = mode;
+      console.log('Maintenance mode updated to:', mode);
+      
+      switch (mode) {
+        case 'cold-start':
+          // Simulate cold start conditions
+          simulationData.processVariable = 15; // Cold temperature
+          simulationData.integral = 0; // Reset integral
+          simulationData.lastError = 0; // Reset derivative
+          showInlineNotification('Cold start mode activated - system starting from low temperature', 'info');
+          break;
+        case 'maintenance':
+          // Simulate maintenance mode with reduced performance
+          simulationData.pumpWear = 0.3; // 30% pump wear
+          simulationData.valveBlockage = 0.2; // 20% valve blockage
+          showInlineNotification('Maintenance mode activated - simulating equipment wear', 'warning');
+          break;
+        case 'normal':
+        default:
+          // Reset to normal operation
+          simulationData.pumpWear = 0;
+          simulationData.valveBlockage = 0;
+          simulationData.sensorDrift = 0;
+          showInlineNotification('Normal operation mode activated', 'success');
+          break;
+      }
+      
+      updateDisturbanceEffects();
+    }
+    
+    // Update disturbance effects on system
+    function updateDisturbanceEffects() {
+      // Calculate combined disturbance effect
+      const totalDisturbance = simulationData.valveBlockage + simulationData.pumpWear + (Math.abs(simulationData.sensorDrift) / 10);
+      
+      // Update system health based on disturbances
+      if (totalDisturbance < 0.1) {
+        simulationData.systemHealth = 'Excellent';
+      } else if (totalDisturbance < 0.3) {
+        simulationData.systemHealth = 'Good';
+      } else if (totalDisturbance < 0.5) {
+        simulationData.systemHealth = 'Fair';
+      } else {
+        simulationData.systemHealth = 'Poor';
+      }
+      
+      // Update maintenance due date based on system health
+      if (simulationData.systemHealth === 'Excellent') {
+        simulationData.maintenanceDue = 30;
+      } else if (simulationData.systemHealth === 'Good') {
+        simulationData.maintenanceDue = 20;
+      } else if (simulationData.systemHealth === 'Fair') {
+        simulationData.maintenanceDue = 10;
+      } else {
+        simulationData.maintenanceDue = 5;
+      }
+      
+      // Update display
+      updateEnhancedMetrics();
+    }
+    
+    // Inject disturbance into system
+    function injectDisturbance() {
+      const valveBlockage = simulationData.valveBlockage;
+      const pumpWear = simulationData.pumpWear;
+      const sensorDrift = simulationData.sensorDrift;
+      
+      if (valveBlockage > 0 || pumpWear > 0 || sensorDrift !== 0) {
+        // Apply disturbances to system
+        simulationData.processVariable += sensorDrift;
+        simulationData.output *= (1 - pumpWear);
+        
+        showInlineNotification(`Disturbance injected: Valve=${valveBlockage*100}%, Pump=${pumpWear*100}%, Sensor=${sensorDrift}°C`, 'warning');
+        
+        // Update system response
+        updatePIDSimulation();
+        updateFlowLoopSimulation();
+      } else {
+        showInlineNotification('No disturbances set. Adjust the sliders first.', 'info');
+      }
+    }
+    
+    // Clear all disturbances
+    function clearDisturbances() {
+      simulationData.valveBlockage = 0;
+      simulationData.pumpWear = 0;
+      simulationData.sensorDrift = 0;
+      
+      // Reset sliders
+      const valveBlockage = document.getElementById('valve-blockage');
+      const pumpWear = document.getElementById('pump-wear');
+      const sensorDrift = document.getElementById('sensor-drift');
+      
+      if (valveBlockage) valveBlockage.value = 0;
+      if (pumpWear) pumpWear.value = 0;
+      if (sensorDrift) sensorDrift.value = 0;
+      
+      // Update displays
+      document.getElementById('valve-blockage-value').textContent = '0%';
+      document.getElementById('pump-wear-value').textContent = '0%';
+      document.getElementById('sensor-drift-value').textContent = '0°C';
+      
+      updateDisturbanceEffects();
+      showInlineNotification('All disturbances cleared', 'success');
+    }
+    
+    // Update flow loop simulation
+    function updateFlowLoopSimulation() {
+      // Calculate flow based on pump speed, valve position, and disturbances
+      const baseFlow = simulationData.flowSetpoint;
+      const pumpEfficiency = 1 - simulationData.pumpWear;
+      const valveEfficiency = 1 - simulationData.valveBlockage;
+      
+      simulationData.actualFlow = baseFlow * pumpEfficiency * valveEfficiency;
+      
+      // Calculate pump speed needed
+      simulationData.pumpSpeed = Math.min(100, Math.max(0, (simulationData.actualFlow / baseFlow) * 100));
+      
+      // Calculate valve position
+      simulationData.valvePosition = Math.min(100, Math.max(0, (simulationData.actualFlow / baseFlow) * 80 + 20));
+      
+      // Calculate pressure drop
+      simulationData.pressureDrop = 2.0 + (simulationData.valveBlockage * 3.0);
+      
+      // Calculate system efficiency
+      simulationData.systemEfficiency = Math.round((simulationData.actualFlow / simulationData.flowSetpoint) * 100);
+      
+      // Update displays
+      updateFlowLoopDisplay();
+    }
+    
+    // Update flow loop display
+    function updateFlowLoopDisplay() {
+      const actualFlow = document.getElementById('actual-flow');
+      const pumpSpeed = document.getElementById('pump-speed');
+      const valvePosition = document.getElementById('valve-position');
+      const pressureDrop = document.getElementById('pressure-drop');
+      const systemEfficiency = document.getElementById('system-efficiency');
+      
+      if (actualFlow) actualFlow.textContent = simulationData.actualFlow.toFixed(1) + ' L/min';
+      if (pumpSpeed) pumpSpeed.textContent = simulationData.pumpSpeed.toFixed(0) + '%';
+      if (valvePosition) valvePosition.textContent = simulationData.valvePosition.toFixed(0) + '%';
+      if (pressureDrop) pressureDrop.textContent = simulationData.pressureDrop.toFixed(1) + ' bar';
+      if (systemEfficiency) systemEfficiency.textContent = simulationData.systemEfficiency + '%';
+    }
+    
+    // Start flow loop simulation
+    function startFlowLoopSimulation() {
+      if (simulationData.flowLoopInterval) {
+        clearInterval(simulationData.flowLoopInterval);
+      }
+      
+      simulationData.flowLoopInterval = setInterval(() => {
+        updateFlowLoopSimulation();
+        updateFlowLoopVisualization();
+      }, 100);
+    }
+    
+    // Update flow loop visualization
+    function updateFlowLoopVisualization() {
+      const canvas = document.getElementById('flow-loop-canvas');
+      if (!canvas) return;
+      
+      const ctx = canvas.getContext('2d');
+      const width = canvas.width;
+      const height = canvas.height;
+      
+      // Clear canvas
+      ctx.fillStyle = '#222';
+      ctx.fillRect(0, 0, width, height);
+      
+      // Draw flow loop diagram
+      drawFlowLoopDiagram(ctx, width, height);
+    }
+    
+    // Draw flow loop diagram
+    function drawFlowLoopDiagram(ctx, width, height) {
+      // Draw pump
+      ctx.fillStyle = simulationData.pumpSpeed > 50 ? '#4CAF50' : '#FF5722';
+      ctx.fillRect(50, height/2 - 30, 60, 60);
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = '12px Arial';
+      ctx.textAlign = 'center';
+      ctx.fillText('PUMP', 80, height/2 + 5);
+      ctx.fillText(simulationData.pumpSpeed.toFixed(0) + '%', 80, height/2 + 20);
+      
+      // Draw valve
+      ctx.fillStyle = simulationData.valvePosition > 50 ? '#4CAF50' : '#FF9800';
+      ctx.fillRect(width - 110, height/2 - 20, 40, 40);
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = '10px Arial';
+      ctx.textAlign = 'center';
+      ctx.fillText('VALVE', width - 90, height/2 + 5);
+      ctx.fillText(simulationData.valvePosition.toFixed(0) + '%', width - 90, height/2 + 18);
+      
+      // Draw flow lines
+      ctx.strokeStyle = '#2196F3';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(110, height/2);
+      ctx.lineTo(width - 110, height/2);
+      ctx.stroke();
+      
+      // Draw flow direction arrows
+      for (let i = 120; i < width - 120; i += 40) {
+        ctx.fillStyle = '#2196F3';
+        ctx.beginPath();
+        ctx.moveTo(i, height/2 - 5);
+        ctx.lineTo(i + 10, height/2);
+        ctx.lineTo(i, height/2 + 5);
+        ctx.fill();
+      }
+      
+      // Draw flow rate display
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = '16px Arial';
+      ctx.textAlign = 'center';
+      ctx.fillText(simulationData.actualFlow.toFixed(1) + ' L/min', width/2, height - 20);
+    }
+    
+    // Start maintenance scenario
+    function startMaintenanceScenario(scenario) {
+      console.log('Starting maintenance scenario:', scenario);
+      
+      switch (scenario) {
+        case 'cold-start':
+          startColdStartScenario();
+          break;
+        case 'valve-maintenance':
+          startValveMaintenanceScenario();
+          break;
+        case 'pump-performance':
+          startPumpPerformanceScenario();
+          break;
+        default:
+          showInlineNotification('Unknown scenario: ' + scenario, 'error');
+      }
+    }
+    
+    // Cold start scenario
+    function startColdStartScenario() {
+      showInlineNotification('Starting Cold Start Scenario...', 'info');
+      
+      // Set cold start conditions
+      simulationData.maintenanceMode = 'cold-start';
+      simulationData.processVariable = 15;
+      simulationData.setpoint = 50;
+      
+      // Update mode selection
+      const coldStartRadio = document.querySelector('input[name="maintenance-mode"][value="cold-start"]');
+      if (coldStartRadio) coldStartRadio.checked = true;
+      
+      // Start simulation with cold start parameters
+      updatePIDSimulation();
+      showInlineNotification('Cold start scenario active - observe system recovery time', 'success');
+    }
+    
+    // Valve maintenance scenario
+    function startValveMaintenanceScenario() {
+      showInlineNotification('Starting Valve Maintenance Scenario...', 'info');
+      
+      // Simulate valve wear
+      simulationData.valveBlockage = 0.4; // 40% blockage
+      simulationData.maintenanceMode = 'maintenance';
+      
+      // Update valve blockage slider
+      const valveBlockage = document.getElementById('valve-blockage');
+      if (valveBlockage) {
+        valveBlockage.value = 40;
+        document.getElementById('valve-blockage-value').textContent = '40%';
+      }
+      
+      updateDisturbanceEffects();
+      showInlineNotification('Valve maintenance scenario active - observe performance degradation', 'warning');
+    }
+    
+    // Pump performance scenario
+    function startPumpPerformanceScenario() {
+      showInlineNotification('Starting Pump Performance Scenario...', 'info');
+      
+      // Simulate pump wear over time
+      let wearLevel = 0;
+      const wearInterval = setInterval(() => {
+        wearLevel += 0.01;
+        simulationData.pumpWear = Math.min(0.5, wearLevel);
+        
+        // Update pump wear slider
+        const pumpWear = document.getElementById('pump-wear');
+        if (pumpWear) {
+          pumpWear.value = simulationData.pumpWear * 100;
+          document.getElementById('pump-wear-value').textContent = (simulationData.pumpWear * 100).toFixed(0) + '%';
+        }
+        
+        updateDisturbanceEffects();
+        
+        if (simulationData.pumpWear >= 0.5) {
+          clearInterval(wearInterval);
+          showInlineNotification('Pump performance scenario complete - significant wear detected', 'warning');
+        }
+      }, 1000);
+      
+      showInlineNotification('Pump performance scenario active - monitoring wear progression', 'info');
+    }
+    
+    // Update enhanced performance metrics
+    function updateEnhancedMetrics() {
+      // Update system health
+      const systemHealth = document.getElementById('system-health');
+      if (systemHealth) {
+        systemHealth.textContent = simulationData.systemHealth;
+        systemHealth.style.color = simulationData.systemHealth === 'Excellent' ? '#4CAF50' : 
+                                  simulationData.systemHealth === 'Good' ? '#8BC34A' :
+                                  simulationData.systemHealth === 'Fair' ? '#FF9800' : '#F44336';
+      }
+      
+      // Update maintenance due
+      const maintenanceDue = document.getElementById('maintenance-due');
+      if (maintenanceDue) {
+        maintenanceDue.textContent = simulationData.maintenanceDue + ' days';
+        maintenanceDue.style.color = simulationData.maintenanceDue > 20 ? '#4CAF50' : 
+                                    simulationData.maintenanceDue > 10 ? '#FF9800' : '#F44336';
+      }
+      
+      // Update assessment metrics
+      updateAssessmentMetrics();
+    }
+    
+    // Update assessment metrics
+    function updateAssessmentMetrics() {
+      // Calculate PID performance based on error
+      const error = Math.abs(simulationData.setpoint - simulationData.processVariable);
+      if (error < 1) {
+        simulationData.pidPerformance = 'Optimal';
+      } else if (error < 3) {
+        simulationData.pidPerformance = 'Good';
+      } else if (error < 5) {
+        simulationData.pidPerformance = 'Fair';
+      } else {
+        simulationData.pidPerformance = 'Poor';
+      }
+      
+      // Calculate system stability
+      const totalDisturbance = simulationData.valveBlockage + simulationData.pumpWear + (Math.abs(simulationData.sensorDrift) / 10);
+      if (totalDisturbance < 0.1) {
+        simulationData.systemStability = 'Stable';
+      } else if (totalDisturbance < 0.3) {
+        simulationData.systemStability = 'Moderate';
+      } else {
+        simulationData.systemStability = 'Unstable';
+      }
+      
+      // Calculate response quality
+      const responseTime = simulationData.riseTime;
+      if (responseTime < 2) {
+        simulationData.responseQuality = 'Excellent';
+      } else if (responseTime < 5) {
+        simulationData.responseQuality = 'Good';
+      } else if (responseTime < 10) {
+        simulationData.responseQuality = 'Fair';
+      } else {
+        simulationData.responseQuality = 'Poor';
+      }
+      
+      // Calculate fault tolerance
+      const faultTolerance = 1 - totalDisturbance;
+      if (faultTolerance > 0.8) {
+        simulationData.faultTolerance = 'High';
+      } else if (faultTolerance > 0.6) {
+        simulationData.faultTolerance = 'Medium';
+      } else {
+        simulationData.faultTolerance = 'Low';
+      }
+      
+      // Update display
+      const pidPerformance = document.getElementById('pid-performance');
+      const systemStability = document.getElementById('system-stability');
+      const responseQuality = document.getElementById('response-quality');
+      const faultToleranceElement = document.getElementById('fault-tolerance');
+      
+      if (pidPerformance) pidPerformance.textContent = simulationData.pidPerformance;
+      if (systemStability) systemStability.textContent = simulationData.systemStability;
+      if (responseQuality) responseQuality.textContent = simulationData.responseQuality;
+      if (faultToleranceElement) faultToleranceElement.textContent = simulationData.faultTolerance;
     }
   </script>
   <script>

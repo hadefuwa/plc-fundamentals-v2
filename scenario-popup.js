@@ -617,7 +617,11 @@ function initEnhancedPIDSimulation() {
             const derivative = (error - lastError) / timeStep;
             
             const output = Kp * error + Ki * integral + Kd * derivative;
-            processVariable += output * timeStep;
+            
+            // Clamp output to 0-100% range
+            const clampedOutput = Math.max(0, Math.min(100, output));
+            
+            processVariable += clampedOutput * timeStep;
             lastError = error;
             
             // Add some noise
@@ -722,8 +726,11 @@ function initEnhancedPIDSimulation() {
         // Calculate PID output
         const output = Kp * error + Ki * integral + Kd * derivative;
         
+        // Clamp output to 0-100% range
+        const clampedOutput = Math.max(0, Math.min(100, output));
+        
         // Update process variable based on control output
-        processVariable += output * 0.1;
+        processVariable += clampedOutput * 0.1;
         lastError = error;
         
         // Add some noise to simulate real-world conditions
@@ -748,6 +755,22 @@ function initEnhancedPIDSimulation() {
         if (pvValue) {
             pvValue.textContent = `${processVariable.toFixed(1)}°C`;
         }
+        
+        // Update control output display if it exists
+        const controlOutputValue = document.getElementById('control-output-value');
+        if (controlOutputValue) {
+            controlOutputValue.textContent = `${clampedOutput.toFixed(1)}%`;
+            
+            // Visual indicator when output is clamped
+            if (clampedOutput >= 100) {
+                controlOutputValue.style.color = '#FF5722'; // Orange-red when at max
+            } else if (clampedOutput <= 0) {
+                controlOutputValue.style.color = '#FF9800'; // Orange when at min
+            } else {
+                controlOutputValue.style.color = '#4CAF50'; // Normal green
+            }
+        }
+        
         updateMetrics();
         
         // Update visualization
