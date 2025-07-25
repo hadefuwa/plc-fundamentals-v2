@@ -60,9 +60,9 @@ function initializeEStopControls() {
 
 // Create E-stop control panel
 function createEStopControlPanel() {
-  const simulationSection = document.getElementById('emergency-stop-control-panel');
+  const simulationSection = document.querySelector('.simulation-section');
   if (!simulationSection) {
-    console.log('Emergency stop control panel container not found');
+    console.log('Simulation section not found');
     return;
   }
   
@@ -124,9 +124,9 @@ function createEStopControlPanel() {
 // Initialize fault injection system
 function initializeFaultInjection() {
   // Create fault injection panel
-  const simulationSection = document.getElementById('fault-injection-panel');
+  const simulationSection = document.querySelector('.simulation-section');
   if (!simulationSection) {
-    console.log('Fault injection panel container not found');
+    console.log('Simulation section not found');
     return;
   }
   
@@ -184,9 +184,9 @@ function initializeFaultInjection() {
 // Initialize reset sequence
 function initializeResetSequence() {
   // Create reset sequence panel
-  const simulationSection = document.getElementById('reset-sequence-panel');
+  const simulationSection = document.querySelector('.simulation-section');
   if (!simulationSection) {
-    console.log('Reset sequence panel container not found');
+    console.log('Simulation section not found');
     return;
   }
   
@@ -248,9 +248,9 @@ function initializeResetSequence() {
 
 // Initialize fault history panel
 function initializeFaultHistory() {
-  const simulationSection = document.getElementById('fault-history-panel');
+  const simulationSection = document.querySelector('.simulation-section');
   if (!simulationSection) {
-    console.log('Fault history panel container not found');
+    console.log('Simulation section not found');
     return;
   }
   
