@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Matrix TSL - Emergency Stop System Maintenance</title>
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav-bar">
+    <div class="nav-container">
+      <div class="nav-left">
+        <button class="nav-btn back-btn" onclick="window.location.href='worksheet-1.html'">
+          <i class="fas fa-arrow-left"></i> Previous Worksheet
+        </button>
+      </div>
+      <div class="nav-center">
+        <h1 class="nav-title">Worksheet 2 - Emergency Stop System Maintenance</h1>
+      </div>
+      <div class="nav-right">
+        <button class="nav-btn next-btn" onclick="window.location.href='worksheet-3.html'">
+          Next Worksheet <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="worksheet-box">
+    <!-- Introduction Section -->
+    <div class="worksheet-section introduction-section">
+      <h2 class="section-header"><i class="fas fa-info-circle"></i> 1. Introduction</h2>
+      <div class="worksheet-content">
+        <p>Emergency stop systems are critical safety devices designed to immediately shut down equipment in dangerous situations. These systems must be 100% reliable because lives depend on them functioning properly when needed.</p>
+        
+        <div class="system-diagram">
+          <img src="assets/maintenance/emergency-stops.png" alt="Emergency Stop System">
+          <figcaption>Emergency Stop System Components</figcaption>
+        </div>
+      </div>
+    </div>
+
+    <!-- Over To You Section -->
+    <div class="worksheet-section over-to-you-section">
+      <h2 class="section-header"><i class="fas fa-hands-helping"></i> 2. Over To You</h2>
+      <div class="worksheet-content">
+        <p><strong>Examine the emergency stop systems located throughout the facility. These critical safety devices must be tested regularly to ensure they function properly when needed.</strong></p>
+        
+        <div class="steps-container">
+          <div class="step-card" data-step="1">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Visual Inspection</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Check each E-stop button for physical damage, proper mounting, and clear labeling. Ensure the button is not stuck or damaged.</p>
+            </div>
+          </div>
+          
+          <div class="step-card" data-step="2">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Mechanical Test</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Press each E-stop button to verify it latches properly and requires intentional rotation to reset.</p>
+            </div>
+          </div>
+          
+          <div class="step-card" data-step="3">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Circuit Verification</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Use a multimeter to verify the E-stop contacts open properly when activated and close when reset.</p>
+            </div>
+          </div>
+          
+          <div class="step-card" data-step="4">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>System Response Test</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Test that the system properly shuts down when E-stop is activated and requires proper reset sequence to restart.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- So What Section -->
+    <div class="worksheet-section so-what-section">
+      <h2 class="section-header"><i class="fas fa-lightbulb"></i> 3. So What?</h2>
+      <div class="so-what-content">
+        <p>Emergency stop systems are the last line of defense in industrial safety. They must be 100% reliable because lives depend on them. Understanding how they work and how to maintain them is crucial for any maintenance technician.</p>
+        
+        <div class="key-point">
+          <i class="fas fa-shield-alt"></i>
+          <div>
+            <strong>Safety First</strong>
+            <p>E-stop systems are designed to fail safe - if anything goes wrong with the system, it defaults to the stopped state to protect people and equipment.</p>
+          </div>
+        </div>
+        
+        <div class="key-point">
+          <i class="fas fa-clone"></i>
+          <div>
+            <strong>Redundancy</strong>
+            <p>Critical systems often have multiple E-stop buttons and redundant safety circuits to ensure the system can always be stopped, even if one component fails.</p>
+          </div>
+        </div>
+        
+        <div class="key-point">
+          <i class="fas fa-clipboard-check"></i>
+          <div>
+            <strong>Compliance</strong>
+            <p>E-stop systems must meet strict safety standards (like ISO 13850) and require regular testing and documentation to maintain safety certification.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Questions Section -->
+    <div class="worksheet-section questions-section">
+      <h2 class="section-header"><i class="fas fa-question-circle"></i> 4. Questions & Answers</h2>
+      <div class="questions-content">
+        <div class="instructions">
+          <strong>Instructions:</strong> Answer each question based on your observations and understanding of emergency stop systems.
+        </div>
+        
+        <div class="question-item" data-question="1">
+          <h4>Question 1: What should happen when an emergency stop button is pressed?</h4>
+          <textarea class="answer-input" data-question="1" placeholder="Describe the expected system response..."></textarea>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(1)">Submit Answer</button>
+          </div>
+        </div>
+        
+        <div class="question-item" data-question="2">
+          <h4>Question 2: Why must emergency stop buttons be "twist to release" design?</h4>
+          <textarea class="answer-input" data-question="2" placeholder="Explain the safety reasoning..."></textarea>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(2)">Submit Answer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Emergency Stop Simulation -->
+    <div class="simulation-section">
+      <h2 class="section-header"><i class="fas fa-hand-paper"></i> 5. Emergency Stop System Simulation</h2>
+      <div id="emergency-stop-panel" class="simulation-container">
+        <div class="estop-display">
+          <div class="estop-button-container">
+            <div class="estop-button" id="estop-btn">
+              <div class="estop-button-top">EMERGENCY</div>
+              <div class="estop-button-bottom">STOP</div>
+            </div>
+            <div class="estop-status" id="estop-status">NORMAL</div>
+          </div>
+          
+          <div class="system-status">
+            <div class="status-item">
+              <span class="status-label">System Power:</span>
+              <span class="status-value" id="system-power">ON</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">Safety Circuit:</span>
+              <span class="status-value" id="safety-circuit">CLOSED</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">Equipment Status:</span>
+              <span class="status-value" id="equipment-status">RUNNING</span>
+            </div>
+          </div>
+          
+          <div class="control-panel">
+            <button id="reset-btn" class="reset-button" disabled>RESET SYSTEM</button>
+            <button id="test-btn" class="test-button">TEST E-STOP</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+      cursor: not-allowed;
+    }
+    
+
+    
+
+    
+
+    
+
+
+  <!-- Scripts -->
+  <script>
+    let estopPressed = false;
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      initializeEmergencyStopSimulation();
+      initializeStepTracking();
+      loadSavedAnswers();
+    });
+    
+    function initializeEmergencyStopSimulation() {
+      const estopBtn = document.getElementById('estop-btn');
+      const resetBtn = document.getElementById('reset-btn');
+      const testBtn = document.getElementById('test-btn');
+      
+      // E-stop button click
+      estopBtn.addEventListener('click', function() {
+        activateEmergencyStop();
+      });
+      
+      // Reset button click
+      resetBtn.addEventListener('click', function() {
+        resetSystem();
+      });
+      
+      // Test button click
+      testBtn.addEventListener('click', function() {
+        testEmergencyStop();
+      });
+    }
+    
+    function activateEmergencyStop() {
+      estopPressed = true;
+      
+      // Visual feedback
+      document.getElementById('estop-btn').classList.add('pressed');
+      document.getElementById('estop-status').textContent = 'EMERGENCY STOP ACTIVATED';
+      document.getElementById('estop-status').classList.add('emergency');
+      
+      // System status updates
+      document.getElementById('system-power').textContent = 'OFF';
+      document.getElementById('system-power').classList.add('alarm');
+      document.getElementById('safety-circuit').textContent = 'OPEN';
+      document.getElementById('safety-circuit').classList.add('alarm');
+      document.getElementById('equipment-status').textContent = 'STOPPED';
+      document.getElementById('equipment-status').classList.add('alarm');
+      
+      // Enable reset button
+      document.getElementById('reset-btn').disabled = false;
+      
+      console.log('Emergency stop activated!');
+    }
+    
+    function resetSystem() {
+      if (!estopPressed) return;
+      
+      estopPressed = false;
+      
+      // Visual feedback
+      document.getElementById('estop-btn').classList.remove('pressed');
+      document.getElementById('estop-status').textContent = 'NORMAL';
+      document.getElementById('estop-status').classList.remove('emergency');
+      
+      // System status updates
+      document.getElementById('system-power').textContent = 'ON';
+      document.getElementById('system-power').classList.remove('alarm');
+      document.getElementById('safety-circuit').textContent = 'CLOSED';
+      document.getElementById('safety-circuit').classList.remove('alarm');
+      document.getElementById('equipment-status').textContent = 'RUNNING';
+      document.getElementById('equipment-status').classList.remove('alarm');
+      
+      // Disable reset button
+      document.getElementById('reset-btn').disabled = true;
+      
+      console.log('System reset completed');
+    }
+    
+    function testEmergencyStop() {
+      alert('E-stop test procedure:\n\n1. Press the emergency stop button\n2. Verify all equipment stops immediately\n3. Check that reset button becomes active\n4. Twist and pull the E-stop to reset\n5. Press system reset to restore operation');
+    }
+    
+    function initializeStepTracking() {
+      const checkboxes = document.querySelectorAll('.step-complete-checkbox');
+      checkboxes.forEach((checkbox, index) => {
+        checkbox.addEventListener('change', function() {
+          localStorage.setItem(`worksheet2_step${index + 1}`, this.checked);
+        });
+        
+        const saved = localStorage.getItem(`worksheet2_step${index + 1}`);
+        if (saved === 'true') {
+          checkbox.checked = true;
+        }
+      });
+    }
+    
+    function submitAnswer(questionNumber) {
+      const input = document.querySelector(`[data-question="${questionNumber}"]`);
+      const answer = input.value.trim();
+      
+      if (answer) {
+        localStorage.setItem(`worksheet2_answer${questionNumber}`, answer);
+        
+        const button = event.target;
+        const originalText = button.textContent;
+        button.textContent = 'Saved!';
+        button.style.background = '#4CAF50';
+        
+        setTimeout(() => {
+          button.textContent = originalText;
+        }, 2000);
+      } else {
+        alert('Please enter an answer before submitting.');
+      }
+    }
+    
+    function loadSavedAnswers() {
+      for (let i = 1; i <= 2; i++) {
+        const saved = localStorage.getItem(`worksheet2_answer${i}`);
+        if (saved) {
+          const input = document.querySelector(`[data-question="${i}"]`);
+          if (input) {
+            input.value = saved;
+          }
+        }
+      }
+    }
+  </script>
+</body>
+</html> 

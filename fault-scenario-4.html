@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Matrix TSL - Fault Scenario 4: Server Room Cooling Crisis</title>
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav-bar">
+    <div class="nav-container">
+      <div class="nav-left">
+        <button class="nav-btn back-btn" onclick="window.location.href='fault-scenario-3.html'">
+          <i class="fas fa-arrow-left"></i> Previous Scenario
+        </button>
+      </div>
+      <div class="nav-center">
+        <h1 class="nav-title">Fault Scenario 4 - Server Room Cooling Crisis</h1>
+      </div>
+      <div class="nav-right">
+        <button class="nav-btn next-btn" onclick="window.location.href='fault-scenario-5.html'">
+          Next Scenario <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Introduction Section -->
+    <div class="worksheet-section introduction-section">
+      <h2 class="section-header"><i class="fas fa-info-circle"></i> Scenario Overview</h2>
+      <div class="worksheet-content">
+        <div class="scenario-info">
+          <div class="info-grid">
+            <div class="info-item">
+              <strong>Company:</strong> TechCorp Marketing Agency
+            </div>
+            <div class="info-item">
+              <strong>Process:</strong> Mission-critical server operations
+            </div>
+            <div class="info-item">
+              <strong>Shift:</strong> Emergency response - weekend call-out
+            </div>
+            <div class="info-item">
+              <strong>Urgency:</strong> CRITICAL - Server shutdown imminent
+            </div>
+            <div class="info-item">
+              <strong>Difficulty:</strong> Advanced
+            </div>
+            <div class="info-item">
+              <strong>Time:</strong> 35-45 minutes
+            </div>
+          </div>
+        </div>
+
+        <div class="scenario-description">
+          <h3>Background</h3>
+          <p>A marketing company's server room cooling system has triggered multiple high-temperature alarms.</p>
+          
+          <p>The building management system shows the HVAC is running at maximum capacity but struggling to maintain temperature.</p>
+          
+          <p>IT staff report that several new high-performance servers were installed last week to handle increased data processing.</p>
+          
+          <p>The room temperature sensors show uneven readings across different areas, with some server racks showing critically high intake temperatures.</p>
+        </div>
+
+        <div class="system-overview">
+          <h3>System Status</h3>
+          <div class="status-grid">
+            <div class="status-item">
+              <span class="status-label">Max Temperature:</span>
+              <span class="status-value warning">32°C</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">Critical Threshold:</span>
+              <span class="status-value">30°C</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">Target Temperature:</span>
+              <span class="status-value">22°C</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">HVAC Capacity:</span>
+              <span class="status-value">100%</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">Power Consumption:</span>
+              <span class="status-value warning">125%</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">Design Capacity:</span>
+              <span class="status-value">100%</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">Alarm Status:</span>
+              <span class="status-value critical">CRITICAL</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">Shutdown Risk:</span>
+              <span class="status-value critical">HIGH</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Learning Objectives Section -->
+    <div class="worksheet-section objectives-section">
+      <h2 class="section-header"><i class="fas fa-bullseye"></i> Learning Objectives</h2>
+      <div class="worksheet-content">
+        <ul class="objectives-list">
+          <li>Understand data center cooling principles</li>
+          <li>Learn about airflow management and hot spots</li>
+          <li>Recognize thermal emergency response procedures</li>
+          <li>Practice load balancing and capacity planning</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Interactive Tools Section -->
+    <div class="worksheet-section tools-section">
+      <h2 class="section-header"><i class="fas fa-tools"></i> Investigation Tools</h2>
+      <div class="worksheet-content">
+        <div class="tools-grid">
+          <div class="tool-card" onclick="useTool('thermal_imaging')">
+            <i class="fas fa-camera"></i>
+            <h3>Thermal Imaging Survey</h3>
+            <p>Use thermal camera to identify hot spots and airflow patterns</p>
+          </div>
+          <div class="tool-card" onclick="useTool('airflow_analysis')">
+            <i class="fas fa-wind"></i>
+            <h3>Airflow Pattern Analysis</h3>
+            <p>Check for air circulation issues and blocked pathways</p>
+          </div>
+          <div class="tool-card" onclick="useTool('power_consumption_review')">
+            <i class="fas fa-bolt"></i>
+            <h3>Power Consumption Review</h3>
+            <p>Analyze power draw vs cooling capacity</p>
+          </div>
+          <div class="tool-card" onclick="useTool('emergency_load_balancing')">
+            <i class="fas fa-balance-scale"></i>
+            <h3>Emergency Load Balancing</h3>
+            <p>Redistribute server loads to reduce hot spots</p>
+          </div>
+        </div>
+        <div id="tool-results" class="tool-results"></div>
+      </div>
+    </div>
+
+    <!-- Simulation Section -->
+    <div class="worksheet-section simulation-section">
+      <h2 class="section-header"><i class="fas fa-cogs"></i> System Simulation</h2>
+      <div class="worksheet-content">
+        <div id="server-room-simulation" class="simulation-container">
+          <div class="simulation-loading">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Loading server room cooling simulation...</p>
+          </div>
+        </div>
+        <div id="hmi-panel" class="simulation-container" style="margin-top: 20px;"></div>
+        <div id="plc-io-panel" class="simulation-container" style="margin-top: 20px;"></div>
+        <div id="fault-injection-panel" class="simulation-panel" style="margin-top: 20px;"></div>
+        <div id="diagnostic-challenges-panel" class="simulation-panel" style="margin-top: 20px;"></div>
+      </div>
+    </div>
+
+    <!-- Assessment Questions Section -->
+    <div class="worksheet-section questions-section">
+      <h2 class="section-header"><i class="fas fa-question-circle"></i> Assessment Questions</h2>
+      <div class="worksheet-content">
+        <div class="question-card">
+          <h3>Question 4.1</h3>
+          <p>What is the most critical immediate action when server room temperatures exceed critical thresholds?</p>
+          <div class="options">
+            <label><input type="radio" name="q4.1" value="0"> Call the building maintenance team</label>
+            <label><input type="radio" name="q4.1" value="1"> Shut down non-critical servers to reduce heat load</label>
+            <label><input type="radio" name="q4.1" value="2"> Increase HVAC fan speed to maximum</label>
+            <label><input type="radio" name="q4.1" value="3"> Open windows to improve ventilation</label>
+          </div>
+          <button onclick="submitAnswer('4.1')" class="submit-btn">Submit Answer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="hmi-simulation.js"></script>
+  <script src="plc-simulation.js"></script>
+  <script src="pump-simulation.js"></script>
+  <script src="valve-simulation.js"></script>
+  <script>
+    // Tool usage tracking
+    let toolResults = {};
+    
+    function useTool(toolId) {
+      const toolData = {
+        'thermal_imaging': {
+          title: 'Thermal Imaging Survey Results',
+          content: 'Thermal scan reveals hot spots in center section (Racks B1-B6) with temperatures reaching 31°C. North section (Racks A1-A6) shows normal temperatures around 24°C. Clear thermal gradient indicates airflow restriction.',
+          icon: 'fas fa-camera'
+        },
+        'airflow_analysis': {
+          title: 'Airflow Pattern Analysis Results',
+          content: 'Airflow analysis shows blocked return air pathways in center section. New server installations have disrupted the original airflow design. Return air grilles are partially blocked by cable management.',
+          icon: 'fas fa-wind'
+        },
+        'power_consumption_review': {
+          title: 'Power Consumption Analysis',
+          content: 'Total power consumption is 125% of design capacity. New high-performance servers in Racks B1-B6 are drawing 40% more power than the cooling system was designed to handle.',
+          icon: 'fas fa-bolt'
+        },
+        'emergency_load_balancing': {
+          title: 'Emergency Load Balancing Results',
+          content: 'Successfully redistributed 30% of load from hot racks to cooler areas. Immediate temperature reduction of 3°C in critical areas. Emergency shutdown averted.',
+          icon: 'fas fa-balance-scale'
+        }
+      };
+      
+      const result = toolData[toolId];
+      if (result) {
+        toolResults[toolId] = result;
+        displayToolResult(toolId, result);
+      }
+    }
+    
+    function displayToolResult(toolId, result) {
+      const resultsDiv = document.getElementById('tool-results');
+      const resultHtml = `
+        <div class="tool-result" id="result-${toolId}">
+          <div class="result-header">
+            <i class="${result.icon}"></i>
+            <h3>${result.title}</h3>
+          </div>
+          <div class="result-content">
+            <p>${result.content}</p>
+          </div>
+        </div>
+      `;
+      resultsDiv.innerHTML += resultHtml;
+    }
+    
+    function submitAnswer(questionId) {
+      const selectedOption = document.querySelector(`input[name="q${questionId}"]:checked`);
+      if (selectedOption) {
+        const answer = parseInt(selectedOption.value);
+        const correctAnswer = 1; // For question 4.1
+        
+        if (answer === correctAnswer) {
+          alert('Correct! Shutting down non-critical servers reduces heat load immediately.');
+        } else {
+          alert('Incorrect. The correct answer is: Shut down non-critical servers to reduce heat load.');
+        }
+        
+        // Save answer
+        localStorage.setItem(`fault-scenario-4-${questionId}`, answer);
+      } else {
+        alert('Please select an answer before submitting.');
+      }
+    }
+    
+    // Load saved answers on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedAnswer = localStorage.getItem('fault-scenario-4-4.1');
+      if (savedAnswer !== null) {
+        const radio = document.querySelector(`input[name="q4.1"][value="${savedAnswer}"]`);
+        if (radio) radio.checked = true;
+      }
+    });
+  </script>
+</body>
+</html> 

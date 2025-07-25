@@ -2,7 +2,7 @@
 // Industrial Maintenance Training - Worksheet 8
 
 // Float Switch System State
-let floatSwitchData = {
+window.floatSwitchData = {
   // Tank Configuration
   tankLevel: 50, // 0-100%
   tankHeight: 100, // cm

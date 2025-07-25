@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Matrix TSL - Fault Scenario 2: Cleanroom Temperature Control System</title>
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav-bar">
+    <div class="nav-container">
+      <div class="nav-left">
+        <button class="nav-btn back-btn" onclick="window.location.href='fault-scenario-1.html'">
+          <i class="fas fa-arrow-left"></i> Previous Scenario
+        </button>
+      </div>
+      <div class="nav-center">
+        <h1 class="nav-title">Fault Scenario 2 - Cleanroom Temperature Control System</h1>
+      </div>
+      <div class="nav-right">
+        <button class="nav-btn next-btn" onclick="window.location.href='fault-scenario-3.html'">
+          Next Scenario <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Introduction Section -->
+    <div class="worksheet-section introduction-section">
+      <h2 class="section-header"><i class="fas fa-info-circle"></i> Scenario Overview</h2>
+      <div class="worksheet-content">
+        <div class="scenario-info">
+          <div class="info-grid">
+            <div class="info-item">
+              <strong>Company:</strong> Pharmaceutical Manufacturing Inc.
+            </div>
+            <div class="info-item">
+              <strong>Process:</strong> Cleanroom HVAC temperature control
+            </div>
+            <div class="info-item">
+              <strong>Shift:</strong> Production shift during peak hours
+            </div>
+            <div class="info-item">
+              <strong>Urgency:</strong> High - Product quality at risk
+            </div>
+            <div class="info-item">
+              <strong>Difficulty:</strong> Intermediate
+            </div>
+            <div class="info-item">
+              <strong>Time:</strong> 30-45 minutes
+            </div>
+          </div>
+        </div>
+
+        <div class="scenario-description">
+          <h3>Background</h3>
+          <p>You're working in a pharmaceutical cleanroom where temperature control is critical for product quality. The HVAC system has been struggling to maintain the required 22°C ±1°C temperature range.</p>
+          
+          <p>Recently, production has increased by 40% due to a new contract, and the cleanroom temperature has been fluctuating between 24-26°C. The quality control team has reported that some batches are showing temperature-related quality issues.</p>
+          
+          <p>The HVAC system shows normal operation, but the temperature readings indicate the system is running at maximum capacity and still can't meet the setpoint.</p>
+        </div>
+
+        <div class="system-overview">
+          <h3>System Status</h3>
+          <div class="status-grid">
+            <div class="status-item">
+              <span class="status-label">Setpoint:</span>
+              <span class="status-value">22°C</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">Current Temperature:</span>
+              <span class="status-value warning">25°C</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">Tolerance:</span>
+              <span class="status-value">±1°C</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">HVAC Load:</span>
+              <span class="status-value error">95%</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">Production Increase:</span>
+              <span class="status-value">+40%</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">Quality Issues:</span>
+              <span class="status-value error">YES</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">Alarm Status:</span>
+              <span class="status-value warning">HIGH TEMP</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="system-diagram">
+          <img src="assets/scenarios/pharma-cleanroom.png" alt="Cleanroom Temperature Control System">
+          <figcaption>Cleanroom Temperature Control System - Pharmaceutical Manufacturing</figcaption>
+        </div>
+      </div>
+    </div>
+
+    <!-- Learning Objectives Section -->
+    <div class="worksheet-section objectives-section">
+      <h2 class="section-header"><i class="fas fa-bullseye"></i> Learning Objectives</h2>
+      <div class="objectives-content">
+        <ul class="objectives-list">
+          <li>Understand HVAC system capacity limitations</li>
+          <li>Analyze the impact of increased production load</li>
+          <li>Identify system design vs. operational issues</li>
+          <li>Develop solutions for capacity constraints</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Investigation Tools Section -->
+    <div class="worksheet-section tools-section">
+      <h2 class="section-header"><i class="fas fa-tools"></i> Investigation Tools</h2>
+      <div class="tools-content">
+        <div class="tools-grid">
+          <div class="tool-card" data-tool="check_heat_load">
+            <h4><i class="fas fa-fire"></i> Check Heat Load Analysis</h4>
+            <p>Analyze current heat generation from equipment and personnel</p>
+            <button class="tool-btn" onclick="useTool('check_heat_load')">Use Tool</button>
+          </div>
+          
+          <div class="tool-card" data-tool="verify_chiller_capacity">
+            <h4><i class="fas fa-snowflake"></i> Verify Chiller Capacity</h4>
+            <p>Check chiller system specifications and current performance</p>
+            <button class="tool-btn" onclick="useTool('verify_chiller_capacity')">Use Tool</button>
+          </div>
+          
+          <div class="tool-card" data-tool="analyze_production_schedule">
+            <h4><i class="fas fa-calendar-alt"></i> Analyze Production Schedule</h4>
+            <p>Review production timeline and equipment usage patterns</p>
+            <button class="tool-btn" onclick="useTool('analyze_production_schedule')">Use Tool</button>
+          </div>
+          
+          <div class="tool-card" data-tool="inspect_airflow_distribution">
+            <h4><i class="fas fa-wind"></i> Inspect Airflow Distribution</h4>
+            <p>Check air distribution system and ductwork efficiency</p>
+            <button class="tool-btn" onclick="useTool('inspect_airflow_distribution')">Use Tool</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Investigation Results Section -->
+    <div class="worksheet-section results-section" id="investigation-results" style="display: none;">
+      <h2 class="section-header"><i class="fas fa-clipboard-list"></i> Investigation Results</h2>
+      <div class="results-content" id="results-content">
+        <!-- Results will be populated by JavaScript -->
+      </div>
+    </div>
+
+    <!-- Questions Section -->
+    <div class="worksheet-section questions-section">
+      <h2 class="section-header"><i class="fas fa-question-circle"></i> Analysis Questions</h2>
+      <div class="questions-content">
+        <div class="question-item" data-question="1">
+          <h4>Question 1: What is the primary cause of the temperature control failure?</h4>
+          <textarea class="answer-input" data-question="1" placeholder="Identify the root cause..."></textarea>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(1)">Submit Answer</button>
+          </div>
+        </div>
+        
+        <div class="question-item" data-question="2">
+          <h4>Question 2: What immediate actions can be taken to stabilize the temperature?</h4>
+          <textarea class="answer-input" data-question="2" placeholder="Describe short-term solutions..."></textarea>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(2)">Submit Answer</button>
+          </div>
+        </div>
+        
+        <div class="question-item" data-question="3">
+          <h4>Question 3: What long-term solutions should be implemented?</h4>
+          <textarea class="answer-input" data-question="3" placeholder="Describe permanent solutions..."></textarea>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(3)">Submit Answer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Styles -->
+  <style>
+    .scenario-info {
+      background: #333;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+    }
+    
+    .info-item {
+      color: #FFFFFF;
+      padding: 10px;
+      background: #444;
+      border-radius: 4px;
+    }
+    
+    .scenario-description {
+      background: #333;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    
+    .scenario-description h3 {
+      color: #4CAF50;
+      margin-bottom: 15px;
+    }
+    
+    .scenario-description p {
+      color: #FFFFFF;
+      margin-bottom: 15px;
+      line-height: 1.6;
+    }
+    
+    .system-overview {
+      background: #333;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    
+    .system-overview h3 {
+      color: #4CAF50;
+      margin-bottom: 15px;
+    }
+    
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+    
+    .status-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      background: #444;
+      border-radius: 4px;
+    }
+    
+    .status-label {
+      color: #AAA;
+      font-weight: bold;
+    }
+    
+    .status-value {
+      color: #FFFFFF;
+      font-weight: bold;
+    }
+    
+    .status-value.normal {
+      color: #4CAF50;
+    }
+    
+    .status-value.warning {
+      color: #FF9800;
+    }
+    
+    .status-value.error {
+      color: #F44336;
+    }
+    
+    .system-diagram {
+      text-align: center;
+      margin: 20px 0;
+    }
+    
+    .system-diagram img {
+      max-width: 400px;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+    
+    .system-diagram figcaption {
+      color: #FFFFFF;
+      margin-top: 10px;
+      font-style: italic;
+    }
+    
+    .objectives-list {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .objectives-list li {
+      color: #FFFFFF;
+      padding: 10px 0;
+      border-bottom: 1px solid #555;
+      position: relative;
+      padding-left: 30px;
+    }
+    
+    .objectives-list li:before {
+      content: "✓";
+      color: #4CAF50;
+      font-weight: bold;
+      position: absolute;
+      left: 0;
+    }
+    
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    
+    .tool-card {
+      background: #333;
+      padding: 20px;
+      border-radius: 8px;
+      border-left: 4px solid #2196F3;
+    }
+    
+    .tool-card h4 {
+      color: #2196F3;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .tool-card p {
+      color: #FFFFFF;
+      margin-bottom: 15px;
+    }
+    
+    .tool-btn {
+      background: #2196F3;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    
+    .tool-btn:hover {
+      background: #1976D2;
+    }
+    
+    .tool-btn:disabled {
+      background: #666;
+      cursor: not-allowed;
+    }
+    
+    .question-item {
+      background: #333;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+    
+    .question-item h4 {
+      color: #FFFFFF;
+      margin-bottom: 10px;
+    }
+    
+    .answer-input {
+      width: 100%;
+      height: 100px;
+      padding: 10px;
+      border: 1px solid #555;
+      border-radius: 4px;
+      background: #222;
+      color: #FFFFFF;
+      resize: vertical;
+    }
+    
+    .submit-question-btn {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    
+    .submit-question-btn:hover {
+      background: #45a049;
+    }
+  </style>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  
+  <script>
+    // Tool results data
+    const toolResults = {
+      'check_heat_load': {
+        title: 'Heat Load Analysis',
+        content: `
+          <div class="result-item">
+            <h4>Current Heat Generation:</h4>
+            <ul>
+              <li>Production Equipment: 45 kW (was 32 kW)</li>
+              <li>Personnel: 8 kW (was 6 kW)</li>
+              <li>Lighting: 12 kW (was 10 kW)</li>
+              <li>Total Heat Load: 65 kW (was 48 kW)</li>
+              <li>Increase: +35% from previous levels</li>
+            </ul>
+            <p><strong>Analysis:</strong> The 40% production increase has resulted in a 35% increase in heat generation, exceeding the HVAC system's design capacity.</p>
+          </div>
+        `
+      },
+      'verify_chiller_capacity': {
+        title: 'Chiller Capacity Verification',
+        content: `
+          <div class="result-item">
+            <h4>Chiller System Specifications:</h4>
+            <ul>
+              <li>Design Capacity: 60 kW cooling</li>
+              <li>Current Load: 65 kW</li>
+              <li>Overload: 8.3% above capacity</li>
+              <li>Chiller Efficiency: 95% (normal)</li>
+              <li>Cooling Water Flow: Maximum</li>
+            </ul>
+            <p><strong>Analysis:</strong> The chiller is operating at 108.3% of its design capacity, explaining why it cannot maintain the setpoint temperature.</p>
+          </div>
+        `
+      },
+      'analyze_production_schedule': {
+        title: 'Production Schedule Analysis',
+        content: `
+          <div class="result-item">
+            <h4>Production Timeline:</h4>
+            <ul>
+              <li>Previous Production: 100 units/day</li>
+              <li>Current Production: 140 units/day</li>
+              <li>Equipment Runtime: 18 hours/day (was 12 hours)</li>
+              <li>Peak Hours: 10:00-16:00 (highest heat generation)</li>
+              <li>Contract Duration: 6 months</li>
+            </ul>
+            <p><strong>Analysis:</strong> The increased production schedule is permanent, requiring a long-term solution rather than temporary adjustments.</p>
+          </div>
+        `
+      },
+      'inspect_airflow_distribution': {
+        title: 'Airflow Distribution Inspection',
+        content: `
+          <div class="result-item">
+            <h4>Air Distribution System:</h4>
+            <ul>
+              <li>Supply Air Temperature: 18°C (normal)</li>
+              <li>Air Flow Rate: Maximum capacity</li>
+              <li>Ductwork: Clean, no obstructions</li>
+              <li>Return Air Temperature: 26°C (elevated)</li>
+              <li>Air Changes: 20/hour (design specification)</li>
+            </ul>
+            <p><strong>Analysis:</strong> The air distribution system is operating correctly but cannot compensate for the excessive heat load.</p>
+          </div>
+        `
+      }
+    };
+
+    // Use investigation tool
+    function useTool(toolId) {
+      const resultsSection = document.getElementById('investigation-results');
+      const resultsContent = document.getElementById('results-content');
+      const toolCard = document.querySelector(`[data-tool="${toolId}"]`);
+      const toolBtn = toolCard.querySelector('.tool-btn');
+      
+      // Disable the tool button
+      toolBtn.disabled = true;
+      toolBtn.textContent = 'Used';
+      
+      // Show results
+      const result = toolResults[toolId];
+      resultsContent.innerHTML = `
+        <h3>${result.title}</h3>
+        ${result.content}
+      `;
+      resultsSection.style.display = 'block';
+      
+      // Scroll to results
+      resultsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Submit answer
+    function submitAnswer(questionNumber) {
+      const input = document.querySelector(`[data-question="${questionNumber}"]`);
+      const answer = input.value.trim();
+      
+      if (answer) {
+        localStorage.setItem(`fault2_answer${questionNumber}`, answer);
+        
+        const button = event.target;
+        const originalText = button.textContent;
+        button.textContent = 'Saved!';
+        button.style.background = '#4CAF50';
+        
+        setTimeout(() => {
+          button.textContent = originalText;
+        }, 2000);
+      } else {
+        alert('Please enter an answer before submitting.');
+      }
+    }
+
+    // Load saved answers
+    function loadSavedAnswers() {
+      for (let i = 1; i <= 3; i++) {
+        const saved = localStorage.getItem(`fault2_answer${i}`);
+        if (saved) {
+          const input = document.querySelector(`[data-question="${i}"]`);
+          if (input) {
+            input.value = saved;
+          }
+        }
+      }
+    }
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+      loadSavedAnswers();
+    });
+  </script>
+</body>
+</html> 

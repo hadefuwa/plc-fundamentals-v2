@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Matrix TSL - Fault Scenario 5: Brine Flow Control System</title>
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav-bar">
+    <div class="nav-container">
+      <div class="nav-left">
+        <button class="nav-btn back-btn" onclick="window.location.href='fault-scenario-4.html'">
+          <i class="fas fa-arrow-left"></i> Previous Scenario
+        </button>
+      </div>
+      <div class="nav-center">
+        <h1 class="nav-title">Fault Scenario 5 - Brine Flow Control System</h1>
+      </div>
+      <div class="nav-right">
+        <button class="nav-btn next-btn" onclick="window.location.href='fault-scenario-6.html'">
+          Next Scenario <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Introduction Section -->
+    <div class="worksheet-section introduction-section">
+      <h2 class="section-header"><i class="fas fa-info-circle"></i> Scenario Overview</h2>
+      <div class="worksheet-content">
+        <div class="scenario-info">
+          <div class="info-grid">
+            <div class="info-item">
+              <strong>Company:</strong> Northern Potash Mining Ltd.
+            </div>
+            <div class="info-item">
+              <strong>Process:</strong> Brine injection system for potash extraction
+            </div>
+            <div class="info-item">
+              <strong>Shift:</strong> Day shift operation
+            </div>
+            <div class="info-item">
+              <strong>Urgency:</strong> Medium - Production efficiency declining
+            </div>
+            <div class="info-item">
+              <strong>Difficulty:</strong> Advanced
+            </div>
+            <div class="info-item">
+              <strong>Time:</strong> 35-45 minutes
+            </div>
+          </div>
+        </div>
+
+        <div class="scenario-description">
+          <h3>Background</h3>
+          <p>At a potash mine, the brine injection system's flow control loop is showing inconsistent behavior.</p>
+          
+          <p>Operators report that the flow rate fluctuates despite a constant setpoint, affecting the extraction process efficiency.</p>
+          
+          <p>The control valve position indicator shows frequent movement, suggesting the system is 'hunting' for the correct position.</p>
+          
+          <p>Pressure sensors upstream and downstream of the control valve show stable readings, ruling out pressure-related issues.</p>
+        </div>
+
+        <div class="system-overview">
+          <h3>System Status</h3>
+          <div class="status-grid">
+            <div class="status-item">
+              <span class="status-label">Flow Setpoint:</span>
+              <span class="status-value">250 L/min</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">Current Flow:</span>
+              <span class="status-value">248 L/min</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">Flow Variation:</span>
+              <span class="status-value warning">±15 L/min</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">Valve Position:</span>
+              <span class="status-value">67%</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">Valve Movement:</span>
+              <span class="status-value warning">HUNTING</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">Brine Temperature:</span>
+              <span class="status-value">45°C</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">Control Stability:</span>
+              <span class="status-value warning">POOR</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">Extraction Efficiency:</span>
+              <span class="status-value warning">DECLINING</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Learning Objectives Section -->
+    <div class="worksheet-section objectives-section">
+      <h2 class="section-header"><i class="fas fa-bullseye"></i> Learning Objectives</h2>
+      <div class="worksheet-content">
+        <ul class="objectives-list">
+          <li>Understand flow control valve behavior</li>
+          <li>Learn about process variable interactions</li>
+          <li>Recognize control loop instability symptoms</li>
+          <li>Practice systematic flow control troubleshooting</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Interactive Tools Section -->
+    <div class="worksheet-section tools-section">
+      <h2 class="section-header"><i class="fas fa-tools"></i> Investigation Tools</h2>
+      <div class="worksheet-content">
+        <div class="tools-grid">
+          <div class="tool-card" onclick="useTool('analyze_valve_characteristics')">
+            <i class="fas fa-valve"></i>
+            <h3>Analyze Valve Flow Characteristics</h3>
+            <p>Check valve sizing and flow characteristics vs system requirements</p>
+          </div>
+          <div class="tool-card" onclick="useTool('check_cavitation_conditions')">
+            <i class="fas fa-water"></i>
+            <h3>Check for Cavitation Conditions</h3>
+            <p>Evaluate pressure drop and vapor pressure conditions</p>
+          </div>
+          <div class="tool-card" onclick="useTool('review_controller_tuning')">
+            <i class="fas fa-sliders-h"></i>
+            <h3>Review Controller Tuning</h3>
+            <p>Check PID parameters and control loop response</p>
+          </div>
+          <div class="tool-card" onclick="useTool('monitor_temperature_effects')">
+            <i class="fas fa-thermometer-half"></i>
+            <h3>Monitor Temperature Effects</h3>
+            <p>Analyze how brine temperature affects flow characteristics</p>
+          </div>
+        </div>
+        <div id="tool-results" class="tool-results"></div>
+      </div>
+    </div>
+
+    <!-- Simulation Section -->
+    <div class="worksheet-section simulation-section">
+      <h2 class="section-header"><i class="fas fa-cogs"></i> System Simulation</h2>
+      <div class="worksheet-content">
+        <div id="brine-flow-simulation" class="simulation-container">
+          <div class="simulation-loading">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Loading brine flow control simulation...</p>
+          </div>
+        </div>
+        <div id="hmi-panel" class="simulation-container" style="margin-top: 20px;"></div>
+        <div id="plc-io-panel" class="simulation-container" style="margin-top: 20px;"></div>
+        <div id="fault-injection-panel" class="simulation-panel" style="margin-top: 20px;"></div>
+        <div id="diagnostic-challenges-panel" class="simulation-panel" style="margin-top: 20px;"></div>
+      </div>
+    </div>
+
+    <!-- Assessment Questions Section -->
+    <div class="worksheet-section questions-section">
+      <h2 class="section-header"><i class="fas fa-question-circle"></i> Assessment Questions</h2>
+      <div class="worksheet-content">
+        <div class="question-card">
+          <h3>Question 5.1</h3>
+          <p>What is the most likely cause of the valve position constantly changing?</p>
+          <div class="options">
+            <label><input type="radio" name="q5.1" value="0"> The valve actuator is mechanically damaged</label>
+            <label><input type="radio" name="q5.1" value="1"> The controller PID tuning is causing instability</label>
+            <label><input type="radio" name="q5.1" value="2"> The flow transmitter is giving incorrect readings</label>
+            <label><input type="radio" name="q5.1" value="3"> The valve is experiencing cavitation due to high temperature</label>
+          </div>
+          <button onclick="submitAnswer('5.1')" class="submit-btn">Submit Answer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="hmi-simulation.js"></script>
+  <script src="plc-simulation.js"></script>
+  <script src="valve-simulation.js"></script>
+  <script src="pump-simulation.js"></script>
+  <script>
+    // Tool usage tracking
+    let toolResults = {};
+    
+    function useTool(toolId) {
+      const toolData = {
+        'analyze_valve_characteristics': {
+          title: 'Valve Flow Characteristics Analysis',
+          content: 'Valve sizing analysis shows the control valve is oversized for the current flow range. Operating at 67% position indicates poor control resolution. Valve characteristic curve shows non-linear behavior in the operating range.',
+          icon: 'fas fa-valve'
+        },
+        'check_cavitation_conditions': {
+          title: 'Cavitation Analysis Results',
+          content: 'Cavitation analysis reveals critical pressure drop conditions. With brine temperature at 45°C, the vapor pressure margin is reduced. Pressure drop across the valve exceeds the cavitation threshold, causing flow instability.',
+          icon: 'fas fa-water'
+        },
+        'review_controller_tuning': {
+          title: 'Controller Tuning Review',
+          content: 'PID parameters show aggressive tuning with high proportional gain. This amplifies the flow variations caused by cavitation. Controller is responding to noise rather than actual process changes.',
+          icon: 'fas fa-sliders-h'
+        },
+        'monitor_temperature_effects': {
+          title: 'Temperature Effects Analysis',
+          content: 'Temperature correlation analysis shows direct relationship between brine temperature and control instability. Higher temperatures reduce cavitation margin, causing more frequent valve hunting behavior.',
+          icon: 'fas fa-thermometer-half'
+        }
+      };
+      
+      const result = toolData[toolId];
+      if (result) {
+        toolResults[toolId] = result;
+        displayToolResult(toolId, result);
+      }
+    }
+    
+    function displayToolResult(toolId, result) {
+      const resultsDiv = document.getElementById('tool-results');
+      const resultHtml = `
+        <div class="tool-result" id="result-${toolId}">
+          <div class="result-header">
+            <i class="${result.icon}"></i>
+            <h3>${result.title}</h3>
+          </div>
+          <div class="result-content">
+            <p>${result.content}</p>
+          </div>
+        </div>
+      `;
+      resultsDiv.innerHTML += resultHtml;
+    }
+    
+    function submitAnswer(questionId) {
+      const selectedOption = document.querySelector(`input[name="q${questionId}"]:checked`);
+      if (selectedOption) {
+        const answer = parseInt(selectedOption.value);
+        const correctAnswer = 3; // For question 5.1
+        
+        if (answer === correctAnswer) {
+          alert('Correct! High brine temperature reduces vapor pressure margin, causing cavitation in the control valve.');
+        } else {
+          alert('Incorrect. The correct answer is: The valve is experiencing cavitation due to high temperature.');
+        }
+        
+        // Save answer
+        localStorage.setItem(`fault-scenario-5-${questionId}`, answer);
+      } else {
+        alert('Please select an answer before submitting.');
+      }
+    }
+    
+    // Load saved answers on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedAnswer = localStorage.getItem('fault-scenario-5-5.1');
+      if (savedAnswer !== null) {
+        const radio = document.querySelector(`input[name="q5.1"][value="${savedAnswer}"]`);
+        if (radio) radio.checked = true;
+      }
+    });
+  </script>
+</body>
+</html> 

@@ -2,7 +2,7 @@
 // Industrial Maintenance Training System
 
 // Emergency Stop System State
-let emergencyStopData = {
+window.emergencyStopData = {
   channel1: { status: 'healthy', fault: false, contactWear: 0 },
   channel2: { status: 'healthy', fault: false, contactWear: 0 },
   systemStatus: 'running',

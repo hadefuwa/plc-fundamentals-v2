@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Matrix TSL - Status LED System Maintenance</title>
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav-bar">
+    <div class="nav-container">
+      <div class="nav-left">
+        <button class="nav-btn back-btn" onclick="window.location.href='worksheet-2.html'">
+          <i class="fas fa-arrow-left"></i> Previous Worksheet
+        </button>
+      </div>
+      <div class="nav-center">
+        <h1 class="nav-title">Worksheet 3 - Status LED System Maintenance</h1>
+      </div>
+      <div class="nav-right">
+        <button class="nav-btn next-btn" onclick="window.location.href='worksheet-4.html'">
+          Next Worksheet <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="worksheet-box">
+    <!-- Introduction Section -->
+    <div class="worksheet-section introduction-section">
+      <h2 class="section-header"><i class="fas fa-info-circle"></i> 1. Introduction</h2>
+      <div class="worksheet-content">
+        <p>Status LEDs provide instant visual feedback about system conditions and are essential for quick diagnosis. These simple but critical indicators help operators understand system status at a glance.</p>
+        
+        <div class="system-diagram">
+          <img src="assets/maintenance/status-led.png" alt="Status LED System">
+          <figcaption>Status LED System Components</figcaption>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- Questions Section -->
+    <div class="worksheet-section questions-section">
+      <h2 class="section-header"><i class="fas fa-question-circle"></i> Questions & Answers</h2>
+      <div class="questions-content">
+        <div class="question-item" data-question="1">
+          <h4>Question 1: What do the different LED colors typically indicate in industrial systems?</h4>
+          <textarea class="answer-input" data-question="1" placeholder="Describe the standard color meanings..."></textarea>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(1)">Submit Answer</button>
+          </div>
+        </div>
+        
+        <div class="question-item" data-question="2">
+          <h4>Question 2: Why are status LEDs important for troubleshooting?</h4>
+          <textarea class="answer-input" data-question="2" placeholder="Explain their diagnostic value..."></textarea>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(2)">Submit Answer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Simulation Section -->
+    <div class="simulation-section">
+      <h2 class="section-header"><i class="fas fa-lightbulb"></i> 3. Interactive Status LED System</h2>
+      <div id="led-display-panel" class="simulation-container">
+        <div class="simulation-loading">
+          <i class="fas fa-spinner fa-spin"></i>
+          <p>Loading status LED simulation...</p>
+          <p>Simulation will initialize automatically</p>
+        </div>
+      </div>
+      
+      <!-- Additional simulation panels for full functionality -->
+      <div id="led-control-panel" class="simulation-panel" style="margin-top: 20px;"></div>
+      <div id="fault-injection-panel" class="simulation-panel" style="margin-top: 20px;"></div>
+      <div id="shift-handover-panel" class="simulation-panel" style="margin-top: 20px;"></div>
+      <div id="diagnostic-challenges-panel" class="simulation-panel" style="margin-top: 20px;"></div>
+    </div>
+  </div>
+
+
+    
+
+    
+
+    
+
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="status-led-simulation.js"></script>
+  
+  <script>
+    // Global error handler
+    window.addEventListener('error', function(e) {
+      console.error('JavaScript error:', e.message, 'at', e.filename, 'line', e.lineno);
+    });
+    
+    // Function to initialize simulation with proper error handling
+    function initializeSimulation() {
+      console.log('Attempting to initialize Status LED simulation...');
+      
+      // Check if the function exists
+      if (typeof window.initializeStatusLEDSimulation === 'function') {
+        console.log('✅ Status LED simulation function found');
+        
+        try {
+          window.initializeStatusLEDSimulation();
+          console.log('✅ Status LED simulation initialized successfully');
+          
+          // Update loading message
+          const loadingDiv = document.querySelector('.simulation-loading');
+          if (loadingDiv) {
+            loadingDiv.innerHTML = '<i class="fas fa-check-circle"></i><p>Status LED simulation loaded successfully!</p>';
+            loadingDiv.style.color = '#4CAF50';
+          }
+          
+          // Check if LED elements were created
+          setTimeout(() => {
+            const led = document.getElementById('status-led');
+            const statusText = document.getElementById('led-status-text');
+            const meaningText = document.getElementById('led-meaning-text');
+            
+            console.log('LED element:', led);
+            console.log('Status text element:', statusText);
+            console.log('Meaning text element:', meaningText);
+            
+            if (led && statusText && meaningText) {
+              console.log('✅ All LED elements created successfully');
+            } else {
+              console.log('❌ Some LED elements missing');
+            }
+          }, 100);
+          
+        } catch (error) {
+          console.error('❌ Error initializing Status LED simulation:', error);
+          initializeSimpleLEDSimulation();
+        }
+      } else {
+        console.error('❌ Status LED simulation function not found');
+        console.log('Available functions:', Object.keys(window).filter(key => key.includes('Simulation')));
+        console.log('Available variables:', Object.keys(window).filter(key => key.includes('LED') || key.includes('FAULT')));
+        initializeSimpleLEDSimulation();
+      }
+    }
+    
+    // Wait for DOM and scripts to be fully loaded
+    function waitForScripts() {
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeSimulation);
+      } else {
+        // DOM is already loaded, but wait a bit for scripts
+        setTimeout(initializeSimulation, 50);
+      }
+    }
+    
+    // Start the initialization process
+    waitForScripts();
+    
+    // Also try after a longer delay as backup
+    setTimeout(() => {
+      if (!document.querySelector('.led-display')) {
+        console.log('Backup initialization attempt...');
+        initializeSimulation();
+      }
+    }, 1000);
+    
+    // Load saved answers
+    document.addEventListener('DOMContentLoaded', function() {
+      loadSavedAnswers();
+    });
+    
+    function initializeSimpleLEDSimulation() {
+      console.log('Initializing simple LED simulation fallback...');
+      
+      const ledContainer = document.getElementById('led-display-panel');
+      if (!ledContainer) {
+        console.error('LED display panel not found');
+        return;
+      }
+      
+      // Create a simple LED simulation
+      ledContainer.innerHTML = `
+        <div class="led-display" style="text-align: center; margin: 20px 0;">
+          <div class="led-indicator" id="status-led" style="width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 20px; border: 4px solid #555; background: #4CAF50; box-shadow: 0 0 20px rgba(76, 175, 80, 0.5); transition: all 0.3s ease;"></div>
+          <div class="led-status" id="led-status-text" style="font-size: 18px; font-weight: bold; margin-bottom: 10px;">Normal Operation</div>
+          <div class="led-meaning" id="led-meaning-text" style="font-size: 14px; color: #AAA;">All systems operating normally</div>
+        </div>
+        
+        <div class="led-controls" style="text-align: center; margin: 20px 0;">
+          <button id="test-warning-btn" style="background: #FF9800; color: white; border: none; padding: 10px 20px; margin: 5px; border-radius: 4px; cursor: pointer;">Test Warning</button>
+          <button id="test-alarm-btn" style="background: #F44336; color: white; border: none; padding: 10px 20px; margin: 5px; border-radius: 4px; cursor: pointer;">Test Alarm</button>
+          <button id="reset-system-btn" style="background: #2196F3; color: white; border: none; padding: 10px 20px; margin: 5px; border-radius: 4px; cursor: pointer;">Reset System</button>
+        </div>
+      `;
+      
+      const testWarningBtn = document.getElementById('test-warning-btn');
+      const testAlarmBtn = document.getElementById('test-alarm-btn');
+      const resetBtn = document.getElementById('reset-system-btn');
+      const statusLed = document.getElementById('status-led');
+      const statusText = document.getElementById('led-status-text');
+      const meaningText = document.getElementById('led-meaning-text');
+      
+      testWarningBtn.addEventListener('click', function() {
+        statusLed.style.background = '#FF9800';
+        statusLed.style.boxShadow = '0 0 20px rgba(255, 152, 0, 0.5)';
+        statusText.textContent = 'Warning';
+        meaningText.textContent = 'Minor fault detected, attention required';
+      });
+      
+      testAlarmBtn.addEventListener('click', function() {
+        statusLed.style.background = '#F44336';
+        statusLed.style.boxShadow = '0 0 20px rgba(244, 67, 54, 0.5)';
+        statusText.textContent = 'Fault';
+        meaningText.textContent = 'Critical fault, immediate action required';
+      });
+      
+      resetBtn.addEventListener('click', function() {
+        statusLed.style.background = '#4CAF50';
+        statusLed.style.boxShadow = '0 0 20px rgba(76, 175, 80, 0.5)';
+        statusText.textContent = 'Normal Operation';
+        meaningText.textContent = 'All systems operating normally';
+      });
+      
+      console.log('Simple LED simulation initialized');
+    }
+    
+    function submitAnswer(questionNumber) {
+      const input = document.querySelector('[data-question="' + questionNumber + '"]');
+      const answer = input.value.trim();
+      
+      if (answer) {
+        localStorage.setItem('worksheet3_answer' + questionNumber, answer);
+        
+        const button = event.target;
+        const originalText = button.textContent;
+        button.textContent = 'Saved!';
+        button.style.background = '#4CAF50';
+        
+        setTimeout(() => {
+          button.textContent = originalText;
+        }, 2000);
+      } else {
+        alert('Please enter an answer before submitting.');
+      }
+    }
+    
+    function loadSavedAnswers() {
+      for (let i = 1; i <= 2; i++) {
+        const saved = localStorage.getItem('worksheet3_answer' + i);
+        if (saved) {
+          const input = document.querySelector('[data-question="' + i + '"]');
+          if (input) {
+            input.value = saved;
+          }
+        }
+      }
+    }
+  </script>
+</body>
+</html> 

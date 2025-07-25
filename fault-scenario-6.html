@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Matrix TSL - Fault Scenario 6: Steam Sterilization System</title>
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav-bar">
+    <div class="nav-container">
+      <div class="nav-left">
+        <button class="nav-btn back-btn" onclick="window.location.href='fault-scenario-5.html'">
+          <i class="fas fa-arrow-left"></i> Previous Scenario
+        </button>
+      </div>
+      <div class="nav-center">
+        <h1 class="nav-title">Fault Scenario 6 - Steam Sterilization System</h1>
+      </div>
+      <div class="nav-right">
+        <button class="nav-btn next-btn" onclick="window.location.href='fault-scenario-7.html'">
+          Next Scenario <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Introduction Section -->
+    <div class="worksheet-section introduction-section">
+      <h2 class="section-header"><i class="fas fa-info-circle"></i> Scenario Overview</h2>
+      <div class="worksheet-content">
+        <div class="scenario-info">
+          <div class="info-grid">
+            <div class="info-item">
+              <strong>Company:</strong> Fresh Foods Processing Inc.
+            </div>
+            <div class="info-item">
+              <strong>Process:</strong> Steam sterilization for food safety
+            </div>
+            <div class="info-item">
+              <strong>Shift:</strong> First day as maintenance technician
+            </div>
+            <div class="info-item">
+              <strong>Urgency:</strong> High - Food safety compliance required
+            </div>
+            <div class="info-item">
+              <strong>Difficulty:</strong> Beginner
+            </div>
+            <div class="info-item">
+              <strong>Time:</strong> 20-30 minutes
+            </div>
+          </div>
+        </div>
+
+        <div class="scenario-description">
+          <h3>Background</h3>
+          <p>You've just started as a maintenance technician at a food processing plant.</p>
+          
+          <p>During your first day, an operator reports that the steam sterilization system isn't reaching the required temperature.</p>
+          
+          <p>The system should maintain 121°C for proper sterilization, but it's only reaching 115°C.</p>
+          
+          <p>The steam pressure gauge shows normal supply pressure, but something is clearly wrong with the temperature control.</p>
+        </div>
+
+        <div class="system-overview">
+          <h3>System Status</h3>
+          <div class="status-grid">
+            <div class="status-item">
+              <span class="status-label">Target Temperature:</span>
+              <span class="status-value">121°C</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">Current Temperature:</span>
+              <span class="status-value warning">115°C</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">Steam Pressure:</span>
+              <span class="status-value">2.1 bar</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">Required Pressure:</span>
+              <span class="status-value">2.0 bar</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">Controller Status:</span>
+              <span class="status-value warning">FLICKERING</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">Sterilization Status:</span>
+              <span class="status-value critical">INADEQUATE</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">Food Safety Compliance:</span>
+              <span class="status-value critical">FAILED</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Learning Objectives Section -->
+    <div class="worksheet-section objectives-section">
+      <h2 class="section-header"><i class="fas fa-bullseye"></i> Learning Objectives</h2>
+      <div class="worksheet-content">
+        <ul class="objectives-list">
+          <li>Understand sterilization temperature requirements</li>
+          <li>Learn about electrical troubleshooting in process control</li>
+          <li>Recognize sensor and controller failure modes</li>
+          <li>Practice systematic troubleshooting approach</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Interactive Tools Section -->
+    <div class="worksheet-section tools-section">
+      <h2 class="section-header"><i class="fas fa-tools"></i> Investigation Tools</h2>
+      <div class="worksheet-content">
+        <div class="tools-grid">
+          <div class="tool-card" onclick="useTool('check_power_supply')">
+            <i class="fas fa-bolt"></i>
+            <h3>Check Controller Power Supply</h3>
+            <p>Verify voltage and power quality to the controller</p>
+          </div>
+          <div class="tool-card" onclick="useTool('inspect_wiring')">
+            <i class="fas fa-plug"></i>
+            <h3>Inspect Sensor Wiring</h3>
+            <p>Check thermocouple wiring and connections</p>
+          </div>
+          <div class="tool-card" onclick="useTool('verify_actual_temperature')">
+            <i class="fas fa-thermometer-half"></i>
+            <h3>Verify Actual Temperature</h3>
+            <p>Use portable thermometer to check real sterilizer temperature</p>
+          </div>
+          <div class="tool-card" onclick="useTool('test_controller_calibration')">
+            <i class="fas fa-cog"></i>
+            <h3>Test Controller Calibration</h3>
+            <p>Check if controller is reading sensor correctly</p>
+          </div>
+        </div>
+        <div id="tool-results" class="tool-results"></div>
+      </div>
+    </div>
+
+    <!-- Simulation Section -->
+    <div class="worksheet-section simulation-section">
+      <h2 class="section-header"><i class="fas fa-cogs"></i> System Simulation</h2>
+      <div class="worksheet-content">
+        <div id="steam-sterilization-simulation" class="simulation-container">
+          <div class="simulation-loading">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Loading steam sterilization simulation...</p>
+          </div>
+        </div>
+        <div id="hmi-panel" class="simulation-container" style="margin-top: 20px;"></div>
+        <div id="plc-io-panel" class="simulation-container" style="margin-top: 20px;"></div>
+        <div id="fault-injection-panel" class="simulation-panel" style="margin-top: 20px;"></div>
+        <div id="diagnostic-challenges-panel" class="simulation-panel" style="margin-top: 20px;"></div>
+      </div>
+    </div>
+
+    <!-- Assessment Questions Section -->
+    <div class="worksheet-section questions-section">
+      <h2 class="section-header"><i class="fas fa-question-circle"></i> Assessment Questions</h2>
+      <div class="worksheet-content">
+        <div class="question-card">
+          <h3>Question 6.1</h3>
+          <p>What is the most likely cause of the flickering temperature display?</p>
+          <div class="options">
+            <label><input type="radio" name="q6.1" value="0"> The steam pressure is too low</label>
+            <label><input type="radio" name="q6.1" value="1"> Poor electrical connections or power supply issues</label>
+            <label><input type="radio" name="q6.1" value="2"> The sterilizer chamber door is not sealed properly</label>
+            <label><input type="radio" name="q6.1" value="3"> The operator is using the wrong sterilization program</label>
+          </div>
+          <button onclick="submitAnswer('6.1')" class="submit-btn">Submit Answer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="hmi-simulation.js"></script>
+  <script src="plc-simulation.js"></script>
+  <script src="valve-simulation.js"></script>
+  <script src="pump-simulation.js"></script>
+  <script>
+    // Tool usage tracking
+    let toolResults = {};
+    
+    function useTool(toolId) {
+      const toolData = {
+        'check_power_supply': {
+          title: 'Power Supply Analysis Results',
+          content: 'Power supply voltage is fluctuating between 22-26V (should be stable 24V). Poor electrical connections detected at terminal block. Controller is receiving unstable power, causing display flickering.',
+          icon: 'fas fa-bolt'
+        },
+        'inspect_wiring': {
+          title: 'Sensor Wiring Inspection Results',
+          content: 'Thermocouple wiring shows loose connection at terminal block. Wire insulation is damaged near the connection point. Intermittent signal loss is causing temperature reading fluctuations.',
+          icon: 'fas fa-plug'
+        },
+        'verify_actual_temperature': {
+          title: 'Actual Temperature Verification',
+          content: 'Portable thermometer reading shows actual sterilizer temperature is 121°C. The controller display is incorrect due to electrical issues. The sterilization process is actually working correctly.',
+          icon: 'fas fa-thermometer-half'
+        },
+        'test_controller_calibration': {
+          title: 'Controller Calibration Test',
+          content: 'Controller calibration is correct. The issue is electrical - poor connections and unstable power supply are causing the display to show incorrect readings despite proper sensor input.',
+          icon: 'fas fa-cog'
+        }
+      };
+      
+      const result = toolData[toolId];
+      if (result) {
+        toolResults[toolId] = result;
+        displayToolResult(toolId, result);
+      }
+    }
+    
+    function displayToolResult(toolId, result) {
+      const resultsDiv = document.getElementById('tool-results');
+      const resultHtml = `
+        <div class="tool-result" id="result-${toolId}">
+          <div class="result-header">
+            <i class="${result.icon}"></i>
+            <h3>${result.title}</h3>
+          </div>
+          <div class="result-content">
+            <p>${result.content}</p>
+          </div>
+        </div>
+      `;
+      resultsDiv.innerHTML += resultHtml;
+    }
+    
+    function submitAnswer(questionId) {
+      const selectedOption = document.querySelector(`input[name="q${questionId}"]:checked`);
+      if (selectedOption) {
+        const answer = parseInt(selectedOption.value);
+        const correctAnswer = 1; // For question 6.1
+        
+        if (answer === correctAnswer) {
+          alert('Correct! A flickering display typically indicates electrical problems such as loose connections or poor power supply.');
+        } else {
+          alert('Incorrect. The correct answer is: Poor electrical connections or power supply issues.');
+        }
+        
+        // Save answer
+        localStorage.setItem(`fault-scenario-6-${questionId}`, answer);
+      } else {
+        alert('Please select an answer before submitting.');
+      }
+    }
+    
+    // Load saved answers on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedAnswer = localStorage.getItem('fault-scenario-6-6.1');
+      if (savedAnswer !== null) {
+        const radio = document.querySelector(`input[name="q6.1"][value="${savedAnswer}"]`);
+        if (radio) radio.checked = true;
+      }
+    });
+  </script>
+</body>
+</html> 

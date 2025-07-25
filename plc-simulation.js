@@ -2,7 +2,7 @@
 // Industrial Maintenance Training - Worksheet 4
 
 // PLC System State
-let plcData = {
+window.plcData = {
   // Digital I/O States
   digitalInputs: {
     'DI_0': { name: 'Emergency Stop', state: false, fault: false, description: 'E-Stop Button' },

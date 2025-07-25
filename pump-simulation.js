@@ -2,7 +2,7 @@
 // Industrial Maintenance Training - Worksheet 6
 
 // Pump System State
-let pumpData = {
+window.pumpData = {
   // Pump Status
   pumpStatus: 'stopped',
   pumpSpeed: 0, // RPM

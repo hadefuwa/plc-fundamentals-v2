@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Matrix TSL - Flow Control System Maintenance</title>
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav-bar">
+    <div class="nav-container">
+      <div class="nav-left">
+        <button class="nav-btn back-btn" onclick="window.location.href='cp0539-worksheets.html'">
+          <i class="fas fa-arrow-left"></i> Back to Worksheets
+        </button>
+      </div>
+      <div class="nav-center">
+        <h1 class="nav-title">Worksheet 1 - Flow Control System Maintenance</h1>
+      </div>
+      <div class="nav-right">
+        <button class="nav-btn next-btn" onclick="window.location.href='worksheet-2.html'">
+          Next Worksheet <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="worksheet-box">
+    <!-- Introduction Section -->
+    <div class="worksheet-section introduction-section">
+      <h2 class="section-header"><i class="fas fa-info-circle"></i> 1. Introduction</h2>
+      <div class="worksheet-content">
+        <p>The system you have in front of you is a Closed-Loop Flow Control system, meaning it continuously adjusts itself to meet a desired target, called the setpoint. It does this by using feedback from sensors to control devices like pumps and valves, keeping the system accurate and stable even if conditions change.</p>
+        
+        <div class="cad-models">
+          <div class="cad-model">
+            <img src="assets/cad.png" alt="CAD Model - Front View">
+            <figcaption>CAD Model - Front View</figcaption>
+          </div>
+          <div class="cad-model">
+            <img src="assets/cad2.png" alt="CAD Model - Side View">
+            <figcaption>CAD Model - Side View</figcaption>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Over To You Section -->
+    <div class="worksheet-section over-to-you-section">
+      <h2 class="section-header"><i class="fas fa-hands-helping"></i> 2. Over To You</h2>
+      <div class="worksheet-content">
+        <p><strong>Your task is to examine and maintain the flow control system following these essential procedures:</strong></p>
+        
+        <div class="steps-container">
+          <div class="step-card" data-step="1">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>System Overview</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Examine the overall system layout, identifying the pump, valve, flow sensor, and control elements. Understand how they work together in the closed-loop control system.</p>
+            </div>
+          </div>
+          
+          <div class="step-card" data-step="2">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Flow Sensor Inspection</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Check the flow sensor for proper mounting, clean sensor face, and verify signal output matches actual flow conditions.</p>
+            </div>
+          </div>
+          
+          <div class="step-card" data-step="3">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Control Valve Operation</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Test valve operation by adjusting setpoint and observing valve response. Check for smooth operation and proper positioning.</p>
+            </div>
+          </div>
+          
+          <div class="step-card" data-step="4">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>PID Controller Tuning</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Use the PID tuning interface to optimize system response. Adjust Proportional, Integral, and Derivative parameters for stable, responsive control.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- So What Section -->
+    <div class="worksheet-section so-what-section">
+      <h2 class="section-header"><i class="fas fa-lightbulb"></i> 3. So What?</h2>
+      <div class="so-what-content">
+        <p>Understanding closed-loop flow control systems is fundamental to industrial automation. These systems are everywhere - from water treatment plants to chemical processing facilities.</p>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>Feedback Control</strong>
+            <p>The system continuously measures the actual flow and compares it to the desired setpoint, automatically adjusting the control valve to maintain accurate flow control even when conditions change.</p>
+          </div>
+        </div>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>PID Control</strong>
+            <p>The PID controller uses Proportional, Integral, and Derivative actions to provide stable, responsive control without oscillation or steady-state error.</p>
+          </div>
+        </div>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>System Reliability</strong>
+            <p>Proper maintenance of sensors, valves, and controllers ensures the system operates reliably, preventing costly production disruptions and maintaining product quality.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Questions Section -->
+    <div class="worksheet-section questions-section">
+      <h2 class="section-header"><i class="fas fa-question-circle"></i> 4. Questions & Answers</h2>
+      <div class="questions-content">
+        <div class="instructions">
+          <strong>Instructions:</strong> Answer each question based on your observations and understanding of the flow control system. Your answers will be saved automatically.
+        </div>
+        
+        <div class="question-item" data-question="1">
+          <h4>Question 1: What happens to the control valve when the flow rate drops below the setpoint?</h4>
+          <textarea class="answer-input" data-question="1" placeholder="Describe the valve response and control action..."></textarea>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(1)">Submit Answer</button>
+            <span class="submit-note">Your answer will be saved automatically.</span>
+          </div>
+        </div>
+        
+        <div class="question-item" data-question="2">
+          <h4>Question 2: How does increasing the Proportional (P) gain affect system response?</h4>
+          <textarea class="answer-input" data-question="2" placeholder="Explain the effect of P gain on system behavior..."></textarea>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(2)">Submit Answer</button>
+            <span class="submit-note">Your answer will be saved automatically.</span>
+          </div>
+        </div>
+        
+        <div class="question-item" data-question="3">
+          <h4>Question 3: Why is regular maintenance of the flow sensor critical for system performance?</h4>
+          <textarea class="answer-input" data-question="3" placeholder="Discuss the importance of sensor maintenance..."></textarea>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(3)">Submit Answer</button>
+            <span class="submit-note">Your answer will be saved automatically.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive PID Simulation -->
+    <div class="simulation-section">
+      <h2 class="section-header"><i class="fas fa-chart-line"></i> 5. Interactive PID Control System</h2>
+      
+      <div class="pid-simulation-tabs">
+        <div class="tab-buttons">
+          <button class="tab-btn active" data-tab="tuning">PID Tuning</button>
+          <button class="tab-btn" data-tab="response">System Response</button>
+          <button class="tab-btn" data-tab="challenges">Challenges</button>
+        </div>
+        
+        <div class="tab-content" id="tuning-tab">
+          <div id="pid-tuning-container">
+            <div class="pid-controls">
+              <div class="control-group">
+                <label>Setpoint</label>
+                <input type="range" id="setpoint-slider" min="0" max="100" value="50">
+                <span id="setpoint-value">50</span>
+              </div>
+              
+              <div class="control-group">
+                <label>Proportional (P)</label>
+                <input type="range" id="p-gain-slider" min="0" max="5" step="0.1" value="1.0">
+                <span id="p-gain-value">1.0</span>
+              </div>
+              
+              <div class="control-group">
+                <label>Integral (I)</label>
+                <input type="range" id="i-gain-slider" min="0" max="2" step="0.01" value="0.1">
+                <span id="i-gain-value">0.1</span>
+              </div>
+              
+              <div class="control-group">
+                <label>Derivative (D)</label>
+                <input type="range" id="d-gain-slider" min="0" max="1" step="0.01" value="0.05">
+                <span id="d-gain-value">0.05</span>
+              </div>
+              
+              <div class="control-buttons">
+                <button id="start-simulation-btn">Start Simulation</button>
+                <button id="reset-pid-btn">Reset to Defaults</button>
+              </div>
+            </div>
+            
+            <div class="pid-chart-container">
+              <canvas id="pid-chart" width="800" height="400"></canvas>
+            </div>
+          </div>
+        </div>
+        
+        <div class="tab-content" id="response-tab" style="display: none;">
+          <div id="response-analysis-container">
+            <h3>System Response Analysis</h3>
+            <div class="response-metrics">
+              <div class="metric-card">
+                <h4>Rise Time</h4>
+                <p id="rise-time">--</p>
+              </div>
+              <div class="metric-card">
+                <h4>Settling Time</h4>
+                <p id="settling-time">--</p>
+              </div>
+              <div class="metric-card">
+                <h4>Overshoot</h4>
+                <p id="overshoot">--</p>
+              </div>
+              <div class="metric-card">
+                <h4>Steady State Error</h4>
+                <p id="steady-state-error">--</p>
+              </div>
+            </div>
+            <div class="response-tips">
+              <h4>Response Characteristics:</h4>
+              <ul>
+                <li><strong>Fast Rise Time:</strong> High P gain, but may cause overshoot</li>
+                <li><strong>Low Overshoot:</strong> Moderate P gain with some D gain</li>
+                <li><strong>No Steady State Error:</strong> Include I gain to eliminate offset</li>
+                <li><strong>Stable Response:</strong> Balance all three parameters</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div class="tab-content" id="challenges-tab" style="display: none;">
+          <div id="challenges-container">
+            <h3>PID Tuning Challenges</h3>
+            <div class="challenge-list">
+              <div class="challenge-item">
+                <h4>Challenge 1: Aggressive Response</h4>
+                <p>Set the setpoint to 80 and tune the PID parameters to achieve a fast response with minimal overshoot (less than 5%).</p>
+                <button class="challenge-btn" onclick="loadChallenge(1)">Load Challenge</button>
+              </div>
+              <div class="challenge-item">
+                <h4>Challenge 2: Disturbance Rejection</h4>
+                <p>Tune the system to maintain the setpoint at 50 despite external disturbances. The system should recover quickly.</p>
+                <button class="challenge-btn" onclick="loadChallenge(2)">Load Challenge</button>
+              </div>
+              <div class="challenge-item">
+                <h4>Challenge 3: Conservative Tuning</h4>
+                <p>Create a slow but stable response with no overshoot. This is useful for processes that cannot tolerate overshoot.</p>
+                <button class="challenge-btn" onclick="loadChallenge(3)">Load Challenge</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+    
+
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <script>
+    // Initialize PID simulation
+    document.addEventListener('DOMContentLoaded', function() {
+      initializePIDTabs();
+      initializePIDControls();
+      initializeStepTracking();
+      loadSavedAnswers();
+    });
+    
+    // PID simulation variables
+    let pidChart = null;
+    let simulationRunning = false;
+    let simulationData = [];
+    
+    // Initialize PID tabs
+    function initializePIDTabs() {
+      const tabButtons = document.querySelectorAll('.tab-btn');
+      const tabContents = document.querySelectorAll('.tab-content');
+      
+      tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const targetTab = this.getAttribute('data-tab');
+          
+          // Update button states
+          tabButtons.forEach(btn => {
+            btn.classList.remove('active');
+          });
+          this.classList.add('active');
+          
+          // Update tab content visibility
+          tabContents.forEach(content => {
+            content.style.display = 'none';
+          });
+          const targetTabContent = document.getElementById(`${targetTab}-tab`);
+          if (targetTabContent) {
+            targetTabContent.style.display = 'block';
+          }
+        });
+      });
+    }
+    
+    // Initialize PID controls
+    function initializePIDControls() {
+      // Update slider values
+      document.getElementById('setpoint-slider').addEventListener('input', function() {
+        document.getElementById('setpoint-value').textContent = this.value;
+      });
+      
+      document.getElementById('p-gain-slider').addEventListener('input', function() {
+        document.getElementById('p-gain-value').textContent = this.value;
+      });
+      
+      document.getElementById('i-gain-slider').addEventListener('input', function() {
+        document.getElementById('i-gain-value').textContent = this.value;
+      });
+      
+      document.getElementById('d-gain-slider').addEventListener('input', function() {
+        document.getElementById('d-gain-value').textContent = this.value;
+      });
+      
+      // Start simulation button
+      document.getElementById('start-simulation-btn').addEventListener('click', function() {
+        if (!simulationRunning) {
+          startPIDSimulation();
+        } else {
+          stopPIDSimulation();
+        }
+      });
+      
+      // Reset button
+      document.getElementById('reset-pid-btn').addEventListener('click', function() {
+        resetPIDDefaults();
+      });
+      
+      // Initialize chart
+      initializePIDChart();
+    }
+    
+    // Initialize PID chart
+    function initializePIDChart() {
+      const ctx = document.getElementById('pid-chart').getContext('2d');
+      pidChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: [],
+          datasets: [{
+            label: 'Setpoint',
+            data: [],
+            borderColor: '#FF5722',
+            backgroundColor: 'transparent',
+            borderWidth: 2
+          }, {
+            label: 'Process Variable',
+            data: [],
+            borderColor: '#4CAF50',
+            backgroundColor: 'transparent',
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              labels: {
+                color: '#FFFFFF'
+              }
+            }
+          },
+          scales: {
+            x: {
+              ticks: {
+                color: '#FFFFFF'
+              },
+              grid: {
+                color: '#555'
+              }
+            },
+            y: {
+              ticks: {
+                color: '#FFFFFF'
+              },
+              grid: {
+                color: '#555'
+              }
+            }
+          }
+        }
+      });
+    }
+    
+    // Start PID simulation
+    function startPIDSimulation() {
+      simulationRunning = true;
+      document.getElementById('start-simulation-btn').textContent = 'Stop Simulation';
+      
+      // Clear previous data
+      simulationData = [];
+      pidChart.data.labels = [];
+      pidChart.data.datasets[0].data = [];
+      pidChart.data.datasets[1].data = [];
+      
+      // Start simulation loop
+      let time = 0;
+      const interval = setInterval(() => {
+        if (!simulationRunning) {
+          clearInterval(interval);
+          return;
+        }
+        
+        // Get PID parameters
+        const setpoint = parseFloat(document.getElementById('setpoint-slider').value);
+        const kp = parseFloat(document.getElementById('p-gain-slider').value);
+        const ki = parseFloat(document.getElementById('i-gain-slider').value);
+        const kd = parseFloat(document.getElementById('d-gain-slider').value);
+        
+        // Simple PID simulation
+        const processVariable = simulatePIDResponse(setpoint, kp, ki, kd, time);
+        
+        // Add data to chart
+        pidChart.data.labels.push(time);
+        pidChart.data.datasets[0].data.push(setpoint);
+        pidChart.data.datasets[1].data.push(processVariable);
+        
+        // Limit data points
+        if (pidChart.data.labels.length > 100) {
+          pidChart.data.labels.shift();
+          pidChart.data.datasets[0].data.shift();
+          pidChart.data.datasets[1].data.shift();
+        }
+        
+        pidChart.update('none');
+        time++;
+        
+        // Update metrics every 10 time steps
+        if (time % 10 === 0) {
+          calculateResponseMetrics();
+        }
+      }, 100);
+    }
+    
+    // Stop PID simulation
+    function stopPIDSimulation() {
+      simulationRunning = false;
+      document.getElementById('start-simulation-btn').textContent = 'Start Simulation';
+    }
+    
+    // Simple PID response simulation
+    function simulatePIDResponse(setpoint, kp, ki, kd, time) {
+      // Simple first-order system response
+      const tau = 10; // Time constant
+      const k = 1; // Gain
+      
+      // Add some noise and disturbance
+      const noise = (Math.random() - 0.5) * 2;
+      const disturbance = Math.sin(time * 0.1) * 5;
+      
+      // Simple exponential response towards setpoint
+      const steadyState = setpoint + disturbance;
+      const response = steadyState * (1 - Math.exp(-time * kp / tau)) + noise;
+      
+      return Math.max(0, Math.min(100, response));
+    }
+    
+    // Reset PID to defaults
+    function resetPIDDefaults() {
+      document.getElementById('setpoint-slider').value = 50;
+      document.getElementById('setpoint-value').textContent = '50';
+      document.getElementById('p-gain-slider').value = 1.0;
+      document.getElementById('p-gain-value').textContent = '1.0';
+      document.getElementById('i-gain-slider').value = 0.1;
+      document.getElementById('i-gain-value').textContent = '0.1';
+      document.getElementById('d-gain-slider').value = 0.05;
+      document.getElementById('d-gain-value').textContent = '0.05';
+      
+      stopPIDSimulation();
+    }
+    
+    // Initialize step tracking
+    function initializeStepTracking() {
+      const checkboxes = document.querySelectorAll('.step-complete-checkbox');
+      checkboxes.forEach((checkbox, index) => {
+        checkbox.addEventListener('change', function() {
+          const stepCard = this.closest('.step-card');
+          if (this.checked) {
+            stepCard.style.borderLeftColor = '#4CAF50';
+            stepCard.style.opacity = '0.8';
+          } else {
+            stepCard.style.borderLeftColor = '#4CAF50';
+            stepCard.style.opacity = '1';
+          }
+          
+          // Save step completion
+          localStorage.setItem(`worksheet1_step${index + 1}`, this.checked);
+        });
+        
+        // Load saved step completion
+        const saved = localStorage.getItem(`worksheet1_step${index + 1}`);
+        if (saved === 'true') {
+          checkbox.checked = true;
+          checkbox.dispatchEvent(new Event('change'));
+        }
+      });
+    }
+    
+    // Submit answer
+    function submitAnswer(questionNumber) {
+      const input = document.querySelector(`[data-question="${questionNumber}"]`);
+      const answer = input.value.trim();
+      
+      if (answer) {
+        // Save answer
+        localStorage.setItem(`worksheet1_answer${questionNumber}`, answer);
+        
+        // Show confirmation
+        const button = event.target;
+        const originalText = button.textContent;
+        button.textContent = 'Saved!';
+        button.style.background = '#4CAF50';
+        
+        setTimeout(() => {
+          button.textContent = originalText;
+          button.style.background = '#4CAF50';
+        }, 2000);
+      } else {
+        alert('Please enter an answer before submitting.');
+      }
+    }
+    
+    // Load saved answers
+    function loadSavedAnswers() {
+      for (let i = 1; i <= 3; i++) {
+        const saved = localStorage.getItem(`worksheet1_answer${i}`);
+        if (saved) {
+          const input = document.querySelector(`[data-question="${i}"]`);
+          if (input) {
+            input.value = saved;
+          }
+        }
+      }
+    }
+    
+    // Load PID tuning challenges
+    function loadChallenge(challengeNumber) {
+      const challenges = {
+        1: { setpoint: 80, p: 2.0, i: 0.05, d: 0.1, description: 'Aggressive Response Challenge' },
+        2: { setpoint: 50, p: 1.5, i: 0.2, d: 0.05, description: 'Disturbance Rejection Challenge' },
+        3: { setpoint: 60, p: 0.8, i: 0.1, d: 0.2, description: 'Conservative Tuning Challenge' }
+      };
+      
+      const challenge = challenges[challengeNumber];
+      if (challenge) {
+        // Set the parameters
+        document.getElementById('setpoint-slider').value = challenge.setpoint;
+        document.getElementById('setpoint-value').textContent = challenge.setpoint;
+        document.getElementById('p-gain-slider').value = challenge.p;
+        document.getElementById('p-gain-value').textContent = challenge.p;
+        document.getElementById('i-gain-slider').value = challenge.i;
+        document.getElementById('i-gain-value').textContent = challenge.i;
+        document.getElementById('d-gain-slider').value = challenge.d;
+        document.getElementById('d-gain-value').textContent = challenge.d;
+        
+        // Switch to tuning tab
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelector('[data-tab="tuning"]').classList.add('active');
+        document.querySelectorAll('.tab-content').forEach(content => content.style.display = 'none');
+        document.getElementById('tuning-tab').style.display = 'block';
+        
+        alert(`Loaded ${challenge.description}. Try to improve the response!`);
+      }
+    }
+    
+    // Calculate response metrics
+    function calculateResponseMetrics() {
+      if (!pidChart || pidChart.data.datasets[1].data.length === 0) return;
+      
+      const setpointData = pidChart.data.datasets[0].data;
+      const processData = pidChart.data.datasets[1].data;
+      const setpoint = setpointData[setpointData.length - 1];
+      
+      // Calculate rise time (time to reach 90% of setpoint)
+      const target90 = setpoint * 0.9;
+      let riseTime = 0;
+      for (let i = 0; i < processData.length; i++) {
+        if (processData[i] >= target90) {
+          riseTime = i;
+          break;
+        }
+      }
+      
+      // Calculate overshoot
+      const maxValue = Math.max(...processData);
+      const overshoot = maxValue > setpoint ? ((maxValue - setpoint) / setpoint) * 100 : 0;
+      
+      // Calculate settling time (time to stay within 2% of setpoint)
+      const targetRange = setpoint * 0.02;
+      let settlingTime = 0;
+      for (let i = processData.length - 1; i >= 0; i--) {
+        if (Math.abs(processData[i] - setpoint) > targetRange) {
+          settlingTime = i;
+          break;
+        }
+      }
+      
+      // Calculate steady state error
+      const finalValue = processData[processData.length - 1];
+      const steadyStateError = Math.abs(finalValue - setpoint);
+      
+      // Update display
+      document.getElementById('rise-time').textContent = riseTime + ' s';
+      document.getElementById('settling-time').textContent = settlingTime + ' s';
+      document.getElementById('overshoot').textContent = overshoot.toFixed(1) + '%';
+      document.getElementById('steady-state-error').textContent = steadyStateError.toFixed(2);
+    }
+  </script>
+</body>
+</html> 

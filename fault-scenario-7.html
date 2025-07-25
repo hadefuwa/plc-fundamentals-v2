@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Matrix TSL - Fault Scenario 7: Injection Molding Temperature Control</title>
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav-bar">
+    <div class="nav-container">
+      <div class="nav-left">
+        <button class="nav-btn back-btn" onclick="window.location.href='fault-scenario-6.html'">
+          <i class="fas fa-arrow-left"></i> Previous Scenario
+        </button>
+      </div>
+      <div class="nav-center">
+        <h1 class="nav-title">Fault Scenario 7 - Injection Molding Temperature Control</h1>
+      </div>
+      <div class="nav-right">
+        <button class="nav-btn next-btn" onclick="window.location.href='fault-scenario-8.html'">
+          Next Scenario <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Introduction Section -->
+    <div class="worksheet-section introduction-section">
+      <h2 class="section-header"><i class="fas fa-info-circle"></i> Scenario Overview</h2>
+      <div class="worksheet-content">
+        <div class="scenario-info">
+          <div class="info-grid">
+            <div class="info-item">
+              <strong>Company:</strong> Precision Plastics Manufacturing
+            </div>
+            <div class="info-item">
+              <strong>Process:</strong> High-precision injection molding
+            </div>
+            <div class="info-item">
+              <strong>Shift:</strong> Quality issue investigation
+            </div>
+            <div class="info-item">
+              <strong>Urgency:</strong> Medium - Customer quality complaints
+            </div>
+            <div class="info-item">
+              <strong>Difficulty:</strong> Intermediate
+            </div>
+            <div class="info-item">
+              <strong>Time:</strong> 25-35 minutes
+            </div>
+          </div>
+        </div>
+
+        <div class="scenario-description">
+          <h3>Background</h3>
+          <p>A plastic injection molding machine is producing parts with inconsistent quality.</p>
+          
+          <p>The mold temperature control unit shows the temperature is within specification at 80°C.</p>
+          
+          <p>Quality control reports that parts from certain cavities are showing signs of incomplete filling and surface defects.</p>
+          
+          <p>The issue seems to be worse after extended production runs, suggesting a thermal-related problem.</p>
+        </div>
+
+        <div class="system-overview">
+          <h3>System Status</h3>
+          <div class="status-grid">
+            <div class="status-item">
+              <span class="status-label">Mold Temperature Setpoint:</span>
+              <span class="status-value">80°C</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">Displayed Temperature:</span>
+              <span class="status-value">80°C</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">Actual Cavity Temperatures:</span>
+              <span class="status-value warning">79, 82, 77, 84°C</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">Cooling Water Temp:</span>
+              <span class="status-value">25°C</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">Cooling Water Pressure:</span>
+              <span class="status-value">3.2 bar</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">Quality Status:</span>
+              <span class="status-value warning">DECLINING</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">Thermal Uniformity:</span>
+              <span class="status-value warning">POOR</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Learning Objectives Section -->
+    <div class="worksheet-section objectives-section">
+      <h2 class="section-header"><i class="fas fa-bullseye"></i> Learning Objectives</h2>
+      <div class="worksheet-content">
+        <ul class="objectives-list">
+          <li>Understand injection molding temperature requirements</li>
+          <li>Learn about thermal uniformity in manufacturing</li>
+          <li>Recognize temperature distribution problems</li>
+          <li>Practice systematic quality issue troubleshooting</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Interactive Tools Section -->
+    <div class="worksheet-section tools-section">
+      <h2 class="section-header"><i class="fas fa-tools"></i> Investigation Tools</h2>
+      <div class="worksheet-content">
+        <div class="tools-grid">
+          <div class="tool-card" onclick="useTool('thermal_mapping')">
+            <i class="fas fa-camera"></i>
+            <h3>Thermal Mapping of Mold</h3>
+            <p>Use thermal imaging to map temperature across all cavities</p>
+          </div>
+          <div class="tool-card" onclick="useTool('cooling_circuit_analysis')">
+            <i class="fas fa-water"></i>
+            <h3>Cooling Circuit Analysis</h3>
+            <p>Check flow rates and temperatures in each cooling circuit</p>
+          </div>
+          <div class="tool-card" onclick="useTool('quality_correlation')">
+            <i class="fas fa-chart-bar"></i>
+            <h3>Quality vs Temperature Correlation</h3>
+            <p>Analyze which cavities have quality issues vs temperature</p>
+          </div>
+          <div class="tool-card" onclick="useTool('extended_run_monitoring')">
+            <i class="fas fa-clock"></i>
+            <h3>Extended Run Monitoring</h3>
+            <p>Monitor temperature stability during long production runs</p>
+          </div>
+        </div>
+        <div id="tool-results" class="tool-results"></div>
+      </div>
+    </div>
+
+    <!-- Simulation Section -->
+    <div class="worksheet-section simulation-section">
+      <h2 class="section-header"><i class="fas fa-cogs"></i> System Simulation</h2>
+      <div class="worksheet-content">
+        <div id="injection-molding-simulation" class="simulation-container">
+          <div class="simulation-loading">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Loading injection molding simulation...</p>
+          </div>
+        </div>
+        <div id="hmi-panel" class="simulation-container" style="margin-top: 20px;"></div>
+        <div id="plc-io-panel" class="simulation-container" style="margin-top: 20px;"></div>
+        <div id="fault-injection-panel" class="simulation-panel" style="margin-top: 20px;"></div>
+        <div id="diagnostic-challenges-panel" class="simulation-panel" style="margin-top: 20px;"></div>
+      </div>
+    </div>
+
+    <!-- Assessment Questions Section -->
+    <div class="worksheet-section questions-section">
+      <h2 class="section-header"><i class="fas fa-question-circle"></i> Assessment Questions</h2>
+      <div class="worksheet-content">
+        <div class="question-card">
+          <h3>Question 7.1</h3>
+          <p>What is the most likely cause of temperature variations between mold cavities?</p>
+          <div class="options">
+            <label><input type="radio" name="q7.1" value="0"> The temperature controller is broken</label>
+            <label><input type="radio" name="q7.1" value="1"> Uneven cooling water flow distribution between cavities</label>
+            <label><input type="radio" name="q7.1" value="2"> The plastic material has changed properties</label>
+            <label><input type="radio" name="q7.1" value="3"> The operator is using the wrong temperature setting</label>
+          </div>
+          <button onclick="submitAnswer('7.1')" class="submit-btn">Submit Answer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="hmi-simulation.js"></script>
+  <script src="plc-simulation.js"></script>
+  <script src="valve-simulation.js"></script>
+  <script src="pump-simulation.js"></script>
+  <script>
+    // Tool usage tracking
+    let toolResults = {};
+    
+    function useTool(toolId) {
+      const toolData = {
+        'thermal_mapping': {
+          title: 'Thermal Mapping Results',
+          content: 'Thermal imaging reveals significant temperature variations across cavities: Cavity 1 (79°C), Cavity 2 (82°C), Cavity 3 (77°C), Cavity 4 (84°C). Temperature gradient shows cooling circuit imbalance.',
+          icon: 'fas fa-camera'
+        },
+        'cooling_circuit_analysis': {
+          title: 'Cooling Circuit Analysis Results',
+          content: 'Flow rate measurements show uneven distribution: Circuit 1 (85% flow), Circuit 2 (100% flow), Circuit 3 (60% flow), Circuit 4 (110% flow). Circuit 3 has partial blockage causing reduced cooling.',
+          icon: 'fas fa-water'
+        },
+        'quality_correlation': {
+          title: 'Quality vs Temperature Correlation',
+          content: 'Quality analysis shows cavities 3 and 4 (77°C and 84°C) produce the most defective parts. Temperature extremes cause incomplete filling and surface defects. Cavities 1 and 2 show acceptable quality.',
+          icon: 'fas fa-chart-bar'
+        },
+        'extended_run_monitoring': {
+          title: 'Extended Run Monitoring Results',
+          content: 'Temperature monitoring over 8-hour production run shows thermal drift. Cavity temperatures vary by ±3°C over time, with poorest thermal stability in cavities 3 and 4. Controller sensor location is not representative.',
+          icon: 'fas fa-clock'
+        }
+      };
+      
+      const result = toolData[toolId];
+      if (result) {
+        toolResults[toolId] = result;
+        displayToolResult(toolId, result);
+      }
+    }
+    
+    function displayToolResult(toolId, result) {
+      const resultsDiv = document.getElementById('tool-results');
+      const resultHtml = `
+        <div class="tool-result" id="result-${toolId}">
+          <div class="result-header">
+            <i class="${result.icon}"></i>
+            <h3>${result.title}</h3>
+          </div>
+          <div class="result-content">
+            <p>${result.content}</p>
+          </div>
+        </div>
+      `;
+      resultsDiv.innerHTML += resultHtml;
+    }
+    
+    function submitAnswer(questionId) {
+      const selectedOption = document.querySelector(`input[name="q${questionId}"]:checked`);
+      if (selectedOption) {
+        const answer = parseInt(selectedOption.value);
+        const correctAnswer = 1; // For question 7.1
+        
+        if (answer === correctAnswer) {
+          alert('Correct! Uneven cooling water flow distribution between cavities causes temperature variations.');
+        } else {
+          alert('Incorrect. The correct answer is: Uneven cooling water flow distribution between cavities.');
+        }
+        
+        // Save answer
+        localStorage.setItem(`fault-scenario-7-${questionId}`, answer);
+      } else {
+        alert('Please select an answer before submitting.');
+      }
+    }
+    
+    // Load saved answers on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedAnswer = localStorage.getItem('fault-scenario-7-7.1');
+      if (savedAnswer !== null) {
+        const radio = document.querySelector(`input[name="q7.1"][value="${savedAnswer}"]`);
+        if (radio) radio.checked = true;
+      }
+    });
+  </script>
+</body>
+</html> 

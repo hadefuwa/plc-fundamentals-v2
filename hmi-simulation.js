@@ -2,7 +2,7 @@
 // Industrial Maintenance Training - Worksheet 5
 
 // HMI System State
-let hmiData = {
+window.hmiData = {
   // Alarm System
   alarms: {
     active: [],

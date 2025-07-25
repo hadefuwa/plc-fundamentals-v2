@@ -2,7 +2,7 @@
 // Industrial Maintenance Training - Worksheet 3
 
 // Status LED System State
-let statusLEDData = {
+window.statusLEDData = {
   // LED States: 'off', 'green', 'yellow', 'red', 'flashing-red', 'flashing-yellow'
   currentState: 'green',
   previousState: 'green',
@@ -34,7 +34,7 @@ let statusLEDData = {
 };
 
 // LED State Definitions
-const LED_STATES = {
+window.LED_STATES = {
   'off': { color: '#333', description: 'System Off', meaning: 'No power or system shutdown' },
   'green': { color: '#4CAF50', description: 'Normal Operation', meaning: 'All systems operating normally' },
   'yellow': { color: '#FF9800', description: 'Warning', meaning: 'Minor fault detected, attention required' },
@@ -44,7 +44,7 @@ const LED_STATES = {
 };
 
 // Fault Definitions
-const FAULT_TYPES = {
+window.FAULT_TYPES = {
   'sensor_drift': { name: 'Sensor Drift', severity: 'warning', escalation: 30 },
   'valve_stuck': { name: 'Valve Stuck', severity: 'fault', escalation: 60 },
   'pump_failure': { name: 'Pump Failure', severity: 'critical', escalation: 90 },
@@ -86,9 +86,9 @@ function initializeLEDDisplay() {
   
   ledContainer.innerHTML = `
     <div class="led-display" style="text-align: center; margin: 20px 0;">
-      <div class="led-indicator" id="status-led" style="width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 20px; border: 4px solid #555; box-shadow: 0 0 20px rgba(0,0,0,0.5); transition: all 0.3s ease;"></div>
-      <div class="led-status" id="led-status-text" style="font-size: 18px; font-weight: bold; margin-bottom: 10px;"></div>
-      <div class="led-meaning" id="led-meaning-text" style="font-size: 14px; color: #AAA;"></div>
+      <div class="led-indicator" id="status-led" style="width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 20px; border: 4px solid #555; background: #4CAF50; box-shadow: 0 0 20px rgba(76, 175, 80, 0.5); transition: all 0.3s ease;"></div>
+      <div class="led-status" id="led-status-text" style="font-size: 18px; font-weight: bold; margin-bottom: 10px; color: #4CAF50;">Normal Operation</div>
+      <div class="led-meaning" id="led-meaning-text" style="font-size: 14px; color: #AAA;">All systems operating normally</div>
     </div>
     
     <div class="system-status" style="background: #333; padding: 20px; border-radius: 8px; margin: 20px 0;">
@@ -114,13 +114,17 @@ function initializeLEDDisplay() {
     </div>
   `;
   
-  updateLEDDisplay();
+  // Set initial LED state
+  setLEDState('green');
 }
 
 // Initialize LED Controls
 function initializeLEDControls() {
   const controlContainer = document.getElementById('led-control-panel');
-  if (!controlContainer) return;
+  if (!controlContainer) {
+    console.log('LED control panel not found, skipping control initialization');
+    return;
+  }
   
   controlContainer.innerHTML = `
     <div class="led-controls" style="margin: 20px 0;">
@@ -188,7 +192,10 @@ function initializeLEDControls() {
 // Initialize Fault Injection
 function initializeFaultInjection() {
   const faultContainer = document.getElementById('fault-injection-panel');
-  if (!faultContainer) return;
+  if (!faultContainer) {
+    console.log('Fault injection panel not found, skipping fault injection initialization');
+    return;
+  }
   
   faultContainer.innerHTML = `
     <div class="fault-injection" style="margin: 20px 0;">
@@ -225,7 +232,10 @@ function initializeFaultInjection() {
 // Initialize Shift Handover
 function initializeShiftHandover() {
   const handoverContainer = document.getElementById('shift-handover-panel');
-  if (!handoverContainer) return;
+  if (!handoverContainer) {
+    console.log('Shift handover panel not found, skipping handover initialization');
+    return;
+  }
   
   handoverContainer.innerHTML = `
     <div class="shift-handover" style="margin: 20px 0;">
@@ -272,7 +282,10 @@ function initializeShiftHandover() {
 // Initialize Diagnostic Challenges
 function initializeDiagnosticChallenges() {
   const challengeContainer = document.getElementById('diagnostic-challenges-panel');
-  if (!challengeContainer) return;
+  if (!challengeContainer) {
+    console.log('Diagnostic challenges panel not found, skipping diagnostic initialization');
+    return;
+  }
   
   challengeContainer.innerHTML = `
     <div class="diagnostic-challenges" style="margin: 20px 0;">
@@ -350,7 +363,10 @@ function updateLEDDisplay() {
   const statusText = document.getElementById('led-status-text');
   const meaningText = document.getElementById('led-meaning-text');
   
-  if (!led || !statusText || !meaningText) return;
+  if (!led || !statusText || !meaningText) {
+    console.log('LED display elements not found, skipping update');
+    return;
+  }
   
   const state = LED_STATES[statusLEDData.currentState];
   
@@ -375,7 +391,10 @@ function updateSystemStatus() {
   const maintenanceDue = document.getElementById('maintenance-due');
   const activeFaults = document.getElementById('active-faults');
   
-  if (!systemHealth || !faultLevel || !maintenanceDue || !activeFaults) return;
+  if (!systemHealth || !faultLevel || !maintenanceDue || !activeFaults) {
+    console.log('System status elements not found, skipping update');
+    return;
+  }
   
   systemHealth.textContent = statusLEDData.systemHealth;
   systemHealth.style.color = getHealthColor(statusLEDData.systemHealth);

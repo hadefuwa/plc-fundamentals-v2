@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Matrix TSL - Pump System Maintenance</title>
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">
+</head>
+<body>
+  <nav class="nav-bar">
+    <div class="nav-container">
+      <div class="nav-left">
+        <button class="nav-btn back-btn" onclick="window.location.href='worksheet-5.html'">
+          <i class="fas fa-arrow-left"></i> Previous Worksheet
+        </button>
+      </div>
+      <div class="nav-center">
+        <h1 class="nav-title">Worksheet 6 - Pump System Maintenance</h1>
+      </div>
+      <div class="nav-right">
+        <button class="nav-btn next-btn" onclick="window.location.href='worksheet-7.html'">
+          Next Worksheet <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="worksheet-box">
+    <div class="worksheet-section introduction-section">
+      <h2 class="section-header"><i class="fas fa-info-circle"></i> 1. Introduction</h2>
+      <div class="worksheet-content">
+        <p>This worksheet covers maintenance procedures for pump system maintenance. Pumps are the heart of fluid systems, converting mechanical energy into fluid flow and pressure.</p>
+        <div class="system-diagram">
+          <img src="assets/maintenance/pump.png" alt="Pump System Maintenance">
+          <figcaption>Pump System Maintenance Components</figcaption>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="worksheet-section questions-section">
+      <h2 class="section-header"><i class="fas fa-question-circle"></i> Questions & Answers</h2>
+      <div class="questions-content">
+        <div class="question-item" data-question="1">
+          <h4>Question 1: What are the key maintenance points for this pump system?</h4>
+          <textarea class="answer-input" data-question="1" placeholder="Describe the main maintenance requirements..."></textarea>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(1)">Submit Answer</button>
+          </div>
+        </div>
+        <div class="question-item" data-question="2">
+          <h4>Question 2: How would you troubleshoot common issues with this system?</h4>
+          <textarea class="answer-input" data-question="2" placeholder="Explain your troubleshooting approach..."></textarea>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(2)">Submit Answer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Simulation Section -->
+    <div class="simulation-section">
+      <h2 class="section-header"><i class="fas fa-cogs"></i> 3. Interactive Pump System Maintenance</h2>
+      <div id="pump-display-panel" class="simulation-container">
+        <div class="simulation-loading">
+          <i class="fas fa-spinner fa-spin"></i>
+          <p>Loading pump simulation...</p>
+          <p>Simulation will initialize automatically</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="pump-simulation.js"></script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const initFunc = 'initializePumpSimulation';
+      setTimeout(() => {
+        if (typeof window[initFunc] === 'function') {
+          console.log('Initializing', initFunc);
+          window[initFunc]();
+        } else {
+          document.querySelector('.simulation-loading').innerHTML = '<p>Simulation ready - Pump System Maintenance</p>';
+        }
+      }, 1000);
+      loadSavedAnswers();
+    });
+    
+    function submitAnswer(questionNumber) {
+      const input = document.querySelector('[data-question="' + questionNumber + '"]');
+      const answer = input.value.trim();
+      if (answer) {
+        localStorage.setItem('worksheet6_answer' + questionNumber, answer);
+        const button = event.target;
+        const originalText = button.textContent;
+        button.textContent = 'Saved!';
+        setTimeout(() => { button.textContent = originalText; }, 2000);
+      } else {
+        alert('Please enter an answer before submitting.');
+      }
+    }
+    
+    function loadSavedAnswers() {
+      for (let i = 1; i <= 2; i++) {
+        const saved = localStorage.getItem('worksheet6_answer' + i);
+        if (saved) {
+          const input = document.querySelector('[data-question="' + i + '"]');
+          if (input) input.value = saved;
+        }
+      }
+    }
+  </script>
+</body>
+</html> 

@@ -2,7 +2,7 @@
 // Industrial Maintenance Training - Worksheet 7
 
 // Valve System State
-let valveData = {
+window.valveData = {
   // Valve Status
   valveType: 'proportional',
   valvePosition: 0, // 0-100%
