@@ -596,7 +596,7 @@
   <div id="error-container" class="error-container" style="display: none;">
     <h3><i class="fas fa-exclamation-triangle"></i> Worksheet Not Found</h3>
     <p>The requested worksheet could not be loaded.</p>
-    <button class="back-btn" onclick="window.location='worksheets.html'">
+    <button class="back-btn">
       <i class="fas fa-arrow-left"></i> Back to Worksheets
     </button>
   </div>
@@ -607,7 +607,7 @@
     <div id="main-content" class="worksheet-container" style="display: none;">
       <!-- Back Navigation -->
       <div class="back-nav">
-        <button class="back-btn" onclick="window.location='worksheets.html'">
+        <button class="back-btn">
           <i class="fas fa-arrow-left"></i> Back to Worksheets
         </button>
       </div>
@@ -625,7 +625,7 @@
           <button class="nav-btn next-btn" onclick="navigateWorksheet('next')">
             Next Worksheet <i class="fas fa-chevron-right"></i>
           </button>
-          <button class="nav-btn back-to-list-btn" onclick="window.location='worksheets.html'">
+          <button class="nav-btn back-to-list-btn">
             <i class="fas fa-list"></i> All Worksheets
           </button>
         </div>
@@ -648,6 +648,24 @@
     function getUrlParameter(name) {
       const urlParams = new URLSearchParams(window.location.search);
       return urlParams.get(name);
+    }
+
+    // Get the correct worksheets page URL based on worksheet type
+    function getWorksheetsPageUrl() {
+      const type = getUrlParameter('type') || 'maintenance';
+      return type === 'fault' ? 'cp6773-worksheets.html' : 'cp0539-worksheets.html';
+    }
+
+    // Update back button destinations
+    function updateBackButtons() {
+      const worksheetsUrl = getWorksheetsPageUrl();
+      const backButtons = document.querySelectorAll('.back-btn, .back-to-list-btn');
+      
+      backButtons.forEach(button => {
+        button.onclick = function() {
+          window.location.href = worksheetsUrl;
+        };
+      });
     }
 
     // Load worksheet data
@@ -1157,16 +1175,11 @@
 
         ${worksheetId === 1 ? `
         <!-- PID Control Simulation Section (Worksheet 1 only) -->
+        
+        <!-- PID Tuning Section -->
         <div class="simulation-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-top: 40px; border: 2px solid #E91E63; box-shadow: 0 8px 20px rgba(233, 30, 99, 0.3);">
-          <h2 class="section-header" style="color: #E91E63; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-chart-line"></i> 5. PID Control Simulation</h2>
+          <h2 class="section-header" style="color: #E91E63; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-chart-line"></i> 5.1 PID Tuning</h2>
           
-          <!-- Tab navigation for different simulation features -->
-          <div class="simulation-tabs" style="display: flex; gap: 10px; margin-bottom: 25px; flex-wrap: wrap;">
-              <button class="tab-button active" data-tab="tuning" style="background: #E91E63; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: all 0.3s ease;">PID Tuning</button>
-              <button class="tab-button" data-tab="response" style="background: #555; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: all 0.3s ease;">System Response</button>
-              <button class="tab-button" data-tab="challenges" style="background: #555; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: all 0.3s ease;">Challenges</button>
-          </div>
-
           <!-- PID Tuning Interface -->
           <div class="tab-content" id="tuning-tab">
               <!-- Main control panel for setpoint and process variable -->
@@ -1179,6 +1192,10 @@
                   <div class="control-group" style="display: flex; align-items: center; gap: 10px;">
                       <label style="color: #FFFFFF; min-width: 80px; font-weight: bold;">Process Variable:</label>
                       <span id="pv-value" class="value-display" style="color: #2196F3; font-weight: bold; min-width: 60px;">25.0°C</span>
+                  </div>
+                  <div class="control-group" style="display: flex; align-items: center; gap: 10px;">
+                      <label style="color: #FFFFFF; min-width: 80px; font-weight: bold;">Control Output:</label>
+                      <span id="control-output-value" class="value-display" style="color: #4CAF50; font-weight: bold; min-width: 60px;">0.0%</span>
                   </div>
               </div>
 
@@ -1251,9 +1268,14 @@
                   </div>
               </div>
           </div>
+        </div>
 
+        <!-- System Response Section -->
+        <div class="simulation-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-top: 40px; border: 2px solid #E91E63; box-shadow: 0 8px 20px rgba(233, 30, 99, 0.3);">
+          <h2 class="section-header" style="color: #E91E63; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-chart-line"></i> 5.2 System Response</h2>
+          
           <!-- System Response Testing Interface -->
-          <div class="tab-content hidden" id="response-tab">
+          <div class="tab-content" id="response-tab">
               <!-- Response Type Selection -->
               <div class="response-control-panel" style="background: linear-gradient(135deg, #2a2a2a, #3a3a3a); border-radius: 12px; padding: 30px; margin-bottom: 30px; border: 2px solid #E91E63; box-shadow: 0 8px 20px rgba(233, 30, 99, 0.2);">
                   <h4 style="color: #E91E63; margin-bottom: 25px; font-size: 20px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-sliders-h"></i> Response Type Selection</h4>
@@ -1382,9 +1404,14 @@
                   </div>
               </div>
           </div>
+        </div>
 
+        <!-- Challenges Section -->
+        <div class="simulation-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-top: 40px; border: 2px solid #E91E63; box-shadow: 0 8px 20px rgba(233, 30, 99, 0.3);">
+          <h2 class="section-header" style="color: #E91E63; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-chart-line"></i> 5.3 Challenges</h2>
+          
           <!-- Interactive Challenges Interface -->
-          <div class="tab-content hidden" id="challenges-tab">
+          <div class="tab-content" id="challenges-tab">
               <div class="challenge-list" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px;">
                   <!-- Challenge 1: Minimal Overshoot -->
                   <div class="challenge-card" data-challenge="1" style="background: #333; padding: 25px; border-radius: 12px; border: 2px solid #E91E63; transition: all 0.3s ease;">
@@ -2281,16 +2308,10 @@
               </div>
             </div>
 
+            <!-- PID Tuning Section -->
             <div class="simulation-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-top: 40px; border: 2px solid #E91E63; box-shadow: 0 8px 20px rgba(233, 30, 99, 0.3);">
-              <h2 class="section-header" style="color: #E91E63; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-chart-line"></i> 5. PID Control Simulation</h2>
+              <h2 class="section-header" style="color: #E91E63; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-chart-line"></i> 5.1 PID Tuning</h2>
               
-              <!-- Tab navigation for different simulation features -->
-              <div class="simulation-tabs" style="display: flex; gap: 10px; margin-bottom: 25px; flex-wrap: wrap;">
-                  <button class="tab-button active" data-tab="tuning" style="background: #E91E63; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: all 0.3s ease;">PID Tuning</button>
-                  <button class="tab-button" data-tab="response" style="background: #555; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: all 0.3s ease;">System Response</button>
-                  <button class="tab-button" data-tab="challenges" style="background: #555; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: all 0.3s ease;">Challenges</button>
-              </div>
-
               <!-- PID Tuning Interface -->
               <div class="tab-content" id="tuning-tab">
                   <!-- Main control panel for setpoint and process variable -->
@@ -2303,6 +2324,10 @@
                       <div class="control-group" style="display: flex; align-items: center; gap: 10px;">
                           <label style="color: #FFFFFF; min-width: 80px; font-weight: bold;">Process Variable:</label>
                           <span id="pv-value" class="value-display" style="color: #2196F3; font-weight: bold; min-width: 60px;">25.0°C</span>
+                      </div>
+                      <div class="control-group" style="display: flex; align-items: center; gap: 10px;">
+                          <label style="color: #FFFFFF; min-width: 80px; font-weight: bold;">Control Output:</label>
+                          <span id="control-output-value" class="value-display" style="color: #4CAF50; font-weight: bold; min-width: 60px;">0.0%</span>
                       </div>
                   </div>
 
@@ -2346,9 +2371,14 @@
                       </div>
                   </div>
               </div>
+            </div>
 
+            <!-- System Response Section -->
+            <div class="simulation-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-top: 40px; border: 2px solid #E91E63; box-shadow: 0 8px 20px rgba(233, 30, 99, 0.3);">
+              <h2 class="section-header" style="color: #E91E63; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-chart-line"></i> 5.2 System Response</h2>
+              
               <!-- System Response Testing Interface -->
-              <div class="tab-content hidden" id="response-tab">
+              <div class="tab-content" id="response-tab">
                   <div class="response-controls" style="display: flex; gap: 20px; align-items: center; margin-bottom: 25px; background: #333; padding: 20px; border-radius: 8px;">
                       <div class="control-group" style="display: flex; align-items: center; gap: 10px;">
                           <label style="color: #FFFFFF; font-weight: bold;">Input Type:</label>
@@ -2366,9 +2396,14 @@
                       <canvas id="response-canvas" class="simulation-canvas" width="800" height="300" style="background: #222; border-radius: 8px; width: 100%; height: 300px; border: 2px solid #555;"></canvas>
                   </div>
               </div>
+            </div>
 
+            <!-- Challenges Section -->
+            <div class="simulation-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-top: 40px; border: 2px solid #E91E63; box-shadow: 0 8px 20px rgba(233, 30, 99, 0.3);">
+              <h2 class="section-header" style="color: #E91E63; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-chart-line"></i> 5.3 Challenges</h2>
+              
               <!-- Interactive Challenges Interface -->
-              <div class="tab-content hidden" id="challenges-tab">
+              <div class="tab-content" id="challenges-tab">
                   <div class="challenge-list" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px;">
                       <!-- Challenge 1: Minimal Overshoot -->
                       <div class="challenge-card" data-challenge="1" style="background: #333; padding: 25px; border-radius: 12px; border: 2px solid #E91E63; transition: all 0.3s ease;">
@@ -2390,8 +2425,11 @@
                       </div>
                   </div>
               </div>
+            </div>
 
-              <!-- Main simulation canvas for real-time visualization -->
+            <!-- Main simulation canvas for real-time visualization -->
+            <div class="simulation-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-top: 40px; border: 2px solid #E91E63; box-shadow: 0 8px 20px rgba(233, 30, 99, 0.3);">
+              <h2 class="section-header" style="color: #E91E63; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-chart-line"></i> 5.4 Real-Time Visualization</h2>
               <canvas id="simulation-canvas" class="simulation-canvas" width="800" height="200" style="background: #222; border-radius: 8px; width: 100%; height: 200px; margin: 25px 0; border: 2px solid #555;"></canvas>
             </div>
           `;
@@ -3184,7 +3222,11 @@
     // Initialize when page loads
     document.addEventListener('DOMContentLoaded', () => {
       // Small delay to allow URL parameters to be set by main process
-      setTimeout(loadWorksheet, 100);
+      setTimeout(() => {
+        loadWorksheet();
+        updateBackButtons();
+        initializeResponseTestEventListeners();
+      }, 100);
     });
 
     // Initialize basic Worksheet 1 features for fallback
@@ -3388,28 +3430,14 @@
         }
       }
 
-      // Initialize tab system
-      const tabButtons = document.querySelectorAll('.tab-button');
-      tabButtons.forEach(button => {
-        button.addEventListener('click', (e) => {
-          const tabName = e.target.dataset.tab;
-          switchTab(tabName);
-        });
-      });
+      // Tab system removed - sections are now displayed vertically
     }
 
     // Initialize PID simulation functionality
     function initEnhancedPIDSimulation() {
       console.log('Initializing PID simulation...');
       
-      // Initialize tab switching
-      const tabButtons = document.querySelectorAll('.tab-button');
-      tabButtons.forEach(button => {
-        button.addEventListener('click', function() {
-          const tabName = this.getAttribute('data-tab');
-          switchTab(tabName);
-        });
-      });
+      // Tab switching removed - sections are now displayed vertically
       
       // Initialize sliders and controls
       const setpointSlider = document.getElementById('setpoint-slider');
@@ -3476,12 +3504,33 @@
       
       if (resetResponseBtn) {
         resetResponseBtn.addEventListener('click', function() {
+          console.log('Reset button clicked');
+          
+          // Stop current simulation completely
+          if (simulationData && simulationData.responseAnimationInterval) {
+            clearInterval(simulationData.responseAnimationInterval);
+            simulationData.responseAnimationInterval = null;
+            console.log('Stopped simulation for reset');
+          }
+          
+          // Reset ALL simulation data
+          if (simulationData) {
+            simulationData.responseData = null;
+            simulationData.responseTime = 0;
+            simulationData.responseValue = 25;
+            simulationData.integral = 0;
+            simulationData.lastError = 0;
+            simulationData.time = 0;
+          }
+          
+          // Clear the canvas completely
           const canvas = document.getElementById('response-canvas');
           if (canvas) {
             const ctx = canvas.getContext('2d');
             ctx.fillStyle = '#222';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             drawEnhancedGrid(ctx, canvas.width, canvas.height, 15);
+            console.log('Cleared canvas for reset');
           }
           
           // Reset metrics
@@ -3490,6 +3539,8 @@
             const element = document.getElementById(id);
             if (element) element.textContent = '--';
           });
+          
+          console.log('Reset complete');
         });
       }
       
@@ -3669,6 +3720,9 @@
                                simulationData.ki * simulationData.integral + 
                                simulationData.kd * simulationData.derivative;
         
+        // Clamp output to 0-100% range
+        simulationData.output = Math.max(0, Math.min(100, simulationData.output));
+        
         // Update process variable (simplified first-order system)
         const tau = 2.0; // time constant
         simulationData.processVariable += (simulationData.output - simulationData.processVariable) * 0.1 / tau;
@@ -3680,6 +3734,24 @@
         const pvValue = document.getElementById('pv-value');
         if (pvValue) {
           pvValue.textContent = simulationData.processVariable.toFixed(1) + '°C';
+        }
+        
+        // Update control output display
+        const controlOutputValue = document.getElementById('control-output-value');
+        if (controlOutputValue) {
+          controlOutputValue.textContent = simulationData.output.toFixed(1) + '%';
+          
+          // Visual indicator when output is clamped
+          if (simulationData.output >= 100) {
+            controlOutputValue.style.color = '#FF5722'; // Orange-red when at max
+            controlOutputValue.style.fontWeight = 'bold';
+          } else if (simulationData.output <= 0) {
+            controlOutputValue.style.color = '#FF9800'; // Orange when at min
+            controlOutputValue.style.fontWeight = 'bold';
+          } else {
+            controlOutputValue.style.color = '#4CAF50'; // Normal green
+            controlOutputValue.style.fontWeight = 'bold';
+          }
         }
         
         // Add data to graph
@@ -3695,6 +3767,8 @@
 
     // Run response test simulation
     function runResponseTest() {
+      console.log('runResponseTest() called');
+      
       const canvas = document.getElementById('response-canvas');
       if (!canvas) return;
       
@@ -3707,7 +3781,9 @@
       ctx.fillRect(0, 0, width, height);
       
       // Get input type from radio buttons
-      const inputType = document.querySelector('input[name="input-type"]:checked').value;
+      const selectedRadio = document.querySelector('input[name="input-type"]:checked');
+      const inputType = selectedRadio ? selectedRadio.value : 'step';
+      console.log('Starting simulation with input type:', inputType);
       
       // Use default parameters for simplified interface
       const amplitude = 25; // Default amplitude
@@ -3720,11 +3796,8 @@
       // Draw enhanced grid
       drawEnhancedGrid(ctx, width, height, duration);
       
-      // Generate enhanced response data
-      const data = generateEnhancedResponseData(inputType, amplitude, duration, frequency);
-      
-      // Draw and animate response
-      animateEnhancedResponse(ctx, data, width, height, inputType, duration);
+      // Start real-time simulation
+      startRealTimeResponseSimulation(ctx, width, height, inputType, amplitude, duration, frequency);
     }
 
     // Draw enhanced grid on canvas
@@ -3753,17 +3826,94 @@
       ctx.font = '12px Arial';
       ctx.textAlign = 'center';
       
-      // Y-axis labels (temperature)
+      // Y-axis labels (temperature) - will be updated dynamically
       for (let i = 0; i <= 8; i++) {
         const y = height - (i * height / 8);
         const temp = i * 12.5; // 0 to 100°C
         ctx.fillText(temp + '°C', 30, y + 4);
       }
       
-      // X-axis labels (time)
+      // X-axis labels (time) - for scrolling display
       for (let i = 0; i <= 10; i++) {
         const x = i * width / 10;
         const time = i * duration / 10;
+        ctx.fillText(time.toFixed(1) + 's', x, height - 5);
+      }
+    }
+    
+    // Draw dynamic grid with auto-scaling Y-axis
+    function drawDynamicGrid(ctx, width, height, data, timeWindow) {
+      ctx.strokeStyle = '#444';
+      ctx.lineWidth = 1;
+      
+      // Auto-scale Y-axis based on actual data range
+      let allValues = [];
+      if (data && data.input && data.input.length > 0) {
+        allValues = allValues.concat(data.input.map(p => p.value));
+      }
+      if (data && data.response && data.response.length > 0) {
+        allValues = allValues.concat(data.response.map(p => p.value));
+      }
+      if (data && data.error && data.error.length > 0) {
+        // Scale error values to fit in temperature range
+        allValues = allValues.concat(data.error.map(p => 50 + p.value * 2));
+      }
+      
+      let tempMin = 0;
+      let tempMax = 80;
+      
+      if (allValues.length > 0) {
+        const dataMin = Math.min(...allValues);
+        const dataMax = Math.max(...allValues);
+        const range = dataMax - dataMin;
+        const padding = range * 0.2; // 20% padding
+        
+        tempMin = Math.max(0, Math.floor(dataMin - padding));
+        tempMax = Math.min(100, Math.ceil(dataMax + padding));
+        
+        // Ensure minimum range for visibility
+        if (tempMax - tempMin < 20) {
+          const center = (tempMin + tempMax) / 2;
+          tempMin = Math.max(0, center - 10);
+          tempMax = Math.min(100, center + 10);
+        }
+      }
+      
+      // Store the calculated range for use in curve drawing
+      window.currentTempRange = { min: tempMin, max: tempMax };
+      
+      // Vertical lines (time)
+      for (let x = 0; x <= width; x += width / 10) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, height);
+        ctx.stroke();
+      }
+      
+      // Horizontal lines (temperature)
+      for (let y = 0; y <= height; y += height / 8) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(width, y);
+        ctx.stroke();
+      }
+      
+      // Add labels
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = '12px Arial';
+      ctx.textAlign = 'center';
+      
+      // Y-axis labels (temperature) - dynamic scaling
+      for (let i = 0; i <= 8; i++) {
+        const y = height - (i * height / 8);
+        const temp = tempMin + (i * (tempMax - tempMin) / 8);
+        ctx.fillText(temp.toFixed(1) + '°C', 30, y + 4);
+      }
+      
+      // X-axis labels (time) - for scrolling display
+      for (let i = 0; i <= 10; i++) {
+        const x = i * width / 10;
+        const time = i * timeWindow / 10;
         ctx.fillText(time.toFixed(1) + 's', x, height - 5);
       }
     }
@@ -3778,6 +3928,15 @@
       
       const timeSteps = 200;
       const baseTemp = 25; // Base temperature
+      
+      // PID simulation variables
+      let integral = 0;
+      let lastError = 0;
+      
+      // Get current PID parameters - ensure they are available
+      const kp = (simulationData && simulationData.kp) || parseFloat(document.getElementById('kp-slider')?.value) || 0.5;
+      const ki = (simulationData && simulationData.ki) || parseFloat(document.getElementById('ki-slider')?.value) || 0.1;
+      const kd = (simulationData && simulationData.kd) || parseFloat(document.getElementById('kd-slider')?.value) || 0.2;
       
       for (let i = 0; i < timeSteps; i++) {
         const time = (i / timeSteps) * duration;
@@ -3798,22 +3957,39 @@
         }
         
         // Generate system response (simplified PID simulation)
-        const error = inputValue - responseValue;
-        const kp = simulationData.kp;
-        const ki = simulationData.ki;
-        const kd = simulationData.kd;
-        
-        // Simple first-order system response
-        const tau = 2.0; // time constant
         const dt = duration / timeSteps;
         
         if (i > 0) {
           const prevResponse = data.response[i - 1];
-          const controlOutput = kp * error + ki * error * dt + kd * (error - (data.input[i - 1] - prevResponse)) / dt;
-          responseValue = prevResponse + (controlOutput - prevResponse) * dt / tau;
+          const prevInput = data.input[i - 1];
+          
+          // Calculate error between input and current response
+          const error = inputValue - prevResponse;
+          
+          // Update integral term (accumulate error over time)
+          integral += error * dt;
+          
+          // Calculate derivative term (rate of change of error)
+          const derivative = (error - lastError) / dt;
+          
+          // Calculate PID control output
+          const controlOutput = kp * error + ki * integral + kd * derivative;
+          
+          // Clamp control output to 0-100% range
+          const clampedControlOutput = Math.max(0, Math.min(100, controlOutput));
+          
+          // Update response using first-order system model
+          const tau = 2.0; // time constant
+          responseValue = prevResponse + (clampedControlOutput - prevResponse) * dt / tau;
           
           // Add some realistic noise
-          responseValue += (Math.random() - 0.5) * 2;
+          responseValue += (Math.random() - 0.5) * 1;
+          
+          // Update last error for next iteration
+          lastError = error;
+        } else {
+          // For the first point, start at base temperature
+          responseValue = baseTemp;
         }
         
         const errorValue = inputValue - responseValue;
@@ -3823,41 +3999,157 @@
         data.error.push({ time, value: errorValue });
       }
       
+      // Ensure we have valid data
+      if (data.input.length === 0) {
+        console.error('No data generated');
+        return { input: [], response: [], error: [] };
+      }
+      
       return data;
     }
 
-    // Animate enhanced response
-    function animateEnhancedResponse(ctx, data, width, height, inputType, duration) {
+    // Start real-time response simulation
+    function startRealTimeResponseSimulation(ctx, width, height, inputType, amplitude, duration, frequency) {
       if (simulationData.responseAnimationInterval) {
         clearInterval(simulationData.responseAnimationInterval);
       }
       
-      let currentIndex = 0;
-      const totalPoints = data.input.length;
+      // Initialize simulation data
+      let time = 0;
+      let responseValue = 25; // Base temperature
+      let integral = 0;
+      let lastError = 0;
+      const dt = 0.1; // Time step
+      const tau = 2.0; // System time constant
+      
+      // Get current PID parameters
+      const kp = (simulationData && simulationData.kp) || parseFloat(document.getElementById('kp-slider')?.value) || 0.5;
+      const ki = (simulationData && simulationData.ki) || parseFloat(document.getElementById('ki-slider')?.value) || 0.1;
+      const kd = (simulationData && simulationData.kd) || parseFloat(document.getElementById('kd-slider')?.value) || 0.2;
+      
+      // Store data for plotting
+      const data = {
+        input: [],
+        response: [],
+        error: []
+      };
       
       simulationData.responseAnimationInterval = setInterval(() => {
-        if (currentIndex >= totalPoints) {
-          clearInterval(simulationData.responseAnimationInterval);
-          return;
+        // Check if input type was changed
+        if (simulationData.inputTypeChanged) {
+          console.log('Input type changed detected, resetting simulation');
+          time = 0; // Reset time
+          responseValue = 25; // Reset response
+          integral = 0; // Reset integral
+          lastError = 0; // Reset last error
+          
+          // Clear data arrays
+          data.input = [];
+          data.response = [];
+          data.error = [];
+          
+          // Clear the flag
+          simulationData.inputTypeChanged = false;
+          console.log('Simulation reset complete');
         }
+        
+        // Get current input type from radio buttons (in case it changed)
+        const selectedRadio = document.querySelector('input[name="input-type"]:checked');
+        const currentInputType = selectedRadio ? selectedRadio.value : inputType;
+        
+        // Debug: log the current input type every 50 iterations (5 seconds)
+        if (Math.floor(time * 10) % 50 === 0) {
+          console.log('Current input type:', currentInputType, 'Time:', time.toFixed(1));
+        }
+        
+
         
         // Clear canvas and redraw grid
         ctx.fillStyle = '#222';
         ctx.fillRect(0, 0, width, height);
-        drawEnhancedGrid(ctx, width, height, duration);
         
-        // Draw curves up to current point
-        drawResponseCurves(ctx, data, width, height, duration, currentIndex);
+        // Calculate time window for scrolling display
+        const timeWindow = 15; // Show last 15 seconds
+        const startTime = Math.max(0, time - timeWindow);
+        const endTime = time;
         
-        currentIndex++;
-      }, 50); // Update every 50ms for smooth animation
+        drawDynamicGrid(ctx, width, height, data, timeWindow);
+        
+        // Generate input signal based on current type
+        let inputValue = 25; // Base temperature
+        switch (currentInputType) {
+          case 'step':
+            inputValue = 25 + (time > 3 ? amplitude : 0);
+            break;
+          case 'ramp':
+            // Create a repeating ramp that goes from 25°C to 50°C over 10 seconds, then repeats
+            const rampTime = time % 10; // Repeat every 10 seconds
+            inputValue = 25 + (rampTime / 10) * amplitude;
+            break;
+          case 'sine':
+            // Create a sine wave that oscillates around 37.5°C (midpoint of 25-50°C)
+            inputValue = 37.5 + (amplitude / 2) * Math.sin(2 * Math.PI * 0.2 * time); // 0.2 Hz = 5 second period
+            break;
+        }
+        
+        // Calculate error
+        const error = inputValue - responseValue;
+        
+        // Update integral term
+        integral += error * dt;
+        
+        // Calculate derivative term
+        const derivative = (error - lastError) / dt;
+        
+        // Calculate PID control output
+        const controlOutput = kp * error + ki * integral + kd * derivative;
+        
+        // Clamp control output
+        const clampedControlOutput = Math.max(0, Math.min(100, controlOutput));
+        
+        // Update system response
+        responseValue += (clampedControlOutput - responseValue) * dt / tau;
+        
+        // Add some noise
+        responseValue += (Math.random() - 0.5) * 0.5;
+        
+        // Store data
+        data.input.push({ time, value: inputValue });
+        data.response.push({ time, value: responseValue });
+        data.error.push({ time, value: error });
+        
+        // Keep only last 150 points for smooth display
+        if (data.input.length > 150) {
+          data.input.shift();
+          data.response.shift();
+          data.error.shift();
+        }
+        
+        // Draw curves
+        drawResponseCurves(ctx, data, width, height, duration, data.input.length - 1);
+        
+        // Update time
+        time += dt;
+        lastError = error;
+        
+        // Continue simulation indefinitely (don't stop after duration)
+        // The simulation will keep running and the display will scroll
+      }, 100); // Update every 100ms
     }
     
     // Draw response curves
     function drawResponseCurves(ctx, data, width, height, duration, maxIndex) {
-      const tempMin = 0;
-      const tempMax = 100;
-      const tempRange = tempMax - tempMin;
+      // Validate data
+      if (!data || !data.input || !data.response || !data.error) {
+        console.error('Invalid data structure for drawing curves:', data);
+        return;
+      }
+      
+      // Use dynamic Y-axis scaling from drawDynamicGrid
+      const tempRange = window.currentTempRange || { min: 0, max: 80 };
+      const tempMin = tempRange.min;
+      const tempMax = tempRange.max;
+      const tempRangeValue = tempMax - tempMin;
       
       // Draw input signal (pink)
       ctx.strokeStyle = '#E91E63';
@@ -3865,8 +4157,11 @@
       ctx.beginPath();
       for (let i = 0; i <= maxIndex && i < data.input.length; i++) {
         const point = data.input[i];
-        const x = (point.time / duration) * width;
-        const y = height - ((point.value - tempMin) / tempRange) * height;
+        // Calculate scrolling X position
+        const timeWindow = 15;
+        const startTime = Math.max(0, data.input[data.input.length - 1]?.time - timeWindow || 0);
+        const x = ((point.time - startTime) / timeWindow) * width;
+        const y = height - ((point.value - tempMin) / tempRangeValue) * height;
         if (i === 0) {
           ctx.moveTo(x, y);
         } else {
@@ -3881,8 +4176,11 @@
       ctx.beginPath();
       for (let i = 0; i <= maxIndex && i < data.response.length; i++) {
         const point = data.response[i];
-        const x = (point.time / duration) * width;
-        const y = height - ((point.value - tempMin) / tempRange) * height;
+        // Calculate scrolling X position
+        const timeWindow = 15;
+        const startTime = Math.max(0, data.response[data.response.length - 1]?.time - timeWindow || 0);
+        const x = ((point.time - startTime) / timeWindow) * width;
+        const y = height - ((point.value - tempMin) / tempRangeValue) * height;
         if (i === 0) {
           ctx.moveTo(x, y);
         } else {
@@ -3897,10 +4195,13 @@
       ctx.beginPath();
       for (let i = 0; i <= maxIndex && i < data.error.length; i++) {
         const point = data.error[i];
-        const x = (point.time / duration) * width;
+        // Calculate scrolling X position
+        const timeWindow = 15;
+        const startTime = Math.max(0, data.error[data.error.length - 1]?.time - timeWindow || 0);
+        const x = ((point.time - startTime) / timeWindow) * width;
         // Scale error to fit in temperature range
         const scaledError = 50 + point.value * 2; // Center at 50°C, scale by 2
-        const y = height - ((scaledError - tempMin) / tempRange) * height;
+        const y = height - ((scaledError - tempMin) / tempRangeValue) * height;
         if (i === 0) {
           ctx.moveTo(x, y);
         } else {
@@ -3959,9 +4260,60 @@
       const kiDisplay = document.getElementById('display-ki');
       const kdDisplay = document.getElementById('display-kd');
       
-      if (kpDisplay) kpDisplay.textContent = simulationData.kp.toFixed(2);
-      if (kiDisplay) kiDisplay.textContent = simulationData.ki.toFixed(2);
-      if (kdDisplay) kdDisplay.textContent = simulationData.kd.toFixed(2);
+      if (kpDisplay && simulationData) kpDisplay.textContent = simulationData.kp.toFixed(2);
+      if (kiDisplay && simulationData) kiDisplay.textContent = simulationData.ki.toFixed(2);
+      if (kdDisplay && simulationData) kdDisplay.textContent = simulationData.kd.toFixed(2);
+    }
+    
+    // Initialize event listeners for response test
+    function initializeResponseTestEventListeners() {
+      // Add event listeners to radio buttons
+      const radioButtons = document.querySelectorAll('input[name="input-type"]');
+      radioButtons.forEach(radio => {
+        radio.addEventListener('change', () => {
+          console.log('Response type changed to:', radio.value);
+          
+          // Force the simulation to immediately use the new input type
+          // by setting a flag that the simulation will check
+          if (simulationData) {
+            simulationData.inputTypeChanged = true;
+            simulationData.newInputType = radio.value;
+            console.log('Set input type change flag to:', radio.value);
+          }
+        });
+      });
+      
+      // Add event listeners to PID sliders
+      const kpSlider = document.getElementById('kp-slider');
+      const kiSlider = document.getElementById('ki-slider');
+      const kdSlider = document.getElementById('kd-slider');
+      
+      if (kpSlider) {
+        kpSlider.addEventListener('input', () => {
+          if (simulationData) {
+            simulationData.kp = parseFloat(kpSlider.value);
+            updatePIDDisplay();
+          }
+        });
+      }
+      
+      if (kiSlider) {
+        kiSlider.addEventListener('input', () => {
+          if (simulationData) {
+            simulationData.ki = parseFloat(kiSlider.value);
+            updatePIDDisplay();
+          }
+        });
+      }
+      
+      if (kdSlider) {
+        kdSlider.addEventListener('input', () => {
+          if (simulationData) {
+            simulationData.kd = parseFloat(kdSlider.value);
+            updatePIDDisplay();
+          }
+        });
+      }
     }
     
     // Calculate and display response metrics
@@ -4264,45 +4616,7 @@
       ctx.stroke();
     }
 
-    // Tab switching function for PID simulation
-    function switchTab(tabName) {
-      // Hide all tab contents
-      const tabContents = document.querySelectorAll('.tab-content');
-      tabContents.forEach(content => {
-        content.classList.add('hidden');
-      });
-
-      // Remove active class from all buttons
-      const tabButtons = document.querySelectorAll('.tab-button');
-      tabButtons.forEach(button => {
-        button.classList.remove('active');
-        button.style.background = '#555';
-      });
-
-      // Show selected tab content
-      const selectedTab = document.getElementById(`${tabName}-tab`);
-      if (selectedTab) {
-        selectedTab.classList.remove('hidden');
-      }
-
-      // Add active class to selected button
-      const selectedButton = document.querySelector(`[data-tab="${tabName}"]`);
-      if (selectedButton) {
-        selectedButton.classList.add('active');
-        selectedButton.style.background = '#E91E63';
-      }
-      
-      // Show/hide appropriate explanations
-      const explanations = document.querySelectorAll('.explanation-content');
-      explanations.forEach(explanation => {
-        explanation.style.display = 'none';
-      });
-      
-      const activeExplanation = document.getElementById(tabName + '-explanation');
-      if (activeExplanation) {
-        activeExplanation.style.display = 'block';
-      }
-    }
+    // Tab switching function removed - sections are now displayed vertically
 
     // Interactive Fault Scenario 1 - Tank Temperature Control with Operator Offset Error
     function renderInteractiveFaultScenario1(scenario) {
