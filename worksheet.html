@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">
   <link rel="manifest" href="manifest.json">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   
   <style>
     /* Multiple Choice Question Styles */
@@ -1348,26 +1349,7 @@
                   <h4 style="color: #E91E63; margin-bottom: 25px; font-size: 20px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-chart-line"></i> System Response Analysis</h4>
                   
                   <div class="graph-wrapper" style="position: relative;">
-                      <canvas id="response-canvas" class="simulation-canvas" width="800" height="400" style="background: #222; border-radius: 8px; width: 100%; height: 400px; border: 2px solid #555;"></canvas>
-                      
-                      <!-- Enhanced Legend -->
-                      <div class="graph-legend" style="position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.8); padding: 15px; border-radius: 8px; border: 1px solid #555;">
-                          <h6 style="color: #FFFFFF; margin-bottom: 10px; font-size: 14px; text-align: center;">Signal Legend</h6>
-                          <div style="display: flex; flex-direction: column; gap: 8px;">
-                              <div style="display: flex; align-items: center; gap: 8px;">
-                                  <div style="width: 15px; height: 3px; background: #E91E63;"></div>
-                                  <span style="color: #FFFFFF; font-size: 12px;">Input Signal</span>
-                              </div>
-                              <div style="display: flex; align-items: center; gap: 8px;">
-                                  <div style="width: 15px; height: 3px; background: #2196F3;"></div>
-                                  <span style="color: #FFFFFF; font-size: 12px;">System Response</span>
-                              </div>
-                              <div style="display: flex; align-items: center; gap: 8px;">
-                                  <div style="width: 15px; height: 3px; background: #4CAF50;"></div>
-                                  <span style="color: #FFFFFF; font-size: 12px;">Error Signal</span>
-                              </div>
-                          </div>
-                      </div>
+                      <canvas id="response-chart" style="background: #222; border-radius: 8px; width: 100%; height: 400px; border: 2px solid #555;"></canvas>
                   </div>
               </div>
               
@@ -2457,26 +2439,7 @@
                       <h4 style="color: #E91E63; margin-bottom: 25px; font-size: 20px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-chart-line"></i> System Response Analysis</h4>
                       
                       <div class="graph-wrapper" style="position: relative;">
-                          <canvas id="response-canvas" class="simulation-canvas" width="800" height="400" style="background: #222; border-radius: 8px; width: 100%; height: 400px; border: 2px solid #555;"></canvas>
-                          
-                          <!-- Enhanced Legend -->
-                          <div class="graph-legend" style="position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.8); padding: 15px; border-radius: 8px; border: 1px solid #555;">
-                              <h6 style="color: #FFFFFF; margin-bottom: 10px; font-size: 14px; text-align: center;">Signal Legend</h6>
-                              <div style="display: flex; flex-direction: column; gap: 8px;">
-                                  <div style="display: flex; align-items: center; gap: 8px;">
-                                      <div style="width: 15px; height: 3px; background: #E91E63;"></div>
-                                      <span style="color: #FFFFFF; font-size: 12px;">Input Signal</span>
-                                  </div>
-                                  <div style="display: flex; align-items: center; gap: 8px;">
-                                      <div style="width: 15px; height: 3px; background: #2196F3;"></div>
-                                      <span style="color: #FFFFFF; font-size: 12px;">System Response</span>
-                                  </div>
-                                  <div style="display: flex; align-items: center; gap: 8px;">
-                                      <div style="width: 15px; height: 3px; background: #4CAF50;"></div>
-                                      <span style="color: #FFFFFF; font-size: 12px;">Error Signal</span>
-                                  </div>
-                              </div>
-                          </div>
+                          <canvas id="response-chart" style="background: #222; border-radius: 8px; width: 100%; height: 400px; border: 2px solid #555;"></canvas>
                       </div>
                   </div>
               </div>
@@ -3632,14 +3595,11 @@
             simulationData.time = 0;
           }
           
-          // Clear the canvas completely
-          const canvas = document.getElementById('response-canvas');
-          if (canvas) {
-            const ctx = canvas.getContext('2d');
-            ctx.fillStyle = '#222';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            drawEnhancedGrid(ctx, canvas.width, canvas.height, 15);
-            console.log('Cleared canvas for reset');
+          // Destroy Chart.js chart if it exists
+          if (responseChart) {
+            responseChart.destroy();
+            responseChart = null;
+            console.log('Destroyed Chart.js chart for reset');
           }
           
           // Reset metrics
@@ -3874,20 +3834,15 @@
       }, 100); // Update every 100ms
     }
 
-    // Run response test simulation
+    // Global Chart.js chart instance
+    let responseChart = null;
+
+    // Run response test simulation with Chart.js
     function runResponseTest() {
       console.log('runResponseTest() called');
       
-      const canvas = document.getElementById('response-canvas');
+      const canvas = document.getElementById('response-chart');
       if (!canvas) return;
-      
-      const ctx = canvas.getContext('2d');
-      const width = canvas.width;
-      const height = canvas.height;
-      
-      // Clear canvas
-      ctx.fillStyle = '#222';
-      ctx.fillRect(0, 0, width, height);
       
       // Get input type from radio buttons
       const selectedRadio = document.querySelector('input[name="input-type"]:checked');
@@ -3902,11 +3857,203 @@
       // Update PID display
       updatePIDDisplay();
       
-      // Draw enhanced grid
-      drawEnhancedGrid(ctx, width, height, duration);
+      // Create or update Chart.js chart
+      createResponseChart(canvas, inputType, amplitude, duration, frequency);
+    }
+
+    // Create Chart.js response chart
+    function createResponseChart(canvas, inputType, amplitude, duration, frequency) {
+      // Destroy existing chart if it exists
+      if (responseChart) {
+        responseChart.destroy();
+      }
       
-      // Start real-time simulation
-      startRealTimeResponseSimulation(ctx, width, height, inputType, amplitude, duration, frequency);
+      // Generate data based on input type
+      const data = generateResponseData(inputType, amplitude, duration, frequency);
+      
+      // Create new Chart.js chart
+      responseChart = new Chart(canvas, {
+        type: 'line',
+        data: {
+          labels: data.input.map(point => point.time.toFixed(1) + 's'),
+          datasets: [
+            {
+              label: 'Input Signal',
+              data: data.input.map(point => point.value),
+              borderColor: '#E91E63',
+              backgroundColor: 'rgba(233, 30, 99, 0.1)',
+              borderWidth: 2,
+              fill: false,
+              tension: 0.1
+            },
+            {
+              label: 'System Response',
+              data: data.response.map(point => point.value),
+              borderColor: '#2196F3',
+              backgroundColor: 'rgba(33, 150, 243, 0.1)',
+              borderWidth: 2,
+              fill: false,
+              tension: 0.1
+            },
+            {
+              label: 'Error Signal',
+              data: data.error.map(point => point.value),
+              borderColor: '#4CAF50',
+              backgroundColor: 'rgba(76, 175, 80, 0.1)',
+              borderWidth: 2,
+              fill: false,
+              tension: 0.1
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'top',
+              labels: {
+                color: '#FFFFFF',
+                font: {
+                  size: 12
+                }
+              }
+            },
+            title: {
+              display: true,
+              text: 'System Response Analysis',
+              color: '#FFFFFF',
+              font: {
+                size: 16,
+                weight: 'bold'
+              }
+            }
+          },
+          scales: {
+            x: {
+              title: {
+                display: true,
+                text: 'Time (seconds)',
+                color: '#FFFFFF'
+              },
+              ticks: {
+                color: '#FFFFFF'
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.1)'
+              }
+            },
+            y: {
+              title: {
+                display: true,
+                text: 'Temperature (°C)',
+                color: '#FFFFFF'
+              },
+              ticks: {
+                color: '#FFFFFF'
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.1)'
+              },
+              suggestedMin: 0,
+              suggestedMax: 80
+            }
+          },
+          interaction: {
+            intersect: false,
+            mode: 'index'
+          },
+          elements: {
+            point: {
+              radius: 0
+            }
+          }
+        }
+      });
+    }
+
+    // Generate response data for Chart.js
+    function generateResponseData(inputType, amplitude, duration, frequency) {
+      const timeSteps = 200;
+      const baseTemp = 25; // Base temperature
+      
+      // PID simulation variables
+      let integral = 0;
+      let lastError = 0;
+      
+      // Get current PID parameters - use response-specific values if available, otherwise fall back to main values
+      const kp = (simulationData && simulationData.responseKp) || (simulationData && simulationData.kp) || parseFloat(document.getElementById('response-kp-slider')?.value) || parseFloat(document.getElementById('kp-slider')?.value) || 0.5;
+      const ki = (simulationData && simulationData.responseKi) || (simulationData && simulationData.ki) || parseFloat(document.getElementById('response-ki-slider')?.value) || parseFloat(document.getElementById('ki-slider')?.value) || 0.1;
+      const kd = (simulationData && simulationData.responseKd) || (simulationData && simulationData.kd) || parseFloat(document.getElementById('response-kd-slider')?.value) || parseFloat(document.getElementById('kd-slider')?.value) || 0.2;
+      
+      const data = {
+        input: [],
+        response: [],
+        error: []
+      };
+      
+      for (let i = 0; i < timeSteps; i++) {
+        const time = (i / timeSteps) * duration;
+        let inputValue = baseTemp;
+        let responseValue = baseTemp;
+        
+        // Generate input signal
+        switch (inputType) {
+          case 'step':
+            inputValue = baseTemp + (time > duration * 0.2 ? amplitude : 0);
+            break;
+          case 'ramp':
+            inputValue = baseTemp + (time / duration) * amplitude;
+            break;
+          case 'sine':
+            inputValue = baseTemp + amplitude * Math.sin(2 * Math.PI * frequency * time);
+            break;
+        }
+        
+        // Generate system response (simplified PID simulation)
+        const dt = duration / timeSteps;
+        
+        if (i > 0) {
+          const prevResponse = data.response[i - 1];
+          const prevInput = data.input[i - 1];
+          
+          // Calculate error between input and current response
+          const error = inputValue - prevResponse;
+          
+          // Update integral term (accumulate error over time)
+          integral += error * dt;
+          
+          // Calculate derivative term (rate of change of error)
+          const derivative = (error - lastError) / dt;
+          
+          // Calculate PID control output
+          const controlOutput = kp * error + ki * integral + kd * derivative;
+          
+          // Clamp control output to 0-100% range
+          const clampedControlOutput = Math.max(0, Math.min(100, controlOutput));
+          
+          // Update response using first-order system model
+          const tau = 2.0; // time constant
+          responseValue = prevResponse + (clampedControlOutput - prevResponse) * dt / tau;
+          
+          // Add some realistic noise
+          responseValue += (Math.random() - 0.5) * 1;
+          
+          // Update last error for next iteration
+          lastError = error;
+        } else {
+          // For the first point, start at base temperature
+          responseValue = baseTemp;
+        }
+        
+        const errorValue = inputValue - responseValue;
+        
+        data.input.push({ time, value: inputValue });
+        data.response.push({ time, value: responseValue });
+        data.error.push({ time, value: errorValue });
+      }
+      
+      return data;
     }
 
     // Draw enhanced grid on canvas
