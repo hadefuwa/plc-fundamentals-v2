@@ -24,6 +24,9 @@ function initializeEmergencyStopSimulation() {
   // Initialize reset sequence
   initializeResetSequence();
   
+  // Initialize fault history panel
+  initializeFaultHistory();
+  
   // Start system monitoring
   startEStopMonitoring();
   
@@ -57,8 +60,11 @@ function initializeEStopControls() {
 
 // Create E-stop control panel
 function createEStopControlPanel() {
-  const simulationSection = document.querySelector('.simulation-section');
-  if (!simulationSection) return;
+  const simulationSection = document.getElementById('emergency-stop-control-panel');
+  if (!simulationSection) {
+    console.log('Emergency stop control panel container not found');
+    return;
+  }
   
   const eStopPanel = document.createElement('div');
   eStopPanel.className = 'emergency-stop-panel';
@@ -118,8 +124,11 @@ function createEStopControlPanel() {
 // Initialize fault injection system
 function initializeFaultInjection() {
   // Create fault injection panel
-  const simulationSection = document.querySelector('.simulation-section');
-  if (!simulationSection) return;
+  const simulationSection = document.getElementById('fault-injection-panel');
+  if (!simulationSection) {
+    console.log('Fault injection panel container not found');
+    return;
+  }
   
   const faultPanel = document.createElement('div');
   faultPanel.className = 'fault-injection-panel';
@@ -175,8 +184,11 @@ function initializeFaultInjection() {
 // Initialize reset sequence
 function initializeResetSequence() {
   // Create reset sequence panel
-  const simulationSection = document.querySelector('.simulation-section');
-  if (!simulationSection) return;
+  const simulationSection = document.getElementById('reset-sequence-panel');
+  if (!simulationSection) {
+    console.log('Reset sequence panel container not found');
+    return;
+  }
   
   const resetPanel = document.createElement('div');
   resetPanel.className = 'reset-sequence-panel';
@@ -232,6 +244,56 @@ function initializeResetSequence() {
       performBlueButton();
     });
   }
+}
+
+// Initialize fault history panel
+function initializeFaultHistory() {
+  const simulationSection = document.getElementById('fault-history-panel');
+  if (!simulationSection) {
+    console.log('Fault history panel container not found');
+    return;
+  }
+  
+  const historyPanel = document.createElement('div');
+  historyPanel.className = 'fault-history-panel';
+  historyPanel.style.cssText = `
+    background: linear-gradient(135deg, #2a2a2a, #3a3a3a);
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 25px;
+    border: 2px solid #9C27B0;
+    box-shadow: 0 8px 20px rgba(156, 39, 176, 0.2);
+  `;
+  
+  historyPanel.innerHTML = `
+    <h4 style="color: #9C27B0; margin-bottom: 20px; font-size: 18px; display: flex; align-items: center; gap: 10px;">
+      <i class="fas fa-history"></i> Fault History & Diagnostics
+    </h4>
+    
+    <div class="diagnostic-info" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px;">
+      <div class="diagnostic-item" style="background: #333; padding: 15px; border-radius: 8px;">
+        <div style="color: #FFFFFF; font-size: 12px; margin-bottom: 5px;">Channel 1 Status</div>
+        <div id="channel1-status" style="color: #4CAF50; font-weight: bold;">Healthy</div>
+      </div>
+      <div class="diagnostic-item" style="background: #333; padding: 15px; border-radius: 8px;">
+        <div style="color: #FFFFFF; font-size: 12px; margin-bottom: 5px;">Channel 2 Status</div>
+        <div id="channel2-status" style="color: #4CAF50; font-weight: bold;">Healthy</div>
+      </div>
+      <div class="diagnostic-item" style="background: #333; padding: 15px; border-radius: 8px;">
+        <div style="color: #FFFFFF; font-size: 12px; margin-bottom: 5px;">Maintenance Due</div>
+        <div id="maintenance-due" style="color: #FF9800; font-weight: bold;">30 days</div>
+      </div>
+    </div>
+    
+    <div class="fault-log" style="background: #222; padding: 15px; border-radius: 8px;">
+      <h5 style="color: #FFFFFF; margin-bottom: 10px; font-size: 14px;">System Log</h5>
+      <div id="system-log" style="color: #FFFFFF; font-size: 12px; max-height: 150px; overflow-y: auto; font-family: monospace;">
+        System initialized - Emergency Stop ready
+      </div>
+    </div>
+  `;
+  
+  simulationSection.appendChild(historyPanel);
 }
 
 // Activate emergency stop
