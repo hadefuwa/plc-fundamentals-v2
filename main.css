@@ -265,7 +265,7 @@ h1 {
 
 /* Worksheet Box Styling - Vertical Boxed Window Format */
 .worksheet-box {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 20px auto;
     background: #1a1a1a !important;
     border-radius: 12px;
@@ -2197,4 +2197,10 @@ h1 {
 }
 .main-content::before, .main-container::before {
     content: none !important;
+}
+
+.worksheet-nav-bar {
+  margin-bottom: 24px;
+  background: none;
+  box-shadow: none;
 }
