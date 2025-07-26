@@ -279,31 +279,16 @@
       }
     }
 
-    /* Image Slider Styles */
-    .sliders-section {
-      background: linear-gradient(135deg, #2a2a2a, #3a3a3a);
-      border-radius: 12px;
-      padding: 30px;
-      margin-bottom: 30px;
-      border: 2px solid #444;
+    /* Embedded Image Slider Styles */
+    .embedded-slider {
+      margin-top: 25px;
+      padding-top: 25px;
+      border-top: 1px solid #444;
     }
 
-    .sliders-section h2 {
+    .embedded-slider h3 {
       color: #4CAF50;
-      font-size: 28px;
-      margin-bottom: 25px;
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-
-    .slider-container {
-      margin-bottom: 40px;
-    }
-
-    .slider-container h3 {
-      color: #FFFFFF;
-      font-size: 22px;
+      font-size: 20px;
       margin-bottom: 20px;
       display: flex;
       align-items: center;
@@ -312,17 +297,16 @@
 
     .image-slider {
       position: relative;
-      max-width: 800px;
-      margin: 0 auto;
-      border-radius: 12px;
+      width: 100%;
+      border-radius: 8px;
       overflow: hidden;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     }
 
     .slider-wrapper {
       position: relative;
       width: 100%;
-      height: 400px;
+      height: 250px;
     }
 
     .slider-image {
@@ -398,21 +382,21 @@
 
     @media (max-width: 768px) {
       .slider-wrapper {
-        height: 300px;
+        height: 200px;
       }
       
       .slider-btn {
-        padding: 12px 10px;
-        font-size: 16px;
+        padding: 10px 8px;
+        font-size: 14px;
       }
       
       .slider-dots {
-        bottom: 15px;
+        bottom: 10px;
       }
       
       .dot {
-        width: 10px;
-        height: 10px;
+        width: 8px;
+        height: 8px;
       }
     }
   </style>
@@ -505,6 +489,29 @@
           <li>Practical Skills Development</li>
           <li>Industry-Relevant Training Solutions</li>
         </ul>
+
+        <!-- Matrix TSL Image Slider -->
+        <div class="embedded-slider">
+          <h3><i class="fas fa-images"></i> Gallery</h3>
+          <div class="image-slider" id="matrix-slider">
+            <div class="slider-wrapper">
+              <img src="assets/about/matrix1.png" alt="Matrix TSL - Image 1" class="slider-image active">
+              <img src="assets/about/matrix2.png" alt="Matrix TSL - Image 2" class="slider-image">
+              <img src="assets/about/matrix3.png" alt="Matrix TSL - Image 3" class="slider-image">
+            </div>
+            <button class="slider-btn prev-btn" onclick="changeSlide('matrix-slider', -1)">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="slider-btn next-btn" onclick="changeSlide('matrix-slider', 1)">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+            <div class="slider-dots">
+              <span class="dot active" onclick="currentSlide('matrix-slider', 0)"></span>
+              <span class="dot" onclick="currentSlide('matrix-slider', 1)"></span>
+              <span class="dot" onclick="currentSlide('matrix-slider', 2)"></span>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Halifax UK -->
@@ -527,55 +534,27 @@
           <li>Transportation Hub</li>
           <li>Cultural Center</li>
         </ul>
-      </div>
-    </div>
 
-    <!-- Image Sliders -->
-    <div class="sliders-section">
-      <h2><i class="fas fa-images"></i> Gallery</h2>
-      
-      <!-- Matrix TSL Image Slider -->
-      <div class="slider-container">
-        <h3><i class="fas fa-industry"></i> Matrix Technology Solutions Ltd</h3>
-        <div class="image-slider" id="matrix-slider">
-          <div class="slider-wrapper">
-            <img src="assets/about/matrix1.png" alt="Matrix TSL - Image 1" class="slider-image active">
-            <img src="assets/about/matrix2.png" alt="Matrix TSL - Image 2" class="slider-image">
-            <img src="assets/about/matrix3.png" alt="Matrix TSL - Image 3" class="slider-image">
-          </div>
-          <button class="slider-btn prev-btn" onclick="changeSlide('matrix-slider', -1)">
-            <i class="fas fa-chevron-left"></i>
-          </button>
-          <button class="slider-btn next-btn" onclick="changeSlide('matrix-slider', 1)">
-            <i class="fas fa-chevron-right"></i>
-          </button>
-          <div class="slider-dots">
-            <span class="dot active" onclick="currentSlide('matrix-slider', 0)"></span>
-            <span class="dot" onclick="currentSlide('matrix-slider', 1)"></span>
-            <span class="dot" onclick="currentSlide('matrix-slider', 2)"></span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Halifax Image Slider -->
-      <div class="slider-container">
-        <h3><i class="fas fa-map-marker-alt"></i> Halifax, England</h3>
-        <div class="image-slider" id="halifax-slider">
-          <div class="slider-wrapper">
-            <img src="assets/about/halifax1.jpg" alt="Halifax - Image 1" class="slider-image active">
-            <img src="assets/about/halifax2.png" alt="Halifax - Image 2" class="slider-image">
-            <img src="assets/about/halifax3.jpg" alt="Halifax - Image 3" class="slider-image">
-          </div>
-          <button class="slider-btn prev-btn" onclick="changeSlide('halifax-slider', -1)">
-            <i class="fas fa-chevron-left"></i>
-          </button>
-          <button class="slider-btn next-btn" onclick="changeSlide('halifax-slider', 1)">
-            <i class="fas fa-chevron-right"></i>
-          </button>
-          <div class="slider-dots">
-            <span class="dot active" onclick="currentSlide('halifax-slider', 0)"></span>
-            <span class="dot" onclick="currentSlide('halifax-slider', 1)"></span>
-            <span class="dot" onclick="currentSlide('halifax-slider', 2)"></span>
+        <!-- Halifax Image Slider -->
+        <div class="embedded-slider">
+          <h3><i class="fas fa-images"></i> Gallery</h3>
+          <div class="image-slider" id="halifax-slider">
+            <div class="slider-wrapper">
+              <img src="assets/about/halifax1.jpg" alt="Halifax - Image 1" class="slider-image active">
+              <img src="assets/about/halifax2.png" alt="Halifax - Image 2" class="slider-image">
+              <img src="assets/about/halifax3.jpg" alt="Halifax - Image 3" class="slider-image">
+            </div>
+            <button class="slider-btn prev-btn" onclick="changeSlide('halifax-slider', -1)">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="slider-btn next-btn" onclick="changeSlide('halifax-slider', 1)">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+            <div class="slider-dots">
+              <span class="dot active" onclick="currentSlide('halifax-slider', 0)"></span>
+              <span class="dot" onclick="currentSlide('halifax-slider', 1)"></span>
+              <span class="dot" onclick="currentSlide('halifax-slider', 2)"></span>
+            </div>
           </div>
         </div>
       </div>
