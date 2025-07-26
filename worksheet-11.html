@@ -272,9 +272,15 @@
         button.textContent = answer === correctAnswer ? 'Correct!' : 'Incorrect!';
         button.style.background = answer === correctAnswer ? '#4CAF50' : '#f44336';
         
+        // Add incorrect class for enhanced styling
+        if (answer !== correctAnswer) {
+          button.classList.add('incorrect');
+        }
+        
         setTimeout(() => {
           button.textContent = originalText;
           button.style.background = '';
+          button.classList.remove('incorrect');
         }, 2000);
 
         // Show correct answer

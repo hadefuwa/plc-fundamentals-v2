@@ -16,14 +16,14 @@
         <img src="assets/matrix-logo.png" alt="Matrix Logo">
         <h1>Inspiring the Next Generation of Engineers</h1>
       </div>
-      <ul class="nav-menu">
+      <ul class="nav-menu" id="nav-menu">
         <li class="nav-item">
           <a href="#" onclick="window.location='index.html'" class="nav-link">
             <i class="fas fa-home"></i> HOME
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" onclick="window.location='cp0539-worksheets.html'" class="nav-link active">
+          <a href="#" onclick="window.location='cp0539-worksheets.html'" class="nav-link">
             <i class="fas fa-cogs"></i> CP0539
           </a>
         </li>
@@ -429,9 +429,15 @@
         button.textContent = answer === correctAnswer ? 'Correct!' : 'Incorrect!';
         button.style.background = answer === correctAnswer ? '#4CAF50' : '#f44336';
         
+        // Add incorrect class for enhanced styling
+        if (answer !== correctAnswer) {
+          button.classList.add('incorrect');
+        }
+        
         setTimeout(() => {
           button.textContent = originalText;
           button.style.background = '';
+          button.classList.remove('incorrect');
         }, 2000);
 
         // Show correct answer
