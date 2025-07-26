@@ -111,11 +111,7 @@ h1 {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   position: relative;
   z-index: 10;
-  width: 100vw;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
+  width: 100%;
 }
 
 .nav-container {
@@ -153,7 +149,8 @@ h1 {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 300px;
+  max-width: 350px;
+  transition: all 0.3s ease;
 }
 
 .nav-menu {
@@ -205,7 +202,7 @@ h1 {
 @media (max-width: 1200px) {
   .nav-logo h1 {
     font-size: 16px;
-    max-width: 250px;
+    max-width: 280px;
   }
   .nav-link {
     padding: 12px 15px;
@@ -216,7 +213,7 @@ h1 {
 @media (max-width: 900px) {
   .nav-logo h1 {
     font-size: 14px;
-    max-width: 200px;
+    max-width: 220px;
   }
   .nav-link {
     padding: 10px 12px;
@@ -237,7 +234,7 @@ h1 {
   }
   .nav-logo h1 {
     font-size: 13px;
-    max-width: 150px;
+    max-width: 180px;
   }
   .nav-menu {
     justify-content: center;
@@ -255,11 +252,22 @@ h1 {
   }
   .nav-logo h1 {
     font-size: 12px;
-    max-width: 120px;
+    max-width: 140px;
   }
   .nav-link {
     padding: 6px 8px;
     font-size: 10px;
+  }
+}
+
+@media (max-width: 360px) {
+  .nav-logo h1 {
+    font-size: 11px;
+    max-width: 120px;
+  }
+  .nav-link {
+    padding: 5px 6px;
+    font-size: 9px;
   }
 }
 
