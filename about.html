@@ -278,6 +278,143 @@
         font-size: 16px;
       }
     }
+
+    /* Image Slider Styles */
+    .sliders-section {
+      background: linear-gradient(135deg, #2a2a2a, #3a3a3a);
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 30px;
+      border: 2px solid #444;
+    }
+
+    .sliders-section h2 {
+      color: #4CAF50;
+      font-size: 28px;
+      margin-bottom: 25px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .slider-container {
+      margin-bottom: 40px;
+    }
+
+    .slider-container h3 {
+      color: #FFFFFF;
+      font-size: 22px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .image-slider {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .slider-wrapper {
+      position: relative;
+      width: 100%;
+      height: 400px;
+    }
+
+    .slider-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    .slider-image.active {
+      opacity: 1;
+    }
+
+    .slider-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      border: none;
+      padding: 15px 12px;
+      cursor: pointer;
+      border-radius: 50%;
+      font-size: 18px;
+      transition: all 0.3s ease;
+      z-index: 10;
+    }
+
+    .slider-btn:hover {
+      background: rgba(76, 175, 80, 0.8);
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .prev-btn {
+      left: 15px;
+    }
+
+    .next-btn {
+      right: 15px;
+    }
+
+    .slider-dots {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      z-index: 10;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .dot.active {
+      background: #4CAF50;
+      transform: scale(1.2);
+    }
+
+    .dot:hover {
+      background: rgba(76, 175, 80, 0.8);
+    }
+
+    @media (max-width: 768px) {
+      .slider-wrapper {
+        height: 300px;
+      }
+      
+      .slider-btn {
+        padding: 12px 10px;
+        font-size: 16px;
+      }
+      
+      .slider-dots {
+        bottom: 15px;
+      }
+      
+      .dot {
+        width: 10px;
+        height: 10px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -393,6 +530,57 @@
       </div>
     </div>
 
+    <!-- Image Sliders -->
+    <div class="sliders-section">
+      <h2><i class="fas fa-images"></i> Gallery</h2>
+      
+      <!-- Matrix TSL Image Slider -->
+      <div class="slider-container">
+        <h3><i class="fas fa-industry"></i> Matrix Technology Solutions Ltd</h3>
+        <div class="image-slider" id="matrix-slider">
+          <div class="slider-wrapper">
+            <img src="assets/about/matrix1.png" alt="Matrix TSL - Image 1" class="slider-image active">
+            <img src="assets/about/matrix2.png" alt="Matrix TSL - Image 2" class="slider-image">
+            <img src="assets/about/matrix3.png" alt="Matrix TSL - Image 3" class="slider-image">
+          </div>
+          <button class="slider-btn prev-btn" onclick="changeSlide('matrix-slider', -1)">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <button class="slider-btn next-btn" onclick="changeSlide('matrix-slider', 1)">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+          <div class="slider-dots">
+            <span class="dot active" onclick="currentSlide('matrix-slider', 0)"></span>
+            <span class="dot" onclick="currentSlide('matrix-slider', 1)"></span>
+            <span class="dot" onclick="currentSlide('matrix-slider', 2)"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Halifax Image Slider -->
+      <div class="slider-container">
+        <h3><i class="fas fa-map-marker-alt"></i> Halifax, England</h3>
+        <div class="image-slider" id="halifax-slider">
+          <div class="slider-wrapper">
+            <img src="assets/about/halifax1.png" alt="Halifax - Image 1" class="slider-image active">
+            <img src="assets/about/halifax2.png" alt="Halifax - Image 2" class="slider-image">
+            <img src="assets/about/halifax3.png" alt="Halifax - Image 3" class="slider-image">
+          </div>
+          <button class="slider-btn prev-btn" onclick="changeSlide('halifax-slider', -1)">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <button class="slider-btn next-btn" onclick="changeSlide('halifax-slider', 1)">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+          <div class="slider-dots">
+            <span class="dot active" onclick="currentSlide('halifax-slider', 0)"></span>
+            <span class="dot" onclick="currentSlide('halifax-slider', 1)"></span>
+            <span class="dot" onclick="currentSlide('halifax-slider', 2)"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Platform Features -->
     <div class="features-section">
       <h2><i class="fas fa-star"></i> Platform Features</h2>
@@ -464,8 +652,62 @@
   </div>
 
   <script>
-    // Add any interactive features here if needed
-    console.log('About page loaded successfully');
+    // Image Slider Functionality
+    let slideIndexes = {
+      'matrix-slider': 0,
+      'halifax-slider': 0
+    };
+
+    function changeSlide(sliderId, direction) {
+      const slider = document.getElementById(sliderId);
+      const images = slider.querySelectorAll('.slider-image');
+      const dots = slider.querySelectorAll('.dot');
+      const totalSlides = images.length;
+      
+      slideIndexes[sliderId] += direction;
+      
+      if (slideIndexes[sliderId] >= totalSlides) {
+        slideIndexes[sliderId] = 0;
+      } else if (slideIndexes[sliderId] < 0) {
+        slideIndexes[sliderId] = totalSlides - 1;
+      }
+      
+      showSlide(sliderId, slideIndexes[sliderId]);
+    }
+
+    function currentSlide(sliderId, index) {
+      slideIndexes[sliderId] = index;
+      showSlide(sliderId, index);
+    }
+
+    function showSlide(sliderId, index) {
+      const slider = document.getElementById(sliderId);
+      const images = slider.querySelectorAll('.slider-image');
+      const dots = slider.querySelectorAll('.dot');
+      
+      // Hide all images
+      images.forEach(img => img.classList.remove('active'));
+      dots.forEach(dot => dot.classList.remove('active'));
+      
+      // Show current image and dot
+      images[index].classList.add('active');
+      dots[index].classList.add('active');
+    }
+
+    // Auto-advance slides every 5 seconds
+    function autoAdvanceSlides() {
+      Object.keys(slideIndexes).forEach(sliderId => {
+        changeSlide(sliderId, 1);
+      });
+    }
+
+    // Start auto-advance when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('About page loaded successfully');
+      
+      // Auto-advance slides every 5 seconds
+      setInterval(autoAdvanceSlides, 5000);
+    });
   </script>
 </body>
 </html> 
