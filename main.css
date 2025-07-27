@@ -2461,7 +2461,7 @@ h1 {
   }
 }
 
-/* 70/30 Column Layout for Background Section */
+/* 50/50 Column Layout for Background Section */
 .background-section {
   display: flex;
   gap: 20px;
@@ -2470,6 +2470,24 @@ h1 {
 
 .background-text {
   flex: 0 0 50%;
+}
+
+.background-text .scenario-description {
+  background: #333;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 0;
+}
+
+.background-text .scenario-description h3 {
+  color: #4CAF50;
+  margin-bottom: 15px;
+}
+
+.background-text .scenario-description p {
+  color: #FFFFFF;
+  margin-bottom: 15px;
+  line-height: 1.6;
 }
 
 .background-image {
