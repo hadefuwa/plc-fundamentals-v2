@@ -2315,9 +2315,9 @@ h1 {
   display: flex;
   align-items: center;
   gap: 10px;
-  background: linear-gradient(135deg, #333333, #555555);
-  color: #FFFFFF;
-  border: 2px solid #666666;
+  background: linear-gradient(135deg, #2a2a2a, #404040);
+  color: #CCCCCC;
+  border: 2px solid #555555;
   border-radius: 8px;
   padding: 12px 20px;
   font-size: 14px;
@@ -2327,20 +2327,21 @@ h1 {
   cursor: pointer;
   transition: all 0.3s ease;
   text-decoration: none;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .worksheet-nav-btn:hover {
-  background: linear-gradient(135deg, var(--accent-color), #3a8ce6);
-  border-color: var(--accent-color);
+  background: linear-gradient(135deg, #404040, #555555);
+  border-color: #777777;
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px var(--accent-shadow);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
   color: #FFFFFF;
 }
 
 .worksheet-nav-btn:active {
   transform: translateY(0);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(135deg, #1a1a1a, #333333);
 }
 
 .worksheet-nav-btn i {
