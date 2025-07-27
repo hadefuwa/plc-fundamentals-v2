@@ -523,8 +523,9 @@ h1 {
 }
 
 .system-diagram img { 
-    max-width: 400px; 
-    height: auto; 
+    width: 350px; 
+    height: 250px; 
+    object-fit: cover;
     border-radius: 8px; 
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); 
 }
@@ -2442,5 +2443,18 @@ h1 {
   
   .worksheet-nav-btn i {
     font-size: 18px;
+  }
+  
+  /* Responsive system diagram images */
+  .system-diagram img {
+    width: 280px;
+    height: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .system-diagram img {
+    width: 320px;
+    height: 230px;
   }
 }
