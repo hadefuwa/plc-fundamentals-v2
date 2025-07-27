@@ -2464,20 +2464,20 @@ h1 {
 /* 70/30 Column Layout for Background Section */
 .background-section {
   display: flex;
-  gap: 30px;
+  gap: 20px;
   margin-bottom: 30px;
 }
 
 .background-text {
-  flex: 0 0 70%;
+  flex: 0 0 50%;
 }
 
 .background-image {
-  flex: 0 0 30%;
+  flex: 0 0 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 300px;
+  max-width: 500px;
 }
 
 .background-image img {
