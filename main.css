@@ -360,7 +360,8 @@ h1 {
     flex-wrap: wrap;
 }
 
-.nav-btn {
+/* Legacy nav-btn styles - only for old navigation, not worksheet navigation */
+.worksheet-navigation .nav-btn {
     background: linear-gradient(135deg, #4CAF50, #45a049);
     color: white;
     border: none;
@@ -377,7 +378,7 @@ h1 {
     justify-content: center;
 }
 
-.nav-btn:hover {
+.worksheet-navigation .nav-btn:hover {
     background: linear-gradient(135deg, #45a049, #4CAF50);
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
@@ -2315,9 +2316,9 @@ h1 {
   display: flex;
   align-items: center;
   gap: 10px;
-  background: linear-gradient(135deg, #2a2a2a, #404040);
-  color: #CCCCCC;
-  border: 2px solid #555555;
+  background: linear-gradient(135deg, #2a2a2a, #404040) !important;
+  color: #CCCCCC !important;
+  border: 2px solid #555555 !important;
   border-radius: 8px;
   padding: 12px 20px;
   font-size: 14px;
@@ -2331,11 +2332,11 @@ h1 {
 }
 
 .worksheet-nav-btn:hover {
-  background: linear-gradient(135deg, #404040, #555555);
-  border-color: #777777;
+  background: linear-gradient(135deg, #404040, #555555) !important;
+  border-color: #777777 !important;
   transform: translateY(-2px);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-  color: #FFFFFF;
+  color: #FFFFFF !important;
 }
 
 .worksheet-nav-btn:active {
