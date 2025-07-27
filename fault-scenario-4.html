@@ -170,7 +170,7 @@
     <!-- Investigation Tools Section -->
     <div class="worksheet-section tools-section">
       <h2 class="section-header"><i class="fas fa-tools"></i> Investigation Tools</h2>
-      <div class="worksheet-content">
+      <div class="tools-content">
         <div class="tools-grid">
           <div class="tool-card" data-tool="thermal_imaging">
             <h4><i class="fas fa-camera"></i> Thermal Imaging Survey</h4>
@@ -193,14 +193,14 @@
             <button class="tool-btn" onclick="useTool('emergency_load_balancing')">Use Tool</button>
           </div>
         </div>
-        
-        <!-- Investigation Results Section -->
-        <div id="investigation-results" class="investigation-results" style="display: none;">
-          <h3 class="section-header"><i class="fas fa-search"></i> Investigation Results</h3>
-          <div id="results-content">
-            <!-- Results will be populated by JavaScript -->
-          </div>
-        </div>
+      </div>
+    </div>
+
+    <!-- Investigation Results Section -->
+    <div class="worksheet-section results-section" id="investigation-results" style="display: none;">
+      <h2 class="section-header"><i class="fas fa-clipboard-list"></i> Investigation Results</h2>
+      <div class="results-content" id="results-content">
+        <!-- Results will be populated by JavaScript -->
       </div>
     </div>
 
