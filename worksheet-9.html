@@ -6,7 +6,8 @@
   <title>Matrix TSL - Proximity Switch System Maintenance</title>
   <link rel="stylesheet" href="main.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">  <script src="worksheet-tracking.js"></script>
+  <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">    <script src="worksheet-core.js"></script>
+<script src="worksheet-tracking.js"></script>
 
 </head>
 <body>
@@ -104,7 +105,7 @@
             </label>
           </div>
           <div class="question-actions">
-            <button class="submit-question-btn" onclick="submitAnswer(1, event)">Submit Answer</button>
+            <button class="submit-question-btn" onclick="submitAnswer(1)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
             <strong style="color: #4CAF50;">Correct Answer:</strong> A) To detect the presence of an object without physical contact, helping with automation, positioning, and safety.
@@ -132,7 +133,7 @@
             </label>
           </div>
           <div class="question-actions">
-            <button class="submit-question-btn" onclick="submitAnswer(2, event)">Submit Answer</button>
+            <button class="submit-question-btn" onclick="submitAnswer(2)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
             <strong style="color: #4CAF50;">Correct Answer:</strong> A) It detects metal objects only.
@@ -160,7 +161,7 @@
             </label>
           </div>
           <div class="question-actions">
-            <button class="submit-question-btn" onclick="submitAnswer(3, event)">Submit Answer</button>
+            <button class="submit-question-btn" onclick="submitAnswer(3)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
             <strong style="color: #4CAF50;">Correct Answer:</strong> A) To ensure the tank lid is in place before the system runs, preventing water from being pumped without the lid.
@@ -188,7 +189,7 @@
             </label>
           </div>
           <div class="question-actions">
-            <button class="submit-question-btn" onclick="submitAnswer(4, event)">Submit Answer</button>
+            <button class="submit-question-btn" onclick="submitAnswer(4)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
             <strong style="color: #4CAF50;">Correct Answer:</strong> A) Inductive (metal), capacitive (metal and non-metal), and photoelectric (uses light to detect objects).
@@ -216,7 +217,7 @@
             </label>
           </div>
           <div class="question-actions">
-            <button class="submit-question-btn" onclick="submitAnswer(5, event)">Submit Answer</button>
+            <button class="submit-question-btn" onclick="submitAnswer(5)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
             <strong style="color: #4CAF50;">Correct Answer:</strong> A) Misalignment, poor mounting, wiring faults, dust, or moisture.
@@ -257,8 +258,103 @@
       loadSavedAnswers();
     });
     
-        function submitAnswer(questionNumber, event) {
-      const questionItem = document.querySelector(`[data-question="${questionNumber}"]`);
+        function submitAnswer(questionNumber) {
+          const answerInput = document.querySelector(`[data-question="${questionNumber}"]`);
+          if (!answerInput) return;
+          
+          const selectedOption = document.querySelector(`input[name="question-${questionNumber}"]:checked`);
+          if (!selectedOption) {
+            alert('Please select an answer before submitting.');
+            return;
+          }
+          
+          const answer = selectedOption.value;
+          
+          // Save with enhanced tracking
+          worksheetTracker.saveAnswer(9, questionNumber, answer, 'maintenance');
+          
+          // Define correct answers for worksheet 9
+          const correctAnswers = {
+                "1": "A",
+                "2": "A",
+                "3": "A",
+                "4": "A",
+                "5": "A"
+          };
+          
+          // Apply visual feedback
+          const allOptions = answerInput.querySelectorAll('.option-label');
+          const correctAnswer = correctAnswers[questionNumber];
+          
+          allOptions.forEach(option => {
+            const radio = option.querySelector('.option-radio');
+            const optionValue = radio.value;
+            
+            if (optionValue === correctAnswer) {
+              option.classList.add('correct');
+            } else if (optionValue === answer && answer !== correctAnswer) {
+              option.classList.add('incorrect');
+            }
+          });
+          
+          // Mark question as submitted to disable further interaction
+          answerInput.classList.add('submitted');
+          
+          // Show feedback on button
+          const submitBtn = answerInput.querySelector('.submit-question-btn');
+          if (submitBtn) {
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = answer === correctAnswer ? 'Correct!' : 'Incorrect!';
+            submitBtn.style.background = answer === correctAnswer ? '#4CAF50' : '#f44336';
+            
+            // Add incorrect class for enhanced styling
+            if (answer !== correctAnswer) {
+              submitBtn.classList.add('incorrect');
+            }
+            
+            setTimeout(() => {
+              submitBtn.textContent = originalText;
+              submitBtn.style.background = '#4CAF50';
+              submitBtn.classList.remove('incorrect');
+            }, 2000);
+          }
+          
+          // Show correct answer if available
+          const correctAnswerDiv = answerInput.querySelector('.correct-answer');
+          if (correctAnswerDiv) {
+            correctAnswerDiv.style.display = 'block';
+          }
+        }"]`);
+      if (!answerInput) return;
+      
+      const selectedOption = document.querySelector(`input[name="question-${questionNumber}"]:checked`);
+      if (!selectedOption) {
+        alert('Please select an answer before submitting.');
+        return;
+      }
+      
+      const answer = selectedOption.value;
+      
+      // Save with enhanced tracking
+      worksheetTracker.saveAnswer(9, questionNumber, answer, 'maintenance');
+      
+      // Show feedback
+      const submitBtn = answerInput.querySelector('.submit-question-btn');
+      if (submitBtn) {
+        submitBtn.textContent = 'Answer Saved!';
+        submitBtn.style.background = '#4CAF50';
+        setTimeout(() => {
+          submitBtn.textContent = 'Submit Answer';
+          submitBtn.style.background = '#4CAF50';
+        }, 2000);
+      }
+      
+      // Show correct answer if available
+      const correctAnswer = answerInput.querySelector('.correct-answer');
+      if (correctAnswer) {
+        correctAnswer.style.display = 'block';
+      }
+    }"]`);
       const selectedOption = questionItem.querySelector('.option-radio:checked');
       const answer = selectedOption ? selectedOption.value : '';
       
@@ -316,51 +412,8 @@
         alert('Please select an answer before submitting.');
       }
     }
-    
-        function loadSavedAnswers() {
-      // Define correct answers for worksheet 9
-      const correctAnswers = {
-         1: 'A',
-         2: 'A',
-         3: 'A',
-         4: 'A',
-         5: 'A'
-       };
-      
-      for (let i = 1; i <= 5; i++) {
-        const saved = localStorage.getItem(`worksheet9_answer${i}`);
-        if (saved) {
-          const questionItem = document.querySelector(`[data-question="${i}"]`);
-          if (questionItem) {
-            const selectedOption = questionItem.querySelector(`.option-radio[value="${saved}"]`);
-            if (selectedOption) {
-              selectedOption.checked = true;
-              
-              // Apply visual feedback for saved answers
-              const allOptions = questionItem.querySelectorAll('.option-label');
-              const correctAnswer = correctAnswers[i];
-              
-              allOptions.forEach(option => {
-                const radio = option.querySelector('.option-radio');
-                const optionValue = radio.value;
-                
-                if (optionValue === correctAnswer) {
-                  option.classList.add('correct');
-                } else if (optionValue === saved && saved !== correctAnswer) {
-                  option.classList.add('incorrect');
-                }
-              });
-              
-              // Mark question as submitted to disable further interaction
-              questionItem.classList.add('submitted');
-              
-              // Show correct answer
-              const correctAnswerDiv = questionItem.querySelector('.correct-answer');
-              correctAnswerDiv.style.display = 'block';
-            }
-          }
-        }
-      }
+    function loadSavedAnswers() {
+      // This function is now handled by the tracking system
     }
   </script>
 </body>

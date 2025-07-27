@@ -5,30 +5,30 @@ class WorksheetTracker {
   constructor() {
     this.worksheets = {
       maintenance: [
-        { id: 1, title: "Flow Control System Maintenance", type: "maintenance" },
-        { id: 2, title: "PID Control System", type: "maintenance" },
-        { id: 3, title: "System Calibration", type: "maintenance" },
-        { id: 4, title: "Preventive Maintenance", type: "maintenance" },
-        { id: 5, title: "Emergency Procedures", type: "maintenance" },
-        { id: 6, title: "System Diagnostics", type: "maintenance" },
-        { id: 7, title: "Component Testing", type: "maintenance" },
-        { id: 8, title: "Performance Optimization", type: "maintenance" },
-        { id: 9, title: "Safety Protocols", type: "maintenance" },
-        { id: 10, title: "Quality Assurance", type: "maintenance" },
-        { id: 11, title: "Documentation Standards", type: "maintenance" },
-        { id: 12, title: "Troubleshooting Methods", type: "maintenance" },
-        { id: 13, title: "Advanced Diagnostics", type: "maintenance" },
-        { id: 14, title: "System Integration", type: "maintenance" }
+        { id: 1, title: "Flow Control System Maintenance", type: "maintenance", totalQuestions: 5 },
+        { id: 2, title: "Emergency Stop System Maintenance", type: "maintenance", totalQuestions: 5 },
+        { id: 3, title: "Status LED System Maintenance", type: "maintenance", totalQuestions: 5 },
+        { id: 4, title: "PLC System Maintenance", type: "maintenance", totalQuestions: 5 },
+        { id: 5, title: "HMI System Maintenance", type: "maintenance", totalQuestions: 5 },
+        { id: 6, title: "Pump System Maintenance", type: "maintenance", totalQuestions: 5 },
+        { id: 7, title: "Valve System Maintenance", type: "maintenance", totalQuestions: 5 },
+        { id: 8, title: "Float Switch System Maintenance", type: "maintenance", totalQuestions: 5 },
+        { id: 9, title: "Proximity Switch System Maintenance", type: "maintenance", totalQuestions: 5 },
+        { id: 10, title: "Flow Sensor System Maintenance", type: "maintenance", totalQuestions: 5 },
+        { id: 11, title: "Temperature Sensor System Maintenance", type: "maintenance", totalQuestions: 5 },
+        { id: 12, title: "Digital Sensors System Maintenance", type: "maintenance", totalQuestions: 5 },
+        { id: 13, title: "Analogue Sensors System Maintenance", type: "maintenance", totalQuestions: 5 },
+        { id: 14, title: "Fault Detection & Troubleshooting", type: "maintenance", totalQuestions: 5 }
       ],
       fault: [
-        { id: 1, title: "Fault Scenario 1", type: "fault" },
-        { id: 2, title: "Fault Scenario 2", type: "fault" },
-        { id: 3, title: "Fault Scenario 3", type: "fault" },
-        { id: 4, title: "Fault Scenario 4", type: "fault" },
-        { id: 5, title: "Fault Scenario 5", type: "fault" },
-        { id: 6, title: "Fault Scenario 6", type: "fault" },
-        { id: 7, title: "Fault Scenario 7", type: "fault" },
-        { id: 8, title: "Fault Scenario 8", type: "fault" }
+        { id: 1, title: "Fault Scenario 1", type: "fault", totalQuestions: 3 },
+        { id: 2, title: "Fault Scenario 2", type: "fault", totalQuestions: 3 },
+        { id: 3, title: "Fault Scenario 3", type: "fault", totalQuestions: 3 },
+        { id: 4, title: "Fault Scenario 4", type: "fault", totalQuestions: 3 },
+        { id: 5, title: "Fault Scenario 5", type: "fault", totalQuestions: 3 },
+        { id: 6, title: "Fault Scenario 6", type: "fault", totalQuestions: 3 },
+        { id: 7, title: "Fault Scenario 7", type: "fault", totalQuestions: 3 },
+        { id: 8, title: "Fault Scenario 8", type: "fault", totalQuestions: 3 }
       ]
     };
   }
@@ -52,7 +52,6 @@ class WorksheetTracker {
     // Save metadata
     const metadata = JSON.parse(localStorage.getItem(metadataKey) || '{}');
     metadata.lastUpdated = new Date().toISOString();
-    metadata.totalQuestions = Math.max(metadata.totalQuestions || 0, questionNumber);
     metadata.completedQuestions = Object.keys(savedAnswers).length;
     localStorage.setItem(metadataKey, JSON.stringify(metadata));
     
@@ -70,6 +69,10 @@ class WorksheetTracker {
     const metadata = JSON.parse(localStorage.getItem(metadataKey) || '{}');
     const timestamps = JSON.parse(localStorage.getItem(timestampsKey) || '{}');
     
+    // Get the worksheet definition to get the correct total questions
+    const worksheet = this.worksheets[type].find(w => w.id === parseInt(worksheetId));
+    const totalQuestions = worksheet ? worksheet.totalQuestions : 0;
+    
     return {
       worksheetId,
       type,
@@ -77,9 +80,9 @@ class WorksheetTracker {
       timestamps,
       metadata,
       completedQuestions: Object.keys(answers).length,
-      totalQuestions: metadata.totalQuestions || 0,
-      completionPercentage: metadata.totalQuestions > 0 ? 
-        Math.round((Object.keys(answers).length / metadata.totalQuestions) * 100) : 0,
+      totalQuestions: totalQuestions,
+      completionPercentage: totalQuestions > 0 ? 
+        Math.round((Object.keys(answers).length / totalQuestions) * 100) : 0,
       lastUpdated: metadata.lastUpdated
     };
   }
@@ -405,12 +408,25 @@ class WorksheetTracker {
   }
 }
 
+// Helper function to get URL parameter (copied from worksheet-core.js)
+function getUrlParameter(name) {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get(name);
+}
+
+// Helper function to get worksheet ID from URL (copied from worksheet-core.js)
+function getWorksheetIdFromUrl() {
+  const path = window.location.pathname;
+  const match = path.match(/worksheet-(\d+)\.html/);
+  return match ? parseInt(match[1]) : 1;
+}
+
 // Global instance
 const worksheetTracker = new WorksheetTracker();
 
 // Enhanced submitAnswer function that integrates with tracking
 function submitAnswerWithTracking(questionNumber) {
-  const worksheetId = getUrlParameter('id');
+  const worksheetId = getUrlParameter('id') || getWorksheetIdFromUrl();
   const type = getUrlParameter('type') || 'maintenance';
   
   const answerInput = document.querySelector(`[data-question="${questionNumber}"]`);

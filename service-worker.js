@@ -22,8 +22,4 @@ self.addEventListener('activate', event => {
   );
 });
 
-// Don't intercept any requests - let browser handle everything
-self.addEventListener('fetch', event => {
-  // Do nothing - let all requests pass through normally
-  return;
-}); 
+// No fetch handler - let browser handle all requests normally 

@@ -768,7 +768,7 @@ function submitMultipleChoiceQuestion(questionId) {
 }
 
 function saveAnswer(questionNumber, answer) {
-  const worksheetId = getUrlParameter('id');
+  const worksheetId = getUrlParameter('id') || getWorksheetIdFromUrl();
   const type = getUrlParameter('type') || 'maintenance';
   const key = `worksheet-${type}-${worksheetId}-answers`;
   
@@ -779,7 +779,7 @@ function saveAnswer(questionNumber, answer) {
 }
 
 function loadSavedAnswers() {
-  const worksheetId = getUrlParameter('id');
+  const worksheetId = getUrlParameter('id') || getWorksheetIdFromUrl();
   const type = getUrlParameter('type') || 'maintenance';
   const key = `worksheet-${type}-${worksheetId}-answers`;
   

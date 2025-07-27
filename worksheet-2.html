@@ -6,7 +6,9 @@
   <title>Matrix TSL - Emergency Stop System Maintenance</title>
   <link rel="stylesheet" href="main.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">  <script src="worksheet-tracking.js"></script>
+  <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">
+  <script src="worksheet-core.js"></script>
+  <script src="worksheet-tracking.js"></script>
 
 </head>
 <body>
@@ -215,7 +217,7 @@
             </label>
           </div>
           <div class="question-actions">
-            <button class="submit-question-btn" onclick="submitAnswer(1, event)">Submit Answer</button>
+            <button class="submit-question-btn" onclick="submitAnswer(1)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
             <strong style="color: #4CAF50;">Correct Answer:</strong> A) To quickly stop a machine or system in an emergency to protect people and equipment.
@@ -243,7 +245,7 @@
             </label>
           </div>
           <div class="question-actions">
-            <button class="submit-question-btn" onclick="submitAnswer(2, event)">Submit Answer</button>
+            <button class="submit-question-btn" onclick="submitAnswer(2)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
             <strong style="color: #4CAF50;">Correct Answer:</strong> A) Twist the E-Stop anti-clockwise, then press the blue reset button or the HMI reset button.
@@ -271,7 +273,7 @@
             </label>
           </div>
           <div class="question-actions">
-            <button class="submit-question-btn" onclick="submitAnswer(3, event)">Submit Answer</button>
+            <button class="submit-question-btn" onclick="submitAnswer(3)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
             <strong style="color: #4CAF50;">Correct Answer:</strong> A) It has two contact channels; both must be closed for operation, and either opening will stop the system, this redundancy ensures safety.
@@ -299,7 +301,7 @@
             </label>
           </div>
           <div class="question-actions">
-            <button class="submit-question-btn" onclick="submitAnswer(4, event)">Submit Answer</button>
+            <button class="submit-question-btn" onclick="submitAnswer(4)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
             <strong style="color: #4CAF50;">Correct Answer:</strong> A) Only during emergencies, not for regular stopping of the machine.
@@ -327,7 +329,7 @@
             </label>
           </div>
           <div class="question-actions">
-            <button class="submit-question-btn" onclick="submitAnswer(5, event)">Submit Answer</button>
+            <button class="submit-question-btn" onclick="submitAnswer(5)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
             <strong style="color: #4CAF50;">Correct Answer:</strong> A) To ensure it is free from damage or faults and will work properly when needed.
@@ -372,20 +374,6 @@
       </div>
     </div>
   </div>
-
-
-
-
-      cursor: not-allowed;
-    }
-    
-
-    
-
-    
-
-    
-
 
   <!-- Scripts -->
   <script>
@@ -483,109 +471,83 @@
     }
     
     function submitAnswer(questionNumber) {
-      const questionItem = document.querySelector(`[data-question="${questionNumber}"]`);
-      const selectedOption = questionItem.querySelector('.option-radio:checked');
-      const answer = selectedOption ? selectedOption.value : '';
+      const answerInput = document.querySelector(`[data-question="${questionNumber}"]`);
+      if (!answerInput) return;
       
-      if (answer) {
-        // Define correct answers for worksheet 2
-        const correctAnswers = {
-          1: 'A', // To quickly stop a machine or system in an emergency to protect people and equipment.
-          2: 'A', // Twist the E-Stop anti-clockwise, then press the blue reset button or the HMI reset button.
-          3: 'A', // It has two contact channels; both must be closed for operation, and either opening will stop the system, this redundancy ensures safety.
-          4: 'A', // Only during emergencies, not for regular stopping of the machine.
-          5: 'A'  // To ensure it is free from damage or faults and will work properly when needed.
-        };
+      const selectedOption = document.querySelector(`input[name="question-${questionNumber}"]:checked`);
+      if (!selectedOption) {
+        alert('Please select an answer before submitting.');
+        return;
+      }
+      
+      const answer = selectedOption.value;
+      
+      // Save with enhanced tracking
+      worksheetTracker.saveAnswer(2, questionNumber, answer, 'maintenance');
+      
+      // Define correct answers for worksheet 2
+      const correctAnswers = {
+            "1": "A",
+            "2": "A",
+            "3": "A",
+            "4": "A",
+            "5": "A"
+      };
+      
+      // Apply visual feedback
+      const allOptions = answerInput.querySelectorAll('.option-label');
+      const correctAnswer = correctAnswers[questionNumber];
+      
+      allOptions.forEach(option => {
+        const radio = option.querySelector('.option-radio');
+        const optionValue = radio.value;
         
-        localStorage.setItem(`worksheet2_answer${questionNumber}`, answer);
-        
-        // Apply visual feedback
-        const allOptions = questionItem.querySelectorAll('.option-label');
-        const correctAnswer = correctAnswers[questionNumber];
-        
-        allOptions.forEach(option => {
-          const radio = option.querySelector('.option-radio');
-          const optionValue = radio.value;
-          
-          if (optionValue === correctAnswer) {
-            option.classList.add('correct');
-          } else if (optionValue === answer && answer !== correctAnswer) {
-            option.classList.add('incorrect');
-          }
-        });
-        
-        // Mark question as submitted to disable further interaction
-        questionItem.classList.add('submitted');
-        
-        const button = event.target;
-        const originalText = button.textContent;
-        button.textContent = answer === correctAnswer ? 'Correct!' : 'Incorrect!';
-        button.style.background = answer === correctAnswer ? '#4CAF50' : '#f44336';
+        if (optionValue === correctAnswer) {
+          option.classList.add('correct');
+        } else if (optionValue === answer && answer !== correctAnswer) {
+          option.classList.add('incorrect');
+        }
+      });
+      
+      // Mark question as submitted to disable further interaction
+      answerInput.classList.add('submitted');
+      
+      // Show feedback on button
+      const submitBtn = answerInput.querySelector('.submit-question-btn');
+      if (submitBtn) {
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = answer === correctAnswer ? 'Correct!' : 'Incorrect!';
+        submitBtn.style.background = answer === correctAnswer ? '#4CAF50' : '#f44336';
         
         // Add incorrect class for enhanced styling
         if (answer !== correctAnswer) {
-          button.classList.add('incorrect');
+          submitBtn.classList.add('incorrect');
         }
         
         setTimeout(() => {
-          button.textContent = originalText;
-          button.style.background = '';
-          button.classList.remove('incorrect');
+          submitBtn.textContent = originalText;
+          submitBtn.style.background = '#4CAF50';
+          submitBtn.classList.remove('incorrect');
         }, 2000);
-
-        // Show correct answer
-        const correctAnswerDiv = questionItem.querySelector('.correct-answer');
+      }
+      
+      // Show correct answer if available
+      const correctAnswerDiv = answerInput.querySelector('.correct-answer');
+      if (correctAnswerDiv) {
         correctAnswerDiv.style.display = 'block';
-
-      } else {
-        alert('Please select an answer before submitting.');
+      }
+    }, 2000);
+      }
+      
+      // Show correct answer if available
+      const correctAnswer = answerInput.querySelector('.correct-answer');
+      if (correctAnswer) {
+        correctAnswer.style.display = 'block';
       }
     }
     
     function loadSavedAnswers() {
-      // Define correct answers for worksheet 2
-      const correctAnswers = {
-        1: 'A', // To quickly stop a machine or system in an emergency to protect people and equipment.
-        2: 'A', // Twist the E-Stop anti-clockwise, then press the blue reset button or the HMI reset button.
-        3: 'A', // It has two contact channels; both must be closed for operation, and either opening will stop the system, this redundancy ensures safety.
-        4: 'A', // Only during emergencies, not for regular stopping of the machine.
-        5: 'A'  // To ensure it is free from damage or faults and will work properly when needed.
-      };
-      
-      for (let i = 1; i <= 5; i++) {
-        const saved = localStorage.getItem(`worksheet2_answer${i}`);
-        if (saved) {
-          const questionItem = document.querySelector(`[data-question="${i}"]`);
-          if (questionItem) {
-            const selectedOption = questionItem.querySelector(`.option-radio[value="${saved}"]`);
-            if (selectedOption) {
-              selectedOption.checked = true;
-              
-              // Apply visual feedback for saved answers
-              const allOptions = questionItem.querySelectorAll('.option-label');
-              const correctAnswer = correctAnswers[i];
-              
-              allOptions.forEach(option => {
-                const radio = option.querySelector('.option-radio');
-                const optionValue = radio.value;
-                
-                if (optionValue === correctAnswer) {
-                  option.classList.add('correct');
-                } else if (optionValue === saved && saved !== correctAnswer) {
-                  option.classList.add('incorrect');
-                }
-              });
-              
-              // Mark question as submitted to disable further interaction
-              questionItem.classList.add('submitted');
-              
-              // Show correct answer
-              const correctAnswerDiv = questionItem.querySelector('.correct-answer');
-              correctAnswerDiv.style.display = 'block';
-            }
-          }
-        }
-      }
+      // This function is now handled by the tracking system
     }
   </script>
 </body>

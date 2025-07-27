@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="worksheet-core.js"></script>
   <script src="worksheet-tracking.js"></script>
 </head>
 <body>
@@ -1185,69 +1186,20 @@
     
     // Submit answer
     function submitAnswer(questionNumber) {
-      const questionItem = document.querySelector(`[data-question="${questionNumber}"]`);
-      const selectedOption = questionItem.querySelector('.option-radio:checked');
-      const answer = selectedOption ? selectedOption.value : '';
+      const answerInput = document.querySelector(`[data-question="${questionNumber}"]`);
+      if (!answerInput) return;
       
-      if (answer) {
-        // Define correct answers for worksheet 1
-        const correctAnswers = {
-          1: 'A', // To continuously adjust flow using sensor feedback to meet a setpoint, maintaining accuracy and stability even if conditions change.
-          2: 'A', // Ensure the hand valve is in the open position, with the handle in line with the piping.
-          3: 'A', // The flow drops, the sensor detects this and sends data to the PLC, which increases pump speed and adjusts the valve to restore flow.
-          4: 'A', // The PLC is a computer that makes real-time decisions based on sensor data to control devices like pumps and valves.
-          5: 'A'  // Rapid changes can cause oscillations in flow, making the system unstable; gradual adjustments help maintain smooth control.
-        };
-        
-        // Save answer
-        localStorage.setItem(`worksheet1_answer${questionNumber}`, answer);
-        
-        // Apply visual feedback
-        const allOptions = questionItem.querySelectorAll('.option-label');
-        const correctAnswer = correctAnswers[questionNumber];
-        
-        allOptions.forEach(option => {
-          const radio = option.querySelector('.option-radio');
-          const optionValue = radio.value;
-          
-          if (optionValue === correctAnswer) {
-            option.classList.add('correct');
-          } else if (optionValue === answer && answer !== correctAnswer) {
-            option.classList.add('incorrect');
-          }
-        });
-        
-        // Mark question as submitted to disable further interaction
-        questionItem.classList.add('submitted');
-        
-        // Show confirmation
-        const button = event.target;
-        const originalText = button.textContent;
-        button.textContent = answer === correctAnswer ? 'Correct!' : 'Incorrect!';
-        button.style.background = answer === correctAnswer ? '#4CAF50' : '#f44336';
-        
-        // Add incorrect class for enhanced styling
-        if (answer !== correctAnswer) {
-          button.classList.add('incorrect');
-        }
-        
-        setTimeout(() => {
-          button.textContent = originalText;
-          button.style.background = '';
-          button.classList.remove('incorrect');
-        }, 2000);
-
-        // Show correct answer
-        const correctAnswerDiv = questionItem.querySelector('.correct-answer');
-        correctAnswerDiv.style.display = 'block';
-
-      } else {
+      const selectedOption = document.querySelector(`input[name="question-${questionNumber}"]:checked`);
+      if (!selectedOption) {
         alert('Please select an answer before submitting.');
+        return;
       }
-    }
-    
-    // Load saved answers
-    function loadSavedAnswers() {
+      
+      const answer = selectedOption.value;
+      
+      // Save with enhanced tracking
+      worksheetTracker.saveAnswer(1, questionNumber, answer, 'maintenance');
+      
       // Define correct answers for worksheet 1
       const correctAnswers = {
         1: 'A', // To continuously adjust flow using sensor feedback to meet a setpoint, maintaining accuracy and stability even if conditions change.
@@ -1257,41 +1209,53 @@
         5: 'A'  // Rapid changes can cause oscillations in flow, making the system unstable; gradual adjustments help maintain smooth control.
       };
       
-      for (let i = 1; i <= 5; i++) {
-        const saved = localStorage.getItem(`worksheet1_answer${i}`);
-        if (saved) {
-          const questionItem = document.querySelector(`[data-question="${i}"]`);
-          if (questionItem) {
-            const selectedOption = questionItem.querySelector(`.option-radio[value="${saved}"]`);
-            if (selectedOption) {
-              selectedOption.checked = true;
-              
-              // Apply visual feedback for saved answers
-              const allOptions = questionItem.querySelectorAll('.option-label');
-              const correctAnswer = correctAnswers[i];
-              
-              allOptions.forEach(option => {
-                const radio = option.querySelector('.option-radio');
-                const optionValue = radio.value;
-                
-                if (optionValue === correctAnswer) {
-                  option.classList.add('correct');
-                } else if (optionValue === saved && saved !== correctAnswer) {
-                  option.classList.add('incorrect');
-                }
-              });
-              
-              // Mark question as submitted to disable further interaction
-              questionItem.classList.add('submitted');
-              
-              // Show correct answer
-              const correctAnswerDiv = questionItem.querySelector('.correct-answer');
-              correctAnswerDiv.style.display = 'block';
-            }
-          }
+      // Apply visual feedback
+      const allOptions = answerInput.querySelectorAll('.option-label');
+      const correctAnswer = correctAnswers[questionNumber];
+      
+      allOptions.forEach(option => {
+        const radio = option.querySelector('.option-radio');
+        const optionValue = radio.value;
+        
+        if (optionValue === correctAnswer) {
+          option.classList.add('correct');
+        } else if (optionValue === answer && answer !== correctAnswer) {
+          option.classList.add('incorrect');
         }
+      });
+      
+      // Mark question as submitted to disable further interaction
+      answerInput.classList.add('submitted');
+      
+      // Show feedback on button
+      const submitBtn = answerInput.querySelector('.submit-question-btn');
+      if (submitBtn) {
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = answer === correctAnswer ? 'Correct!' : 'Incorrect!';
+        submitBtn.style.background = answer === correctAnswer ? '#4CAF50' : '#f44336';
+        
+        // Add incorrect class for enhanced styling
+        if (answer !== correctAnswer) {
+          submitBtn.classList.add('incorrect');
+        }
+        
+        setTimeout(() => {
+          submitBtn.textContent = originalText;
+          submitBtn.style.background = '#4CAF50';
+          submitBtn.classList.remove('incorrect');
+        }, 2000);
+      }
+      
+      // Show correct answer if available
+      const correctAnswerDiv = answerInput.querySelector('.correct-answer');
+      if (correctAnswerDiv) {
+        correctAnswerDiv.style.display = 'block';
       }
     }
+
+function loadSavedAnswers() {
+  // This function is now handled by the tracking system
+}
     
     // Add disturbance to simulation
     function addDisturbance() {
