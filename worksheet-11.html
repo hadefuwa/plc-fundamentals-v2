@@ -41,7 +41,28 @@
     </div>
   </nav>
 
+  <!-- Main Content -->
   <div class="worksheet-box">
+    <!-- Integrated Worksheet Header -->
+    <div class="worksheet-header">
+      <div class="worksheet-header-content">
+        <div class="worksheet-header-left">
+          <button class="worksheet-nav-btn worksheet-back-btn" onclick="window.location.href='worksheet-10.html'">
+            <i class="fas fa-arrow-left"></i>
+            <span>Previous Worksheet</span>
+          </button>
+        </div>
+        <div class="worksheet-header-center">
+          <h1 class="worksheet-title">Worksheet 11 - Temperature Sensor System Maintenance</h1>
+        </div>
+        <div class="worksheet-header-right">
+          <button class="worksheet-nav-btn worksheet-next-btn" onclick="window.location.href='worksheet-12.html'">
+            <span>Next Worksheet</span>
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
     <div class="worksheet-section introduction-section">
       <h2 class="section-header"><i class="fas fa-info-circle"></i> 1. Introduction</h2>
       <div class="worksheet-content">
@@ -79,7 +100,7 @@
             </label>
           </div>
           <div class="question-actions">
-            <button class="submit-question-btn" onclick="submitAnswer(1)">Submit Answer</button>
+            <button class="submit-question-btn" onclick="submitAnswer(1, event)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
             <strong style="color: #4CAF50;">Correct Answer:</strong> A) To monitor heat levels and prevent overheating or freezing, ensuring safe and efficient operation.
@@ -107,7 +128,7 @@
             </label>
           </div>
           <div class="question-actions">
-            <button class="submit-question-btn" onclick="submitAnswer(2)">Submit Answer</button>
+            <button class="submit-question-btn" onclick="submitAnswer(2, event)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
             <strong style="color: #4CAF50;">Correct Answer:</strong> A) It changes resistance based on temperature, which is then converted into a signal the PLC can read.
@@ -135,7 +156,7 @@
             </label>
           </div>
           <div class="question-actions">
-            <button class="submit-question-btn" onclick="submitAnswer(3)">Submit Answer</button>
+            <button class="submit-question-btn" onclick="submitAnswer(3, event)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
             <strong style="color: #4CAF50;">Correct Answer:</strong> A) The system will shut down to protect against overheating or unsafe conditions.
@@ -163,7 +184,7 @@
             </label>
           </div>
           <div class="question-actions">
-            <button class="submit-question-btn" onclick="submitAnswer(4)">Submit Answer</button>
+            <button class="submit-question-btn" onclick="submitAnswer(4, event)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
             <strong style="color: #4CAF50;">Correct Answer:</strong> A) Possible causes include wiring faults, sensor damage, dirt, vibration, or electrical interference.
@@ -191,7 +212,7 @@
             </label>
           </div>
           <div class="question-actions">
-            <button class="submit-question-btn" onclick="submitAnswer(5)">Submit Answer</button>
+            <button class="submit-question-btn" onclick="submitAnswer(5, event)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
             <strong style="color: #4CAF50;">Correct Answer:</strong> A) Calibration keeps the readings accurate and ensures the sensor responds correctly to real conditions.
@@ -232,8 +253,8 @@
       loadSavedAnswers();
     });
     
-        function submitAnswer(questionNumber) {
-      const questionItem = document.querySelector([data-question="${questionNumber}"]);
+        function submitAnswer(questionNumber, event) {
+      const questionItem = document.querySelector(`[data-question="${questionNumber}"]`);
       const selectedOption = questionItem.querySelector('.option-radio:checked');
       const answer = selectedOption ? selectedOption.value : '';
       
@@ -247,7 +268,7 @@
           5: 'A'
         };
         
-        localStorage.setItem(worksheet11_answer${questionNumber}, answer);
+        localStorage.setItem(`worksheet11_answer${questionNumber}`, answer);
         
         // Apply visual feedback
         const allOptions = questionItem.querySelectorAll('.option-label');
@@ -303,11 +324,11 @@
        };
       
       for (let i = 1; i <= 5; i++) {
-        const saved = localStorage.getItem(worksheet11_answer${i});
+        const saved = localStorage.getItem(`worksheet11_answer${i}`);
         if (saved) {
-          const questionItem = document.querySelector([data-question="${i}"]);
+          const questionItem = document.querySelector(`[data-question="${i}"]`);
           if (questionItem) {
-            const selectedOption = questionItem.querySelector(.option-radio[value="${saved}"]);
+            const selectedOption = questionItem.querySelector(`.option-radio[value="${saved}"]`);
             if (selectedOption) {
               selectedOption.checked = true;
               
