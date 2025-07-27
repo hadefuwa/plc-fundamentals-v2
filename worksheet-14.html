@@ -320,7 +320,10 @@
           if (correctAnswerDiv) {
             correctAnswerDiv.style.display = 'block';
           }
-        }"]`);
+        }
+    function loadSavedAnswers() {
+      // This function is now handled by the tracking system
+    }"]`);
       if (!answerInput) return;
       
       const selectedOption = document.querySelector(`input[name="question-${questionNumber}"]:checked`);
@@ -401,7 +404,6 @@
       } else {
         alert('Please select an answer before submitting.');
       }
-    }
     function loadSavedAnswers() {
       // This function is now handled by the tracking system
     }
