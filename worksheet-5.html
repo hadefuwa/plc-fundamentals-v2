@@ -258,7 +258,7 @@
     });
     
         function submitAnswer(questionNumber) {
-      const questionItem = document.querySelector([data-question="${questionNumber}"]);
+      const questionItem = document.querySelector(`[data-question="${questionNumber}"]`);
       const selectedOption = questionItem.querySelector('.option-radio:checked');
       const answer = selectedOption ? selectedOption.value : '';
       
@@ -272,7 +272,7 @@
           5: 'A'
         };
         
-        localStorage.setItem(worksheet5_answer${questionNumber}, answer);
+        localStorage.setItem(`worksheet5_answer${questionNumber}`, answer);
         
         // Apply visual feedback
         const allOptions = questionItem.querySelectorAll('.option-label');
@@ -328,11 +328,11 @@
        };
       
       for (let i = 1; i <= 5; i++) {
-        const saved = localStorage.getItem(worksheet5_answer${i});
+        const saved = localStorage.getItem(`worksheet5_answer${i}`);
         if (saved) {
-          const questionItem = document.querySelector([data-question="${i}"]);
+          const questionItem = document.querySelector(`[data-question="${i}"]`);
           if (questionItem) {
-            const selectedOption = questionItem.querySelector(.option-radio[value="${saved}"]);
+            const selectedOption = questionItem.querySelector(`.option-radio[value="${saved}"]`);
             if (selectedOption) {
               selectedOption.checked = true;
               
