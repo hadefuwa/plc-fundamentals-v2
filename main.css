@@ -2645,6 +2645,19 @@ h1 {
   cursor: not-allowed;
 }
 
+/* System Overview Styling */
+.system-overview {
+  background: #333;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.system-overview h3 {
+  color: #4CAF50;
+  margin-bottom: 15px;
+}
+
 /* Investigation Results Styling */
 .investigation-results {
   background: #333;
