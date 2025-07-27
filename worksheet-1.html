@@ -504,42 +504,103 @@
             label: 'Setpoint',
             data: [],
             borderColor: '#FF5722',
-            backgroundColor: 'transparent',
-            borderWidth: 2
+            backgroundColor: 'rgba(255, 87, 34, 0.1)',
+            borderWidth: 3,
+            fill: false,
+            tension: 0.1,
+            pointRadius: 0,
+            pointHoverRadius: 4
           }, {
             label: 'Process Variable',
             data: [],
-            borderColor: '#4CAF50',
-            backgroundColor: 'transparent',
-            borderWidth: 2
+            borderColor: 'var(--accent-color)',
+            backgroundColor: 'var(--accent-shadow-light)',
+            borderWidth: 3,
+            fill: false,
+            tension: 0.1,
+            pointRadius: 0,
+            pointHoverRadius: 4
           }]
         },
         options: {
           responsive: true,
+          maintainAspectRatio: false,
+          animation: {
+            duration: 0
+          },
           plugins: {
             legend: {
               labels: {
-                color: '#FFFFFF'
-              }
+                color: '#FFFFFF',
+                font: {
+                  size: 14,
+                  weight: 'bold'
+                },
+                usePointStyle: true,
+                pointStyle: 'circle'
+              },
+              position: 'top'
+            },
+            tooltip: {
+              backgroundColor: 'rgba(0, 0, 0, 0.8)',
+              titleColor: '#FFFFFF',
+              bodyColor: '#FFFFFF',
+              borderColor: '#555',
+              borderWidth: 1,
+              cornerRadius: 8,
+              displayColors: true
             }
           },
           scales: {
             x: {
+              title: {
+                display: true,
+                text: 'Time (s)',
+                color: '#FFFFFF',
+                font: {
+                  size: 14,
+                  weight: 'bold'
+                }
+              },
               ticks: {
-                color: '#FFFFFF'
+                color: '#FFFFFF',
+                font: {
+                  size: 12
+                }
               },
               grid: {
-                color: '#555'
+                color: 'rgba(255, 255, 255, 0.1)',
+                drawBorder: false
               }
             },
             y: {
+              title: {
+                display: true,
+                text: 'Value (%)',
+                color: '#FFFFFF',
+                font: {
+                  size: 14,
+                  weight: 'bold'
+                }
+              },
+              min: 0,
+              max: 100,
               ticks: {
-                color: '#FFFFFF'
+                color: '#FFFFFF',
+                font: {
+                  size: 12
+                },
+                stepSize: 20
               },
               grid: {
-                color: '#555'
+                color: 'rgba(255, 255, 255, 0.1)',
+                drawBorder: false
               }
             }
+          },
+          interaction: {
+            intersect: false,
+            mode: 'index'
           }
         }
       });
@@ -555,6 +616,11 @@
       pidChart.data.labels = [];
       pidChart.data.datasets[0].data = [];
       pidChart.data.datasets[1].data = [];
+      
+      // Reset PID simulation state
+      if (simulatePIDResponse.integral) simulatePIDResponse.integral = 0;
+      if (simulatePIDResponse.previousError) simulatePIDResponse.previousError = 0;
+      if (simulatePIDResponse.previousOutput) simulatePIDResponse.previousOutput = 0;
       
       // Start simulation loop
       let time = 0;
@@ -601,21 +667,41 @@
       document.getElementById('start-simulation-btn').textContent = 'Start Simulation';
     }
     
-    // Simple PID response simulation
+    // Enhanced PID response simulation
     function simulatePIDResponse(setpoint, kp, ki, kd, time) {
-      // Simple first-order system response
-      const tau = 10; // Time constant
-      const k = 1; // Gain
+      // Initialize static variables for integral and previous error
+      if (!simulatePIDResponse.integral) simulatePIDResponse.integral = 0;
+      if (!simulatePIDResponse.previousError) simulatePIDResponse.previousError = 0;
+      if (!simulatePIDResponse.previousOutput) simulatePIDResponse.previousOutput = 0;
       
-      // Add some noise and disturbance
-      const noise = (Math.random() - 0.5) * 2;
-      const disturbance = Math.sin(time * 0.1) * 5;
+      // Calculate error
+      const error = setpoint - simulatePIDResponse.previousOutput;
       
-      // Simple exponential response towards setpoint
-      const steadyState = setpoint + disturbance;
-      const response = steadyState * (1 - Math.exp(-time * kp / tau)) + noise;
+      // PID calculations
+      const proportional = kp * error;
+      simulatePIDResponse.integral += ki * error * 0.1; // 0.1 is time step
+      const derivative = kd * (error - simulatePIDResponse.previousError) / 0.1;
       
-      return Math.max(0, Math.min(100, response));
+      // Calculate output
+      let output = proportional + simulatePIDResponse.integral + derivative;
+      
+      // Add realistic system dynamics (first-order system)
+      const tau = 5; // Time constant
+      const dt = 0.1; // Time step
+      output = simulatePIDResponse.previousOutput + (output - simulatePIDResponse.previousOutput) * (1 - Math.exp(-dt / tau));
+      
+      // Add some realistic noise and disturbance
+      const noise = (Math.random() - 0.5) * 1;
+      const disturbance = Math.sin(time * 0.05) * 2; // Slow disturbance
+      
+      output += noise + disturbance;
+      
+      // Update previous values
+      simulatePIDResponse.previousError = error;
+      simulatePIDResponse.previousOutput = output;
+      
+      // Ensure output stays within 0-100 range
+      return Math.max(0, Math.min(100, output));
     }
     
     // Reset PID to defaults
@@ -628,6 +714,11 @@
       document.getElementById('i-gain-value').textContent = '0.1';
       document.getElementById('d-gain-slider').value = 0.05;
       document.getElementById('d-gain-value').textContent = '0.05';
+      
+      // Reset PID simulation state
+      if (simulatePIDResponse.integral) simulatePIDResponse.integral = 0;
+      if (simulatePIDResponse.previousError) simulatePIDResponse.previousError = 0;
+      if (simulatePIDResponse.previousOutput) simulatePIDResponse.previousOutput = 0;
       
       stopPIDSimulation();
     }
