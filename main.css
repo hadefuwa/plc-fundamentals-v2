@@ -2460,3 +2460,49 @@ h1 {
     height: 230px;
   }
 }
+
+/* 70/30 Column Layout for Background Section */
+.background-section {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.background-text {
+  flex: 0 0 70%;
+}
+
+.background-image {
+  flex: 0 0 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.background-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  margin-bottom: 10px;
+}
+
+.background-image figcaption {
+  text-align: center;
+  font-size: 14px;
+  color: #AAAAAA;
+  font-style: italic;
+}
+
+/* Responsive design for background section */
+@media (max-width: 768px) {
+  .background-section {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .background-text,
+  .background-image {
+    flex: 1;
+  }
+}
