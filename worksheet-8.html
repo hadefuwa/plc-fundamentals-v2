@@ -257,7 +257,7 @@
       loadSavedAnswers();
     });
     
-        function submitAnswer(questionNumber) {
+        function submitAnswer(questionNumber, event) {
       const questionItem = document.querySelector(`[data-question="${questionNumber}"]`);
       const selectedOption = questionItem.querySelector('.option-radio:checked');
       const answer = selectedOption ? selectedOption.value : '';
