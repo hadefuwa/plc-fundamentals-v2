@@ -1,6 +1,6 @@
 {
   "name": "matrix-training-platform",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Matrix Training Platform for Closed Loop Maintenance Curriculum",
   "main": "index.html",
   "scripts": {
