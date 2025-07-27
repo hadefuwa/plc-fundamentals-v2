@@ -2562,12 +2562,41 @@ h1 {
   font-weight: 600 !important;
 }
 
-/* Status Grid - Single Column Layout */
+/* Status Grid - Responsive Grid Layout */
 .status-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.status-item {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-top: 15px;
+  justify-content: space-between;
+  padding: 10px;
+  background: #444;
+  border-radius: 4px;
+}
+
+.status-label {
+  color: #AAA;
+  font-weight: bold;
+}
+
+.status-value {
+  color: #FFFFFF;
+  font-weight: bold;
+}
+
+.status-value.normal {
+  color: #4CAF50;
+}
+
+.status-value.warning {
+  color: #FF9800;
+}
+
+.status-value.error {
+  color: #F44336;
 }
 
 /* Investigation Results Styling */
