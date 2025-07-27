@@ -167,33 +167,40 @@
       </div>
     </div>
 
-    <!-- Interactive Tools Section -->
+    <!-- Investigation Tools Section -->
     <div class="worksheet-section tools-section">
       <h2 class="section-header"><i class="fas fa-tools"></i> Investigation Tools</h2>
       <div class="worksheet-content">
         <div class="tools-grid">
-          <div class="tool-card" onclick="useTool('analyze_coolant_quality')">
-            <i class="fas fa-flask"></i>
-            <h3>Analyze Coolant Quality</h3>
+          <div class="tool-card" data-tool="analyze_coolant_quality">
+            <h4><i class="fas fa-flask"></i> Analyze Coolant Quality</h4>
             <p>Test coolant chemistry, pH, and contamination levels</p>
+            <button class="tool-btn" onclick="useTool('analyze_coolant_quality')">Use Tool</button>
           </div>
-          <div class="tool-card" onclick="useTool('inspect_heat_exchanger')">
-            <i class="fas fa-thermometer-half"></i>
-            <h3>Inspect Heat Exchanger</h3>
+          <div class="tool-card" data-tool="inspect_heat_exchanger">
+            <h4><i class="fas fa-thermometer-half"></i> Inspect Heat Exchanger</h4>
             <p>Check for fouling, scaling, and thermal efficiency</p>
+            <button class="tool-btn" onclick="useTool('inspect_heat_exchanger')">Use Tool</button>
           </div>
-          <div class="tool-card" onclick="useTool('monitor_temperature_cycles')">
-            <i class="fas fa-chart-line"></i>
-            <h3>Monitor Temperature Cycles</h3>
+          <div class="tool-card" data-tool="monitor_temperature_cycles">
+            <h4><i class="fas fa-chart-line"></i> Monitor Temperature Cycles</h4>
             <p>Track system temperature over 24-hour periods</p>
+            <button class="tool-btn" onclick="useTool('monitor_temperature_cycles')">Use Tool</button>
           </div>
-          <div class="tool-card" onclick="useTool('verify_flow_distribution')">
-            <i class="fas fa-water"></i>
-            <h3>Verify Flow Distribution</h3>
+          <div class="tool-card" data-tool="verify_flow_distribution">
+            <h4><i class="fas fa-water"></i> Verify Flow Distribution</h4>
             <p>Check flow rates to individual CNC machines</p>
+            <button class="tool-btn" onclick="useTool('verify_flow_distribution')">Use Tool</button>
           </div>
         </div>
-        <div id="tool-results" class="tool-results"></div>
+        
+        <!-- Investigation Results Section -->
+        <div id="investigation-results" class="investigation-results" style="display: none;">
+          <h3 class="section-header"><i class="fas fa-search"></i> Investigation Results</h3>
+          <div id="results-content">
+            <!-- Results will be populated by JavaScript -->
+          </div>
+        </div>
       </div>
     </div>
 
@@ -201,16 +208,30 @@
     <div class="worksheet-section simulation-section">
       <h2 class="section-header"><i class="fas fa-cogs"></i> System Simulation</h2>
       <div class="worksheet-content">
-        <div id="coolant-system-simulation" class="simulation-container">
+        <div id="hmi-display-panel" class="simulation-container">
           <div class="simulation-loading">
             <i class="fas fa-spinner fa-spin"></i>
-            <p>Loading coolant system simulation...</p>
+            <p>Loading HMI simulation...</p>
           </div>
         </div>
-        <div id="hmi-panel" class="simulation-container" style="margin-top: 20px;"></div>
-        <div id="plc-io-panel" class="simulation-container" style="margin-top: 20px;"></div>
-        <div id="fault-injection-panel" class="simulation-panel" style="margin-top: 20px;"></div>
-        <div id="diagnostic-challenges-panel" class="simulation-panel" style="margin-top: 20px;"></div>
+        <div id="plc-io-panel" class="simulation-container" style="margin-top: 20px;">
+          <div class="simulation-loading">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Loading PLC I/O simulation...</p>
+          </div>
+        </div>
+        <div id="pump-simulation-panel" class="simulation-container" style="margin-top: 20px;">
+          <div class="simulation-loading">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Loading pump simulation...</p>
+          </div>
+        </div>
+        <div id="valve-simulation-panel" class="simulation-container" style="margin-top: 20px;">
+          <div class="simulation-loading">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Loading valve simulation...</p>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -238,54 +259,96 @@
   <script src="pump-simulation.js"></script>
   <script src="valve-simulation.js"></script>
   <script>
-    // Tool usage tracking
-    let toolResults = {};
-    
-    function useTool(toolId) {
-      const toolData = {
-        'analyze_coolant_quality': {
-          title: 'Coolant Quality Analysis Results',
-          content: 'Analysis reveals coolant degradation with increased pH levels and contamination. The coolant has exceeded its recommended service life due to 24-hour operation without proper maintenance cycles.',
-          icon: 'fas fa-flask'
-        },
-        'inspect_heat_exchanger': {
-          title: 'Heat Exchanger Inspection Results',
-          content: 'Significant fouling detected in heat exchanger tubes. Thermal efficiency reduced by 35%. Scaling buildup from continuous operation without maintenance intervals.',
-          icon: 'fas fa-thermometer-half'
-        },
-        'monitor_temperature_cycles': {
-          title: 'Temperature Cycle Analysis',
-          content: '24-hour temperature monitoring shows continuous heat buildup with no recovery periods. Temperature increases by 2-3°C per 8-hour shift, reaching critical levels by night shift.',
-          icon: 'fas fa-chart-line'
-        },
-        'verify_flow_distribution': {
-          title: 'Flow Distribution Results',
-          content: 'Flow rates to individual CNC machines are inconsistent. Some machines receiving 60% of required flow due to system pressure drops and fouling in distribution lines.',
-          icon: 'fas fa-water'
-        }
-      };
-      
-      const result = toolData[toolId];
-      if (result) {
-        toolResults[toolId] = result;
-        displayToolResult(toolId, result);
+    // Tool results data
+    const toolResults = {
+      'analyze_coolant_quality': {
+        title: 'Coolant Quality Analysis Results',
+        content: `
+          <div class="result-item">
+            <h4>Coolant Analysis Results:</h4>
+            <ul>
+              <li>pH Level: 9.2 (Normal: 8.5-9.0)</li>
+              <li>Contamination: High levels of metal particles</li>
+              <li>Coolant Age: 6 months (Exceeds recommended 3-month cycle)</li>
+              <li>Bacterial Growth: Detected</li>
+              <li>Concentration: 8% (Normal: 5-7%)</li>
+            </ul>
+            <p><strong>Analysis:</strong> The coolant has degraded significantly due to 24-hour operation without proper maintenance cycles. The high pH and contamination are reducing heat transfer efficiency.</p>
+          </div>
+        `
+      },
+      'inspect_heat_exchanger': {
+        title: 'Heat Exchanger Inspection Results',
+        content: `
+          <div class="result-item">
+            <h4>Heat Exchanger Condition:</h4>
+            <ul>
+              <li>Thermal Efficiency: 65% (Normal: 85-90%)</li>
+              <li>Tube Fouling: Heavy scaling detected</li>
+              <li>Pressure Drop: 2.5 bar (Normal: 1.0 bar)</li>
+              <li>Last Maintenance: 8 months ago</li>
+              <li>Recommended Service: Overdue by 5 months</li>
+            </ul>
+            <p><strong>Analysis:</strong> Significant fouling has reduced heat transfer efficiency by 35%. The scaling buildup is from continuous operation without maintenance intervals.</p>
+          </div>
+        `
+      },
+      'monitor_temperature_cycles': {
+        title: 'Temperature Cycle Analysis',
+        content: `
+          <div class="result-item">
+            <h4>24-Hour Temperature Monitoring:</h4>
+            <ul>
+              <li>Day Shift Start: 22°C</li>
+              <li>Day Shift End: 25°C (+3°C)</li>
+              <li>Night Shift Start: 25°C</li>
+              <li>Night Shift End: 28°C (+3°C)</li>
+              <li>Recovery Periods: None detected</li>
+              <li>Cooling System Load: 95% (Normal: 60-70%)</li>
+            </ul>
+            <p><strong>Analysis:</strong> Temperature increases by 2-3°C per 8-hour shift with no recovery periods. The system reaches critical levels by night shift.</p>
+          </div>
+        `
+      },
+      'verify_flow_distribution': {
+        title: 'Flow Distribution Results',
+        content: `
+          <div class="result-item">
+            <h4>Flow Rate Analysis:</h4>
+            <ul>
+              <li>Main Pump Flow: 120 L/min (Normal: 150 L/min)</li>
+              <li>Machine 1 Flow: 45 L/min (Required: 50 L/min)</li>
+              <li>Machine 2 Flow: 35 L/min (Required: 50 L/min)</li>
+              <li>Machine 3 Flow: 40 L/min (Required: 50 L/min)</li>
+              <li>Pressure Drop: 1.8 bar (Normal: 1.0 bar)</li>
+            </ul>
+            <p><strong>Analysis:</strong> Flow rates to individual CNC machines are inconsistent. Some machines receiving only 60% of required flow due to system pressure drops and fouling.</p>
+          </div>
+        `
       }
-    }
-    
-    function displayToolResult(toolId, result) {
-      const resultsDiv = document.getElementById('tool-results');
-      const resultHtml = `
-        <div class="tool-result" id="result-${toolId}">
-          <div class="result-header">
-            <i class="${result.icon}"></i>
-            <h3>${result.title}</h3>
-          </div>
-          <div class="result-content">
-            <p>${result.content}</p>
-          </div>
-        </div>
+    };
+
+    // Use investigation tool
+    function useTool(toolId) {
+      const resultsSection = document.getElementById('investigation-results');
+      const resultsContent = document.getElementById('results-content');
+      const toolCard = document.querySelector(`[data-tool="${toolId}"]`);
+      const toolBtn = toolCard.querySelector('.tool-btn');
+      
+      // Disable the tool button
+      toolBtn.disabled = true;
+      toolBtn.textContent = 'Used';
+      
+      // Show results
+      const result = toolResults[toolId];
+      resultsContent.innerHTML = `
+        <h3>${result.title}</h3>
+        ${result.content}
       `;
-      resultsDiv.innerHTML += resultHtml;
+      resultsSection.style.display = 'block';
+      
+      // Scroll to results
+      resultsSection.scrollIntoView({ behavior: 'smooth' });
     }
     
     function submitAnswer(questionId) {
@@ -314,6 +377,22 @@
         const radio = document.querySelector(`input[name="q3.1"][value="${savedAnswer}"]`);
         if (radio) radio.checked = true;
       }
+      
+      // Initialize simulations
+      setTimeout(() => {
+        if (typeof initializeHMISimulation === 'function') {
+          initializeHMISimulation();
+        }
+        if (typeof initializePLCSimulation === 'function') {
+          initializePLCSimulation();
+        }
+        if (typeof initializePumpSimulation === 'function') {
+          initializePumpSimulation();
+        }
+        if (typeof initializeValveSimulation === 'function') {
+          initializeValveSimulation();
+        }
+      }, 1000);
     });
   </script>
 </body>

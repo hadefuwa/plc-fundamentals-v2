@@ -167,33 +167,40 @@
       </div>
     </div>
 
-    <!-- Interactive Tools Section -->
+    <!-- Investigation Tools Section -->
     <div class="worksheet-section tools-section">
       <h2 class="section-header"><i class="fas fa-tools"></i> Investigation Tools</h2>
       <div class="worksheet-content">
         <div class="tools-grid">
-          <div class="tool-card" onclick="useTool('thermal_imaging')">
-            <i class="fas fa-camera"></i>
-            <h3>Thermal Imaging Survey</h3>
+          <div class="tool-card" data-tool="thermal_imaging">
+            <h4><i class="fas fa-camera"></i> Thermal Imaging Survey</h4>
             <p>Use thermal camera to identify hot spots and airflow patterns</p>
+            <button class="tool-btn" onclick="useTool('thermal_imaging')">Use Tool</button>
           </div>
-          <div class="tool-card" onclick="useTool('airflow_analysis')">
-            <i class="fas fa-wind"></i>
-            <h3>Airflow Pattern Analysis</h3>
+          <div class="tool-card" data-tool="airflow_analysis">
+            <h4><i class="fas fa-wind"></i> Airflow Pattern Analysis</h4>
             <p>Check for air circulation issues and blocked pathways</p>
+            <button class="tool-btn" onclick="useTool('airflow_analysis')">Use Tool</button>
           </div>
-          <div class="tool-card" onclick="useTool('power_consumption_review')">
-            <i class="fas fa-bolt"></i>
-            <h3>Power Consumption Review</h3>
+          <div class="tool-card" data-tool="power_consumption_review">
+            <h4><i class="fas fa-bolt"></i> Power Consumption Review</h4>
             <p>Analyze power draw vs cooling capacity</p>
+            <button class="tool-btn" onclick="useTool('power_consumption_review')">Use Tool</button>
           </div>
-          <div class="tool-card" onclick="useTool('emergency_load_balancing')">
-            <i class="fas fa-balance-scale"></i>
-            <h3>Emergency Load Balancing</h3>
+          <div class="tool-card" data-tool="emergency_load_balancing">
+            <h4><i class="fas fa-balance-scale"></i> Emergency Load Balancing</h4>
             <p>Redistribute server loads to reduce hot spots</p>
+            <button class="tool-btn" onclick="useTool('emergency_load_balancing')">Use Tool</button>
           </div>
         </div>
-        <div id="tool-results" class="tool-results"></div>
+        
+        <!-- Investigation Results Section -->
+        <div id="investigation-results" class="investigation-results" style="display: none;">
+          <h3 class="section-header"><i class="fas fa-search"></i> Investigation Results</h3>
+          <div id="results-content">
+            <!-- Results will be populated by JavaScript -->
+          </div>
+        </div>
       </div>
     </div>
 
@@ -238,54 +245,95 @@
   <script src="pump-simulation.js"></script>
   <script src="valve-simulation.js"></script>
   <script>
-    // Tool usage tracking
-    let toolResults = {};
-    
-    function useTool(toolId) {
-      const toolData = {
-        'thermal_imaging': {
-          title: 'Thermal Imaging Survey Results',
-          content: 'Thermal scan reveals hot spots in center section (Racks B1-B6) with temperatures reaching 31°C. North section (Racks A1-A6) shows normal temperatures around 24°C. Clear thermal gradient indicates airflow restriction.',
-          icon: 'fas fa-camera'
-        },
-        'airflow_analysis': {
-          title: 'Airflow Pattern Analysis Results',
-          content: 'Airflow analysis shows blocked return air pathways in center section. New server installations have disrupted the original airflow design. Return air grilles are partially blocked by cable management.',
-          icon: 'fas fa-wind'
-        },
-        'power_consumption_review': {
-          title: 'Power Consumption Analysis',
-          content: 'Total power consumption is 125% of design capacity. New high-performance servers in Racks B1-B6 are drawing 40% more power than the cooling system was designed to handle.',
-          icon: 'fas fa-bolt'
-        },
-        'emergency_load_balancing': {
-          title: 'Emergency Load Balancing Results',
-          content: 'Successfully redistributed 30% of load from hot racks to cooler areas. Immediate temperature reduction of 3°C in critical areas. Emergency shutdown averted.',
-          icon: 'fas fa-balance-scale'
-        }
-      };
-      
-      const result = toolData[toolId];
-      if (result) {
-        toolResults[toolId] = result;
-        displayToolResult(toolId, result);
+    // Tool results data
+    const toolResults = {
+      'thermal_imaging': {
+        title: 'Thermal Imaging Survey Results',
+        content: `
+          <div class="result-item">
+            <h4>Thermal Scan Analysis:</h4>
+            <ul>
+              <li>Center Section (Racks B1-B6): 31°C (Critical)</li>
+              <li>North Section (Racks A1-A6): 24°C (Normal)</li>
+              <li>South Section (Racks C1-C6): 26°C (Elevated)</li>
+              <li>Hot Spot Location: Rack B3-B4 junction</li>
+              <li>Temperature Gradient: 7°C difference across room</li>
+            </ul>
+            <p><strong>Analysis:</strong> Clear thermal gradient indicates airflow restriction in center section. Hot spots concentrated around new server installations.</p>
+          </div>
+        `
+      },
+      'airflow_analysis': {
+        title: 'Airflow Pattern Analysis Results',
+        content: `
+          <div class="result-item">
+            <h4>Airflow Investigation:</h4>
+            <ul>
+              <li>Supply Air: Normal flow to all sections</li>
+              <li>Return Air: 60% blocked in center section</li>
+              <li>Obstruction: Cable management blocking grilles</li>
+              <li>Air Velocity: 2.5 m/s (Normal: 3.5 m/s)</li>
+              <li>Static Pressure: 0.8" w.c. (Normal: 0.5" w.c.)</li>
+            </ul>
+            <p><strong>Analysis:</strong> Return air pathways blocked by cable management. New server installations disrupted original airflow design.</p>
+          </div>
+        `
+      },
+      'power_consumption_review': {
+        title: 'Power Consumption Analysis',
+        content: `
+          <div class="result-item">
+            <h4>Power Load Analysis:</h4>
+            <ul>
+              <li>Total Power Draw: 85 kW (Design: 68 kW)</li>
+              <li>Overload: 125% of design capacity</li>
+              <li>New Servers (Racks B1-B6): 40 kW</li>
+              <li>Existing Servers: 45 kW</li>
+              <li>Cooling System Capacity: 70 kW</li>
+            </ul>
+            <p><strong>Analysis:</strong> New high-performance servers drawing 40% more power than cooling system designed to handle.</p>
+          </div>
+        `
+      },
+      'emergency_load_balancing': {
+        title: 'Emergency Load Balancing Results',
+        content: `
+          <div class="result-item">
+            <h4>Load Redistribution Results:</h4>
+            <ul>
+              <li>Load Moved: 30% from hot racks</li>
+              <li>Temperature Reduction: 3°C in critical areas</li>
+              <li>Servers Shutdown: 8 non-critical systems</li>
+              <li>Power Reduction: 12 kW immediate</li>
+              <li>Emergency Status: Averted</li>
+            </ul>
+            <p><strong>Analysis:</strong> Successfully redistributed load to cooler areas. Immediate temperature reduction prevented emergency shutdown.</p>
+          </div>
+        `
       }
-    }
-    
-    function displayToolResult(toolId, result) {
-      const resultsDiv = document.getElementById('tool-results');
-      const resultHtml = `
-        <div class="tool-result" id="result-${toolId}">
-          <div class="result-header">
-            <i class="${result.icon}"></i>
-            <h3>${result.title}</h3>
-          </div>
-          <div class="result-content">
-            <p>${result.content}</p>
-          </div>
-        </div>
+    };
+
+    // Use investigation tool
+    function useTool(toolId) {
+      const resultsSection = document.getElementById('investigation-results');
+      const resultsContent = document.getElementById('results-content');
+      const toolCard = document.querySelector(`[data-tool="${toolId}"]`);
+      const toolBtn = toolCard.querySelector('.tool-btn');
+      
+      // Disable the tool button
+      toolBtn.disabled = true;
+      toolBtn.textContent = 'Used';
+      
+      // Show results
+      const result = toolResults[toolId];
+      resultsContent.innerHTML = `
+        <h3>${result.title}</h3>
+        ${result.content}
       `;
-      resultsDiv.innerHTML += resultHtml;
+      resultsSection.style.display = 'block';
+      
+      // Scroll to results
+      resultsSection.scrollIntoView({ behavior: 'smooth' });
     }
     
     function submitAnswer(questionId) {
@@ -314,6 +362,22 @@
         const radio = document.querySelector(`input[name="q4.1"][value="${savedAnswer}"]`);
         if (radio) radio.checked = true;
       }
+      
+      // Initialize simulations
+      setTimeout(() => {
+        if (typeof initializeHMISimulation === 'function') {
+          initializeHMISimulation();
+        }
+        if (typeof initializePLCSimulation === 'function') {
+          initializePLCSimulation();
+        }
+        if (typeof initializePumpSimulation === 'function') {
+          initializePumpSimulation();
+        }
+        if (typeof initializeValveSimulation === 'function') {
+          initializeValveSimulation();
+        }
+      }, 1000);
     });
   </script>
 </body>
