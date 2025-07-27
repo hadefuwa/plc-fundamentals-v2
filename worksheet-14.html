@@ -79,7 +79,7 @@
             </label>
           </div>
           <div class="question-actions">
-            <button class="submit-question-btn" onclick="submitAnswer(1)">Submit Answer</button>
+            <button class="submit-question-btn" onclick="submitAnswer(1, event)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
             <strong style="color: #4CAF50;">Correct Answer:</strong> A) It helps identify and fix issues that could stop the system from running safely and efficiently.
@@ -106,7 +106,7 @@
             </label>
           </div>
           <div class="question-actions">
-            <button class="submit-question-btn" onclick="submitAnswer(2)">Submit Answer</button>
+            <button class="submit-question-btn" onclick="submitAnswer(2, event)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
             <strong style="color: #4CAF50;">Correct Answer:</strong> A) Software faults (programming or settings), electrical faults (wiring or sensor issues), and mechanical faults (stuck or broken parts).
@@ -133,7 +133,7 @@
             </label>
           </div>
           <div class="question-actions">
-            <button class="submit-question-btn" onclick="submitAnswer(3)">Submit Answer</button>
+            <button class="submit-question-btn" onclick="submitAnswer(3, event)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
             <strong style="color: #4CAF50;">Correct Answer:</strong> A) The HMI shows alarms and fault status, helping to locate and understand the issue.
@@ -160,7 +160,7 @@
             </label>
           </div>
           <div class="question-actions">
-            <button class="submit-question-btn" onclick="submitAnswer(4)">Submit Answer</button>
+            <button class="submit-question-btn" onclick="submitAnswer(4, event)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
             <strong style="color: #4CAF50;">Correct Answer:</strong> A) It shows exactly when the fault happened, helping to trace the cause.
@@ -187,7 +187,7 @@
             </label>
           </div>
           <div class="question-actions">
-            <button class="submit-question-btn" onclick="submitAnswer(5)">Submit Answer</button>
+            <button class="submit-question-btn" onclick="submitAnswer(5, event)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
             <strong style="color: #4CAF50;">Correct Answer:</strong> A) It builds confidence and teaches how to spot and respond to problems in a real system.
@@ -228,8 +228,8 @@
       loadSavedAnswers();
     });
     
-        function submitAnswer(questionNumber) {
-      const questionItem = document.querySelector([data-question="${questionNumber}"]);
+        function submitAnswer(questionNumber, event) {
+      const questionItem = document.querySelector(`[data-question="${questionNumber}"]`);
       const selectedOption = questionItem.querySelector('.option-radio:checked');
       const answer = selectedOption ? selectedOption.value : '';
       
@@ -243,7 +243,7 @@
           5: 'A'
         };
         
-        localStorage.setItem(worksheet14_answer${questionNumber}, answer);
+        localStorage.setItem(`worksheet14_answer${questionNumber}`, answer);
         
         // Apply visual feedback
         const allOptions = questionItem.querySelectorAll('.option-label');
@@ -293,11 +293,11 @@
        };
       
       for (let i = 1; i <= 5; i++) {
-        const saved = localStorage.getItem(worksheet14_answer${i});
+        const saved = localStorage.getItem(`worksheet14_answer${i}`);
         if (saved) {
-          const questionItem = document.querySelector([data-question="${i}"]);
+          const questionItem = document.querySelector(`[data-question="${i}"]`);
           if (questionItem) {
-            const selectedOption = questionItem.querySelector(.option-radio[value="${saved}"]);
+            const selectedOption = questionItem.querySelector(`.option-radio[value="${saved}"]`);
             if (selectedOption) {
               selectedOption.checked = true;
               
