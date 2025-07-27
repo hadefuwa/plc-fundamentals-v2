@@ -6,7 +6,8 @@
   <title>Matrix TSL - Fault Scenario 2: Cleanroom Temperature Control System</title>
   <link rel="stylesheet" href="main.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">
+  <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">  <script src="worksheet-tracking.js"></script>
+
 </head>
 <body>
   <!-- Navigation -->
@@ -31,7 +32,12 @@
             <i class="fas fa-exclamation-triangle"></i> CP6773
           </a>
         </li>
+        
         <li class="nav-item">
+          <a href="#" onclick="window.location='tracking-dashboard.html'" class="nav-link">
+            <i class="fas fa-chart-line"></i> PROGRESS
+          </a>
+        </li><li class="nav-item">
           <a href="#" onclick="window.location='settings.html'" class="nav-link">
             <i class="fas fa-gear"></i> SETTINGS
           </a>
@@ -57,7 +63,7 @@
           </button>
         </div>
         <div class="worksheet-header-center">
-          <h1 class="worksheet-title">Fault Scenario 2 - Cleanroom Temperature Control System</h1>
+          <h1 class="worksheet-title">Fault Scenario 2 - Tank Lid Flicker</h1>
         </div>
         <div class="worksheet-header-right">
           <button class="worksheet-nav-btn worksheet-next-btn" onclick="window.location.href='fault-scenario-3.html'">
@@ -69,27 +75,27 @@
     </div>
     <!-- Introduction Section -->
     <div class="worksheet-section introduction-section">
-      <h2 class="section-header"><i class="fas fa-info-circle"></i> Scenario Overview</h2>
+      <h2 class="section-header"><i class="fas fa-info-circle"></i> Fault Scenario 2: Tank Lid Flicker</h2>
       <div class="worksheet-content">
         <div class="scenario-info">
           <div class="info-grid">
             <div class="info-item">
-              <strong>Company:</strong> Pharmaceutical Manufacturing Inc.
+              <strong>Scenario:</strong> Tank Lid Flicker
             </div>
             <div class="info-item">
-              <strong>Process:</strong> Cleanroom HVAC temperature control
+              <strong>Process:</strong> Tank lid proximity switch monitoring
             </div>
             <div class="info-item">
-              <strong>Shift:</strong> Production shift during peak hours
+              <strong>Shift:</strong> Production shift during normal operation
             </div>
             <div class="info-item">
-              <strong>Urgency:</strong> High - Product quality at risk
+              <strong>Urgency:</strong> Medium - System operation affected
             </div>
             <div class="info-item">
-              <strong>Difficulty:</strong> Intermediate
+              <strong>Difficulty:</strong> Beginner
             </div>
             <div class="info-item">
-              <strong>Time:</strong> 30-45 minutes
+              <strong>Time:</strong> 15-25 minutes
             </div>
           </div>
         </div>
@@ -97,51 +103,49 @@
         <div class="background-section">
           <div class="background-text">
             <div class="scenario-description">
-              <h3>Background</h3>
-              <p>You're working in a pharmaceutical cleanroom where temperature control is critical for product quality. The HVAC system has been struggling to maintain the required 22°C ±1°C temperature range.</p>
+              <h3>Scenario Background</h3>
+              <p>You're monitoring a tank system where the lid proximity switch keeps flicking on and off every 5 seconds. The system is designed to only operate when the lid is properly closed, but the intermittent signal is causing operational issues.</p>
               
-              <p>Recently, production has increased by 40% due to a new contract, and the cleanroom temperature has been fluctuating between 24-26°C. The quality control team has reported that some batches are showing temperature-related quality issues.</p>
+              <p>The proximity switch on the tank lid is showing erratic behavior in the I/O screen, indicating the lid is opening and closing repeatedly. This is preventing normal system operation and causing production delays.</p>
               
-              <p>The HVAC system shows normal operation, but the temperature readings indicate the system is running at maximum capacity and still can't meet the setpoint.</p>
+              <p>The maintenance team was recently working on the tank system, and this issue started immediately after their work was completed.</p>
+              
+              <p><strong>Industry Context:</strong> An issue like this would happen in industry because proximity switches are prone to misalignment over time due to vibrations, repeated use, or mechanical wear. If the sensor isn't properly checked during maintenance, it may flicker on and off, falsely indicating that the lid is open and preventing the system from running.</p>
             </div>
           </div>
           
           <div class="background-image">
-            <img src="assets/scenarios/pharma-cleanroom.png" alt="Cleanroom Temperature Control System">
-            <figcaption>Cleanroom Temperature Control System - Pharmaceutical Manufacturing</figcaption>
+            <img src="assets/scenarios/pharma-cleanroom.png" alt="Tank Lid Proximity Switch System">
+            <figcaption>Tank Lid Proximity Switch System - Industrial Processing</figcaption>
           </div>
         </div>
 
         <div class="system-overview">
-          <h3>System Status</h3>
+          <h3>Initial System Status</h3>
           <div class="status-grid">
             <div class="status-item">
-              <span class="status-label">Setpoint:</span>
-              <span class="status-value">22°C</span>
+              <span class="status-label">Lid Status:</span>
+              <span class="status-value warning">FLICKERING</span>
             </div>
             <div class="status-item">
-              <span class="status-label">Current Temperature:</span>
-              <span class="status-value warning">25°C</span>
+              <span class="status-label">Proximity Switch:</span>
+              <span class="status-value warning">INTERMITTENT</span>
             </div>
             <div class="status-item">
-              <span class="status-label">Tolerance:</span>
-              <span class="status-value">±1°C</span>
+              <span class="status-label">Flicker Interval:</span>
+              <span class="status-value">5 seconds</span>
             </div>
             <div class="status-item">
-              <span class="status-label">HVAC Load:</span>
-              <span class="status-value error">95%</span>
+              <span class="status-label">System Operation:</span>
+              <span class="status-value error">BLOCKED</span>
             </div>
             <div class="status-item">
-              <span class="status-label">Production Increase:</span>
-              <span class="status-value">+40%</span>
-            </div>
-            <div class="status-item">
-              <span class="status-label">Quality Issues:</span>
-              <span class="status-value error">YES</span>
+              <span class="status-label">Production Status:</span>
+              <span class="status-value error">DELAYED</span>
             </div>
             <div class="status-item">
               <span class="status-label">Alarm Status:</span>
-              <span class="status-value warning">HIGH TEMP</span>
+              <span class="status-value warning">LID FAULT</span>
             </div>
           </div>
         </div>
@@ -201,31 +205,31 @@
       </div>
     </div>
 
-    <!-- Questions Section -->
+    <!-- Analysis Section -->
     <div class="worksheet-section questions-section">
-      <h2 class="section-header"><i class="fas fa-question-circle"></i> Analysis Questions</h2>
+      <h2 class="section-header"><i class="fas fa-clipboard-list"></i> Fault Analysis Worksheet</h2>
       <div class="questions-content">
-        <div class="question-item" data-question="1">
-          <h4>Question 1: What is the primary cause of the temperature control failure?</h4>
-          <textarea class="answer-input" data-question="1" placeholder="Identify the root cause..."></textarea>
+        <div class="analysis-section">
+          <h4>Observations:</h4>
+          <textarea class="answer-input" data-question="observations" placeholder="Record your observations of the system behavior, readings, and any unusual indicators..."></textarea>
           <div class="question-actions">
-            <button class="submit-question-btn" onclick="submitAnswer(1)">Submit Answer</button>
+            <button class="submit-question-btn" onclick="submitAnswer('observations')">Save Observations</button>
           </div>
         </div>
         
-        <div class="question-item" data-question="2">
-          <h4>Question 2: What immediate actions can be taken to stabilize the temperature?</h4>
-          <textarea class="answer-input" data-question="2" placeholder="Describe short-term solutions..."></textarea>
+        <div class="analysis-section">
+          <h4>Problem:</h4>
+          <textarea class="answer-input" data-question="problem" placeholder="Identify the root cause and describe the specific problem affecting the system..."></textarea>
           <div class="question-actions">
-            <button class="submit-question-btn" onclick="submitAnswer(2)">Submit Answer</button>
+            <button class="submit-question-btn" onclick="submitAnswer('problem')">Save Problem Analysis</button>
           </div>
         </div>
         
-        <div class="question-item" data-question="3">
-          <h4>Question 3: What long-term solutions should be implemented?</h4>
-          <textarea class="answer-input" data-question="3" placeholder="Describe permanent solutions..."></textarea>
+        <div class="analysis-section">
+          <h4>Solution:</h4>
+          <textarea class="answer-input" data-question="solution" placeholder="Describe the steps you would take to resolve the issue safely and effectively..."></textarea>
           <div class="question-actions">
-            <button class="submit-question-btn" onclick="submitAnswer(3)">Submit Answer</button>
+            <button class="submit-question-btn" onclick="submitAnswer('solution')">Save Solution</button>
           </div>
         </div>
       </div>
@@ -404,16 +408,24 @@
       cursor: not-allowed;
     }
     
-    .question-item {
+    .question-item, .analysis-section {
       background: #333;
       padding: 20px;
       margin-bottom: 20px;
       border-radius: 8px;
     }
     
-    .question-item h4 {
+    .question-item h4, .analysis-section h4 {
       color: #FFFFFF;
       margin-bottom: 10px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+    
+    .analysis-section h4 {
+      color: #4CAF50;
+      border-bottom: 2px solid #4CAF50;
+      padding-bottom: 5px;
     }
     
     .answer-input {
@@ -538,12 +550,12 @@
     }
 
     // Submit answer
-    function submitAnswer(questionNumber) {
-      const input = document.querySelector(`[data-question="${questionNumber}"]`);
+    function submitAnswer(questionType) {
+      const input = document.querySelector(`[data-question="${questionType}"]`);
       const answer = input.value.trim();
       
       if (answer) {
-        localStorage.setItem(`fault2_answer${questionNumber}`, answer);
+        localStorage.setItem(`fault2_${questionType}`, answer);
         
         const button = event.target;
         const originalText = button.textContent;
@@ -554,21 +566,22 @@
           button.textContent = originalText;
         }, 2000);
       } else {
-        alert('Please enter an answer before submitting.');
+        alert('Please enter content before saving.');
       }
     }
 
     // Load saved answers
     function loadSavedAnswers() {
-      for (let i = 1; i <= 3; i++) {
-        const saved = localStorage.getItem(`fault2_answer${i}`);
+      const questionTypes = ['observations', 'problem', 'solution'];
+      questionTypes.forEach(type => {
+        const saved = localStorage.getItem(`fault2_${type}`);
         if (saved) {
-          const input = document.querySelector(`[data-question="${i}"]`);
+          const input = document.querySelector(`[data-question="${type}"]`);
           if (input) {
             input.value = saved;
           }
         }
-      }
+      });
     }
 
     // Initialize page

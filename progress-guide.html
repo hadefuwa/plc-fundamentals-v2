@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Matrix TSL - Progress Data Guide</title>
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">
+  <script src="worksheet-tracking.js"></script>
+  <style>
+    .guide-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .guide-header {
+      text-align: center;
+      margin-bottom: 30px;
+      background: linear-gradient(135deg, var(--background-color) 0%, #1a1d20 100%);
+      padding: 30px;
+      border-radius: 10px;
+      color: white;
+      border: 2px solid var(--accent-color);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    }
+    
+    .guide-section {
+      background: #23272b;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      margin-bottom: 25px;
+      color: white;
+    }
+    
+    .guide-section h2 {
+      color: var(--accent-color);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .guide-section h3 {
+      color: #9da5b1;
+      margin: 20px 0 10px 0;
+      border-bottom: 1px solid #444;
+      padding-bottom: 5px;
+    }
+    
+    .step-list {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .step-list li {
+      margin-bottom: 15px;
+      padding: 15px;
+      background: #2d2d2d;
+      border-radius: 8px;
+      border-left: 4px solid var(--accent-color);
+      position: relative;
+    }
+    
+    .step-number {
+      position: absolute;
+      top: -8px;
+      left: -8px;
+      background: var(--accent-color);
+      color: white;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    
+    .step-content {
+      margin-left: 20px;
+    }
+    
+    .step-content strong {
+      color: var(--accent-color);
+    }
+    
+    .warning-box {
+      background: linear-gradient(135deg, #2f1a1a 0%, #4a2d2d 100%);
+      border: 1px solid #f44336;
+      border-radius: 8px;
+      padding: 15px;
+      margin: 15px 0;
+    }
+    
+    .warning-box h4 {
+      color: #f44336;
+      margin: 0 0 10px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .info-box {
+      background: linear-gradient(135deg, #1a2f1a 0%, #2d4a2d 100%);
+      border: 1px solid #4CAF50;
+      border-radius: 8px;
+      padding: 15px;
+      margin: 15px 0;
+    }
+    
+    .info-box h4 {
+      color: #4CAF50;
+      margin: 0 0 10px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .export-import-demo {
+      background: #1a1d20;
+      border: 1px solid #444;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    
+    .demo-buttons {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+    
+    .demo-btn {
+      background: linear-gradient(135deg, var(--accent-color), #3a8ce6);
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .demo-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+    }
+    
+    .demo-btn.secondary {
+      background: linear-gradient(135deg, #666, #444);
+    }
+    
+    .demo-btn.secondary:hover {
+      background: linear-gradient(135deg, #777, #555);
+    }
+    
+    .file-input-wrapper {
+      position: relative;
+      display: inline-block;
+      margin: 10px 0;
+    }
+    
+    .file-input {
+      position: absolute;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+    
+    .file-input-label {
+      background: linear-gradient(135deg, #2196F3, #1976D2);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s;
+    }
+    
+    .file-input-label:hover {
+      background: linear-gradient(135deg, #1976D2, #1565C0);
+    }
+    
+    .code-block {
+      background: #1a1d20;
+      border: 1px solid #444;
+      border-radius: 6px;
+      padding: 15px;
+      margin: 15px 0;
+      font-family: 'Courier New', monospace;
+      color: #9da5b1;
+      overflow-x: auto;
+    }
+    
+    .troubleshooting {
+      background: #2d2d2d;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    
+    .troubleshooting h4 {
+      color: #ff9800;
+      margin-bottom: 15px;
+    }
+    
+    .troubleshooting ul {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .troubleshooting li {
+      margin-bottom: 10px;
+      padding-left: 20px;
+      position: relative;
+    }
+    
+    .troubleshooting li::before {
+      content: '•';
+      color: var(--accent-color);
+      position: absolute;
+      left: 0;
+      font-weight: bold;
+    }
+    
+    @media (max-width: 768px) {
+      .demo-buttons {
+        flex-direction: column;
+      }
+      
+      .guide-section {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="main-navigation">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <img src="assets/matrix-logo.png" alt="Matrix Logo">
+      </div>
+      <ul class="nav-menu" id="nav-menu">
+        <li class="nav-item">
+          <a href="#" onclick="window.location='index.html'" class="nav-link">
+            <i class="fas fa-home"></i> HOME
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" onclick="window.location='cp0539-worksheets.html'" class="nav-link">
+            <i class="fas fa-cogs"></i> CP0539
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" onclick="window.location='cp6773-worksheets.html'" class="nav-link">
+            <i class="fas fa-exclamation-triangle"></i> CP6773
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" onclick="window.location='tracking-dashboard.html'" class="nav-link">
+            <i class="fas fa-chart-line"></i> PROGRESS
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" onclick="window.location='settings.html'" class="nav-link">
+            <i class="fas fa-gear"></i> SETTINGS
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" onclick="window.location='about.html'" class="nav-link">
+            <i class="fas fa-info-circle"></i> ABOUT
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="guide-container">
+    <div class="guide-header">
+      <h1><i class="fas fa-exchange-alt"></i> Progress Data Import/Export Guide</h1>
+      <p>Learn how to backup, transfer, and restore your worksheet progress data</p>
+    </div>
+
+    <!-- Export Section -->
+    <div class="guide-section">
+      <h2><i class="fas fa-download"></i> Exporting Your Progress</h2>
+      
+      <h3>Why Export Your Data?</h3>
+      <p>Exporting your progress data allows you to:</p>
+      <ul>
+        <li><strong>Backup your work</strong> - Keep a safe copy of your progress</li>
+        <li><strong>Transfer between devices</strong> - Move your data to a new computer</li>
+        <li><strong>Share with teachers</strong> - Submit progress reports</li>
+        <li><strong>Recover from issues</strong> - Restore data if something goes wrong</li>
+      </ul>
+
+      <h3>How to Export</h3>
+      <ol class="step-list">
+        <li>
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <strong>Go to the Progress Dashboard</strong><br>
+            Click "PROGRESS" in the navigation menu
+          </div>
+        </li>
+        <li>
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <strong>Set your student information</strong><br>
+            Enter your name and student ID in the form at the top
+          </div>
+        </li>
+        <li>
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <strong>Choose export format</strong><br>
+            Click one of the export buttons:
+            <ul>
+              <li><strong>JSON</strong> - Complete data (recommended for backup/transfer)</li>
+              <li><strong>CSV</strong> - Spreadsheet format (good for analysis)</li>
+              <li><strong>PDF</strong> - Printable report (good for submission)</li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <div class="step-number">4</div>
+          <div class="step-content">
+            <strong>Save the file</strong><br>
+            Choose a location on your computer and save the exported file
+          </div>
+        </li>
+      </ol>
+
+      <div class="info-box">
+        <h4><i class="fas fa-lightbulb"></i> Pro Tip</h4>
+        <p>Export your data regularly (weekly or after completing each worksheet) to ensure you never lose your progress!</p>
+      </div>
+    </div>
+
+    <!-- Import Section -->
+    <div class="guide-section">
+      <h2><i class="fas fa-upload"></i> Importing Your Progress</h2>
+      
+      <h3>When to Import</h3>
+      <p>You might need to import your progress data when:</p>
+      <ul>
+        <li>Moving to a new computer or device</li>
+        <li>Recovering from a browser reset</li>
+        <li>Restoring from a backup</li>
+        <li>Transferring data between different browsers</li>
+      </ul>
+
+      <h3>How to Import</h3>
+      <ol class="step-list">
+        <li>
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <strong>Prepare your export file</strong><br>
+            Make sure you have a JSON export file from this application
+          </div>
+        </li>
+        <li>
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <strong>Go to the Progress Dashboard</strong><br>
+            Click "PROGRESS" in the navigation menu
+          </div>
+        </li>
+        <li>
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <strong>Use the import function</strong><br>
+            Click the "Import Progress" button below and select your JSON file
+          </div>
+        </li>
+        <li>
+          <div class="step-number">4</div>
+          <div class="step-content">
+            <strong>Verify the import</strong><br>
+            Check that your progress data has been restored correctly
+          </div>
+        </li>
+      </ol>
+
+      <div class="warning-box">
+        <h4><i class="fas fa-exclamation-triangle"></i> Important Warning</h4>
+        <p><strong>Importing will replace your current progress data!</strong> Make sure to export your current data first if you want to keep it.</p>
+      </div>
+    </div>
+
+    <!-- Demo Section -->
+    <div class="guide-section">
+      <h2><i class="fas fa-play-circle"></i> Try It Now</h2>
+      
+      <div class="export-import-demo">
+        <h3>Export/Import Demo</h3>
+        <p>Test the export and import functionality with your current data:</p>
+        
+        <div class="demo-buttons">
+          <button class="demo-btn" onclick="exportCurrentData()">
+            <i class="fas fa-download"></i> Export Current Data
+          </button>
+          <div class="file-input-wrapper">
+            <input type="file" id="importFile" class="file-input" accept=".json" onchange="importData(this)">
+            <label for="importFile" class="file-input-label">
+              <i class="fas fa-upload"></i> Import Data
+            </label>
+          </div>
+          <button class="demo-btn secondary" onclick="clearAllData()">
+            <i class="fas fa-trash"></i> Clear All Data (Test)
+          </button>
+        </div>
+        
+        <div id="demoStatus" style="margin-top: 15px; padding: 10px; border-radius: 4px; display: none;"></div>
+      </div>
+    </div>
+
+    <!-- File Formats Section -->
+    <div class="guide-section">
+      <h2><i class="fas fa-file-alt"></i> File Formats Explained</h2>
+      
+      <h3>JSON Format (Recommended)</h3>
+      <p>The JSON format contains all your progress data in a structured format:</p>
+      <div class="code-block">
+{
+  "studentInfo": {
+    "name": "Your Name",
+    "id": "STU001"
+  },
+  "overallStats": {
+    "totalWorksheets": 22,
+    "completedWorksheets": 5,
+    "completionPercentage": 23
+  },
+  "worksheets": {
+    "maintenance-1": {
+      "completedQuestions": 3,
+      "totalQuestions": 5,
+      "completionPercentage": 60
+    }
+  }
+}
+      </div>
+      
+      <h3>CSV Format</h3>
+      <p>CSV format is useful for spreadsheet analysis:</p>
+      <div class="code-block">
+Worksheet Type,Worksheet ID,Title,Completed Questions,Total Questions,Completion %,Last Updated
+Maintenance,1,Flow Control System Maintenance,3,5,60%,2024-01-15T10:30:00Z
+      </div>
+      
+      <h3>PDF Format</h3>
+      <p>PDF format creates a professional report suitable for printing or emailing to teachers.</p>
+    </div>
+
+    <!-- Troubleshooting Section -->
+    <div class="guide-section">
+      <h2><i class="fas fa-tools"></i> Troubleshooting</h2>
+      
+      <div class="troubleshooting">
+        <h4>Common Issues and Solutions</h4>
+        
+        <h5>Export Issues</h5>
+        <ul>
+          <li><strong>File won't download:</strong> Check your browser's popup blocker settings</li>
+          <li><strong>Empty export:</strong> Make sure you have completed some worksheets first</li>
+          <li><strong>Wrong format:</strong> Use JSON format for backup/transfer, CSV for analysis, PDF for reports</li>
+        </ul>
+        
+        <h5>Import Issues</h5>
+        <ul>
+          <li><strong>File won't load:</strong> Make sure you're selecting a JSON file exported from this app</li>
+          <li><strong>Import fails:</strong> Check that the file isn't corrupted and is from the same version</li>
+          <li><strong>Data not appearing:</strong> Refresh the page after import</li>
+        </ul>
+        
+        <h5>Data Loss Prevention</h5>
+        <ul>
+          <li><strong>Regular backups:</strong> Export your data weekly or after each worksheet</li>
+          <li><strong>Multiple copies:</strong> Keep backup files in different locations</li>
+          <li><strong>Before clearing:</strong> Always export before clearing browser data</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Best Practices Section -->
+    <div class="guide-section">
+      <h2><i class="fas fa-star"></i> Best Practices</h2>
+      
+      <h3>Data Management</h3>
+      <ul>
+        <li><strong>Export regularly:</strong> Create backups every week or after completing worksheets</li>
+        <li><strong>Use descriptive filenames:</strong> Include date in filename (e.g., "progress-2024-01-15.json")</li>
+        <li><strong>Store safely:</strong> Keep backup files in cloud storage or multiple locations</li>
+        <li><strong>Test imports:</strong> Occasionally test that your backup files can be imported</li>
+      </ul>
+      
+      <h3>Transferring Between Devices</h3>
+      <ol>
+        <li>Export your data from the current device</li>
+        <li>Transfer the JSON file to the new device (email, USB, cloud storage)</li>
+        <li>Open the app on the new device</li>
+        <li>Import the JSON file</li>
+        <li>Verify all your progress is restored</li>
+      </ol>
+      
+      <h3>Sharing with Teachers</h3>
+      <ul>
+        <li><strong>Use PDF format:</strong> Most professional and widely compatible</li>
+        <li><strong>Include student information:</strong> Make sure your name and ID are set</li>
+        <li><strong>Export after completion:</strong> Export when you've finished the work you want to share</li>
+        <li><strong>Keep a copy:</strong> Save a copy of what you send to teachers</li>
+      </ul>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="guide-section">
+      <h2><i class="fas fa-bolt"></i> Quick Actions</h2>
+      
+      <div class="demo-buttons">
+        <button class="demo-btn" onclick="window.location.href='tracking-dashboard.html'">
+          <i class="fas fa-chart-line"></i> Go to Progress Dashboard
+        </button>
+        <button class="demo-btn secondary" onclick="window.location.href='test-tracking.html'">
+          <i class="fas fa-vial"></i> Test Tracking System
+        </button>
+        <button class="demo-btn secondary" onclick="window.location.href='settings.html'">
+          <i class="fas fa-gear"></i> App Settings
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Load settings and apply accent color
+    function loadSettings() {
+      try {
+        const settings = JSON.parse(localStorage.getItem('app-settings') || '{}');
+        if (settings.appAccent) {
+          document.documentElement.style.setProperty('--accent-color', settings.appAccent);
+        }
+      } catch (error) {
+        console.warn('Could not load settings:', error);
+      }
+    }
+
+    // Export current data
+    function exportCurrentData() {
+      try {
+        worksheetTracker.exportToJSON();
+        showStatus('Export completed successfully!', 'success');
+      } catch (error) {
+        showStatus('Export failed: ' + error.message, 'error');
+      }
+    }
+
+    // Import data from file
+    function importData(input) {
+      const file = input.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const data = JSON.parse(e.target.result);
+          
+          // Validate the data structure
+          if (!data.worksheets || !data.studentInfo) {
+            throw new Error('Invalid file format. Please use a JSON file exported from this app.');
+          }
+
+          // Clear existing data
+          worksheetTracker.clearAllProgress();
+
+          // Import student info
+          if (data.studentInfo.name) {
+            localStorage.setItem('student-name', data.studentInfo.name);
+          }
+          if (data.studentInfo.id) {
+            localStorage.setItem('student-id', data.studentInfo.id);
+          }
+
+          // Import worksheet data
+          Object.entries(data.worksheets).forEach(([key, progress]) => {
+            if (progress.answers) {
+              Object.entries(progress.answers).forEach(([questionNumber, answer]) => {
+                const [type, id] = key.split('-');
+                worksheetTracker.saveAnswer(parseInt(id), parseInt(questionNumber), answer, type);
+              });
+            }
+          });
+
+          showStatus('Import completed successfully! Your progress has been restored.', 'success');
+          
+          // Clear the file input
+          input.value = '';
+          
+          // Refresh the page to show updated data
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
+          
+        } catch (error) {
+          showStatus('Import failed: ' + error.message, 'error');
+          input.value = '';
+        }
+      };
+      
+      reader.readAsText(file);
+    }
+
+    // Clear all data (for testing)
+    function clearAllData() {
+      if (confirm('Are you sure you want to clear all progress data? This cannot be undone unless you have a backup.')) {
+        worksheetTracker.clearAllProgress();
+        showStatus('All data cleared. Use import to restore from backup.', 'warning');
+      }
+    }
+
+    // Show status messages
+    function showStatus(message, type) {
+      const statusDiv = document.getElementById('demoStatus');
+      statusDiv.textContent = message;
+      statusDiv.style.display = 'block';
+      
+      // Set color based on type
+      switch(type) {
+        case 'success':
+          statusDiv.style.background = 'linear-gradient(135deg, #1a2f1a 0%, #2d4a2d 100%)';
+          statusDiv.style.border = '1px solid #4CAF50';
+          statusDiv.style.color = '#4CAF50';
+          break;
+        case 'error':
+          statusDiv.style.background = 'linear-gradient(135deg, #2f1a1a 0%, #4a2d2d 100%)';
+          statusDiv.style.border = '1px solid #f44336';
+          statusDiv.style.color = '#f44336';
+          break;
+        case 'warning':
+          statusDiv.style.background = 'linear-gradient(135deg, #2f2f1a 0%, #4a4a2d 100%)';
+          statusDiv.style.border = '1px solid #ff9800';
+          statusDiv.style.color = '#ff9800';
+          break;
+      }
+      
+      // Hide after 5 seconds
+      setTimeout(() => {
+        statusDiv.style.display = 'none';
+      }, 5000);
+    }
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+      loadSettings();
+    });
+  </script>
+</body>
+</html> 

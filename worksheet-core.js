@@ -707,15 +707,25 @@ function submitAnswer(questionNumber) {
   const answerInput = document.querySelector(`[data-question="${questionNumber}"]`);
   if (!answerInput) return;
   
-  const answer = answerInput.value.trim();
-  if (!answer) {
-    alert('Please enter an answer before submitting.');
+  const selectedOption = document.querySelector(`input[name="question-${questionNumber}"]:checked`);
+  if (!selectedOption) {
+    alert('Please select an answer before submitting.');
     return;
   }
   
-  saveAnswer(questionNumber, answer);
+  const answer = selectedOption.value;
   
-  const submitBtn = answerInput.parentElement.querySelector('.submit-question-btn');
+  // Save with enhanced tracking if available
+  if (typeof worksheetTracker !== 'undefined') {
+    const worksheetId = getUrlParameter('id') || getWorksheetIdFromUrl();
+    const type = getUrlParameter('type') || 'maintenance';
+    worksheetTracker.saveAnswer(worksheetId, questionNumber, answer, type);
+  } else {
+    // Fallback to original save method
+    saveAnswer(questionNumber, answer);
+  }
+  
+  const submitBtn = answerInput.querySelector('.submit-question-btn');
   if (submitBtn) {
     submitBtn.textContent = 'Answer Saved!';
     submitBtn.style.background = '#4CAF50';
@@ -724,6 +734,19 @@ function submitAnswer(questionNumber) {
       submitBtn.style.background = '#4CAF50';
     }, 2000);
   }
+  
+  // Show correct answer if available
+  const correctAnswer = answerInput.querySelector('.correct-answer');
+  if (correctAnswer) {
+    correctAnswer.style.display = 'block';
+  }
+}
+
+// Helper function to get worksheet ID from URL
+function getWorksheetIdFromUrl() {
+  const path = window.location.pathname;
+  const match = path.match(/worksheet-(\d+)\.html/);
+  return match ? parseInt(match[1]) : 1;
 }
 
 function submitMultipleChoiceQuestion(questionId) {

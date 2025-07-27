@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="worksheet-tracking.js"></script>
 </head>
 <body>
   <!-- Navigation -->
@@ -32,7 +33,12 @@
             <i class="fas fa-exclamation-triangle"></i> CP6773
           </a>
         </li>
+        
         <li class="nav-item">
+          <a href="#" onclick="window.location='tracking-dashboard.html'" class="nav-link">
+            <i class="fas fa-chart-line"></i> PROGRESS
+          </a>
+        </li><li class="nav-item">
           <a href="#" onclick="window.location='settings.html'" class="nav-link">
             <i class="fas fa-gear"></i> SETTINGS
           </a>
@@ -337,95 +343,359 @@
     <div class="simulation-section">
       <h2 class="section-header"><i class="fas fa-chart-line"></i> 5. Interactive PID Control System</h2>
       
+      <!-- Educational Introduction -->
+      <div class="pid-education">
+        <div class="education-card">
+          <h3><i class="fas fa-lightbulb"></i> Understanding PID Control</h3>
+          <p><strong>PID (Proportional-Integral-Derivative)</strong> control is the most common control algorithm used in industrial automation. It continuously calculates an error value and applies a correction based on proportional, integral, and derivative terms.</p>
+          <p><strong>🎯 Conservative Tuning:</strong> The default values (P=0.8, I=0.15, D=0.05) are carefully selected to demonstrate stable, well-damped control with minimal overshoot and reliable settling. These very conservative values ensure the system stabilizes properly.</p>
+          
+          <div class="pid-components">
+            <div class="component">
+              <h4><i class="fas fa-percentage"></i> Proportional (P = 0.8)</h4>
+              <p>Provides gentle immediate response to errors. This very conservative value ensures stable, well-damped control with minimal overshoot.</p>
+            </div>
+            <div class="component">
+              <h4><i class="fas fa-plus-circle"></i> Integral (I = 0.15)</h4>
+              <p>Eliminates steady-state error very gradually. This very low value prevents any oscillations while slowly correcting offset.</p>
+            </div>
+            <div class="component">
+              <h4><i class="fas fa-chart-line"></i> Derivative (D = 0.05)</h4>
+              <p>Provides minimal damping to reduce overshoot. This very low value improves stability without any risk of noise amplification.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
       <!-- PID Tuning Section -->
       <div id="pid-tuning-container">
-        <h3>PID Tuning Controls</h3>
+        <h3><i class="fas fa-sliders-h"></i> PID Tuning Controls</h3>
+        
+        <!-- Real-time Parameter Display -->
+        <div class="parameter-display">
+          <div class="parameter-card">
+            <div class="parameter-header">
+              <i class="fas fa-bullseye"></i>
+              <span>Setpoint</span>
+            </div>
+            <div class="parameter-value" id="setpoint-display">50.0</div>
+            <div class="parameter-unit">%</div>
+          </div>
+          
+          <div class="parameter-card">
+            <div class="parameter-header">
+              <i class="fas fa-percentage"></i>
+              <span>Proportional (P)</span>
+            </div>
+            <div class="parameter-value" id="p-display">0.8</div>
+            <div class="parameter-unit">gain</div>
+          </div>
+          
+          <div class="parameter-card">
+            <div class="parameter-header">
+              <i class="fas fa-plus-circle"></i>
+              <span>Integral (I)</span>
+            </div>
+            <div class="parameter-value" id="i-display">0.15</div>
+            <div class="parameter-unit">gain</div>
+          </div>
+          
+          <div class="parameter-card">
+            <div class="parameter-header">
+              <i class="fas fa-chart-line"></i>
+              <span>Derivative (D)</span>
+            </div>
+            <div class="parameter-value" id="d-display">0.05</div>
+            <div class="parameter-unit">gain</div>
+          </div>
+        </div>
+        
+        <!-- Control Sliders -->
         <div class="pid-controls">
           <div class="control-group">
-            <label>Setpoint</label>
-            <input type="range" id="setpoint-slider" min="0" max="100" value="50">
+            <label><i class="fas fa-bullseye"></i> Setpoint (%)</label>
+            <div class="slider-container">
+              <input type="range" id="setpoint-slider" min="0" max="100" value="50" class="modern-slider">
+              <div class="slider-track">
+                <div class="slider-fill" id="setpoint-fill"></div>
+              </div>
+            </div>
             <span id="setpoint-value">50</span>
           </div>
           
           <div class="control-group">
-            <label>Proportional (P)</label>
-            <input type="range" id="p-gain-slider" min="0" max="5" step="0.1" value="1.0">
-            <span id="p-gain-value">1.0</span>
+            <label><i class="fas fa-percentage"></i> Proportional (P)</label>
+            <div class="slider-container">
+              <input type="range" id="p-gain-slider" min="0" max="5" step="0.1" value="0.8" class="modern-slider">
+              <div class="slider-track">
+                <div class="slider-fill" id="p-fill"></div>
+              </div>
+            </div>
+            <span id="p-gain-value">0.8</span>
           </div>
           
           <div class="control-group">
-            <label>Integral (I)</label>
-            <input type="range" id="i-gain-slider" min="0" max="2" step="0.01" value="0.1">
-            <span id="i-gain-value">0.1</span>
+            <label><i class="fas fa-plus-circle"></i> Integral (I)</label>
+            <div class="slider-container">
+              <input type="range" id="i-gain-slider" min="0" max="2" step="0.01" value="0.15" class="modern-slider">
+              <div class="slider-track">
+                <div class="slider-fill" id="i-fill"></div>
+              </div>
+            </div>
+            <span id="i-gain-value">0.15</span>
           </div>
           
           <div class="control-group">
-            <label>Derivative (D)</label>
-            <input type="range" id="d-gain-slider" min="0" max="1" step="0.01" value="0.05">
+            <label><i class="fas fa-chart-line"></i> Derivative (D)</label>
+            <div class="slider-container">
+              <input type="range" id="d-gain-slider" min="0" max="1" step="0.01" value="0.05" class="modern-slider">
+              <div class="slider-track">
+                <div class="slider-fill" id="d-fill"></div>
+              </div>
+            </div>
             <span id="d-gain-value">0.05</span>
-          </div>
-          
-          <div class="control-buttons">
-            <button id="start-simulation-btn">Start Simulation</button>
-            <button id="reset-pid-btn">Reset to Defaults</button>
           </div>
         </div>
         
+        <!-- Control Buttons -->
+        <div class="control-buttons">
+          <button id="start-simulation-btn" class="btn-primary">
+            <i class="fas fa-play"></i> Start Simulation
+          </button>
+          <button id="reset-pid-btn" class="btn-secondary">
+            <i class="fas fa-undo"></i> Reset to Defaults
+          </button>
+          <button id="add-disturbance-btn" class="btn-warning">
+            <i class="fas fa-bolt"></i> Add Disturbance
+          </button>
+        </div>
+        
+        <!-- Enhanced Chart Container -->
         <div class="pid-chart-container">
+          <div class="chart-header">
+            <h4><i class="fas fa-chart-line"></i> System Response</h4>
+            <div class="chart-legend">
+              <div class="legend-item">
+                <div class="legend-color setpoint-color"></div>
+                <span>Setpoint</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-color process-color"></div>
+                <span>Process Variable</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-color error-color"></div>
+                <span>Error</span>
+              </div>
+            </div>
+          </div>
           <canvas id="pid-chart" width="800" height="400"></canvas>
+        </div>
+        
+        <!-- Educational Note about Error Values -->
+        <div class="educational-note">
+          <div class="error-info-header" onclick="toggleErrorInfo()">
+            <h5><i class="fas fa-info-circle"></i> Understanding Error Values</h5>
+            <i class="fas fa-chevron-down" id="error-info-icon"></i>
+          </div>
+          <div class="error-info-content" id="error-info-content">
+            <p><strong>Error = Setpoint - Process Variable</strong></p>
+            <ul>
+              <li><strong>Positive Error:</strong> Process Variable is below Setpoint (system needs to increase)</li>
+              <li><strong>Negative Error:</strong> Process Variable is above Setpoint (overshoot - system needs to decrease)</li>
+              <li><strong>Zero Error:</strong> Process Variable matches Setpoint (perfect control)</li>
+            </ul>
+            <p><em>Note: Negative error values are normal in PID control and indicate overshoot, which the controller will correct.</em></p>
+          </div>
         </div>
       </div>
       
       <!-- System Response Analysis Section -->
       <div id="response-analysis-container">
-        <h3>System Response Analysis</h3>
+        <h3><i class="fas fa-analytics"></i> System Response Analysis</h3>
+        
+        <!-- Real-time Performance Metrics -->
         <div class="response-metrics">
           <div class="metric-card">
-            <h4>Rise Time</h4>
-            <p id="rise-time">--</p>
+            <div class="metric-icon">
+              <i class="fas fa-arrow-up"></i>
+            </div>
+            <div class="metric-content">
+              <h4>Rise Time</h4>
+              <p id="rise-time">--</p>
+              <small>Time to reach 90% of setpoint</small>
+            </div>
           </div>
+          
           <div class="metric-card">
-            <h4>Settling Time</h4>
-            <p id="settling-time">--</p>
+            <div class="metric-icon">
+              <i class="fas fa-clock"></i>
+            </div>
+            <div class="metric-content">
+              <h4>Settling Time</h4>
+              <p id="settling-time">--</p>
+              <small>Time to stay within ±2% of setpoint</small>
+            </div>
           </div>
+          
           <div class="metric-card">
-            <h4>Overshoot</h4>
-            <p id="overshoot">--</p>
+            <div class="metric-icon">
+              <i class="fas fa-chart-area"></i>
+            </div>
+            <div class="metric-content">
+              <h4>Overshoot</h4>
+              <p id="overshoot">--</p>
+              <small>Maximum deviation above setpoint</small>
+            </div>
           </div>
+          
           <div class="metric-card">
-            <h4>Steady State Error</h4>
-            <p id="steady-state-error">--</p>
+            <div class="metric-icon">
+              <i class="fas fa-bullseye"></i>
+            </div>
+            <div class="metric-content">
+              <h4>Steady State Error</h4>
+              <p id="steady-state-error">--</p>
+              <small>Final offset from setpoint</small>
+            </div>
           </div>
         </div>
+        
+        <!-- Educational Tips -->
         <div class="response-tips">
-          <h4>Response Characteristics:</h4>
-          <ul>
-            <li><strong>Fast Rise Time:</strong> High P gain, but may cause overshoot</li>
-            <li><strong>Low Overshoot:</strong> Moderate P gain with some D gain</li>
-            <li><strong>No Steady State Error:</strong> Include I gain to eliminate offset</li>
-            <li><strong>Stable Response:</strong> Balance all three parameters</li>
-          </ul>
+          <h4><i class="fas fa-lightbulb"></i> Tuning Guidelines:</h4>
+          <div class="tips-grid">
+            <div class="tip-item">
+              <div class="tip-icon">
+                <i class="fas fa-percentage"></i>
+              </div>
+              <div class="tip-content">
+                <h5>Proportional (P)</h5>
+                <ul>
+                  <li><strong>Too Low:</strong> Slow response, steady-state error</li>
+                  <li><strong>Too High:</strong> Oscillations, overshoot</li>
+                  <li><strong>Optimal (0.8):</strong> Stable response with minimal overshoot</li>
+                </ul>
+              </div>
+            </div>
+            
+            <div class="tip-item">
+              <div class="tip-icon">
+                <i class="fas fa-plus-circle"></i>
+              </div>
+              <div class="tip-content">
+                <h5>Integral (I)</h5>
+                <ul>
+                  <li><strong>Too Low:</strong> Persistent steady-state error</li>
+                  <li><strong>Too High:</strong> Slow response, oscillations</li>
+                  <li><strong>Optimal (0.15):</strong> Eliminates offset without instability</li>
+                </ul>
+              </div>
+            </div>
+            
+            <div class="tip-item">
+              <div class="tip-icon">
+                <i class="fas fa-chart-line"></i>
+              </div>
+              <div class="tip-content">
+                <h5>Derivative (D)</h5>
+                <ul>
+                  <li><strong>Too Low:</strong> Overshoot, slow settling</li>
+                  <li><strong>Too High:</strong> Noise amplification, instability</li>
+                  <li><strong>Optimal (0.05):</strong> Reduces overshoot, improves stability</li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       
       <!-- PID Tuning Challenges Section -->
       <div id="challenges-container">
-        <h3>PID Tuning Challenges</h3>
+        <h3><i class="fas fa-trophy"></i> Industrial PID Tuning Challenges</h3>
         <div class="challenge-list">
           <div class="challenge-item">
-            <h4>Challenge 1: Aggressive Response</h4>
-            <p>Set the setpoint to 80 and tune the PID parameters to achieve a fast response with minimal overshoot (less than 5%).</p>
-            <button class="challenge-btn" onclick="loadChallenge(1)">Load Challenge</button>
+            <div class="challenge-header">
+              <div class="challenge-icon">
+                <i class="fas fa-rocket"></i>
+              </div>
+              <div class="challenge-info">
+                <h4>Challenge 1: Temperature Control System</h4>
+                <p class="challenge-description">Industrial heating system needs fast response to temperature changes. Tune for quick recovery with minimal overshoot.</p>
+              </div>
+            </div>
+            <div class="challenge-details">
+              <div class="challenge-params">
+                <span><strong>Setpoint:</strong> 75°C</span>
+                <span><strong>Target:</strong> Rise time < 30s, Overshoot < 3%</span>
+              </div>
+              <button class="challenge-btn" onclick="loadChallenge(1)">
+                <i class="fas fa-play"></i> Load Challenge
+              </button>
+            </div>
           </div>
+          
           <div class="challenge-item">
-            <h4>Challenge 2: Disturbance Rejection</h4>
-            <p>Tune the system to maintain the setpoint at 50 despite external disturbances. The system should recover quickly.</p>
-            <button class="challenge-btn" onclick="loadChallenge(2)">Load Challenge</button>
+            <div class="challenge-header">
+              <div class="challenge-icon">
+                <i class="fas fa-shield-alt"></i>
+              </div>
+              <div class="challenge-info">
+                <h4>Challenge 2: Flow Control with Disturbances</h4>
+                <p class="challenge-description">Chemical process flow control system. Must maintain setpoint despite pump variations and valve wear.</p>
+              </div>
+            </div>
+            <div class="challenge-details">
+              <div class="challenge-params">
+                <span><strong>Setpoint:</strong> 60 L/min</span>
+                <span><strong>Target:</strong> Disturbance rejection, stable operation</span>
+              </div>
+              <button class="challenge-btn" onclick="loadChallenge(2)">
+                <i class="fas fa-play"></i> Load Challenge
+              </button>
+            </div>
           </div>
+          
           <div class="challenge-item">
-            <h4>Challenge 3: Conservative Tuning</h4>
-            <p>Create a slow but stable response with no overshoot. This is useful for processes that cannot tolerate overshoot.</p>
-            <button class="challenge-btn" onclick="loadChallenge(3)">Load Challenge</button>
+            <div class="challenge-header">
+              <div class="challenge-icon">
+                <i class="fas fa-balance-scale"></i>
+              </div>
+              <div class="challenge-info">
+                <h4>Challenge 3: Pressure Control (No Overshoot)</h4>
+                <p class="challenge-description">Safety-critical pressure control system. Cannot tolerate any overshoot due to safety requirements.</p>
+              </div>
+            </div>
+            <div class="challenge-details">
+              <div class="challenge-params">
+                <span><strong>Setpoint:</strong> 2.5 bar</span>
+                <span><strong>Target:</strong> Zero overshoot, stable operation</span>
+              </div>
+              <button class="challenge-btn" onclick="loadChallenge(3)">
+                <i class="fas fa-play"></i> Load Challenge
+              </button>
+            </div>
+          </div>
+          
+          <div class="challenge-item">
+            <div class="challenge-header">
+              <div class="challenge-icon">
+                <i class="fas fa-cogs"></i>
+              </div>
+              <div class="challenge-info">
+                <h4>Challenge 4: Level Control System</h4>
+                <p class="challenge-description">Tank level control with varying inlet flow rates. Must handle both fast and slow disturbances.</p>
+              </div>
+            </div>
+            <div class="challenge-details">
+              <div class="challenge-params">
+                <span><strong>Setpoint:</strong> 80% level</span>
+                <span><strong>Target:</strong> Adaptive response, minimal oscillation</span>
+              </div>
+              <button class="challenge-btn" onclick="loadChallenge(4)">
+                <i class="fas fa-play"></i> Load Challenge
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -444,9 +714,26 @@
   <script>
     // Initialize PID simulation
     document.addEventListener('DOMContentLoaded', function() {
-      initializePIDControls();
-      initializeStepTracking();
-      loadSavedAnswers();
+      console.log('Worksheet 1 loaded, initializing PID controls...');
+      
+      // Check if Chart.js is loaded
+      if (typeof Chart === 'undefined') {
+        console.error('ERROR: Chart.js is not loaded!');
+        alert('Chart.js library failed to load. Please refresh the page.');
+        return;
+      } else {
+        console.log('SUCCESS: Chart.js is loaded');
+      }
+      
+      try {
+        initializePIDControls();
+        initializeStepTracking();
+        loadSavedAnswers();
+        console.log('SUCCESS: All initialization completed');
+      } catch (error) {
+        console.error('ERROR during initialization:', error);
+        alert('Error initializing PID controls: ' + error.message);
+      }
     });
     
     // PID simulation variables
@@ -458,21 +745,56 @@
     
     // Initialize PID controls
     function initializePIDControls() {
-      // Update slider values
+      console.log('Initializing PID controls...');
+      
+      // Check if all required elements exist
+      const requiredElements = [
+        'setpoint-slider', 'setpoint-value',
+        'p-gain-slider', 'p-gain-value',
+        'i-gain-slider', 'i-gain-value',
+        'd-gain-slider', 'd-gain-value',
+        'start-simulation-btn', 'reset-pid-btn',
+        'pid-chart'
+      ];
+      
+      for (const elementId of requiredElements) {
+        const element = document.getElementById(elementId);
+        if (!element) {
+          console.error('ERROR: Required element not found:', elementId);
+          alert('Required element not found: ' + elementId);
+          return;
+        }
+      }
+      
+      console.log('SUCCESS: All required elements found');
+      
+      // Update slider values and parameter displays
       document.getElementById('setpoint-slider').addEventListener('input', function() {
-        document.getElementById('setpoint-value').textContent = this.value;
+        const value = this.value;
+        document.getElementById('setpoint-value').textContent = value;
+        document.getElementById('setpoint-display').textContent = parseFloat(value).toFixed(1);
+        updateSliderFill('setpoint-fill', value, 100);
       });
       
       document.getElementById('p-gain-slider').addEventListener('input', function() {
-        document.getElementById('p-gain-value').textContent = this.value;
+        const value = this.value;
+        document.getElementById('p-gain-value').textContent = value;
+        document.getElementById('p-display').textContent = parseFloat(value).toFixed(1);
+        updateSliderFill('p-fill', value, 5);
       });
       
       document.getElementById('i-gain-slider').addEventListener('input', function() {
-        document.getElementById('i-gain-value').textContent = this.value;
+        const value = this.value;
+        document.getElementById('i-gain-value').textContent = value;
+        document.getElementById('i-display').textContent = parseFloat(value).toFixed(2);
+        updateSliderFill('i-fill', value, 2);
       });
       
       document.getElementById('d-gain-slider').addEventListener('input', function() {
-        document.getElementById('d-gain-value').textContent = this.value;
+        const value = this.value;
+        document.getElementById('d-gain-value').textContent = value;
+        document.getElementById('d-display').textContent = parseFloat(value).toFixed(2);
+        updateSliderFill('d-fill', value, 1);
       });
       
       // Start simulation button
@@ -489,121 +811,198 @@
         resetPIDDefaults();
       });
       
+      // Add disturbance button
+      document.getElementById('add-disturbance-btn').addEventListener('click', function() {
+        addDisturbance();
+      });
+      
       // Initialize chart
       initializePIDChart();
+      
+      // Initialize slider fills
+      updateSliderFill('setpoint-fill', 50, 100);
+      updateSliderFill('p-fill', 0.8, 5);
+      updateSliderFill('i-fill', 0.15, 2);
+      updateSliderFill('d-fill', 0.05, 1);
+      
+      // Initialize error info dropdown as collapsed
+      document.getElementById('error-info-content').style.display = 'none';
     }
     
-    // Initialize PID chart
+    // Update slider fill visualization
+    function updateSliderFill(fillId, value, max) {
+      const fillElement = document.getElementById(fillId);
+      if (fillElement) {
+        const percentage = (value / max) * 100;
+        fillElement.style.width = percentage + '%';
+      }
+    }
+    
+        // Initialize PID chart
     function initializePIDChart() {
-      const ctx = document.getElementById('pid-chart').getContext('2d');
-      pidChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: [],
-          datasets: [{
-            label: 'Setpoint',
-            data: [],
-            borderColor: '#FF5722',
-            backgroundColor: 'rgba(255, 87, 34, 0.1)',
-            borderWidth: 3,
-            fill: false,
-            tension: 0.1,
-            pointRadius: 0,
-            pointHoverRadius: 4
-          }, {
-            label: 'Process Variable',
-            data: [],
-            borderColor: 'var(--accent-color)',
-            backgroundColor: 'var(--accent-shadow-light)',
-            borderWidth: 3,
-            fill: false,
-            tension: 0.1,
-            pointRadius: 0,
-            pointHoverRadius: 4
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          animation: {
-            duration: 0
+      console.log('Initializing PID chart...');
+      try {
+        const ctx = document.getElementById('pid-chart').getContext('2d');
+        console.log('SUCCESS: Got chart context');
+        
+        pidChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: [],
+            datasets: [{
+              label: 'Setpoint',
+              data: [],
+              borderColor: '#FF5722',
+              backgroundColor: 'rgba(255, 87, 34, 0.1)',
+              borderWidth: 3,
+              fill: false,
+              tension: 0.2,
+              pointRadius: 0,
+              pointHoverRadius: 6,
+              pointHoverBackgroundColor: '#FF5722',
+              pointHoverBorderColor: '#FFFFFF',
+              pointHoverBorderWidth: 2
+            }, {
+              label: 'Process Variable',
+              data: [],
+              borderColor: '#4CAF50',
+              backgroundColor: 'rgba(76, 175, 80, 0.1)',
+              borderWidth: 3,
+              fill: false,
+              tension: 0.2,
+              pointRadius: 0,
+              pointHoverRadius: 6,
+              pointHoverBackgroundColor: '#4CAF50',
+              pointHoverBorderColor: '#FFFFFF',
+              pointHoverBorderWidth: 2
+            }, {
+              label: 'Error',
+              data: [],
+              borderColor: '#FFC107',
+              backgroundColor: 'rgba(255, 193, 7, 0.1)',
+              borderWidth: 2,
+              fill: false,
+              tension: 0.2,
+              pointRadius: 0,
+              pointHoverRadius: 4,
+              pointHoverBackgroundColor: '#FFC107',
+              pointHoverBorderColor: '#FFFFFF',
+              pointHoverBorderWidth: 2
+            }]
           },
-          plugins: {
-            legend: {
-              labels: {
-                color: '#FFFFFF',
-                font: {
+                  options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            aspectRatio: 2,
+            animation: {
+              duration: 0
+            },
+            plugins: {
+              legend: {
+                display: false // We have our own legend in the header
+              },
+              tooltip: {
+                backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                titleColor: '#FFFFFF',
+                bodyColor: '#FFFFFF',
+                borderColor: '#555',
+                borderWidth: 1,
+                cornerRadius: 8,
+                displayColors: true,
+                titleFont: {
                   size: 14,
                   weight: 'bold'
                 },
-                usePointStyle: true,
-                pointStyle: 'circle'
-              },
-              position: 'top'
-            },
-            tooltip: {
-              backgroundColor: 'rgba(0, 0, 0, 0.8)',
-              titleColor: '#FFFFFF',
-              bodyColor: '#FFFFFF',
-              borderColor: '#555',
-              borderWidth: 1,
-              cornerRadius: 8,
-              displayColors: true
-            }
-          },
-          scales: {
-            x: {
-              title: {
-                display: true,
-                text: 'Time (s)',
-                color: '#FFFFFF',
-                font: {
-                  size: 14,
-                  weight: 'bold'
-                }
-              },
-              ticks: {
-                color: '#FFFFFF',
-                font: {
-                  size: 12
-                }
-              },
-              grid: {
-                color: 'rgba(255, 255, 255, 0.1)',
-                drawBorder: false
-              }
-            },
-            y: {
-              title: {
-                display: true,
-                text: 'Value (%)',
-                color: '#FFFFFF',
-                font: {
-                  size: 14,
-                  weight: 'bold'
-                }
-              },
-              min: 0,
-              max: 100,
-              ticks: {
-                color: '#FFFFFF',
-                font: {
-                  size: 12
+                bodyFont: {
+                  size: 13
                 },
-                stepSize: 20
-              },
-              grid: {
-                color: 'rgba(255, 255, 255, 0.1)',
-                drawBorder: false
+                padding: 12,
+                callbacks: {
+                  label: function(context) {
+                    let label = context.dataset.label || '';
+                    if (label) {
+                      label += ': ';
+                    }
+                    if (context.parsed.y !== null) {
+                      label += context.parsed.y.toFixed(2) + '%';
+                    }
+                    return label;
+                  }
+                }
               }
-            }
-          },
+            },
+                      scales: {
+              x: {
+                title: {
+                  display: true,
+                  text: 'Time (seconds)',
+                  color: '#CCCCCC',
+                  font: {
+                    size: 14,
+                    weight: 'bold'
+                  }
+                },
+                ticks: {
+                  color: '#CCCCCC',
+                  font: {
+                    size: 12
+                  },
+                  maxTicksLimit: 10
+                },
+                grid: {
+                  color: 'rgba(255, 255, 255, 0.05)',
+                  drawBorder: false,
+                  lineWidth: 1
+                },
+                border: {
+                  color: 'rgba(255, 255, 255, 0.1)'
+                }
+              },
+              y: {
+                title: {
+                  display: true,
+                  text: 'Value (%)',
+                  color: '#CCCCCC',
+                  font: {
+                    size: 14,
+                    weight: 'bold'
+                  }
+                },
+                min: -25,
+                max: 125,
+                ticks: {
+                  color: '#CCCCCC',
+                  font: {
+                    size: 12
+                  },
+                  stepSize: 25,
+                  callback: function(value) {
+                    return value + '%';
+                  }
+                },
+                grid: {
+                  color: 'rgba(255, 255, 255, 0.05)',
+                  drawBorder: false,
+                  lineWidth: 1,
+                  zeroLineColor: 'rgba(255, 255, 255, 0.2)',
+                  zeroLineWidth: 2
+                },
+                border: {
+                  color: 'rgba(255, 255, 255, 0.1)'
+                }
+              }
+            },
           interaction: {
             intersect: false,
             mode: 'index'
           }
         }
       });
+      console.log('SUCCESS: PID chart initialized');
+    } catch (error) {
+      console.error('ERROR: Failed to initialize PID chart:', error);
+      alert('Failed to initialize PID chart: ' + error.message);
+    }
     }
     
     // Start PID simulation
@@ -639,16 +1038,21 @@
         // Simple PID simulation
         const processVariable = simulatePIDResponse(setpoint, kp, ki, kd, time);
         
+        // Calculate error
+        const error = setpoint - processVariable;
+        
         // Add data to chart
         pidChart.data.labels.push(time);
         pidChart.data.datasets[0].data.push(setpoint);
         pidChart.data.datasets[1].data.push(processVariable);
+        pidChart.data.datasets[2].data.push(error);
         
         // Limit data points
         if (pidChart.data.labels.length > 100) {
           pidChart.data.labels.shift();
           pidChart.data.datasets[0].data.shift();
           pidChart.data.datasets[1].data.shift();
+          pidChart.data.datasets[2].data.shift();
         }
         
         pidChart.update('none');
@@ -692,9 +1096,10 @@
       
       // Add some realistic noise and disturbance
       const noise = (Math.random() - 0.5) * 1;
-      const disturbance = Math.sin(time * 0.05) * 2; // Slow disturbance
+      const slowDisturbance = Math.sin(time * 0.05) * 2; // Slow disturbance
+      const stepDisturbance = simulatePIDResponse.disturbance || 0; // Step disturbance
       
-      output += noise + disturbance;
+      output += noise + slowDisturbance + stepDisturbance;
       
       // Update previous values
       simulatePIDResponse.previousError = error;
@@ -708,19 +1113,47 @@
     function resetPIDDefaults() {
       document.getElementById('setpoint-slider').value = 50;
       document.getElementById('setpoint-value').textContent = '50';
-      document.getElementById('p-gain-slider').value = 1.0;
-      document.getElementById('p-gain-value').textContent = '1.0';
-      document.getElementById('i-gain-slider').value = 0.1;
-      document.getElementById('i-gain-value').textContent = '0.1';
+      document.getElementById('setpoint-display').textContent = '50.0';
+      updateSliderFill('setpoint-fill', 50, 100);
+      
+      document.getElementById('p-gain-slider').value = 0.8;
+      document.getElementById('p-gain-value').textContent = '0.8';
+      document.getElementById('p-display').textContent = '0.8';
+      updateSliderFill('p-fill', 0.8, 5);
+      
+      document.getElementById('i-gain-slider').value = 0.15;
+      document.getElementById('i-gain-value').textContent = '0.15';
+      document.getElementById('i-display').textContent = '0.15';
+      updateSliderFill('i-fill', 0.15, 2);
+      
       document.getElementById('d-gain-slider').value = 0.05;
       document.getElementById('d-gain-value').textContent = '0.05';
+      document.getElementById('d-display').textContent = '0.05';
+      updateSliderFill('d-fill', 0.05, 1);
       
       // Reset PID simulation state
       if (simulatePIDResponse.integral) simulatePIDResponse.integral = 0;
       if (simulatePIDResponse.previousError) simulatePIDResponse.previousError = 0;
       if (simulatePIDResponse.previousOutput) simulatePIDResponse.previousOutput = 0;
+      if (simulatePIDResponse.disturbance) simulatePIDResponse.disturbance = 0;
       
       stopPIDSimulation();
+    }
+    
+    // Toggle error info dropdown
+    function toggleErrorInfo() {
+      const content = document.getElementById('error-info-content');
+      const icon = document.getElementById('error-info-icon');
+      
+      if (content.style.display === 'none' || content.style.display === '') {
+        content.style.display = 'block';
+        icon.className = 'fas fa-chevron-up';
+        content.style.maxHeight = content.scrollHeight + 'px';
+      } else {
+        content.style.display = 'none';
+        icon.className = 'fas fa-chevron-down';
+        content.style.maxHeight = '0';
+      }
     }
     
     // Initialize step tracking
@@ -860,12 +1293,57 @@
       }
     }
     
+    // Add disturbance to simulation
+    function addDisturbance() {
+      if (!simulationRunning) {
+        alert('Please start the simulation first!');
+        return;
+      }
+      
+      // Add a step disturbance
+      simulatePIDResponse.disturbance = 15;
+      setTimeout(() => {
+        simulatePIDResponse.disturbance = 0;
+      }, 2000);
+      
+      console.log('Disturbance added to simulation');
+    }
+    
     // Load PID tuning challenges
     function loadChallenge(challengeNumber) {
       const challenges = {
-        1: { setpoint: 80, p: 2.0, i: 0.05, d: 0.1, description: 'Aggressive Response Challenge' },
-        2: { setpoint: 50, p: 1.5, i: 0.2, d: 0.05, description: 'Disturbance Rejection Challenge' },
-        3: { setpoint: 60, p: 0.8, i: 0.1, d: 0.2, description: 'Conservative Tuning Challenge' }
+        1: { 
+          setpoint: 75, 
+          p: 2.5, 
+          i: 0.08, 
+          d: 0.15, 
+          description: 'Temperature Control System',
+          target: 'Rise time < 30s, Overshoot < 3%'
+        },
+        2: { 
+          setpoint: 60, 
+          p: 1.8, 
+          i: 0.25, 
+          d: 0.08, 
+          description: 'Flow Control with Disturbances',
+          target: 'Disturbance rejection, stable operation'
+        },
+        3: { 
+          setpoint: 50, 
+          p: 0.6, 
+          i: 0.12, 
+          d: 0.25, 
+          description: 'Pressure Control (No Overshoot)',
+          target: 'Zero overshoot, stable operation'
+        },
+        4: { 
+          setpoint: 80, 
+          p: 1.2, 
+          i: 0.15, 
+          d: 0.18, 
+          description: 'Level Control System',
+          target: 'Adaptive response, minimal oscillation'
+        }
       };
       
       const challenge = challenges[challengeNumber];
@@ -873,14 +1351,27 @@
         // Set the parameters
         document.getElementById('setpoint-slider').value = challenge.setpoint;
         document.getElementById('setpoint-value').textContent = challenge.setpoint;
+        document.getElementById('setpoint-display').textContent = challenge.setpoint.toFixed(1);
+        updateSliderFill('setpoint-fill', challenge.setpoint, 100);
+        
         document.getElementById('p-gain-slider').value = challenge.p;
         document.getElementById('p-gain-value').textContent = challenge.p;
+        document.getElementById('p-display').textContent = challenge.p.toFixed(1);
+        updateSliderFill('p-fill', challenge.p, 5);
+        
         document.getElementById('i-gain-slider').value = challenge.i;
         document.getElementById('i-gain-value').textContent = challenge.i;
+        document.getElementById('i-display').textContent = challenge.i.toFixed(2);
+        updateSliderFill('i-fill', challenge.i, 2);
+        
         document.getElementById('d-gain-slider').value = challenge.d;
         document.getElementById('d-gain-value').textContent = challenge.d;
+        document.getElementById('d-display').textContent = challenge.d.toFixed(2);
+        updateSliderFill('d-fill', challenge.d, 1);
         
-        alert(`Loaded ${challenge.description}. Try to improve the response!`);
+        // Show challenge info
+        const challengeInfo = `${challenge.description}\n\nTarget: ${challenge.target}\n\nTry to improve the response by adjusting the PID parameters!`;
+        alert(challengeInfo);
       }
     }
     

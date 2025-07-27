@@ -8,6 +8,26 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">
   <style>
+    /* CSS Custom Properties for dynamic theming */
+    :root {
+      --accent-secondary: #3a8ce6;
+    }
+    
+    /* Main Container Layout */
+    .main-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 80vh;
+      padding: 20px;
+      background: #2d2d2d;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      max-width: 1400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
     .about-container {
       width: 100%;
       margin: 0;
@@ -16,6 +36,29 @@
       border-radius: 12px;
       border: 2px solid #333;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .main-container {
+        padding: 15px;
+        margin: 10px;
+      }
+      
+      .about-container {
+        padding: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .main-container {
+        padding: 10px;
+        margin: 5px;
+      }
+      
+      .about-container {
+        padding: 15px;
+      }
     }
 
     .about-header {
@@ -239,7 +282,7 @@
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      background: linear-gradient(135deg, var(--accent-color), #3a8ce6);
+      background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
       color: white;
       text-decoration: none;
       padding: 15px 30px;
@@ -250,7 +293,7 @@
     }
 
     .back-button:hover {
-      background: linear-gradient(135deg, #3a8ce6, var(--accent-color));
+      background: linear-gradient(135deg, var(--accent-secondary), var(--accent-color));
       transform: translateY(-2px);
       box-shadow: 0 4px 15px var(--accent-shadow);
     }
@@ -285,7 +328,7 @@
       display: inline-flex;
       align-items: center;
       gap: 12px;
-      background: linear-gradient(135deg, var(--accent-color), #3a8ce6);
+      background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
       color: white;
       text-decoration: none;
       padding: 18px 35px;
@@ -299,7 +342,7 @@
     }
 
     .email-button:hover {
-      background: linear-gradient(135deg, #3a8ce6, var(--accent-color));
+      background: linear-gradient(135deg, var(--accent-secondary), var(--accent-color));
       transform: translateY(-3px);
       box-shadow: 0 8px 25px var(--accent-shadow-heavy);
     }
@@ -560,7 +603,13 @@
             <i class="fas fa-exclamation-triangle"></i> CP6773
           </a>
         </li>
+        
         <li class="nav-item">
+          <a href="#" onclick="window.location='tracking-dashboard.html'" class="nav-link">
+            <i class="fas fa-chart-line"></i> PROGRESS
+          </a>
+        </li>
+<li class="nav-item">
           <a href="#" onclick="window.location='settings.html'" class="nav-link">
             <i class="fas fa-gear"></i> SETTINGS
           </a>
@@ -574,7 +623,9 @@
     </div>
   </nav>
 
-      <!-- About Content -->
+  <!-- Main Container -->
+  <div class="main-container">
+    <!-- About Content -->
     <div class="about-container">
       <div class="about-header">
         <h2 class="section-header"><i class="fas fa-info-circle"></i> About Matrix TSL</h2>
@@ -823,6 +874,7 @@
       </a>
     </div>
   </div>
+  </div>
 
   <script>
     // Image Slider Functionality
@@ -833,9 +885,13 @@
 
     function changeSlide(sliderId, direction) {
       const slider = document.getElementById(sliderId);
+      if (!slider) return; // Exit if slider doesn't exist
+      
       const images = slider.querySelectorAll('.slider-image');
       const dots = slider.querySelectorAll('.dot');
       const totalSlides = images.length;
+      
+      if (totalSlides === 0) return; // Exit if no images found
       
       slideIndexes[sliderId] += direction;
       
@@ -849,28 +905,40 @@
     }
 
     function currentSlide(sliderId, index) {
+      if (typeof index !== 'number' || index < 0) return; // Validate index
       slideIndexes[sliderId] = index;
       showSlide(sliderId, index);
     }
 
     function showSlide(sliderId, index) {
       const slider = document.getElementById(sliderId);
+      if (!slider) return; // Exit if slider doesn't exist
+      
       const images = slider.querySelectorAll('.slider-image');
       const dots = slider.querySelectorAll('.dot');
+      
+      if (images.length === 0) return; // Exit if no images found
       
       // Hide all images
       images.forEach(img => img.classList.remove('active'));
       dots.forEach(dot => dot.classList.remove('active'));
       
       // Show current image and dot
-      images[index].classList.add('active');
-      dots[index].classList.add('active');
+      if (images[index]) {
+        images[index].classList.add('active');
+      }
+      if (dots[index]) {
+        dots[index].classList.add('active');
+      }
     }
 
     // Auto-advance slides every 5 seconds
     function autoAdvanceSlides() {
       Object.keys(slideIndexes).forEach(sliderId => {
-        changeSlide(sliderId, 1);
+        const slider = document.getElementById(sliderId);
+        if (slider && slider.querySelectorAll('.slider-image').length > 0) {
+          changeSlide(sliderId, 1);
+        }
       });
     }
 
@@ -881,6 +949,28 @@
       // Auto-advance slides every 5 seconds
       setInterval(autoAdvanceSlides, 5000);
     });
+  </script>
+  <script>
+    // Apply user theme from localStorage
+    (function() {
+      const settings = JSON.parse(localStorage.getItem('appSettings')) || {};
+      if (settings.appBackground) document.documentElement.style.setProperty('--background-color', settings.appBackground);
+      if (settings.appAccent) {
+        document.documentElement.style.setProperty('--accent-color', settings.appAccent);
+        // Set secondary accent color based on primary accent
+        const accentColor = settings.appAccent;
+        // Create a slightly different shade for secondary accent
+        const secondaryColor = accentColor === '#4a9eff' ? '#3a8ce6' : 
+                              accentColor === '#9b59b6' ? '#8e44ad' : 
+                              accentColor === '#e74c3c' ? '#c0392b' : 
+                              accentColor === '#f39c12' ? '#e67e22' : 
+                              accentColor === '#27ae60' ? '#229954' : 
+                              accentColor === '#1abc9c' ? '#16a085' : 
+                              accentColor === '#34495e' ? '#2c3e50' : 
+                              accentColor === '#95a5a6' ? '#7f8c8d' : accentColor;
+        document.documentElement.style.setProperty('--accent-secondary', secondaryColor);
+      }
+    })();
   </script>
 </body>
 </html> 

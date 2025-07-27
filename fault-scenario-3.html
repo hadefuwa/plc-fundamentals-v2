@@ -6,7 +6,8 @@
   <title>Matrix TSL - Fault Scenario 3: CNC Coolant System Performance</title>
   <link rel="stylesheet" href="main.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">
+  <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">  <script src="worksheet-tracking.js"></script>
+
 </head>
 <body>
   <!-- Navigation -->
@@ -31,7 +32,12 @@
             <i class="fas fa-exclamation-triangle"></i> CP6773
           </a>
         </li>
+        
         <li class="nav-item">
+          <a href="#" onclick="window.location='tracking-dashboard.html'" class="nav-link">
+            <i class="fas fa-chart-line"></i> PROGRESS
+          </a>
+        </li><li class="nav-item">
           <a href="#" onclick="window.location='settings.html'" class="nav-link">
             <i class="fas fa-gear"></i> SETTINGS
           </a>
@@ -57,7 +63,7 @@
           </button>
         </div>
         <div class="worksheet-header-center">
-          <h1 class="worksheet-title">Fault Scenario 3 - CNC Coolant System Performance</h1>
+          <h1 class="worksheet-title">Fault Scenario 3 - Bad Flow</h1>
         </div>
         <div class="worksheet-header-right">
           <button class="worksheet-nav-btn worksheet-next-btn" onclick="window.location.href='fault-scenario-4.html'">
@@ -69,27 +75,27 @@
     </div>
     <!-- Introduction Section -->
     <div class="worksheet-section introduction-section">
-      <h2 class="section-header"><i class="fas fa-info-circle"></i> Scenario Overview</h2>
+      <h2 class="section-header"><i class="fas fa-info-circle"></i> Fault Scenario 3: Bad Flow</h2>
       <div class="worksheet-content">
         <div class="scenario-info">
           <div class="info-grid">
             <div class="info-item">
-              <strong>Company:</strong> Precision Manufacturing Inc.
+              <strong>Scenario:</strong> Bad Flow
             </div>
             <div class="info-item">
-              <strong>Process:</strong> High-precision CNC machining operations
+              <strong>Process:</strong> Flow sensor monitoring and control
             </div>
             <div class="info-item">
-              <strong>Shift:</strong> Investigation during day shift, problem occurs nights
+              <strong>Shift:</strong> Production shift during normal operation
             </div>
             <div class="info-item">
-              <strong>Urgency:</strong> Medium - Production quality declining, potential equipment damage
+              <strong>Urgency:</strong> Medium - System performance affected
             </div>
             <div class="info-item">
-              <strong>Difficulty:</strong> Intermediate
+              <strong>Difficulty:</strong> Beginner
             </div>
             <div class="info-item">
-              <strong>Time:</strong> 30-40 minutes
+              <strong>Time:</strong> 20-30 minutes
             </div>
           </div>
         </div>
@@ -97,57 +103,49 @@
         <div class="background-section">
           <div class="background-text">
             <div class="scenario-description">
-              <h3>Background</h3>
-              <p>You're called to investigate a CNC machining facility where multiple machines are reporting spindle temperature warnings.</p>
+              <h3>Scenario Background</h3>
+              <p>You're monitoring a flow system where the flow manometer gauge shows the system is delivering approximately 50 litres per minute too much flow.</p>
               
-              <p>The central coolant system that supplies all CNC machines shows normal pressure readings, but something isn't right.</p>
+              <p>The flow sensor on the I/O screen has an offset applied that is causing the system to deliver excessive flow rates. This is affecting system performance and efficiency.</p>
               
-              <p>Operators report that the issue started gradually over the past month, coinciding with increased production demands.</p>
+              <p>The flow readings are consistently higher than the expected values, and the system is not operating within normal parameters.</p>
               
-              <p>The facility recently increased production hours from 8 to 24 hours per day to meet customer demand.</p>
+              <p><strong>Industry Context:</strong> This kind of problem tends to occur in industry because flow issues can be caused by blockages, airlocks in the piping, pump cavitation, or partially closed valves. Wear and tear on pumps or leaks in the system can also reduce flow, while buildup of debris in filters or strainers can create unexpected restrictions. If these issues aren't identified and fixed, the system struggles to maintain proper flow rates, leading to unstable operation.</p>
             </div>
           </div>
           
           <div class="background-image">
-            <img src="assets/scenarios/cnc-cooling.png" alt="CNC Coolant System">
-            <figcaption>CNC Coolant System - Precision Manufacturing</figcaption>
+            <img src="assets/scenarios/cnc-cooling.png" alt="Flow Sensor System">
+            <figcaption>Flow Sensor System - Industrial Processing</figcaption>
           </div>
         </div>
 
         <div class="system-overview">
-          <h3>System Status</h3>
+          <h3>Initial System Status</h3>
           <div class="status-grid">
             <div class="status-item">
-              <span class="status-label">Coolant Temperature:</span>
-              <span class="status-value">28°C</span>
+              <span class="status-label">Expected Flow Rate:</span>
+              <span class="status-value">100 L/min</span>
             </div>
             <div class="status-item">
-              <span class="status-label">Target Temperature:</span>
-              <span class="status-value">22°C</span>
+              <span class="status-label">Actual Flow Rate:</span>
+              <span class="status-value warning">150 L/min</span>
             </div>
             <div class="status-item">
-              <span class="status-label">Coolant Pressure:</span>
-              <span class="status-value">4.2 bar</span>
+              <span class="status-label">Flow Offset:</span>
+              <span class="status-value error">+50 L/min</span>
             </div>
             <div class="status-item">
-              <span class="status-label">Target Pressure:</span>
-              <span class="status-value">4.0 bar</span>
+              <span class="status-label">System Performance:</span>
+              <span class="status-value warning">REDUCED</span>
             </div>
             <div class="status-item">
-              <span class="status-label">Flow Rate:</span>
-              <span class="status-value">85%</span>
+              <span class="status-label">Flow Sensor Status:</span>
+              <span class="status-value warning">OFFSET APPLIED</span>
             </div>
             <div class="status-item">
-              <span class="status-label">Target Flow Rate:</span>
-              <span class="status-value">100%</span>
-            </div>
-            <div class="status-item">
-              <span class="status-label">System Efficiency:</span>
-              <span class="status-value warning">DECLINING</span>
-            </div>
-            <div class="status-item">
-              <span class="status-label">Night Shift Performance:</span>
-              <span class="status-value warning">POOR</span>
+              <span class="status-label">Alarm Status:</span>
+              <span class="status-value warning">HIGH FLOW</span>
             </div>
           </div>
         </div>
@@ -235,25 +233,80 @@
       </div>
     </div>
 
-    <!-- Assessment Questions Section -->
+    <!-- Analysis Section -->
     <div class="worksheet-section questions-section">
-      <h2 class="section-header"><i class="fas fa-question-circle"></i> Assessment Questions</h2>
-      <div class="worksheet-content">
-        <div class="question-card">
-          <h3>Question 3.1</h3>
-          <p>Why might the temperature issues be more prominent during night shift?</p>
-          <div class="options">
-            <label><input type="radio" name="q3.1" value="0"> Night shift operators are less experienced</label>
-            <label><input type="radio" name="q3.1" value="1"> Ambient temperature is lower, affecting the cooling system</label>
-            <label><input type="radio" name="q3.1" value="2"> Heat buildup accumulates throughout the day with no cooling recovery time</label>
-            <label><input type="radio" name="q3.1" value="3"> Different CNC programs run at night</label>
+      <h2 class="section-header"><i class="fas fa-clipboard-list"></i> Fault Analysis Worksheet</h2>
+      <div class="questions-content">
+        <div class="analysis-section">
+          <h4>Observations:</h4>
+          <textarea class="answer-input" data-question="observations" placeholder="Record your observations of the system behavior, readings, and any unusual indicators..."></textarea>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer('observations')">Save Observations</button>
           </div>
-          <button onclick="submitAnswer('3.1')" class="submit-btn">Submit Answer</button>
+        </div>
+        
+        <div class="analysis-section">
+          <h4>Problem:</h4>
+          <textarea class="answer-input" data-question="problem" placeholder="Identify the root cause and describe the specific problem affecting the system..."></textarea>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer('problem')">Save Problem Analysis</button>
+          </div>
+        </div>
+        
+        <div class="analysis-section">
+          <h4>Solution:</h4>
+          <textarea class="answer-input" data-question="solution" placeholder="Describe the steps you would take to resolve the issue safely and effectively..."></textarea>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer('solution')">Save Solution</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
+  <style>
+    .analysis-section {
+      background: #333;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+    
+    .analysis-section h4 {
+      color: #4CAF50;
+      margin-bottom: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      border-bottom: 2px solid #4CAF50;
+      padding-bottom: 5px;
+    }
+    
+    .answer-input {
+      width: 100%;
+      height: 100px;
+      padding: 10px;
+      border: 1px solid #555;
+      border-radius: 4px;
+      background: #222;
+      color: #FFFFFF;
+      resize: vertical;
+    }
+    
+    .submit-question-btn {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    
+    .submit-question-btn:hover {
+      background: #45a049;
+    }
+  </style>
+  
   <script src="hmi-simulation.js"></script>
   <script src="plc-simulation.js"></script>
   <script src="pump-simulation.js"></script>
@@ -351,32 +404,44 @@
       resultsSection.scrollIntoView({ behavior: 'smooth' });
     }
     
-    function submitAnswer(questionId) {
-      const selectedOption = document.querySelector(`input[name="q${questionId}"]:checked`);
-      if (selectedOption) {
-        const answer = parseInt(selectedOption.value);
-        const correctAnswer = 2; // For question 3.1
+    // Submit answer
+    function submitAnswer(questionType) {
+      const input = document.querySelector(`[data-question="${questionType}"]`);
+      const answer = input.value.trim();
+      
+      if (answer) {
+        localStorage.setItem(`fault3_${questionType}`, answer);
         
-        if (answer === correctAnswer) {
-          alert('Correct! Heat buildup accumulates throughout the day with no cooling recovery time.');
-        } else {
-          alert('Incorrect. The correct answer is: Heat buildup accumulates throughout the day with no cooling recovery time.');
-        }
+        const button = event.target;
+        const originalText = button.textContent;
+        button.textContent = 'Saved!';
+        button.style.background = '#4CAF50';
         
-        // Save answer
-        localStorage.setItem(`fault-scenario-3-${questionId}`, answer);
+        setTimeout(() => {
+          button.textContent = originalText;
+        }, 2000);
       } else {
-        alert('Please select an answer before submitting.');
+        alert('Please enter content before saving.');
       }
+    }
+
+    // Load saved answers
+    function loadSavedAnswers() {
+      const questionTypes = ['observations', 'problem', 'solution'];
+      questionTypes.forEach(type => {
+        const saved = localStorage.getItem(`fault3_${type}`);
+        if (saved) {
+          const input = document.querySelector(`[data-question="${type}"]`);
+          if (input) {
+            input.value = saved;
+          }
+        }
+      });
     }
     
     // Load saved answers on page load
     document.addEventListener('DOMContentLoaded', function() {
-      const savedAnswer = localStorage.getItem('fault-scenario-3-3.1');
-      if (savedAnswer !== null) {
-        const radio = document.querySelector(`input[name="q3.1"][value="${savedAnswer}"]`);
-        if (radio) radio.checked = true;
-      }
+      loadSavedAnswers();
       
       // Initialize simulations
       setTimeout(() => {
