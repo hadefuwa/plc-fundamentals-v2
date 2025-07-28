@@ -330,335 +330,602 @@
     <div class="simulation-section">
       <h2 class="section-header"><i class="fas fa-desktop"></i> 3. Essential HMI Screens for Engineers</h2>
       <div class="worksheet-content">
-        <p><strong>These three HMI screens can significantly improve your efficiency as an engineer. Let's explore how each one helps with system monitoring and troubleshooting:</strong></p>
-
-        <!-- Screen Navigation -->
-        <div class="screen-navigation" style="display: flex; gap: 15px; margin-bottom: 20px;">
-          <button id="show-alarms" class="screen-nav-btn" style="flex: 1; padding: 15px; border-radius: 8px; background: linear-gradient(145deg, #FF5722, #F4511E); color: white; border: none; cursor: pointer; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1);" onclick="showScreen('alarms')">
-            <i class="fas fa-bell"></i> Alarms
-          </button>
-          <button id="show-setup" class="screen-nav-btn" style="flex: 1; padding: 15px; border-radius: 8px; background: linear-gradient(145deg, #2196F3, #1E88E5); color: white; border: none; cursor: pointer; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1);" onclick="showScreen('setup')">
-            <i class="fas fa-sliders"></i> Setup
-          </button>
-          <button id="show-trends" class="screen-nav-btn" style="flex: 1; padding: 15px; border-radius: 8px; background: linear-gradient(145deg, #4CAF50, #43A047); color: white; border: none; cursor: pointer; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1);" onclick="showScreen('trends')">
-            <i class="fas fa-chart-line"></i> Trends
-          </button>
+        <div class="intro-section" style="background: linear-gradient(145deg, #2196F3, #1976D2); color: white; padding: 25px; border-radius: 12px; margin-bottom: 40px; box-shadow: 0 4px 15px rgba(33, 150, 243, 0.2);">
+          <h3 style="margin: 0 0 15px 0; font-size: 24px;">
+            <i class="fas fa-lightbulb"></i> Essential HMI Screens for Engineers
+          </h3>
+          <p style="margin: 0; font-size: 16px; line-height: 1.6;">
+            These three HMI screens can significantly improve your efficiency as an engineer. Each screen serves a specific purpose in system monitoring and troubleshooting. Let's explore how to use them effectively.
+          </p>
         </div>
 
-        <!-- Alarms Screen -->
-        <div id="alarms-screen" class="hmi-screen" style="background: #1a1a1a; border-radius: 12px; padding: 20px; margin-bottom: 20px;">
-          <div class="screen-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-            <h3 style="color: #FF5722; margin: 0;"><i class="fas fa-bell"></i> Active Alarms</h3>
-            <div class="alarm-controls">
-              <button style="background: #333; color: white; border: none; padding: 8px 15px; border-radius: 4px; margin-left: 10px;">
-                <i class="fas fa-filter"></i> Filter
+                  <!-- Screen Guide Cards -->
+          <div class="screen-guides" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 40px;">
+            <!-- Alarms Guide -->
+            <div class="guide-card" style="background: #2a2a2a; border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 1px solid #333;">
+              <div style="margin-bottom: 15px;">
+                <i class="fas fa-bell" style="font-size: 24px; color: #FF5722;"></i>
+                <h4 style="margin: 10px 0; font-size: 18px; color: #FF5722;">Alarms Screen</h4>
+              </div>
+              <ul style="margin: 0; padding-left: 20px; color: #aaa; line-height: 1.6;">
+                <li>Monitor active alarms in real-time</li>
+                <li>Sort by priority (High, Medium, Low)</li>
+                <li>Acknowledge alarms after addressing them</li>
+                <li>Filter alarms by type or status</li>
+                <li>Export alarm history for analysis</li>
+              </ul>
+              <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #444;">
+                <p style="margin: 0; color: #FF5722; font-size: 14px;">
+                  <i class="fas fa-lightbulb"></i> <strong>Pro Tip:</strong> Use alarm patterns to identify recurring issues.
+                </p>
+              </div>
+            </div>
+
+            <!-- Setup Guide -->
+            <div class="guide-card" style="background: #2a2a2a; border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 1px solid #333;">
+              <div style="margin-bottom: 15px;">
+                <i class="fas fa-sliders" style="font-size: 24px; color: #2196F3;"></i>
+                <h4 style="margin: 10px 0; font-size: 18px; color: #2196F3;">Setup Screen</h4>
+              </div>
+              <ul style="margin: 0; padding-left: 20px; color: #aaa; line-height: 1.6;">
+                <li>Configure system safety limits</li>
+                <li>Adjust operational parameters</li>
+                <li>Save configurations for processes</li>
+                <li>Reset to factory defaults if needed</li>
+                <li>Document any changes made</li>
+              </ul>
+              <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #444;">
+                <p style="margin: 0; color: #2196F3; font-size: 14px;">
+                  <i class="fas fa-lightbulb"></i> <strong>Pro Tip:</strong> Always test after changing safety limits.
+                </p>
+              </div>
+            </div>
+
+            <!-- Trends Guide -->
+            <div class="guide-card" style="background: #2a2a2a; border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 1px solid #333;">
+              <div style="margin-bottom: 15px;">
+                <i class="fas fa-chart-line" style="font-size: 24px; color: #4CAF50;"></i>
+                <h4 style="margin: 10px 0; font-size: 18px; color: #4CAF50;">Trends Screen</h4>
+              </div>
+              <ul style="margin: 0; padding-left: 20px; color: #aaa; line-height: 1.6;">
+                <li>Monitor performance over time</li>
+                <li>Identify patterns and anomalies</li>
+                <li>Compare process variables</li>
+                <li>Export data for analysis</li>
+                <li>Use historical data for troubleshooting</li>
+              </ul>
+              <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #444;">
+                <p style="margin: 0; color: #4CAF50; font-size: 14px;">
+                  <i class="fas fa-lightbulb"></i> <strong>Pro Tip:</strong> Look for correlations between variables.
+                </p>
+              </div>
+            </div>
+          </div>
+
+        <!-- HMI Screen Container -->
+        <div class="hmi-container" style="display: flex; flex-direction: column; gap: 40px; margin: 20px 0;">
+          <!-- Common HMI Screen Style -->
+          <style>
+            .hmi-screen-frame {
+              background: #424242;
+              border: 12px solid #2a2a2a;
+              border-radius: 8px;
+              box-shadow: 
+                inset 0 0 0 2px #666,
+                0 0 0 4px #1a1a1a,
+                0 10px 20px rgba(0,0,0,0.3);
+              padding: 25px;
+              position: relative;
+            }
+            .hmi-screen-frame::before {
+              content: '';
+              position: absolute;
+              top: -8px;
+              left: -8px;
+              right: -8px;
+              bottom: -8px;
+              background: linear-gradient(45deg, #333, #1a1a1a);
+              border-radius: 4px;
+              z-index: -1;
+            }
+            .hmi-title-bar {
+              background: linear-gradient(to right, #1a1a1a, #333);
+              padding: 10px 15px;
+              margin: -25px -25px 20px -25px;
+              border-bottom: 4px solid #666;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            }
+            .hmi-title {
+              color: #00ccff;
+              font-size: 20px;
+              font-weight: bold;
+              text-shadow: 0 0 10px rgba(0, 204, 255, 0.5);
+              font-family: 'Segoe UI', sans-serif;
+            }
+            .hmi-status {
+              display: flex;
+              gap: 15px;
+              align-items: center;
+            }
+            .hmi-status-light {
+              width: 12px;
+              height: 12px;
+              border-radius: 50%;
+              border: 2px solid #666;
+            }
+            .hmi-status-light.active {
+              background: #4CAF50;
+              box-shadow: 0 0 10px #4CAF50;
+            }
+            .hmi-datetime {
+              color: #aaa;
+              font-size: 14px;
+              font-family: 'Consolas', monospace;
+            }
+            .hmi-footer {
+              background: linear-gradient(to right, #1a1a1a, #333);
+              padding: 10px 15px;
+              margin: 20px -25px -25px -25px;
+              border-top: 4px solid #666;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              color: #aaa;
+              font-size: 14px;
+              font-family: 'Segoe UI', sans-serif;
+            }
+            .hmi-button {
+              background: linear-gradient(145deg, #333, #2a2a2a);
+              border: 2px solid #666;
+              color: #fff;
+              padding: 8px 15px;
+              border-radius: 4px;
+              cursor: pointer;
+              font-weight: bold;
+              transition: all 0.3s ease;
+            }
+            .hmi-button:hover {
+              background: linear-gradient(145deg, #444, #333);
+              border-color: #888;
+            }
+            .hmi-button:active {
+              transform: translateY(1px);
+              box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+            }
+          </style>
+
+                  <!-- Alarms Screen -->
+          <div class="hmi-screen-frame">
+            <div class="hmi-title-bar">
+              <div class="hmi-title">
+                <i class="fas fa-bell"></i> ALARM MANAGEMENT
+              </div>
+              <div class="hmi-status">
+                <div class="hmi-status-light active"></div>
+                <div class="hmi-datetime">2024-02-15 10:15:22</div>
+              </div>
+            </div>
+            
+            <div class="alarm-controls" style="display: flex; gap: 10px; margin-bottom: 15px;">
+              <button class="hmi-button">
+                <i class="fas fa-filter"></i> Filter Alarms
               </button>
-              <button style="background: #333; color: white; border: none; padding: 8px 15px; border-radius: 4px; margin-left: 10px;">
+              <button class="hmi-button">
                 <i class="fas fa-check"></i> Acknowledge All
               </button>
+              <button class="hmi-button">
+                <i class="fas fa-history"></i> History
+              </button>
             </div>
-          </div>
           
-          <div class="alarm-list" style="background: #222; border-radius: 8px; overflow: hidden;">
-            <table style="width: 100%; border-collapse: collapse; color: white;">
-              <thead style="background: #333;">
-                <tr>
-                  <th style="padding: 12px; text-align: left;">Time</th>
-                  <th style="padding: 12px; text-align: left;">Priority</th>
-                  <th style="padding: 12px; text-align: left;">Description</th>
-                  <th style="padding: 12px; text-align: left;">Status</th>
-                  <th style="padding: 12px; text-align: left;">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr style="border-bottom: 1px solid #444;">
-                  <td style="padding: 12px;">10:15:22</td>
-                  <td style="padding: 12px;"><span style="background: #f44336; padding: 4px 8px; border-radius: 4px;">High</span></td>
-                  <td style="padding: 12px;">Tank Temperature Above Limit (45°C)</td>
-                  <td style="padding: 12px;">Active</td>
-                  <td style="padding: 12px;">
-                    <button style="background: #666; border: none; color: white; padding: 4px 8px; border-radius: 4px;">Acknowledge</button>
-                  </td>
-                </tr>
-                <tr style="border-bottom: 1px solid #444;">
-                  <td style="padding: 12px;">10:14:55</td>
-                  <td style="padding: 12px;"><span style="background: #ff9800; padding: 4px 8px; border-radius: 4px;">Medium</span></td>
-                  <td style="padding: 12px;">Flow Rate Below Minimum (0 L/h)</td>
-                  <td style="padding: 12px;">Active</td>
-                  <td style="padding: 12px;">
-                    <button style="background: #666; border: none; color: white; padding: 4px 8px; border-radius: 4px;">Acknowledge</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding: 12px;">10:12:30</td>
-                  <td style="padding: 12px;"><span style="background: #ff9800; padding: 4px 8px; border-radius: 4px;">Medium</span></td>
-                  <td style="padding: 12px;">Valve Position Mismatch</td>
-                  <td style="padding: 12px;">Acknowledged</td>
-                  <td style="padding: 12px;">
-                    <button style="background: #444; border: none; color: #888; padding: 4px 8px; border-radius: 4px;" disabled>Acknowledged</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                      <div class="alarm-list" style="background: #2a2a2a; border: 2px solid #666; border-radius: 4px; overflow: hidden;">
+              <table style="width: 100%; border-collapse: collapse; color: white; font-family: 'Segoe UI', sans-serif;">
+                <thead style="background: linear-gradient(to bottom, #444, #333);">
+                  <tr>
+                    <th style="padding: 12px; text-align: left; border-bottom: 2px solid #666;">Time</th>
+                    <th style="padding: 12px; text-align: left; border-bottom: 2px solid #666;">Priority</th>
+                    <th style="padding: 12px; text-align: left; border-bottom: 2px solid #666;">Description</th>
+                    <th style="padding: 12px; text-align: left; border-bottom: 2px solid #666;">Status</th>
+                    <th style="padding: 12px; text-align: left; border-bottom: 2px solid #666;">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom: 1px solid #444; background: rgba(244, 67, 54, 0.1);">
+                    <td style="padding: 12px;">10:15:22</td>
+                    <td style="padding: 12px;">
+                      <div style="background: #f44336; color: white; padding: 4px 8px; border-radius: 4px; display: inline-block; font-weight: bold; text-align: center; min-width: 80px; border: 1px solid #d32f2f;">
+                        HIGH
+                      </div>
+                    </td>
+                    <td style="padding: 12px;">Tank Temperature Above Limit (45°C)</td>
+                    <td style="padding: 12px;">
+                      <div style="color: #f44336; font-weight: bold;">
+                        <i class="fas fa-exclamation-triangle"></i> Active
+                      </div>
+                    </td>
+                    <td style="padding: 12px;">
+                      <button class="hmi-button" style="font-size: 12px;">
+                        <i class="fas fa-check"></i> Acknowledge
+                      </button>
+                    </td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid #444; background: rgba(255, 152, 0, 0.1);">
+                    <td style="padding: 12px;">10:14:55</td>
+                    <td style="padding: 12px;">
+                      <div style="background: #ff9800; color: white; padding: 4px 8px; border-radius: 4px; display: inline-block; font-weight: bold; text-align: center; min-width: 80px; border: 1px solid #f57c00;">
+                        MEDIUM
+                      </div>
+                    </td>
+                    <td style="padding: 12px;">Flow Rate Below Minimum (0 L/h)</td>
+                    <td style="padding: 12px;">
+                      <div style="color: #ff9800; font-weight: bold;">
+                        <i class="fas fa-exclamation-circle"></i> Active
+                      </div>
+                    </td>
+                    <td style="padding: 12px;">
+                      <button class="hmi-button" style="font-size: 12px;">
+                        <i class="fas fa-check"></i> Acknowledge
+                      </button>
+                    </td>
+                  </tr>
+                  <tr style="background: rgba(158, 158, 158, 0.1);">
+                    <td style="padding: 12px;">10:12:30</td>
+                    <td style="padding: 12px;">
+                      <div style="background: #ff9800; color: white; padding: 4px 8px; border-radius: 4px; display: inline-block; font-weight: bold; text-align: center; min-width: 80px; border: 1px solid #f57c00;">
+                        MEDIUM
+                      </div>
+                    </td>
+                    <td style="padding: 12px;">Valve Position Mismatch</td>
+                    <td style="padding: 12px;">
+                      <div style="color: #9e9e9e; font-weight: bold;">
+                        <i class="fas fa-check-circle"></i> Acknowledged
+                      </div>
+                    </td>
+                    <td style="padding: 12px;">
+                      <button class="hmi-button" style="font-size: 12px; opacity: 0.5;" disabled>
+                        <i class="fas fa-check"></i> Acknowledged
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="hmi-footer">
+              <div class="hmi-status">
+                <span><i class="fas fa-exclamation-triangle" style="color: #f44336;"></i> Active Alarms: 2</span>
+                <span><i class="fas fa-check-circle" style="color: #9e9e9e;"></i> Acknowledged: 1</span>
+              </div>
+              <div class="hmi-page-info">
+                Page 1/1 | Total Alarms: 3
+              </div>
+            </div>
+
           </div>
 
-          <div class="screen-explanation" style="margin-top: 20px; padding: 15px; background: #333; border-radius: 8px; color: #aaa;">
-            <h4 style="color: white; margin-top: 0;">How to Use the Alarms Screen:</h4>
-            <ul style="margin: 10px 0; padding-left: 20px;">
-              <li>Monitor active alarms in real-time</li>
-              <li>Sort by priority (High, Medium, Low) or time</li>
-              <li>Acknowledge alarms after addressing them</li>
-              <li>Filter alarms by type or status</li>
-              <li>Export alarm history for analysis</li>
-            </ul>
-            <p style="margin: 10px 0;">
-              <i class="fas fa-lightbulb" style="color: #FF5722;"></i> 
-              <strong style="color: white;">Pro Tip:</strong> Use alarm patterns to identify recurring issues and plan preventive maintenance.
-            </p>
-          </div>
-        </div>
-
-        <!-- Setup Screen -->
-        <div id="setup-screen" class="hmi-screen" style="display: none; background: #1a1a1a; border-radius: 12px; padding: 20px; margin-bottom: 20px;">
-          <div class="screen-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-            <h3 style="color: #2196F3; margin: 0;"><i class="fas fa-sliders"></i> System Setup</h3>
-            <div class="setup-controls">
-              <button style="background: #333; color: white; border: none; padding: 8px 15px; border-radius: 4px; margin-left: 10px;">
+                  <!-- Setup Screen -->
+          <div class="hmi-screen-frame">
+            <div class="hmi-title-bar">
+              <div class="hmi-title">
+                <i class="fas fa-sliders"></i> SYSTEM CONFIGURATION
+              </div>
+              <div class="hmi-status">
+                <div class="hmi-status-light active"></div>
+                <div class="hmi-datetime">2024-02-15 10:15:22</div>
+              </div>
+            </div>
+            
+            <div class="setup-controls" style="display: flex; gap: 10px; margin-bottom: 15px;">
+              <button class="hmi-button">
                 <i class="fas fa-save"></i> Save Changes
               </button>
-              <button style="background: #333; color: white; border: none; padding: 8px 15px; border-radius: 4px; margin-left: 10px;">
+              <button class="hmi-button">
                 <i class="fas fa-undo"></i> Reset Defaults
               </button>
-            </div>
-          </div>
-
-          <div class="setup-panels" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-            <!-- Temperature Settings -->
-            <div class="setup-panel" style="background: #222; padding: 15px; border-radius: 8px;">
-              <h4 style="color: white; margin-top: 0;">Temperature Control</h4>
-              <div class="setting-group" style="margin: 15px 0;">
-                <label style="display: block; color: #aaa; margin-bottom: 5px;">High Temperature Cutout</label>
-                <div style="display: flex; align-items: center; gap: 10px;">
-                  <input type="number" value="45" style="background: #333; border: 1px solid #444; color: white; padding: 8px; border-radius: 4px; width: 80px;">
-                  <span style="color: #aaa;">°C</span>
-                </div>
-              </div>
-              <div class="setting-group" style="margin: 15px 0;">
-                <label style="display: block; color: #aaa; margin-bottom: 5px;">Low Temperature Cutout</label>
-                <div style="display: flex; align-items: center; gap: 10px;">
-                  <input type="number" value="5" style="background: #333; border: 1px solid #444; color: white; padding: 8px; border-radius: 4px; width: 80px;">
-                  <span style="color: #aaa;">°C</span>
-                </div>
-              </div>
+              <button class="hmi-button">
+                <i class="fas fa-file-export"></i> Export Config
+              </button>
             </div>
 
-            <!-- Flow Settings -->
-            <div class="setup-panel" style="background: #222; padding: 15px; border-radius: 8px;">
-              <h4 style="color: white; margin-top: 0;">Flow Control</h4>
-              <div class="setting-group" style="margin: 15px 0;">
-                <label style="display: block; color: #aaa; margin-bottom: 5px;">Maximum Flow Rate</label>
-                <div style="display: flex; align-items: center; gap: 10px;">
-                  <input type="number" value="500" style="background: #333; border: 1px solid #444; color: white; padding: 8px; border-radius: 4px; width: 80px;">
-                  <span style="color: #aaa;">L/h</span>
+            <div class="setup-panels" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+              <!-- Temperature Settings -->
+              <div class="setup-panel" style="background: #2a2a2a; padding: 20px; border-radius: 4px; border: 2px solid #666;">
+                <h4 style="color: #00ccff; margin: 0 0 20px 0; font-family: 'Segoe UI', sans-serif; border-bottom: 2px solid #666; padding-bottom: 10px;">
+                  <i class="fas fa-thermometer-half"></i> Temperature Control
+                </h4>
+                <div class="setting-group" style="margin: 15px 0;">
+                  <label style="display: block; color: #fff; margin-bottom: 10px; font-family: 'Segoe UI', sans-serif;">
+                    High Temperature Cutout
+                  </label>
+                  <div style="display: flex; align-items: center; gap: 15px;">
+                    <input type="number" value="45" style="background: #333; border: 2px solid #666; color: #00ccff; padding: 10px; border-radius: 4px; width: 100px; font-size: 16px; font-family: 'Consolas', monospace;">
+                    <span style="color: #aaa; font-family: 'Segoe UI', sans-serif;">°C</span>
+                    <div style="background: #1a1a1a; padding: 5px 10px; border-radius: 4px; color: #666; font-size: 12px;">
+                      Range: 0-100°C
+                    </div>
+                  </div>
+                </div>
+                <div class="setting-group" style="margin: 15px 0;">
+                  <label style="display: block; color: #fff; margin-bottom: 10px; font-family: 'Segoe UI', sans-serif;">
+                    Low Temperature Cutout
+                  </label>
+                  <div style="display: flex; align-items: center; gap: 15px;">
+                    <input type="number" value="5" style="background: #333; border: 2px solid #666; color: #00ccff; padding: 10px; border-radius: 4px; width: 100px; font-size: 16px; font-family: 'Consolas', monospace;">
+                    <span style="color: #aaa; font-family: 'Segoe UI', sans-serif;">°C</span>
+                    <div style="background: #1a1a1a; padding: 5px 10px; border-radius: 4px; color: #666; font-size: 12px;">
+                      Range: 0-100°C
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div class="setting-group" style="margin: 15px 0;">
-                <label style="display: block; color: #aaa; margin-bottom: 5px;">Minimum Flow Rate</label>
-                <div style="display: flex; align-items: center; gap: 10px;">
-                  <input type="number" value="50" style="background: #333; border: 1px solid #444; color: white; padding: 8px; border-radius: 4px; width: 80px;">
-                  <span style="color: #aaa;">L/h</span>
+
+              <!-- Flow Settings -->
+              <div class="setup-panel" style="background: #2a2a2a; padding: 20px; border-radius: 4px; border: 2px solid #666;">
+                <h4 style="color: #00ccff; margin: 0 0 20px 0; font-family: 'Segoe UI', sans-serif; border-bottom: 2px solid #666; padding-bottom: 10px;">
+                  <i class="fas fa-tint"></i> Flow Control
+                </h4>
+                <div class="setting-group" style="margin: 15px 0;">
+                  <label style="display: block; color: #fff; margin-bottom: 10px; font-family: 'Segoe UI', sans-serif;">
+                    Maximum Flow Rate
+                  </label>
+                  <div style="display: flex; align-items: center; gap: 15px;">
+                    <input type="number" value="500" style="background: #333; border: 2px solid #666; color: #00ccff; padding: 10px; border-radius: 4px; width: 100px; font-size: 16px; font-family: 'Consolas', monospace;">
+                    <span style="color: #aaa; font-family: 'Segoe UI', sans-serif;">L/h</span>
+                    <div style="background: #1a1a1a; padding: 5px 10px; border-radius: 4px; color: #666; font-size: 12px;">
+                      Range: 0-1000 L/h
+                    </div>
+                  </div>
+                </div>
+                <div class="setting-group" style="margin: 15px 0;">
+                  <label style="display: block; color: #fff; margin-bottom: 10px; font-family: 'Segoe UI', sans-serif;">
+                    Minimum Flow Rate
+                  </label>
+                  <div style="display: flex; align-items: center; gap: 15px;">
+                    <input type="number" value="50" style="background: #333; border: 2px solid #666; color: #00ccff; padding: 10px; border-radius: 4px; width: 100px; font-size: 16px; font-family: 'Consolas', monospace;">
+                    <span style="color: #aaa; font-family: 'Segoe UI', sans-serif;">L/h</span>
+                    <div style="background: #1a1a1a; padding: 5px 10px; border-radius: 4px; color: #666; font-size: 12px;">
+                      Range: 0-1000 L/h
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
+
+            <div class="hmi-footer">
+              <div class="hmi-status">
+                <span><i class="fas fa-edit" style="color: #00ccff;"></i> Changes Made: 0</span>
+                <span><i class="fas fa-clock" style="color: #aaa;"></i> Last Save: 10:00:15</span>
+              </div>
+              <div class="hmi-page-info">
+                Page 1/3 | System Parameters
+              </div>
+            </div>
+
           </div>
 
-          <div class="screen-explanation" style="margin-top: 20px; padding: 15px; background: #333; border-radius: 8px; color: #aaa;">
-            <h4 style="color: white; margin-top: 0;">How to Use the Setup Screen:</h4>
-            <ul style="margin: 10px 0; padding-left: 20px;">
-              <li>Configure system safety limits</li>
-              <li>Adjust operational parameters</li>
-              <li>Save configurations for different processes</li>
-              <li>Reset to factory defaults if needed</li>
-              <li>Document any changes made</li>
-            </ul>
-            <p style="margin: 10px 0;">
-              <i class="fas fa-lightbulb" style="color: #2196F3;"></i> 
-              <strong style="color: white;">Pro Tip:</strong> Always document changes and test system response after adjusting safety limits.
-            </p>
-          </div>
-        </div>
-
-        <!-- Trends Screen -->
-        <div id="trends-screen" class="hmi-screen" style="display: none; background: #1a1a1a; border-radius: 12px; padding: 20px; margin-bottom: 20px;">
-          <div class="screen-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-            <h3 style="color: #4CAF50; margin: 0;"><i class="fas fa-chart-line"></i> System Trends</h3>
-            <div class="trend-controls">
-              <button style="background: #333; color: white; border: none; padding: 8px 15px; border-radius: 4px; margin-left: 10px;">
+                  <!-- Trends Screen -->
+          <div class="hmi-screen-frame">
+            <div class="hmi-title-bar">
+              <div class="hmi-title">
+                <i class="fas fa-chart-line"></i> TREND ANALYSIS
+              </div>
+              <div class="hmi-status">
+                <div class="hmi-status-light active"></div>
+                <div class="hmi-datetime">2024-02-15 10:15:22</div>
+              </div>
+            </div>
+            
+            <div class="trend-controls" style="display: flex; gap: 10px; margin-bottom: 15px;">
+              <button class="hmi-button">
                 <i class="fas fa-clock"></i> Time Range
               </button>
-              <button style="background: #333; color: white; border: none; padding: 8px 15px; border-radius: 4px; margin-left: 10px;">
+              <button class="hmi-button">
+                <i class="fas fa-chart-area"></i> Add Trend
+              </button>
+              <button class="hmi-button">
                 <i class="fas fa-download"></i> Export Data
               </button>
-            </div>
-          </div>
-
-          <div class="trend-graphs" style="display: grid; gap: 20px;">
-            <!-- Temperature Trend -->
-            <div class="trend-graph" style="background: #222; padding: 15px; border-radius: 8px;">
-              <h4 style="color: white; margin-top: 0;">Temperature Trend</h4>
-              <div class="graph-container" style="height: 200px; background: #333; border-radius: 4px; padding: 10px; position: relative;">
-                <canvas id="temperatureChart" style="width: 100%; height: 100%;"></canvas>
+              <div style="margin-left: auto; display: flex; align-items: center; gap: 15px; color: #aaa; font-family: 'Segoe UI', sans-serif;">
+                <span><i class="fas fa-history"></i> Update Rate: 1s</span>
+                <span><i class="fas fa-chart-line"></i> Time Span: 30s</span>
               </div>
             </div>
 
-            <!-- Flow Rate Trend -->
-            <div class="trend-graph" style="background: #222; padding: 15px; border-radius: 8px;">
-              <h4 style="color: white; margin-top: 0;">Flow Rate Trend</h4>
-              <div class="graph-container" style="height: 200px; background: #333; border-radius: 4px; padding: 10px; position: relative;">
-                <canvas id="flowChart" style="width: 100%; height: 100%;"></canvas>
+            <div class="trend-graphs" style="display: grid; gap: 20px;">
+              <!-- Temperature Trend -->
+              <div class="trend-graph" style="background: #2a2a2a; padding: 20px; border-radius: 4px; border: 2px solid #666;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                  <h4 style="color: #00ccff; margin: 0; font-family: 'Segoe UI', sans-serif;">
+                    <i class="fas fa-thermometer-half"></i> Temperature Trend
+                  </h4>
+                  <div style="display: flex; gap: 10px;">
+                    <button class="hmi-button" style="font-size: 12px; padding: 5px 10px;">
+                      <i class="fas fa-expand"></i>
+                    </button>
+                    <button class="hmi-button" style="font-size: 12px; padding: 5px 10px;">
+                      <i class="fas fa-cog"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="graph-container" style="height: 250px; background: #1a1a1a; border-radius: 4px; padding: 15px; position: relative; border: 1px solid #444;">
+                  <canvas id="temperatureChart" style="width: 100%; height: 100%;"></canvas>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-top: 10px; color: #aaa; font-size: 12px; font-family: 'Segoe UI', sans-serif;">
+                  <span>Min: 25°C</span>
+                  <span>Current: 45°C</span>
+                  <span>Max: 55°C</span>
+                </div>
+              </div>
+
+              <!-- Flow Rate Trend -->
+              <div class="trend-graph" style="background: #2a2a2a; padding: 20px; border-radius: 4px; border: 2px solid #666;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                  <h4 style="color: #00ccff; margin: 0; font-family: 'Segoe UI', sans-serif;">
+                    <i class="fas fa-tint"></i> Flow Rate Trend
+                  </h4>
+                  <div style="display: flex; gap: 10px;">
+                    <button class="hmi-button" style="font-size: 12px; padding: 5px 10px;">
+                      <i class="fas fa-expand"></i>
+                    </button>
+                    <button class="hmi-button" style="font-size: 12px; padding: 5px 10px;">
+                      <i class="fas fa-cog"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="graph-container" style="height: 250px; background: #1a1a1a; border-radius: 4px; padding: 15px; position: relative; border: 1px solid #444;">
+                  <canvas id="flowChart" style="width: 100%; height: 100%;"></canvas>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-top: 10px; color: #aaa; font-size: 12px; font-family: 'Segoe UI', sans-serif;">
+                  <span>Min: 0 L/h</span>
+                  <span>Current: 180 L/h</span>
+                  <span>Max: 500 L/h</span>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="screen-explanation" style="margin-top: 20px; padding: 15px; background: #333; border-radius: 8px; color: #aaa;">
-            <h4 style="color: white; margin-top: 0;">How to Use the Trends Screen:</h4>
-            <ul style="margin: 10px 0; padding-left: 20px;">
-              <li>Monitor system performance over time</li>
-              <li>Identify patterns and anomalies</li>
-              <li>Compare different process variables</li>
-              <li>Export data for detailed analysis</li>
-              <li>Use historical data for troubleshooting</li>
-            </ul>
-            <p style="margin: 10px 0;">
-              <i class="fas fa-lightbulb" style="color: #4CAF50;"></i> 
-              <strong style="color: white;">Pro Tip:</strong> Look for correlations between different variables to identify root causes of issues.
-            </p>
+            <div class="hmi-footer">
+              <div class="hmi-status">
+                <span><i class="fas fa-database" style="color: #00ccff;"></i> Logging Active</span>
+                <span><i class="fas fa-save" style="color: #aaa;"></i> Auto-save: 5min</span>
+              </div>
+              <div class="hmi-page-info">
+                Page 1/1 | Active Trends: 2
+              </div>
+            </div>
+
           </div>
-        </div>
       </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+      // Common chart configuration
+      const commonChartConfig = {
+        type: 'line',
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: {
+            duration: 750,
+            easing: 'linear'
+          },
+          interaction: {
+            intersect: false,
+            mode: 'index'
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: {
+                color: '#333',
+                borderColor: '#666',
+                tickColor: '#666'
+              },
+              ticks: {
+                color: '#aaa',
+                font: {
+                  family: "'Segoe UI', sans-serif",
+                  size: 11
+                },
+                padding: 10
+              },
+              border: {
+                color: '#666'
+              }
+            },
+            x: {
+              grid: {
+                color: '#333',
+                borderColor: '#666',
+                tickColor: '#666'
+              },
+              ticks: {
+                color: '#aaa',
+                font: {
+                  family: "'Segoe UI', sans-serif",
+                  size: 11
+                },
+                padding: 10
+              },
+              border: {
+                color: '#666'
+              }
+            }
+          },
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              backgroundColor: 'rgba(26, 26, 26, 0.9)',
+              titleColor: '#00ccff',
+              bodyColor: '#fff',
+              borderColor: '#666',
+              borderWidth: 1,
+              padding: 10,
+              titleFont: {
+                family: "'Segoe UI', sans-serif",
+                size: 12,
+                weight: 'bold'
+              },
+              bodyFont: {
+                family: "'Segoe UI', sans-serif",
+                size: 12
+              },
+              displayColors: false
+            }
+          }
+        }
+      };
+
       // Initialize charts when the DOM is loaded
       document.addEventListener('DOMContentLoaded', function() {
         // Temperature Chart
         const tempCtx = document.getElementById('temperatureChart').getContext('2d');
         const tempChart = new Chart(tempCtx, {
-          type: 'line',
+          ...commonChartConfig,
           data: {
-            labels: Array.from({length: 20}, (_, i) => i),
+            labels: Array.from({length: 30}, (_, i) => i),
             datasets: [{
-              label: 'Temperature °C',
-              data: [25,26,27,28,30,32,35,38,40,42,43,44,45,44,43,42,41,40,39,38],
-              borderColor: '#FF5722',
+              label: 'Temperature',
+              data: [25,26,27,28,30,32,35,38,40,42,43,44,45,44,43,42,41,40,39,38,37,36,35,34,33,32,31,30,29,28],
+              borderColor: '#00ccff',
+              borderWidth: 2,
               tension: 0.4,
-              fill: false
+              fill: true,
+              backgroundColor: 'rgba(0, 204, 255, 0.1)'
             }]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-              y: {
-                beginAtZero: true,
-                grid: {
-                  color: '#444'
-                },
-                ticks: {
-                  color: '#aaa'
-                }
-              },
-              x: {
-                grid: {
-                  color: '#444'
-                },
-                ticks: {
-                  color: '#aaa'
-                }
-              }
-            },
-            plugins: {
-              legend: {
-                labels: {
-                  color: '#aaa'
-                }
-              }
-            }
           }
         });
 
         // Flow Rate Chart
         const flowCtx = document.getElementById('flowChart').getContext('2d');
         const flowChart = new Chart(flowCtx, {
-          type: 'line',
+          ...commonChartConfig,
           data: {
-            labels: Array.from({length: 20}, (_, i) => i),
+            labels: Array.from({length: 30}, (_, i) => i),
             datasets: [{
-              label: 'Flow Rate L/h',
-              data: [250,248,245,240,235,230,220,210,200,180,150,120,90,60,30,0,0,0,0,0],
-              borderColor: '#2196F3',
+              label: 'Flow Rate',
+              data: [250,248,245,240,235,230,220,210,200,180,150,120,90,60,30,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+              borderColor: '#00ccff',
+              borderWidth: 2,
               tension: 0.4,
-              fill: false
+              fill: true,
+              backgroundColor: 'rgba(0, 204, 255, 0.1)'
             }]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-              y: {
-                beginAtZero: true,
-                grid: {
-                  color: '#444'
-                },
-                ticks: {
-                  color: '#aaa'
-                }
-              },
-              x: {
-                grid: {
-                  color: '#444'
-                },
-                ticks: {
-                  color: '#aaa'
-                }
-              }
-            },
-            plugins: {
-              legend: {
-                labels: {
-                  color: '#aaa'
-                }
-              }
-            }
           }
         });
       });
 
-      // Function to show different screens
-      function showScreen(screenName) {
-        // Hide all screens
-        document.querySelectorAll('.hmi-screen').forEach(screen => {
-          screen.style.display = 'none';
+      // Add spacing between HMI screens
+      document.addEventListener('DOMContentLoaded', function() {
+        const hmiScreens = document.querySelectorAll('.hmi-screen-frame');
+        hmiScreens.forEach(screen => {
+          screen.style.marginBottom = '40px';
         });
-        
-        // Show selected screen
-        document.getElementById(screenName + '-screen').style.display = 'block';
-        
-        // Update button styles
-        document.querySelectorAll('.screen-nav-btn').forEach(btn => {
-          btn.style.transform = 'none';
-          btn.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
-        });
-        
-        // Highlight active button
-        const activeBtn = document.getElementById('show-' + screenName);
-        activeBtn.style.transform = 'translateY(2px)';
-        activeBtn.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
-      }
-
-      // Show Alarms screen by default
-      showScreen('alarms');
+      });
     </script>
   </div>
 
