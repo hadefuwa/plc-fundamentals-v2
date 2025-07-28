@@ -89,7 +89,97 @@
       </div>
     </div>
 
+    <!-- Over To You Section -->
+    <div class="worksheet-section over-to-you-section">
+      <h2 class="section-header"><i class="fas fa-hands-helping"></i> 2. Over To You</h2>
+      <div class="worksheet-content">
+        <p><strong>Examine the analogue sensor system and understand signal scaling principles:</strong></p>
+        
+        <div class="steps-container">
+          <div class="step-card" data-step="1">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Identify the Analogue Sensor</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Identify the only analogue sensor on this rig - the temperature sensor. Understand that it sends a 0-10V signal to the PLC representing 0-100°C range.</p>
+            </div>
+          </div>
+          
+          <div class="step-card" data-step="2">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Explore Scaling Configuration</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Navigate to the IO page and click the "i" button next to the temperature field to view analogue input settings. Test changing the scalar value from 100 to 200 and observe the temperature double, then reset to 100.</p>
+            </div>
+          </div>
+          
+          <div class="step-card" data-step="3">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Test Offset Configuration</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Adjust the offset value from 0 to -20 and observe the temperature drop by 20 degrees. Reset the offset back to 0 to restore normal readings.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
+    <!-- So What Section -->
+    <div class="worksheet-section so-what-section">
+      <h2 class="section-header"><i class="fas fa-lightbulb"></i> 3. So What?</h2>
+      <div class="so-what-content">
+        <p>Analogue sensors provide continuous measurement data that requires proper scaling and calibration:</p>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>Signal Scaling</strong>
+            <p>PLCs convert analogue signals (0-10V) into raw values (0-27648 on S7-1200), which must be scaled to meaningful engineering units like temperature or pressure.</p>
+          </div>
+        </div>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>Range Matching</strong>
+            <p>When sensors are replaced with different ranges (e.g., 0-300°C vs 0-100°C), PLC scaling must be updated to prevent incorrect readings and control errors.</p>
+          </div>
+        </div>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>Offset Correction</strong>
+            <p>Offsets compensate for sensor drift or installation variations. A sensor reading 5°C high can be corrected with a -5°C offset to restore accuracy.</p>
+          </div>
+        </div>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>Continuous Monitoring</strong>
+            <p>Unlike digital sensors that are simply on/off, analogue sensors provide detailed information about how much something is changing, enabling precise process control.</p>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="worksheet-section questions-section">
       <h2 class="section-header"><i class="fas fa-question-circle"></i> Questions & Answers</h2>
