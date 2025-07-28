@@ -5,14 +5,12 @@
 window.plcData = {
   // Digital I/O States
   digitalInputs: {
-    'DI_0': { name: 'Emergency Stop', state: false, fault: false, description: 'E-Stop Button' },
-    'DI_1': { name: 'Float Switch High', state: false, fault: false, description: 'High Level Float' },
-    'DI_2': { name: 'Float Switch Low', state: true, fault: false, description: 'Low Level Float' },
-    'DI_3': { name: 'Reset Button', state: false, fault: false, description: 'System Reset' },
-    'DI_4': { name: 'Flow Sensor', state: false, fault: false, description: 'Flow Detection' },
-    'DI_5': { name: 'Proximity Switch', state: false, fault: false, description: 'Lid Position' },
-    'DI_6': { name: 'Pump Run Feedback', state: false, fault: false, description: 'Pump Status' },
-    'DI_7': { name: 'Valve Position', state: false, fault: false, description: 'Valve Status' }
+    'DI_0': { name: 'Estop Channel 1', state: true, fault: false, description: 'E-Stop Ch1 [NC]', type: 'NC' },
+    'DI_1': { name: 'Estop Channel 2', state: true, fault: false, description: 'E-Stop Ch2 [NC]', type: 'NC' },
+    'DI_2': { name: 'Reset Button', state: false, fault: false, description: 'System Reset [NO]', type: 'NO' },
+    'DI_3': { name: 'Tank High Float Switch', state: true, fault: false, description: 'High Level [NC]', type: 'NC' },
+    'DI_4': { name: 'Tank Low Float Switch', state: false, fault: false, description: 'Low Level [NO]', type: 'NO' },
+    'DI_5': { name: 'Tank Cover Switch', state: false, fault: false, description: 'Cover Position [NO]', type: 'NO' }
   },
   
   digitalOutputs: {
@@ -26,10 +24,10 @@ window.plcData = {
   
   // Analog I/O States
   analogInputs: {
-    'AI_0': { name: 'Temperature Sensor', value: 25.0, unit: '°C', fault: false, description: 'Tank Temperature' },
-    'AI_1': { name: 'Flow Rate', value: 0.0, unit: 'L/min', fault: false, description: 'Flow Measurement' },
-    'AI_2': { name: 'Pressure Sensor', value: 1.2, unit: 'bar', fault: false, description: 'System Pressure' },
-    'AI_3': { name: 'Level Sensor', value: 45.0, unit: '%', fault: false, description: 'Tank Level' }
+    'AI_0': { name: 'Tank Temperature', value: 25.0, unit: '°C', fault: false, description: 'Tank Temperature Sensor', min: 0, max: 100 },
+    'AI_1': { name: 'Flow Rate', value: 120.5, unit: 'l/h', fault: false, description: 'Flow Rate Measurement', min: 0, max: 500 },
+    'AI_2': { name: 'Pump Demand', value: 75.0, unit: '%', fault: false, description: 'Pump Speed Demand', min: 0, max: 100 },
+    'AI_3': { name: 'Valve Demand', value: 60.0, unit: '%', fault: false, description: 'Valve Position Demand', min: 0, max: 100 }
   },
   
   analogOutputs: {
@@ -99,47 +97,23 @@ function initializeIODisplay() {
       </h4>
       
       <div class="io-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px;">
-        <!-- Digital Inputs -->
+        <!-- Digital Inputs (Left Column) -->
         <div class="digital-inputs">
           <h5 style="color: #4CAF50; margin-bottom: 15px; font-size: 16px;">
             <i class="fas fa-sign-in-alt"></i> Digital Inputs
           </h5>
-          <div id="digital-inputs-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+          <div id="digital-inputs-grid" style="display: grid; gap: 12px;">
             <!-- Digital inputs will be generated here -->
           </div>
         </div>
         
-        <!-- Digital Outputs -->
-        <div class="digital-outputs">
-          <h5 style="color: #FF9800; margin-bottom: 15px; font-size: 16px;">
-            <i class="fas fa-sign-out-alt"></i> Digital Outputs
+        <!-- Analogue Values (Right Column) -->
+        <div class="analogue-values">
+          <h5 style="color: #9C27B0; margin-bottom: 15px; font-size: 16px;">
+            <i class="fas fa-chart-line"></i> Analogue Values
           </h5>
-          <div id="digital-outputs-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
-            <!-- Digital outputs will be generated here -->
-          </div>
-        </div>
-      </div>
-      
-      <!-- Analog I/O Section -->
-      <div class="analog-io-section" style="margin-top: 25px;">
-        <h5 style="color: #9C27B0; margin-bottom: 15px; font-size: 16px;">
-          <i class="fas fa-chart-line"></i> Analog I/O
-        </h5>
-        <div class="analog-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px;">
-          <!-- Analog Inputs -->
-          <div class="analog-inputs">
-            <h6 style="color: #4CAF50; margin-bottom: 10px;">Analog Inputs</h6>
-            <div id="analog-inputs-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px;">
-              <!-- Analog inputs will be generated here -->
-            </div>
-          </div>
-          
-          <!-- Analog Outputs -->
-          <div class="analog-outputs">
-            <h6 style="color: #FF9800; margin-bottom: 10px;">Analog Outputs</h6>
-            <div id="analog-outputs-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px;">
-              <!-- Analog outputs will be generated here -->
-            </div>
+          <div id="analog-inputs-grid" style="display: grid; gap: 12px;">
+            <!-- Analog inputs will be generated here -->
           </div>
         </div>
       </div>
@@ -319,9 +293,7 @@ function initializeSignalTracing() {
 // Update I/O Display
 function updateIODisplay() {
   updateDigitalInputs();
-  updateDigitalOutputs();
   updateAnalogInputs();
-  updateAnalogOutputs();
 }
 
 // Update Digital Inputs Display
@@ -330,13 +302,18 @@ function updateDigitalInputs() {
   if (!container) return;
   
   container.innerHTML = Object.entries(plcData.digitalInputs).map(([key, input]) => `
-    <div class="digital-input" style="background: #333; padding: 10px; border-radius: 5px; border-left: 4px solid ${input.fault ? '#F44336' : input.state ? '#4CAF50' : '#666'};">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
-        <span style="color: #FFFFFF; font-size: 12px; font-weight: bold;">${input.name}</span>
-        <div class="led-indicator" style="width: 12px; height: 12px; border-radius: 50%; background: ${input.fault ? '#F44336' : input.state ? '#4CAF50' : '#333'}; border: 1px solid #555;"></div>
+    <div class="digital-input" style="background: #333; padding: 15px; border-radius: 8px; border-left: 4px solid ${input.fault ? '#F44336' : input.state ? '#4CAF50' : '#666'}; transition: all 0.3s ease;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+        <span style="color: #FFFFFF; font-size: 14px; font-weight: bold;">${input.name}</span>
+        <div class="led-indicator" style="width: 16px; height: 16px; border-radius: 50%; background: ${input.fault ? '#F44336' : input.state ? '#4CAF50' : '#333'}; border: 2px solid #555; box-shadow: 0 0 ${input.state && !input.fault ? '8px rgba(76, 175, 80, 0.5)' : '0px'};"></div>
       </div>
-      <div style="color: #AAA; font-size: 10px;">${input.description}</div>
-      <div style="color: #AAA; font-size: 10px;">${key}</div>
+      <div style="color: #AAA; font-size: 12px; margin-bottom: 4px;">${input.description}</div>
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="color: #888; font-size: 11px;">${key}</div>
+        <div style="color: ${input.state ? '#4CAF50' : '#666'}; font-size: 11px; font-weight: bold; background: #222; padding: 2px 6px; border-radius: 3px;">
+          ${input.state ? (input.type === 'NC' ? 'CLOSED' : 'ACTIVE') : (input.type === 'NC' ? 'OPEN' : 'INACTIVE')}
+        </div>
+      </div>
     </div>
   `).join('');
 }
@@ -364,13 +341,22 @@ function updateAnalogInputs() {
   if (!container) return;
   
   container.innerHTML = Object.entries(plcData.analogInputs).map(([key, input]) => `
-    <div class="analog-input" style="background: #333; padding: 10px; border-radius: 5px; border-left: 4px solid ${input.fault ? '#F44336' : '#4CAF50'};">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
-        <span style="color: #FFFFFF; font-size: 12px; font-weight: bold;">${input.name}</span>
-        <span style="color: ${input.fault ? '#F44336' : '#4CAF50'}; font-size: 12px; font-weight: bold;">${input.value} ${input.unit}</span>
+    <div class="analog-input" style="background: #333; padding: 15px; border-radius: 8px; border-left: 4px solid ${input.fault ? '#F44336' : '#9C27B0'}; transition: all 0.3s ease;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+        <span style="color: #FFFFFF; font-size: 14px; font-weight: bold;">${input.name}</span>
+        <span style="color: ${input.fault ? '#F44336' : '#9C27B0'}; font-size: 16px; font-weight: bold; background: #222; padding: 4px 8px; border-radius: 4px;">
+          ${input.value}${input.unit}
+        </span>
       </div>
-      <div style="color: #AAA; font-size: 10px;">${input.description}</div>
-      <div style="color: #AAA; font-size: 10px;">${key}</div>
+      <div style="color: #AAA; font-size: 12px; margin-bottom: 8px;">${input.description}</div>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+        <div style="color: #888; font-size: 11px;">${key}</div>
+        <div style="color: #666; font-size: 10px;">Range: ${input.min}-${input.max}${input.unit}</div>
+      </div>
+      <!-- Value Bar -->
+      <div style="background: #222; border-radius: 3px; overflow: hidden; height: 6px;">
+        <div style="background: ${input.fault ? '#F44336' : 'linear-gradient(90deg, #9C27B0, #BA68C8)'}; height: 100%; width: ${Math.min(100, Math.max(0, ((input.value - input.min) / (input.max - input.min)) * 100))}%; transition: width 0.3s ease;"></div>
+      </div>
     </div>
   `).join('');
 }
@@ -420,8 +406,8 @@ function generateAnalogControls() {
   container.innerHTML = Object.entries(plcData.analogInputs).map(([key, input]) => `
     <div class="analog-control" style="display: grid; gap: 5px;">
       <label style="color: #FFFFFF; font-size: 11px;">${input.name}</label>
-      <input type="range" min="0" max="100" value="${input.value}" data-input="${key}" style="width: 100%;">
-      <span style="color: #AAA; font-size: 10px;">${input.value} ${input.unit}</span>
+      <input type="range" min="${input.min}" max="${input.max}" value="${input.value}" data-input="${key}" style="width: 100%;">
+      <span style="color: #AAA; font-size: 10px;">${input.value}${input.unit}</span>
     </div>
   `).join('');
   
@@ -431,7 +417,7 @@ function generateAnalogControls() {
       const inputKey = this.dataset.input;
       const value = parseFloat(this.value);
       updateAnalogInput(inputKey, value);
-      this.nextElementSibling.textContent = `${value} ${plcData.analogInputs[inputKey].unit}`;
+      this.nextElementSibling.textContent = `${value}${plcData.analogInputs[inputKey].unit}`;
     });
   });
 }
@@ -745,4 +731,5 @@ function updateFaultTimer() {
 
 // Export functions for global access
 window.initializePLCSimulation = initializePLCSimulation;
-window.plcData = plcData; 
+window.plcData = plcData;
+window.updateIODisplay = updateIODisplay; 
