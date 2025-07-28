@@ -552,6 +552,9 @@ h1 {
 
 .introduction-image {
     flex: 0 0 40%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
 }
 
 .introduction-image .system-diagram {
@@ -562,7 +565,9 @@ h1 {
     width: 100%;
     max-width: 300px;
     height: auto;
+    max-height: 25vh;
     min-height: 200px;
+    object-fit: contain;
 }
 
 /* CAD Models for Worksheet 1 */
@@ -580,8 +585,10 @@ h1 {
     width: 100%;
     max-width: 280px;
     height: auto;
+    max-height: 20vh;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    object-fit: contain;
 }
 
 .cad-model figcaption {
@@ -606,6 +613,15 @@ h1 {
     
     .introduction-text {
         padding-right: 0;
+    }
+    
+    .introduction-image .system-diagram img {
+        max-height: 30vh;
+        min-height: 150px;
+    }
+    
+    .cad-model img {
+        max-height: 25vh;
     }
 }
 
