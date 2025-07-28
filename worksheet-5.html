@@ -328,33 +328,346 @@
 
     <!-- Simulation Section -->
     <div class="simulation-section">
-      <h2 class="section-header"><i class="fas fa-cogs"></i> 3. Interactive HMI System Maintenance</h2>
-      <div id="hmi-display-panel" class="simulation-container">
-        <div class="simulation-loading">
-          <i class="fas fa-spinner fa-spin"></i>
-          <p>Loading HMI simulation...</p>
-          <p>Simulation will initialize automatically</p>
+      <h2 class="section-header"><i class="fas fa-desktop"></i> 3. Essential HMI Screens for Engineers</h2>
+      <div class="worksheet-content">
+        <p><strong>These three HMI screens can significantly improve your efficiency as an engineer. Let's explore how each one helps with system monitoring and troubleshooting:</strong></p>
+
+        <!-- Screen Navigation -->
+        <div class="screen-navigation" style="display: flex; gap: 15px; margin-bottom: 20px;">
+          <button id="show-alarms" class="screen-nav-btn" style="flex: 1; padding: 15px; border-radius: 8px; background: linear-gradient(145deg, #FF5722, #F4511E); color: white; border: none; cursor: pointer; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1);" onclick="showScreen('alarms')">
+            <i class="fas fa-bell"></i> Alarms
+          </button>
+          <button id="show-setup" class="screen-nav-btn" style="flex: 1; padding: 15px; border-radius: 8px; background: linear-gradient(145deg, #2196F3, #1E88E5); color: white; border: none; cursor: pointer; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1);" onclick="showScreen('setup')">
+            <i class="fas fa-sliders"></i> Setup
+          </button>
+          <button id="show-trends" class="screen-nav-btn" style="flex: 1; padding: 15px; border-radius: 8px; background: linear-gradient(145deg, #4CAF50, #43A047); color: white; border: none; cursor: pointer; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1);" onclick="showScreen('trends')">
+            <i class="fas fa-chart-line"></i> Trends
+          </button>
+        </div>
+
+        <!-- Alarms Screen -->
+        <div id="alarms-screen" class="hmi-screen" style="background: #1a1a1a; border-radius: 12px; padding: 20px; margin-bottom: 20px;">
+          <div class="screen-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h3 style="color: #FF5722; margin: 0;"><i class="fas fa-bell"></i> Active Alarms</h3>
+            <div class="alarm-controls">
+              <button style="background: #333; color: white; border: none; padding: 8px 15px; border-radius: 4px; margin-left: 10px;">
+                <i class="fas fa-filter"></i> Filter
+              </button>
+              <button style="background: #333; color: white; border: none; padding: 8px 15px; border-radius: 4px; margin-left: 10px;">
+                <i class="fas fa-check"></i> Acknowledge All
+              </button>
+            </div>
+          </div>
+          
+          <div class="alarm-list" style="background: #222; border-radius: 8px; overflow: hidden;">
+            <table style="width: 100%; border-collapse: collapse; color: white;">
+              <thead style="background: #333;">
+                <tr>
+                  <th style="padding: 12px; text-align: left;">Time</th>
+                  <th style="padding: 12px; text-align: left;">Priority</th>
+                  <th style="padding: 12px; text-align: left;">Description</th>
+                  <th style="padding: 12px; text-align: left;">Status</th>
+                  <th style="padding: 12px; text-align: left;">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid #444;">
+                  <td style="padding: 12px;">10:15:22</td>
+                  <td style="padding: 12px;"><span style="background: #f44336; padding: 4px 8px; border-radius: 4px;">High</span></td>
+                  <td style="padding: 12px;">Tank Temperature Above Limit (45°C)</td>
+                  <td style="padding: 12px;">Active</td>
+                  <td style="padding: 12px;">
+                    <button style="background: #666; border: none; color: white; padding: 4px 8px; border-radius: 4px;">Acknowledge</button>
+                  </td>
+                </tr>
+                <tr style="border-bottom: 1px solid #444;">
+                  <td style="padding: 12px;">10:14:55</td>
+                  <td style="padding: 12px;"><span style="background: #ff9800; padding: 4px 8px; border-radius: 4px;">Medium</span></td>
+                  <td style="padding: 12px;">Flow Rate Below Minimum (0 L/h)</td>
+                  <td style="padding: 12px;">Active</td>
+                  <td style="padding: 12px;">
+                    <button style="background: #666; border: none; color: white; padding: 4px 8px; border-radius: 4px;">Acknowledge</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px;">10:12:30</td>
+                  <td style="padding: 12px;"><span style="background: #ff9800; padding: 4px 8px; border-radius: 4px;">Medium</span></td>
+                  <td style="padding: 12px;">Valve Position Mismatch</td>
+                  <td style="padding: 12px;">Acknowledged</td>
+                  <td style="padding: 12px;">
+                    <button style="background: #444; border: none; color: #888; padding: 4px 8px; border-radius: 4px;" disabled>Acknowledged</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="screen-explanation" style="margin-top: 20px; padding: 15px; background: #333; border-radius: 8px; color: #aaa;">
+            <h4 style="color: white; margin-top: 0;">How to Use the Alarms Screen:</h4>
+            <ul style="margin: 10px 0; padding-left: 20px;">
+              <li>Monitor active alarms in real-time</li>
+              <li>Sort by priority (High, Medium, Low) or time</li>
+              <li>Acknowledge alarms after addressing them</li>
+              <li>Filter alarms by type or status</li>
+              <li>Export alarm history for analysis</li>
+            </ul>
+            <p style="margin: 10px 0;">
+              <i class="fas fa-lightbulb" style="color: #FF5722;"></i> 
+              <strong style="color: white;">Pro Tip:</strong> Use alarm patterns to identify recurring issues and plan preventive maintenance.
+            </p>
+          </div>
+        </div>
+
+        <!-- Setup Screen -->
+        <div id="setup-screen" class="hmi-screen" style="display: none; background: #1a1a1a; border-radius: 12px; padding: 20px; margin-bottom: 20px;">
+          <div class="screen-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h3 style="color: #2196F3; margin: 0;"><i class="fas fa-sliders"></i> System Setup</h3>
+            <div class="setup-controls">
+              <button style="background: #333; color: white; border: none; padding: 8px 15px; border-radius: 4px; margin-left: 10px;">
+                <i class="fas fa-save"></i> Save Changes
+              </button>
+              <button style="background: #333; color: white; border: none; padding: 8px 15px; border-radius: 4px; margin-left: 10px;">
+                <i class="fas fa-undo"></i> Reset Defaults
+              </button>
+            </div>
+          </div>
+
+          <div class="setup-panels" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <!-- Temperature Settings -->
+            <div class="setup-panel" style="background: #222; padding: 15px; border-radius: 8px;">
+              <h4 style="color: white; margin-top: 0;">Temperature Control</h4>
+              <div class="setting-group" style="margin: 15px 0;">
+                <label style="display: block; color: #aaa; margin-bottom: 5px;">High Temperature Cutout</label>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <input type="number" value="45" style="background: #333; border: 1px solid #444; color: white; padding: 8px; border-radius: 4px; width: 80px;">
+                  <span style="color: #aaa;">°C</span>
+                </div>
+              </div>
+              <div class="setting-group" style="margin: 15px 0;">
+                <label style="display: block; color: #aaa; margin-bottom: 5px;">Low Temperature Cutout</label>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <input type="number" value="5" style="background: #333; border: 1px solid #444; color: white; padding: 8px; border-radius: 4px; width: 80px;">
+                  <span style="color: #aaa;">°C</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Flow Settings -->
+            <div class="setup-panel" style="background: #222; padding: 15px; border-radius: 8px;">
+              <h4 style="color: white; margin-top: 0;">Flow Control</h4>
+              <div class="setting-group" style="margin: 15px 0;">
+                <label style="display: block; color: #aaa; margin-bottom: 5px;">Maximum Flow Rate</label>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <input type="number" value="500" style="background: #333; border: 1px solid #444; color: white; padding: 8px; border-radius: 4px; width: 80px;">
+                  <span style="color: #aaa;">L/h</span>
+                </div>
+              </div>
+              <div class="setting-group" style="margin: 15px 0;">
+                <label style="display: block; color: #aaa; margin-bottom: 5px;">Minimum Flow Rate</label>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <input type="number" value="50" style="background: #333; border: 1px solid #444; color: white; padding: 8px; border-radius: 4px; width: 80px;">
+                  <span style="color: #aaa;">L/h</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="screen-explanation" style="margin-top: 20px; padding: 15px; background: #333; border-radius: 8px; color: #aaa;">
+            <h4 style="color: white; margin-top: 0;">How to Use the Setup Screen:</h4>
+            <ul style="margin: 10px 0; padding-left: 20px;">
+              <li>Configure system safety limits</li>
+              <li>Adjust operational parameters</li>
+              <li>Save configurations for different processes</li>
+              <li>Reset to factory defaults if needed</li>
+              <li>Document any changes made</li>
+            </ul>
+            <p style="margin: 10px 0;">
+              <i class="fas fa-lightbulb" style="color: #2196F3;"></i> 
+              <strong style="color: white;">Pro Tip:</strong> Always document changes and test system response after adjusting safety limits.
+            </p>
+          </div>
+        </div>
+
+        <!-- Trends Screen -->
+        <div id="trends-screen" class="hmi-screen" style="display: none; background: #1a1a1a; border-radius: 12px; padding: 20px; margin-bottom: 20px;">
+          <div class="screen-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h3 style="color: #4CAF50; margin: 0;"><i class="fas fa-chart-line"></i> System Trends</h3>
+            <div class="trend-controls">
+              <button style="background: #333; color: white; border: none; padding: 8px 15px; border-radius: 4px; margin-left: 10px;">
+                <i class="fas fa-clock"></i> Time Range
+              </button>
+              <button style="background: #333; color: white; border: none; padding: 8px 15px; border-radius: 4px; margin-left: 10px;">
+                <i class="fas fa-download"></i> Export Data
+              </button>
+            </div>
+          </div>
+
+          <div class="trend-graphs" style="display: grid; gap: 20px;">
+            <!-- Temperature Trend -->
+            <div class="trend-graph" style="background: #222; padding: 15px; border-radius: 8px;">
+              <h4 style="color: white; margin-top: 0;">Temperature Trend</h4>
+              <div class="graph-container" style="height: 200px; background: #333; border-radius: 4px; padding: 10px; position: relative;">
+                <canvas id="temperatureChart" style="width: 100%; height: 100%;"></canvas>
+              </div>
+            </div>
+
+            <!-- Flow Rate Trend -->
+            <div class="trend-graph" style="background: #222; padding: 15px; border-radius: 8px;">
+              <h4 style="color: white; margin-top: 0;">Flow Rate Trend</h4>
+              <div class="graph-container" style="height: 200px; background: #333; border-radius: 4px; padding: 10px; position: relative;">
+                <canvas id="flowChart" style="width: 100%; height: 100%;"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div class="screen-explanation" style="margin-top: 20px; padding: 15px; background: #333; border-radius: 8px; color: #aaa;">
+            <h4 style="color: white; margin-top: 0;">How to Use the Trends Screen:</h4>
+            <ul style="margin: 10px 0; padding-left: 20px;">
+              <li>Monitor system performance over time</li>
+              <li>Identify patterns and anomalies</li>
+              <li>Compare different process variables</li>
+              <li>Export data for detailed analysis</li>
+              <li>Use historical data for troubleshooting</li>
+            </ul>
+            <p style="margin: 10px 0;">
+              <i class="fas fa-lightbulb" style="color: #4CAF50;"></i> 
+              <strong style="color: white;">Pro Tip:</strong> Look for correlations between different variables to identify root causes of issues.
+            </p>
+          </div>
         </div>
       </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      // Initialize charts when the DOM is loaded
+      document.addEventListener('DOMContentLoaded', function() {
+        // Temperature Chart
+        const tempCtx = document.getElementById('temperatureChart').getContext('2d');
+        const tempChart = new Chart(tempCtx, {
+          type: 'line',
+          data: {
+            labels: Array.from({length: 20}, (_, i) => i),
+            datasets: [{
+              label: 'Temperature °C',
+              data: [25,26,27,28,30,32,35,38,40,42,43,44,45,44,43,42,41,40,39,38],
+              borderColor: '#FF5722',
+              tension: 0.4,
+              fill: false
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              y: {
+                beginAtZero: true,
+                grid: {
+                  color: '#444'
+                },
+                ticks: {
+                  color: '#aaa'
+                }
+              },
+              x: {
+                grid: {
+                  color: '#444'
+                },
+                ticks: {
+                  color: '#aaa'
+                }
+              }
+            },
+            plugins: {
+              legend: {
+                labels: {
+                  color: '#aaa'
+                }
+              }
+            }
+          }
+        });
+
+        // Flow Rate Chart
+        const flowCtx = document.getElementById('flowChart').getContext('2d');
+        const flowChart = new Chart(flowCtx, {
+          type: 'line',
+          data: {
+            labels: Array.from({length: 20}, (_, i) => i),
+            datasets: [{
+              label: 'Flow Rate L/h',
+              data: [250,248,245,240,235,230,220,210,200,180,150,120,90,60,30,0,0,0,0,0],
+              borderColor: '#2196F3',
+              tension: 0.4,
+              fill: false
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              y: {
+                beginAtZero: true,
+                grid: {
+                  color: '#444'
+                },
+                ticks: {
+                  color: '#aaa'
+                }
+              },
+              x: {
+                grid: {
+                  color: '#444'
+                },
+                ticks: {
+                  color: '#aaa'
+                }
+              }
+            },
+            plugins: {
+              legend: {
+                labels: {
+                  color: '#aaa'
+                }
+              }
+            }
+          }
+        });
+      });
+
+      // Function to show different screens
+      function showScreen(screenName) {
+        // Hide all screens
+        document.querySelectorAll('.hmi-screen').forEach(screen => {
+          screen.style.display = 'none';
+        });
+        
+        // Show selected screen
+        document.getElementById(screenName + '-screen').style.display = 'block';
+        
+        // Update button styles
+        document.querySelectorAll('.screen-nav-btn').forEach(btn => {
+          btn.style.transform = 'none';
+          btn.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
+        });
+        
+        // Highlight active button
+        const activeBtn = document.getElementById('show-' + screenName);
+        activeBtn.style.transform = 'translateY(2px)';
+        activeBtn.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+      }
+
+      // Show Alarms screen by default
+      showScreen('alarms');
+    </script>
   </div>
 
 
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="hmi-simulation.js"></script>
   
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      const initFunc = 'initializeHMISimulation';
-      setTimeout(() => {
-        if (typeof window[initFunc] === 'function') {
-          console.log('Initializing', initFunc);
-          window[initFunc]();
-        } else {
-          document.querySelector('.simulation-loading').innerHTML = '<p>Simulation ready - HMI System Maintenance</p>';
-        }
-      }, 1000);
       loadSavedAnswers();
     });
     

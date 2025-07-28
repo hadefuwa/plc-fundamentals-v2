@@ -1,187 +1,150 @@
-# 🏭 Closed Loop Maintenance PC Companion
+# 🏭 Closed Loop Maintenance Training System
 
 > **Inspiring the next generation of Engineers**
 
-A comprehensive Electron.js application for industrial maintenance training, featuring interactive worksheets, advanced analytics dashboard, dynamic theming, and a modern, unified user experience.
+A comprehensive Progressive Web Application (PWA) for industrial maintenance training, featuring interactive worksheets, simulations, and a modern, unified user experience. This web-based system can be installed on any device and works offline.
 
 <img width="1383" height="845" alt="image" src="https://github.com/user-attachments/assets/47d14b85-c53a-4bb7-9268-192e1b7649f9" />
 
 ---
 
-## 🆕 What's New in Version 1.0.0
+## 🚀 Features
 
-### 🎨 **Modern Unified Navigation & Branding**
-- **Consistent Navigation Bar**: Home, CP0539, CP6773, Settings
-- **Branding**: "Inspiring the next generation of Engineers" in the header on every page
-- **Responsive Header**: Title resizes to fit all screens, never wraps
-- **No more Worksheets nav**: Navigation is now scenario- and module-focused
+### 📱 PWA Capabilities
+- **Install on Any Device**: Add to home screen on mobile or desktop
+- **Offline Support**: Full functionality without internet connection
+- **Automatic Updates**: Always get the latest version
+- **Cross-Platform**: Works on all modern browsers and devices
+- **Responsive Design**: Optimized for both desktop and mobile
 
-### 🌈 **Dynamic Theming & Settings**
-- **Theme Customization**: Change background and accent color from the Settings page
-- **Settings Saved to Config File**: Preferences are stored in `settings.json` (not just localStorage)
-- **Instant Theme Application**: Changes apply across all pages and persist between sessions
-
-### 🖥️ **Unified Look & Feel**
-- **Boxed Windows**: All main content areas use a consistent, solid background for clarity
-- **Subtle Honeycomb Pattern**: Only on the global background, not inside content boxes
-- **No Floating Titles**: Page titles are now part of the main content area for a cohesive look
-
----
-
-## 🚀 Features (Updated)
-
-- **Unified Navigation**: Home, CP0539, CP6773, Settings
-- **Dynamic Theming**: User-selectable background and accent color, saved to config file
-- **Branding**: "Inspiring the next generation of Engineers" header
-- **Responsive UI**: Header text resizes, boxed content areas, and modern design
-- **Settings Page**: Change theme, all preferences saved to `settings.json`
-- **Interactive Worksheets & Fault Scenarios**
-- **Student Portal & Teacher Dashboard**
-- **Persistent Progress & Analytics**
+### 🎯 Core Features
+- **Interactive Worksheets**: Hands-on learning with real-time feedback
+- **System Simulations**: PLC, HMI, and control system simulations
+- **Progress Tracking**: Save and resume your learning journey
+- **Dynamic Theming**: Customize your learning environment
+- **PDF Integration**: Built-in viewer for documentation
+- **Analytics Dashboard**: Track your progress and performance
 
 ---
 
-## 🧑‍💻 Technology Stack (Detailed)
-
-### ⚡ Electron
-- **Electron Version:** 25.x (see `package.json`)
-- **Main Process:** Handles window creation, navigation, security, and settings management
-- **Preload Script:** Uses `contextBridge` to safely expose APIs (settings, navigation, PDF opening) to the renderer
-- **IPC (Inter-Process Communication):**
-  - `ipcMain` and `ipcRenderer` for secure communication between renderer and main
-  - Used for reading/writing settings (`settings.json`), navigation, and file operations
-- **Security Features:**
-  - `contextIsolation: true` (renderer and preload are isolated)
-  - `sandbox: false` (for compatibility, but context isolation is enforced)
-  - `webSecurity: false` (for local file access, but only trusted files are loaded)
-  - `nodeIntegration: false` (no direct Node.js access in renderer)
-  - Custom preload script for all privileged operations
-- **Window Management:**
-  - Single main window, maximized on launch
-  - Custom navigation via exposed API (`window.electron.navigate`)
-- **PDF Handling:**
-  - Securely opens PDFs in the user's default viewer via main process
-- **Settings Storage:**
-  - All user preferences (theme, etc.) are saved to `settings.json` via IPC and Node.js `fs` module
-- **Packaging:**
-  - Built and distributed with `electron-builder` for Windows, Mac, and Linux
-
-### 🟢 Node.js & npm
-- **Node.js:** v16+ required
-- **npm:** v8+ required
-- **Key dependencies:**
-  - `electron`, `electron-builder`, `jquery`, `animejs`, `pdfjs-dist`
+## 🛠️ Technology Stack
 
 ### 🌐 Frontend
 - **HTML5, CSS3, JavaScript (ES6+)**
-- **Custom CSS Grid** for layout
-- **Responsive Design:** Uses CSS `clamp()`, media queries, and flex/grid for all screen sizes
-- **Branding:** Matrix logo, custom icons, and "Inspiring the next generation of Engineers" header
-- **Dynamic Theming:** CSS variables for background and accent color, updated via settings
-- **Libraries:**
-  - **jQuery:** For DOM manipulation and event handling
-  - **anime.js:** For splash screen and subtle animations
-  - **Font Awesome:** For icons
-  - **Chart.js:** (if used for analytics/dashboard)
+- **Service Workers**: For offline functionality and caching
+- **Web Storage**: For saving progress and settings
+- **Libraries**:
+  - Chart.js: For analytics and trends visualization
+  - PDF.js: For in-browser PDF viewing
+  - Font Awesome: For icons and visual elements
 
-### 🗂️ File System & Config
-- **Settings:**
-  - All user preferences are stored in `settings.json` in the app directory
-  - Read/written via Electron IPC and Node.js `fs` module
-- **Data:**
-  - Training content and scenarios in JSON files (`dbMaintenanceScenarios.json`, `dbFaultScenarios.json`)
+### 📦 Data Management
+- **LocalStorage**: User preferences and settings
+- **Cache Storage**: Offline content and assets
+- **IndexedDB**: Progress tracking and analytics
 
-### 🔒 Security Practices
-- **No remote code execution**
-- **No nodeIntegration in renderer**
-- **All privileged operations go through preload/contextBridge and IPC**
-- **Only trusted local files are loaded**
-
-### 🏗️ Build & Release
-- **electron-builder** for packaging and code signing
-- **Cross-platform:** Windows, Mac, Linux
-- **Release scripts:** See `scripts/` and `package.json`
+### 🎨 UI/UX
+- **Responsive Grid Layout**: Adapts to any screen size
+- **Touch-Friendly Controls**: Mobile-optimized interactions
+- **Dynamic Theming**: User-customizable appearance
+- **Consistent Navigation**: Intuitive menu structure
 
 ---
 
-## ⚙️ Settings & Customization (New)
+## 🚀 Getting Started
 
-- **Settings Page**: Access from the navigation bar
-- **Theme**: Change background and accent color
-- **Persistence**: All settings are saved to `settings.json` in the app directory
-- **How it works**: Settings are loaded on every page and applied instantly
+### 📲 Installation
+1. Visit the application URL in your browser
+2. Click "Add to Home Screen" when prompted
+3. The app will install and create an icon on your device
 
----
-
-## 📋 Navigation Structure
-
-- **Home**: Overview and quick access to main features
-- **CP0539**: Industrial Maintenance Worksheets
-- **CP6773**: Troubleshooting & Fault-Finding Scenarios
-- **Settings**: Theme and app preferences
-
----
-
-## 📖 Usage Guide (Quick Start)
-
+### 💻 Local Development
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/hadefuwa/closed-loop-maint-v1.git
-   cd closed-loop-maint-v1
+   git clone https://github.com/hadefuwa/closed-loop-maint-v2.git
+   cd closed-loop-maint-v2
    ```
-2. **Install Dependencies**
+2. **Serve the Files**
+   - Use any static file server (e.g., `python -m http.server 8000`)
+   - Or use VS Code's Live Server extension
+
+### 🌐 Deployment
+1. **Build the Project** (if using a build system)
    ```bash
-   npm install
+   npm run build  # If using build tools
    ```
-3. **Launch the Application**
-   ```bash
-   npm start
-   ```
-4. **Configure Your Theme**
-   - Click **Settings** in the navigation bar
-   - Choose your background and accent color
-   - Save and enjoy your personalized experience!
+2. **Deploy to Hosting**
+   - Upload to any static hosting service
+   - Or use GitHub Pages (automatically deployed from main branch)
 
 ---
 
-## 🏢 About
+## 📋 System Structure
 
-This application is developed by Matrix for industrial maintenance operations. For support or inquiries, please contact our development team.
+### 📚 Training Modules
+- **CP0539**: Industrial Maintenance Worksheets
+  - System Components
+  - Maintenance Procedures
+  - Safety Protocols
+  - Troubleshooting Guides
 
-**Built with ❤️ for Industrial Maintenance Professionals**
+- **CP6773**: Fault-Finding Scenarios
+  - Real-world Problems
+  - Interactive Diagnostics
+  - Solution Validation
+  - Performance Assessment
+
+### 🖥️ Key Screens
+- **Dashboard**: Overview and progress tracking
+- **Worksheets**: Interactive learning materials
+- **Simulations**: Hands-on practice environments
+- **Settings**: Personalization options
 
 ---
 
-## 🌐 Web & PWA Version (2024+)
+## ⚙️ Configuration
 
-This project is now a Progressive Web App (PWA) and can be deployed as a static website (e.g., GitHub Pages, Netlify, Vercel).
+### 🎨 Theme Customization
+- Access Settings through the navigation menu
+- Choose background and accent colors
+- Changes are saved automatically
+- Persists across sessions
 
-### 🚀 Features
-- Installable on desktop and mobile (Add to Home Screen)
-- Offline support (service worker caching)
-- In-browser PDF viewing (PDF.js)
-- Settings and theme stored in browser (localStorage)
-- Responsive, touch-friendly UI
+### 📱 PWA Settings
+- Enable/disable notifications
+- Configure offline storage
+- Manage data synchronization
+- Update preferences
 
-### 📦 Deployment (GitHub Pages)
-1. **Push your code to the `main` branch** (or `gh-pages` if you prefer).
-2. In your repository settings, set GitHub Pages to serve from the root or `/docs` folder.
-3. Make sure all paths are relative (already configured).
-4. Add the PDF.js viewer files to `pdfjs/web/` (see below).
-5. Visit `https://<your-username>.github.io/<repo-name>/` to use the app.
+---
 
-### 📄 PDF.js Integration
-- Download the latest PDF.js release from https://github.com/mozilla/pdf.js/releases
-- Copy the `web/` folder to `pdfjs/web/` in your project
-- The app will use `pdf-viewer.html` to display PDFs in-browser
+## 📖 Documentation
 
-### 📝 Manifest & Service Worker
-- `manifest.json` and `service-worker.js` are included for PWA installability and offline support
-- App icons should be placed in `assets/icons/` (192x192 and 512x512 PNG recommended)
+### 👩‍🎓 For Students
+- Getting Started Guide
+- Module Descriptions
+- Assessment Criteria
+- Progress Tracking
 
-### ⚠️ Electron Deprecation
-- All Electron/Node.js code has been removed
-- No main process, preload, or IPC code remains
-- Settings are now stored in browser storage
+### 👩‍🏫 For Instructors
+- Teaching Resources
+- Assessment Tools
+- Progress Monitoring
+- Class Management
+
+---
+
+## 🤝 Support
+
+Need help? Contact our support team:
+- 📧 Email: support@matrix.com
+- 🌐 Website: https://matrix.com/support
+- 📱 In-app: Use the Help menu
+
+---
+
+## 📝 License
+
+Copyright © 2024 Matrix TSL. All rights reserved.
 
 ---
