@@ -89,7 +89,97 @@
       </div>
     </div>
 
+    <!-- Over To You Section -->
+    <div class="worksheet-section over-to-you-section">
+      <h2 class="section-header"><i class="fas fa-hands-helping"></i> 2. Over To You</h2>
+      <div class="worksheet-content">
+        <p><strong>Examine the flow sensor system and understand flow measurement principles:</strong></p>
+        
+        <div class="steps-container">
+          <div class="step-card" data-step="1">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Locate and Observe Flow Sensor</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Run the system and locate the flow sensor both on the HMI screen and physically on the system. Note that while there's no external movement, an internal turbine is spinning and being counted by the PLC.</p>
+            </div>
+          </div>
+          
+          <div class="step-card" data-step="2">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Test Flow Rate Response</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Increase the flow rate to 300 litres per hour and observe the reading change. Then constrict the flow by closing the hand valve clockwise and watch the flow rate drop until the system faults.</p>
+            </div>
+          </div>
+          
+          <div class="step-card" data-step="3">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Observe Flow Settling</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Open the valve fully and restart the system. When running normally, hit the E-Stop and observe how the flow sensor takes time to settle, detecting residual forward or backward flow even after the pump stops.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
+    <!-- So What Section -->
+    <div class="worksheet-section so-what-section">
+      <h2 class="section-header"><i class="fas fa-lightbulb"></i> 3. So What?</h2>
+      <div class="so-what-content">
+        <p>Flow sensors provide critical measurement data for system control and troubleshooting:</p>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>Flow Measurement Technologies</strong>
+            <p>Turbine sensors count pulses from a spinning rotor, while electromagnetic and ultrasonic sensors offer alternative measurement methods for different applications.</p>
+          </div>
+        </div>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>System Protection</strong>
+            <p>Flow sensors enable protective functions - lack of proper flow can trigger alarms or stop processes to prevent equipment damage from dry running or blockages.</p>
+          </div>
+        </div>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>Calibration and Accuracy</strong>
+            <p>Flow meters require regular calibration to maintain accuracy. HMI systems often provide scaling, offset adjustments, and alarm threshold configurations for optimal performance.</p>
+          </div>
+        </div>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>Troubleshooting Indicators</strong>
+            <p>Unstable readings may indicate air pockets, valve restrictions, or sensor faults. No signal could point to wiring issues, while drift may require recalibration or cleaning.</p>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="worksheet-section questions-section">
       <h2 class="section-header"><i class="fas fa-question-circle"></i> Questions & Answers</h2>
