@@ -236,7 +236,7 @@
             <button class="submit-question-btn" onclick="submitAnswer(2)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
-            <strong style="color: #4CAF50;">Correct Answer:</strong> A) It uses a spinning rotor, and the number of spins (pulses) is counted to determine the flow rate.
+            <strong style="color: #4CAF50;">Correct Answer:</strong> C) It uses ultrasonic waves to measure flow.
           </div>
         </div>
         
@@ -264,7 +264,7 @@
             <button class="submit-question-btn" onclick="submitAnswer(3)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
-            <strong style="color: #4CAF50;">Correct Answer:</strong> A) The PLC counts pulses from the turbine sensor and calculates the flow rate, which is shown on the HMI.
+            <strong style="color: #4CAF50;">Correct Answer:</strong> B) The PLC controls the flow sensor directly.
           </div>
         </div>
         
@@ -292,7 +292,7 @@
             <button class="submit-question-btn" onclick="submitAnswer(4)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
-            <strong style="color: #4CAF50;">Correct Answer:</strong> A) They could indicate blockages, valve restrictions, air pockets, sensor faults, or wiring issues.
+            <strong style="color: #4CAF50;">Correct Answer:</strong> D) They indicate the temperature is too high.
           </div>
         </div>
         
@@ -320,7 +320,7 @@
             <button class="submit-question-btn" onclick="submitAnswer(5)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
-            <strong style="color: #4CAF50;">Correct Answer:</strong> A) Calibration ensures the sensor remains accurate over time and helps prevent false readings or system faults.
+            <strong style="color: #4CAF50;">Correct Answer:</strong> B) To ensure accurate flow measurements and system performance.
           </div>
         </div>
       </div>
@@ -345,92 +345,20 @@
   <script src="flow-sensor-simulation.js"></script>
   
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const initFunc = 'initializeFlowSensorSimulation';
-      setTimeout(() => {
-        if (typeof window[initFunc] === 'function') {
-          console.log('Initializing', initFunc);
-          window[initFunc]();
-        } else {
-          document.querySelector('.simulation-loading').innerHTML = '<p>Simulation ready - Flow Sensor System Maintenance</p>';
-        }
-      }, 1000);
-      loadSavedAnswers();
-    });
-    
-        function submitAnswer(questionNumber) {
-          const answerInput = document.querySelector(`[data-question="${questionNumber}"]`);
-          if (!answerInput) return;
-          
-          const selectedOption = document.querySelector(`input[name="question-${questionNumber}"]:checked`);
-          if (!selectedOption) {
-            alert('Please select an answer before submitting.');
-            return;
-          }
-          
-          const answer = selectedOption.value;
-          
-          // Save with enhanced tracking
-          worksheetTracker.saveAnswer(10, questionNumber, answer, 'maintenance');
-          
-          // Define correct answers for worksheet 10
-          const correctAnswers = {
-                "1": "A",
-                "2": "A",
-                "3": "A",
-                "4": "A",
-                "5": "A"
-          };
-          
-          // Apply visual feedback
-          const allOptions = answerInput.querySelectorAll('.option-label');
-          const correctAnswer = correctAnswers[questionNumber];
-          
-          allOptions.forEach(option => {
-            const radio = option.querySelector('.option-radio');
-            const optionValue = radio.value;
-            
-            if (optionValue === correctAnswer) {
-              option.classList.add('correct');
-            } else if (optionValue === answer && answer !== correctAnswer) {
-              option.classList.add('incorrect');
-            }
-          });
-          
-          // Mark question as submitted to disable further interaction
-          answerInput.classList.add('submitted');
-          
-          // Show feedback on button
-          const submitBtn = answerInput.querySelector('.submit-question-btn');
-          if (submitBtn) {
-            const originalText = submitBtn.textContent;
-            submitBtn.textContent = answer === correctAnswer ? 'Correct!' : 'Incorrect!';
-            submitBtn.style.background = answer === correctAnswer ? '#4CAF50' : '#f44336';
-            
-            // Add incorrect class for enhanced styling
-            if (answer !== correctAnswer) {
-              submitBtn.classList.add('incorrect');
-            }
-            
-            setTimeout(() => {
-              submitBtn.textContent = originalText;
-              submitBtn.style.background = '#4CAF50';
-              submitBtn.classList.remove('incorrect');
-            }, 2000);
-          }
-          
-          // Show correct answer if available
-          const correctAnswerDiv = answerInput.querySelector('.correct-answer');
-          if (correctAnswerDiv) {
-            correctAnswerDiv.style.display = 'block';
-          }
-        }
-    function loadSavedAnswers() {
-      // This function is now handled by the tracking system
-    }"]`);
-      if (!answerInput) return;
+    // Define correct answers for worksheet 10
+    const correctAnswers = {
+      "1": "A",
+      "2": "C",
+      "3": "B",
+      "4": "D",
+      "5": "B"
+    };
+
+    function submitAnswer(questionNumber) {
+      const questionItem = document.querySelector(`[data-question="${questionNumber}"]`);
+      if (!questionItem) return;
       
-      const selectedOption = document.querySelector(`input[name="question-${questionNumber}"]:checked`);
+      const selectedOption = questionItem.querySelector('.option-radio:checked');
       if (!selectedOption) {
         alert('Please select an answer before submitting.');
         return;
@@ -441,82 +369,75 @@
       // Save with enhanced tracking
       worksheetTracker.saveAnswer(10, questionNumber, answer, 'maintenance');
       
-      // Show feedback
-      const submitBtn = answerInput.querySelector('.submit-question-btn');
-      if (submitBtn) {
-        submitBtn.textContent = 'Answer Saved!';
-        submitBtn.style.background = '#4CAF50';
-        setTimeout(() => {
-          submitBtn.textContent = 'Submit Answer';
-          submitBtn.style.background = '#4CAF50';
-        }, 2000);
+      // Apply visual feedback
+      const allOptions = questionItem.querySelectorAll('.option-label');
+      const correctAnswer = correctAnswers[questionNumber];
+      
+      allOptions.forEach(option => {
+        const radio = option.querySelector('.option-radio');
+        const optionValue = radio.value;
+        
+        if (optionValue === correctAnswer) {
+          option.classList.add('correct');
+        } else if (optionValue === answer && answer !== correctAnswer) {
+          option.classList.add('incorrect');
+        }
+      });
+      
+      // Mark question as submitted to disable further interaction
+      questionItem.classList.add('submitted');
+      
+      // Update submit button
+      const button = questionItem.querySelector('.submit-question-btn');
+      const originalText = button.textContent;
+      button.textContent = answer === correctAnswer ? 'Correct!' : 'Incorrect!';
+      button.style.background = answer === correctAnswer ? '#4CAF50' : '#f44336';
+      
+      // Add incorrect class for enhanced styling
+      if (answer !== correctAnswer) {
+        button.classList.add('incorrect');
       }
       
-      // Show correct answer if available
-      const correctAnswer = answerInput.querySelector('.correct-answer');
-      if (correctAnswer) {
-        correctAnswer.style.display = 'block';
+      setTimeout(() => {
+        button.textContent = originalText;
+        button.style.background = '#4CAF50';
+        button.classList.remove('incorrect');
+      }, 2000);
+
+      // Show correct answer
+      const correctAnswerDiv = questionItem.querySelector('.correct-answer');
+      if (correctAnswerDiv) {
+        correctAnswerDiv.style.display = 'block';
       }
-    }"]`);
-      const selectedOption = questionItem.querySelector('.option-radio:checked');
-      const answer = selectedOption ? selectedOption.value : '';
-      
-      if (answer) {
-        // Define correct answers for worksheet 10
-        const correctAnswers = {
-          1: 'A',
-          2: 'A',
-          3: 'A',
-          4: 'A',
-          5: 'A'
-        };
-        
-        localStorage.setItem(`worksheet10_answer${questionNumber}`, answer);
-        
-        // Apply visual feedback
-        const allOptions = questionItem.querySelectorAll('.option-label');
-        const correctAnswer = correctAnswers[questionNumber];
-        
-        allOptions.forEach(option => {
-          const radio = option.querySelector('.option-radio');
-          const optionValue = radio.value;
-          
-          if (optionValue === correctAnswer) {
-            option.classList.add('correct');
-          } else if (optionValue === answer && answer !== correctAnswer) {
-            option.classList.add('incorrect');
+    }
+
+    // Initialize when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize tracking system
+      if (typeof worksheetTracker === 'undefined') {
+        console.error('Worksheet tracking system not loaded');
+        return;
+      }
+
+      // Load any saved answers
+      const progress = worksheetTracker.getWorksheetProgress(10, 'maintenance');
+      if (progress && progress.answers) {
+        Object.entries(progress.answers).forEach(([questionNumber, answerData]) => {
+          const questionItem = document.querySelector(`[data-question="${questionNumber}"]`);
+          if (questionItem) {
+            const radio = questionItem.querySelector(`.option-radio[value="${answerData.value}"]`);
+            if (radio) {
+              radio.checked = true;
+              // Show the correct answer for previously answered questions
+              const correctAnswerDiv = questionItem.querySelector('.correct-answer');
+              if (correctAnswerDiv) {
+                correctAnswerDiv.style.display = 'block';
+              }
+            }
           }
         });
-        
-        // Mark question as submitted to disable further interaction
-        questionItem.classList.add('submitted');
-        
-        const button = event.target;
-        const originalText = button.textContent;
-        button.textContent = answer === correctAnswer ? 'Correct!' : 'Incorrect!';
-        button.style.background = answer === correctAnswer ? '#4CAF50' : '#f44336';
-        
-        // Add incorrect class for enhanced styling
-        if (answer !== correctAnswer) {
-          button.classList.add('incorrect');
-        }
-        
-        setTimeout(() => {
-          button.textContent = originalText;
-          button.style.background = '';
-          button.classList.remove('incorrect');
-        }, 2000);
-
-        // Show correct answer
-        const correctAnswerDiv = questionItem.querySelector('.correct-answer');
-        correctAnswerDiv.style.display = 'block';
-
-      } else {
-        alert('Please select an answer before submitting.');
       }
-    function loadSavedAnswers() {
-      // This function is now handled by the tracking system
-    }
+    });
   </script>
   
   <!-- Bottom Navigation -->

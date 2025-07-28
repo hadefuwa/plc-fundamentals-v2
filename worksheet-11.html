@@ -237,7 +237,7 @@
             <button class="submit-question-btn" onclick="submitAnswer(2)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
-            <strong style="color: #4CAF50;">Correct Answer:</strong> A) It changes resistance based on temperature, which is then converted into a signal the PLC can read.
+            <strong style="color: #4CAF50;">Correct Answer:</strong> D) It uses pressure to measure temperature.
           </div>
         </div>
         
@@ -265,7 +265,7 @@
             <button class="submit-question-btn" onclick="submitAnswer(3)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
-            <strong style="color: #4CAF50;">Correct Answer:</strong> A) The system will shut down to protect against overheating or unsafe conditions.
+            <strong style="color: #4CAF50;">Correct Answer:</strong> B) The system will continue running normally.
           </div>
         </div>
         
@@ -293,7 +293,7 @@
             <button class="submit-question-btn" onclick="submitAnswer(4)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
-            <strong style="color: #4CAF50;">Correct Answer:</strong> A) Possible causes include wiring faults, sensor damage, dirt, vibration, or electrical interference.
+            <strong style="color: #4CAF50;">Correct Answer:</strong> C) Fast movement, slow movement, or no movement.
           </div>
         </div>
         
@@ -321,7 +321,7 @@
             <button class="submit-question-btn" onclick="submitAnswer(5)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
-            <strong style="color: #4CAF50;">Correct Answer:</strong> A) Calibration keeps the readings accurate and ensures the sensor responds correctly to real conditions.
+            <strong style="color: #4CAF50;">Correct Answer:</strong> B) Calibration makes the sensor work faster.
           </div>
         </div>
       </div>
@@ -346,24 +346,20 @@
   <script src="temperature-sensor-simulation.js"></script>
   
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const initFunc = 'initializeTemperatureSensorSimulation';
-      setTimeout(() => {
-        if (typeof window[initFunc] === 'function') {
-          console.log('Initializing', initFunc);
-          window[initFunc]();
-        } else {
-          document.querySelector('.simulation-loading').innerHTML = '<p>Simulation ready - Temperature Sensor System Maintenance</p>';
-        }
-      }, 1000);
-      loadSavedAnswers();
-    });
-    
-        function submitAnswer(questionNumber) {
-      const answerInput = document.querySelector(`[data-question="${questionNumber}"]`);
-      if (!answerInput) return;
+    // Define correct answers for worksheet 11
+    const correctAnswers = {
+      "1": "A",
+      "2": "D",
+      "3": "B",
+      "4": "C",
+      "5": "B"
+    };
+
+    function submitAnswer(questionNumber) {
+      const questionItem = document.querySelector(`[data-question="${questionNumber}"]`);
+      if (!questionItem) return;
       
-      const selectedOption = document.querySelector(`input[name="question-${questionNumber}"]:checked`);
+      const selectedOption = questionItem.querySelector('.option-radio:checked');
       if (!selectedOption) {
         alert('Please select an answer before submitting.');
         return;
@@ -374,17 +370,8 @@
       // Save with enhanced tracking
       worksheetTracker.saveAnswer(11, questionNumber, answer, 'maintenance');
       
-      // Define correct answers for worksheet 11
-      const correctAnswers = {
-            "1": "A",
-            "2": "A",
-            "3": "A",
-            "4": "A",
-            "5": "A"
-      };
-      
       // Apply visual feedback
-      const allOptions = answerInput.querySelectorAll('.option-label');
+      const allOptions = questionItem.querySelectorAll('.option-label');
       const correctAnswer = correctAnswers[questionNumber];
       
       allOptions.forEach(option => {
@@ -399,43 +386,59 @@
       });
       
       // Mark question as submitted to disable further interaction
-      answerInput.classList.add('submitted');
+      questionItem.classList.add('submitted');
       
-      // Show feedback on button
-      const submitBtn = answerInput.querySelector('.submit-question-btn');
-      if (submitBtn) {
-        const originalText = submitBtn.textContent;
-        submitBtn.textContent = answer === correctAnswer ? 'Correct!' : 'Incorrect!';
-        submitBtn.style.background = answer === correctAnswer ? '#4CAF50' : '#f44336';
-        
-        // Add incorrect class for enhanced styling
-        if (answer !== correctAnswer) {
-          submitBtn.classList.add('incorrect');
-        }
-        
-        setTimeout(() => {
-          submitBtn.textContent = originalText;
-          submitBtn.style.background = '#4CAF50';
-          submitBtn.classList.remove('incorrect');
-        }, 2000);
+      // Update submit button
+      const button = questionItem.querySelector('.submit-question-btn');
+      const originalText = button.textContent;
+      button.textContent = answer === correctAnswer ? 'Correct!' : 'Incorrect!';
+      button.style.background = answer === correctAnswer ? '#4CAF50' : '#f44336';
+      
+      // Add incorrect class for enhanced styling
+      if (answer !== correctAnswer) {
+        button.classList.add('incorrect');
       }
       
-      // Show correct answer if available
-      const correctAnswerDiv = answerInput.querySelector('.correct-answer');
+      setTimeout(() => {
+        button.textContent = originalText;
+        button.style.background = '#4CAF50';
+        button.classList.remove('incorrect');
+      }, 2000);
+
+      // Show correct answer
+      const correctAnswerDiv = questionItem.querySelector('.correct-answer');
       if (correctAnswerDiv) {
         correctAnswerDiv.style.display = 'block';
       }
-    }, 2000);
-      }
-      
-      // Show correct answer if available
-      const correctAnswer = answerInput.querySelector('.correct-answer');
-      if (correctAnswer) {
-        correctAnswer.style.display = 'block';
-      }
-    function loadSavedAnswers() {
-      // This function is now handled by the tracking system
     }
+
+    // Initialize when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize tracking system
+      if (typeof worksheetTracker === 'undefined') {
+        console.error('Worksheet tracking system not loaded');
+        return;
+      }
+
+      // Load any saved answers
+      const progress = worksheetTracker.getWorksheetProgress(11, 'maintenance');
+      if (progress && progress.answers) {
+        Object.entries(progress.answers).forEach(([questionNumber, answerData]) => {
+          const questionItem = document.querySelector(`[data-question="${questionNumber}"]`);
+          if (questionItem) {
+            const radio = questionItem.querySelector(`.option-radio[value="${answerData.value}"]`);
+            if (radio) {
+              radio.checked = true;
+              // Show the correct answer for previously answered questions
+              const correctAnswerDiv = questionItem.querySelector('.correct-answer');
+              if (correctAnswerDiv) {
+                correctAnswerDiv.style.display = 'block';
+              }
+            }
+          }
+        });
+      }
+    });
   </script>
   
   <!-- Bottom Navigation -->
