@@ -329,14 +329,98 @@
     <!-- Simulation Section -->
     <div class="simulation-section">
       <h2 class="section-header"><i class="fas fa-cogs"></i> 3. Interactive Pump System Maintenance</h2>
-      <div id="pump-display-panel" class="simulation-container">
-        <div class="simulation-loading">
-          <i class="fas fa-spinner fa-spin"></i>
-          <p>Loading pump simulation...</p>
-          <p>Simulation will initialize automatically</p>
+      
+      <!-- Pump Types Comparison -->
+      <div class="simulation-subsection">
+        <h3><i class="fas fa-pump"></i> Understanding Pump Types</h3>
+        <div class="pump-types-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0;">
+          <!-- Centrifugal Pump -->
+          <div class="pump-type-card" style="background: #2a2a2a; padding: 20px; border-radius: 12px; border: 1px solid #333;">
+            <h4 style="color: #2196F3; margin-top: 0;">Centrifugal Pump</h4>
+            <div class="pump-illustration" style="text-align: center; margin: 15px 0;">
+              <img src="assets/maintenance/centrifugal-pump.png" alt="Centrifugal Pump Diagram" style="max-width: 200px;">
+            </div>
+            <ul style="color: #aaa; margin: 15px 0;">
+              <li>Uses rotating impeller to create flow</li>
+              <li>Flow varies with pressure</li>
+              <li>Better for high flow, lower pressure</li>
+              <li>Common in HVAC and water systems</li>
+            </ul>
+            <div class="pump-controls" style="margin-top: 20px;">
+              <button id="start-centrifugal" class="control-btn" style="background: #2196F3; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-right: 10px;">Start Pump</button>
+              <button id="stop-centrifugal" class="control-btn" style="background: #666; color: white; border: none; padding: 10px 20px; border-radius: 5px;">Stop</button>
+            </div>
+            <div style="margin-top: 15px;">
+              <canvas id="centrifugal-chart" height="150"></canvas>
+            </div>
+          </div>
+
+          <!-- Positive Displacement Pump -->
+          <div class="pump-type-card" style="background: #2a2a2a; padding: 20px; border-radius: 12px; border: 1px solid #333;">
+            <h4 style="color: #4CAF50; margin-top: 0;">Positive Displacement Pump</h4>
+            <div class="pump-illustration" style="text-align: center; margin: 15px 0;">
+              <img src="assets/maintenance/pd-pump.png" alt="Positive Displacement Pump Diagram" style="max-width: 200px;">
+            </div>
+            <ul style="color: #aaa; margin: 15px 0;">
+              <li>Fixed volume per rotation</li>
+              <li>Constant flow regardless of pressure</li>
+              <li>Better for high pressure, lower flow</li>
+              <li>Common in hydraulic systems</li>
+            </ul>
+            <div class="pump-controls" style="margin-top: 20px;">
+              <button id="start-pd" class="control-btn" style="background: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-right: 10px;">Start Pump</button>
+              <button id="stop-pd" class="control-btn" style="background: #666; color: white; border: none; padding: 10px 20px; border-radius: 5px;">Stop</button>
+            </div>
+            <div style="margin-top: 15px;">
+              <canvas id="pd-chart" height="150"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Common Pump Issues -->
+      <div class="simulation-subsection" style="margin-top: 40px;">
+        <h3><i class="fas fa-exclamation-triangle"></i> Common Pump Issues</h3>
+        <div class="pump-issues-container" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 20px 0;">
+          
+          <!-- Leak Simulation -->
+          <div class="issue-card" style="background: #2a2a2a; padding: 20px; border-radius: 12px; border: 1px solid #333;">
+            <h4 style="color: #FF5722; margin-top: 0;">System Leak</h4>
+            <p style="color: #aaa;">Watch how flow rate drops while power consumption remains high</p>
+            <div class="issue-controls" style="margin: 15px 0;">
+              <button id="start-leak" class="control-btn" style="background: #FF5722; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-right: 10px;">Simulate Leak</button>
+              <button id="reset-leak" class="control-btn" style="background: #666; color: white; border: none; padding: 10px 20px; border-radius: 5px;">Reset</button>
+            </div>
+            <canvas id="leak-chart" height="150"></canvas>
+          </div>
+
+          <!-- Cavitation Simulation -->
+          <div class="issue-card" style="background: #2a2a2a; padding: 20px; border-radius: 12px; border: 1px solid #333;">
+            <h4 style="color: #9C27B0; margin-top: 0;">Cavitation</h4>
+            <p style="color: #aaa;">Notice pressure fluctuations and increased vibration</p>
+            <div class="issue-controls" style="margin: 15px 0;">
+              <button id="start-cavitation" class="control-btn" style="background: #9C27B0; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-right: 10px;">Simulate Cavitation</button>
+              <button id="reset-cavitation" class="control-btn" style="background: #666; color: white; border: none; padding: 10px 20px; border-radius: 5px;">Reset</button>
+            </div>
+            <canvas id="cavitation-chart" height="150"></canvas>
+          </div>
+
+          <!-- Overheating Simulation -->
+          <div class="issue-card" style="background: #2a2a2a; padding: 20px; border-radius: 12px; border: 1px solid #333;">
+            <h4 style="color: #F44336; margin-top: 0;">Overheating</h4>
+            <p style="color: #aaa;">Observe temperature rise and efficiency loss</p>
+            <div class="issue-controls" style="margin: 15px 0;">
+              <button id="start-overheat" class="control-btn" style="background: #F44336; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-right: 10px;">Simulate Overheat</button>
+              <button id="reset-overheat" class="control-btn" style="background: #666; color: white; border: none; padding: 10px 20px; border-radius: 5px;">Reset</button>
+            </div>
+            <canvas id="overheat-chart" height="150"></canvas>
+          </div>
         </div>
       </div>
     </div>
+
+    <!-- Add Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </div>
 
 
