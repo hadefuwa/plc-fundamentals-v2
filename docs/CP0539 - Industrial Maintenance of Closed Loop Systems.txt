@@ -1,0 +1,825 @@
+
+
+
+
+
+
+Introduction 2
+Worksheets 3
+Worksheet 1 – Closed-Loop Control Systems 4
+Worksheet 2 – Emergency Stops 6
+Worksheet 3 – Status LED 8
+Worksheet 4 – PLC 10
+Worksheet 5 – HMI 12
+Worksheet 6 – Pump 14
+Worksheet 7 – Valve 18
+Worksheet 8 – Float Switch 21
+Worksheet 9 – Proximity Switch 23
+Worksheet 10 – Flow Sensor 25
+Worksheet 11 – Temperature Sensor 27
+Worksheet 12 – Digital Sensors 29
+Worksheet 13 – Analogue Sensors 31
+Worksheet 14 – Faults 34
+Student Handbook 36
+Safety Note 51
+Version Control 53
+INTRODUCTION
+Welcome to the Industrial Maintenance for Closed Loop Systems Curriculum. This program is designed to provide a comprehensive understanding of the components, principles, and troubleshooting techniques essential for maintaining closed-loop systems. Whether you are a student, technician, or engineer, this curriculum equips you with the skills and knowledge to confidently diagnose and resolve issues in industrial control systems. 
+
+Curriculum
+This curriculum is divided into 14 worksheets. Each worksheet focuses on a specific component or concept, progressing from fundamental to advanced topics. 
+Industrial closed-loop systems are critical to modern manufacturing and process industries. As such, the ability to maintain and troubleshoot these systems is a valuable skill. This curriculum bridges the gap between theory and practice, preparing you for challenges in the field and enabling you to contribute to system reliability and efficiency.
+We encourage you to approach each worksheet with curiosity and diligence. Practical exercises and case studies will provide you with the opportunity to apply what you learn, solidifying your understanding and building confidence in your maintenance skills. Let’s get started!
+
+
+
+
+
+
+
+
+
+WORKSHEETS
+
+
+Worksheet 1 – Closed-Loop Control Systems
+The system you have in front of you is a Closed-Loop Flow Control system, meaning it continuously adjusts itself to meet a desired target, called the setpoint. It does this by using feedback from sensors to control devices like pumps and valves, keeping the system accurate and stable even if conditions change.Over To You
+Select Start and observe the system start up. Once the pump is running you should see water flow through the flow gauge. Ensure the hand valve is in the open position, (the handle should be in line with the piping).
+
+1. Set a Flow Rate: Enter a target flow rate on the HMI. You can adjust in increments of 20 using the +/- buttons.
+2. Observe Feedback: Watch the flow sensor reading on the HMI and compare it to the setpoint.
+3. Watch the System Adjust: Note how the pump speed and valve position change to bring the flow rate to the setpoint.
+4. Introduce a Disturbance: Temporarily restrict the flow (e.g., partially close the shut-off valve) and observe how the system reacts to maintain the flow rate.So What?
+This is part of a control system, which automates processes in Industry. At the heart of this system is a PLC (Programmable Logic Controller), a computer that makes real-time decisions based on sensor data. The HMI (Human-Machine Interface) allows you to monitor and adjust settings easily.
+Restricting the hand valve reduced flow, which the sensor detected and sent to the PLC. The PLC increased pump speed and adjusted the valve to restore flow, showing automatic correction. Rapid valve changes caused oscillations, highlighting the need for gradual adjustments. Fully closing the valve stopped flow; the PLC responded by maxing the pump and opening the valve, but no water moved. This demonstrates risks like pressure buildup and why managing flow restrictions is critical.
+Key Takeaways
+* Closed-loop systems continuously adjust using sensor feedback to maintain accuracy.
+* PID control ensures stability by fine-tuning pump speed and valve position.
+* The pump and proportional valve work together to match the setpoint, even with disturbances.
+* Understanding this process helps you troubleshoot issues and optimize system performance effectively.
+Student Handbook
+Complete The Questions & Answers in the Student Handbook relating to this worksheet.
+
+
+Worksheet 2 – Emergency Stops
+An Emergency Stop (E-Stop) is a safety button that quickly stops a machine or system when there is an emergency. It helps keep people safe and prevents damage to equipment.
+An E-Stop is not the same as a normal stop button. It should only be used in emergencies, not to turn off the machine during normal use.Over To You
+* Run the system as you did in Worksheet 1. 
+* Find the E-Stop on your training system.
+* Press the E-Stop to see how the system stops.
+* Reset the E-Stop and check that the system starts again.
+o This can be done by twisting the Estop anti-clockwise.
+o Once the Estop has been released, the system must be reset by pressing the blue reset button to the left of the Estop or the reset button on the HMI.
+So What?
+E-Stops have dual channels or two inputs into the control system, to make them reliable and safe:
+* Two Contacts: The E-Stop button has two sets of contacts. Both must be closed for the system to function. When pressed, both contacts open and the system stops. Even if only one were to open, the system would still stop. This is done as a redundancy measure. 
+* Reset Needed: After using an E-Stop, the emergency stop button must be reset and the reset button must be pressed once before the system can start again.
+Regularly inspect the E-Stop for damage or loose parts and test it during downtime to ensure it functions properly. Never cover or tamper with one.
+Key Takeaways
+* E-Stops are for emergencies, not regular use.
+* They have two safety circuits to make sure they work.
+* Regular checks and tests keep them reliable.
+Knowing how to use an E-Stop can help keep everyone safe and the system running well.
+Student Handbook
+Complete The Questions & Answers in the Student Handbook relating to this worksheet.
+
+
+Worksheet 3 – Status LED
+The Status LED indicates the system’s condition, showing clear visual signals for normal operation, faults, and safety issues. It’s an important maintenance tool, helping quickly identify and assess problems before they escalate. By recognising the meaning of each LED colour, maintenance teams can detect faults early, respond efficiently, and maintain safe, reliable operation.Over To You
+* Run the system as you have done previously.
+* Locate the Status LED on your training system.
+* Observe the LED colour during normal operation.
+* Trigger a fault: 
+o Fully close the hand valve and watch as the system errors out. 
+o Observe how the LED changes colour to indicate a fault.
+* Restore normal operation by reopening the valve and resetting the system. 
+o Confirm the LED returns to green.
+* Trigger a safety fault: Press the Emergency Stop and observe how the system goes into a safety error mode. 
+o Note the colour of the LED.
+* Reset the E-Stop by twisting it anti-clockwise and pressing the blue reset button. 
+o Observe the LED returning to normal after the system is restarted.
+So What?
+The Status LED has three colour states:
+* Green – System is operating normally.
+* Orange – A fault has been detected, but the system may still function. Investigate the issue.
+* Red – A safety fault has occurred. The system requires immediate attention before it can restart.
+Using the Status LED as a diagnostic tool helps with preventive maintenance and troubleshooting. If an orange or red light appears, maintenance personnel should take immediate action to identify and resolve the issue.
+Key Takeaways 
+* Green means normal operation.
+* Orange indicates a fault that needs investigation.
+* Red signals a critical safety fault requiring immediate intervention.
+* Regular monitoring of the Status LED helps prevent downtime and improve system reliability.
+Student Handbook
+Complete The Questions & Answers in the Student Handbook relating to this worksheet.
+
+
+Worksheet 4 – PLC
+A Programmable Logic Controller (PLC) is an industrial computer designed to control machines and processes. Unlike general-purpose computers, PLCs are built for reliability, durability, and real-time control in harsh environments. They are used in manufacturing, automation, and process control to monitor inputs, execute logic, and control outputs based on a predefined program.
+Over To You
+* Locate the PLC in your training system.
+* Identify the inputs and outputs status LEDs on the PLC.
+o You will see DI a and DI b, which are two groups of digital inputs 
+o You will also see DQ a and DQ b, which are two groups of digital outputs
+* Run the system and you should see some of the lights change. Be sure to open the hand valve, if left shut from the previous worksheet.
+o The bottom LEDs showing the outputs, will have one of them flash briefly as the system starts up. This is our status LED flashing.
+o As the system is running, you will see one of the digital inputs flashing fast. This is our flow sensor as it rotates. If you decrease flow, the LED will flash slower as the propellor inside the flow sensor spins slower. If you run at full speed, the LED will almost go solid as it propellor spins extremely fast.
+* Look at the inputs at DI a 0 and 1. These two should be on. These are your two emergency stop channels. 
+o Press the estop and these two LEDs will go out.
+o Reset the estop and they will come back on.
+o As you press the blue reset button, you will observe that DI a 2 will turn on whilst you hold it down.
+So What?
+The I/O status LEDs on the PLC are invaluable for maintenance engineers because they provide real-time feedback on the system’s operation. These lights help identify whether sensors, switches, and outputs are functioning correctly, making troubleshooting faster and reducing downtime.
+Key Takeaways
+* Quick Fault Diagnosis – If an expected input LED isn’t lighting up, it may indicate a faulty sensor, wiring issue, or failed connection.
+* Verifying System Responses – Watching the LEDs change confirms that the PLC is correctly processing inputs and activating outputs.
+* Output Activation Check – The DQ LEDs confirm that outputs like solenoid valves and pumps are being triggered by the PLC. If an expected output LED isn’t lighting up, it may indicate that the PLC logic is not enabling the output due to an unmet condition.
+Student Handbook
+Complete The Questions & Answers in the Student Handbook relating to this worksheet.
+
+
+Worksheet 5 – HMI
+An Human-Machine Interface (HMI) is a touchscreen interface that lets operators monitor and control automated systems. It shows real-time data, alarms, and diagnostics to help engineers identify and fix issues quickly.Over To You
+* Press the emergency stop or create any other type of fault, like a PID setpoint error by running the system with the hand valve closed.
+o Navigate to the Faults section on the HMI and verify you can see the active fault there.
+* Return to the main menu and navigate to the Alarms section.
+o Verify you can see the fault on the alarms page and take note of what other information you can see on this page.
+* Reset the fault and return to the Main page with the system diagram and run the system. 
+o Take note of the current water temperature, it’s available on the top left of the screen.
+* Leave the system running and navigate back to the Main Menu and then to the Setup page.
+o Adjust either the “High Temp Cutout” or “Low Temp Cutout”  temperature settings in the Setup page until the system cuts out.
+o These two settings are Low Temperature Cutout & High Temperature Cutout
+o You will need to either set the low temperature setting to above your current temperature or the high temperature setting to below your current temperature. 
+* Confirm the system shuts off.
+* Close the fault popup and try to run the system again. It should not run.
+* Navigate back to the Alarm or Fault page and confirm you can see the active fault.
+* Change the settings in the Setup page back to the original settings:
+o High: 30 degrees
+o Low: 5 degrees
+So What?
+The HMI improves maintenance by logging alarms, verifying system responses, monitoring processes, and providing control functions. It helps diagnose faults, detect inefficiencies, and identify hardware failures. Engineers can reset alarms, adjust setpoints, and test system functions. Setup screens allow configuration of safety limits, such as high-temperature cutouts, ensuring automatic shutdowns or alarms prevent equipment damage.
+Key Takeaways
+* HMIs provide real-time system monitoring and are essential for troubleshooting.
+* Alarms and warnings help identify faults quickly without accessing the PLC.
+* Live data displays confirm sensor functionality and process conditions.
+* Control functions allow engineers to adjust and reset system settings.
+Student Handbook
+Complete The Questions & Answers in the Student Handbook relating to this worksheet.
+
+
+
+Worksheet 6 – Pump
+A pump moves fluids by generating flow and pressure, essential in process control and fluid transport. Controlled manually or via automation, pumps must be monitored for issues like cavitation, overheating, and wear to maintain system performance.Over To You
+* Locate the pump in your training system.
+* Identify the wiring for the pump;
+o It’s a simple 2-wire device. If you were to put 24V across these two wires, it would run at full speed.
+* Run the system and set the setpoint to 300 litres per hour.
+o To control the speed we vary this voltage from 0V up to 24V. If you were to use a multimeter across these wires now you would see close to 24V on the pump. 
+* Reduce the setpoint down to 40 litres per hour.
+o If you were to use a multimeter across these wires now, you would see much lower, likely around 12V. 
+* Motors, pumps and valves can either be controller in a black and white manner, simply on or off. This means either full-speed/fully-open or stopped/fully-closed.
+* They can also be controlled in a varying way by changing the voltage being supplied to them.
+o At 50% voltage, the pump or motor would go at half speed and a valve would be half open.
+* Motors, pumps, and valves can either be controlled in a binary on/off manner   running at full speed/fully open or completely off/fully shut.
+* Alternatively, motors, pumps, and valves can be controlled proportionally, meaning their speed or position can be adjusted gradually instead of just on or off. This is usually done by pulsing the supply voltage (called PWM) or by changing the frequency of the voltage (using a VFD for motors).
+o For example, if we apply 50% pulses (PWM) or set the frequency to 50%, the pump will run at about half speed.
+o If we apply only 10% pulses or frequency, a valve may be almost fully closed or completely shut.
+o On our pump, 10% pulses are not enough to make it turn   we need at least 50% or about 12V before it starts moving.
+* Run the system, set a setpoint above 250 litres per hour and almost fully shut the valve.
+o Watch as the pump attempts to run at full speed but cannot reach it.
+o Running a pump at full speed is mostly harmless but you would expect in industry that most motors and pumps are oversized for the system their in to accommodate future upgrade, so you should rarely see a pump that has varying speed control, running at max speed. Especially if the desired setpoint is not being achieved. This could be a sign something is wrong, for example your hand valve being partially closed.
+* We have a low-level sensor inside the tank which detects when the water level in the tank is too low. This is an essential safety feature for pumps. Most pumps cannot be run dry under any circumstances. 
+o Many pumps use liquid they push as coolant and/or lubricant. Running them without a fluid to push, could cause them to overheat or destroy themselves through metal-on-metal contact and friction.
+So What?
+When maintaining industrial pump systems, it's important to understand how they're controlled. Modern pumps rarely run at just on or off settings. Instead, they use special controllers like Variable Frequency Drives (VFDs) that let them run at different speeds depending on what's needed. This is similar to how a car doesn't always need to run at full throttle - sometimes you just need to cruise along.
+One key thing to watch for as a maintenance technician is when a pump with variable speed control is running at 100% capacity but still not meeting its flow targets. This is almost always a red flag. Industrial pumps are typically sized larger than necessary to handle future expansion, so they shouldn't need to run flat-out during normal operation. If you see this happening, start looking for problems like partially closed valves, clogged filters, or pipe restrictions.
+Protecting pumps from running dry is also crucial in maintenance. When pumps run without fluid, they can overheat and fail quickly - sometimes in just minutes. That's why level sensors are installed to automatically shut pumps down before they run dry. As a maintenance technician, checking these safety systems regularly is just as important as inspecting the pump itself.
+Sensors throughout your pump system help you spot problems before they cause a breakdown. By monitoring readings for flow, pressure, and temperature, you can catch subtle changes that might indicate developing issues. For example, gradually increasing power usage with decreasing flow often means something is starting to clog the system.
+Regular maintenance checks, including listening for unusual noises and feeling for excessive vibration, will help keep your pumps running efficiently and prevent unexpected downtime. Remember that in industrial maintenance, preventing failures is always better than repairing them.
+Key Takeaways
+o Pumps are mechanical devices that need careful monitoring and routine maintenance to stay reliable.
+o Variable speed control using PWM, voltage control, or VFDs allows pumps to adjust flow and pressure based on system demands   preventing unnecessary wear and saving energy.
+o Low-level sensors are critical for preventing dry running, which can permanently damage pumps.
+o If a pump is running at full speed but not reaching setpoints, this often indicates a system fault like a blockage or valve issue.
+o Sensors provide vital feedback on flow, pressure, temperature, and fluid levels, enabling early detection of problems and reducing downtime.
+By understanding how pumps interact with the system, maintenance engineers can prevent failures, diagnose faults faster, and keep operations running efficiently.
+Student Handbook
+Complete The Questions & Answers in the Student Handbook relating to this worksheet.
+
+
+Worksheet 7 – Valve
+A valve controls fluid flow by opening, closing, or restricting passage. Often automated by PLCs or sensors, valves regulate pressure and direction. Engineers must understand them to prevent flow issues, pressure faults, or system failures.Over To You
+o Locate the valve in your training system.
+o This is the large black solenoid valve with the brass base.
+o Run the system at 250 litres per minute.
+o Locate the valve on the screen and monitor its % value. This is how open the valve is. At 100% open it allows full flow through. At 0% it allows zero flow. 
+o Begin to close the hand valve whilst the system is running and watch as the solenoid valve opens up more towards 100% in order to compensate for the restricted flow from the hand valve.
+o Close the hand valve and watch it go to 100% position, i.e. fully open.
+o Quickly open the valve and you will see it begin to close.
+o This is known as proportional valve control.
+o This, similar to the pump, is a 2-wire device. It works in the same way. 
+o Should you apply 24V across these two wires, the valve will go fully open.
+o We use PWM to control the position of the valve.	
+o Run the system, 
+o Set the flow rate high (something above 200)
+o Navigate to the IO page
+o Click the “i” button next to the valve demand. 
+o Click the offset orange box that should have a value of “0”
+o Apply an offset of -100, this will ensure the valve fully closes. You should see zero flow and the pump should go to 100% demand. Confirm this on the main screen before the system errors out.
+o Keep running the system and reduce the offset until you get the valve demand to be a positive number.
+o You should see the valve open at about 10%. 
+o Typically, the valve will remain shut at 0-10% demand and then open from 10% onwards. Pump speed (i.e. flow rate) will affect this slightly. 
+o This 0-10% closed position is known as deadband.
+o Remove the offset, run the system at 300 litres per hour
+o Place your hand on the valve, you should feel it get warm.
+o This could be used as an indication as to whether a valve is operating or not. Generally, the electronic connector on the valve will get warm in operation. 
+o Note: Never check for leaks using your hand.
+o Hit the Estop and observe the valve
+o Did the valve go fully open or fully closed?
+o Understanding the difference here is important. Sometimes you want a valve to fully open in an emergency whilst in our case, we want it fully closed.
+So What?
+Valves play a critical role in fluid control, and their correct operation is essential for system stability and efficiency. Different types of valves serve different functions, and understanding their behaviour helps in diagnosing potential faults.
+Here’s how valves affect system performance and maintenance:
+* Flow and Pressure Regulation – A valve controls how much fluid passes through a system. 
+* Solenoid Valve Functionality – Electrically operated valves should open and close reliably when activated. If a solenoid valve fails to switch, it could be due to coil failure, power loss, or blocked ports.
+* Mechanical Valves – Not all valves are electronically operated. Some are operated mechanically like our hand valve. Some are operated using air or even other fluids, like with pilot-operated valves. There are many types of valves.
+* Proportional Valve Issues – Some systems use proportional valves that adjust gradually instead of fully opening or closing. If these fail, flow control becomes erratic, leading to unstable system performance.
+* Mechanical Blockages – Dirt, debris, or scale buildup inside a valve can restrict movement or cause leaks, leading to pressure drops or stuck positions.
+* Valve Position Feedback – Some automated systems use sensors to confirm if a valve is open, closed, or in transition. If a valve position sensor disagrees with expected operation, it may indicate a mechanical fault or electrical issue.
+* Fail-Safe Behaviour – Certain valves return to a default position (open or closed) when power is lost. Observing how a valve reacts to power cuts or E-Stop activation can help determine if it is configured correctly for safety.
+Key Takeaways
+o Valves control flow, pressure, and direction in a system.
+o Proportional valves adjust gradually, controlled by PWM signals.
+o Valves often stay closed until 10% demand (deadband).
+o Blockages, coil failures, or power loss can cause valve faults.
+o Some valves are mechanical or pilot operated.
+o Some valves have sensors that give position feedback to detect issues.
+o Valves may get warm when operating   normal but not for leak checks.
+o Always check how valves behave during an E-Stop for safety.
+Student Handbook
+Complete The Questions & Answers in the Student Handbook relating to this worksheet.
+
+
+Worksheet 8 – Float Switch
+A float switch detects liquid levels by rising or falling with the fluid, triggering a contact at set points. Used for pump control and overflow prevention, engineers must understand them to avoid false readings, pump failure, or system shutdowns.Over To You
+* Locate the float switches in your training system, there are two.
+* Identify their function:
+o High-Level Float Switch: Prevents overflow by stopping the pump or triggering an alarm.
+o Low-Level Float Switch: Protects the system by stopping the pump when fluid is too low.
+* Run the system and try to observe how the float switches bobble around in the tank. 
+* Can you observe whether the float switches are currently raised or lowered?
+* If you were to fill the tank, the high level float switch would raise and shut the system off.
+* If you were to drain the tank, the low level float switch would lower and shut the system off.
+* We can view the status of the float switches on the IO screen.
+o Navigate to the Main Menu
+o Select the IO Screen
+o Find the high and low float switches on the left-hand side of the screen.
+* Observe the difference between the two sensors
+o One sensor should be on, and one should be off.
+o These sensors are different; one gives our control system a signal when the float switch is lifted by water. This is known as normally open (NO).
+o The other sensor is known as normally closed (NC). It gives us a signal when the float switch is not activated (lifted by water), but when it is activated, we lose this signal.
+So What?
+Float switches monitor liquid levels and help protect the system. The low-level switch is normally open (NO) and only closes when there is enough liquid. This allows the pump to run. If the level drops, it opens and stops the pump to avoid dry running.
+The high-level switch is normally closed (NC) and breaks the circuit when the tank is full. This stops filling or triggers an alarm to prevent overflow.
+This setup is fail-safe. If a wire breaks or a switch fails, the system detects the change and shuts down safely. NC switches are used where a constant signal confirms safety. NO switches are used where action is only needed in specific conditions, like confirming enough fluid is present.
+Key Takeaways
+* Float switches detect tank levels and help control pumps or alarms.
+* The low-level switch is NO and stops the pump if fluid is too low.
+* The high-level switch is NC and stops filling when the tank is full.
+* This setup is fail-safe. If wiring or switches fail, the system shuts down safely.
+* NO switches only give a signal when needed. NC switches give a constant signal and fail safely if lost.
+* Knowing how float switches behave helps prevent damage, improve safety, and maintain system reliability.
+By recognizing how float switches function, maintenance engineers can identify issues early, prevent costly failures, and keep fluid control systems operating efficiently.
+Student Handbook
+Complete The Questions & Answers in the Student Handbook relating to this worksheet.
+Worksheet 9 – Proximity Switch
+A proximity switch detects an object’s presence without contact, making it ideal for automation, positioning and safety systems. Maintenance engineers should know how they work to troubleshoot misalignments or faults, otherwise false triggers can cause machine stoppages or safety hazards. We use inductive sensors to detect metal objects.Over To You
+* Run the system as you have done previously.
+* Locate the proximity switch in your training system.
+o We are using the sensor to detect if the tank lid is on by detecting the metal pillar next to the tank.
+* If this sensor does not detect a metal object, the system will not run. 
+o This is done to prevent the system from pumping water whilst the tank lid is off, as the pumps return line is attached to the lid.
+* Disturb the proximity sensor by either;
+o Slightly lifting the right side of the tank, where the proximity sensor sits, away from the metal pillar.
+o Remove the tank lid slightly by undoing the white circle screws that hold the lid down and then slightly lifting the tank lid away from the pillar.
+o Gently bend the metal bracket away from the proximity sensor.
+* This should bring up a fault on the HMI and the system should shut off.
+* Navigate to the IO screen and monitor the status of the proximity sensor.
+o Disturb the proximity sensor again using the same method you did previously. 
+o Observe the status of it changing on the IO screen.
+So What?
+Proximity switches improve automation and safety by detecting objects without physical contact, reducing wear and increasing durability. They are commonly used to monitor guards, access points, and object positions. Proximity sensors are sometimes overridden during maintenance by presenting a different metal object to simulate detection.
+Types of proximity sensors:
+* Inductive – detects metal objects only
+* Capacitive – detects both metal and non-metal materials
+* Photoelectric – uses light to detect objects
+A common use for an inductive sensor is to confirm whether a metal component, such as a tank lid, is in place. If the sensor fails to detect the metal, the system may be prevented from operating to avoid unsafe conditions. Misalignment, poor mounting, wiring faults, or environmental factors like dust or moisture can all cause false signals or detection failures. Using the correct sensor type and installing it properly is essential for reliable and safe operation.
+Key Takeaways
+* Proximity switches detect objects without contact, reducing wear and increasing system reliability.
+* Inductive sensors detect metal, capacitive sensors detect various materials, and photoelectric sensors use light.
+* A sensor may prevent system operation if it fails to detect a required object, such as a metal lid.
+* False signals can result from misalignment, poor mounting, wiring faults, or environmental interference.
+* Sensors are sometimes overridden during maintenance using metal objects to simulate detection.
+By understanding proximity switches, maintenance engineers can prevent system failures, improve accuracy, and ensure safe and efficient machine operation.
+Student Handbook
+Complete The Questions & Answers in the Student Handbook relating to this worksheet.
+Worksheet 10 – Flow Sensor
+Flow sensors measure fluid movement and help regulate flow in automated systems. They provide critical data for detecting blockages, leaks, or pump faults. Accurate readings support system reliability, troubleshooting, and maintenance. Regular cleaning and calibration help ensure consistent performance.Over To You
+* Run the system and find the flow sensor on the HMI screen.
+* Locate the flow sensor physically on the system.
+o You should see no physical change in the flow sensor externally, but internally there is a turbine spinning.
+o The PLC counts how many times a second this turbine spins and then calculates the flow rate, which is displayed on the screen.
+* Increase the flow rate to 300 litres per hour on the HMI and observe the flow rate changing. 
+* Now constrict the flow rate by closing the gate/hand valve on the system. This is done by turning it clockwise. 
+o As the valve closes, observe the flow rate dropping. 
+o Eventually the system will fault and turn off, as it is no longer able to achieve the desired flow rate of 300 litres per minute.
+* Open the valve fully and run the system again.
+* When the system is fully running again, hit the E-Stop and observe the flow rate.
+o It takes some time for the flow sensor to settle. 
+o Even if the pump is off, water may still flow forward or backwards, which the PLC will detect.
+* Reset the E-Stop and clear the fault.
+So What?
+Types of Flow Sensors:
+* Turbine – Measures flow using a spinning rotor and counts pulses as it turns.
+* Electromagnetic – Detects flow by measuring voltage from moving fluid.
+* Ultrasonic – Uses sound waves to measure flow rate without moving parts.
+Flow sensors help maintain accurate fluid control. Turbine sensors often output pulses that are counted by the PLC to calculate flow. These readings are usually displayed on the HMI, which may also include setup options like scaling, calibration offsets, or flow alarms. Often many flow meters will be sent off for calibration regularly to ensure they remain accurate.
+Unstable or incorrect readings could indicate blockages, or sensor faults. No signal may point to wiring or power issues. Dirt, scale, or misalignment can reduce accuracy. In many systems, a lack of proper flow will trigger alarms or stop the process to prevent damage, making flow sensors key to reliable operation.
+Key Takeaways
+* Flow sensors measure fluid movement and help regulate flow in automated systems.
+* Turbine sensors work by counting pulses as a rotor spins, which the PLC uses to calculate flow rate.
+* Flow data is often shown on the HMI, which may also allow adjustments like scaling, offsets, or alarm thresholds.
+* Low or unstable readings can point to air pockets, valve restrictions, blockages, or sensor faults.
+* Flow sensors are critical for detecting system problems early and protecting equipment from damage.
+* Regular cleaning and calibration help maintain sensor accuracy and reliability.
+Student Handbook
+Complete The Questions & Answers in the Student Handbook relating to this worksheet.
+Worksheet 11 – Temperature Sensor
+A temperature sensor tracks heat levels in real time to maintain safe and efficient system operation. Common in automation and process control, it helps prevent overheating or freezing. Engineers must understand these sensors to detect faults, ensure accurate readings, and avoid equipment damage or shutdowns.Over To You
+* Locate the temperature sensor in your training system.
+* The sensor consists of a sensing element (RTD probe) and an electronic transmitter module.
+o The RTD (Resistance Temperature Detector) changes resistance based on temperature.
+o The transmitter converts this resistance into a standard signal, typically a voltage, which is then sent to the PLC.
+o The PLC interprets this signal to an understandable temperature. 
+* Run the system on full flow and observe the temperature on the HMI.
+o Should you run this for 10 minutes, you will see the temperature rise.
+o Take note of the current temperature.
+* Navigate to the Main Menu and then to the Setup screen.
+o This screen shows you the current temperature, the low temperature cutout and the high temperature cutout.
+* Set the high temperature cut-out to be below the current temperature.
+o The system will cutout.
+o The same would happen if you set the low temperature cutout to be above the current temperature.
+* Reset the high temperature cutout to 40 degrees C and the low cutout back to 5 degrees C.
+* Reset all faults.
+So What?
+Types of Temperature Sensors:
+* Thermocouple – Measures temperature by detecting voltage changes.
+* RTD – Measures temperature through changes in resistance.
+* Thermistor – A resistor that changes with temperature and responds quickly.
+Temperature sensors keep equipment safe by preventing overheating and detecting faults. They provide live readings, but strange or missing values may point to damage, wiring issues, or interference. Dirt or vibration can also affect accuracy, and incorrect readings may require recalibration or replacement.
+Sensors often control heaters, fans, or coolers. If the temperature doesn’t change, check airflow, controls, or sensor placement. Many systems rely on these sensors to trigger alarms or shutdowns when temperatures get too high.
+Key Takeaways
+* Temperature sensors monitor heat levels to keep systems running safely and efficiently.
+* RTDs change resistance with temperature, and the transmitter converts this to a signal the PLC can read.
+* The HMI displays live temperature and allows you to set cutout limits for high and low temperatures.
+* Setting a cutout beyond the current temperature will shut down the system to prevent damage.
+* Strange or missing readings may indicate sensor faults, wiring issues, or environmental interference.
+* Sensors often control heaters or coolers and trigger alarms or shutdowns if temperatures go out of range.
+* Regular checks and calibration help ensure accurate and reliable operation.
+Student Handbook
+Complete The Questions & Answers in the Student Handbook relating to this worksheet.
+Worksheet 12 – Digital Sensors
+A digital sensor detects and transmits data in a binary format (on/off, high/low) to control systems, ensuring precise monitoring and automation. These sensors are widely used in industrial automation, safety systems, and equipment monitoring, providing real-time feedback for critical operations.Over To You
+* Identify 4 of the 7 digital inputs we’re using on top of the tank.
+o Flow Sensor
+o Tank High Switch
+o Tank Low Switch
+o Tank Lid Proximity Switch
+* Identify the last 3 digital inputs
+o Two E-Stop Channels
+o Blue Reset Switch
+* Press the Emergency Stop and observe the LEDs on the PLC changing.
+* Do the same with the Blue Reset button.
+* Navigate to the IO screen on the HMI and repeat the same digital input test;
+o Observe the E-Stop and Blue Reset LEDs on the screen change as you press the E-Stop and Blue Reset button.
+So What?
+Digital sensors send a simple on or off signal, usually using 24V DC. To set one up, connect the power wires (+24V and 0V) and the signal wire to a PLC digital input. The PLC reads this as either on (1) or off (0). You can usually monitor the status of these digital inputs directly on the PLC, and also on the IO screen of the HMI.
+
+
+There are two types:
+* Normally Open (NO): Sends a signal only when triggered.
+* Normally Closed (NC): Sends a signal when idle and stops when triggered.
+This matters for safety. For example, emergency stops use NC so that if a wire breaks, the system sees it as a fault. Always check the sensor type before wiring.
+Key Takeaways
+* Digital sensors send an on/off signal to the PLC, typically using 24V DC.
+* The PLC reads these signals as either 1 (on) or 0 (off) and uses them to monitor and control system actions.
+* Input status can be viewed directly on the PLC and also on the IO screen of the HMI.
+* Digital sensors can be Normally Open (NO) or Normally Closed (NC), and the choice affects how faults are detected.
+* Safety devices like Emergency Stops use NC contacts so a broken wire or fault is detected immediately.
+* Knowing the sensor type and how it behaves is essential for safe and reliable system operation.
+By understanding digital sensors, maintenance engineers can diagnose faults, improve system reliability, and ensure safe, efficient operations.
+Student Handbook
+Complete The Questions & Answers in the Student Handbook relating to this worksheet.
+
+
+Worksheet 13 – Analogue Sensors
+An analogue sensor measures things like temperature, pressure, flow, or position and turns that into a changing electrical signal, such as 0 to 10 volts. This signal goes to the control system so it can understand what’s happening in real time. Unlike digital sensors that just say on or off, analogue sensors give more detail about how much something is changing.Over To You
+* Identify the only analogue sensor we have on this rig – the temperature sensor.
+* The electronic transmitter is sending our PLC a 0-10V signal
+o If you have a multimeter, you can measure analogue input 0, on the PLC. (Black probe on terminal “2M” and red probe on the “0” terminal next to “2M”). This will show you 0-10V on your meter.
+* Navigate to the IO page and click the “i” button next to the temperature field.
+o This shows you our settings for our analogue inputs.
+o Our temperature sensor can only read a range of 0-100 degrees Celsius.
+o It outputs 0-10V based on that 0-100 degrees range.
+o So  2V = 20 degrees Celsius and 5V = 50 degrees Celsius.
+* Adjust the scalar value from 100 to 200
+o Notice what happens to the system temperature.
+o It should now have doubled.
+* Reset the scalar value back to 100
+* Adjust the offset value from 0 to -20
+o Observe the system temperature now. It should be 20 degrees lower than the actual temperature.
+* Remove the offset, reset it back to 0.
+So What?
+The temperature sensor in this system is set up to measure 0 to 100°C, and it sends a voltage signal from 0 to 10V into the PLC. The PLC doesn't see temperature directly. Instead, it sees a raw number. On a Siemens S7-1200, the full raw input range is 0 to 27648. This means:
+* 0V = 0
+* 10V = 27648
+* 5V = 13824
+To make this useful, the PLC uses scaling to convert the raw number into a real-world value, like temperature. For a 0–100°C sensor, the scaling is set so:
+* 0 = 0°C
+* 27648 = 100°C
+* 13824 = 50°C
+If the sensor is replaced with one that measures 0 to 300°C, the PLC’s scaling needs to be changed. If not, the PLC will still show 100°C at 10V, when the real temperature is actually 300°C. This causes the HMI to display incorrect values.
+Example:
+* With the 0–100°C sensor:
+o Raw 13824 = 50°C
+* With a 0–300°C sensor (without changing scaling):
+o Raw 13824 still shows 50°C, but the real temperature is 150°C
+To fix this, the PLC must be rescaled so:
+* 0 = 0°C
+* 27648 = 300°C
+* 13824 = 150°C
+Always update the PLC analogue input scaling when the sensor range changes, to keep readings accurate and prevent control errors.
+Applying an Offset
+Sometimes a sensor doesn’t read exactly right. For example, a temperature sensor might always show 5°C too high, even when the real temperature is lower. This could be caused by small differences in how it was installed or changes over time.
+To fix this, an offset is used. An offset just means adjusting the value up or down.
+Example: If the sensor says 100°C but it’s actually 95°C, apply an offset of -5.
+So:
+Final?Value = 100 - 5 = 95°C
+Some systems let you enter this offset directly on the HMI. If not, the PLC programmer may need to change the code to apply it.
+Key Takeaways
+* Analogue sensors send a continuous signal (like 0–10V) to represent values such as temperature or pressure, unlike digital sensors which are just on or off.
+* The temperature sensor on this rig uses a 0–10V signal to represent 0–100°C, meaning 5V equals 50°C.
+* The PLC reads this voltage as a raw value and scales it to show the correct temperature on the HMI.
+* On a Siemens S7-1200, the raw input range is 0 to 27648, so the PLC converts this into a temperature using a formula.
+* If the sensor range changes (e.g. from 0–100°C to 0–300°C), the PLC scaling must be updated. If not, the readings will be incorrect.
+* An offset can be used to correct small differences or errors in readings. For example, if the sensor shows 5°C too high, an offset of –5 can be applied.
+* Understanding scaling and offset ensures accurate measurements and prevents control issues in automated systems.
+Student Handbook
+Complete The Questions & Answers in the Student Handbook relating to this worksheet.
+
+Worksheet 14 – Faults
+Fault finding is essential in industrial maintenance to identify and fix mechanical, electrical, or software issues. This training simulates common faults like sensor failures and E-stops, helping learners build skills in diagnosis, system feedback, and effective troubleshooting.Over To You
+* Run the system and then hit the E-Stop.
+* Before clearing the fault, close the popup and navigate to the “Alarms” page on the HMI
+o This is a common way of displaying Alarms, in a tabular format, with date and time.
+* Check the raise time of the alarm. 
+o This is the time the alarm occurred. Checking this time when an alarm occurs is important.
+* Navigate back to the Main Menu and then to the Fault Page on the HMI
+o This is a page similar to the IO page, where it displays all the faults that occur in the software. 
+o It shows the status of each fault, active or inactive.
+* Reset the Emergency Stop and try another fault, like the proximity switch or temperature offset.
+o Navigate to the Faults and Alarms pages and view the new fault.
+So What?
+Faults in industrial systems can generally be categorized into three types:
+1. Software Faults – These occur due to incorrect programming or parameter settings that cause the system to behave unpredictably. For example, a temperature offset in software can prevent the system from starting.
+2. Electrical Faults – These arise from issues such as broken connections, faulty wiring, or sensor failures, leading to incorrect readings or system shutdowns.
+3. Mechanical Faults – These involve physical issues like stuck valves or damaged components, affecting the movement of fluids or mechanical parts.
+To become proficient in fault finding, you must develop an understanding of system behaviours and learn to recognize abnormal conditions. 
+Key Takeaways
+* Fault finding is a critical skill in industrial maintenance, used to identify and fix mechanical, electrical, and software issues.
+* Industrial faults are either software (settings or code issues), electrical (wiring or sensor faults), or mechanical (stuck or damaged parts).
+* Alarms and fault screens on the HMI help diagnose issues by showing when and where a fault occurred.
+* Checking the alarm raise time can help trace when a problem started.
+* Recognising patterns and abnormal behaviour in the system is key to diagnosing faults effectively.
+* Practising with simulated faults, such as E-stops or sensor offsets, helps build confidence in real-world troubleshooting.
+Student Handbook
+Complete The Questions & Answers in the Student Handbook relating to this worksheet.
+
+
+
+
+
+
+
+
+
+
+
+
+STUDENT HANDBOOK
+
+
+
+Worksheet 1 – Closed-Loop Control Systems
+Questions:
+1. What is the purpose of a closed-loop flow control system?
+________________________________________________________________
+________________________________________________________________
+2. What must you check before starting the system?
+________________________________________________________________
+________________________________________________________________
+3. What happens when you restrict the flow using the hand valve?
+________________________________________________________________
+________________________________________________________________
+4. What role does the PLC play in the system?
+________________________________________________________________
+________________________________________________________________
+5. Why should you avoid making rapid changes to the valve?
+________________________________________________________________
+________________________________________________________________
+
+
+Worksheet 2 – Emergency Stops
+Questions:
+1. What is the main purpose of an Emergency Stop (E-Stop)?
+________________________________________________________________
+________________________________________________________________
+2. How do you reset the E-Stop after it has been pressed?
+________________________________________________________________
+________________________________________________________________
+3. What makes an E-Stop more reliable than a normal stop button?
+________________________________________________________________
+________________________________________________________________
+4. When should an E-Stop be used?
+________________________________________________________________
+________________________________________________________________
+5. Why is it important to regularly inspect the E-Stop?
+________________________________________________________________
+________________________________________________________________
+
+
+Worksheet 3 – Status LED
+Questions:
+1. What is the purpose of the Status LED in the system?
+________________________________________________________________
+________________________________________________________________
+2. What does a green Status LED typically indicate?
+________________________________________________________________
+________________________________________________________________
+3. What colour does the LED turn when a fault is detected, but the system may still function?
+________________________________________________________________
+________________________________________________________________
+4. How can you trigger a safety fault to observe the LED behaviour?
+________________________________________________________________
+________________________________________________________________
+5. Why is it important to monitor the Status LED regularly?
+________________________________________________________________
+________________________________________________________________
+
+
+Worksheet 4 – PLC
+Questions:
+1. What is a PLC and what is it designed for?
+________________________________________________________________
+________________________________________________________________
+2. What do the status LEDs on the PLC indicate?
+________________________________________________________________
+________________________________________________________________
+3. What does it mean if an input LED expected to be on is not lit?
+________________________________________________________________
+________________________________________________________________
+4. What should you observe on the output LEDs when the system starts?
+________________________________________________________________
+________________________________________________________________
+5. How can you tell the flow sensor is working by looking at the PLC?
+________________________________________________________________
+________________________________________________________________
+
+
+Worksheet 5 – HMI
+Questions:
+1. What is the purpose of a Human-Machine Interface (HMI)?
+________________________________________________________________
+________________________________________________________________
+2. Where can you view system faults and alarms on the HMI?
+________________________________________________________________
+________________________________________________________________
+3. What happens when you adjust the High or Low Temperature Cutout settings beyond the current temperature?
+________________________________________________________________
+________________________________________________________________
+4. How does the HMI assist with troubleshooting and maintenance?
+________________________________________________________________
+________________________________________________________________
+5. What real-time information can be seen on the main page of the HMI during system operation?
+________________________________________________________________
+________________________________________________________________
+
+
+Worksheet 6 – Pump
+Questions:
+1. What is the function of a pump in an industrial system?
+________________________________________________________________
+________________________________________________________________
+2. How can a pump be controlled to vary its speed?
+________________________________________________________________
+________________________________________________________________
+3. What might it indicate if a pump is running at full speed but still not meeting the setpoint?
+________________________________________________________________
+________________________________________________________________
+4. Why must pumps not be run dry, and what protects against this?
+________________________________________________________________
+________________________________________________________________
+5. What are some signs that maintenance engineers should look for to detect pump issues early?
+________________________________________________________________
+________________________________________________________________
+
+
+Worksheet 7 – Valve
+Questions:
+1. What is the main function of a valve in an industrial system?
+________________________________________________________________
+________________________________________________________________
+2. How is the valve position controlled in this system?
+________________________________________________________________
+________________________________________________________________
+3. What is meant by the term "deadband" in valve control?
+________________________________________________________________
+________________________________________________________________
+4. What should you do to check if a valve is active during operation?
+________________________________________________________________
+________________________________________________________________
+5. Why is it important to observe valve behaviour during an Emergency Stop?
+________________________________________________________________
+________________________________________________________________
+
+
+Worksheet 8 – Float Switch
+Questions:
+1. What is the main purpose of a float switch in an industrial system?
+________________________________________________________________
+________________________________________________________________
+2. What is the difference between a normally open (NO) and a normally closed (NC) float switch?
+________________________________________________________________
+________________________________________________________________
+3. Why is the low-level float switch normally open (NO)?
+________________________________________________________________
+________________________________________________________________
+4. Why is the high-level float switch normally closed (NC)?
+________________________________________________________________
+________________________________________________________________
+5. What are some common float switch faults, and how can they be identified?
+________________________________________________________________
+________________________________________________________________
+
+
+Worksheet 9 – Proximity Switch
+Questions:
+1. What is a proximity switch and what does it detect?
+________________________________________________________________
+________________________________________________________________
+2. What are the three main types of proximity switches mentioned?
+
+________________________________________________________________
+________________________________________________________________
+3. What problems can a faulty or misaligned proximity switch cause?
+________________________________________________________________
+________________________________________________________________
+4. What should you check if a proximity switch fails to trigger correctly?
+________________________________________________________________
+________________________________________________________________
+5. Why is proper mounting and alignment important for proximity switches?
+________________________________________________________________
+________________________________________________________________
+
+
+Worksheet 10 – Flow Sensor
+Questions:
+1. What does a flow sensor measure and why is it important in automated systems?
+________________________________________________________________
+________________________________________________________________
+2. How does a turbine flow sensor work?
+________________________________________________________________
+________________________________________________________________
+3. What role does the PLC play in reading the flow sensor data?
+________________________________________________________________
+________________________________________________________________
+4. What might unstable or incorrect flow readings indicate?
+________________________________________________________________
+________________________________________________________________
+5. Why is regular calibration of flow sensors important?
+________________________________________________________________
+________________________________________________________________
+
+
+Worksheet 11 – Temperature Sensor
+Questions:
+1. What is the main purpose of a temperature sensor in an automated system?
+________________________________________________________________
+________________________________________________________________
+2. How does an RTD temperature sensor work?
+________________________________________________________________
+________________________________________________________________
+3. What happens if the temperature exceeds the high cutout limit set on the HMI?
+________________________________________________________________
+________________________________________________________________
+4. What could cause a temperature sensor to give incorrect or no readings?
+________________________________________________________________
+________________________________________________________________
+5. Why is calibration important for temperature sensors?
+________________________________________________________________
+________________________________________________________________
+
+
+Worksheet 12 – Digital Sensors
+Questions:
+1. What type of signal does a digital sensor send to a PLC?
+________________________________________________________________
+________________________________________________________________
+2. How can you monitor the status of a digital input?
+________________________________________________________________
+________________________________________________________________
+3. What is the difference between a Normally Open (NO) and Normally Closed (NC) sensor?
+________________________________________________________________
+________________________________________________________________
+4. Why are Emergency Stop buttons typically wired as Normally Closed (NC)?
+________________________________________________________________
+________________________________________________________________
+5. Can you name the seven digital inputs used in the training system?
+________________________________________________________________
+________________________________________________________________
+
+
+Worksheet 13 – Analogue Sensors
+Questions:
+1. What is the only analogue sensor used on this training rig, and what does it measure?
+________________________________________________________________
+________________________________________________________________
+2. What voltage signal does the temperature sensor send to the PLC, and what temperature range does it represent?
+________________________________________________________________
+________________________________________________________________
+3. What does the PLC do with the analogue voltage signal it receives from the sensor?
+________________________________________________________________
+________________________________________________________________
+4. What happens if the sensor range changes from 0–100°C to 0–300°C but the PLC scaling is not updated?
+________________________________________________________________
+________________________________________________________________
+5. Why might an offset be used, and how does it affect the final temperature value?
+________________________________________________________________
+________________________________________________________________
+
+
+Worksheet 14 – Faults
+Questions:
+1. Why is fault finding important in industrial maintenance?
+________________________________________________________________
+________________________________________________________________
+2. What are the three main types of faults in industrial systems?
+________________________________________________________________
+________________________________________________________________
+3. How does the HMI help with diagnosing faults?
+________________________________________________________________
+________________________________________________________________
+4. What is the purpose of checking the alarm raise time on the HMI?
+________________________________________________________________
+________________________________________________________________
+5. How can practising with simulated faults improve troubleshooting skills?
+________________________________________________________________
+________________________________________________________________
+
+
+SAFETY NOTE
+As you step into the world of industrial maintenance, safety must always come first. Every machine, tool, and system you work with has risks, but following the right procedures keeps you and your team safe. 
+There are official safety standards and regulations, like the Machinery Directive 2006/42/EC, that exist to ensure all maintenance work is carried out correctly and safely. In the EU there is the EN 60204-1 (electrical safety for machinery) and in the US, OSHA 1910 (general industry safety) and NFPA 70E (electrical safety for workers). These standards help maintenance engineers work safely, reduce risks, and comply with legal requirements. Once you get into Industry, get a copy of these and learn them. They may save your life. The best engineers aren’t just good at fixing machines; they’re smart enough to work safely.
+1. Lock It Out, Stay Safe
+Before you touch any machine, make sure it’s isolated from power. Use Lockout/Tagout (LOTO) procedures to lock off energy sources (electricity, hydraulics, pneumatics). Machines can start unexpectedly, so always check before working.
+2. Read the Manual, Know the Rules
+Every machine has a manufacturer’s manual it’s there for a reason. Read it. Follow it. Never assume you know how something works without checking first.
+3. Wear the Right Gear
+Your Personal Protective Equipment (PPE) isn’t optional. Safety glasses, gloves, boots, and hearing protection help prevent injuries that could end your career before it starts.
+4. Only Work on What You Understand
+If you’re unsure about something, ask. Rushing in without the right knowledge can be dangerous. Learning the correct procedures now will make you a better and safer engineer in the long run.
+5. Keep Your Workspace Clear
+Slips, trips, and falls are some of the most common accidents in maintenance. Keep tools, cables, and waste tidy to prevent hazards.
+6. Electrical Safety is No Joke
+Always turn off and test before working on electrical systems. Use insulated tools and check grounding a bad connection can be deadly.
+7. Moving Parts Can Kill
+Machines have stored energy, even when turned off. Always block, chock, or brace moving parts before working on them. Never assume something is safe just because it’s not running.
+8. Watch Out for Pressure
+Hydraulics and pneumatics store energy in pipes, hoses, and tanks.
+* Always depressurize systems before working on them.
+* Inspect hoses and fittings for leaks never use your hands to check, use cardboard instead.
+* A burst hose can cause serious injuries look for signs of wear before starting work.
+9. Be Ready for Emergencies
+Know where emergency stops, fire extinguishers, and first aid stations are. If something goes wrong, you need to act fast and correctly.
+10. Speak Up About Faults
+If you find something wrong don’t ignore it. Report faults immediately, and don’t use unsafe equipment. A quick fix now could prevent a serious accident later.
+
+
+
+
+VERSION CONTROL
+15 05 25 		 First Revision Created
+
+0Worksheets		
+
+	Copyright © 2025 Matrix Technology Solutions Limited	Page 2 of 2
+

@@ -537,6 +537,78 @@ h1 {
     font-style: italic; 
 }
 
+/* Introduction Section Two-Column Layout */
+.introduction-content-wrapper {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+    margin-top: 20px;
+}
+
+.introduction-text {
+    flex: 0 0 60%;
+    padding-right: 20px;
+}
+
+.introduction-image {
+    flex: 0 0 40%;
+}
+
+.introduction-image .system-diagram {
+    margin: 0;
+}
+
+.introduction-image .system-diagram img {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    min-height: 200px;
+}
+
+/* CAD Models for Worksheet 1 */
+.cad-models {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.cad-model {
+    text-align: center;
+}
+
+.cad-model img {
+    width: 100%;
+    max-width: 280px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.cad-model figcaption {
+    color: #FFFFFF;
+    margin-top: 10px;
+    font-style: italic;
+    font-size: 14px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .introduction-content-wrapper {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .introduction-text,
+    .introduction-image {
+        flex: none;
+        width: 100%;
+    }
+    
+    .introduction-text {
+        padding-right: 0;
+    }
+}
+
 /* Simulation Section Styling */
 .simulation-section { 
     background: linear-gradient(135deg, #1a1a1a, #2d2d2d); 

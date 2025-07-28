@@ -79,16 +79,21 @@
     <div class="worksheet-section introduction-section">
       <h2 class="section-header"><i class="fas fa-info-circle"></i> 1. Introduction</h2>
       <div class="worksheet-content">
-        <p>The system you have in front of you is a Closed-Loop Flow Control system, meaning it continuously adjusts itself to meet a desired target, called the setpoint. It does this by using feedback from sensors to control devices like pumps and valves, keeping the system accurate and stable even if conditions change.</p>
-        
-        <div class="cad-models">
-          <div class="cad-model">
-            <img src="assets/cad.png" alt="CAD Model - Front View">
-            <figcaption>CAD Model - Front View</figcaption>
+        <div class="introduction-content-wrapper">
+          <div class="introduction-text">
+            <p>The system you have in front of you is a Closed-Loop Flow Control system, meaning it continuously adjusts itself to meet a desired target, called the setpoint. It does this by using feedback from sensors to control devices like pumps and valves, keeping the system accurate and stable even if conditions change.</p>
           </div>
-          <div class="cad-model">
-            <img src="assets/cad2.png" alt="CAD Model - Side View">
-            <figcaption>CAD Model - Side View</figcaption>
+          <div class="introduction-image">
+            <div class="cad-models">
+              <div class="cad-model">
+                <img src="assets/cad.png" alt="CAD Model - Front View">
+                <figcaption>CAD Model - Front View</figcaption>
+              </div>
+              <div class="cad-model">
+                <img src="assets/cad2.png" alt="CAD Model - Side View">
+                <figcaption>CAD Model - Side View</figcaption>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1382,5 +1387,27 @@ function loadSavedAnswers() {
       document.getElementById('steady-state-error').textContent = steadyStateError.toFixed(2);
     }
   </script>
+  
+  <!-- Bottom Navigation -->
+  <div class="worksheet-bottom-nav">
+    <div class="worksheet-header-content">
+      <div class="worksheet-header-left">
+        <button class="worksheet-nav-btn worksheet-back-btn" onclick="window.location.href='cp0539-worksheets.html'">
+          <i class="fas fa-arrow-left"></i>
+          <span>Back to Worksheets</span>
+        </button>
+      </div>
+      <div class="worksheet-header-center">
+        <h1 class="worksheet-title">Worksheet 1 - Flow Control System Maintenance</h1>
+      </div>
+      <div class="worksheet-header-right">
+        <button class="worksheet-nav-btn worksheet-next-btn" onclick="window.location.href='worksheet-2.html'">
+          <span>Next Worksheet</span>
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  
 </body>
 </html> 
