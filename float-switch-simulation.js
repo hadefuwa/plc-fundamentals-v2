@@ -8,7 +8,8 @@ let tankState = {
         draining: false,
         highSwitch: false,  // 80%
         lowSwitch: false,   // 20%
-        pumpStatus: 'IDLE'
+        pumpStatus: 'IDLE',
+        time: 0
     },
     advanced: {
         level: 0,
@@ -19,364 +20,226 @@ let tankState = {
         lowWarning: false,  // 30%
         lowCutout: false,   // 10%
         pumpStatus: 'IDLE',
-        alerts: []
+        alerts: [],
+        time: 0
     }
 };
 
-// Initialize all charts when the page loads
 function initializeFloatSwitchSimulation() {
     console.log('Initializing float switch simulation...');
-
-    // Destroy existing charts if they exist
-    Object.values(charts).forEach(chart => {
-        if (chart) {
-            chart.destroy();
+    
+    // Reset tank state
+    tankState = {
+        basic: {
+            level: 0,
+            filling: false,
+            draining: false,
+            highSwitch: false,
+            lowSwitch: false,
+            pumpStatus: 'IDLE',
+            time: 0
+        },
+        advanced: {
+            level: 0,
+            filling: false,
+            draining: false,
+            highCutout: false,
+            highWarning: false,
+            lowWarning: false,
+            lowCutout: false,
+            pumpStatus: 'IDLE',
+            alerts: [],
+            time: 0
         }
-    });
-    charts = {};
+    };
 
     // Clear any existing intervals
-    Object.values(simIntervals).forEach(interval => {
-        clearInterval(interval);
-    });
+    Object.values(simIntervals).forEach(interval => clearInterval(interval));
     simIntervals = {};
 
-    // Common chart configuration
+    // Initialize charts
+    initializeCharts();
+    
+    // Set up event listeners
+    setupEventListeners();
+    
+    // Initial updates
+    updateBasicVisualTank();
+    updateBasicStatus();
+    updateAdvancedVisualTank();
+    updateAdvancedStatus();
+    
+    console.log('Float switch simulation initialized successfully!');
+}
+
+function initializeCharts() {
+    // Destroy existing charts if they exist
+    if (charts.basic) charts.basic.destroy();
+    if (charts.advanced) charts.advanced.destroy();
+    charts = {};
+
     const commonConfig = {
         type: 'line',
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            animation: {
-                duration: 0
-            },
-            interaction: {
-                intersect: false,
-                mode: 'index'
-            },
+            animation: { duration: 0 },
             plugins: {
-                legend: {
-                    display: false
+                legend: { display: false }
+            },
+            scales: {
+                x: {
+                    type: 'linear',
+                    min: 0,
+                    max: 30,
+                    grid: {
+                        color: '#333'
+                    },
+                    ticks: {
+                        color: '#aaa'
+                    }
                 },
-                tooltip: {
-                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                    titleColor: '#fff',
-                    bodyColor: '#fff',
-                    borderColor: '#555',
-                    borderWidth: 1,
-                    padding: 10,
-                    displayColors: false,
-                    callbacks: {
-                        label: function(context) {
-                            return 'Level: ' + context.parsed.y.toFixed(1) + '%';
-                        }
+                y: {
+                    min: 0,
+                    max: 100,
+                    grid: {
+                        color: '#333'
+                    },
+                    ticks: {
+                        color: '#aaa',
+                        callback: value => value + '%'
                     }
                 }
             }
         }
     };
 
-    try {
-        // Initialize Basic Tank Chart
-        const basicCtx = document.getElementById('basic-tank-chart');
-        if (basicCtx) {
-            charts.basic = new Chart(basicCtx, Object.assign({}, commonConfig, {
-                data: {
-                    datasets: [{
-                        label: 'Tank Level',
-                        data: [],
-                        borderColor: '#2196F3',
-                        backgroundColor: 'rgba(33, 150, 243, 0.1)',
-                        tension: 0.4,
-                        fill: true
-                    }]
-                },
-                options: {
-                    ...commonConfig.options,
-                    scales: {
-                        x: {
-                            type: 'linear',
-                            display: true,
-                            min: 0,
-                            max: 30,
-                            grid: {
-                                color: '#333',
-                                drawBorder: false
-                            },
-                            ticks: {
-                                color: '#aaa',
-                                maxTicksLimit: 8
-                            },
-                            title: {
-                                display: true,
-                                text: 'Time (s)',
-                                color: '#aaa',
-                                font: { size: 14 }
-                            }
-                        },
-                        y: {
-                            display: true,
-                            min: 0,
-                            max: 100,
-                            grid: {
-                                color: '#333',
-                                drawBorder: false
-                            },
-                            ticks: {
-                                color: '#aaa',
-                                callback: function(value) {
-                                    return value + '%';
-                                }
-                            },
-                            title: {
-                                display: true,
-                                text: 'Tank Level',
-                                color: '#aaa',
-                                font: { size: 14 }
-                            }
-                        }
-                    }
-                }
-            }));
+    // Initialize Basic Tank Chart
+    const basicCtx = document.getElementById('basic-tank-chart');
+    if (basicCtx) {
+        charts.basic = new Chart(basicCtx, {
+            ...commonConfig,
+            data: {
+                datasets: [{
+                    data: [],
+                    borderColor: '#2196F3',
+                    backgroundColor: 'rgba(33, 150, 243, 0.1)',
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    fill: true
+                }]
+            }
+        });
+    }
 
-            // Add switch level indicators
-            const basicSwitchPlugin = {
-                id: 'basicSwitchLines',
-                beforeDraw: (chart) => {
-                    const ctx = chart.ctx;
-                    const yAxis = chart.scales.y;
-                    
-                    // High switch line (80%)
-                    ctx.beginPath();
-                    ctx.strokeStyle = '#FF5722';
-                    ctx.setLineDash([5, 5]);
-                    const highY = yAxis.getPixelForValue(80);
-                    ctx.moveTo(chart.chartArea.left, highY);
-                    ctx.lineTo(chart.chartArea.right, highY);
-                    ctx.stroke();
-                    
-                    // Low switch line (20%)
-                    ctx.beginPath();
-                    ctx.strokeStyle = '#FF9800';
-                    const lowY = yAxis.getPixelForValue(20);
-                    ctx.moveTo(chart.chartArea.left, lowY);
-                    ctx.lineTo(chart.chartArea.right, lowY);
-                    ctx.stroke();
-                    
-                    ctx.setLineDash([]);
-                }
-            };
-            charts.basic.options.plugins.basicSwitchLines = basicSwitchPlugin;
-        }
-
-        // Initialize Advanced Tank Chart
-        const advCtx = document.getElementById('adv-tank-chart');
-        if (advCtx) {
-            charts.advanced = new Chart(advCtx, Object.assign({}, commonConfig, {
-                data: {
-                    datasets: [{
-                        label: 'Tank Level',
-                        data: [],
-                        borderColor: '#4CAF50',
-                        backgroundColor: 'rgba(76, 175, 80, 0.1)',
-                        tension: 0.4,
-                        fill: true
-                    }]
-                },
-                options: {
-                    ...commonConfig.options,
-                    scales: {
-                        x: {
-                            type: 'linear',
-                            display: true,
-                            min: 0,
-                            max: 30,
-                            grid: {
-                                color: '#333',
-                                drawBorder: false
-                            },
-                            ticks: {
-                                color: '#aaa',
-                                maxTicksLimit: 8
-                            },
-                            title: {
-                                display: true,
-                                text: 'Time (s)',
-                                color: '#aaa',
-                                font: { size: 14 }
-                            }
-                        },
-                        y: {
-                            display: true,
-                            min: 0,
-                            max: 100,
-                            grid: {
-                                color: '#333',
-                                drawBorder: false
-                            },
-                            ticks: {
-                                color: '#aaa',
-                                callback: function(value) {
-                                    return value + '%';
-                                }
-                            },
-                            title: {
-                                display: true,
-                                text: 'Tank Level',
-                                color: '#aaa',
-                                font: { size: 14 }
-                            }
-                        }
-                    }
-                }
-            }));
-
-            // Add switch level indicators
-            const advSwitchPlugin = {
-                id: 'advSwitchLines',
-                beforeDraw: (chart) => {
-                    const ctx = chart.ctx;
-                    const yAxis = chart.scales.y;
-                    
-                    // High cutout line (90%)
-                    ctx.beginPath();
-                    ctx.strokeStyle = '#F44336';
-                    ctx.setLineDash([5, 5]);
-                    const highCutY = yAxis.getPixelForValue(90);
-                    ctx.moveTo(chart.chartArea.left, highCutY);
-                    ctx.lineTo(chart.chartArea.right, highCutY);
-                    ctx.stroke();
-                    
-                    // High warning line (70%)
-                    ctx.beginPath();
-                    ctx.strokeStyle = '#FF9800';
-                    const highWarnY = yAxis.getPixelForValue(70);
-                    ctx.moveTo(chart.chartArea.left, highWarnY);
-                    ctx.lineTo(chart.chartArea.right, highWarnY);
-                    ctx.stroke();
-                    
-                    // Low warning line (30%)
-                    ctx.beginPath();
-                    ctx.strokeStyle = '#FF9800';
-                    const lowWarnY = yAxis.getPixelForValue(30);
-                    ctx.moveTo(chart.chartArea.left, lowWarnY);
-                    ctx.lineTo(chart.chartArea.right, lowWarnY);
-                    ctx.stroke();
-                    
-                    // Low cutout line (10%)
-                    ctx.beginPath();
-                    ctx.strokeStyle = '#F44336';
-                    const lowCutY = yAxis.getPixelForValue(10);
-                    ctx.moveTo(chart.chartArea.left, lowCutY);
-                    ctx.lineTo(chart.chartArea.right, lowCutY);
-                    ctx.stroke();
-                    
-                    ctx.setLineDash([]);
-                }
-            };
-            charts.advanced.options.plugins.advSwitchLines = advSwitchPlugin;
-        }
-
-        // Set up event listeners
-        setupEventListeners();
-        console.log('Float switch simulation initialized successfully!');
-    } catch (error) {
-        console.error('Error initializing float switch simulation:', error);
+    // Initialize Advanced Tank Chart
+    const advCtx = document.getElementById('adv-tank-chart');
+    if (advCtx) {
+        charts.advanced = new Chart(advCtx, {
+            ...commonConfig,
+            data: {
+                datasets: [{
+                    data: [],
+                    borderColor: '#4CAF50',
+                    backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    fill: true
+                }]
+            }
+        });
     }
 }
 
 function setupEventListeners() {
-    try {
-        // Basic Tank Controls
-        const basicFillBtn = document.getElementById('basic-fill');
-        const basicDrainBtn = document.getElementById('basic-drain');
-        if (basicFillBtn && basicDrainBtn) {
-            basicFillBtn.addEventListener('click', () => toggleBasicFill());
-            basicDrainBtn.addEventListener('click', () => toggleBasicDrain());
-        }
+    // Basic Tank Controls
+    const basicFillBtn = document.getElementById('basic-fill');
+    const basicDrainBtn = document.getElementById('basic-drain');
+    
+    if (basicFillBtn) basicFillBtn.onclick = toggleBasicFill;
+    if (basicDrainBtn) basicDrainBtn.onclick = toggleBasicDrain;
 
-        // Advanced Tank Controls
-        const advFillBtn = document.getElementById('adv-fill');
-        const advDrainBtn = document.getElementById('adv-drain');
-        if (advFillBtn && advDrainBtn) {
-            advFillBtn.addEventListener('click', () => toggleAdvancedFill());
-            advDrainBtn.addEventListener('click', () => toggleAdvancedDrain());
-        }
-
-        console.log('Event listeners set up successfully!');
-    } catch (error) {
-        console.error('Error setting up event listeners:', error);
-    }
+    // Advanced Tank Controls
+    const advFillBtn = document.getElementById('adv-fill');
+    const advDrainBtn = document.getElementById('adv-drain');
+    
+    if (advFillBtn) advFillBtn.onclick = toggleAdvancedFill;
+    if (advDrainBtn) advDrainBtn.onclick = toggleAdvancedDrain;
 }
 
 // Basic Tank Functions
 function toggleBasicFill() {
-    const btn = document.getElementById('basic-fill');
     tankState.basic.filling = !tankState.basic.filling;
+    tankState.basic.draining = false;
     
-    // Update button state
-    btn.textContent = tankState.basic.filling ? 'Stop Fill' : 'Start Fill';
-    btn.style.background = tankState.basic.filling ? '#FF5722' : '#4CAF50';
+    // Update button states
+    const fillBtn = document.getElementById('basic-fill');
+    const drainBtn = document.getElementById('basic-drain');
     
-    // Start/Stop simulation
+    if (fillBtn) {
+        fillBtn.textContent = tankState.basic.filling ? 'Stop Fill' : 'Start Fill';
+        fillBtn.style.background = tankState.basic.filling ? '#FF5722' : '#4CAF50';
+    }
+    if (drainBtn) {
+        drainBtn.textContent = 'Start Drain';
+        drainBtn.style.background = '#FF5722';
+    }
+
     if (tankState.basic.filling) {
-        tankState.basic.draining = false;
-        document.getElementById('basic-drain').textContent = 'Start Drain';
-        document.getElementById('basic-drain').style.background = '#FF5722';
         startBasicSimulation();
     }
-    updateBasicStatus();
 }
 
 function toggleBasicDrain() {
-    const btn = document.getElementById('basic-drain');
     tankState.basic.draining = !tankState.basic.draining;
+    tankState.basic.filling = false;
     
-    // Update button state
-    btn.textContent = tankState.basic.draining ? 'Stop Drain' : 'Start Drain';
-    btn.style.background = tankState.basic.draining ? '#FF5722' : '#FF5722';
+    // Update button states
+    const fillBtn = document.getElementById('basic-fill');
+    const drainBtn = document.getElementById('basic-drain');
     
-    // Start/Stop simulation
+    if (drainBtn) {
+        drainBtn.textContent = tankState.basic.draining ? 'Stop Drain' : 'Start Drain';
+        drainBtn.style.background = '#FF5722';
+    }
+    if (fillBtn) {
+        fillBtn.textContent = 'Start Fill';
+        fillBtn.style.background = '#4CAF50';
+    }
+
     if (tankState.basic.draining) {
-        tankState.basic.filling = false;
-        document.getElementById('basic-fill').textContent = 'Start Fill';
-        document.getElementById('basic-fill').style.background = '#4CAF50';
         startBasicSimulation();
     }
-    updateBasicStatus();
 }
 
 function startBasicSimulation() {
-    clearInterval(simIntervals.basic);
-    let time = 0;
-    const timeStep = 0.1;
-
+    // Clear existing interval
+    if (simIntervals.basic) clearInterval(simIntervals.basic);
+    
     simIntervals.basic = setInterval(() => {
-        time += timeStep;
+        // Update time
+        tankState.basic.time += 0.1;
         
-        // Update level based on filling/draining
+        // Update level
         if (tankState.basic.filling && !tankState.basic.highSwitch) {
-            tankState.basic.level = Math.min(100, tankState.basic.level + 2 * timeStep);
+            tankState.basic.level = Math.min(100, tankState.basic.level + 1);
         } else if (tankState.basic.draining && !tankState.basic.lowSwitch) {
-            tankState.basic.level = Math.max(0, tankState.basic.level - 2 * timeStep);
+            tankState.basic.level = Math.max(0, tankState.basic.level - 1);
         }
         
         // Update switch states
         tankState.basic.highSwitch = tankState.basic.level >= 80;
         tankState.basic.lowSwitch = tankState.basic.level <= 20;
         
-        // Update chart
-        updateChart('basic', time, [tankState.basic.level]);
-        
-        // Update status display
+        // Update visuals
+        updateBasicVisualTank();
         updateBasicStatus();
+        updateChart('basic', tankState.basic.time, tankState.basic.level);
         
-        // Stop filling if high switch activated
+        // Stop conditions
         if (tankState.basic.highSwitch && tankState.basic.filling) {
             toggleBasicFill();
         }
-        
-        // Stop draining if low switch activated
         if (tankState.basic.lowSwitch && tankState.basic.draining) {
             toggleBasicDrain();
         }
@@ -388,21 +251,34 @@ function startBasicSimulation() {
     }, 100);
 }
 
+function updateBasicVisualTank() {
+    const tankFill = document.getElementById('basic-tank-fill');
+    const highIndicator = document.getElementById('basic-high-indicator');
+    const lowIndicator = document.getElementById('basic-low-indicator');
+    
+    if (tankFill) tankFill.style.height = `${tankState.basic.level}%`;
+    if (highIndicator) highIndicator.style.background = tankState.basic.highSwitch ? '#4CAF50' : '#FF5722';
+    if (lowIndicator) lowIndicator.style.background = tankState.basic.lowSwitch ? '#4CAF50' : '#FF9800';
+}
+
 function updateBasicStatus() {
     const levelSpan = document.getElementById('basic-level');
     const highSpan = document.getElementById('basic-high');
     const lowSpan = document.getElementById('basic-low');
     const pumpSpan = document.getElementById('basic-pump');
     
-    if (levelSpan) levelSpan.textContent = Math.round(tankState.basic.level) + '%';
+    if (levelSpan) levelSpan.textContent = `${Math.round(tankState.basic.level)}%`;
+    
     if (highSpan) {
         highSpan.textContent = tankState.basic.highSwitch ? 'ON' : 'OFF';
         highSpan.style.color = tankState.basic.highSwitch ? '#4CAF50' : '#FF5722';
     }
+    
     if (lowSpan) {
         lowSpan.textContent = tankState.basic.lowSwitch ? 'ON' : 'OFF';
         lowSpan.style.color = tankState.basic.lowSwitch ? '#4CAF50' : '#FF5722';
     }
+    
     if (pumpSpan) {
         let status = 'IDLE';
         if (tankState.basic.filling) status = 'FILLING';
@@ -412,56 +288,84 @@ function updateBasicStatus() {
     }
 }
 
+function updateChart(chartId, time, level) {
+    const chart = charts[chartId];
+    if (!chart) return;
+
+    // Add new data point
+    chart.data.datasets[0].data.push({x: time, y: level});
+    
+    // Remove old data points if beyond 30 seconds
+    if (time > 30) {
+        while (chart.data.datasets[0].data.length > 0 && 
+               chart.data.datasets[0].data[0].x < time - 30) {
+            chart.data.datasets[0].data.shift();
+        }
+        chart.options.scales.x.min = time - 30;
+        chart.options.scales.x.max = time;
+    }
+    
+    chart.update('none');
+}
+
 // Advanced Tank Functions
 function toggleAdvancedFill() {
-    const btn = document.getElementById('adv-fill');
     tankState.advanced.filling = !tankState.advanced.filling;
+    tankState.advanced.draining = false;
     
-    // Update button state
-    btn.textContent = tankState.advanced.filling ? 'Stop Fill' : 'Start Fill';
-    btn.style.background = tankState.advanced.filling ? '#FF5722' : '#4CAF50';
+    // Update button states
+    const fillBtn = document.getElementById('adv-fill');
+    const drainBtn = document.getElementById('adv-drain');
     
-    // Start/Stop simulation
+    if (fillBtn) {
+        fillBtn.textContent = tankState.advanced.filling ? 'Stop Fill' : 'Start Fill';
+        fillBtn.style.background = tankState.advanced.filling ? '#FF5722' : '#4CAF50';
+    }
+    if (drainBtn) {
+        drainBtn.textContent = 'Start Drain';
+        drainBtn.style.background = '#FF5722';
+    }
+
     if (tankState.advanced.filling) {
-        tankState.advanced.draining = false;
-        document.getElementById('adv-drain').textContent = 'Start Drain';
-        document.getElementById('adv-drain').style.background = '#FF5722';
         startAdvancedSimulation();
     }
-    updateAdvancedStatus();
 }
 
 function toggleAdvancedDrain() {
-    const btn = document.getElementById('adv-drain');
     tankState.advanced.draining = !tankState.advanced.draining;
+    tankState.advanced.filling = false;
     
-    // Update button state
-    btn.textContent = tankState.advanced.draining ? 'Stop Drain' : 'Start Drain';
-    btn.style.background = tankState.advanced.draining ? '#FF5722' : '#FF5722';
+    // Update button states
+    const fillBtn = document.getElementById('adv-fill');
+    const drainBtn = document.getElementById('adv-drain');
     
-    // Start/Stop simulation
+    if (drainBtn) {
+        drainBtn.textContent = tankState.advanced.draining ? 'Stop Drain' : 'Start Drain';
+        drainBtn.style.background = '#FF5722';
+    }
+    if (fillBtn) {
+        fillBtn.textContent = 'Start Fill';
+        fillBtn.style.background = '#4CAF50';
+    }
+
     if (tankState.advanced.draining) {
-        tankState.advanced.filling = false;
-        document.getElementById('adv-fill').textContent = 'Start Fill';
-        document.getElementById('adv-fill').style.background = '#4CAF50';
         startAdvancedSimulation();
     }
-    updateAdvancedStatus();
 }
 
 function startAdvancedSimulation() {
-    clearInterval(simIntervals.advanced);
-    let time = 0;
-    const timeStep = 0.1;
-
+    // Clear existing interval
+    if (simIntervals.advanced) clearInterval(simIntervals.advanced);
+    
     simIntervals.advanced = setInterval(() => {
-        time += timeStep;
+        // Update time
+        tankState.advanced.time += 0.1;
         
-        // Update level based on filling/draining
+        // Update level
         if (tankState.advanced.filling && !tankState.advanced.highCutout) {
-            tankState.advanced.level = Math.min(100, tankState.advanced.level + 2 * timeStep);
+            tankState.advanced.level = Math.min(100, tankState.advanced.level + 1);
         } else if (tankState.advanced.draining && !tankState.advanced.lowCutout) {
-            tankState.advanced.level = Math.max(0, tankState.advanced.level - 2 * timeStep);
+            tankState.advanced.level = Math.max(0, tankState.advanced.level - 1);
         }
         
         // Update switch states
@@ -470,18 +374,15 @@ function startAdvancedSimulation() {
         tankState.advanced.lowWarning = tankState.advanced.level <= 30;
         tankState.advanced.lowCutout = tankState.advanced.level <= 10;
         
-        // Update chart
-        updateChart('advanced', time, [tankState.advanced.level]);
-        
-        // Update status and alerts
+        // Update visuals
+        updateAdvancedVisualTank();
         updateAdvancedStatus();
+        updateChart('advanced', tankState.advanced.time, tankState.advanced.level);
         
-        // Stop filling if high cutout activated
+        // Stop conditions
         if (tankState.advanced.highCutout && tankState.advanced.filling) {
             toggleAdvancedFill();
         }
-        
-        // Stop draining if low cutout activated
         if (tankState.advanced.lowCutout && tankState.advanced.draining) {
             toggleAdvancedDrain();
         }
@@ -491,6 +392,24 @@ function startAdvancedSimulation() {
             clearInterval(simIntervals.advanced);
         }
     }, 100);
+}
+
+function updateAdvancedVisualTank() {
+    const tankFill = document.getElementById('adv-tank-fill');
+    const highCutIndicator = document.getElementById('adv-high-cut-indicator');
+    const highWarnIndicator = document.getElementById('adv-high-warn-indicator');
+    const lowWarnIndicator = document.getElementById('adv-low-warn-indicator');
+    const lowCutIndicator = document.getElementById('adv-low-cut-indicator');
+    
+    if (tankFill) tankFill.style.height = `${tankState.advanced.level}%`;
+    
+    if (highCutIndicator) highCutIndicator.style.background = tankState.advanced.highCutout ? '#4CAF50' : '#F44336';
+    
+    if (highWarnIndicator) highWarnIndicator.style.background = tankState.advanced.highWarning ? '#4CAF50' : '#FF9800';
+    
+    if (lowWarnIndicator) lowWarnIndicator.style.background = tankState.advanced.lowWarning ? '#4CAF50' : '#FF9800';
+    
+    if (lowCutIndicator) lowCutIndicator.style.background = tankState.advanced.lowCutout ? '#4CAF50' : '#F44336';
 }
 
 function updateAdvancedStatus() {
@@ -503,23 +422,28 @@ function updateAdvancedStatus() {
     const alertsDiv = document.getElementById('adv-alerts');
     
     // Update level and switch states
-    if (levelSpan) levelSpan.textContent = Math.round(tankState.advanced.level) + '%';
+    if (levelSpan) levelSpan.textContent = `${Math.round(tankState.advanced.level)}%`;
+    
     if (highCutSpan) {
         highCutSpan.textContent = tankState.advanced.highCutout ? 'ON' : 'OFF';
         highCutSpan.style.color = tankState.advanced.highCutout ? '#4CAF50' : '#FF5722';
     }
+    
     if (highWarnSpan) {
         highWarnSpan.textContent = tankState.advanced.highWarning ? 'ON' : 'OFF';
         highWarnSpan.style.color = tankState.advanced.highWarning ? '#4CAF50' : '#FF5722';
     }
+    
     if (lowWarnSpan) {
         lowWarnSpan.textContent = tankState.advanced.lowWarning ? 'ON' : 'OFF';
         lowWarnSpan.style.color = tankState.advanced.lowWarning ? '#4CAF50' : '#FF5722';
     }
+    
     if (lowCutSpan) {
         lowCutSpan.textContent = tankState.advanced.lowCutout ? 'ON' : 'OFF';
         lowCutSpan.style.color = tankState.advanced.lowCutout ? '#4CAF50' : '#FF5722';
     }
+    
     if (pumpSpan) {
         let status = 'IDLE';
         if (tankState.advanced.filling) status = 'FILLING';
@@ -544,29 +468,26 @@ function updateAdvancedStatus() {
     }
 }
 
-// Helper Functions
-function updateChart(chartId, time, values) {
-    try {
-        const chart = charts[chartId];
-        if (!chart) {
-            console.error(`Chart ${chartId} not found!`);
-            return;
+// Advanced Tank Functions
+function updateChart(chartId, time, level) {
+    const chart = charts[chartId];
+    if (!chart) return;
+
+    // Add new data point
+    chart.data.datasets[0].data.push({x: time, y: level});
+    
+    // Remove old data points if beyond 30 seconds
+    if (time > 30) {
+        while (chart.data.datasets[0].data.length > 0 && 
+               chart.data.datasets[0].data[0].x < time - 30) {
+            chart.data.datasets[0].data.shift();
         }
-
-        // Add new data points
-        values.forEach((value, index) => {
-            chart.data.datasets[index].data.push({x: time, y: value});
-        });
-
-        chart.update('none');
-    } catch (error) {
-        console.error(`Error updating chart ${chartId}:`, error);
+        chart.options.scales.x.min = time - 30;
+        chart.options.scales.x.max = time;
     }
+    
+    chart.update('none');
 }
 
-// Initialize when the script loads
-if (document.readyState === 'complete') {
-    initializeFloatSwitchSimulation();
-} else {
-    window.addEventListener('load', initializeFloatSwitchSimulation);
-} 
+// Initialize when the page loads
+window.addEventListener('load', initializeFloatSwitchSimulation); 
