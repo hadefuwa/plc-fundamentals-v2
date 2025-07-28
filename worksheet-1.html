@@ -96,20 +96,20 @@
     <div class="worksheet-section over-to-you-section">
       <h2 class="section-header"><i class="fas fa-hands-helping"></i> 2. Over To You</h2>
       <div class="worksheet-content">
-        <p><strong>Your task is to examine and maintain the flow control system following these essential procedures:</strong></p>
+        <p><strong>Select Start and observe the system start up. Once the pump is running you should see water flow through the flow gauge. Ensure the hand valve is in the open position (the handle should be in line with the piping).</strong></p>
         
         <div class="steps-container">
           <div class="step-card" data-step="1">
             <div class="step-number">1</div>
             <div class="step-content">
               <div class="step-header">
-                <h4>System Overview</h4>
+                <h4>Set a Flow Rate</h4>
                 <label class="step-checkbox">
                   <input type="checkbox" class="step-complete-checkbox">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <p>Examine the overall system layout, identifying the pump, valve, flow sensor, and control elements. Understand how they work together in the closed-loop control system.</p>
+              <p>Enter a target flow rate on the HMI. You can adjust in increments of 20 using the +/- buttons.</p>
             </div>
           </div>
           
@@ -117,13 +117,13 @@
             <div class="step-number">2</div>
             <div class="step-content">
               <div class="step-header">
-                <h4>Flow Sensor Inspection</h4>
+                <h4>Observe Feedback</h4>
                 <label class="step-checkbox">
                   <input type="checkbox" class="step-complete-checkbox">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <p>Check the flow sensor for proper mounting, clean sensor face, and verify signal output matches actual flow conditions.</p>
+              <p>Watch the flow sensor reading on the HMI and compare it to the setpoint.</p>
             </div>
           </div>
           
@@ -131,13 +131,13 @@
             <div class="step-number">3</div>
             <div class="step-content">
               <div class="step-header">
-                <h4>Control Valve Operation</h4>
+                <h4>Watch the System Adjust</h4>
                 <label class="step-checkbox">
                   <input type="checkbox" class="step-complete-checkbox">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <p>Test valve operation by adjusting setpoint and observing valve response. Check for smooth operation and proper positioning.</p>
+              <p>Note how the pump speed and valve position change to bring the flow rate to the setpoint.</p>
             </div>
           </div>
           
@@ -145,13 +145,13 @@
             <div class="step-number">4</div>
             <div class="step-content">
               <div class="step-header">
-                <h4>PID Controller Tuning</h4>
+                <h4>Introduce a Disturbance</h4>
                 <label class="step-checkbox">
                   <input type="checkbox" class="step-complete-checkbox">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <p>Use the PID tuning interface to optimize system response. Adjust Proportional, Integral, and Derivative parameters for stable, responsive control.</p>
+              <p>Temporarily restrict the flow (e.g., partially close the shut-off valve) and observe how the system reacts to maintain the flow rate.</p>
             </div>
           </div>
         </div>
@@ -164,29 +164,35 @@
     <div class="worksheet-section so-what-section">
       <h2 class="section-header"><i class="fas fa-lightbulb"></i> 3. So What?</h2>
       <div class="so-what-content">
-        <p>Understanding closed-loop flow control systems is fundamental to industrial automation. These systems are everywhere - from water treatment plants to chemical processing facilities.</p>
+        <p>This is part of a control system, which automates processes in Industry. At the heart of this system is a PLC (Programmable Logic Controller), a computer that makes real-time decisions based on sensor data. The HMI (Human-Machine Interface) allows you to monitor and adjust settings easily.</p>
+        
+        <p>Restricting the hand valve reduced flow, which the sensor detected and sent to the PLC. The PLC increased pump speed and adjusted the valve to restore flow, showing automatic correction. Rapid valve changes caused oscillations, highlighting the need for gradual adjustments. Fully closing the valve stopped flow; the PLC responded by maxing the pump and opening the valve, but no water moved. This demonstrates risks like pressure buildup and why managing flow restrictions is critical.</p>
         
         <div class="key-point">
           <i class="fas fa-lightbulb"></i>
           <div>
-            <strong>Feedback Control</strong>
-            <p>The system continuously measures the actual flow and compares it to the desired setpoint, automatically adjusting the control valve to maintain accurate flow control even when conditions change.</p>
+            <strong>Closed-loop systems continuously adjust using sensor feedback to maintain accuracy.</strong>
           </div>
         </div>
         
         <div class="key-point">
           <i class="fas fa-lightbulb"></i>
           <div>
-            <strong>PID Control</strong>
-            <p>The PID controller uses Proportional, Integral, and Derivative actions to provide stable, responsive control without oscillation or steady-state error.</p>
+            <strong>PID control ensures stability by fine-tuning pump speed and valve position.</strong>
           </div>
         </div>
         
         <div class="key-point">
           <i class="fas fa-lightbulb"></i>
           <div>
-            <strong>System Reliability</strong>
-            <p>Proper maintenance of sensors, valves, and controllers ensures the system operates reliably, preventing costly production disruptions and maintaining product quality.</p>
+            <strong>The pump and proportional valve work together to match the setpoint, even with disturbances.</strong>
+          </div>
+        </div>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>Understanding this process helps you troubleshoot issues and optimize system performance effectively.</strong>
           </div>
         </div>
       </div>
