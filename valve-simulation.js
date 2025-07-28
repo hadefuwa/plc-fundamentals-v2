@@ -1,774 +1,621 @@
-// Valve Simulation System
-// Industrial Maintenance Training - Worksheet 7
-
-// Valve System State
-window.valveData = {
-  // Valve Status
-  valveType: 'proportional',
-  valvePosition: 0, // 0-100%
-  demandSignal: 0, // 0-10V or 0-100% PWM
-  actualPosition: 0, // 0-100%
-  
-  // Control Parameters
-  deadband: 10, // % - no movement below this threshold
-  hysteresis: 2, // % - difference between open/close positions
-  responseTime: 2, // seconds - time to reach 90% of demand
-  
-  // System Conditions
-  inletPressure: 2.0, // bar
-  outletPressure: 1.5, // bar
-  flowRate: 0, // L/min
-  temperature: 25, // °C
-  
-  // Fault Conditions
-  stuckPosition: false,
-  heatBuildup: false,
-  actuatorFault: false,
-  sensorDrift: 0, // % offset
-  
-  // Performance Metrics
-  accuracy: 95, // %
-  repeatability: 98, // %
-  linearity: 97, // %
-  responseTime: 2.0, // seconds
-  
-  // Calibration Data
-  calibrationPoints: [],
-  calibrationDate: null,
-  nextCalibration: null,
-  
-  // Simulation Control
-  autoMode: false,
-  simulationInterval: null,
-  faultInjectionInterval: null
+// Global state
+let charts = {};
+let simIntervals = {};
+let valveState = {
+    onOff: {
+        pumpRunning: false,
+        valveOpen: false,
+        flowRate: 0,
+        time: 0
+    },
+    proportional: {
+        pumpRunning: false,
+        position: 0,
+        flowRate: 0,
+        time: 0
+    },
+    sequence: {
+        running: false,
+        step: 0,
+        valves: {
+            v1: false,
+            v2: false,
+            v3: false,
+            v4: false
+        },
+        cylinderPosition: 0
+    }
 };
 
-// Initialize Valve Simulation
+// Initialize all charts when the page loads
 function initializeValveSimulation() {
-  console.log('Initializing Valve simulation...');
-  
-  initializeValveDisplay();
-  initializeValveControls();
-  initializeCalibrationPanel();
-  initializeFaultInjection();
-  startValveMonitoring();
-  
-  console.log('Valve simulation initialized');
+    console.log('Initializing valve simulation...');
+
+    try {
+        // Destroy existing charts if they exist
+        Object.values(charts).forEach(chart => {
+            if (chart) {
+                chart.destroy();
+            }
+        });
+        charts = {};
+
+        // Clear any existing intervals
+        Object.values(simIntervals).forEach(interval => {
+            clearInterval(interval);
+        });
+        simIntervals = {};
+
+        // Reset valve state
+        valveState = {
+            onOff: {
+                pumpRunning: false,
+                valveOpen: false,
+                flowRate: 0,
+                time: 0
+            },
+            proportional: {
+                pumpRunning: false,
+                position: 0,
+                flowRate: 0,
+                time: 0
+            },
+            sequence: {
+                running: false,
+                step: 0,
+                valves: {
+                    v1: false,
+                    v2: false,
+                    v3: false,
+                    v4: false
+                },
+                cylinderPosition: 0
+            }
+        };
+
+        // Common chart configuration
+        const commonConfig = {
+            type: 'line',
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: {
+                    duration: 0
+                },
+                interaction: {
+                    intersect: false,
+                    mode: 'index'
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#aaa',
+                            font: { size: 12 },
+                            padding: 20,
+                            usePointStyle: true,
+                            pointStyle: 'circle'
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        titleColor: '#fff',
+                        bodyColor: '#fff',
+                        borderColor: '#555',
+                        borderWidth: 1,
+                        padding: 10,
+                        displayColors: true,
+                        intersect: false,
+                        mode: 'index'
+                    }
+                }
+            }
+        };
+
+        // Initialize On/Off Valve Chart
+        const onOffCtx = document.getElementById('onoff-valve-chart');
+        if (onOffCtx) {
+            charts.onOff = new Chart(onOffCtx, Object.assign({}, commonConfig, {
+                data: {
+                    datasets: [{
+                        label: 'Flow Rate (L/min)',
+                        data: [],
+                        borderColor: '#2196F3',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    ...commonConfig.options,
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            display: true,
+                            min: 0,
+                            max: 30,
+                            title: {
+                                display: true,
+                                text: 'Time (s)',
+                                color: '#aaa',
+                                font: { size: 14 }
+                            },
+                            ticks: { color: '#aaa', maxTicksLimit: 8 },
+                            grid: { color: '#333', drawBorder: false }
+                        },
+                        y: {
+                            display: true,
+                            min: 0,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Flow Rate (L/min)',
+                                color: '#2196F3',
+                                font: { size: 14 }
+                            },
+                            ticks: { color: '#aaa', padding: 10 },
+                            grid: { color: '#333', drawBorder: false }
+                        }
+                    }
+                }
+            }));
+        }
+
+        // Initialize Proportional Valve Chart
+        const propCtx = document.getElementById('prop-valve-chart');
+        if (propCtx) {
+            charts.proportional = new Chart(propCtx, Object.assign({}, commonConfig, {
+                data: {
+                    datasets: [{
+                        label: 'Flow Rate (L/min)',
+                        data: [],
+                        borderColor: '#4CAF50',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    ...commonConfig.options,
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            display: true,
+                            min: 0,
+                            max: 30,
+                            title: {
+                                display: true,
+                                text: 'Time (s)',
+                                color: '#aaa',
+                                font: { size: 14 }
+                            },
+                            ticks: { color: '#aaa', maxTicksLimit: 8 },
+                            grid: { color: '#333', drawBorder: false }
+                        },
+                        y: {
+                            display: true,
+                            min: 0,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Flow Rate (L/min)',
+                                color: '#4CAF50',
+                                font: { size: 14 }
+                            },
+                            ticks: { color: '#aaa', padding: 10 },
+                            grid: { color: '#333', drawBorder: false }
+                        }
+                    }
+                }
+            }));
+        }
+
+        // Initialize Sequence Chart
+        const sequenceCtx = document.getElementById('sequence-chart');
+        if (sequenceCtx) {
+            charts.sequence = new Chart(sequenceCtx, Object.assign({}, commonConfig, {
+                data: {
+                    datasets: [{
+                        label: 'Cylinder Position (%)',
+                        data: [],
+                        borderColor: '#9C27B0',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    ...commonConfig.options,
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            display: true,
+                            min: 0,
+                            max: 20,
+                            title: {
+                                display: true,
+                                text: 'Time (s)',
+                                color: '#aaa',
+                                font: { size: 14 }
+                            },
+                            ticks: { color: '#aaa', maxTicksLimit: 8 },
+                            grid: { color: '#333', drawBorder: false }
+                        },
+                        y: {
+                            display: true,
+                            min: 0,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Cylinder Position (%)',
+                                color: '#9C27B0',
+                                font: { size: 14 }
+                            },
+                            ticks: { color: '#aaa', padding: 10 },
+                            grid: { color: '#333', drawBorder: false }
+                        }
+                    }
+                }
+            }));
+        }
+
+        // Set up event listeners
+        setupEventListeners();
+        console.log('Valve simulation initialized successfully!');
+    } catch (error) {
+        console.error('Error initializing valve simulation:', error);
+    }
 }
 
-// Initialize Valve Display
-function initializeValveDisplay() {
-  const container = document.getElementById('valve-display-panel');
-  if (!container) return;
-  
-  container.innerHTML = `
-    <div class="valve-interface" style="background: #1a1a1a; border-radius: 12px; padding: 25px; margin-bottom: 25px;">
-      <h4 style="color: #2196F3; margin-bottom: 20px; font-size: 18px; display: flex; align-items: center; gap: 10px;">
-        <i class="fas fa-valve"></i> Proportional Valve System
-      </h4>
-      
-      <!-- Valve Visualization -->
-      <div class="valve-visualization" style="background: #333; padding: 20px; border-radius: 8px; margin-bottom: 20px; text-align: center;">
-        <h5 style="color: #FFFFFF; margin-bottom: 15px;">Valve Position</h5>
-        <div class="valve-body" style="width: 200px; height: 300px; background: #222; border: 3px solid #555; border-radius: 10px; margin: 0 auto; position: relative; overflow: hidden;">
-          <div id="valve-disc" style="width: 80px; height: 80px; background: #4CAF50; border-radius: 50%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); transition: all 0.5s ease; box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);"></div>
-          <div id="flow-indicator" style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); width: 100px; height: 20px; background: linear-gradient(to right, #2196F3, #64B5F6); border-radius: 10px; opacity: 0.7;"></div>
-        </div>
-        <div style="margin-top: 15px;">
-          <div id="valve-position-display" style="color: #4CAF50; font-size: 24px; font-weight: bold;">0%</div>
-          <div style="color: #AAA; font-size: 12px;">Actual Position</div>
-        </div>
-      </div>
-      
-      <!-- System Status -->
-      <div class="system-status" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px;">
-        <div class="status-card" style="background: #333; padding: 15px; border-radius: 8px; text-align: center;">
-          <div id="demand-signal-display" style="color: #FF9800; font-size: 20px; font-weight: bold;">0V</div>
-          <div style="color: #AAA; font-size: 12px;">Demand Signal</div>
-        </div>
-        <div class="status-card" style="background: #333; padding: 15px; border-radius: 8px; text-align: center;">
-          <div id="flow-rate-display" style="color: #2196F3; font-size: 20px; font-weight: bold;">0 L/min</div>
-          <div style="color: #AAA; font-size: 12px;">Flow Rate</div>
-        </div>
-        <div class="status-card" style="background: #333; padding: 15px; border-radius: 8px; text-align: center;">
-          <div id="pressure-drop-display" style="color: #9C27B0; font-size: 20px; font-weight: bold;">0.5 bar</div>
-          <div style="color: #AAA; font-size: 12px;">Pressure Drop</div>
-        </div>
-        <div class="status-card" style="background: #333; padding: 15px; border-radius: 8px; text-align: center;">
-          <div id="valve-temperature-display" style="color: #F44336; font-size: 20px; font-weight: bold;">25°C</div>
-          <div style="color: #AAA; font-size: 12px;">Valve Temperature</div>
-        </div>
-      </div>
-      
-      <!-- Performance Metrics -->
-      <div class="performance-metrics" style="background: #333; padding: 20px; border-radius: 8px;">
-        <h5 style="color: #FFFFFF; margin-bottom: 15px;">Performance Metrics</h5>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
-          <div class="metric-card" style="background: #222; padding: 10px; border-radius: 5px; text-align: center;">
-            <div id="accuracy-display" style="color: #4CAF50; font-size: 18px; font-weight: bold;">95%</div>
-            <div style="color: #AAA; font-size: 12px;">Accuracy</div>
-          </div>
-          <div class="metric-card" style="background: #222; padding: 10px; border-radius: 5px; text-align: center;">
-            <div id="repeatability-display" style="color: #FF9800; font-size: 18px; font-weight: bold;">98%</div>
-            <div style="color: #AAA; font-size: 12px;">Repeatability</div>
-          </div>
-          <div class="metric-card" style="background: #222; padding: 10px; border-radius: 5px; text-align: center;">
-            <div id="linearity-display" style="color: #2196F3; font-size: 18px; font-weight: bold;">97%</div>
-            <div style="color: #AAA; font-size: 12px;">Linearity</div>
-          </div>
-          <div class="metric-card" style="background: #222; padding: 10px; border-radius: 5px; text-align: center;">
-            <div id="response-time-display" style="color: #9C27B0; font-size: 18px; font-weight: bold;">2.0s</div>
-            <div style="color: #AAA; font-size: 12px;">Response Time</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
-  
-  updateValveDisplay();
-}
-
-// Initialize Valve Controls
-function initializeValveControls() {
-  const container = document.getElementById('valve-control-panel');
-  if (!container) return;
-  
-  container.innerHTML = `
-    <div class="valve-controls" style="background: #2a2a2a; border-radius: 12px; padding: 25px; margin-bottom: 25px;">
-      <h4 style="color: #2196F3; margin-bottom: 20px; font-size: 18px; display: flex; align-items: center; gap: 10px;">
-        <i class="fas fa-cogs"></i> Valve Control Panel
-      </h4>
-      
-      <div class="control-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 20px;">
-        <!-- Demand Signal Control -->
-        <div class="control-group" style="background: #333; padding: 15px; border-radius: 8px;">
-          <h5 style="color: #FFFFFF; margin-bottom: 15px;">Demand Signal Control</h5>
-          <div style="margin-bottom: 10px;">
-            <label style="color: #FFFFFF; font-size: 12px;">Signal Type</label>
-            <select id="signal-type-select" style="width: 100%; padding: 5px; border-radius: 3px; border: 1px solid #555; background: #222; color: #FFFFFF; margin-top: 5px;">
-              <option value="voltage">0-10V DC</option>
-              <option value="pwm">0-100% PWM</option>
-              <option value="current">4-20mA</option>
-            </select>
-          </div>
-          <div style="margin-bottom: 10px;">
-            <label style="color: #FFFFFF; font-size: 12px;">Demand Value</label>
-            <input type="range" id="demand-signal-slider" min="0" max="100" value="0" style="width: 100%; margin: 5px 0;">
-            <span id="demand-signal-value" style="color: #FF9800; font-size: 14px; font-weight: bold;">0V</span>
-          </div>
-        </div>
+function setupEventListeners() {
+    try {
+        // On/Off Valve Controls
+        const startOnOffPumpBtn = document.getElementById('start-onoff-pump');
+        const stopOnOffPumpBtn = document.getElementById('stop-onoff-pump');
+        const toggleValveBtn = document.getElementById('toggle-valve');
         
-        <!-- Deadband Control -->
-        <div class="control-group" style="background: #333; padding: 15px; border-radius: 8px;">
-          <h5 style="color: #FFFFFF; margin-bottom: 15px;">Deadband Control</h5>
-          <div style="margin-bottom: 10px;">
-            <label style="color: #FFFFFF; font-size: 12px;">Deadband (%)</label>
-            <input type="range" id="deadband-slider" min="0" max="20" value="10" style="width: 100%; margin: 5px 0;">
-            <span id="deadband-value" style="color: #4CAF50; font-size: 14px; font-weight: bold;">10%</span>
-          </div>
-          <div style="color: #AAA; font-size: 11px;">
-            No movement below: <span id="deadband-threshold" style="color: #FF9800;">10%</span>
-          </div>
-        </div>
+        if (startOnOffPumpBtn && stopOnOffPumpBtn && toggleValveBtn) {
+            startOnOffPumpBtn.addEventListener('click', () => startPump('onOff'));
+            stopOnOffPumpBtn.addEventListener('click', () => stopPump('onOff'));
+            toggleValveBtn.addEventListener('click', toggleValve);
+        }
+
+        // Proportional Valve Controls
+        const startPropPumpBtn = document.getElementById('start-prop-pump');
+        const stopPropPumpBtn = document.getElementById('stop-prop-pump');
+        const valvePositionSlider = document.getElementById('valve-position');
         
-        <!-- Response Time Control -->
-        <div class="control-group" style="background: #333; padding: 15px; border-radius: 8px;">
-          <h5 style="color: #FFFFFF; margin-bottom: 15px;">Response Time Control</h5>
-          <div style="margin-bottom: 10px;">
-            <label style="color: #FFFFFF; font-size: 12px;">Response Time (seconds)</label>
-            <input type="range" id="response-time-slider" min="0.5" max="5" value="2" step="0.1" style="width: 100%; margin: 5px 0;">
-            <span id="response-time-value" style="color: #9C27B0; font-size: 14px; font-weight: bold;">2.0s</span>
-          </div>
-          <div style="color: #AAA; font-size: 11px;">
-            Time to reach 90% of demand
-          </div>
-        </div>
-      </div>
-      
-      <!-- Valve Status -->
-      <div class="valve-status" style="background: #333; padding: 15px; border-radius: 8px;">
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
-          <div>
-            <span style="color: #AAA; font-size: 12px;">Valve Status:</span>
-            <div id="valve-status-display" style="color: #4CAF50; font-weight: bold; font-size: 16px;">OPERATIONAL</div>
-          </div>
-          <div>
-            <span style="color: #AAA; font-size: 12px;">Position Error:</span>
-            <div id="position-error-display" style="color: #FF9800; font-weight: bold; font-size: 16px;">0%</div>
-          </div>
-          <div>
-            <span style="color: #AAA; font-size: 12px;">Last Calibration:</span>
-            <div id="last-calibration-display" style="color: #2196F3; font-weight: bold; font-size: 16px;">30 days ago</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
-  
-  // Add event listeners
-  addValveControlEventListeners();
+        if (startPropPumpBtn && stopPropPumpBtn && valvePositionSlider) {
+            startPropPumpBtn.addEventListener('click', () => startPump('proportional'));
+            stopPropPumpBtn.addEventListener('click', () => stopPump('proportional'));
+            valvePositionSlider.addEventListener('input', updateValvePosition);
+        }
+
+        // Sequence Controls
+        const startSequenceBtn = document.getElementById('start-sequence');
+        const resetSequenceBtn = document.getElementById('reset-sequence');
+        if (startSequenceBtn && resetSequenceBtn) {
+            startSequenceBtn.addEventListener('click', startSequence);
+            resetSequenceBtn.addEventListener('click', resetSequence);
+        }
+
+        console.log('Event listeners set up successfully!');
+    } catch (error) {
+        console.error('Error setting up event listeners:', error);
+    }
 }
 
-// Initialize Calibration Panel
-function initializeCalibrationPanel() {
-  const container = document.getElementById('valve-calibration-panel');
-  if (!container) return;
-  
-  container.innerHTML = `
-    <div class="calibration-panel" style="background: #2a2a2a; border-radius: 12px; padding: 25px; margin-bottom: 25px;">
-      <h4 style="color: #4CAF50; margin-bottom: 20px; font-size: 18px; display: flex; align-items: center; gap: 10px;">
-        <i class="fas fa-tools"></i> Valve Calibration
-      </h4>
-      
-      <div class="calibration-controls" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 20px;">
-        <div class="calibration-group" style="background: #333; padding: 15px; border-radius: 8px;">
-          <h5 style="color: #FFFFFF; margin-bottom: 15px;">Calibration Procedures</h5>
-          <div style="display: grid; gap: 10px;">
-            <button id="start-calibration-btn" style="background: #4CAF50; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
-              <i class="fas fa-play"></i> Start Calibration
-            </button>
-            <button id="zero-calibration-btn" style="background: #2196F3; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
-              <i class="fas fa-home"></i> Zero Calibration
-            </button>
-            <button id="span-calibration-btn" style="background: #FF9800; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
-              <i class="fas fa-expand"></i> Span Calibration
-            </button>
-            <button id="linearity-test-btn" style="background: #9C27B0; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
-              <i class="fas fa-chart-line"></i> Linearity Test
-            </button>
-          </div>
-        </div>
+// Pump Control Functions
+function startPump(type) {
+    if (type === 'onOff') {
+        valveState.onOff.pumpRunning = true;
+        updatePumpState('pump-state', true);
+        startOnOffSimulation();
+    } else if (type === 'proportional') {
+        valveState.proportional.pumpRunning = true;
+        updatePumpState('prop-pump-state', true);
+        startProportionalSimulation();
+    }
+}
+
+function stopPump(type) {
+    if (type === 'onOff') {
+        valveState.onOff.pumpRunning = false;
+        updatePumpState('pump-state', false);
+        valveState.onOff.flowRate = 0;
+        updateFlowRate('flow-rate', 0);
+    } else if (type === 'proportional') {
+        valveState.proportional.pumpRunning = false;
+        updatePumpState('prop-pump-state', false);
+        valveState.proportional.flowRate = 0;
+        updateFlowRate('prop-flow-rate', 0);
+    }
+}
+
+function updatePumpState(elementId, running) {
+    const stateSpan = document.getElementById(elementId);
+    if (stateSpan) {
+        stateSpan.textContent = running ? 'Running' : 'Stopped';
+        stateSpan.style.color = running ? '#4CAF50' : '#FF5722';
+    }
+}
+
+// On/Off Valve Functions
+function toggleValve() {
+    const btn = document.getElementById('toggle-valve');
+    const stateSpan = document.getElementById('valve-state');
+    
+    valveState.onOff.valveOpen = !valveState.onOff.valveOpen;
+    
+    // Update UI
+    if (btn) {
+        btn.textContent = valveState.onOff.valveOpen ? 'Close Valve' : 'Open Valve';
+        btn.style.background = valveState.onOff.valveOpen ? '#FF5722' : '#2196F3';
+    }
+    if (stateSpan) {
+        stateSpan.textContent = valveState.onOff.valveOpen ? 'Open' : 'Closed';
+        stateSpan.style.color = valveState.onOff.valveOpen ? '#4CAF50' : '#FF5722';
+    }
+}
+
+function startOnOffSimulation() {
+    // Clear existing interval
+    if (simIntervals.onOff) {
+        clearInterval(simIntervals.onOff);
+    }
+
+    const timeStep = 0.1;
+    simIntervals.onOff = setInterval(() => {
+        if (!valveState.onOff.pumpRunning) {
+            clearInterval(simIntervals.onOff);
+            return;
+        }
+
+        valveState.onOff.time += timeStep;
+
+        // Calculate target flow rate based on valve state
+        const targetFlow = valveState.onOff.valveOpen ? 80 : 0;
         
-        <div class="calibration-group" style="background: #333; padding: 15px; border-radius: 8px;">
-          <h5 style="color: #FFFFFF; margin-bottom: 15px;">Calibration Data</h5>
-          <div id="calibration-data" style="background: #222; padding: 10px; border-radius: 5px; min-height: 100px; font-family: monospace; font-size: 12px; color: #FFFFFF;">
-            <div style="color: #AAA;">No calibration data available</div>
-          </div>
-        </div>
+        // Gradually adjust flow rate
+        const flowDiff = targetFlow - valveState.onOff.flowRate;
+        valveState.onOff.flowRate += flowDiff * 0.1;
+
+        // Update flow rate display
+        updateFlowRate('flow-rate', Math.round(valveState.onOff.flowRate));
+
+        // Update chart
+        updateChart('onOff', valveState.onOff.time, [valveState.onOff.flowRate]);
+
+        // Manage chart window
+        if (valveState.onOff.time > 30) {
+            // Remove old data points
+            const chart = charts.onOff;
+            while (chart.data.datasets[0].data.length > 0 && 
+                   chart.data.datasets[0].data[0].x < valveState.onOff.time - 30) {
+                chart.data.datasets[0].data.shift();
+            }
+            // Update x-axis window
+            chart.options.scales.x.min = valveState.onOff.time - 30;
+            chart.options.scales.x.max = valveState.onOff.time;
+        }
+    }, 100);
+}
+
+// Proportional Valve Functions
+function updateValvePosition(event) {
+    const position = parseInt(event.target.value);
+    valveState.proportional.position = position;
+    
+    // Update UI
+    const positionValue = document.getElementById('position-value');
+    const valveStateDisplay = document.getElementById('prop-valve-state');
+    
+    if (positionValue) positionValue.textContent = position + '%';
+    if (valveStateDisplay) valveStateDisplay.textContent = position + '%';
+    
+    // Update slider background
+    const slider = event.target;
+    const percentage = (position / slider.max) * 100;
+    slider.style.background = `linear-gradient(to right, #4CAF50 0%, #4CAF50 ${percentage}%, #333 ${percentage}%, #333 100%)`;
+}
+
+function startProportionalSimulation() {
+    // Clear existing interval
+    if (simIntervals.proportional) {
+        clearInterval(simIntervals.proportional);
+    }
+
+    const timeStep = 0.1;
+    simIntervals.proportional = setInterval(() => {
+        if (!valveState.proportional.pumpRunning) {
+            clearInterval(simIntervals.proportional);
+            return;
+        }
+
+        valveState.proportional.time += timeStep;
+
+        // Calculate target flow rate based on valve position
+        const targetFlow = valveState.proportional.position * 0.8; // Max flow 80 L/min at 100%
         
-        <div class="calibration-group" style="background: #333; padding: 15px; border-radius: 8px;">
-          <h5 style="color: #FFFFFF; margin-bottom: 15px;">Calibration Status</h5>
-          <div style="display: grid; gap: 10px;">
-            <div>
-              <span style="color: #AAA; font-size: 12px;">Calibration Status:</span>
-              <div id="calibration-status" style="color: #4CAF50; font-weight: bold;">VALID</div>
-            </div>
-            <div>
-              <span style="color: #AAA; font-size: 12px;">Next Due:</span>
-              <div id="next-calibration" style="color: #FF9800; font-weight: bold;">60 days</div>
-            </div>
-            <div>
-              <span style="color: #AAA; font-size: 12px;">Calibration Points:</span>
-              <div id="calibration-points-count" style="color: #2196F3; font-weight: bold;">0</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
-  
-  // Add calibration event listeners
-  addCalibrationEventListeners();
+        // Gradually adjust flow rate
+        const flowDiff = targetFlow - valveState.proportional.flowRate;
+        valveState.proportional.flowRate += flowDiff * 0.1;
+
+        // Update flow rate display
+        updateFlowRate('prop-flow-rate', Math.round(valveState.proportional.flowRate));
+
+        // Update chart
+        updateChart('proportional', valveState.proportional.time, [valveState.proportional.flowRate]);
+
+        // Manage chart window
+        if (valveState.proportional.time > 30) {
+            // Remove old data points
+            const chart = charts.proportional;
+            while (chart.data.datasets[0].data.length > 0 && 
+                   chart.data.datasets[0].data[0].x < valveState.proportional.time - 30) {
+                chart.data.datasets[0].data.shift();
+            }
+            // Update x-axis window
+            chart.options.scales.x.min = valveState.proportional.time - 30;
+            chart.options.scales.x.max = valveState.proportional.time;
+        }
+    }, 100);
 }
 
-// Initialize Fault Injection
-function initializeFaultInjection() {
-  const container = document.getElementById('valve-fault-panel');
-  if (!container) return;
-  
-  container.innerHTML = `
-    <div class="fault-injection" style="background: #2a2a2a; border-radius: 12px; padding: 25px; margin-bottom: 25px;">
-      <h4 style="color: #F44336; margin-bottom: 20px; font-size: 18px; display: flex; align-items: center; gap: 10px;">
-        <i class="fas fa-exclamation-triangle"></i> Fault Injection
-      </h4>
-      
-      <div class="fault-controls" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px;">
-        <button id="stuck-valve-btn" class="fault-btn" style="background: #666; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
-          Stuck Valve
-        </button>
-        <button id="heat-buildup-btn" class="fault-btn" style="background: #666; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
-          Heat Buildup
-        </button>
-        <button id="actuator-fault-btn" class="fault-btn" style="background: #666; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
-          Actuator Fault
-        </button>
-        <button id="sensor-drift-btn" class="fault-btn" style="background: #666; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
-          Sensor Drift
-        </button>
-        <button id="clear-valve-faults-btn" class="fault-btn" style="background: #4CAF50; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
-          Clear Faults
-        </button>
-      </div>
-      
-      <!-- Fault Status -->
-      <div class="fault-status" style="background: #333; padding: 15px; border-radius: 8px;">
-        <h5 style="color: #FFFFFF; margin-bottom: 15px;">Fault Status</h5>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;">
-          <div>
-            <span style="color: #AAA; font-size: 12px;">Stuck Position:</span>
-            <div id="stuck-status" style="color: #4CAF50; font-weight: bold;">NO</div>
-          </div>
-          <div>
-            <span style="color: #AAA; font-size: 12px;">Heat Buildup:</span>
-            <div id="heat-status" style="color: #4CAF50; font-weight: bold;">NO</div>
-          </div>
-          <div>
-            <span style="color: #AAA; font-size: 12px;">Actuator Fault:</span>
-            <div id="actuator-status" style="color: #4CAF50; font-weight: bold;">NO</div>
-          </div>
-          <div>
-            <span style="color: #AAA; font-size: 12px;">Sensor Drift:</span>
-            <div id="drift-status" style="color: #4CAF50; font-weight: bold;">0%</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
-  
-  // Add fault injection event listeners
-  addFaultInjectionEventListeners();
+// Sequence Functions
+function startSequence() {
+    if (valveState.sequence.running) return;
+    
+    valveState.sequence.running = true;
+    valveState.sequence.step = 0;
+    resetSequenceState();
+    runSequence();
 }
 
-// Add Valve Control Event Listeners
-function addValveControlEventListeners() {
-  // Signal type selector
-  const signalTypeSelect = document.getElementById('signal-type-select');
-  if (signalTypeSelect) {
-    signalTypeSelect.addEventListener('change', function() {
-      updateSignalDisplay();
+function resetSequence() {
+    valveState.sequence.running = false;
+    valveState.sequence.step = 0;
+    resetSequenceState();
+    resetChart('sequence');
+    updateSequenceUI('Ready', 0);
+}
+
+function resetSequenceState() {
+    valveState.sequence.valves = {
+        v1: false,
+        v2: false,
+        v3: false,
+        v4: false
+    };
+    valveState.sequence.cylinderPosition = 0;
+    updateValveStates();
+}
+
+function runSequence() {
+    clearInterval(simIntervals.sequence);
+    resetChart('sequence');
+    
+    let time = 0;
+    const timeStep = 0.1;
+    let currentStep = 0;
+    let stepStartTime = 0;
+
+    simIntervals.sequence = setInterval(() => {
+        if (!valveState.sequence.running) {
+            clearInterval(simIntervals.sequence);
+            return;
+        }
+
+        time += timeStep;
+
+        // Sequence steps
+        switch (currentStep) {
+            case 0: // Extend fast
+                if (time - stepStartTime < 0.5) {
+                    valveState.sequence.valves = { v1: true, v2: false, v3: false, v4: false };
+                    valveState.sequence.cylinderPosition += 8 * timeStep;
+                    updateSequenceUI('Extending Fast', valveState.sequence.cylinderPosition);
+                } else {
+                    currentStep++;
+                    stepStartTime = time;
+                }
+                break;
+
+            case 1: // Extend slow
+                if (valveState.sequence.cylinderPosition < 100) {
+                    valveState.sequence.valves = { v1: false, v2: false, v3: true, v4: false };
+                    valveState.sequence.cylinderPosition += 2 * timeStep;
+                    updateSequenceUI('Extending Slow', valveState.sequence.cylinderPosition);
+                } else {
+                    currentStep++;
+                    stepStartTime = time;
+                }
+                break;
+
+            case 2: // Hold position
+                if (time - stepStartTime < 2) {
+                    valveState.sequence.valves = { v1: false, v2: false, v3: false, v4: false };
+                    updateSequenceUI('Holding Position', valveState.sequence.cylinderPosition);
+                } else {
+                    currentStep++;
+                    stepStartTime = time;
+                }
+                break;
+
+            case 3: // Retract fast
+                if (valveState.sequence.cylinderPosition > 0) {
+                    valveState.sequence.valves = { v1: false, v2: true, v3: false, v4: false };
+                    valveState.sequence.cylinderPosition -= 5 * timeStep;
+                    updateSequenceUI('Retracting Fast', valveState.sequence.cylinderPosition);
+                } else {
+                    currentStep++;
+                    stepStartTime = time;
+                }
+                break;
+
+            default:
+                valveState.sequence.running = false;
+                clearInterval(simIntervals.sequence);
+                updateSequenceUI('Complete', 0);
+                break;
+        }
+
+        valveState.sequence.cylinderPosition = Math.max(0, Math.min(100, valveState.sequence.cylinderPosition));
+        updateValveStates();
+        updateChart('sequence', time, [valveState.sequence.cylinderPosition]);
+    }, 100);
+}
+
+function updateSequenceUI(step, position) {
+    const stepSpan = document.getElementById('sequence-step');
+    const positionSpan = document.getElementById('cylinder-position');
+    
+    if (stepSpan) stepSpan.textContent = step;
+    if (positionSpan) positionSpan.textContent = Math.round(position) + '%';
+}
+
+function updateValveStates() {
+    Object.entries(valveState.sequence.valves).forEach(([valve, state]) => {
+        const stateSpan = document.getElementById(`${valve}-state`);
+        if (stateSpan) {
+            stateSpan.textContent = state ? 'Open' : 'Closed';
+            stateSpan.style.color = state ? '#4CAF50' : '#FF5722';
+        }
     });
-  }
-  
-  // Demand signal slider
-  const demandSlider = document.getElementById('demand-signal-slider');
-  const demandValue = document.getElementById('demand-signal-value');
-  if (demandSlider && demandValue) {
-    demandSlider.addEventListener('input', function() {
-      const value = this.value;
-      valveData.demandSignal = parseInt(value);
-      updateSignalDisplay();
-      updateValvePosition();
-    });
-  }
-  
-  // Deadband slider
-  const deadbandSlider = document.getElementById('deadband-slider');
-  const deadbandValue = document.getElementById('deadband-value');
-  const deadbandThreshold = document.getElementById('deadband-threshold');
-  if (deadbandSlider && deadbandValue && deadbandThreshold) {
-    deadbandSlider.addEventListener('input', function() {
-      const value = this.value;
-      valveData.deadband = parseInt(value);
-      deadbandValue.textContent = value + '%';
-      deadbandThreshold.textContent = value + '%';
-    });
-  }
-  
-  // Response time slider
-  const responseSlider = document.getElementById('response-time-slider');
-  const responseValue = document.getElementById('response-time-value');
-  if (responseSlider && responseValue) {
-    responseSlider.addEventListener('input', function() {
-      const value = parseFloat(this.value);
-      valveData.responseTime = value;
-      responseValue.textContent = value.toFixed(1) + 's';
-    });
-  }
 }
 
-// Add Calibration Event Listeners
-function addCalibrationEventListeners() {
-  document.getElementById('start-calibration-btn')?.addEventListener('click', startCalibration);
-  document.getElementById('zero-calibration-btn')?.addEventListener('click', zeroCalibration);
-  document.getElementById('span-calibration-btn')?.addEventListener('click', spanCalibration);
-  document.getElementById('linearity-test-btn')?.addEventListener('click', linearityTest);
-}
-
-// Add Fault Injection Event Listeners
-function addFaultInjectionEventListeners() {
-  document.getElementById('stuck-valve-btn')?.addEventListener('click', toggleStuckValve);
-  document.getElementById('heat-buildup-btn')?.addEventListener('click', toggleHeatBuildup);
-  document.getElementById('actuator-fault-btn')?.addEventListener('click', toggleActuatorFault);
-  document.getElementById('sensor-drift-btn')?.addEventListener('click', injectSensorDrift);
-  document.getElementById('clear-valve-faults-btn')?.addEventListener('click', clearValveFaults);
-}
-
-// Update Signal Display
-function updateSignalDisplay() {
-  const signalType = document.getElementById('signal-type-select')?.value || 'voltage';
-  const demandValue = document.getElementById('demand-signal-value');
-  
-  if (demandValue) {
-    const value = valveData.demandSignal;
-    switch (signalType) {
-      case 'voltage':
-        demandValue.textContent = ((value / 100) * 10).toFixed(1) + 'V';
-        break;
-      case 'pwm':
-        demandValue.textContent = value + '%';
-        break;
-      case 'current':
-        demandValue.textContent = (4 + (value / 100) * 16).toFixed(1) + 'mA';
-        break;
+function updateFlowRate(elementId, value) {
+    const flowSpan = document.getElementById(elementId);
+    if (flowSpan) {
+        flowSpan.textContent = value + ' L/min';
     }
-  }
 }
 
-// Update Valve Position
-function updateValvePosition() {
-  // Apply deadband
-  if (valveData.demandSignal <= valveData.deadband) {
-    valveData.actualPosition = 0;
-  } else {
-    // Calculate position with response time simulation
-    const targetPosition = valveData.demandSignal;
-    const currentPosition = valveData.actualPosition;
-    const timeStep = 0.1; // seconds
-    
-    // Simple first-order response simulation
-    const timeConstant = valveData.responseTime / 2.3; // 90% response time
-    const change = (targetPosition - currentPosition) * (1 - Math.exp(-timeStep / timeConstant));
-    
-    valveData.actualPosition = Math.max(0, Math.min(100, currentPosition + change));
-  }
-  
-  // Apply faults
-  if (valveData.stuckPosition) {
-    valveData.actualPosition = 50; // Stuck at 50%
-  }
-  
-  if (valveData.actuatorFault) {
-    valveData.actualPosition *= 0.8; // Reduced movement
-  }
-  
-  // Apply sensor drift
-  valveData.actualPosition += valveData.sensorDrift;
-  valveData.actualPosition = Math.max(0, Math.min(100, valveData.actualPosition));
-  
-  updateValveDisplay();
-  updateFlowRate();
-}
-
-// Update Flow Rate
-function updateFlowRate() {
-  // Calculate flow based on valve position and pressure drop
-  const maxFlow = 100; // L/min
-  const pressureDrop = valveData.inletPressure - valveData.outletPressure;
-  
-  // Flow coefficient based on valve position (simplified)
-  const flowCoeff = Math.pow(valveData.actualPosition / 100, 2);
-  
-  valveData.flowRate = maxFlow * flowCoeff * (pressureDrop / 1.0);
-  valveData.flowRate = Math.round(valveData.flowRate * 10) / 10;
-}
-
-// Update Valve Display
-function updateValveDisplay() {
-  // Update valve disc position
-  const valveDisc = document.getElementById('valve-disc');
-  if (valveDisc) {
-    const position = valveData.actualPosition;
-    const yOffset = (100 - position) * 2; // Move up as valve opens
-    valveDisc.style.transform = `translate(-50%, -50%) translateY(${yOffset}px)`;
-    
-    // Change color based on position
-    if (position > 80) {
-      valveDisc.style.background = '#4CAF50'; // Green for open
-    } else if (position > 20) {
-      valveDisc.style.background = '#FF9800'; // Orange for partially open
-    } else {
-      valveDisc.style.background = '#F44336'; // Red for closed
+function resetChart(chartId) {
+    if (charts[chartId]) {
+        charts[chartId].data.datasets.forEach(dataset => {
+            dataset.data = [];
+        });
+        charts[chartId].update();
     }
-  }
-  
-  // Update flow indicator
-  const flowIndicator = document.getElementById('flow-indicator');
-  if (flowIndicator) {
-    const flowWidth = (valveData.flowRate / 100) * 100;
-    flowIndicator.style.width = Math.max(20, flowWidth) + 'px';
-    flowIndicator.style.opacity = valveData.flowRate > 0 ? 0.7 : 0.2;
-  }
-  
-  // Update displays
-  const positionDisplay = document.getElementById('valve-position-display');
-  const flowDisplay = document.getElementById('flow-rate-display');
-  const pressureDropDisplay = document.getElementById('pressure-drop-display');
-  const demandDisplay = document.getElementById('demand-signal-display');
-  
-  if (positionDisplay) positionDisplay.textContent = Math.round(valveData.actualPosition) + '%';
-  if (flowDisplay) flowDisplay.textContent = valveData.flowRate + ' L/min';
-  if (pressureDropDisplay) pressureDropDisplay.textContent = (valveData.inletPressure - valveData.outletPressure).toFixed(1) + ' bar';
-  if (demandDisplay) updateSignalDisplay();
-  
-  // Update performance metrics
-  updatePerformanceMetrics();
 }
 
-// Update Performance Metrics
-function updatePerformanceMetrics() {
-  // Calculate accuracy (difference between demand and actual)
-  const positionError = Math.abs(valveData.demandSignal - valveData.actualPosition);
-  const accuracy = Math.max(0, 100 - positionError);
-  
-  // Calculate repeatability (simplified)
-  const repeatability = 98 - (valveData.sensorDrift * 2);
-  
-  // Calculate linearity (simplified)
-  const linearity = 97 - (valveData.stuckPosition ? 10 : 0) - (valveData.actuatorFault ? 5 : 0);
-  
-  // Update displays
-  const accuracyDisplay = document.getElementById('accuracy-display');
-  const repeatabilityDisplay = document.getElementById('repeatability-display');
-  const linearityDisplay = document.getElementById('linearity-display');
-  const responseTimeDisplay = document.getElementById('response-time-display');
-  const positionErrorDisplay = document.getElementById('position-error-display');
-  
-  if (accuracyDisplay) accuracyDisplay.textContent = Math.round(accuracy) + '%';
-  if (repeatabilityDisplay) repeatabilityDisplay.textContent = Math.round(repeatability) + '%';
-  if (linearityDisplay) linearityDisplay.textContent = Math.round(linearity) + '%';
-  if (responseTimeDisplay) responseTimeDisplay.textContent = valveData.responseTime.toFixed(1) + 's';
-  if (positionErrorDisplay) positionErrorDisplay.textContent = Math.round(positionError) + '%';
-  
-  // Update valve status
-  const valveStatus = document.getElementById('valve-status-display');
-  if (valveStatus) {
-    if (valveData.stuckPosition || valveData.actuatorFault) {
-      valveStatus.textContent = 'FAULT';
-      valveStatus.style.color = '#F44336';
-    } else if (valveData.heatBuildup) {
-      valveStatus.textContent = 'WARNING';
-      valveStatus.style.color = '#FF9800';
-    } else {
-      valveStatus.textContent = 'OPERATIONAL';
-      valveStatus.style.color = '#4CAF50';
+// Helper Functions
+function updateChart(chartId, time, values) {
+    try {
+        const chart = charts[chartId];
+        if (!chart) {
+            console.error(`Chart ${chartId} not found!`);
+            return;
+        }
+
+        // Add new data points
+        values.forEach((value, index) => {
+            chart.data.datasets[index].data.push({x: time, y: value});
+        });
+
+        chart.update('none');
+    } catch (error) {
+        console.error(`Error updating chart ${chartId}:`, error);
     }
-  }
 }
 
-// Calibration Functions
-function startCalibration() {
-  showNotification('Starting valve calibration procedure...', 'info');
-  
-  // Simulate calibration process
-  setTimeout(() => {
-    valveData.calibrationPoints = [
-      { input: 0, output: 0 },
-      { input: 25, output: 25 },
-      { input: 50, output: 50 },
-      { input: 75, output: 75 },
-      { input: 100, output: 100 }
-    ];
-    
-    valveData.calibrationDate = new Date();
-    valveData.nextCalibration = new Date(Date.now() + 60 * 24 * 60 * 60 * 1000); // 60 days
-    
-    updateCalibrationDisplay();
-    showNotification('Calibration completed successfully', 'success');
-  }, 2000);
-}
-
-function zeroCalibration() {
-  showNotification('Performing zero calibration...', 'info');
-  setTimeout(() => {
-    showNotification('Zero calibration completed', 'success');
-  }, 1000);
-}
-
-function spanCalibration() {
-  showNotification('Performing span calibration...', 'info');
-  setTimeout(() => {
-    showNotification('Span calibration completed', 'success');
-  }, 1000);
-}
-
-function linearityTest() {
-  showNotification('Starting linearity test...', 'info');
-  setTimeout(() => {
-    showNotification('Linearity test completed - 97% linear', 'success');
-  }, 1500);
-}
-
-// Update Calibration Display
-function updateCalibrationDisplay() {
-  const calibrationData = document.getElementById('calibration-data');
-  const calibrationStatus = document.getElementById('calibration-status');
-  const nextCalibration = document.getElementById('next-calibration');
-  const pointsCount = document.getElementById('calibration-points-count');
-  
-  if (calibrationData) {
-    if (valveData.calibrationPoints.length > 0) {
-      calibrationData.innerHTML = valveData.calibrationPoints.map(point => 
-        `<div>Input: ${point.input}% → Output: ${point.output}%</div>`
-      ).join('');
-    } else {
-      calibrationData.innerHTML = '<div style="color: #AAA;">No calibration data available</div>';
-    }
-  }
-  
-  if (calibrationStatus) {
-    calibrationStatus.textContent = valveData.calibrationDate ? 'VALID' : 'REQUIRED';
-    calibrationStatus.style.color = valveData.calibrationDate ? '#4CAF50' : '#F44336';
-  }
-  
-  if (nextCalibration) {
-    if (valveData.nextCalibration) {
-      const daysUntil = Math.ceil((valveData.nextCalibration - new Date()) / (1000 * 60 * 60 * 24));
-      nextCalibration.textContent = daysUntil + ' days';
-      nextCalibration.style.color = daysUntil < 30 ? '#F44336' : daysUntil < 60 ? '#FF9800' : '#4CAF50';
-    } else {
-      nextCalibration.textContent = 'Not scheduled';
-    }
-  }
-  
-  if (pointsCount) {
-    pointsCount.textContent = valveData.calibrationPoints.length;
-  }
-}
-
-// Fault Injection Functions
-function toggleStuckValve() {
-  valveData.stuckPosition = !valveData.stuckPosition;
-  updateFaultStatus();
-  updateValvePosition();
-  
-  const btn = document.getElementById('stuck-valve-btn');
-  if (btn) {
-    btn.style.background = valveData.stuckPosition ? '#F44336' : '#666';
-    btn.textContent = valveData.stuckPosition ? 'Unstick Valve' : 'Stuck Valve';
-  }
-  
-  showNotification(valveData.stuckPosition ? 'Valve stuck at 50%' : 'Valve unstuck', 'info');
-}
-
-function toggleHeatBuildup() {
-  valveData.heatBuildup = !valveData.heatBuildup;
-  updateFaultStatus();
-  
-  const btn = document.getElementById('heat-buildup-btn');
-  if (btn) {
-    btn.style.background = valveData.heatBuildup ? '#F44336' : '#666';
-    btn.textContent = valveData.heatBuildup ? 'Cool Valve' : 'Heat Buildup';
-  }
-  
-  showNotification(valveData.heatBuildup ? 'Heat buildup detected' : 'Heat buildup cleared', 'warning');
-}
-
-function toggleActuatorFault() {
-  valveData.actuatorFault = !valveData.actuatorFault;
-  updateFaultStatus();
-  updateValvePosition();
-  
-  const btn = document.getElementById('actuator-fault-btn');
-  if (btn) {
-    btn.style.background = valveData.actuatorFault ? '#F44336' : '#666';
-    btn.textContent = valveData.actuatorFault ? 'Fix Actuator' : 'Actuator Fault';
-  }
-  
-  showNotification(valveData.actuatorFault ? 'Actuator fault detected' : 'Actuator fault cleared', 'info');
-}
-
-function injectSensorDrift() {
-  valveData.sensorDrift = Math.random() * 10 - 5; // -5% to +5%
-  updateFaultStatus();
-  updateValvePosition();
-  
-  showNotification(`Sensor drift injected: ${valveData.sensorDrift.toFixed(1)}%`, 'warning');
-}
-
-function clearValveFaults() {
-  valveData.stuckPosition = false;
-  valveData.heatBuildup = false;
-  valveData.actuatorFault = false;
-  valveData.sensorDrift = 0;
-  
-  updateFaultStatus();
-  updateValvePosition();
-  
-  // Reset button styles
-  document.getElementById('stuck-valve-btn').style.background = '#666';
-  document.getElementById('stuck-valve-btn').textContent = 'Stuck Valve';
-  document.getElementById('heat-buildup-btn').style.background = '#666';
-  document.getElementById('heat-buildup-btn').textContent = 'Heat Buildup';
-  document.getElementById('actuator-fault-btn').style.background = '#666';
-  document.getElementById('actuator-fault-btn').textContent = 'Actuator Fault';
-  
-  showNotification('All valve faults cleared', 'success');
-}
-
-// Update Fault Status
-function updateFaultStatus() {
-  const stuckStatus = document.getElementById('stuck-status');
-  const heatStatus = document.getElementById('heat-status');
-  const actuatorStatus = document.getElementById('actuator-status');
-  const driftStatus = document.getElementById('drift-status');
-  
-  if (stuckStatus) {
-    stuckStatus.textContent = valveData.stuckPosition ? 'YES' : 'NO';
-    stuckStatus.style.color = valveData.stuckPosition ? '#F44336' : '#4CAF50';
-  }
-  
-  if (heatStatus) {
-    heatStatus.textContent = valveData.heatBuildup ? 'YES' : 'NO';
-    heatStatus.style.color = valveData.heatBuildup ? '#F44336' : '#4CAF50';
-  }
-  
-  if (actuatorStatus) {
-    actuatorStatus.textContent = valveData.actuatorFault ? 'YES' : 'NO';
-    actuatorStatus.style.color = valveData.actuatorFault ? '#F44336' : '#4CAF50';
-  }
-  
-  if (driftStatus) {
-    driftStatus.textContent = valveData.sensorDrift.toFixed(1) + '%';
-    driftStatus.style.color = Math.abs(valveData.sensorDrift) > 2 ? '#F44336' : '#4CAF50';
-  }
-}
-
-// Start Valve Monitoring
-function startValveMonitoring() {
-  if (valveData.simulationInterval) {
-    clearInterval(valveData.simulationInterval);
-  }
-  
-  valveData.simulationInterval = setInterval(() => {
-    // Update temperature based on conditions
-    if (valveData.heatBuildup) {
-      valveData.temperature = Math.min(80, valveData.temperature + 0.5);
-    } else {
-      valveData.temperature = Math.max(25, valveData.temperature - 0.2);
-    }
-    
-    // Update temperature display
-    const tempDisplay = document.getElementById('valve-temperature-display');
-    if (tempDisplay) {
-      tempDisplay.textContent = Math.round(valveData.temperature) + '°C';
-      tempDisplay.style.color = valveData.temperature > 60 ? '#F44336' : valveData.temperature > 40 ? '#FF9800' : '#F44336';
-    }
-  }, 1000);
-}
-
-// Show Notification
-function showNotification(message, type) {
-  const notification = document.createElement('div');
-  notification.style.cssText = `
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: ${type === 'success' ? '#4CAF50' : type === 'warning' ? '#FF9800' : type === 'error' ? '#F44336' : '#2196F3'};
-    color: white;
-    padding: 15px 20px;
-    border-radius: 5px;
-    z-index: 1000;
-    font-weight: bold;
-  `;
-  notification.textContent = message;
-  
-  document.body.appendChild(notification);
-  
-  setTimeout(() => {
-    notification.remove();
-  }, 3000);
-}
-
-// Export functions for global access
-window.initializeValveSimulation = initializeValveSimulation;
-window.valveData = valveData; 
+// Initialize when the script loads
+if (document.readyState === 'complete') {
+    initializeValveSimulation();
+} else {
+    window.addEventListener('load', initializeValveSimulation);
+} 

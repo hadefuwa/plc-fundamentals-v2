@@ -550,6 +550,13 @@ h1 {
     padding-right: 20px;
 }
 
+.introduction-text p {
+    color: #FFFFFF;
+    font-size: clamp(1rem, 1.2vw + 0.8rem, 1.4rem);
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
 .introduction-image {
     flex: 0 0 40%;
     display: flex;
@@ -568,6 +575,39 @@ h1 {
     max-height: 25vh;
     min-height: 200px;
     object-fit: contain;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .introduction-content-wrapper {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .introduction-text,
+    .introduction-image {
+        flex: none;
+        width: 100%;
+    }
+    
+    .introduction-text {
+        padding-right: 0;
+    }
+    
+    .introduction-text p {
+        font-size: clamp(1rem, 1vw + 0.9rem, 1.3rem);
+    }
+    
+    .introduction-image .system-diagram img {
+        max-height: 30vh;
+        min-height: 150px;
+    }
+}
+
+@media (max-width: 480px) {
+    .introduction-text p {
+        font-size: clamp(1rem, 0.8vw + 0.9rem, 1.2rem);
+    }
 }
 
 /* CAD Models for Worksheet 1 */
@@ -596,33 +636,6 @@ h1 {
     margin-top: 10px;
     font-style: italic;
     font-size: 14px;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .introduction-content-wrapper {
-        flex-direction: column;
-        gap: 20px;
-    }
-    
-    .introduction-text,
-    .introduction-image {
-        flex: none;
-        width: 100%;
-    }
-    
-    .introduction-text {
-        padding-right: 0;
-    }
-    
-    .introduction-image .system-diagram img {
-        max-height: 30vh;
-        min-height: 150px;
-    }
-    
-    .cad-model img {
-        max-height: 25vh;
-    }
 }
 
 /* Simulation Section Styling */

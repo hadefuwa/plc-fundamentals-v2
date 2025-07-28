@@ -24,7 +24,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" onclick="window.location='cp0539-worksheets.html'" class="nav-link">
+          <a href="#" onclick="window.location='cp0539-worksheets.html'" class="nav-link active">
             <i class="fas fa-cogs"></i> CP0539
           </a>
         </li>
@@ -337,8 +337,8 @@
           <!-- Centrifugal Pump -->
           <div class="pump-type-card" style="background: #2a2a2a; padding: 20px; border-radius: 12px; border: 1px solid #333;">
             <h4 style="color: #2196F3; margin-top: 0;">Centrifugal Pump</h4>
-            <div class="pump-illustration" style="text-align: center; margin: 15px 0;">
-              <img src="assets/maintenance/centrifugal-pump.png" alt="Centrifugal Pump Diagram" style="max-width: 200px;">
+            <div style="margin: 15px 0;">
+              <canvas id="centrifugal-chart" height="200"></canvas>
             </div>
             <ul style="color: #aaa; margin: 15px 0;">
               <li>Uses rotating impeller to create flow</li>
@@ -350,16 +350,13 @@
               <button id="start-centrifugal" class="control-btn" style="background: #2196F3; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-right: 10px;">Start Pump</button>
               <button id="stop-centrifugal" class="control-btn" style="background: #666; color: white; border: none; padding: 10px 20px; border-radius: 5px;">Stop</button>
             </div>
-            <div style="margin-top: 15px;">
-              <canvas id="centrifugal-chart" height="150"></canvas>
-            </div>
           </div>
 
           <!-- Positive Displacement Pump -->
           <div class="pump-type-card" style="background: #2a2a2a; padding: 20px; border-radius: 12px; border: 1px solid #333;">
             <h4 style="color: #4CAF50; margin-top: 0;">Positive Displacement Pump</h4>
-            <div class="pump-illustration" style="text-align: center; margin: 15px 0;">
-              <img src="assets/maintenance/pd-pump.png" alt="Positive Displacement Pump Diagram" style="max-width: 200px;">
+            <div style="margin: 15px 0;">
+              <canvas id="pd-chart" height="200"></canvas>
             </div>
             <ul style="color: #aaa; margin: 15px 0;">
               <li>Fixed volume per rotation</li>
@@ -370,9 +367,6 @@
             <div class="pump-controls" style="margin-top: 20px;">
               <button id="start-pd" class="control-btn" style="background: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-right: 10px;">Start Pump</button>
               <button id="stop-pd" class="control-btn" style="background: #666; color: white; border: none; padding: 10px 20px; border-radius: 5px;">Stop</button>
-            </div>
-            <div style="margin-top: 15px;">
-              <canvas id="pd-chart" height="150"></canvas>
             </div>
           </div>
         </div>
@@ -387,33 +381,57 @@
           <div class="issue-card" style="background: #2a2a2a; padding: 20px; border-radius: 12px; border: 1px solid #333;">
             <h4 style="color: #FF5722; margin-top: 0;">System Leak</h4>
             <p style="color: #aaa;">Watch how flow rate drops while power consumption remains high</p>
-            <div class="issue-controls" style="margin: 15px 0;">
+            <div style="margin: 15px 0;">
+              <canvas id="leak-chart" height="200"></canvas>
+            </div>
+            <ul style="color: #aaa; margin: 15px 0; padding-left: 20px;">
+              <li>Sudden drop in flow rate</li>
+              <li>Power consumption stays high</li>
+              <li>Pressure fluctuations</li>
+              <li>Possible fluid loss</li>
+            </ul>
+            <div class="issue-controls" style="margin-top: 20px;">
               <button id="start-leak" class="control-btn" style="background: #FF5722; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-right: 10px;">Simulate Leak</button>
               <button id="reset-leak" class="control-btn" style="background: #666; color: white; border: none; padding: 10px 20px; border-radius: 5px;">Reset</button>
             </div>
-            <canvas id="leak-chart" height="150"></canvas>
           </div>
 
           <!-- Cavitation Simulation -->
           <div class="issue-card" style="background: #2a2a2a; padding: 20px; border-radius: 12px; border: 1px solid #333;">
             <h4 style="color: #9C27B0; margin-top: 0;">Cavitation</h4>
             <p style="color: #aaa;">Notice pressure fluctuations and increased vibration</p>
-            <div class="issue-controls" style="margin: 15px 0;">
+            <div style="margin: 15px 0;">
+              <canvas id="cavitation-chart" height="200"></canvas>
+            </div>
+            <ul style="color: #aaa; margin: 15px 0; padding-left: 20px;">
+              <li>Erratic pressure readings</li>
+              <li>Increased vibration levels</li>
+              <li>Noise and potential damage</li>
+              <li>Reduced pump efficiency</li>
+            </ul>
+            <div class="issue-controls" style="margin-top: 20px;">
               <button id="start-cavitation" class="control-btn" style="background: #9C27B0; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-right: 10px;">Simulate Cavitation</button>
               <button id="reset-cavitation" class="control-btn" style="background: #666; color: white; border: none; padding: 10px 20px; border-radius: 5px;">Reset</button>
             </div>
-            <canvas id="cavitation-chart" height="150"></canvas>
           </div>
 
           <!-- Overheating Simulation -->
           <div class="issue-card" style="background: #2a2a2a; padding: 20px; border-radius: 12px; border: 1px solid #333;">
             <h4 style="color: #F44336; margin-top: 0;">Overheating</h4>
             <p style="color: #aaa;">Observe temperature rise and efficiency loss</p>
-            <div class="issue-controls" style="margin: 15px 0;">
+            <div style="margin: 15px 0;">
+              <canvas id="overheat-chart" height="200"></canvas>
+            </div>
+            <ul style="color: #aaa; margin: 15px 0; padding-left: 20px;">
+              <li>Rising temperature trend</li>
+              <li>Decreasing efficiency</li>
+              <li>Potential seal damage</li>
+              <li>Risk of pump failure</li>
+            </ul>
+            <div class="issue-controls" style="margin-top: 20px;">
               <button id="start-overheat" class="control-btn" style="background: #F44336; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-right: 10px;">Simulate Overheat</button>
               <button id="reset-overheat" class="control-btn" style="background: #666; color: white; border: none; padding: 10px 20px; border-radius: 5px;">Reset</button>
             </div>
-            <canvas id="overheat-chart" height="150"></canvas>
           </div>
         </div>
       </div>
@@ -426,19 +444,22 @@
 
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <!-- Load Chart.js first -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Then load our simulation code -->
   <script src="pump-simulation.js"></script>
   
   <script>
+    // Initialize everything when the DOM is ready
     document.addEventListener('DOMContentLoaded', function() {
-      const initFunc = 'initializePumpSimulation';
-      setTimeout(() => {
-        if (typeof window[initFunc] === 'function') {
-          console.log('Initializing', initFunc);
-          window[initFunc]();
-        } else {
-          document.querySelector('.simulation-loading').innerHTML = '<p>Simulation ready - Pump System Maintenance</p>';
-        }
-      }, 1000);
+      console.log('DOM Content Loaded - Initializing pump simulation...');
+      // Initialize the simulation immediately
+      if (typeof initializePumpSimulation === 'function') {
+        console.log('Starting pump simulation initialization');
+        initializePumpSimulation();
+      } else {
+        console.error('Pump simulation initialization function not found!');
+      }
       loadSavedAnswers();
     });
     

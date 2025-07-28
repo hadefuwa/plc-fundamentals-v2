@@ -24,7 +24,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" onclick="window.location='cp0539-worksheets.html'" class="nav-link">
+          <a href="#" onclick="window.location='cp0539-worksheets.html'" class="nav-link active">
             <i class="fas fa-cogs"></i> CP0539
           </a>
         </li>
@@ -329,14 +329,124 @@
     <!-- Simulation Section -->
     <div class="simulation-section">
       <h2 class="section-header"><i class="fas fa-cogs"></i> 3. Interactive Proximity Switch System Maintenance</h2>
-      <div id="proximity-sensor-panel" class="simulation-container">
-        <div class="simulation-loading">
-          <i class="fas fa-spinner fa-spin"></i>
-          <p>Loading proximity switch simulation...</p>
-          <p>Simulation will initialize automatically</p>
+      
+      <!-- Introduction -->
+      <div class="simulation-intro" style="background: #2a2a2a; padding: 20px; border-radius: 12px; border: 1px solid #333; margin-bottom: 20px;">
+        <h3 style="color: #2196F3; margin-top: 0;"><i class="fas fa-info-circle"></i> Understanding Proximity Sensors</h3>
+        <p style="color: #aaa; margin: 10px 0;">This simulation demonstrates how an inductive proximity sensor works in an industrial setting. Follow the steps below to learn about sensor operation, detection ranges, and proper positioning.</p>
+      </div>
+
+      <!-- Main Simulation Area -->
+      <div class="simulation-container" style="display: grid; grid-template-columns: 300px 1fr; gap: 20px; margin: 20px 0;">
+        <!-- Control Panel -->
+        <div class="control-panel" style="background: #2a2a2a; padding: 20px; border-radius: 12px; border: 1px solid #333;">
+          <h4 style="color: #2196F3; margin-top: 0;">Sensor Controls</h4>
+          
+          <!-- Target Position Control -->
+          <div style="margin: 20px 0;">
+            <label style="color: #aaa; display: block; margin-bottom: 10px;">Target Distance (mm)</label>
+            <input type="range" id="target-distance" min="0" max="100" value="50" 
+                   style="width: 100%; background: #2196F3; height: 10px; border-radius: 5px; -webkit-appearance: none;">
+            <div style="display: flex; justify-content: space-between; margin-top: 5px;">
+              <span style="color: #666;">0mm</span>
+              <span id="distance-value" style="color: #2196F3;">50mm</span>
+              <span style="color: #666;">100mm</span>
+            </div>
+          </div>
+
+          <!-- Status Display -->
+          <div class="sensor-status" style="margin-top: 20px; padding: 15px; background: #1a1a1a; border-radius: 5px;">
+            <p style="margin: 0; color: #aaa;">Sensor Status: <span id="sensor-state" style="color: #FF5722;">Not Detecting</span></p>
+            <p style="margin: 10px 0; color: #aaa;">Detection Range: <span style="color: #4CAF50;">0-40mm</span></p>
+            <p style="margin: 10px 0; color: #aaa;">Current Distance: <span id="current-distance" style="color: #2196F3;">50mm</span></p>
+          </div>
+
+          <!-- Step Progress -->
+          <div class="step-progress" style="margin-top: 20px;">
+            <h5 style="color: #aaa; margin: 0 0 10px 0;">Learning Progress:</h5>
+            <div class="progress-steps">
+              <div class="step" style="padding: 10px; background: #1a1a1a; border-radius: 5px; margin-bottom: 10px;">
+                <span style="color: #aaa;">1. Basic Detection</span>
+                <span id="step1-complete" style="float: right; color: #FF5722;">❌</span>
+              </div>
+              <div class="step" style="padding: 10px; background: #1a1a1a; border-radius: 5px; margin-bottom: 10px;">
+                <span style="color: #aaa;">2. Range Testing</span>
+                <span id="step2-complete" style="float: right; color: #FF5722;">❌</span>
+              </div>
+              <div class="step" style="padding: 10px; background: #1a1a1a; border-radius: 5px;">
+                <span style="color: #aaa;">3. Hysteresis Check</span>
+                <span id="step3-complete" style="float: right; color: #FF5722;">❌</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Visualization Area -->
+        <div style="background: #2a2a2a; padding: 20px; border-radius: 12px; border: 1px solid #333;">
+          <div style="margin-bottom: 20px;">
+            <h4 style="color: #2196F3; margin-top: 0;">Current Task</h4>
+            <div id="task-description" style="color: #aaa; padding: 15px; background: #1a1a1a; border-radius: 5px;">
+              Move the target into the detection range (0-40mm) to see how the sensor responds.
+            </div>
+          </div>
+          
+          <!-- Sensor Visualization -->
+          <div class="sensor-visualization" style="position: relative; height: 200px; background: #1a1a1a; border-radius: 5px; overflow: hidden;">
+            <div id="sensor-body" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); width: 40px; height: 80px; background: #666; border-radius: 5px;">
+              <div id="sensor-face" style="width: 20px; height: 20px; background: #2196F3; border-radius: 50%; position: absolute; right: -10px; top: 50%; transform: translateY(-50%);"></div>
+            </div>
+            <div id="target-object" style="position: absolute; left: 200px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; background: #FF5722; border-radius: 5px;"></div>
+            <div id="detection-zone" style="position: absolute; left: 50px; top: 50%; transform: translateY(-50%); width: 80px; height: 100px; border: 2px dashed #4CAF50; border-radius: 5px; opacity: 0.3;"></div>
+          </div>
+
+          <!-- Detection Graph -->
+          <div style="margin-top: 20px;">
+            <canvas id="detection-chart" height="150"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Learning Steps -->
+      <div class="learning-steps" style="margin-top: 40px;">
+        <h3 style="color: #4CAF50; margin-top: 0;"><i class="fas fa-graduation-cap"></i> Learning Steps</h3>
+        
+        <!-- Step 1 -->
+        <div class="learning-step" style="background: #2a2a2a; padding: 20px; border-radius: 12px; border: 1px solid #333; margin-bottom: 20px;">
+          <h4 style="color: #2196F3; margin-top: 0;">Step 1: Basic Detection</h4>
+          <p style="color: #aaa;">Move the target in and out of the detection zone to understand how the sensor responds. The sensor will activate when a metal target enters its detection range.</p>
+          <ul style="color: #aaa; margin: 10px 0;">
+            <li>Detection Range: 0-40mm</li>
+            <li>Sensor Type: Inductive (detects metal objects)</li>
+            <li>Output: Digital (ON/OFF)</li>
+          </ul>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="learning-step" style="background: #2a2a2a; padding: 20px; border-radius: 12px; border: 1px solid #333; margin-bottom: 20px;">
+          <h4 style="color: #2196F3; margin-top: 0;">Step 2: Range Testing</h4>
+          <p style="color: #aaa;">Test the sensor at different distances to understand its reliable detection range. Note that the signal strength decreases with distance.</p>
+          <ul style="color: #aaa; margin: 10px 0;">
+            <li>Optimal Range: 0-32mm (80% of rated)</li>
+            <li>Maximum Range: 40mm</li>
+            <li>Best Practice: Mount at 50-75% of rated range</li>
+          </ul>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="learning-step" style="background: #2a2a2a; padding: 20px; border-radius: 12px; border: 1px solid #333;">
+          <h4 style="color: #2196F3; margin-top: 0;">Step 3: Understanding Hysteresis</h4>
+          <p style="color: #aaa;">Observe how the sensor has slightly different ON and OFF points. This hysteresis prevents chattering when the target is near the threshold.</p>
+          <ul style="color: #aaa; margin: 10px 0;">
+            <li>ON Point: 40mm (moving in)</li>
+            <li>OFF Point: 42mm (moving out)</li>
+            <li>Hysteresis: 2mm difference</li>
+          </ul>
         </div>
       </div>
     </div>
+
+    <!-- Add Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </div>
 
 

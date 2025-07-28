@@ -1,809 +1,572 @@
-// Float Switch Simulation System
-// Industrial Maintenance Training - Worksheet 8
-
-// Float Switch System State
-window.floatSwitchData = {
-  // Tank Configuration
-  tankLevel: 50, // 0-100%
-  tankHeight: 100, // cm
-  tankCapacity: 1000, // liters
-  
-  // Float Switch Configuration
-  floatSwitches: {
-    lowLevel: {
-      position: 20, // % from bottom
-      type: 'NC', // Normally Closed
-      state: true, // true = closed/active
-      fault: false,
-      description: 'Low Level Float'
+// Chart.js configurations and float switch simulation logic
+let charts = {};
+let simIntervals = {};
+let tankState = {
+    basic: {
+        level: 0,
+        filling: false,
+        draining: false,
+        highSwitch: false,  // 80%
+        lowSwitch: false,   // 20%
+        pumpStatus: 'IDLE'
     },
-    highLevel: {
-      position: 80, // % from bottom
-      type: 'NO', // Normally Open
-      state: false, // false = open/inactive
-      fault: false,
-      description: 'High Level Float'
-    },
-    emergency: {
-      position: 95, // % from bottom
-      type: 'NC', // Normally Closed
-      state: true, // true = closed/active
-      fault: false,
-      description: 'Emergency Level Float'
+    advanced: {
+        level: 0,
+        filling: false,
+        draining: false,
+        highCutout: false,  // 90%
+        highWarning: false, // 70%
+        lowWarning: false,  // 30%
+        lowCutout: false,   // 10%
+        pumpStatus: 'IDLE',
+        alerts: []
     }
-  },
-  
-  // System Conditions
-  fluidType: 'water',
-  fluidDensity: 1.0, // kg/L
-  temperature: 25, // °C
-  turbulence: 0, // 0-100%
-  
-  // Fault Conditions
-  stuckFloat: false,
-  wiringFault: false,
-  sensorDrift: 0, // % offset
-  vibrationEffect: false,
-  
-  // Performance Metrics
-  responseTime: 0.5, // seconds
-  accuracy: 98, // %
-  reliability: 99.5, // %
-  
-  // Simulation Control
-  autoMode: false,
-  simulationInterval: null,
-  faultInjectionInterval: null
 };
 
-// Initialize Float Switch Simulation
+// Initialize all charts when the page loads
 function initializeFloatSwitchSimulation() {
-  console.log('Initializing Float Switch simulation...');
-  
-  initializeTankDisplay();
-  initializeFloatSwitchControls();
-  initializeLogicTesting();
-  initializeFaultInjection();
-  startFloatSwitchMonitoring();
-  
-  console.log('Float Switch simulation initialized');
-}
+    console.log('Initializing float switch simulation...');
 
-// Initialize Tank Display
-function initializeTankDisplay() {
-  const container = document.getElementById('float-tank-panel');
-  if (!container) return;
-  
-  container.innerHTML = `
-    <div class="tank-interface" style="background: #1a1a1a; border-radius: 12px; padding: 25px; margin-bottom: 25px;">
-      <h4 style="color: #2196F3; margin-bottom: 20px; font-size: 18px; display: flex; align-items: center; gap: 10px;">
-        <i class="fas fa-water"></i> Tank Level Monitoring
-      </h4>
-      
-      <!-- Tank Visualization -->
-      <div class="tank-visualization" style="background: #333; padding: 20px; border-radius: 8px; margin-bottom: 20px; text-align: center;">
-        <h5 style="color: #FFFFFF; margin-bottom: 15px;">Tank Level</h5>
-        <div class="tank-container" style="display: flex; align-items: center; gap: 30px; justify-content: center;">
-          <div class="tank" style="width: 120px; height: 300px; background: #222; border: 3px solid #555; border-radius: 10px; position: relative; overflow: hidden;">
-            <div id="tank-fluid" style="position: absolute; bottom: 0; width: 100%; background: linear-gradient(to top, #2196F3, #64B5F6); transition: height 0.5s ease;"></div>
-            
-            <!-- Float Switches -->
-            <div id="low-float" class="float-switch" style="position: absolute; left: 50%; transform: translateX(-50%); width: 20px; height: 20px; background: #4CAF50; border-radius: 50%; border: 2px solid #333; transition: all 0.3s ease;"></div>
-            <div id="high-float" class="float-switch" style="position: absolute; left: 50%; transform: translateX(-50%); width: 20px; height: 20px; background: #FF9800; border-radius: 50%; border: 2px solid #333; transition: all 0.3s ease;"></div>
-            <div id="emergency-float" class="float-switch" style="position: absolute; left: 50%; transform: translateX(-50%); width: 20px; height: 20px; background: #F44336; border-radius: 50%; border: 2px solid #333; transition: all 0.3s ease;"></div>
-            
-            <!-- Level Markers -->
-            <div class="level-marker" style="position: absolute; right: -30px; width: 20px; height: 2px; background: #AAA; font-size: 10px; color: #AAA; display: flex; align-items: center;">
-              <span style="margin-left: 5px;">100%</span>
-            </div>
-            <div class="level-marker" style="position: absolute; right: -30px; width: 20px; height: 2px; background: #AAA; font-size: 10px; color: #AAA; display: flex; align-items: center;">
-              <span style="margin-left: 5px;">50%</span>
-            </div>
-            <div class="level-marker" style="position: absolute; right: -30px; width: 20px; height: 2px; background: #AAA; font-size: 10px; color: #AAA; display: flex; align-items: center;">
-              <span style="margin-left: 5px;">0%</span>
-            </div>
-          </div>
-          
-          <!-- Float Switch Status -->
-          <div class="float-status" style="flex: 1; max-width: 300px;">
-            <h6 style="color: #FFFFFF; margin-bottom: 15px;">Float Switch Status</h6>
-            <div class="float-switches" style="display: grid; gap: 10px;">
-              <div class="float-item" style="background: #222; padding: 10px; border-radius: 5px; border-left: 4px solid #4CAF50;">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                  <span style="color: #FFFFFF; font-size: 12px;">Low Level (NC)</span>
-                  <div id="low-float-led" class="led-indicator" style="width: 12px; height: 12px; border-radius: 50%; background: #4CAF50; border: 1px solid #555;"></div>
-                </div>
-                <div style="color: #AAA; font-size: 10px;">Position: 20%</div>
-              </div>
-              
-              <div class="float-item" style="background: #222; padding: 10px; border-radius: 5px; border-left: 4px solid #FF9800;">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                  <span style="color: #FFFFFF; font-size: 12px;">High Level (NO)</span>
-                  <div id="high-float-led" class="led-indicator" style="width: 12px; height: 12px; border-radius: 50%; background: #666; border: 1px solid #555;"></div>
-                </div>
-                <div style="color: #AAA; font-size: 10px;">Position: 80%</div>
-              </div>
-              
-              <div class="float-item" style="background: #222; padding: 10px; border-radius: 5px; border-left: 4px solid #F44336;">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                  <span style="color: #FFFFFF; font-size: 12px;">Emergency (NC)</span>
-                  <div id="emergency-float-led" class="led-indicator" style="width: 12px; height: 12px; border-radius: 50%; background: #4CAF50; border: 1px solid #555;"></div>
-                </div>
-                <div style="color: #AAA; font-size: 10px;">Position: 95%</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Tank Information -->
-        <div class="tank-info" style="margin-top: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
-          <div class="info-card" style="background: #222; padding: 10px; border-radius: 5px; text-align: center;">
-            <div id="tank-level-display" style="color: #2196F3; font-size: 20px; font-weight: bold;">50%</div>
-            <div style="color: #AAA; font-size: 12px;">Current Level</div>
-          </div>
-          <div class="info-card" style="background: #222; padding: 10px; border-radius: 5px; text-align: center;">
-            <div id="tank-volume-display" style="color: #4CAF50; font-size: 20px; font-weight: bold;">500L</div>
-            <div style="color: #AAA; font-size: 12px;">Volume</div>
-          </div>
-          <div class="info-card" style="background: #222; padding: 10px; border-radius: 5px; text-align: center;">
-            <div id="tank-height-display" style="color: #FF9800; font-size: 20px; font-weight: bold;">50cm</div>
-            <div style="color: #AAA; font-size: 12px;">Fluid Height</div>
-          </div>
-          <div class="info-card" style="background: #222; padding: 10px; border-radius: 5px; text-align: center;">
-            <div id="turbulence-display" style="color: #9C27B0; font-size: 20px; font-weight: bold;">0%</div>
-            <div style="color: #AAA; font-size: 12px;">Turbulence</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
-  
-  updateTankDisplay();
-}
-
-// Initialize Float Switch Controls
-function initializeFloatSwitchControls() {
-  const container = document.getElementById('float-control-panel');
-  if (!container) return;
-  
-  container.innerHTML = `
-    <div class="float-controls" style="background: #2a2a2a; border-radius: 12px; padding: 25px; margin-bottom: 25px;">
-      <h4 style="color: #2196F3; margin-bottom: 20px; font-size: 18px; display: flex; align-items: center; gap: 10px;">
-        <i class="fas fa-cogs"></i> Tank Level Control
-      </h4>
-      
-      <div class="control-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 20px;">
-        <!-- Tank Level Control -->
-        <div class="control-group" style="background: #333; padding: 15px; border-radius: 8px;">
-          <h5 style="color: #FFFFFF; margin-bottom: 15px;">Tank Level Control</h5>
-          <div style="margin-bottom: 10px;">
-            <label style="color: #FFFFFF; font-size: 12px;">Tank Level (%)</label>
-            <input type="range" id="tank-level-slider" min="0" max="100" value="50" style="width: 100%; margin: 5px 0;">
-            <span id="tank-level-value" style="color: #2196F3; font-size: 14px; font-weight: bold;">50%</span>
-          </div>
-          <div style="color: #AAA; font-size: 11px;">
-            Volume: <span id="volume-display" style="color: #4CAF50;">500L</span>
-          </div>
-        </div>
-        
-        <!-- Turbulence Control -->
-        <div class="control-group" style="background: #333; padding: 15px; border-radius: 8px;">
-          <h5 style="color: #FFFFFF; margin-bottom: 15px;">Turbulence Control</h5>
-          <div style="margin-bottom: 10px;">
-            <label style="color: #FFFFFF; font-size: 12px;">Turbulence Level (%)</label>
-            <input type="range" id="turbulence-slider" min="0" max="100" value="0" style="width: 100%; margin: 5px 0;">
-            <span id="turbulence-value" style="color: #9C27B0; font-size: 14px; font-weight: bold;">0%</span>
-          </div>
-          <div style="color: #AAA; font-size: 11px;">
-            Effect on float switches
-          </div>
-        </div>
-        
-        <!-- Float Switch Configuration -->
-        <div class="control-group" style="background: #333; padding: 15px; border-radius: 8px;">
-          <h5 style="color: #FFFFFF; margin-bottom: 15px;">Float Switch Config</h5>
-          <div style="display: grid; gap: 10px;">
-            <div>
-              <label style="color: #FFFFFF; font-size: 12px;">Low Level Position (%)</label>
-              <input type="range" id="low-float-position" min="5" max="40" value="20" style="width: 100%; margin: 5px 0;">
-              <span id="low-float-value" style="color: #4CAF50; font-size: 12px;">20%</span>
-            </div>
-            <div>
-              <label style="color: #FFFFFF; font-size: 12px;">High Level Position (%)</label>
-              <input type="range" id="high-float-position" min="60" max="90" value="80" style="width: 100%; margin: 5px 0;">
-              <span id="high-float-value" style="color: #FF9800; font-size: 12px;">80%</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- System Status -->
-      <div class="system-status" style="background: #333; padding: 15px; border-radius: 8px;">
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
-          <div>
-            <span style="color: #AAA; font-size: 12px;">System Status:</span>
-            <div id="float-system-status" style="color: #4CAF50; font-weight: bold; font-size: 16px;">NORMAL</div>
-          </div>
-          <div>
-            <span style="color: #AAA; font-size: 12px;">Active Switches:</span>
-            <div id="active-switches-count" style="color: #2196F3; font-weight: bold; font-size: 16px;">2</div>
-          </div>
-          <div>
-            <span style="color: #AAA; font-size: 12px;">Response Time:</span>
-            <div id="response-time-display" style="color: #FF9800; font-weight: bold; font-size: 16px;">0.5s</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
-  
-  // Add event listeners
-  addFloatControlEventListeners();
-}
-
-// Initialize Logic Testing
-function initializeLogicTesting() {
-  const container = document.getElementById('float-logic-panel');
-  if (!container) return;
-  
-  container.innerHTML = `
-    <div class="logic-testing" style="background: #2a2a2a; border-radius: 12px; padding: 25px; margin-bottom: 25px;">
-      <h4 style="color: #4CAF50; margin-bottom: 20px; font-size: 18px; display: flex; align-items: center; gap: 10px;">
-        <i class="fas fa-brain"></i> Logic Testing
-      </h4>
-      
-      <div class="logic-controls" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 20px;">
-        <div class="logic-group" style="background: #333; padding: 15px; border-radius: 8px;">
-          <h5 style="color: #FFFFFF; margin-bottom: 15px;">NO vs NC Testing</h5>
-          <div style="display: grid; gap: 10px;">
-            <button id="test-no-logic-btn" style="background: #2196F3; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
-              <i class="fas fa-play"></i> Test NO Logic
-            </button>
-            <button id="test-nc-logic-btn" style="background: #4CAF50; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
-              <i class="fas fa-play"></i> Test NC Logic
-            </button>
-            <button id="test-fail-safe-btn" style="background: #FF9800; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
-              <i class="fas fa-shield-alt"></i> Test Fail-Safe
-            </button>
-          </div>
-        </div>
-        
-        <div class="logic-group" style="background: #333; padding: 15px; border-radius: 8px;">
-          <h5 style="color: #FFFFFF; margin-bottom: 15px;">Logic Truth Table</h5>
-          <div id="truth-table" style="background: #222; padding: 10px; border-radius: 5px; font-family: monospace; font-size: 12px; color: #FFFFFF;">
-            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 10px;">
-              <div style="color: #AAA;">Level</div>
-              <div style="color: #AAA;">NO State</div>
-              <div style="color: #AAA;">NC State</div>
-            </div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
-              <div>Below</div>
-              <div style="color: #666;">Open</div>
-              <div style="color: #4CAF50;">Closed</div>
-            </div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
-              <div>Above</div>
-              <div style="color: #4CAF50;">Closed</div>
-              <div style="color: #666;">Open</div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="logic-group" style="background: #333; padding: 15px; border-radius: 8px;">
-          <h5 style="color: #FFFFFF; margin-bottom: 15px;">Logic Test Results</h5>
-          <div id="logic-test-results" style="background: #222; padding: 10px; border-radius: 5px; min-height: 100px; font-family: monospace; font-size: 12px; color: #FFFFFF;">
-            <div style="color: #AAA;">No tests run yet</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
-  
-  // Add logic testing event listeners
-  addLogicTestingEventListeners();
-}
-
-// Initialize Fault Injection
-function initializeFaultInjection() {
-  const container = document.getElementById('float-fault-panel');
-  if (!container) return;
-  
-  container.innerHTML = `
-    <div class="fault-injection" style="background: #2a2a2a; border-radius: 12px; padding: 25px; margin-bottom: 25px;">
-      <h4 style="color: #F44336; margin-bottom: 20px; font-size: 18px; display: flex; align-items: center; gap: 10px;">
-        <i class="fas fa-exclamation-triangle"></i> Fault Injection
-      </h4>
-      
-      <div class="fault-controls" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px;">
-        <button id="stuck-float-btn" class="fault-btn" style="background: #666; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
-          Stuck Float
-        </button>
-        <button id="wiring-fault-btn" class="fault-btn" style="background: #666; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
-          Wiring Fault
-        </button>
-        <button id="sensor-drift-btn" class="fault-btn" style="background: #666; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
-          Sensor Drift
-        </button>
-        <button id="vibration-effect-btn" class="fault-btn" style="background: #666; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
-          Vibration Effect
-        </button>
-        <button id="clear-float-faults-btn" class="fault-btn" style="background: #4CAF50; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
-          Clear Faults
-        </button>
-      </div>
-      
-      <!-- Fault Status -->
-      <div class="fault-status" style="background: #333; padding: 15px; border-radius: 8px;">
-        <h5 style="color: #FFFFFF; margin-bottom: 15px;">Fault Status</h5>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;">
-          <div>
-            <span style="color: #AAA; font-size: 12px;">Stuck Float:</span>
-            <div id="stuck-status" style="color: #4CAF50; font-weight: bold;">NO</div>
-          </div>
-          <div>
-            <span style="color: #AAA; font-size: 12px;">Wiring Fault:</span>
-            <div id="wiring-status" style="color: #4CAF50; font-weight: bold;">NO</div>
-          </div>
-          <div>
-            <span style="color: #AAA; font-size: 12px;">Sensor Drift:</span>
-            <div id="drift-status" style="color: #4CAF50; font-weight: bold;">0%</div>
-          </div>
-          <div>
-            <span style="color: #AAA; font-size: 12px;">Vibration Effect:</span>
-            <div id="vibration-status" style="color: #4CAF50; font-weight: bold;">NO</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
-  
-  // Add fault injection event listeners
-  addFaultInjectionEventListeners();
-}
-
-// Add Float Control Event Listeners
-function addFloatControlEventListeners() {
-  // Tank level slider
-  const tankSlider = document.getElementById('tank-level-slider');
-  const tankValue = document.getElementById('tank-level-value');
-  const volumeDisplay = document.getElementById('volume-display');
-  if (tankSlider && tankValue && volumeDisplay) {
-    tankSlider.addEventListener('input', function() {
-      const value = this.value;
-      floatSwitchData.tankLevel = parseInt(value);
-      tankValue.textContent = value + '%';
-      volumeDisplay.textContent = Math.round((value / 100) * floatSwitchData.tankCapacity) + 'L';
-      updateTankDisplay();
-      updateFloatSwitchStates();
+    // Destroy existing charts if they exist
+    Object.values(charts).forEach(chart => {
+        if (chart) {
+            chart.destroy();
+        }
     });
-  }
-  
-  // Turbulence slider
-  const turbulenceSlider = document.getElementById('turbulence-slider');
-  const turbulenceValue = document.getElementById('turbulence-value');
-  if (turbulenceSlider && turbulenceValue) {
-    turbulenceSlider.addEventListener('input', function() {
-      const value = this.value;
-      floatSwitchData.turbulence = parseInt(value);
-      turbulenceValue.textContent = value + '%';
-      updateFloatSwitchStates();
+    charts = {};
+
+    // Clear any existing intervals
+    Object.values(simIntervals).forEach(interval => {
+        clearInterval(interval);
     });
-  }
-  
-  // Float position sliders
-  const lowFloatSlider = document.getElementById('low-float-position');
-  const lowFloatValue = document.getElementById('low-float-value');
-  if (lowFloatSlider && lowFloatValue) {
-    lowFloatSlider.addEventListener('input', function() {
-      const value = this.value;
-      floatSwitchData.floatSwitches.lowLevel.position = parseInt(value);
-      lowFloatValue.textContent = value + '%';
-      updateTankDisplay();
-      updateFloatSwitchStates();
-    });
-  }
-  
-  const highFloatSlider = document.getElementById('high-float-position');
-  const highFloatValue = document.getElementById('high-float-value');
-  if (highFloatSlider && highFloatValue) {
-    highFloatSlider.addEventListener('input', function() {
-      const value = this.value;
-      floatSwitchData.floatSwitches.highLevel.position = parseInt(value);
-      highFloatValue.textContent = value + '%';
-      updateTankDisplay();
-      updateFloatSwitchStates();
-    });
-  }
-}
+    simIntervals = {};
 
-// Add Logic Testing Event Listeners
-function addLogicTestingEventListeners() {
-  document.getElementById('test-no-logic-btn')?.addEventListener('click', testNOLogic);
-  document.getElementById('test-nc-logic-btn')?.addEventListener('click', testNCLogic);
-  document.getElementById('test-fail-safe-btn')?.addEventListener('click', testFailSafe);
-}
+    // Common chart configuration
+    const commonConfig = {
+        type: 'line',
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: {
+                duration: 0
+            },
+            interaction: {
+                intersect: false,
+                mode: 'index'
+            },
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    titleColor: '#fff',
+                    bodyColor: '#fff',
+                    borderColor: '#555',
+                    borderWidth: 1,
+                    padding: 10,
+                    displayColors: false,
+                    callbacks: {
+                        label: function(context) {
+                            return 'Level: ' + context.parsed.y.toFixed(1) + '%';
+                        }
+                    }
+                }
+            }
+        }
+    };
 
-// Add Fault Injection Event Listeners
-function addFaultInjectionEventListeners() {
-  document.getElementById('stuck-float-btn')?.addEventListener('click', toggleStuckFloat);
-  document.getElementById('wiring-fault-btn')?.addEventListener('click', toggleWiringFault);
-  document.getElementById('sensor-drift-btn')?.addEventListener('click', injectSensorDrift);
-  document.getElementById('vibration-effect-btn')?.addEventListener('click', toggleVibrationEffect);
-  document.getElementById('clear-float-faults-btn')?.addEventListener('click', clearFloatFaults);
-}
+    try {
+        // Initialize Basic Tank Chart
+        const basicCtx = document.getElementById('basic-tank-chart');
+        if (basicCtx) {
+            charts.basic = new Chart(basicCtx, Object.assign({}, commonConfig, {
+                data: {
+                    datasets: [{
+                        label: 'Tank Level',
+                        data: [],
+                        borderColor: '#2196F3',
+                        backgroundColor: 'rgba(33, 150, 243, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    ...commonConfig.options,
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            display: true,
+                            min: 0,
+                            max: 30,
+                            grid: {
+                                color: '#333',
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: '#aaa',
+                                maxTicksLimit: 8
+                            },
+                            title: {
+                                display: true,
+                                text: 'Time (s)',
+                                color: '#aaa',
+                                font: { size: 14 }
+                            }
+                        },
+                        y: {
+                            display: true,
+                            min: 0,
+                            max: 100,
+                            grid: {
+                                color: '#333',
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: '#aaa',
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Tank Level',
+                                color: '#aaa',
+                                font: { size: 14 }
+                            }
+                        }
+                    }
+                }
+            }));
 
-// Update Tank Display
-function updateTankDisplay() {
-  // Update tank fluid level
-  const tankFluid = document.getElementById('tank-fluid');
-  if (tankFluid) {
-    tankFluid.style.height = floatSwitchData.tankLevel + '%';
-  }
-  
-  // Update float positions
-  const lowFloat = document.getElementById('low-float');
-  const highFloat = document.getElementById('high-float');
-  const emergencyFloat = document.getElementById('emergency-float');
-  
-  if (lowFloat) {
-    const lowPosition = 300 - (floatSwitchData.floatSwitches.lowLevel.position / 100) * 300;
-    lowFloat.style.top = lowPosition + 'px';
-  }
-  
-  if (highFloat) {
-    const highPosition = 300 - (floatSwitchData.floatSwitches.highLevel.position / 100) * 300;
-    highFloat.style.top = highPosition + 'px';
-  }
-  
-  if (emergencyFloat) {
-    const emergencyPosition = 300 - (floatSwitchData.floatSwitches.emergency.position / 100) * 300;
-    emergencyFloat.style.top = emergencyPosition + 'px';
-  }
-  
-  // Update displays
-  const tankLevelDisplay = document.getElementById('tank-level-display');
-  const tankVolumeDisplay = document.getElementById('tank-volume-display');
-  const tankHeightDisplay = document.getElementById('tank-height-display');
-  const turbulenceDisplay = document.getElementById('turbulence-display');
-  
-  if (tankLevelDisplay) tankLevelDisplay.textContent = floatSwitchData.tankLevel + '%';
-  if (tankVolumeDisplay) tankVolumeDisplay.textContent = Math.round((floatSwitchData.tankLevel / 100) * floatSwitchData.tankCapacity) + 'L';
-  if (tankHeightDisplay) tankHeightDisplay.textContent = Math.round((floatSwitchData.tankLevel / 100) * floatSwitchData.tankHeight) + 'cm';
-  if (turbulenceDisplay) turbulenceDisplay.textContent = floatSwitchData.turbulence + '%';
-  
-  updateFloatSwitchStates();
-}
+            // Add switch level indicators
+            const basicSwitchPlugin = {
+                id: 'basicSwitchLines',
+                beforeDraw: (chart) => {
+                    const ctx = chart.ctx;
+                    const yAxis = chart.scales.y;
+                    
+                    // High switch line (80%)
+                    ctx.beginPath();
+                    ctx.strokeStyle = '#FF5722';
+                    ctx.setLineDash([5, 5]);
+                    const highY = yAxis.getPixelForValue(80);
+                    ctx.moveTo(chart.chartArea.left, highY);
+                    ctx.lineTo(chart.chartArea.right, highY);
+                    ctx.stroke();
+                    
+                    // Low switch line (20%)
+                    ctx.beginPath();
+                    ctx.strokeStyle = '#FF9800';
+                    const lowY = yAxis.getPixelForValue(20);
+                    ctx.moveTo(chart.chartArea.left, lowY);
+                    ctx.lineTo(chart.chartArea.right, lowY);
+                    ctx.stroke();
+                    
+                    ctx.setLineDash([]);
+                }
+            };
+            charts.basic.options.plugins.basicSwitchLines = basicSwitchPlugin;
+        }
 
-// Update Float Switch States
-function updateFloatSwitchStates() {
-  const level = floatSwitchData.tankLevel;
-  
-  // Update low level float
-  const lowLevel = floatSwitchData.floatSwitches.lowLevel;
-  const lowLED = document.getElementById('low-float-led');
-  const lowFloat = document.getElementById('low-float');
-  
-  if (level >= lowLevel.position) {
-    lowLevel.state = lowLevel.type === 'NC' ? false : true; // NC opens when level rises, NO closes
-  } else {
-    lowLevel.state = lowLevel.type === 'NC' ? true : false; // NC closes when level drops, NO opens
-  }
-  
-  // Apply faults
-  if (floatSwitchData.stuckFloat) {
-    lowLevel.state = true; // Stuck closed
-  }
-  
-  if (floatSwitchData.wiringFault) {
-    lowLevel.state = false; // Open circuit
-  }
-  
-  // Apply vibration effect
-  if (floatSwitchData.vibrationEffect && floatSwitchData.turbulence > 50) {
-    lowLevel.state = !lowLevel.state; // Toggle state due to vibration
-  }
-  
-  // Update visual indicators
-  if (lowLED) {
-    lowLED.style.background = lowLevel.state ? '#4CAF50' : '#666';
-  }
-  
-  if (lowFloat) {
-    lowFloat.style.background = lowLevel.state ? '#4CAF50' : '#666';
-    lowFloat.style.boxShadow = lowLevel.state ? '0 0 10px rgba(76, 175, 80, 0.5)' : 'none';
-  }
-  
-  // Update high level float
-  const highLevel = floatSwitchData.floatSwitches.highLevel;
-  const highLED = document.getElementById('high-float-led');
-  const highFloat = document.getElementById('high-float');
-  
-  if (level >= highLevel.position) {
-    highLevel.state = highLevel.type === 'NC' ? false : true;
-  } else {
-    highLevel.state = highLevel.type === 'NC' ? true : false;
-  }
-  
-  // Apply faults
-  if (floatSwitchData.stuckFloat) {
-    highLevel.state = false; // Stuck open
-  }
-  
-  if (floatSwitchData.wiringFault) {
-    highLevel.state = false; // Open circuit
-  }
-  
-  // Apply vibration effect
-  if (floatSwitchData.vibrationEffect && floatSwitchData.turbulence > 50) {
-    highLevel.state = !highLevel.state;
-  }
-  
-  // Update visual indicators
-  if (highLED) {
-    highLED.style.background = highLevel.state ? '#FF9800' : '#666';
-  }
-  
-  if (highFloat) {
-    highFloat.style.background = highLevel.state ? '#FF9800' : '#666';
-    highFloat.style.boxShadow = highLevel.state ? '0 0 10px rgba(255, 152, 0, 0.5)' : 'none';
-  }
-  
-  // Update emergency float
-  const emergency = floatSwitchData.floatSwitches.emergency;
-  const emergencyLED = document.getElementById('emergency-float-led');
-  const emergencyFloat = document.getElementById('emergency-float');
-  
-  if (level >= emergency.position) {
-    emergency.state = emergency.type === 'NC' ? false : true;
-  } else {
-    emergency.state = emergency.type === 'NC' ? true : false;
-  }
-  
-  // Apply faults
-  if (floatSwitchData.stuckFloat) {
-    emergency.state = true; // Stuck closed (fail-safe)
-  }
-  
-  if (floatSwitchData.wiringFault) {
-    emergency.state = false; // Open circuit
-  }
-  
-  // Update visual indicators
-  if (emergencyLED) {
-    emergencyLED.style.background = emergency.state ? '#F44336' : '#666';
-  }
-  
-  if (emergencyFloat) {
-    emergencyFloat.style.background = emergency.state ? '#F44336' : '#666';
-    emergencyFloat.style.boxShadow = emergency.state ? '0 0 10px rgba(244, 67, 54, 0.5)' : 'none';
-  }
-  
-  updateSystemStatus();
-}
+        // Initialize Advanced Tank Chart
+        const advCtx = document.getElementById('adv-tank-chart');
+        if (advCtx) {
+            charts.advanced = new Chart(advCtx, Object.assign({}, commonConfig, {
+                data: {
+                    datasets: [{
+                        label: 'Tank Level',
+                        data: [],
+                        borderColor: '#4CAF50',
+                        backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    ...commonConfig.options,
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            display: true,
+                            min: 0,
+                            max: 30,
+                            grid: {
+                                color: '#333',
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: '#aaa',
+                                maxTicksLimit: 8
+                            },
+                            title: {
+                                display: true,
+                                text: 'Time (s)',
+                                color: '#aaa',
+                                font: { size: 14 }
+                            }
+                        },
+                        y: {
+                            display: true,
+                            min: 0,
+                            max: 100,
+                            grid: {
+                                color: '#333',
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: '#aaa',
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Tank Level',
+                                color: '#aaa',
+                                font: { size: 14 }
+                            }
+                        }
+                    }
+                }
+            }));
 
-// Update System Status
-function updateSystemStatus() {
-  const systemStatus = document.getElementById('float-system-status');
-  const activeSwitches = document.getElementById('active-switches-count');
-  const responseTime = document.getElementById('response-time-display');
-  
-  // Count active switches
-  const activeCount = Object.values(floatSwitchData.floatSwitches).filter(sw => sw.state).length;
-  
-  if (activeSwitches) {
-    activeSwitches.textContent = activeCount;
-  }
-  
-  if (responseTime) {
-    responseTime.textContent = floatSwitchData.responseTime + 's';
-  }
-  
-  if (systemStatus) {
-    if (floatSwitchData.floatSwitches.emergency.state) {
-      systemStatus.textContent = 'EMERGENCY';
-      systemStatus.style.color = '#F44336';
-    } else if (floatSwitchData.floatSwitches.highLevel.state) {
-      systemStatus.textContent = 'HIGH LEVEL';
-      systemStatus.style.color = '#FF9800';
-    } else if (!floatSwitchData.floatSwitches.lowLevel.state) {
-      systemStatus.textContent = 'LOW LEVEL';
-      systemStatus.style.color = '#FF9800';
-    } else {
-      systemStatus.textContent = 'NORMAL';
-      systemStatus.style.color = '#4CAF50';
+            // Add switch level indicators
+            const advSwitchPlugin = {
+                id: 'advSwitchLines',
+                beforeDraw: (chart) => {
+                    const ctx = chart.ctx;
+                    const yAxis = chart.scales.y;
+                    
+                    // High cutout line (90%)
+                    ctx.beginPath();
+                    ctx.strokeStyle = '#F44336';
+                    ctx.setLineDash([5, 5]);
+                    const highCutY = yAxis.getPixelForValue(90);
+                    ctx.moveTo(chart.chartArea.left, highCutY);
+                    ctx.lineTo(chart.chartArea.right, highCutY);
+                    ctx.stroke();
+                    
+                    // High warning line (70%)
+                    ctx.beginPath();
+                    ctx.strokeStyle = '#FF9800';
+                    const highWarnY = yAxis.getPixelForValue(70);
+                    ctx.moveTo(chart.chartArea.left, highWarnY);
+                    ctx.lineTo(chart.chartArea.right, highWarnY);
+                    ctx.stroke();
+                    
+                    // Low warning line (30%)
+                    ctx.beginPath();
+                    ctx.strokeStyle = '#FF9800';
+                    const lowWarnY = yAxis.getPixelForValue(30);
+                    ctx.moveTo(chart.chartArea.left, lowWarnY);
+                    ctx.lineTo(chart.chartArea.right, lowWarnY);
+                    ctx.stroke();
+                    
+                    // Low cutout line (10%)
+                    ctx.beginPath();
+                    ctx.strokeStyle = '#F44336';
+                    const lowCutY = yAxis.getPixelForValue(10);
+                    ctx.moveTo(chart.chartArea.left, lowCutY);
+                    ctx.lineTo(chart.chartArea.right, lowCutY);
+                    ctx.stroke();
+                    
+                    ctx.setLineDash([]);
+                }
+            };
+            charts.advanced.options.plugins.advSwitchLines = advSwitchPlugin;
+        }
+
+        // Set up event listeners
+        setupEventListeners();
+        console.log('Float switch simulation initialized successfully!');
+    } catch (error) {
+        console.error('Error initializing float switch simulation:', error);
     }
-  }
 }
 
-// Logic Testing Functions
-function testNOLogic() {
-  const results = document.getElementById('logic-test-results');
-  if (results) {
-    results.innerHTML = `
-      <div style="color: #2196F3; margin-bottom: 5px;">NO Logic Test Results:</div>
-      <div style="color: #AAA; font-size: 11px;">Below level: Open (inactive)</div>
-      <div style="color: #AAA; font-size: 11px;">Above level: Closed (active)</div>
-      <div style="color: #4CAF50; font-size: 11px;">✓ Test passed</div>
-    `;
-  }
-  showNotification('NO logic test completed', 'success');
-}
+function setupEventListeners() {
+    try {
+        // Basic Tank Controls
+        const basicFillBtn = document.getElementById('basic-fill');
+        const basicDrainBtn = document.getElementById('basic-drain');
+        if (basicFillBtn && basicDrainBtn) {
+            basicFillBtn.addEventListener('click', () => toggleBasicFill());
+            basicDrainBtn.addEventListener('click', () => toggleBasicDrain());
+        }
 
-function testNCLogic() {
-  const results = document.getElementById('logic-test-results');
-  if (results) {
-    results.innerHTML = `
-      <div style="color: #4CAF50; margin-bottom: 5px;">NC Logic Test Results:</div>
-      <div style="color: #AAA; font-size: 11px;">Below level: Closed (active)</div>
-      <div style="color: #AAA; font-size: 11px;">Above level: Open (inactive)</div>
-      <div style="color: #4CAF50; font-size: 11px;">✓ Test passed</div>
-    `;
-  }
-  showNotification('NC logic test completed', 'success');
-}
+        // Advanced Tank Controls
+        const advFillBtn = document.getElementById('adv-fill');
+        const advDrainBtn = document.getElementById('adv-drain');
+        if (advFillBtn && advDrainBtn) {
+            advFillBtn.addEventListener('click', () => toggleAdvancedFill());
+            advDrainBtn.addEventListener('click', () => toggleAdvancedDrain());
+        }
 
-function testFailSafe() {
-  const results = document.getElementById('logic-test-results');
-  if (results) {
-    results.innerHTML = `
-      <div style="color: #F44336; margin-bottom: 5px;">Fail-Safe Test Results:</div>
-      <div style="color: #AAA; font-size: 11px;">Wire break: NC opens (alarm)</div>
-      <div style="color: #AAA; font-size: 11px;">Power loss: NC opens (alarm)</div>
-      <div style="color: #4CAF50; font-size: 11px;">✓ Fail-safe behavior confirmed</div>
-    `;
-  }
-  showNotification('Fail-safe test completed', 'success');
-}
-
-// Fault Injection Functions
-function toggleStuckFloat() {
-  floatSwitchData.stuckFloat = !floatSwitchData.stuckFloat;
-  updateFaultStatus();
-  updateFloatSwitchStates();
-  
-  const btn = document.getElementById('stuck-float-btn');
-  if (btn) {
-    btn.style.background = floatSwitchData.stuckFloat ? '#F44336' : '#666';
-    btn.textContent = floatSwitchData.stuckFloat ? 'Unstick Float' : 'Stuck Float';
-  }
-  
-  showNotification(floatSwitchData.stuckFloat ? 'Float stuck' : 'Float unstuck', 'info');
-}
-
-function toggleWiringFault() {
-  floatSwitchData.wiringFault = !floatSwitchData.wiringFault;
-  updateFaultStatus();
-  updateFloatSwitchStates();
-  
-  const btn = document.getElementById('wiring-fault-btn');
-  if (btn) {
-    btn.style.background = floatSwitchData.wiringFault ? '#F44336' : '#666';
-    btn.textContent = floatSwitchData.wiringFault ? 'Fix Wiring' : 'Wiring Fault';
-  }
-  
-  showNotification(floatSwitchData.wiringFault ? 'Wiring fault detected' : 'Wiring fault cleared', 'info');
-}
-
-function injectSensorDrift() {
-  floatSwitchData.sensorDrift = Math.random() * 10 - 5; // -5% to +5%
-  updateFaultStatus();
-  updateFloatSwitchStates();
-  
-  showNotification(`Sensor drift injected: ${floatSwitchData.sensorDrift.toFixed(1)}%`, 'warning');
-}
-
-function toggleVibrationEffect() {
-  floatSwitchData.vibrationEffect = !floatSwitchData.vibrationEffect;
-  updateFaultStatus();
-  updateFloatSwitchStates();
-  
-  const btn = document.getElementById('vibration-effect-btn');
-  if (btn) {
-    btn.style.background = floatSwitchData.vibrationEffect ? '#F44336' : '#666';
-    btn.textContent = floatSwitchData.vibrationEffect ? 'Stop Vibration' : 'Vibration Effect';
-  }
-  
-  showNotification(floatSwitchData.vibrationEffect ? 'Vibration effect enabled' : 'Vibration effect disabled', 'info');
-}
-
-function clearFloatFaults() {
-  floatSwitchData.stuckFloat = false;
-  floatSwitchData.wiringFault = false;
-  floatSwitchData.sensorDrift = 0;
-  floatSwitchData.vibrationEffect = false;
-  
-  updateFaultStatus();
-  updateFloatSwitchStates();
-  
-  // Reset button styles
-  document.getElementById('stuck-float-btn').style.background = '#666';
-  document.getElementById('stuck-float-btn').textContent = 'Stuck Float';
-  document.getElementById('wiring-fault-btn').style.background = '#666';
-  document.getElementById('wiring-fault-btn').textContent = 'Wiring Fault';
-  document.getElementById('vibration-effect-btn').style.background = '#666';
-  document.getElementById('vibration-effect-btn').textContent = 'Vibration Effect';
-  
-  showNotification('All float switch faults cleared', 'success');
-}
-
-// Update Fault Status
-function updateFaultStatus() {
-  const stuckStatus = document.getElementById('stuck-status');
-  const wiringStatus = document.getElementById('wiring-status');
-  const driftStatus = document.getElementById('drift-status');
-  const vibrationStatus = document.getElementById('vibration-status');
-  
-  if (stuckStatus) {
-    stuckStatus.textContent = floatSwitchData.stuckFloat ? 'YES' : 'NO';
-    stuckStatus.style.color = floatSwitchData.stuckFloat ? '#F44336' : '#4CAF50';
-  }
-  
-  if (wiringStatus) {
-    wiringStatus.textContent = floatSwitchData.wiringFault ? 'YES' : 'NO';
-    wiringStatus.style.color = floatSwitchData.wiringFault ? '#F44336' : '#4CAF50';
-  }
-  
-  if (driftStatus) {
-    driftStatus.textContent = floatSwitchData.sensorDrift.toFixed(1) + '%';
-    driftStatus.style.color = Math.abs(floatSwitchData.sensorDrift) > 2 ? '#F44336' : '#4CAF50';
-  }
-  
-  if (vibrationStatus) {
-    vibrationStatus.textContent = floatSwitchData.vibrationEffect ? 'YES' : 'NO';
-    vibrationStatus.style.color = floatSwitchData.vibrationEffect ? '#F44336' : '#4CAF50';
-  }
-}
-
-// Start Float Switch Monitoring
-function startFloatSwitchMonitoring() {
-  if (floatSwitchData.simulationInterval) {
-    clearInterval(floatSwitchData.simulationInterval);
-  }
-  
-  floatSwitchData.simulationInterval = setInterval(() => {
-    // Simulate turbulence effects
-    if (floatSwitchData.turbulence > 0) {
-      // Add small random variations to level
-      const variation = (Math.random() - 0.5) * (floatSwitchData.turbulence / 10);
-      const newLevel = Math.max(0, Math.min(100, floatSwitchData.tankLevel + variation));
-      floatSwitchData.tankLevel = newLevel;
-      
-      // Update display
-      const tankSlider = document.getElementById('tank-level-slider');
-      const tankValue = document.getElementById('tank-level-value');
-      if (tankSlider && tankValue) {
-        tankSlider.value = newLevel;
-        tankValue.textContent = Math.round(newLevel) + '%';
-      }
-      
-      updateTankDisplay();
+        console.log('Event listeners set up successfully!');
+    } catch (error) {
+        console.error('Error setting up event listeners:', error);
     }
-  }, 500);
 }
 
-// Show Notification
-function showNotification(message, type) {
-  const notification = document.createElement('div');
-  notification.style.cssText = `
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: ${type === 'success' ? '#4CAF50' : type === 'warning' ? '#FF9800' : type === 'error' ? '#F44336' : '#2196F3'};
-    color: white;
-    padding: 15px 20px;
-    border-radius: 5px;
-    z-index: 1000;
-    font-weight: bold;
-  `;
-  notification.textContent = message;
-  
-  document.body.appendChild(notification);
-  
-  setTimeout(() => {
-    notification.remove();
-  }, 3000);
+// Basic Tank Functions
+function toggleBasicFill() {
+    const btn = document.getElementById('basic-fill');
+    tankState.basic.filling = !tankState.basic.filling;
+    
+    // Update button state
+    btn.textContent = tankState.basic.filling ? 'Stop Fill' : 'Start Fill';
+    btn.style.background = tankState.basic.filling ? '#FF5722' : '#4CAF50';
+    
+    // Start/Stop simulation
+    if (tankState.basic.filling) {
+        tankState.basic.draining = false;
+        document.getElementById('basic-drain').textContent = 'Start Drain';
+        document.getElementById('basic-drain').style.background = '#FF5722';
+        startBasicSimulation();
+    }
+    updateBasicStatus();
 }
 
-// Export functions for global access
-window.initializeFloatSwitchSimulation = initializeFloatSwitchSimulation;
-window.floatSwitchData = floatSwitchData; 
+function toggleBasicDrain() {
+    const btn = document.getElementById('basic-drain');
+    tankState.basic.draining = !tankState.basic.draining;
+    
+    // Update button state
+    btn.textContent = tankState.basic.draining ? 'Stop Drain' : 'Start Drain';
+    btn.style.background = tankState.basic.draining ? '#FF5722' : '#FF5722';
+    
+    // Start/Stop simulation
+    if (tankState.basic.draining) {
+        tankState.basic.filling = false;
+        document.getElementById('basic-fill').textContent = 'Start Fill';
+        document.getElementById('basic-fill').style.background = '#4CAF50';
+        startBasicSimulation();
+    }
+    updateBasicStatus();
+}
+
+function startBasicSimulation() {
+    clearInterval(simIntervals.basic);
+    let time = 0;
+    const timeStep = 0.1;
+
+    simIntervals.basic = setInterval(() => {
+        time += timeStep;
+        
+        // Update level based on filling/draining
+        if (tankState.basic.filling && !tankState.basic.highSwitch) {
+            tankState.basic.level = Math.min(100, tankState.basic.level + 2 * timeStep);
+        } else if (tankState.basic.draining && !tankState.basic.lowSwitch) {
+            tankState.basic.level = Math.max(0, tankState.basic.level - 2 * timeStep);
+        }
+        
+        // Update switch states
+        tankState.basic.highSwitch = tankState.basic.level >= 80;
+        tankState.basic.lowSwitch = tankState.basic.level <= 20;
+        
+        // Update chart
+        updateChart('basic', time, [tankState.basic.level]);
+        
+        // Update status display
+        updateBasicStatus();
+        
+        // Stop filling if high switch activated
+        if (tankState.basic.highSwitch && tankState.basic.filling) {
+            toggleBasicFill();
+        }
+        
+        // Stop draining if low switch activated
+        if (tankState.basic.lowSwitch && tankState.basic.draining) {
+            toggleBasicDrain();
+        }
+        
+        // Stop if neither filling nor draining
+        if (!tankState.basic.filling && !tankState.basic.draining) {
+            clearInterval(simIntervals.basic);
+        }
+    }, 100);
+}
+
+function updateBasicStatus() {
+    const levelSpan = document.getElementById('basic-level');
+    const highSpan = document.getElementById('basic-high');
+    const lowSpan = document.getElementById('basic-low');
+    const pumpSpan = document.getElementById('basic-pump');
+    
+    if (levelSpan) levelSpan.textContent = Math.round(tankState.basic.level) + '%';
+    if (highSpan) {
+        highSpan.textContent = tankState.basic.highSwitch ? 'ON' : 'OFF';
+        highSpan.style.color = tankState.basic.highSwitch ? '#4CAF50' : '#FF5722';
+    }
+    if (lowSpan) {
+        lowSpan.textContent = tankState.basic.lowSwitch ? 'ON' : 'OFF';
+        lowSpan.style.color = tankState.basic.lowSwitch ? '#4CAF50' : '#FF5722';
+    }
+    if (pumpSpan) {
+        let status = 'IDLE';
+        if (tankState.basic.filling) status = 'FILLING';
+        if (tankState.basic.draining) status = 'DRAINING';
+        pumpSpan.textContent = status;
+        pumpSpan.style.color = status === 'IDLE' ? '#666' : '#4CAF50';
+    }
+}
+
+// Advanced Tank Functions
+function toggleAdvancedFill() {
+    const btn = document.getElementById('adv-fill');
+    tankState.advanced.filling = !tankState.advanced.filling;
+    
+    // Update button state
+    btn.textContent = tankState.advanced.filling ? 'Stop Fill' : 'Start Fill';
+    btn.style.background = tankState.advanced.filling ? '#FF5722' : '#4CAF50';
+    
+    // Start/Stop simulation
+    if (tankState.advanced.filling) {
+        tankState.advanced.draining = false;
+        document.getElementById('adv-drain').textContent = 'Start Drain';
+        document.getElementById('adv-drain').style.background = '#FF5722';
+        startAdvancedSimulation();
+    }
+    updateAdvancedStatus();
+}
+
+function toggleAdvancedDrain() {
+    const btn = document.getElementById('adv-drain');
+    tankState.advanced.draining = !tankState.advanced.draining;
+    
+    // Update button state
+    btn.textContent = tankState.advanced.draining ? 'Stop Drain' : 'Start Drain';
+    btn.style.background = tankState.advanced.draining ? '#FF5722' : '#FF5722';
+    
+    // Start/Stop simulation
+    if (tankState.advanced.draining) {
+        tankState.advanced.filling = false;
+        document.getElementById('adv-fill').textContent = 'Start Fill';
+        document.getElementById('adv-fill').style.background = '#4CAF50';
+        startAdvancedSimulation();
+    }
+    updateAdvancedStatus();
+}
+
+function startAdvancedSimulation() {
+    clearInterval(simIntervals.advanced);
+    let time = 0;
+    const timeStep = 0.1;
+
+    simIntervals.advanced = setInterval(() => {
+        time += timeStep;
+        
+        // Update level based on filling/draining
+        if (tankState.advanced.filling && !tankState.advanced.highCutout) {
+            tankState.advanced.level = Math.min(100, tankState.advanced.level + 2 * timeStep);
+        } else if (tankState.advanced.draining && !tankState.advanced.lowCutout) {
+            tankState.advanced.level = Math.max(0, tankState.advanced.level - 2 * timeStep);
+        }
+        
+        // Update switch states
+        tankState.advanced.highCutout = tankState.advanced.level >= 90;
+        tankState.advanced.highWarning = tankState.advanced.level >= 70;
+        tankState.advanced.lowWarning = tankState.advanced.level <= 30;
+        tankState.advanced.lowCutout = tankState.advanced.level <= 10;
+        
+        // Update chart
+        updateChart('advanced', time, [tankState.advanced.level]);
+        
+        // Update status and alerts
+        updateAdvancedStatus();
+        
+        // Stop filling if high cutout activated
+        if (tankState.advanced.highCutout && tankState.advanced.filling) {
+            toggleAdvancedFill();
+        }
+        
+        // Stop draining if low cutout activated
+        if (tankState.advanced.lowCutout && tankState.advanced.draining) {
+            toggleAdvancedDrain();
+        }
+        
+        // Stop if neither filling nor draining
+        if (!tankState.advanced.filling && !tankState.advanced.draining) {
+            clearInterval(simIntervals.advanced);
+        }
+    }, 100);
+}
+
+function updateAdvancedStatus() {
+    const levelSpan = document.getElementById('adv-level');
+    const highCutSpan = document.getElementById('adv-high-cut');
+    const highWarnSpan = document.getElementById('adv-high-warn');
+    const lowWarnSpan = document.getElementById('adv-low-warn');
+    const lowCutSpan = document.getElementById('adv-low-cut');
+    const pumpSpan = document.getElementById('adv-pump');
+    const alertsDiv = document.getElementById('adv-alerts');
+    
+    // Update level and switch states
+    if (levelSpan) levelSpan.textContent = Math.round(tankState.advanced.level) + '%';
+    if (highCutSpan) {
+        highCutSpan.textContent = tankState.advanced.highCutout ? 'ON' : 'OFF';
+        highCutSpan.style.color = tankState.advanced.highCutout ? '#4CAF50' : '#FF5722';
+    }
+    if (highWarnSpan) {
+        highWarnSpan.textContent = tankState.advanced.highWarning ? 'ON' : 'OFF';
+        highWarnSpan.style.color = tankState.advanced.highWarning ? '#4CAF50' : '#FF5722';
+    }
+    if (lowWarnSpan) {
+        lowWarnSpan.textContent = tankState.advanced.lowWarning ? 'ON' : 'OFF';
+        lowWarnSpan.style.color = tankState.advanced.lowWarning ? '#4CAF50' : '#FF5722';
+    }
+    if (lowCutSpan) {
+        lowCutSpan.textContent = tankState.advanced.lowCutout ? 'ON' : 'OFF';
+        lowCutSpan.style.color = tankState.advanced.lowCutout ? '#4CAF50' : '#FF5722';
+    }
+    if (pumpSpan) {
+        let status = 'IDLE';
+        if (tankState.advanced.filling) status = 'FILLING';
+        if (tankState.advanced.draining) status = 'DRAINING';
+        pumpSpan.textContent = status;
+        pumpSpan.style.color = status === 'IDLE' ? '#666' : '#4CAF50';
+    }
+    
+    // Update alerts
+    if (alertsDiv) {
+        const alerts = [];
+        if (tankState.advanced.highCutout) alerts.push('HIGH LEVEL CUTOUT!');
+        else if (tankState.advanced.highWarning) alerts.push('High Level Warning');
+        if (tankState.advanced.lowCutout) alerts.push('LOW LEVEL CUTOUT!');
+        else if (tankState.advanced.lowWarning) alerts.push('Low Level Warning');
+        
+        const alertsContent = alerts.length > 0 
+            ? `<p style="margin: 0; color: #aaa;">Alerts: <span style="color: ${alerts[0].includes('CUTOUT') ? '#F44336' : '#FF9800'}">${alerts.join(', ')}</span></p>`
+            : '<p style="margin: 0; color: #aaa;">Alerts: <span style="color: #4CAF50">None</span></p>';
+        
+        alertsDiv.innerHTML = alertsContent;
+    }
+}
+
+// Helper Functions
+function updateChart(chartId, time, values) {
+    try {
+        const chart = charts[chartId];
+        if (!chart) {
+            console.error(`Chart ${chartId} not found!`);
+            return;
+        }
+
+        // Add new data points
+        values.forEach((value, index) => {
+            chart.data.datasets[index].data.push({x: time, y: value});
+        });
+
+        chart.update('none');
+    } catch (error) {
+        console.error(`Error updating chart ${chartId}:`, error);
+    }
+}
+
+// Initialize when the script loads
+if (document.readyState === 'complete') {
+    initializeFloatSwitchSimulation();
+} else {
+    window.addEventListener('load', initializeFloatSwitchSimulation);
+} 
