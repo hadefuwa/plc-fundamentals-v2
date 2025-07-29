@@ -15,38 +15,31 @@
     
     /* Reset container styles */
     html, body {
-      height: 100%;
       margin: 0;
       padding: 0;
-      overflow-x: hidden;
+      min-height: 100vh;
+      width: 100%;
     }
 
     body {
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
       background: var(--background-color);
+      overflow-y: auto;
+      overflow-x: hidden;
     }
 
     /* Main Container Layout */
     .main-container {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      justify-content: flex-start;
-      padding: 20px;
-      background: #2d2d2d;
-      border-radius: 8px;
+      min-height: calc(100vh - 100px);
       margin: 20px auto;
+      padding: 20px;
       max-width: 1400px;
       width: calc(100% - 40px);
       box-sizing: border-box;
-      overflow-y: auto;
+      background: #2d2d2d;
+      border-radius: 8px;
     }
 
     .about-container {
-      flex: 1;
       width: 100%;
       margin: 0;
       padding: 40px;
@@ -55,15 +48,14 @@
       border: 2px solid #333;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
       box-sizing: border-box;
-      overflow-y: auto;
     }
 
     /* Responsive adjustments */
     @media (max-width: 768px) {
       .main-container {
         padding: 15px;
-        margin: 10px auto;
-        width: calc(100% - 20px);
+        margin: 15px auto;
+        width: calc(100% - 30px);
       }
       
       .about-container {
@@ -86,8 +78,8 @@
     @media (max-width: 480px) {
       .main-container {
         padding: 10px;
-        margin: 5px auto;
-        width: calc(100% - 10px);
+        margin: 10px auto;
+        width: calc(100% - 20px);
       }
       
       .about-container {
@@ -632,7 +624,7 @@
   <!-- Navigation -->
   <nav class="main-navigation">
     <div class="nav-container">
-      <div class="nav-logo">
+      <div class="nav-logo" onclick="window.location='index.html'" title="Go to Home">
         <img src="assets/matrix-logo.png" alt="Matrix Logo">
       </div>
       <ul class="nav-menu" id="nav-menu">
@@ -683,11 +675,11 @@
         <div class="version-grid">
           <div class="version-item">
             <h3><i class="fas fa-tag"></i> Version</h3>
-            <p>0.0.3</p>
+            <p>1.0.0</p>
           </div>
           <div class="version-item">
             <h3><i class="fas fa-calendar-alt"></i> Last Updated</h3>
-            <p>27/07/2025</p>
+            <p>29/07/2025</p>
           </div>
           <div class="version-item">
             <h3><i class="fas fa-code"></i> Build</h3>

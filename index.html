@@ -101,6 +101,12 @@
       align-items: center;
       gap: 15px;
       padding: 15px 0;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    
+    .nav-logo:hover {
+      transform: scale(1.05);
     }
     
     .nav-logo img {
@@ -385,7 +391,7 @@
   <!-- Navigation -->
   <nav class="main-navigation">
     <div class="nav-container">
-      <div class="nav-logo">
+      <div class="nav-logo" onclick="window.location='index.html'" title="Go to Home">
         <img src="assets/matrix-logo.png" alt="Matrix Logo">
       </div>
       <ul class="nav-menu" id="nav-menu">
