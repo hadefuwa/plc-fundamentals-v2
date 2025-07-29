@@ -6,9 +6,74 @@
   <title>Matrix TSL - Temperature Sensor System Maintenance</title>
   <link rel="stylesheet" href="main.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">    <script src="worksheet-core.js"></script>
-<script src="worksheet-tracking.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.css">
+  <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.js"></script>
+  <script src="worksheet-core.js"></script>
+  <script src="worksheet-tracking.js"></script>
 
+  <style>
+    /* Custom noUiSlider Styles */
+    .noUi-target {
+      background: #23272b;
+      border: none;
+      box-shadow: none;
+      height: 8px;
+    }
+    .noUi-connects {
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .noUi-connect {
+      border-radius: 4px;
+    }
+    .noUi-handle {
+      width: 24px !important;
+      height: 24px !important;
+      border-radius: 50% !important;
+      background: #fff !important;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2) !important;
+      border: 2px solid #2196F3 !important;
+      cursor: pointer;
+    }
+    .noUi-handle:before, .noUi-handle:after {
+      display: none;
+    }
+    .noUi-handle:hover {
+      box-shadow: 0 0 15px rgba(33,150,243,0.4) !important;
+    }
+    .noUi-handle:active {
+      box-shadow: 0 0 20px rgba(33,150,243,0.6) !important;
+    }
+    .noUi-tooltip {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      color: #fff;
+      font-size: 12px;
+      padding: 4px 8px;
+    }
+    
+    /* Temperature Slider */
+    #temperature-slider .noUi-connect {
+      background: linear-gradient(to right, #1B5E20, #4CAF50, #FFC107, #FF5722);
+    }
+    #temperature-slider .noUi-handle {
+      border-color: #FF5722 !important;
+    }
+    
+    /* Offset Slider */
+    #offset-slider .noUi-connect {
+      background: linear-gradient(to right, #1565C0, #2196F3);
+    }
+    
+    /* Drift Slider */
+    #drift-slider .noUi-connect {
+      background: linear-gradient(to right, #FFA000, #FFC107);
+    }
+    #drift-slider .noUi-handle {
+      border-color: #FFC107 !important;
+    }
+  </style>
 </head>
 <body>
   <!-- Navigation -->

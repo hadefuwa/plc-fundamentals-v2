@@ -6,9 +6,280 @@
   <title>Matrix TSL - Analogue Sensors System Maintenance</title>
   <link rel="stylesheet" href="main.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">    <script src="worksheet-core.js"></script>
-<script src="worksheet-tracking.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.css">
+  <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.js"></script>
+  <script src="worksheet-core.js"></script>
+  <script src="worksheet-tracking.js"></script>
 
+  <style>
+    /* Analogue Sensor Styles */
+    .signal-display {
+      background: #23272b;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      border: 1px solid #333;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .signal-indicators {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .signal-value {
+      background: #1a1a1a;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .signal-label {
+      color: #aaa;
+      font-size: 0.9em;
+      margin-bottom: 5px;
+    }
+
+    .signal-number {
+      font-size: 24px;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    .signal-unit {
+      color: #666;
+      font-size: 0.8em;
+    }
+
+    .voltage .signal-number { color: #2196F3; }
+    .raw .signal-number { color: #FF5722; }
+    .scaled .signal-number { color: #4CAF50; }
+
+    /* noUiSlider Styles */
+    .noUi-target {
+      background: #23272b;
+      border: none;
+      box-shadow: none;
+      height: 8px;
+    }
+
+    .noUi-connects {
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .noUi-connect {
+      border-radius: 4px;
+    }
+
+    .noUi-handle {
+      width: 24px !important;
+      height: 24px !important;
+      border-radius: 50% !important;
+      background: #fff !important;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2) !important;
+      border: 2px solid #2196F3 !important;
+      cursor: pointer;
+    }
+
+    .noUi-handle:before, .noUi-handle:after {
+      display: none;
+    }
+
+    .noUi-handle:hover {
+      box-shadow: 0 0 15px rgba(33,150,243,0.4) !important;
+    }
+
+    .noUi-handle:active {
+      box-shadow: 0 0 20px rgba(33,150,243,0.6) !important;
+    }
+
+    .noUi-tooltip {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      color: #fff;
+      font-size: 12px;
+      padding: 4px 8px;
+    }
+
+    /* Voltage Slider */
+    #voltage-slider .noUi-connect {
+      background: linear-gradient(to right, #1565C0, #2196F3);
+    }
+
+    /* Scaling Slider */
+    #scaling-slider .noUi-connect {
+      background: linear-gradient(to right, #FFA000, #FFC107);
+    }
+
+    /* Offset Slider */
+    #offset-slider .noUi-connect {
+      background: linear-gradient(to right, #D32F2F, #F44336);
+    }
+
+    /* Noise Slider */
+    #noise-slider .noUi-connect {
+      background: linear-gradient(to right, #388E3C, #4CAF50);
+    }
+
+    /* Status Indicators */
+    .status-card {
+      background: #23272b;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      border: 1px solid #333;
+      transition: all 0.3s ease;
+    }
+
+    .status-icon {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .status-label {
+      color: #aaa;
+      font-size: 0.9em;
+      margin-bottom: 5px;
+    }
+
+    .status-value {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .status-good {
+      color: #4CAF50;
+      text-shadow: 0 0 10px rgba(76,175,80,0.4);
+    }
+
+    .status-fair {
+      color: #FFC107;
+      text-shadow: 0 0 10px rgba(255,193,7,0.4);
+    }
+
+    .status-poor {
+      color: #FF5722;
+      text-shadow: 0 0 10px rgba(255,87,34,0.4);
+    }
+
+    /* Maintenance Tools */
+    .maintenance-btn, .fault-btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .maintenance-btn {
+      background: #2196F3;
+    }
+
+    .maintenance-btn:hover {
+      background: #1976D2;
+      box-shadow: 0 0 15px rgba(33,150,243,0.3);
+    }
+
+    .fault-btn {
+      background: #FF5722;
+    }
+
+    .fault-btn:hover {
+      background: #F4511E;
+      box-shadow: 0 0 15px rgba(255,87,34,0.3);
+    }
+
+    /* Task Items */
+    .task-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      padding: 10px;
+      background: #23272b;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .task-item input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .task-item label {
+      color: #aaa;
+      cursor: pointer;
+      flex: 1;
+    }
+
+    /* Signal Chart */
+    .signal-chart {
+      height: 200px;
+      margin: 20px 0;
+      position: relative;
+    }
+
+    /* Diagnostic Log */
+    .diagnostic-log {
+      background: #23272b;
+      padding: 15px;
+      border-radius: 5px;
+      max-height: 200px;
+      overflow-y: auto;
+      font-family: monospace;
+      color: #aaa;
+    }
+
+    .diagnostic-log p {
+      margin: 5px 0;
+      padding: 5px;
+      border-radius: 3px;
+      transition: background-color 0.3s ease;
+    }
+
+    .diagnostic-log p:hover {
+      background: rgba(255,255,255,0.05);
+    }
+
+    .timestamp {
+      color: #666;
+      margin-right: 10px;
+    }
+
+    /* Animations */
+    @keyframes glowPulse {
+      0% { box-shadow: 0 0 5px currentColor; }
+      50% { box-shadow: 0 0 15px currentColor; }
+      100% { box-shadow: 0 0 5px currentColor; }
+    }
+
+    @keyframes valueChange {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes statusUpdate {
+      0% { opacity: 0.7; }
+      50% { opacity: 1; }
+      100% { opacity: 0.7; }
+    }
+  </style>
 </head>
 <body>
   <!-- Navigation -->

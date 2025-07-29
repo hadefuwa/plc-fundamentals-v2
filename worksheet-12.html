@@ -6,9 +6,263 @@
   <title>Matrix TSL - Digital Sensors System Maintenance</title>
   <link rel="stylesheet" href="main.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">    <script src="worksheet-core.js"></script>
-<script src="worksheet-tracking.js"></script>
+  <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">
+  <script src="worksheet-core.js"></script>
+  <script src="worksheet-tracking.js"></script>
 
+  <style>
+    /* Digital Sensor Styles */
+    .sensor-item {
+      background: #23272b;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      border: 1px solid #333;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 15px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sensor-label {
+      color: #aaa;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sensor-indicator {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .sensor-indicator.off {
+      background: linear-gradient(145deg, #1a1a1a, #333);
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+    }
+
+    .sensor-indicator.on {
+      background: linear-gradient(145deg, #4CAF50, #388E3C);
+      box-shadow: 0 0 20px rgba(76,175,80,0.4);
+    }
+
+    .sensor-indicator::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+    }
+
+    .toggle-btn {
+      background: #2196F3;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .toggle-btn:hover {
+      background: #1976D2;
+      box-shadow: 0 0 15px rgba(33,150,243,0.3);
+    }
+
+    .plc-status {
+      background: #1a1a1a;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+
+    .plc-indicators {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .plc-input {
+      background: #23272b;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      border: 1px solid #333;
+    }
+
+    .input-label {
+      color: #aaa;
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .plc-indicator {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      margin: 0 auto;
+      transition: all 0.3s ease;
+    }
+
+    .plc-indicator.off {
+      background: linear-gradient(145deg, #1a1a1a, #333);
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+    }
+
+    .plc-indicator.on {
+      background: linear-gradient(145deg, #2196F3, #1976D2);
+      box-shadow: 0 0 20px rgba(33,150,243,0.4);
+    }
+
+    .maintenance-btn, .fault-btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .maintenance-btn {
+      background: #2196F3;
+    }
+
+    .maintenance-btn:hover {
+      background: #1976D2;
+      box-shadow: 0 0 15px rgba(33,150,243,0.3);
+    }
+
+    .fault-btn {
+      background: #FF5722;
+    }
+
+    .fault-btn:hover {
+      background: #F4511E;
+      box-shadow: 0 0 15px rgba(255,87,34,0.3);
+    }
+
+    .task-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      padding: 10px;
+      background: #23272b;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .task-item input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .task-item label {
+      color: #aaa;
+      cursor: pointer;
+      flex: 1;
+    }
+
+    .diagnostic-log {
+      background: #23272b;
+      padding: 15px;
+      border-radius: 5px;
+      max-height: 200px;
+      overflow-y: auto;
+      font-family: monospace;
+      color: #aaa;
+      margin-top: 10px;
+    }
+
+    .diagnostic-log p {
+      margin: 5px 0;
+      padding: 5px;
+      border-radius: 3px;
+      transition: background-color 0.3s ease;
+    }
+
+    .diagnostic-log p:hover {
+      background: rgba(255,255,255,0.05);
+    }
+
+    .timestamp {
+      color: #666;
+      margin-right: 10px;
+    }
+
+    /* Wiring Diagram */
+    .wiring-diagram {
+      background: #23272b;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 20px 0;
+      position: relative;
+      height: 200px;
+      overflow: hidden;
+    }
+
+    .wire {
+      position: absolute;
+      background: #444;
+      transition: all 0.3s ease;
+    }
+
+    .wire.active {
+      background: #2196F3;
+      box-shadow: 0 0 10px rgba(33,150,243,0.4);
+    }
+
+    .wire.fault {
+      background: #FF5722;
+      box-shadow: 0 0 10px rgba(255,87,34,0.4);
+    }
+
+    .connection-point {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background: #666;
+      border-radius: 50%;
+      border: 2px solid #444;
+      transition: all 0.3s ease;
+    }
+
+    .connection-point.active {
+      background: #2196F3;
+      border-color: #1976D2;
+      box-shadow: 0 0 10px rgba(33,150,243,0.4);
+    }
+
+    .connection-point.fault {
+      background: #FF5722;
+      border-color: #F4511E;
+      box-shadow: 0 0 10px rgba(255,87,34,0.4);
+    }
+  </style>
 </head>
 <body>
   <!-- Navigation -->

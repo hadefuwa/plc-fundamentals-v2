@@ -82,15 +82,7 @@ function initializeTemperatureSensorSimulation() {
                                     <span id="temperature-value">25</span>°C
                                 </span>
                             </div>
-                            <div style="position: relative;">
-                                <input type="range" id="temperature" min="-50" max="150" value="25" 
-                                    style="width: 100%; height: 20px; -webkit-appearance: none; background: transparent; cursor: pointer;">
-                                <div style="position: absolute; top: 50%; left: 0; right: 0; height: 8px; background: linear-gradient(to right, #1B5E20, #4CAF50, #FFC107, #FF5722); border-radius: 4px; transform: translateY(-50%); pointer-events: none;"></div>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; margin-top: 5px;">
-                                <span style="color: #666;">-50°C</span>
-                                <span style="color: #666;">150°C</span>
-                            </div>
+                            <div id="temperature-slider" style="margin: 10px 0 20px 0;"></div>
                         </div>
                         
                         <!-- Offset Control -->
@@ -101,15 +93,7 @@ function initializeTemperatureSensorSimulation() {
                                     <span id="offset-value">0</span>°C
                                 </span>
                             </div>
-                            <div style="position: relative;">
-                                <input type="range" id="offset" min="-20" max="20" value="0" 
-                                    style="width: 100%; height: 20px; -webkit-appearance: none; background: transparent; cursor: pointer;">
-                                <div style="position: absolute; top: 50%; left: 0; right: 0; height: 8px; background: linear-gradient(to right, #1565C0, #2196F3); border-radius: 4px; transform: translateY(-50%); pointer-events: none;"></div>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; margin-top: 5px;">
-                                <span style="color: #666;">-20°C</span>
-                                <span style="color: #666;">+20°C</span>
-                            </div>
+                            <div id="offset-slider" style="margin: 10px 0 20px 0;"></div>
                         </div>
                         
                         <!-- Drift Control -->
@@ -120,15 +104,7 @@ function initializeTemperatureSensorSimulation() {
                                     <span id="drift-value">0</span>°C
                                 </span>
                             </div>
-                            <div style="position: relative;">
-                                <input type="range" id="drift" min="0" max="10" value="0" 
-                                    style="width: 100%; height: 20px; -webkit-appearance: none; background: transparent; cursor: pointer;">
-                                <div style="position: absolute; top: 50%; left: 0; right: 0; height: 8px; background: linear-gradient(to right, #FFA000, #FFC107); border-radius: 4px; transform: translateY(-50%); pointer-events: none;"></div>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; margin-top: 5px;">
-                                <span style="color: #666;">0°C</span>
-                                <span style="color: #666;">10°C</span>
-                            </div>
+                            <div id="drift-slider" style="margin: 10px 0 20px 0;"></div>
                         </div>
                     </div>
                 </div>
@@ -242,21 +218,97 @@ function initializeTemperatureSensorSimulation() {
 }
 
 function initializeTemperatureSensorControls() {
-    // Temperature control
-    document.getElementById('temperature').addEventListener('input', function() {
-        temperatureSensorData.temperature = parseInt(this.value);
+    // Temperature slider
+    const temperatureSlider = document.getElementById('temperature-slider');
+    noUiSlider.create(temperatureSlider, {
+        start: [25],
+        connect: 'lower',
+        range: {
+            'min': -50,
+            'max': 150
+        },
+        tooltips: [{
+            to: value => `${Math.round(value)}°C`,
+            from: value => value
+        }],
+        pips: {
+            mode: 'positions',
+            values: [0, 25, 50, 75, 100],
+            density: 4,
+            format: {
+                to: value => `${Math.round(value)}°C`,
+                from: value => value
+            }
+        }
+    });
+    
+    // Offset slider
+    const offsetSlider = document.getElementById('offset-slider');
+    noUiSlider.create(offsetSlider, {
+        start: [0],
+        connect: 'lower',
+        range: {
+            'min': -20,
+            'max': 20
+        },
+        tooltips: [{
+            to: value => `${Math.round(value)}°C`,
+            from: value => value
+        }],
+        pips: {
+            mode: 'positions',
+            values: [0, 25, 50, 75, 100],
+            density: 4,
+            format: {
+                to: value => `${Math.round(value)}°C`,
+                from: value => value
+            }
+        }
+    });
+    
+    // Drift slider
+    const driftSlider = document.getElementById('drift-slider');
+    noUiSlider.create(driftSlider, {
+        start: [0],
+        connect: 'lower',
+        range: {
+            'min': 0,
+            'max': 10
+        },
+        tooltips: [{
+            to: value => `${Math.round(value)}°C`,
+            from: value => value
+        }],
+        pips: {
+            mode: 'positions',
+            values: [0, 25, 50, 75, 100],
+            density: 4,
+            format: {
+                to: value => `${Math.round(value)}°C`,
+                from: value => value
+            }
+        }
+    });
+    
+    // Event listeners
+    temperatureSlider.noUiSlider.on('update', function(values, handle) {
+        const value = Math.round(parseFloat(values[handle]));
+        temperatureSensorData.temperature = value;
+        document.getElementById('temperature-value').textContent = value;
         updateTemperatureSensorDisplay();
     });
     
-    // Offset control
-    document.getElementById('offset').addEventListener('input', function() {
-        temperatureSensorData.offset = parseInt(this.value);
+    offsetSlider.noUiSlider.on('update', function(values, handle) {
+        const value = Math.round(parseFloat(values[handle]));
+        temperatureSensorData.offset = value;
+        document.getElementById('offset-value').textContent = value;
         updateTemperatureSensorDisplay();
     });
     
-    // Drift control
-    document.getElementById('drift').addEventListener('input', function() {
-        temperatureSensorData.drift = parseInt(this.value);
+    driftSlider.noUiSlider.on('update', function(values, handle) {
+        const value = Math.round(parseFloat(values[handle]));
+        temperatureSensorData.drift = value;
+        document.getElementById('drift-value').textContent = value;
         updateTemperatureSensorDisplay();
     });
     
@@ -424,7 +476,13 @@ function injectOffsetFault() {
     temperatureSensorData.faults.push('offset');
     const newOffset = Math.random() * 40 - 20;
     temperatureSensorData.offset = newOffset;
-    document.getElementById('offset').value = newOffset;
+    
+    // Update slider with animation
+    const offsetSlider = document.getElementById('offset-slider');
+    if (offsetSlider && offsetSlider.noUiSlider) {
+        offsetSlider.noUiSlider.set(newOffset);
+    }
+    
     updateTemperatureSensorDisplay();
     logDiagnostic(`Offset fault injected:
     • New offset: ${newOffset.toFixed(1)}°C
@@ -436,7 +494,13 @@ function injectDriftFault() {
     temperatureSensorData.faults.push('drift');
     const newDrift = Math.random() * 10;
     temperatureSensorData.drift = newDrift;
-    document.getElementById('drift').value = newDrift;
+    
+    // Update slider with animation
+    const driftSlider = document.getElementById('drift-slider');
+    if (driftSlider && driftSlider.noUiSlider) {
+        driftSlider.noUiSlider.set(newDrift);
+    }
+    
     updateTemperatureSensorDisplay();
     logDiagnostic(`Drift fault injected:
     • Drift amount: ${newDrift.toFixed(1)}°C
@@ -448,6 +512,17 @@ function injectNoiseFault() {
     temperatureSensorData.faults.push('noise');
     const healthReduction = 20;
     temperatureSensorData.sensorHealth = Math.max(0, temperatureSensorData.sensorHealth - healthReduction);
+    
+    // Add visual feedback
+    const sensorHealth = document.getElementById('sensor-health');
+    if (sensorHealth) {
+        sensorHealth.style.transition = 'color 0.3s ease';
+        sensorHealth.style.color = '#FF5722';
+        setTimeout(() => {
+            sensorHealth.style.color = '';
+        }, 300);
+    }
+    
     updateTemperatureSensorDisplay();
     logDiagnostic(`Noise fault injected:
     • Health reduction: ${healthReduction}%
@@ -464,8 +539,17 @@ function clearAllFaults() {
     temperatureSensorData.drift = 0;
     temperatureSensorData.sensorHealth = 100;
     
-    document.getElementById('offset').value = 0;
-    document.getElementById('drift').value = 0;
+    // Update sliders with animation
+    const offsetSlider = document.getElementById('offset-slider');
+    const driftSlider = document.getElementById('drift-slider');
+    
+    if (offsetSlider && offsetSlider.noUiSlider) {
+        offsetSlider.noUiSlider.set(0);
+    }
+    if (driftSlider && driftSlider.noUiSlider) {
+        driftSlider.noUiSlider.set(0);
+    }
+    
     updateTemperatureSensorDisplay();
     
     logDiagnostic(`System restored to normal operation:
