@@ -167,50 +167,43 @@
       color: #cccccc;
     }
 
-    /* Fullscreen Exit Button */
-    .fullscreen-exit-btn {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: rgba(255, 255, 255, 0.1);
-      border: 2px solid #4a9eff;
-      color: #4a9eff;
-      padding: 12px 20px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
+    /* Install Button Styles */
+    .nav-link.pwa-install-button {
+      background: linear-gradient(135deg, #4CAF50, #45a049);
+      border: none;
+      padding: 8px 16px;
+      color: white;
       font-weight: bold;
-      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 6px;
       transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
-      display: none;
+      box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+      font-size: 14px;
+      height: 100%;
+      margin: auto 0;
     }
 
-    .fullscreen-exit-btn:hover {
-      background: rgba(74, 158, 255, 0.2);
-      border-color: #3a8ce6;
-      color: #ffffff;
-      transform: scale(1.05);
+    .nav-link.pwa-install-button:hover {
+      background: linear-gradient(135deg, #45a049, #388E3C);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
     }
 
-    .fullscreen-exit-btn i {
-      margin-right: 8px;
+    .nav-link.pwa-install-button i {
+      font-size: 1em;
     }
 
-    /* Show exit button only in fullscreen mode */
-    @media screen and (display-mode: fullscreen) {
-      .fullscreen-exit-btn {
-        display: flex;
-        align-items: center;
+    /* Hide install button when app is installed */
+    @media all and (display-mode: standalone), (display-mode: fullscreen) {
+      .nav-item .pwa-install-button {
+        display: none;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Fullscreen Exit Button -->
-  <button class="fullscreen-exit-btn" onclick="exitFullscreenApp()" title="Exit Fullscreen">
-    <i class="fas fa-times"></i> Exit App
-  </button>
+  
 
   <!-- Navigation -->
   <nav class="main-navigation">
@@ -393,53 +386,7 @@
   </script>
 
   <script>
-    // Fullscreen exit function
-    function exitFullscreenApp() {
-      // Function to minimize the window using PWA display-mode media query
-      function minimizeWindow() {
-        // Create a temporary style element
-        const style = document.createElement('style');
-        style.textContent = `
-          @media all and (display-mode: standalone) {
-            html { 
-              height: 100vh !important;
-              width: 100vw !important;
-              overflow: auto !important;
-            }
-            body {
-              height: 100% !important;
-              overflow: auto !important;
-            }
-          }
-        `;
-        document.head.appendChild(style);
-        
-        // Force a reflow
-        document.body.offsetHeight;
-      }
 
-      // Try each method in sequence
-      Promise.resolve()
-        .then(() => {
-          // 1. Try to exit fullscreen if in fullscreen mode
-          if (document.fullscreenElement) {
-            return document.exitFullscreen();
-          }
-        })
-        .then(() => {
-          // 2. Try to minimize PWA window
-          if (window.matchMedia('(display-mode: standalone)').matches || 
-              window.matchMedia('(display-mode: fullscreen)').matches) {
-            minimizeWindow();
-          }
-          
-          // 3. Try to close the window (works for popups)
-          window.close();
-        })
-        .catch(err => {
-          console.log('Error during exit:', err);
-        });
-    }
 
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function() {
