@@ -2,13 +2,32 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="description" content="Industrial maintenance training platform with interactive worksheets and analytics">
+  <meta name="theme-color" content="#4a9eff">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Matrix Training">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="msapplication-TileColor" content="#4a9eff">
+  <meta name="msapplication-TileImage" content="assets/icons/matrix-icon-192.png">
   <title>CP6773 - Troubleshooting Worksheets</title>
   <link rel="stylesheet" href="main.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">
   <link rel="manifest" href="manifest.json">
   <style>
+    body {
+      overflow-y: auto;
+    }
+
+    .main-container {
+      min-height: calc(100vh - 100px);
+      overflow-y: auto;
+      margin: 20px auto;
+      padding: 20px;
+    }
+
     .page-title {
       text-align: center;
       color: #FFFFFF;
@@ -147,9 +166,52 @@
       margin: 0;
       color: #cccccc;
     }
+
+    /* Fullscreen Exit Button */
+    .fullscreen-exit-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid #4a9eff;
+      color: #4a9eff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      z-index: 1000;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      display: none;
+    }
+
+    .fullscreen-exit-btn:hover {
+      background: rgba(74, 158, 255, 0.2);
+      border-color: #3a8ce6;
+      color: #ffffff;
+      transform: scale(1.05);
+    }
+
+    .fullscreen-exit-btn i {
+      margin-right: 8px;
+    }
+
+    /* Show exit button only in fullscreen mode */
+    @media screen and (display-mode: fullscreen) {
+      .fullscreen-exit-btn {
+        display: flex;
+        align-items: center;
+      }
+    }
   </style>
 </head>
 <body>
+  <!-- Fullscreen Exit Button -->
+  <button class="fullscreen-exit-btn" onclick="exitFullscreenApp()" title="Exit Fullscreen">
+    <i class="fas fa-times"></i> Exit App
+  </button>
+
   <!-- Navigation -->
   <nav class="main-navigation">
     <div class="nav-container">
@@ -299,6 +361,26 @@
   </script>
 
   <script>
+    // Fullscreen exit function
+    function exitFullscreenApp() {
+      // Try to exit fullscreen if in fullscreen mode
+      if (document.fullscreenElement) {
+        document.exitFullscreen().then(() => {
+          console.log('Exited fullscreen mode');
+        }).catch(err => {
+          console.log('Error exiting fullscreen:', err);
+        });
+      }
+      
+      // Close the window/tab
+      window.close();
+      
+      // Fallback: redirect to a blank page or show close message
+      if (!window.closed) {
+        alert('Please close this window manually or use Alt+F4 to exit the application.');
+      }
+    }
+
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function() {
         navigator.serviceWorker.register('service-worker.js');

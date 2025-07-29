@@ -2,12 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <meta name="description" content="Industrial maintenance training platform with interactive worksheets and analytics">
   <meta name="theme-color" content="#4a9eff">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Matrix Training">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="msapplication-TileColor" content="#4a9eff">
+  <meta name="msapplication-TileImage" content="assets/icons/matrix-icon-192.png">
   <title>Matrix TSL</title>
   <link rel="stylesheet" href="main.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -35,6 +38,44 @@
     .hidden {
       opacity: 0;
       pointer-events: none;
+    }
+
+    /* Fullscreen Exit Button */
+    .fullscreen-exit-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid #4a9eff;
+      color: #4a9eff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      z-index: 1000;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      display: none;
+    }
+
+    .fullscreen-exit-btn:hover {
+      background: rgba(74, 158, 255, 0.2);
+      border-color: #3a8ce6;
+      color: #ffffff;
+      transform: scale(1.05);
+    }
+
+    .fullscreen-exit-btn i {
+      margin-right: 8px;
+    }
+
+    /* Show exit button only in fullscreen mode */
+    @media screen and (display-mode: fullscreen) {
+      .fullscreen-exit-btn {
+        display: flex;
+        align-items: center;
+      }
     }
 
     /* Navigation Styles */
@@ -308,6 +349,11 @@
   </style>
 </head>
 <body class="home-page">
+  <!-- Fullscreen Exit Button -->
+  <button class="fullscreen-exit-btn" onclick="exitFullscreenApp()" title="Exit Fullscreen">
+    <i class="fas fa-times"></i> Exit App
+  </button>
+
   <!-- Offline Indicator -->
   <div class="offline-indicator">
     <i class="fas fa-wifi-slash"></i> You are currently offline. Some features may be limited.
@@ -410,6 +456,14 @@
             <button onclick="installPWA()" class="pwa-install-button" style="margin-bottom: 20px;">
                 <i class="fas fa-download"></i> Install Matrix IM0004 App
             </button>
+            
+            <div style="background: rgba(74, 158, 255, 0.1); border: 1px solid #4a9eff; border-radius: 8px; padding: 15px; margin: 20px 0; color: #ffffff;">
+                <h4 style="margin: 0 0 10px 0; color: #4a9eff;"><i class="fas fa-info-circle"></i> Full Screen Tip</h4>
+                <p style="margin: 0; font-size: 14px; line-height: 1.4;">
+                    After installing the app, you can maximize the window for a full-screen experience. 
+                    Click the maximize button in the title bar or press <kbd>F11</kbd> for true fullscreen mode.
+                </p>
+            </div>
             
             <div class="curriculum-grid">
                 <div class="curriculum-card" onclick="window.location='cp0539-worksheets.html'">
@@ -613,16 +667,39 @@
       document.body.classList.add('offline');
     });
 
+    // Fullscreen exit function
+    function exitFullscreenApp() {
+      // Try to exit fullscreen if in fullscreen mode
+      if (document.fullscreenElement) {
+        document.exitFullscreen().then(() => {
+          console.log('Exited fullscreen mode');
+        }).catch(err => {
+          console.log('Error exiting fullscreen:', err);
+        });
+      }
+      
+      // Close the window/tab
+      window.close();
+      
+      // Fallback: redirect to a blank page or show close message
+      if (!window.closed) {
+        alert('Please close this window manually or use Alt+F4 to exit the application.');
+      }
+    }
+
     // Register service worker for PWA functionality
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function() {
-        navigator.serviceWorker.register('service-worker.js')
-          .then(function(registration) {
-            console.log('Service Worker registered successfully:', registration);
-          })
-          .catch(function(registrationError) {
-            console.log('Service Worker registration failed:', registrationError);
-          });
+        navigator.serviceWorker.register('service-worker.js', {
+          scope: '/'
+        }).then(function(registration) {
+          console.log('Service Worker registered successfully:', registration);
+        }).catch(function(error) {
+          console.error('Service Worker registration failed:', error);
+          if (error.name === 'SecurityError') {
+            console.error('MIME type error: Make sure service-worker.js is served with Content-Type: application/javascript');
+          }
+        });
       });
     }
   </script>

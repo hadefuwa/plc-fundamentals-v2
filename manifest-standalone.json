@@ -3,26 +3,20 @@
   "short_name": "Matrix IM0004",
   "version": "0.0.3",
   "description": "Industrial maintenance training platform with interactive worksheets and analytics.",
-  "start_url": "./",
-  "display": "fullscreen",
-  "display_override": [
-    "fullscreen",
-    "standalone"
-  ],
+  "start_url": "/",
+  "display": "standalone",
   "background_color": "#2c3033",
   "theme_color": "#4a9eff",
   "icons": [
     {
-      "src": "./assets/icons/matrix-icon-192.png",
+      "src": "assets/icons/matrix-icon-192.png",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     },
     {
-      "src": "./assets/icons/matrix-icon-512.png",
+      "src": "assets/icons/matrix-icon-512.png",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     }
   ],
   "prefer_related_applications": false,
@@ -31,7 +25,7 @@
   },
   "screenshots": [
     {
-      "src": "./assets/matrix-logo.png",
+      "src": "assets/matrix-logo.png",
       "sizes": "1280x720",
       "type": "image/png",
       "form_factor": "wide"

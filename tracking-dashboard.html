@@ -329,6 +329,7 @@
       position: relative;
       max-width: 100%;
       overflow: hidden;
+      z-index: 1;
     }
     
     @media (max-width: 1200px) {
@@ -486,6 +487,31 @@
       }
     }
 
+    /* Reset Controls Styles */
+    .reset-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .reset-options {
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid #444;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .reset-options.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     /* Reset Button Styles */
     .reset-btn {
       background: linear-gradient(135deg, #f44336, #d32f2f);
@@ -503,38 +529,139 @@
       justify-content: center;
     }
 
-    .reset-btn:hover {
+    .reset-btn:hover:not(:disabled) {
       background: linear-gradient(135deg, #d32f2f, #b71c1c);
       transform: translateY(-2px);
       box-shadow: 0 4px 12px rgba(244, 67, 54, 0.4);
     }
 
+    .reset-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .reset-btn.export-btn {
+      background: linear-gradient(135deg, #2196F3, #1976D2);
+    }
+
+    .reset-btn.export-btn:hover {
+      background: linear-gradient(135deg, #1976D2, #1565C0);
+      box-shadow: 0 4px 12px rgba(33, 150, 243, 0.4);
+    }
+
+    .reset-btn.confirm-btn {
+      background: linear-gradient(135deg, #f44336, #d32f2f);
+    }
+
+    .reset-btn.confirm-btn:hover {
+      background: linear-gradient(135deg, #d32f2f, #b71c1c);
+      box-shadow: 0 4px 12px rgba(244, 67, 54, 0.4);
+    }
+
+    .reset-btn.cancel-btn {
+      background: linear-gradient(135deg, #666666, #444444);
+    }
+
+    .reset-btn.cancel-btn:hover {
+      background: linear-gradient(135deg, #555555, #333333);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+
     /* Popup Styles */
-    .popup-overlay {
+    /* Modal/Popup Layer */
+    .modal-layer {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Chart Layer */
+    .chart-container {
+      position: relative;
+      z-index: 1;
+    }
+
+    canvas {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Reset z-index stacking context */
+    body {
+      position: relative;
+      z-index: auto;
+    }
+    
+    .main-container,
+    .main-content,
+    .chart-container,
+    canvas,
+    .Chart {
+      position: relative;
+      z-index: 1;
+    }
+    
+    /* Ensure main content stays below popup */
+    .main-content {
+      z-index: 1 !important;
+      position: relative !important;
+    }
+
+    /* Popup Layer - Above Everything */
+    /* Create new stacking context for popup */
+    body.popup-open {
+      overflow: hidden !important;
+    }
+    
+    body.popup-open .main-content {
+      filter: blur(4px);
+      pointer-events: none;
+    }
+    
+    #resetPopup.popup-overlay {
       display: none;
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      z-index: 1000;
-      backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(5px);
+      right: 0;
+      bottom: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 2147483647 !important;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      overflow: hidden;
+      opacity: 0;
+      transition: all 0.3s ease;
+      will-change: opacity;
+      transform: translateZ(0);
     }
 
-    .popup-content {
-      position: absolute;
+    #resetPopup.popup-overlay[style*="display: block"] {
+      opacity: 1;
+    }
+
+    #resetPopup .popup-content {
+      position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       background: linear-gradient(135deg, #2a2a2a, #3a3a3a);
       padding: 30px;
       border-radius: 12px;
-      border: 2px solid #444;
+      border: 2px solid var(--accent-color);
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
       max-width: 500px;
       width: 90%;
+      z-index: 2147483647 !important;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      transform: translate(-50%, -50%) scale(0.95);
+    }
+
+    #resetPopup.popup-overlay[style*="display: block"] .popup-content {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
     }
 
     .popup-content h3 {
@@ -736,28 +863,21 @@
             <p style="margin-bottom: 15px; color: #9da5b1;">
               Reset all worksheet progress (this cannot be undone):
             </p>
-            <button onclick="showResetConfirmation()" class="reset-btn">
-              <i class="fas fa-trash-alt"></i> Reset All Progress
-            </button>
-          </div>
-        </div>
-
-        <!-- Reset Confirmation Popup -->
-        <div id="resetPopup" class="popup-overlay">
-          <div class="popup-content">
-            <h3><i class="fas fa-exclamation-triangle"></i> Reset Confirmation</h3>
-            <p>Are you sure you want to reset all progress? This action cannot be undone.</p>
-            <p style="margin-top: 10px; color: #9da5b1;">Would you like to export your current progress before resetting?</p>
-            <div class="popup-buttons">
-              <button onclick="exportAndReset()" class="popup-btn export-first">
-                <i class="fas fa-download"></i> Export & Reset
+            <div class="reset-controls">
+              <button onclick="showResetOptions()" class="reset-btn" id="initialResetBtn">
+                <i class="fas fa-trash-alt"></i> Reset All Progress
               </button>
-              <button onclick="resetProgress()" class="popup-btn reset-only">
-                <i class="fas fa-trash-alt"></i> Reset Without Export
-              </button>
-              <button onclick="hideResetConfirmation()" class="popup-btn cancel">
-                <i class="fas fa-times"></i> Cancel
-              </button>
+              <div id="resetOptions" class="reset-options">
+                <button onclick="exportAndReset()" class="reset-btn export-btn">
+                  <i class="fas fa-download"></i> Export & Reset
+                </button>
+                <button onclick="resetProgress()" class="reset-btn confirm-btn">
+                  <i class="fas fa-exclamation-triangle"></i> Confirm Reset
+                </button>
+                <button onclick="hideResetOptions()" class="reset-btn cancel-btn">
+                  <i class="fas fa-times"></i> Cancel
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -963,6 +1083,9 @@
               display: false
             },
             tooltip: {
+              enabled: true,
+              position: 'nearest',
+              z: 1,
               callbacks: {
                 label: function(context) {
                   return `Completion: ${context.raw || 0}%`;
@@ -1144,13 +1267,47 @@
         });
     }
 
-    // Reset confirmation popup functions
-    function showResetConfirmation() {
-      document.getElementById('resetPopup').style.display = 'block';
+    // Reset options functions
+    function showResetOptions() {
+      const resetOptions = document.getElementById('resetOptions');
+      const initialBtn = document.getElementById('initialResetBtn');
+      
+      // Show options with animation
+      resetOptions.style.display = 'flex';
+      resetOptions.classList.add('show');
+      
+      // Disable initial button
+      initialBtn.disabled = true;
+      initialBtn.style.opacity = '0.5';
+      
+      // Add escape key listener
+      document.addEventListener('keydown', handleEscapeKey);
     }
 
-    function hideResetConfirmation() {
-      document.getElementById('resetPopup').style.display = 'none';
+    function hideResetOptions() {
+      const resetOptions = document.getElementById('resetOptions');
+      const initialBtn = document.getElementById('initialResetBtn');
+      
+      // Hide options with animation
+      resetOptions.classList.remove('show');
+      
+      // Re-enable initial button
+      initialBtn.disabled = false;
+      initialBtn.style.opacity = '1';
+      
+      // Remove escape key listener
+      document.removeEventListener('keydown', handleEscapeKey);
+      
+      // Hide options after animation
+      setTimeout(() => {
+        resetOptions.style.display = 'none';
+      }, 300);
+    }
+    
+    function handleEscapeKey(event) {
+      if (event.key === 'Escape') {
+        hideResetOptions();
+      }
     }
 
     function exportAndReset() {
