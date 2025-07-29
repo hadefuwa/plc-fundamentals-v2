@@ -5,6 +5,10 @@
   "description": "Industrial maintenance training platform with interactive worksheets and analytics.",
   "start_url": "index.html",
   "display": "standalone",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone"
+  ],
   "background_color": "#2c3033",
   "theme_color": "#4a9eff",
   "icons": [
@@ -17,6 +21,24 @@
       "src": "assets/icons/matrix-icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
+    }
+  ],
+  "prefer_related_applications": false,
+  "window_controls_overlay": true,
+  "window": {
+    "state": "maximized",
+    "width": "100%",
+    "height": "100%"
+  },
+  "launch_handler": {
+    "client_mode": "focus-existing"
+  },
+  "screenshots": [
+    {
+      "src": "assets/matrix-logo.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
     }
   ]
 } 
