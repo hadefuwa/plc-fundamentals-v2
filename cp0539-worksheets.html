@@ -395,22 +395,50 @@
   <script>
     // Fullscreen exit function
     function exitFullscreenApp() {
-      // Try to exit fullscreen if in fullscreen mode
-      if (document.fullscreenElement) {
-        document.exitFullscreen().then(() => {
-          console.log('Exited fullscreen mode');
-        }).catch(err => {
-          console.log('Error exiting fullscreen:', err);
+      // Function to minimize the window using PWA display-mode media query
+      function minimizeWindow() {
+        // Create a temporary style element
+        const style = document.createElement('style');
+        style.textContent = `
+          @media all and (display-mode: standalone) {
+            html { 
+              height: 100vh !important;
+              width: 100vw !important;
+              overflow: auto !important;
+            }
+            body {
+              height: 100% !important;
+              overflow: auto !important;
+            }
+          }
+        `;
+        document.head.appendChild(style);
+        
+        // Force a reflow
+        document.body.offsetHeight;
+      }
+
+      // Try each method in sequence
+      Promise.resolve()
+        .then(() => {
+          // 1. Try to exit fullscreen if in fullscreen mode
+          if (document.fullscreenElement) {
+            return document.exitFullscreen();
+          }
+        })
+        .then(() => {
+          // 2. Try to minimize PWA window
+          if (window.matchMedia('(display-mode: standalone)').matches || 
+              window.matchMedia('(display-mode: fullscreen)').matches) {
+            minimizeWindow();
+          }
+          
+          // 3. Try to close the window (works for popups)
+          window.close();
+        })
+        .catch(err => {
+          console.log('Error during exit:', err);
         });
-      }
-      
-      // Close the window/tab
-      window.close();
-      
-      // Fallback: redirect to a blank page or show close message
-      if (!window.closed) {
-        alert('Please close this window manually or use Alt+F4 to exit the application.');
-      }
     }
 
     if ('serviceWorker' in navigator) {
