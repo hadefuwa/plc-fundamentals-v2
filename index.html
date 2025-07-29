@@ -369,6 +369,11 @@
             <i class="fas fa-info-circle"></i> ABOUT
           </a>
         </li>
+        <li class="nav-item">
+          <button onclick="installPWA()" class="nav-link pwa-install-button">
+            <i class="fas fa-download"></i> INSTALL APP
+          </button>
+        </li>
       </ul>
     </div>
   </nav>
@@ -401,6 +406,10 @@
                 Comprehensive training platform for industrial maintenance technicians. 
                 Master closed-loop control systems through interactive worksheets and real-world scenarios.
             </p>
+            
+            <button onclick="installPWA()" class="pwa-install-button" style="margin-bottom: 20px;">
+                <i class="fas fa-download"></i> Install Matrix IM0004 App
+            </button>
             
             <div class="curriculum-grid">
                 <div class="curriculum-card" onclick="window.location='cp0539-worksheets.html'">
@@ -440,6 +449,7 @@
   <!-- Load dependencies -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="scenario-popup.js"></script>
+  <script src="pwa-install.js"></script>
   
   <!-- PDF Opening Function - Must be defined before use -->
   <script>
@@ -594,20 +604,18 @@
       window.electron = null;
     }
     
-    // Service worker temporarily disabled to fix image loading issues
-    /*
+    // Register service worker for PWA functionality
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function() {
         navigator.serviceWorker.register('service-worker.js')
           .then(function(registration) {
-            console.log('SW registered: ', registration);
+            console.log('Service Worker registered successfully:', registration);
           })
           .catch(function(registrationError) {
-            console.log('SW registration failed: ', registrationError);
+            console.log('Service Worker registration failed:', registrationError);
           });
       });
     }
-    */
 
     // Add offline indicator
     window.addEventListener('online', function() {

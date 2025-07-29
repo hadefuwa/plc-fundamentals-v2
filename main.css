@@ -3447,3 +3447,37 @@ h1 {
 .error-info-content.show {
     max-height: 500px;
 }
+
+/* PWA Install Button Styles */
+.pwa-install-button {
+    display: none; /* Hidden by default until browser confirms it can be installed */
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #4a9eff, #2d7cd1);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(74, 158, 255, 0.3);
+}
+
+.pwa-install-button:hover:not(.installed) {
+    background: linear-gradient(135deg, #2d7cd1, #1a5a9e);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(74, 158, 255, 0.4);
+}
+
+.pwa-install-button.installed {
+    background: linear-gradient(135deg, #45a845, #348834);
+    cursor: default;
+    opacity: 0.8;
+}
+
+.pwa-install-button i {
+    font-size: 16px;
+}
