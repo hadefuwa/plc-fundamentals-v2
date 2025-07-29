@@ -1,281 +1,183 @@
-// Chart.js configurations and proximity switch simulation logic
-let chart;
-let targetDistance = 50;
-let detectionHistory = [];
-let learningState = {
-    step1Complete: false,
-    step2Complete: false,
-    step3Complete: false,
-    hasDetected: false,
-    hasTestedRange: false,
-    hasObservedHysteresis: false,
-    lastState: false
-};
+// Global variables
+let chart = null;
+let targetDistance = 20;
+let sensorState = false;
 
-// Initialize simulation when the page loads
+// Initialize simulation
 function initializeProximitySwitchSimulation() {
     console.log('Initializing proximity switch simulation...');
-
+    
     try {
-        // Initialize Detection Graph
-        const ctx = document.getElementById('detection-chart');
-        if (!ctx) {
-            console.error('Detection chart canvas not found!');
-            return;
+        // Setup initial detection zone
+        const detectionZone = document.getElementById('detection-zone');
+        if (detectionZone) {
+            detectionZone.style.width = '120px'; // 40mm * 3px scale
+            detectionZone.style.opacity = '0.1';
         }
 
-        chart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                datasets: [{
-                    label: 'Detection State',
-                    data: [],
-                    borderColor: '#4CAF50',
-                    backgroundColor: 'rgba(76, 175, 80, 0.1)',
-                    tension: 0.4,
-                    fill: true,
-                    stepped: true
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                animation: {
-                    duration: 0
-                },
-                scales: {
-                    x: {
-                        type: 'linear',
-                        display: true,
-                        min: 0,
-                        max: 30,
-                        title: {
-                            display: true,
-                            text: 'Time (s)',
-                            color: '#aaa',
-                            font: { size: 14 }
-                        },
-                        ticks: {
-                            color: '#aaa'
-                        },
-                        grid: {
-                            color: '#333'
-                        }
-                    },
-                    y: {
-                        display: true,
-                        min: 0,
-                        max: 1,
-                        title: {
-                            display: true,
-                            text: 'Sensor State',
-                            color: '#aaa',
-                            font: { size: 14 }
-                        },
-                        ticks: {
-                            color: '#aaa',
-                            callback: function(value) {
-                                return value === 1 ? 'ON' : 'OFF';
-                            }
-                        },
-                        grid: {
-                            color: '#333'
-                        }
-                    }
-                },
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return context.parsed.y === 1 ? 'Sensor: ON' : 'Sensor: OFF';
-                            }
-                        }
-                    }
-                }
-            }
-        });
-
-        // Set up event listeners
-        setupEventListeners();
+        // Setup chart
+        setupChart();
         
-        // Start simulation loop
-        startSimulation();
+        // Setup distance slider
+        const slider = document.getElementById('target-distance');
+        if (slider) {
+            slider.value = targetDistance;
+            slider.addEventListener('input', (e) => {
+                targetDistance = parseInt(e.target.value);
+                updateDisplay();
+            });
+        }
+        
+        // Initial display update
+        updateDisplay();
+        
+        // Start update loop
+        setInterval(updateDisplay, 100);
         
         console.log('Proximity switch simulation initialized successfully!');
     } catch (error) {
-        console.error('Error initializing proximity switch simulation:', error);
+        console.error('Simulation initialization error:', error);
     }
 }
 
-function setupEventListeners() {
-    try {
-        // Target distance slider
-        const distanceSlider = document.getElementById('target-distance');
-        if (distanceSlider) {
-            distanceSlider.addEventListener('input', (e) => {
-                targetDistance = parseInt(e.target.value);
-                updateDistanceDisplay();
-                updateVisualization();
-                checkLearningProgress();
-            });
-        }
-
-        console.log('Event listeners set up successfully!');
-    } catch (error) {
-        console.error('Error setting up event listeners:', error);
-    }
-}
-
-function startSimulation() {
-    let time = 0;
-    const timeStep = 0.1;
-
-    setInterval(() => {
-        time += timeStep;
-        
-        // Calculate sensor state with hysteresis
-        const detecting = isDetecting(targetDistance);
-        
-        // Update detection history
-        if (detectionHistory.length > 300) { // Keep last 30 seconds
-            detectionHistory.shift();
-        }
-        detectionHistory.push({
-            x: time,
-            y: detecting ? 1 : 0
-        });
-
-        // Update chart
-        updateChart(time);
-        
-        // Check for learning progress
-        checkLearningProgress();
-    }, 100);
-}
-
-function isDetecting(distance) {
-    const detectionRange = 40;  // mm
-    const hysteresis = 2;       // mm
+// Setup Chart.js chart
+function setupChart() {
+    const ctx = document.getElementById('detection-chart');
+    if (!ctx) return;
     
-    if (!learningState.lastState) {
-        // When currently OFF, use standard range
-        learningState.lastState = distance <= detectionRange;
-    } else {
-        // When currently ON, use hysteresis
-        learningState.lastState = distance <= (detectionRange + hysteresis);
+    // Destroy existing chart if any
+    if (chart) chart.destroy();
+    
+    // Create data arrays
+    const labels = Array(50).fill('');
+    const data = Array(50).fill(0);
+    
+    // Create new chart
+    chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Sensor State',
+                data: data,
+                borderColor: '#2196F3',
+                backgroundColor: 'rgba(33, 150, 243, 0.2)',
+                fill: true,
+                tension: 0.4,
+                pointRadius: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: {
+                duration: 0
+            },
+            scales: {
+                y: {
+                    min: -0.1,
+                    max: 1.1,
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.1)'
+                    },
+                    ticks: {
+                        color: '#888',
+                        callback: function(value) {
+                            if (value <= 0) return 'OFF';
+                            if (value >= 1) return 'ON';
+                            return '';
+                        }
+                    }
+                },
+                x: {
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.1)'
+                    },
+                    ticks: {
+                        display: false
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+}
+
+// Update display elements
+function updateDisplay() {
+    // Update sensor state
+    sensorState = targetDistance <= 40;
+    
+    // Update chart
+    if (chart && chart.data && chart.data.datasets) {
+        const data = chart.data.datasets[0].data;
+        data.push(sensorState ? 1 : 0);
+        data.shift();
+        chart.update('none');
     }
     
-    return learningState.lastState;
-}
-
-function updateChart(time) {
-    if (!chart) return;
-
-    chart.data.datasets[0].data = detectionHistory.map(point => ({
-        x: point.x,
-        y: point.y
-    }));
-
-    // Update x-axis window to show last 30 seconds
-    const minX = Math.max(0, time - 30);
-    chart.options.scales.x.min = minX;
-    chart.options.scales.x.max = time;
-
-    chart.update('none');
-}
-
-function updateDistanceDisplay() {
-    // Update distance value display
+    // Update visualization
+    updateVisualization();
+    
+    // Update text displays
     const distanceValue = document.getElementById('distance-value');
     if (distanceValue) {
         distanceValue.textContent = targetDistance + 'mm';
     }
-
-    // Update current distance display
+    
     const currentDistance = document.getElementById('current-distance');
     if (currentDistance) {
         currentDistance.textContent = targetDistance + 'mm';
     }
-
-    // Update sensor state display
-    const sensorState = document.getElementById('sensor-state');
-    if (sensorState) {
-        const detecting = isDetecting(targetDistance);
-        sensorState.textContent = detecting ? 'Detecting' : 'Not Detecting';
-        sensorState.style.color = detecting ? '#4CAF50' : '#FF5722';
+    
+    const sensorStateElement = document.getElementById('sensor-state');
+    if (sensorStateElement) {
+        sensorStateElement.textContent = sensorState ? 'Detecting' : 'Not Detecting';
+        sensorStateElement.style.color = sensorState ? '#4CAF50' : '#FF5722';
     }
 }
 
+// Update visualization
 function updateVisualization() {
     const targetObject = document.getElementById('target-object');
-    if (targetObject) {
-        // Convert distance to pixels (100mm = 300px)
-        const pixelDistance = 60 + (targetDistance * 3);
-        targetObject.style.left = pixelDistance + 'px';
-    }
-
     const detectionZone = document.getElementById('detection-zone');
-    if (detectionZone) {
-        detectionZone.style.opacity = isDetecting(targetDistance) ? '0.3' : '0.1';
-    }
-}
-
-function checkLearningProgress() {
-    // Step 1: Basic Detection
-    if (!learningState.step1Complete && 
-        detectionHistory.some(point => point.y === 1) && 
-        detectionHistory.some(point => point.y === 0)) {
-        learningState.step1Complete = true;
-        updateStepCompletion(1);
-        updateTaskDescription('Now test the sensor at different distances within the range.');
-    }
-
-    // Step 2: Range Testing
-    if (learningState.step1Complete && !learningState.step2Complete) {
-        const hasTestedNear = detectionHistory.some(point => targetDistance < 20);
-        const hasTestedFar = detectionHistory.some(point => targetDistance > 30);
-        if (hasTestedNear && hasTestedFar) {
-            learningState.step2Complete = true;
-            updateStepCompletion(2);
-            updateTaskDescription('Move the target slowly around the 40mm point to observe hysteresis.');
-        }
-    }
-
-    // Step 3: Hysteresis
-    if (learningState.step2Complete && !learningState.step3Complete) {
-        const recentHistory = detectionHistory.slice(-50);
-        const hasTransitioned = recentHistory.some((point, i) => 
-            i > 0 && point.y !== recentHistory[i-1].y
-        );
-        if (hasTransitioned && targetDistance > 38 && targetDistance < 44) {
-            learningState.step3Complete = true;
-            updateStepCompletion(3);
-            updateTaskDescription('Great job! You\'ve completed all learning objectives.');
+    const sensorBody = document.getElementById('sensor-body');
+    
+    if (targetObject && detectionZone && sensorBody) {
+        // Get sensor position
+        const sensorLeft = sensorBody.offsetLeft;
+        const sensorWidth = sensorBody.offsetWidth;
+        const sensorRight = sensorLeft + sensorWidth;
+        
+        // Set detection zone position and size
+        const detectionRangeInMM = 40; // 40mm detection range
+        const pixelsPerMM = 3; // 3 pixels per mm
+        const detectionZoneWidth = detectionRangeInMM * pixelsPerMM;
+        
+        // Position detection zone
+        detectionZone.style.left = sensorRight + 'px';
+        detectionZone.style.width = detectionZoneWidth + 'px';
+        
+        // Position target object
+        const targetLeft = sensorRight + (targetDistance * pixelsPerMM);
+        targetObject.style.left = targetLeft + 'px';
+        
+        // Update detection zone visibility
+        detectionZone.style.opacity = sensorState ? '0.3' : '0.1';
+        
+        // Add glow effect to sensor when detecting
+        const sensorFace = sensorBody.querySelector('#sensor-face');
+        if (sensorFace) {
+            sensorFace.style.boxShadow = sensorState ? 
+                '0 0 10px rgba(33, 150, 243, 0.8)' : 
+                '0 0 5px rgba(33, 150, 243, 0.3)';
         }
     }
 }
 
-function updateStepCompletion(step) {
-    const stepComplete = document.getElementById(`step${step}-complete`);
-    if (stepComplete) {
-        stepComplete.textContent = '✓';
-        stepComplete.style.color = '#4CAF50';
-    }
-}
-
-function updateTaskDescription(text) {
-    const taskDescription = document.getElementById('task-description');
-    if (taskDescription) {
-        taskDescription.textContent = text;
-    }
-}
-
-// Initialize when the script loads
-if (document.readyState === 'complete') {
-    initializeProximitySwitchSimulation();
-} else {
-    window.addEventListener('load', initializeProximitySwitchSimulation);
-} 
+// Initialize on load
+document.addEventListener('DOMContentLoaded', initializeProximitySwitchSimulation); 

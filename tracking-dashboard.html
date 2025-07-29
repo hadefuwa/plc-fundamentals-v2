@@ -149,8 +149,10 @@
     .worksheet-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
+      gap: 30px;
       width: 100%;
+      margin: 0;
+      padding: 0;
     }
     
     .worksheet-card {
@@ -162,44 +164,83 @@
       background: #2d2d2d;
       color: white;
       min-height: 150px;
+      height: auto;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: flex-start;
+      gap: 15px;
+      margin: 0;
+      box-sizing: border-box;
     }
     
     /* Ensure consistent card sizing */
     .worksheet-grid > * {
       min-height: 150px;
       width: 100%;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      position: relative;
     }
     
     /* Progress section consistency */
     .progress-section {
       width: 100%;
       margin-bottom: 30px;
+      padding: 20px;
+      box-sizing: border-box;
     }
-    
+
     /* Card content layout */
     .worksheet-card-content {
       flex: 1;
       display: flex;
       flex-direction: column;
+      gap: 10px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    /* Title and badge container */
+    .card-header {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    /* Progress info container */
+    .card-footer {
+      display: flex;
       justify-content: space-between;
-      gap: 15px;
-    }
-    
-    /* Question count style */
-    .question-count {
-      font-size: 0.9em;
-      color: #aaa;
+      align-items: center;
       margin-top: auto;
+      width: 100%;
     }
-    
-    /* Progress percentage */
-    .progress-percentage {
-      font-weight: bold;
+
+    /* Question count and progress container */
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    /* Progress bar container */
+    .progress-bar-container {
+      width: 100%;
+      margin: 8px 0;
+    }
+
+    /* Maintenance badge specific */
+    .maintenance-badge {
+      align-self: flex-start;
+      background: rgba(74, 158, 255, 0.15);
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.8em;
       color: var(--accent-color);
-      margin-left: auto;
     }
     
     .worksheet-card:hover {
@@ -311,10 +352,13 @@
       }
       .worksheet-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
+        gap: 20px;
       }
       .worksheet-card {
         min-height: 140px;
+        padding: 15px;
+      }
+      .progress-section {
         padding: 15px;
       }
     }

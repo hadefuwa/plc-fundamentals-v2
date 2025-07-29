@@ -345,7 +345,7 @@
           <!-- Target Position Control -->
           <div style="margin: 20px 0;">
             <label style="color: #aaa; display: block; margin-bottom: 10px;">Target Distance (mm)</label>
-            <input type="range" id="target-distance" min="0" max="100" value="50" 
+            <input type="range" id="target-distance" min="0" max="60" value="20" step="1" 
                    style="width: 100%; background: #2196F3; height: 10px; border-radius: 5px; -webkit-appearance: none;">
             <div style="display: flex; justify-content: space-between; margin-top: 5px;">
               <span style="color: #666;">0mm</span>
@@ -391,17 +391,26 @@
           </div>
           
           <!-- Sensor Visualization -->
-          <div class="sensor-visualization" style="position: relative; height: 200px; background: #1a1a1a; border-radius: 5px; overflow: hidden;">
-            <div id="sensor-body" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); width: 40px; height: 80px; background: #666; border-radius: 5px;">
-              <div id="sensor-face" style="width: 20px; height: 20px; background: #2196F3; border-radius: 50%; position: absolute; right: -10px; top: 50%; transform: translateY(-50%);"></div>
+          <div class="sensor-visualization" style="position: relative; height: 200px; background: #1a1a1a; border-radius: 8px; overflow: hidden; margin-bottom: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.2);">
+            <!-- Sensor body with detection face -->
+            <div id="sensor-body" style="position: absolute; left: 40px; top: 50%; transform: translateY(-50%); width: 30px; height: 80px; background: #666; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+              <div id="sensor-face" style="width: 20px; height: 20px; background: #2196F3; border-radius: 50%; position: absolute; right: -10px; top: 50%; transform: translateY(-50%); box-shadow: 0 0 10px rgba(33, 150, 243, 0.5);"></div>
             </div>
-            <div id="target-object" style="position: absolute; left: 200px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; background: #FF5722; border-radius: 5px;"></div>
-            <div id="detection-zone" style="position: absolute; left: 50px; top: 50%; transform: translateY(-50%); width: 80px; height: 100px; border: 2px dashed #4CAF50; border-radius: 5px; opacity: 0.3;"></div>
+            <!-- Detection zone (0-40mm range) -->
+            <div id="detection-zone" style="position: absolute; left: 70px; top: 50%; transform: translateY(-50%); height: 100px; border: 2px dashed #2196F3; border-radius: 5px; opacity: 0.1;"></div>
+            <!-- Target object -->
+            <div id="target-object" style="position: absolute; left: 150px; top: 50%; transform: translateY(-50%); width: 30px; height: 30px; background: #FF5722; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);"></div>
+            <!-- Distance scale -->
+            <div style="position: absolute; bottom: 10px; left: 70px; right: 40px; height: 20px; display: flex; justify-content: space-between; color: #888; font-size: 12px; font-weight: 500;">
+              <span>0mm</span>
+              <span>20mm</span>
+              <span>40mm</span>
+            </div>
           </div>
 
           <!-- Detection Graph -->
-          <div style="margin-top: 20px;">
-            <canvas id="detection-chart" height="150"></canvas>
+          <div style="margin-top: 20px; background: #1a1a1a; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.2);">
+            <canvas id="detection-chart" height="200"></canvas>
           </div>
         </div>
       </div>
