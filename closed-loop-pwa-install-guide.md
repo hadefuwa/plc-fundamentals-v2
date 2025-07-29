@@ -1,132 +1,88 @@
-# Guide: Making the Closed Loop PWA Installable Like a Real App
+# Installing the Closed Loop Maintenance App
 
-This guide enables users to install the app to their device (desktop or mobile) with offline support, like a native application.
+This guide will help you install the Closed Loop Maintenance App on your device, making it easily accessible from your desktop or home screen - just like any other application!
 
----
+## 💻 Installing on Windows/Mac/Linux (Desktop)
 
-## ✅ 1. Include a Valid Web App Manifest
+1. Open the app in Google Chrome or Microsoft Edge
+   - Visit: [Your app URL]
+   - Or if running locally: http://localhost:8000
 
-Place a `manifest.json` in the root of the project:
+2. Look for the install icon in your browser's address bar:
+   - In Chrome: Look for a "Install" icon (⊕) on the right side of the address bar
+   - In Edge: Look for a "+" icon with "App available" text
+   
+   ![Install Button Location](assets/icons/matrix-icon-192.png)
 
-```json
-{
-  "name": "Closed Loop Maintenance App",
-  "short_name": "Closed Loop",
-  "start_url": ".",
-  "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#0055ff",
-  "icons": [
-    {
-      "src": "/icons/icon-192.png",
-      "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "/icons/icon-512.png",
-      "type": "image/png",
-      "sizes": "512x512"
-    }
-  ]
-}
-```
+3. Click the install icon and then click "Install" in the popup that appears
 
-In `index.html`, link it:
+4. The app will install and create:
+   - A desktop shortcut
+   - A start menu entry
+   - A taskbar icon when running
 
-```html
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#0055ff" />
-```
+You can now launch the app directly from your desktop or start menu!
 
----
+## 📱 Installing on Mobile Devices
 
-## ✅ 2. Add a Service Worker
+### For Android:
 
-Create a `service-worker.js` file to cache the app’s static assets:
+1. Open the app in Chrome
+2. Tap the three dots menu (⋮) in the top-right corner
+3. Tap "Install app" or "Add to Home screen"
+4. Tap "Install" in the popup
 
-```js
-const CACHE_NAME = "closed-loop-cache-v1";
-const ASSETS = [
-  "/",
-  "/index.html",
-  "/worksheet-1.html",
-  "/worksheet-2.html",
-  "/worksheet-3.html",
-  "/worksheet-4.html",
-  "/worksheet-5.html",
-  "/plc-simulation.js",
-  "/styles.css",
-  "/manifest.json",
-  "/icons/icon-192.png",
-  "/icons/icon-512.png"
-];
+### For iOS (iPhone/iPad):
 
-self.addEventListener("install", (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
-  );
-});
+1. Open the app in Safari
+2. Tap the Share button (□↑) at the bottom of the screen
+3. Scroll down and tap "Add to Home Screen"
+4. Tap "Add" in the top-right corner
 
-self.addEventListener("fetch", (event) => {
-  event.respondWith(
-    caches.match(event.request).then(
-      (response) => response || fetch(event.request)
-    )
-  );
-});
-```
+## ✨ Features After Installation
 
----
+- Works offline
+- Launches in its own window
+- Looks and feels like a native app
+- Automatic updates when online
+- Access to all worksheets and simulations
+- Progress tracking
+- Full screen mode
 
-## ✅ 3. Register the Service Worker in JavaScript
+## ❓ Troubleshooting
 
-In `index.html` or `main.js`:
+If you don't see the install option:
 
-```js
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("/service-worker.js").catch(console.error);
-}
-```
+1. Make sure you're using a supported browser:
+   - Chrome (recommended)
+   - Microsoft Edge
+   - Safari (iOS only)
 
----
+2. Check that you're connected to the internet for the first installation
 
-## ✅ 4. Ensure Hosting is over HTTPS or `localhost`
+3. Try refreshing the page if the install icon doesn't appear
 
-Service workers and install prompts only work on:
-- A secure domain (`https://yourdomain.com`)
-- Or `http://localhost` for development
+4. If using locally, make sure you're accessing via http://localhost:8000
 
----
+## 🗑️ Uninstalling
 
-## ✅ 5. Optional: Add `install` Prompt Control (Optional)
+To remove the app:
 
-To manually show the “Install” banner:
+### On Windows:
+- Go to Settings > Apps > Apps & features
+- Find "Closed Loop Maintenance App"
+- Click "Uninstall"
 
-```js
-let deferredPrompt;
+### On Mac:
+- Find the app in your Applications folder
+- Right-click and select "Move to Trash"
 
-window.addEventListener("beforeinstallprompt", (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  // Show your install button
-  document.getElementById("installBtn").style.display = "block";
+### On Mobile:
+- Press and hold the app icon
+- Select "Remove" or "Uninstall"
 
-  document.getElementById("installBtn").addEventListener("click", () => {
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then(() => {
-      deferredPrompt = null;
-    });
-  });
-});
-```
+## 📞 Need Help?
 
----
-
-## ✅ 6. Test and Verify
-
-- Open in Chrome.
-- Check DevTools > Application tab:
-  - Service worker registered.
-  - Manifest loaded.
-  - App is installable.
-- Click browser install icon or test install prompt.
+If you're having trouble installing the app, please contact Matrix TSL support:
+- Email: info@matrixtsl.com
+- Phone: +44 (0) 1422 252380

@@ -75,15 +75,15 @@
     .worksheet-card:hover {
       transform: translateY(-5px);
       box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
-      border-color: #FFFFFF;
+      border-color: #444;
     }
 
     .worksheet-number {
-      color: #00ff88;
+      color: var(--accent-color);
       font-size: 18px;
       font-weight: bold;
       margin-bottom: 10px;
-      text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+      text-shadow: 0 0 10px var(--accent-shadow);
     }
 
     .worksheet-title {
@@ -106,7 +106,7 @@
       top: 20px;
       right: 20px;
       background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
-      border: 2px solid #00ff88;
+      border: 2px solid var(--accent-color);
       border-radius: 12px;
       padding: 20px;
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
@@ -140,7 +140,7 @@
     .pdf-popup-text h3 {
       margin: 0 0 5px 0;
       font-size: 16px;
-      color: #00ff88;
+      color: var(--accent-color);
     }
 
     .pdf-popup-text p {
@@ -176,10 +176,6 @@
         <li class="nav-item">
           <a href="#" onclick="window.location='tracking-dashboard.html'" class="nav-link">
             <i class="fas fa-chart-line"></i> PROGRESS
-          </a>
-        </li><li class="nav-item">
-          <a href="#" onclick="window.location='settings.html'" class="nav-link">
-            <i class="fas fa-gear"></i> SETTINGS
           </a>
         </li>
         <li class="nav-item">
@@ -340,27 +336,6 @@
         navigator.serviceWorker.register('service-worker.js');
       });
     }
-  </script>
-
-  <script>
-    // Apply user theme from localStorage
-    (function() {
-      const settings = JSON.parse(localStorage.getItem('appSettings')) || {};
-      if (settings.appBackground) document.documentElement.style.setProperty('--background-color', settings.appBackground);
-      if (settings.appAccent) document.documentElement.style.setProperty('--accent-color', settings.appAccent);
-      
-      // Apply theme class
-      if (settings.theme) {
-        document.body.className = document.body.className.replace(/theme-\w+/g, '');
-        document.body.classList.add(`theme-${settings.theme}`);
-      }
-      
-      // Apply font size
-      if (settings.fontSize) {
-        document.body.className = document.body.className.replace(/font-size-\w+/g, '');
-        document.body.classList.add(`font-size-${settings.fontSize}`);
-      }
-    })();
   </script>
 </body>
 </html> 

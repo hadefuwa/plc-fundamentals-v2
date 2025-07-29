@@ -609,11 +609,6 @@
             <i class="fas fa-chart-line"></i> PROGRESS
           </a>
         </li>
-<li class="nav-item">
-          <a href="#" onclick="window.location='settings.html'" class="nav-link">
-            <i class="fas fa-gear"></i> SETTINGS
-          </a>
-        </li>
         <li class="nav-item">
           <a href="#" onclick="window.location='about.html'" class="nav-link active">
             <i class="fas fa-info-circle"></i> ABOUT
@@ -628,7 +623,7 @@
     <!-- About Content -->
     <div class="about-container">
       <div class="about-header">
-        <h2 class="section-header"><i class="fas fa-info-circle"></i> About Matrix TSL</h2>
+        <h2 class="section-header" style="color: var(--accent-color);"><i class="fas fa-info-circle"></i> About Matrix TSL</h2>
         <p>Advanced Industrial Maintenance Training Platform for Closed Loop Control Systems</p>
       </div>
 
@@ -690,7 +685,7 @@
         
         <!-- Product Specifications -->
         <div class="product-specs">
-          <h3 class="section-header"><i class="fas fa-clipboard-list"></i> Technical Specifications</h3>
+          <h3 class="section-header" style="color: var(--accent-color);"><i class="fas fa-clipboard-list"></i> Technical Specifications</h3>
           
           <!-- CAD Image Display -->
           <div class="cad-image-section">
@@ -856,7 +851,7 @@
 
       <!-- Contact Us Section -->
       <div class="contact-us-section">
-        <h2 class="section-header"><i class="fas fa-headset"></i> Contact Us</h2>
+        <h2 class="section-header" style="color: var(--accent-color);"><i class="fas fa-headset"></i> Contact Us</h2>
         <div class="contact-us-content">
           <p>Ready to get started with our industrial maintenance training solutions? Our sales team is here to help you find the perfect training solution for your needs.</p>
           <div class="contact-actions">
@@ -951,26 +946,11 @@
     });
   </script>
   <script>
-    // Apply user theme from localStorage
-    (function() {
-      const settings = JSON.parse(localStorage.getItem('appSettings')) || {};
-      if (settings.appBackground) document.documentElement.style.setProperty('--background-color', settings.appBackground);
-      if (settings.appAccent) {
-        document.documentElement.style.setProperty('--accent-color', settings.appAccent);
-        // Set secondary accent color based on primary accent
-        const accentColor = settings.appAccent;
-        // Create a slightly different shade for secondary accent
-        const secondaryColor = accentColor === '#4a9eff' ? '#3a8ce6' : 
-                              accentColor === '#9b59b6' ? '#8e44ad' : 
-                              accentColor === '#e74c3c' ? '#c0392b' : 
-                              accentColor === '#f39c12' ? '#e67e22' : 
-                              accentColor === '#27ae60' ? '#229954' : 
-                              accentColor === '#1abc9c' ? '#16a085' : 
-                              accentColor === '#34495e' ? '#2c3e50' : 
-                              accentColor === '#95a5a6' ? '#7f8c8d' : accentColor;
-        document.documentElement.style.setProperty('--accent-secondary', secondaryColor);
-      }
-    })();
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('service-worker.js');
+      });
+    }
   </script>
 </body>
 </html> 

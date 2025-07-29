@@ -364,11 +364,6 @@
             <i class="fas fa-chart-line"></i> PROGRESS
           </a>
         </li>
-<li class="nav-item">
-          <a href="#" onclick="window.location='settings.html'" class="nav-link">
-            <i class="fas fa-gear"></i> SETTINGS
-          </a>
-        </li>
         <li class="nav-item">
           <a href="#" onclick="window.location='about.html'" class="nav-link">
             <i class="fas fa-info-circle"></i> ABOUT
@@ -555,16 +550,8 @@
     document.addEventListener('DOMContentLoaded', () => {
       ensureBackgroundAnimation();
       
-      // Load and apply theme from localStorage
-      const settings = JSON.parse(localStorage.getItem('appSettings')) || {};
-      if (settings.theme) {
-        document.body.className = document.body.className.replace(/theme-\w+/g, '');
-        document.body.classList.add(`theme-${settings.theme}`);
-      }
-      if (settings.fontSize) {
-        document.body.className = document.body.className.replace(/font-size-\w+/g, '');
-        document.body.classList.add(`font-size-${settings.fontSize}`);
-      }
+      // Initialize background animation
+      ensureBackgroundAnimation();
     });
     
     // Check animation status periodically
@@ -636,17 +623,8 @@
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       deferredPrompt = e;
-      // You can show an install button here if desired
       console.log('PWA install prompt available');
     });
-  </script>
-  <script>
-    // Apply user theme from localStorage
-    (function() {
-      const settings = JSON.parse(localStorage.getItem('appSettings')) || {};
-      if (settings.appBackground) document.documentElement.style.setProperty('--background-color', settings.appBackground);
-      if (settings.appAccent) document.documentElement.style.setProperty('--accent-color', settings.appAccent);
-    })();
   </script>
 </body>
 </html>

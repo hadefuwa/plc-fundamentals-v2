@@ -75,7 +75,7 @@
     .worksheet-card:hover {
       transform: translateY(-5px);
       box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
-      border-color: #FFFFFF;
+      border-color: #444;
     }
 
     .worksheet-number {
@@ -175,16 +175,6 @@
         <li class="nav-item">
           <a href="#" onclick="window.location='tracking-dashboard.html'" class="nav-link">
             <i class="fas fa-chart-line"></i> PROGRESS
-          </a>
-        </li>
-        
-        <li class="nav-item">
-          <a href="#" onclick="window.location='progress-guide.html'" class="nav-link">
-            <i class="fas fa-question-circle"></i> GUIDE
-          </a>
-        </li><li class="nav-item">
-          <a href="#" onclick="window.location='settings.html'" class="nav-link">
-            <i class="fas fa-gear"></i> SETTINGS
           </a>
         </li>
         <li class="nav-item">
@@ -314,27 +304,6 @@
         navigator.serviceWorker.register('service-worker.js');
       });
     }
-  </script>
-
-  <script>
-    // Apply user theme from localStorage
-    (function() {
-      const settings = JSON.parse(localStorage.getItem('appSettings')) || {};
-      if (settings.appBackground) document.documentElement.style.setProperty('--background-color', settings.appBackground);
-      if (settings.appAccent) document.documentElement.style.setProperty('--accent-color', settings.appAccent);
-      
-      // Apply theme class
-      if (settings.theme) {
-        document.body.className = document.body.className.replace(/theme-\w+/g, '');
-        document.body.classList.add(`theme-${settings.theme}`);
-      }
-      
-      // Apply font size
-      if (settings.fontSize) {
-        document.body.className = document.body.className.replace(/font-size-\w+/g, '');
-        document.body.classList.add(`font-size-${settings.fontSize}`);
-      }
-    })();
   </script>
 </body>
 </html> 
