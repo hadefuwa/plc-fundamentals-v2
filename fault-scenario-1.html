@@ -125,10 +125,7 @@
               <span class="status-label">System Min Temp:</span>
               <span class="status-value error">5°C</span>
             </div>
-            <div class="status-item">
-              <span class="status-label">Pump Status:</span>
-              <span class="status-value normal">RUNNING</span>
-            </div>
+
             <div class="status-item">
               <span class="status-label">System Ready:</span>
               <span class="status-value error">FAULT</span>
@@ -139,7 +136,7 @@
             </div>
             <div class="status-item">
               <span class="status-label">Wi-Fi Connection:</span>
-              <span class="status-value normal">CONNECTED</span>
+              <span class="status-value normal" id="wifi-status">CONNECTED</span>
             </div>
           </div>
         </div>
@@ -920,6 +917,12 @@
     .submit-question-btn:hover {
       background: #45a049;
     }
+    
+    /* Make Wi-Fi status box wider to accommodate "DISCONNECTED" text */
+    #wifi-status {
+      min-width: 120px;
+      text-align: center;
+    }
   </style>
 
   <!-- Scripts -->
@@ -935,7 +938,12 @@
       pumpStatus: 'RUNNING',
       systemReady: 'FAULT',
       productionStatus: 'STOPPED',
-      wifiStatus: 'CONNECTED'
+      wifiStatus: 'CONNECTED',
+      // Temperature settings: actual 18°C, offset 33°C, displayed 51°C
+      actualTemperature: 18,
+      displayedTemperature: 51,
+      setpoint: 75,
+      offset: 33
     };
 
     // Tool results data
@@ -1068,6 +1076,7 @@
     document.addEventListener('DOMContentLoaded', function() {
       loadSavedAnswers();
       initializeSimulation();
+      startWifiFlicker(); // Start Wi-Fi flickering
     });
 
     // Simulation Functions
@@ -1208,17 +1217,21 @@
 
     function resetSimulation() {
       simulationData = {
-        actualTemperature: 80,
-        displayedTemperature: 75,
+        oilTemperature: 45,
+        systemPressure: 0,
+        requiredPressure: 200,
+        isolationValve: 'CLOSED',
+        pumpStatus: 'RUNNING',
+        systemReady: 'FAULT',
+        productionStatus: 'STOPPED',
+        wifiStatus: 'CONNECTED',
+        actualTemperature: 18,
+        displayedTemperature: 51,
         setpoint: 75,
-        offset: 5,
-        qualityIssues: true,
-        coolingLoad: 'HIGH',
-        energyUsage: '+25%',
-        alarmStatus: 'NORMAL'
+        offset: 33
       };
       
-      document.getElementById('offset-control').value = 5;
+      document.getElementById('offset-control').value = 33;
       document.getElementById('setpoint-control').value = 75;
       updateOffsetDisplay();
       updateSetpointDisplay();
@@ -1227,8 +1240,8 @@
       // Clear log
       const logContainer = document.getElementById('log-container');
       logContainer.innerHTML = `
-        <div class="log-entry">System initialized with +5°C offset</div>
-        <div class="log-entry">Actual temperature: 80°C, Displayed: 75°C</div>
+        <div class="log-entry">System initialized with +33°C offset</div>
+        <div class="log-entry">Actual temperature: 18°C, Displayed: 51°C</div>
         <div class="log-entry">Quality issues detected in recent batches</div>
       `;
       
@@ -1288,6 +1301,23 @@
       logEntry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
       logContainer.appendChild(logEntry);
       logContainer.scrollTop = logContainer.scrollHeight;
+    }
+
+    // Wi-Fi flickering function
+    function startWifiFlicker() {
+      const wifiStatus = document.getElementById('wifi-status');
+      let isConnected = true;
+      
+      setInterval(() => {
+        if (isConnected) {
+          wifiStatus.textContent = 'DISCONNECTED';
+          wifiStatus.className = 'status-value error';
+        } else {
+          wifiStatus.textContent = 'CONNECTED';
+          wifiStatus.className = 'status-value normal';
+        }
+        isConnected = !isConnected;
+      }, 2000); // Change every 2 seconds
     }
   </script>
 </body>
