@@ -207,7 +207,7 @@
       </div>
     </div>
 
-    <!-- Simulation Section -->
+    <!-- Simulation Section - COMMENTED OUT
     <div class="worksheet-section simulation-section">
       <h2 class="section-header"><i class="fas fa-cogs"></i> System Simulation</h2>
       <div class="worksheet-content">
@@ -223,30 +223,45 @@
         <div id="diagnostic-challenges-panel" class="simulation-panel" style="margin-top: 20px;"></div>
       </div>
     </div>
+    -->
 
-    <!-- Assessment Questions Section -->
+    <!-- Analysis Section -->
     <div class="worksheet-section questions-section">
-      <h2 class="section-header"><i class="fas fa-question-circle"></i> Assessment Questions</h2>
-      <div class="worksheet-content">
-        <div class="question-card">
-          <h3>Question 5.1</h3>
-          <p>What is the most likely cause of the valve position constantly changing?</p>
-          <div class="options">
-            <label><input type="radio" name="q5.1" value="0"> The valve actuator is mechanically damaged</label>
-            <label><input type="radio" name="q5.1" value="1"> The controller PID tuning is causing instability</label>
-            <label><input type="radio" name="q5.1" value="2"> The flow transmitter is giving incorrect readings</label>
-            <label><input type="radio" name="q5.1" value="3"> The valve is experiencing cavitation due to high temperature</label>
+      <h2 class="section-header"><i class="fas fa-clipboard-list"></i> Fault Analysis Worksheet</h2>
+      <div class="questions-content">
+        <div class="analysis-section">
+          <h4>Observations:</h4>
+          <textarea class="answer-input" data-question="observations" placeholder="Record your observations of the system behavior, readings, and any unusual indicators..."></textarea>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer('observations')">Save Observations</button>
           </div>
-          <button onclick="submitAnswer('5.1')" class="submit-btn">Submit Answer</button>
+        </div>
+        
+        <div class="analysis-section">
+          <h4>Problem:</h4>
+          <textarea class="answer-input" data-question="problem" placeholder="Identify the root cause and describe the specific problem affecting the system..."></textarea>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer('problem')">Save Problem Analysis</button>
+          </div>
+        </div>
+        
+        <div class="analysis-section">
+          <h4>Solution:</h4>
+          <textarea class="answer-input" data-question="solution" placeholder="Describe the steps you would take to resolve the issue safely and effectively..."></textarea>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer('solution')">Save Solution</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Simulation Scripts - COMMENTED OUT
   <script src="hmi-simulation.js"></script>
   <script src="plc-simulation.js"></script>
   <script src="valve-simulation.js"></script>
   <script src="pump-simulation.js"></script>
+  -->
   <script>
     // Tool usage tracking
     let toolResults = {};
@@ -298,32 +313,44 @@
       resultsDiv.innerHTML += resultHtml;
     }
     
-    function submitAnswer(questionId) {
-      const selectedOption = document.querySelector(`input[name="q${questionId}"]:checked`);
-      if (selectedOption) {
-        const answer = parseInt(selectedOption.value);
-        const correctAnswer = 3; // For question 5.1
+    // Submit answer
+    function submitAnswer(questionType) {
+      const input = document.querySelector(`[data-question="${questionType}"]`);
+      const answer = input.value.trim();
+      
+      if (answer) {
+        localStorage.setItem(`fault5_${questionType}`, answer);
         
-        if (answer === correctAnswer) {
-          alert('Correct! High brine temperature reduces vapor pressure margin, causing cavitation in the control valve.');
-        } else {
-          alert('Incorrect. The correct answer is: The valve is experiencing cavitation due to high temperature.');
-        }
+        const button = event.target;
+        const originalText = button.textContent;
+        button.textContent = 'Saved!';
+        button.style.background = '#4CAF50';
         
-        // Save answer
-        localStorage.setItem(`fault-scenario-5-${questionId}`, answer);
+        setTimeout(() => {
+          button.textContent = originalText;
+        }, 2000);
       } else {
-        alert('Please select an answer before submitting.');
+        alert('Please enter content before saving.');
       }
+    }
+
+    // Load saved answers
+    function loadSavedAnswers() {
+      const questionTypes = ['observations', 'problem', 'solution'];
+      questionTypes.forEach(type => {
+        const saved = localStorage.getItem(`fault5_${type}`);
+        if (saved) {
+          const input = document.querySelector(`[data-question="${type}"]`);
+          if (input) {
+            input.value = saved;
+          }
+        }
+      });
     }
     
     // Load saved answers on page load
     document.addEventListener('DOMContentLoaded', function() {
-      const savedAnswer = localStorage.getItem('fault-scenario-5-5.1');
-      if (savedAnswer !== null) {
-        const radio = document.querySelector(`input[name="q5.1"][value="${savedAnswer}"]`);
-        if (radio) radio.checked = true;
-      }
+      loadSavedAnswers();
     });
   </script>
 </body>

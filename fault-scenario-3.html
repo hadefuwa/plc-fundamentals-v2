@@ -199,7 +199,7 @@
       </div>
     </div>
 
-    <!-- Simulation Section -->
+    <!-- Simulation Section - COMMENTED OUT
     <div class="worksheet-section simulation-section">
       <h2 class="section-header"><i class="fas fa-cogs"></i> System Simulation</h2>
       <div class="worksheet-content">
@@ -229,6 +229,7 @@
         </div>
       </div>
     </div>
+    -->
 
     <!-- Analysis Section -->
     <div class="worksheet-section questions-section">
@@ -304,10 +305,12 @@
     }
   </style>
   
+  <!-- Simulation Scripts - COMMENTED OUT
   <script src="hmi-simulation.js"></script>
   <script src="plc-simulation.js"></script>
   <script src="pump-simulation.js"></script>
   <script src="valve-simulation.js"></script>
+  -->
   <script>
     // Tool results data
     const toolResults = {
@@ -440,7 +443,8 @@
     document.addEventListener('DOMContentLoaded', function() {
       loadSavedAnswers();
       
-      // Initialize simulations
+      // Initialize simulations - COMMENTED OUT
+      /*
       setTimeout(() => {
         if (typeof initializeHMISimulation === 'function') {
           initializeHMISimulation();
@@ -455,6 +459,7 @@
           initializeValveSimulation();
         }
       }, 1000);
+      */
     });
   </script>
 </body>

@@ -207,7 +207,7 @@
       </div>
     </div>
 
-    <!-- Simulation Section -->
+    <!-- Simulation Section - COMMENTED OUT
     <div class="worksheet-section simulation-section">
       <h2 class="section-header"><i class="fas fa-cogs"></i> System Simulation</h2>
       <div class="worksheet-content">
@@ -223,30 +223,45 @@
         <div id="diagnostic-challenges-panel" class="simulation-panel" style="margin-top: 20px;"></div>
       </div>
     </div>
+    -->
 
-    <!-- Assessment Questions Section -->
+    <!-- Analysis Section -->
     <div class="worksheet-section questions-section">
-      <h2 class="section-header"><i class="fas fa-question-circle"></i> Assessment Questions</h2>
-      <div class="worksheet-content">
-        <div class="question-card">
-          <h3>Question 4.1</h3>
-          <p>What is the most critical immediate action when server room temperatures exceed critical thresholds?</p>
-          <div class="options">
-            <label><input type="radio" name="q4.1" value="0"> Call the building maintenance team</label>
-            <label><input type="radio" name="q4.1" value="1"> Shut down non-critical servers to reduce heat load</label>
-            <label><input type="radio" name="q4.1" value="2"> Increase HVAC fan speed to maximum</label>
-            <label><input type="radio" name="q4.1" value="3"> Open windows to improve ventilation</label>
+      <h2 class="section-header"><i class="fas fa-clipboard-list"></i> Fault Analysis Worksheet</h2>
+      <div class="questions-content">
+        <div class="analysis-section">
+          <h4>Observations:</h4>
+          <textarea class="answer-input" data-question="observations" placeholder="Record your observations of the system behavior, readings, and any unusual indicators..."></textarea>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer('observations')">Save Observations</button>
           </div>
-          <button onclick="submitAnswer('4.1')" class="submit-btn">Submit Answer</button>
+        </div>
+        
+        <div class="analysis-section">
+          <h4>Problem:</h4>
+          <textarea class="answer-input" data-question="problem" placeholder="Identify the root cause and describe the specific problem affecting the system..."></textarea>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer('problem')">Save Problem Analysis</button>
+          </div>
+        </div>
+        
+        <div class="analysis-section">
+          <h4>Solution:</h4>
+          <textarea class="answer-input" data-question="solution" placeholder="Describe the steps you would take to resolve the issue safely and effectively..."></textarea>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer('solution')">Save Solution</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Simulation Scripts - COMMENTED OUT
   <script src="hmi-simulation.js"></script>
   <script src="plc-simulation.js"></script>
   <script src="pump-simulation.js"></script>
   <script src="valve-simulation.js"></script>
+  -->
   <script>
     // Tool results data
     const toolResults = {
@@ -339,34 +354,47 @@
       resultsSection.scrollIntoView({ behavior: 'smooth' });
     }
     
-    function submitAnswer(questionId) {
-      const selectedOption = document.querySelector(`input[name="q${questionId}"]:checked`);
-      if (selectedOption) {
-        const answer = parseInt(selectedOption.value);
-        const correctAnswer = 1; // For question 4.1
+    // Submit answer
+    function submitAnswer(questionType) {
+      const input = document.querySelector(`[data-question="${questionType}"]`);
+      const answer = input.value.trim();
+      
+      if (answer) {
+        localStorage.setItem(`fault4_${questionType}`, answer);
         
-        if (answer === correctAnswer) {
-          alert('Correct! Shutting down non-critical servers reduces heat load immediately.');
-        } else {
-          alert('Incorrect. The correct answer is: Shut down non-critical servers to reduce heat load.');
-        }
+        const button = event.target;
+        const originalText = button.textContent;
+        button.textContent = 'Saved!';
+        button.style.background = '#4CAF50';
         
-        // Save answer
-        localStorage.setItem(`fault-scenario-4-${questionId}`, answer);
+        setTimeout(() => {
+          button.textContent = originalText;
+        }, 2000);
       } else {
-        alert('Please select an answer before submitting.');
+        alert('Please enter content before saving.');
       }
+    }
+
+    // Load saved answers
+    function loadSavedAnswers() {
+      const questionTypes = ['observations', 'problem', 'solution'];
+      questionTypes.forEach(type => {
+        const saved = localStorage.getItem(`fault4_${type}`);
+        if (saved) {
+          const input = document.querySelector(`[data-question="${type}"]`);
+          if (input) {
+            input.value = saved;
+          }
+        }
+      });
     }
     
     // Load saved answers on page load
     document.addEventListener('DOMContentLoaded', function() {
-      const savedAnswer = localStorage.getItem('fault-scenario-4-4.1');
-      if (savedAnswer !== null) {
-        const radio = document.querySelector(`input[name="q4.1"][value="${savedAnswer}"]`);
-        if (radio) radio.checked = true;
-      }
+      loadSavedAnswers();
       
-      // Initialize simulations
+      // Initialize simulations - COMMENTED OUT
+      /*
       setTimeout(() => {
         if (typeof initializeHMISimulation === 'function') {
           initializeHMISimulation();
@@ -381,6 +409,7 @@
           initializeValveSimulation();
         }
       }, 1000);
+      */
     });
   </script>
 </body>
