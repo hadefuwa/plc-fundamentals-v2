@@ -3257,7 +3257,7 @@ h1 {
 }
 
 .process-color {
-    background: var(--accent-color, #4a9eff);
+    background: #0066CC;
 }
 
 .error-color {
