@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Matrix TSL - Fault Scenario 1: Tank Temperature Control System</title>
+  <title>Matrix TSL - Fault Scenario 1: Titanium Forging System Failure</title>
   <link rel="stylesheet" href="main.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">    <script src="worksheet-core.js"></script>
@@ -59,7 +59,7 @@
           </button>
         </div>
         <div class="worksheet-header-center">
-          <h1 class="worksheet-title">Fault Scenario 1 - Tank Temperature Control System</h1>
+          <h1 class="worksheet-title">Fault Scenario 1 - Titanium Forging System Failure</h1>
         </div>
         <div class="worksheet-header-right">
           <button class="worksheet-nav-btn worksheet-next-btn" onclick="window.location.href='fault-scenario-2.html'">
@@ -71,21 +71,21 @@
     </div>
     <!-- Introduction Section -->
     <div class="worksheet-section introduction-section">
-      <h2 class="section-header"><i class="fas fa-info-circle"></i> Fault Scenario 1: Tank Temperature Too High</h2>
+      <h2 class="section-header"><i class="fas fa-info-circle"></i> Fault Scenario 1: Titanium Forging System Won't Start</h2>
       <div class="worksheet-content">
         <div class="scenario-info">
           <div class="info-grid">
             <div class="info-item">
-              <strong>Scenario:</strong> Tank Temperature Too High
+              <strong>Scenario:</strong> Titanium Forging System Won't Start
             </div>
             <div class="info-item">
-              <strong>Process:</strong> Chemical reaction tank temperature control
+              <strong>Process:</strong> Titanium forging for Boeing aeroplane frames
             </div>
             <div class="info-item">
-              <strong>Shift:</strong> Day shift handover to night shift
+              <strong>Shift:</strong> Night shift start
             </div>
             <div class="info-item">
-              <strong>Urgency:</strong> Medium - Process running hot, quality concerns
+              <strong>Urgency:</strong> High - Production line stopped
             </div>
             <div class="info-item">
               <strong>Difficulty:</strong> Beginner
@@ -100,19 +100,13 @@
           <div class="background-text">
             <div class="scenario-description">
               <h3>Scenario Background</h3>
-              <p>You're taking over the night shift at a chemical processing plant. The day shift operator mentions they had some 'sensor issues' earlier and 'made a small adjustment' to keep production running.</p>
-              
-              <p>The tank temperature controller shows 75°C, which is the correct setpoint for the chemical process. However, you notice the product quality reports show signs of overheating, and the cooling system is working harder than usual.</p>
-              
-              <p>The day shift operator left a note: 'Added +5°C offset to compensate for slow sensor response. Should be fine now.' But they forgot to mention when this was supposed to be removed.</p>
-              
-              <p><strong>Industry Context:</strong> A mistake like this is common in industry because operators sometimes add temporary offsets to compensate for sensor errors or delays in heating. If they forget to remove the offset after troubleshooting, the system continues to run with incorrect temperature readings, causing overheating or process failures.</p>
+              <p>You work night shifts in a titanium forging factory that produces frames for Boeing aeroplanes. As you start your shift, you're told the system won't run, and no one knows why. The day shift maintenance engineer tells you they had a problem earlier in the day because the oil was too cold. Harry, the Marketing Manager, thinks it's just the Wi-Fi acting up again.</p>
             </div>
           </div>
           
           <div class="background-image">
-            <img src="assets/scenarios/titanium-forge.png" alt="Tank Temperature Control System">
-            <figcaption>Tank Temperature Control System - Industrial Chemical Processing</figcaption>
+            <img src="assets/scenarios/titanium-forge.png" alt="Titanium Forging System">
+            <figcaption>Titanium Forging System - Aerospace Manufacturing</figcaption>
           </div>
         </div>
 
@@ -120,32 +114,32 @@
           <h3>Initial System Status</h3>
           <div class="status-grid">
             <div class="status-item">
-              <span class="status-label">Setpoint:</span>
-              <span class="status-value">75°C</span>
+              <span class="status-label">Hydraulic Oil Temp:</span>
+              <span class="status-value">45°C</span>
             </div>
             <div class="status-item">
-              <span class="status-label">Displayed Temperature:</span>
-              <span class="status-value">75°C</span>
+              <span class="status-label">System Max Temp:</span>
+              <span class="status-value">40°C</span>
             </div>
             <div class="status-item">
-              <span class="status-label">Actual Temperature:</span>
-              <span class="status-value">80°C</span>
+              <span class="status-label">System Min Temp:</span>
+              <span class="status-value error">5°C</span>
             </div>
             <div class="status-item">
-              <span class="status-label">Offset Applied:</span>
-              <span class="status-value">+5°C</span>
+              <span class="status-label">Pump Status:</span>
+              <span class="status-value normal">RUNNING</span>
             </div>
             <div class="status-item">
-              <span class="status-label">Alarm Status:</span>
-              <span class="status-value normal">NORMAL</span>
+              <span class="status-label">System Ready:</span>
+              <span class="status-value error">FAULT</span>
             </div>
             <div class="status-item">
-              <span class="status-label">Quality Issues:</span>
-              <span class="status-value warning">YES</span>
+              <span class="status-label">Production Status:</span>
+              <span class="status-value error">STOPPED</span>
             </div>
             <div class="status-item">
-              <span class="status-label">Cooling Load:</span>
-              <span class="status-value warning">HIGH</span>
+              <span class="status-label">Wi-Fi Connection:</span>
+              <span class="status-value normal">CONNECTED</span>
             </div>
           </div>
         </div>
@@ -157,10 +151,10 @@
       <h2 class="section-header"><i class="fas fa-lightbulb"></i> Troubleshooting Tips</h2>
       <div class="objectives-content">
         <ul class="objectives-list">
-          <li>Always check for temporary offsets or adjustments made by previous shifts</li>
-          <li>Verify actual vs displayed values using independent measurement tools</li>
-          <li>Look for operator notes or shift handover documentation</li>
-          <li>Consider the impact of forgotten adjustments on product quality</li>
+          <li>Don't assume the obvious issue is always the root cause</li>
+          <li>Check system pressure readings even if pumps appear to be running</li>
+          <li>Look for hydraulic leaks or isolation valve issues</li>
+          <li>Verify that all safety interlocks are satisfied before startup</li>
         </ul>
       </div>
     </div>
@@ -170,28 +164,28 @@
       <h2 class="section-header"><i class="fas fa-tools"></i> Investigation Tools</h2>
       <div class="tools-content">
         <div class="tools-grid">
-          <div class="tool-card" data-tool="check_offset">
-            <h4><i class="fas fa-search"></i> Check Controller Offset</h4>
-            <p>View current offset settings in temperature controller</p>
-            <button class="tool-btn" onclick="useTool('check_offset')">Use Tool</button>
+          <div class="tool-card" data-tool="check_pressure">
+            <h4><i class="fas fa-search"></i> Check Pressure Sensors</h4>
+            <p>Inspect hydraulic pressure sensors and readings</p>
+            <button class="tool-btn" onclick="useTool('check_pressure')">Use Tool</button>
           </div>
           
-          <div class="tool-card" data-tool="use_thermometer">
-            <h4><i class="fas fa-thermometer-half"></i> Use Portable Thermometer</h4>
-            <p>Check actual tank temperature with calibrated instrument</p>
-            <button class="tool-btn" onclick="useTool('use_thermometer')">Use Tool</button>
+          <div class="tool-card" data-tool="inspect_hydraulics">
+            <h4><i class="fas fa-tint"></i> Inspect Hydraulic System</h4>
+            <p>Check for leaks, valve positions, and fluid levels</p>
+            <button class="tool-btn" onclick="useTool('inspect_hydraulics')">Use Tool</button>
           </div>
           
-          <div class="tool-card" data-tool="review_reports">
-            <h4><i class="fas fa-file-alt"></i> Review Quality Reports</h4>
-            <p>Check recent product quality data for temperature trends</p>
-            <button class="tool-btn" onclick="useTool('review_reports')">Use Tool</button>
+          <div class="tool-card" data-tool="check_interlocks">
+            <h4><i class="fas fa-shield-alt"></i> Check Safety Interlocks</h4>
+            <p>Verify all safety systems and emergency stops</p>
+            <button class="tool-btn" onclick="useTool('check_interlocks')">Use Tool</button>
           </div>
           
-          <div class="tool-card" data-tool="adjust_offset">
-            <h4><i class="fas fa-sliders-h"></i> Adjust Temperature Offset</h4>
-            <p>Remove or modify the temperature offset setting</p>
-            <button class="tool-btn" onclick="useTool('adjust_offset')">Use Tool</button>
+          <div class="tool-card" data-tool="test_valves">
+            <h4><i class="fas fa-cog"></i> Test Isolation Valves</h4>
+            <p>Check position and operation of hydraulic isolation valves</p>
+            <button class="tool-btn" onclick="useTool('test_valves')">Use Tool</button>
           </div>
         </div>
       </div>
@@ -237,40 +231,40 @@
 
     <!-- Interactive Simulation Section -->
     <div class="worksheet-section simulation-section">
-      <h2 class="section-header"><i class="fas fa-cogs"></i> Interactive Temperature Control Simulation</h2>
+      <h2 class="section-header"><i class="fas fa-cogs"></i> Interactive Hydraulic System Simulation</h2>
       <div class="simulation-container">
         <div class="simulation-header">
-          <h3><i class="fas fa-thermometer-half"></i> Tank Temperature Control System</h3>
-          <p>Experience the fault scenario in real-time. Observe how the temperature offset affects system behavior and practice troubleshooting techniques.</p>
+          <h3><i class="fas fa-tint"></i> Titanium Forging Hydraulic System</h3>
+          <p>Experience the fault scenario in real-time. Investigate why the hydraulic system shows zero pressure despite the pumps running, and practice troubleshooting techniques.</p>
         </div>
         
         <div class="simulation-grid">
           <div class="simulation-left">
             <div class="temperature-visualization">
-              <h4>Temperature Display</h4>
+              <h4>Hydraulic System Display</h4>
               <div class="temp-display-container">
                 <div class="temp-gauge-container">
                   <div id="temp-gauge" class="temp-gauge">
                     <div class="gauge-background"></div>
                     <div class="gauge-fill" id="gauge-fill"></div>
                     <div class="gauge-center">
-                      <div class="temp-value" id="displayed-temp">75°C</div>
-                      <div class="temp-label">Displayed</div>
+                      <div class="temp-value" id="displayed-temp">0 bar</div>
+                      <div class="temp-label">Pressure</div>
                     </div>
                   </div>
                 </div>
                 <div class="temp-indicators">
                   <div class="temp-indicator">
-                    <span class="indicator-label">Actual Temperature:</span>
-                    <span class="indicator-value" id="actual-temp">80°C</span>
+                    <span class="indicator-label">Oil Temperature:</span>
+                    <span class="indicator-value" id="actual-temp">45°C</span>
                   </div>
                   <div class="temp-indicator">
-                    <span class="indicator-label">Setpoint:</span>
-                    <span class="indicator-value" id="setpoint-temp">75°C</span>
+                    <span class="indicator-label">Required Pressure:</span>
+                    <span class="indicator-value" id="setpoint-temp">200 bar</span>
                   </div>
                   <div class="temp-indicator">
-                    <span class="indicator-label">Offset Applied:</span>
-                    <span class="indicator-value" id="offset-value">+5°C</span>
+                    <span class="indicator-label">Isolation Valve:</span>
+                    <span class="indicator-value" id="offset-value">CLOSED</span>
                   </div>
                 </div>
               </div>
@@ -280,20 +274,20 @@
               <h4>System Status</h4>
               <div class="status-grid-sim">
                 <div class="status-item-sim">
-                  <span class="status-label-sim">Alarm Status:</span>
-                  <span class="status-value-sim normal" id="alarm-status">NORMAL</span>
+                  <span class="status-label-sim">Pump Status:</span>
+                  <span class="status-value-sim normal" id="alarm-status">RUNNING</span>
                 </div>
                 <div class="status-item-sim">
-                  <span class="status-label-sim">Quality Issues:</span>
-                  <span class="status-value-sim warning" id="quality-status">YES</span>
+                  <span class="status-label-sim">System Ready:</span>
+                  <span class="status-value-sim error" id="quality-status">FAULT</span>
                 </div>
                 <div class="status-item-sim">
-                  <span class="status-label-sim">Cooling Load:</span>
-                  <span class="status-value-sim warning" id="cooling-status">HIGH</span>
+                  <span class="status-label-sim">Production:</span>
+                  <span class="status-value-sim error" id="cooling-status">STOPPED</span>
                 </div>
                 <div class="status-item-sim">
-                  <span class="status-label-sim">Energy Usage:</span>
-                  <span class="status-value-sim warning" id="energy-status">+25%</span>
+                  <span class="status-label-sim">Wi-Fi Status:</span>
+                  <span class="status-value-sim normal" id="energy-status">CONNECTED</span>
                 </div>
               </div>
             </div>
@@ -303,38 +297,39 @@
             <div class="control-panel">
               <h4>Control Panel</h4>
               <div class="control-group">
-                <label for="offset-control">Temperature Offset:</label>
-                <input type="range" id="offset-control" min="-10" max="10" value="5" step="0.5">
-                <span id="offset-display">+5.0°C</span>
+                <label for="offset-control">Isolation Valve:</label>
+                <input type="range" id="offset-control" min="0" max="1" value="0" step="1">
+                <span id="offset-display">CLOSED</span>
               </div>
               <div class="control-group">
-                <label for="setpoint-control">Setpoint:</label>
-                <input type="range" id="setpoint-control" min="60" max="90" value="75" step="1">
-                <span id="setpoint-display">75°C</span>
+                <label for="setpoint-control">Pump Speed:</label>
+                <input type="range" id="setpoint-control" min="0" max="100" value="75" step="5">
+                <span id="setpoint-display">75%</span>
               </div>
               <div class="control-buttons">
-                <button id="reset-offset" class="control-btn">Reset Offset</button>
+                <button id="reset-offset" class="control-btn">Open Valve</button>
                 <button id="apply-changes" class="control-btn">Apply Changes</button>
-                <button id="reset-simulation" class="control-btn">Reset Simulation</button>
+                <button id="reset-simulation" class="control-btn">Reset System</button>
               </div>
             </div>
             
             <div class="troubleshooting-tools">
               <h4>Troubleshooting Tools</h4>
               <div class="tool-buttons">
-                <button id="check-offset" class="tool-btn-sim">Check Offset</button>
-                <button id="use-thermometer" class="tool-btn-sim">Use Thermometer</button>
-                <button id="review-reports" class="tool-btn-sim">Review Reports</button>
-                <button id="adjust-offset" class="tool-btn-sim">Adjust Offset</button>
+                <button id="check-offset" class="tool-btn-sim">Check Pressure</button>
+                <button id="use-thermometer" class="tool-btn-sim">Inspect System</button>
+                <button id="review-reports" class="tool-btn-sim">Check Interlocks</button>
+                <button id="adjust-offset" class="tool-btn-sim">Test Valves</button>
               </div>
             </div>
             
             <div class="diagnostic-log">
               <h4>Diagnostic Log</h4>
               <div id="log-container" class="log-container">
-                <div class="log-entry">System initialized with +5°C offset</div>
-                <div class="log-entry">Actual temperature: 80°C, Displayed: 75°C</div>
-                <div class="log-entry">Quality issues detected in recent batches</div>
+                <div class="log-entry">System startup failed - pressure fault</div>
+                <div class="log-entry">Oil temperature: 45°C (adequate)</div>
+                <div class="log-entry">Hydraulic pumps running normally</div>
+                <div class="log-entry">System pressure: 0 bar (fault condition)</div>
               </div>
             </div>
           </div>
@@ -343,10 +338,10 @@
         <div class="simulation-instructions">
           <h4>Instructions</h4>
           <ol>
-            <li>Observe the temperature display showing 75°C while the actual temperature is 80°C</li>
-            <li>Use the troubleshooting tools to investigate the issue</li>
-            <li>Adjust the offset control to see how it affects the displayed vs actual temperature</li>
-            <li>Try to resolve the issue by removing the offset</li>
+            <li>Observe that the hydraulic system shows 0 bar pressure despite pumps running</li>
+            <li>Use the troubleshooting tools to investigate the fault</li>
+            <li>Check if the isolation valve position is affecting system pressure</li>
+            <li>Try opening the isolation valve to restore hydraulic pressure</li>
             <li>Monitor the system status indicators for changes</li>
           </ol>
         </div>
@@ -933,77 +928,79 @@
   <script>
     // Simulation data
     let simulationData = {
-      actualTemperature: 80,
-      displayedTemperature: 75,
-      setpoint: 75,
-      offset: 5,
-      qualityIssues: true,
-      coolingLoad: 'HIGH',
-      energyUsage: '+25%',
-      alarmStatus: 'NORMAL'
+      oilTemperature: 45,
+      systemPressure: 0,
+      requiredPressure: 200,
+      isolationValve: 'CLOSED',
+      pumpStatus: 'RUNNING',
+      systemReady: 'FAULT',
+      productionStatus: 'STOPPED',
+      wifiStatus: 'CONNECTED'
     };
 
     // Tool results data
     const toolResults = {
-      'check_offset': {
-        title: 'Controller Offset Check',
+      'check_pressure': {
+        title: 'Pressure Sensor Check',
         content: `
           <div class="result-item">
-            <h4>Controller Settings Found:</h4>
+            <h4>Pressure System Analysis:</h4>
             <ul>
-              <li>Current Offset: +5.0°C</li>
-              <li>Offset Applied: 2024-01-15 14:30</li>
-              <li>Applied By: Day Shift Operator</li>
-              <li>Reason: "Slow sensor response compensation"</li>
-              <li>Expiration: Not set</li>
+              <li>System Pressure Reading: 0 bar</li>
+              <li>Required Operating Pressure: 200 bar</li>
+              <li>Pressure Sensor Status: FUNCTIONING</li>
+              <li>Pump Outlet Pressure: 205 bar</li>
+              <li>Main Line Pressure: 0 bar</li>
             </ul>
-            <p><strong>Analysis:</strong> The offset was applied as a temporary fix but never removed. This is causing the controller to display 75°C while the actual temperature is 80°C.</p>
+            <p><strong>Analysis:</strong> Pumps are generating correct pressure, but main system shows zero pressure. This indicates a blockage or closed valve between pump and main system.</p>
           </div>
         `
       },
-      'use_thermometer': {
-        title: 'Portable Thermometer Reading',
+      'inspect_hydraulics': {
+        title: 'Hydraulic System Inspection',
         content: `
           <div class="result-item">
-            <h4>Actual Temperature Measurement:</h4>
+            <h4>Physical System Check:</h4>
             <ul>
-              <li>Portable Thermometer Reading: 80.2°C</li>
-              <li>Controller Display: 75.0°C</li>
-              <li>Difference: +5.2°C</li>
-              <li>Calibration Date: 2024-01-10 (Valid)</li>
+              <li>Hydraulic Oil Level: ADEQUATE</li>
+              <li>Oil Temperature: 45°C (ACCEPTABLE)</li>
+              <li>Visible Leaks: NONE DETECTED</li>
+              <li>Pump Operation: NORMAL SOUND/VIBRATION</li>
+              <li>Main Isolation Valve: CLOSED POSITION</li>
             </ul>
-            <p><strong>Analysis:</strong> The actual tank temperature is 5.2°C higher than what the controller displays, confirming the offset issue.</p>
+            <p><strong>Analysis:</strong> All hydraulic components appear normal except the main isolation valve is in the closed position, preventing pressure from reaching the forging system.</p>
           </div>
         `
       },
-      'review_reports': {
-        title: 'Quality Reports Analysis',
+      'check_interlocks': {
+        title: 'Safety Interlock Analysis',
         content: `
           <div class="result-item">
-            <h4>Recent Quality Data:</h4>
+            <h4>Safety System Status:</h4>
             <ul>
-              <li>Product Quality: Degraded (Last 3 batches)</li>
-              <li>Temperature Trend: Increasing over time</li>
-              <li>Cooling System Load: 85% (Normal: 40-60%)</li>
-              <li>Energy Consumption: +25% above normal</li>
-              <li>Operator Notes: "Product seems overcooked"</li>
+              <li>Emergency Stop: NOT ACTIVATED</li>
+              <li>Safety Guards: ALL CLOSED</li>
+              <li>Pressure Interlock: WAITING FOR PRESSURE</li>
+              <li>Temperature Interlock: SATISFIED</li>
+              <li>Wi-Fi Network: CONNECTED (NOT CRITICAL)</li>
             </ul>
-            <p><strong>Analysis:</strong> The quality issues and increased cooling load confirm the system is running hotter than intended.</p>
+            <p><strong>Analysis:</strong> All safety interlocks are satisfied except the pressure interlock, which is waiting for adequate hydraulic pressure to enable system startup.</p>
           </div>
         `
       },
-      'adjust_offset': {
-        title: 'Offset Adjustment',
+      'test_valves': {
+        title: 'Valve Position Check',
         content: `
           <div class="result-item">
-            <h4>Recommended Action:</h4>
-            <ol>
-              <li>Gradually reduce offset from +5.0°C to 0.0°C</li>
-              <li>Monitor actual temperature during adjustment</li>
-              <li>Verify system stabilizes at 75°C</li>
-              <li>Document the correction</li>
-            </ol>
-            <p><strong>Safety Note:</strong> Make changes gradually to avoid shocking the process. Monitor for 15-20 minutes after each adjustment.</p>
+            <h4>Isolation Valve Status:</h4>
+            <ul>
+              <li>Main Isolation Valve: CLOSED</li>
+              <li>Valve Position Indicator: MANUAL CLOSE</li>
+              <li>Last Operation: Day shift maintenance</li>
+              <li>Reason: "Oil too cold - valve closed for safety"</li>
+              <li>Action Required: Open valve when oil temp OK</li>
+            </ul>
+            <p><strong>Analysis:</strong> The day shift closed the isolation valve when oil was too cold. Now that oil temperature is adequate (45°C > 40°C minimum), the valve can be safely opened.</p>
           </div>
         `
       }
