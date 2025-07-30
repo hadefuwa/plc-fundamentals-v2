@@ -381,8 +381,11 @@ h1 {
     border: 2px solid #333;
     position: relative;
     z-index: 10;
-    overflow: hidden;
+    overflow: auto;
     display: block;
+    /* Ensure proper scrolling behavior */
+    height: auto;
+    min-height: 100vh;
 }
 
 /* Additional solid background overrides */
@@ -3627,5 +3630,47 @@ h1 {
     .about-container {
         overflow-y: auto;
         height: auto;
+    }
+}
+
+/* PWA Scrolling Fix - Ensure scrolling works in standalone and fullscreen modes */
+@media screen and (display-mode: standalone), screen and (display-mode: fullscreen) {
+    /* Ensure body allows scrolling */
+    body {
+        overflow-y: auto !important;
+        height: auto !important;
+        min-height: 100vh;
+    }
+    
+    /* Fix main container scrolling */
+    .main-container {
+        overflow-y: auto !important;
+        height: auto !important;
+        min-height: 100vh;
+    }
+    
+    /* Fix worksheet box scrolling */
+    .worksheet-box {
+        overflow-y: auto !important;
+        height: auto !important;
+        max-height: none !important;
+        position: relative !important;
+    }
+    
+    /* Ensure worksheet content is scrollable */
+    .worksheet-content {
+        overflow-y: auto !important;
+        height: auto !important;
+    }
+    
+    /* Fix any fixed positioning issues */
+    .worksheet-header {
+        position: relative !important;
+    }
+    
+    /* Ensure proper viewport height */
+    html {
+        height: auto !important;
+        overflow-y: auto !important;
     }
 }
