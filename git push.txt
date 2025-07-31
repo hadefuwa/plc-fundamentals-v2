@@ -1,0 +1,6 @@
+git add -A
+git commit -m "Your commit message here"
+git push
+
+
+python -m http.server 8000
