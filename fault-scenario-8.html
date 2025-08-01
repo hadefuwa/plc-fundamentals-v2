@@ -230,11 +230,8 @@
         <div class="question-card">
           <h3>Question 8.1</h3>
           <p>What is the most likely cause of pH control valve hunting?</p>
-          <div class="options">
-            <label><input type="radio" name="q8.1" value="0"> The pH sensor is broken</label>
-            <label><input type="radio" name="q8.1" value="1"> Poor mixing causing slow pH response</label>
-            <label><input type="radio" name="q8.1" value="2"> The acid concentration has changed</label>
-            <label><input type="radio" name="q8.1" value="3"> The controller is not properly tuned</label>
+          <div class="answer-input">
+            <textarea data-question="8.1" placeholder="Enter your answer here..." rows="4"></textarea>
           </div>
           <button onclick="submitAnswer('8.1')" class="submit-btn">Submit Answer</button>
         </div>
@@ -300,11 +297,10 @@
     
     // Submit answer
     function submitAnswer(questionId) {
-      const selectedRadio = document.querySelector(`input[name="q${questionId}"]:checked`);
+      const input = document.querySelector(`[data-question="${questionId}"]`);
+      const answer = input.value.trim();
       
-      if (selectedRadio) {
-        const answer = selectedRadio.value;
-        
+      if (answer) {
         // Save to local storage for backward compatibility
         localStorage.setItem(`fault8_${questionId}`, answer);
         
@@ -322,7 +318,7 @@
           button.textContent = originalText;
         }, 2000);
       } else {
-        alert('Please select an answer before saving.');
+        alert('Please enter content before saving.');
       }
     }
     
@@ -330,8 +326,8 @@
     document.addEventListener('DOMContentLoaded', function() {
       const savedAnswer = localStorage.getItem('fault8_8.1');
       if (savedAnswer !== null) {
-        const radio = document.querySelector(`input[name="q8.1"][value="${savedAnswer}"]`);
-        if (radio) radio.checked = true;
+        const textarea = document.querySelector('[data-question="8.1"]');
+        if (textarea) textarea.value = savedAnswer;
       }
     });
   </script>
