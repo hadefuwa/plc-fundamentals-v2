@@ -215,10 +215,11 @@
             <p>Loading pH control simulation...</p>
           </div>
         </div>
-        <div id="hmi-panel" class="simulation-container" style="margin-top: 20px;"></div>
-        <div id="plc-io-panel" class="simulation-container" style="margin-top: 20px;"></div>
-        <div id="fault-injection-panel" class="simulation-panel" style="margin-top: 20px;"></div>
-        <div id="diagnostic-challenges-panel" class="simulation-panel" style="margin-top: 20px;"></div>
+        <!-- Simulation panels commented out for consistency with other scenarios -->
+        <!-- <div id="hmi-panel" class="simulation-container" style="margin-top: 20px;"></div> -->
+        <!-- <div id="plc-io-panel" class="simulation-container" style="margin-top: 20px;"></div> -->
+        <!-- <div id="fault-injection-panel" class="simulation-panel" style="margin-top: 20px;"></div> -->
+        <!-- <div id="diagnostic-challenges-panel" class="simulation-panel" style="margin-top: 20px;"></div> -->
       </div>
     </div>
 
@@ -298,10 +299,11 @@
     
     // Submit answer
     function submitAnswer(questionId) {
-      const input = document.querySelector(`[data-question="${questionId}"]`);
-      const answer = input.value.trim();
+      const selectedRadio = document.querySelector(`input[name="q${questionId}"]:checked`);
       
-      if (answer) {
+      if (selectedRadio) {
+        const answer = selectedRadio.value;
+        
         // Save to local storage for backward compatibility
         localStorage.setItem(`fault8_${questionId}`, answer);
         
@@ -319,13 +321,13 @@
           button.textContent = originalText;
         }, 2000);
       } else {
-        alert('Please enter content before saving.');
+        alert('Please select an answer before saving.');
       }
     }
     
     // Load saved answers on page load
     document.addEventListener('DOMContentLoaded', function() {
-      const savedAnswer = localStorage.getItem('fault-scenario-8-8.1');
+      const savedAnswer = localStorage.getItem('fault8_8.1');
       if (savedAnswer !== null) {
         const radio = document.querySelector(`input[name="q8.1"][value="${savedAnswer}"]`);
         if (radio) radio.checked = true;
