@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Matrix TSL - Fault Scenario 8: Chemical Reactor pH Control System</title>
+  <title>Matrix TSL - Fault Scenario 8: Aerospace Manufacturing Flow System</title>
   <link rel="stylesheet" href="main.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">    <script src="worksheet-core.js"></script>
@@ -60,7 +60,7 @@
           </button>
         </div>
         <div class="worksheet-header-center">
-          <h1 class="worksheet-title">Fault Scenario 8 - Chemical Reactor pH Control System</h1>
+          <h1 class="worksheet-title">Fault Scenario 8 - Aerospace Manufacturing Flow System</h1>
         </div>
         <div class="worksheet-header-right">
           <button class="worksheet-nav-btn worksheet-next-btn" onclick="window.location.href='cp6773-worksheets.html'">
@@ -73,27 +73,27 @@
 
     <!-- Introduction Section -->
     <div class="worksheet-section introduction-section">
-      <h2 class="section-header"><i class="fas fa-info-circle"></i> Scenario Overview</h2>
+      <h2 class="section-header"><i class="fas fa-info-circle"></i> Fault Scenario 8: Aerospace Manufacturing Flow System</h2>
       <div class="worksheet-content">
         <div class="scenario-info">
           <div class="info-grid">
             <div class="info-item">
-              <strong>Company:</strong> ChemTech Processing Solutions
+              <strong>Company:</strong> Aerospace Manufacturer
             </div>
             <div class="info-item">
-              <strong>Process:</strong> Chemical neutralization reactor
+              <strong>Process:</strong> Flow control system
             </div>
             <div class="info-item">
-              <strong>Shift:</strong> Day shift production
+              <strong>Shift:</strong> Maintenance team investigation
             </div>
             <div class="info-item">
-              <strong>Urgency:</strong> High - Product quality affected
+              <strong>Urgency:</strong> High - System behaving violently, can't maintain flow
             </div>
             <div class="info-item">
               <strong>Difficulty:</strong> Advanced
             </div>
             <div class="info-item">
-              <strong>Time:</strong> 35-45 minutes
+              <strong>Time:</strong> 30-40 minutes
             </div>
           </div>
         </div>
@@ -102,19 +102,19 @@
           <div class="background-text">
             <div class="scenario-description">
               <h3>Background</h3>
-              <p>A chemical reactor's pH control system is showing unstable behavior during critical production runs.</p>
+              <p>You're part of the maintenance team at an Aerospace manufacturer. You're aware that a new colleague has joined the team full of experience and has been tinkering in order to get the system up to full speed quicker.</p>
               
-              <p>The pH value oscillates around the setpoint more than usual, affecting product quality and consistency.</p>
+              <p>The managers were happy with your colleague's progress until this morning, when things started behaving more violently. The system can't maintain the correct flow.</p>
               
-              <p>The control valve for acid addition appears to be hunting, constantly adjusting position.</p>
+              <p>Your new colleague suspects it's the hand valve you replaced a while ago. Management would like to roll the system back but want to also know what the issue is. Go through the HMI and figure out what's happened.</p>
               
-              <p>The pH sensor was calibrated last week and shows correct buffer readings, but something is clearly wrong.</p>
+              <p><strong>Industry Context:</strong> In aerospace manufacturing, flow control systems are critical for precision processes. Unauthorized modifications can cause system instability and safety issues. Proper investigation through HMI systems is essential for identifying root causes.</p>
             </div>
           </div>
           
           <div class="background-image">
-            <img src="assets/scenarios/ph-control.png" alt="pH Control System">
-            <figcaption>pH Control System - Chemical Processing</figcaption>
+            <img src="assets/scenarios/ph-control.png" alt="Aerospace Flow Control System">
+            <figcaption>Aerospace Flow Control System - Manufacturing</figcaption>
           </div>
         </div>
 
@@ -122,40 +122,36 @@
           <h3>System Status</h3>
           <div class="status-grid">
             <div class="status-item">
-              <span class="status-label">pH Setpoint:</span>
-              <span class="status-value">7.0</span>
+              <span class="status-label">System Behavior:</span>
+              <span class="status-value error">VIOLENT</span>
             </div>
             <div class="status-item">
-              <span class="status-label">Current pH:</span>
-              <span class="status-value">7.1</span>
+              <span class="status-label">Flow Control:</span>
+              <span class="status-value error">CAN'T MAINTAIN</span>
             </div>
             <div class="status-item">
-              <span class="status-label">pH Oscillation:</span>
-              <span class="status-value warning">±0.4</span>
+              <span class="status-label">Hand Valve:</span>
+              <span class="status-value warning">SUSPECT</span>
             </div>
             <div class="status-item">
-              <span class="status-label">Valve Position:</span>
-              <span class="status-value">52%</span>
+              <span class="status-label">New Colleague:</span>
+              <span class="status-value">EXPERIENCED</span>
             </div>
             <div class="status-item">
-              <span class="status-label">Valve Hunting:</span>
-              <span class="status-value warning">ACTIVE</span>
+              <span class="status-label">Management Status:</span>
+              <span class="status-value">WANTS ROLLBACK</span>
             </div>
             <div class="status-item">
-              <span class="status-label">Reactor Temperature:</span>
-              <span class="status-value">85°C</span>
+              <span class="status-label">HMI Access:</span>
+              <span class="status-value">AVAILABLE</span>
             </div>
             <div class="status-item">
-              <span class="status-label">Reactor Level:</span>
-              <span class="status-value">75%</span>
+              <span class="status-label">System Speed:</span>
+              <span class="status-value warning">FULL SPEED ATTEMPTED</span>
             </div>
             <div class="status-item">
-              <span class="status-label">Control Stability:</span>
-              <span class="status-value warning">POOR</span>
-            </div>
-            <div class="status-item">
-              <span class="status-label">Product Quality:</span>
-              <span class="status-value warning">DECLINING</span>
+              <span class="status-label">Safety Status:</span>
+              <span class="status-value error">CONCERNING</span>
             </div>
           </div>
         </div>
@@ -167,10 +163,10 @@
       <h2 class="section-header"><i class="fas fa-lightbulb"></i> Troubleshooting Tips</h2>
       <div class="worksheet-content">
         <ul class="objectives-list">
-          <li>Test pH sensor response time and accuracy with buffer solutions</li>
-          <li>Check PID controller parameters and control loop stability</li>
-          <li>Look for valve sizing issues and flow characteristics</li>
-          <li>Monitor for process disturbances and their impact on control</li>
+          <li>Review HMI system logs and recent parameter changes</li>
+          <li>Check hand valve installation and flow control settings</li>
+          <li>Inspect system modifications made by the new colleague</li>
+          <li>Analyze flow control parameters and system behavior patterns</li>
         </ul>
       </div>
     </div>
@@ -180,25 +176,25 @@
       <h2 class="section-header"><i class="fas fa-tools"></i> Investigation Tools</h2>
       <div class="worksheet-content">
         <div class="tools-grid">
-          <div class="tool-card" onclick="useTool('analyze_ph_response')">
-            <i class="fas fa-tachometer-alt"></i>
-            <h3>Analyze pH Response Time</h3>
-            <p>Test pH sensor response time and accuracy</p>
+          <div class="tool-card" onclick="useTool('review_hmi_logs')">
+            <i class="fas fa-desktop"></i>
+            <h3>Review HMI Logs</h3>
+            <p>Check HMI system logs and recent parameter changes</p>
           </div>
-          <div class="tool-card" onclick="useTool('review_control_tuning')">
-            <i class="fas fa-sliders-h"></i>
-            <h3>Review Control Tuning</h3>
-            <p>Check PID parameters and control loop stability</p>
+          <div class="tool-card" onclick="useTool('check_hand_valve')">
+            <i class="fas fa-valve"></i>
+            <h3>Check Hand Valve</h3>
+            <p>Inspect hand valve installation and flow control settings</p>
           </div>
-          <div class="tool-card" onclick="useTool('check_mixing_efficiency')">
-            <i class="fas fa-blender"></i>
-            <h3>Check Mixing Efficiency</h3>
-            <p>Verify proper mixing of acid addition</p>
+          <div class="tool-card" onclick="useTool('inspect_system_modifications')">
+            <i class="fas fa-cog"></i>
+            <h3>Inspect System Modifications</h3>
+            <p>Check modifications made by the new colleague</p>
           </div>
-          <div class="tool-card" onclick="useTool('validate_sensor_installation')">
-            <i class="fas fa-map-marker-alt"></i>
-            <h3>Validate Sensor Installation</h3>
-            <p>Check sensor location and installation quality</p>
+          <div class="tool-card" onclick="useTool('analyze_flow_parameters')">
+            <i class="fas fa-chart-line"></i>
+            <h3>Analyze Flow Parameters</h3>
+            <p>Review flow control parameters and system behavior</p>
           </div>
         </div>
         <div id="tool-results" class="tool-results"></div>
@@ -264,25 +260,25 @@
     
     function useTool(toolId) {
       const toolData = {
-        'analyze_ph_response': {
-          title: 'pH Response Time Analysis',
-          content: 'pH sensor response time test shows 45-second delay (should be <15 seconds). Sensor is responding slowly to pH changes, causing control loop instability. Calibration is correct but response time is inadequate.',
-          icon: 'fas fa-tachometer-alt'
+        'review_hmi_logs': {
+          title: 'HMI Logs Analysis',
+          content: 'HMI system logs reveal multiple parameter changes made by the new colleague over the past week. Flow control parameters were modified to increase system speed, but the changes are causing violent system behavior. Recent modifications include flow rate increases and control loop adjustments.',
+          icon: 'fas fa-desktop'
         },
-        'review_control_tuning': {
-          title: 'Control Tuning Review Results',
-          content: 'PID parameters show aggressive tuning with high proportional gain (2.5) and low integral time (30s). Controller is overreacting to pH changes, causing hunting behavior. Tuning is inappropriate for slow-responding pH system.',
-          icon: 'fas fa-sliders-h'
+        'check_hand_valve': {
+          title: 'Hand Valve Inspection',
+          content: 'Hand valve inspection shows the valve was replaced but not properly calibrated. The valve is operating at 85% capacity instead of the recommended 60-70% range. This is causing flow control instability and violent system behavior.',
+          icon: 'fas fa-valve'
         },
-        'check_mixing_efficiency': {
-          title: 'Mixing Efficiency Analysis',
-          content: 'Mixing efficiency test reveals poor acid distribution in reactor. Acid addition point is too close to pH sensor, causing local pH variations. Mixing time is 3 minutes (should be <1 minute) for proper pH response.',
-          icon: 'fas fa-blender'
+        'inspect_system_modifications': {
+          title: 'System Modifications Review',
+          content: 'Review of system modifications shows the new colleague bypassed several safety interlocks and increased flow control parameters beyond recommended limits. Multiple control loops were modified to achieve full speed operation, causing system instability.',
+          icon: 'fas fa-cog'
         },
-        'validate_sensor_installation': {
-          title: 'Sensor Installation Validation',
-          content: 'pH sensor installation check shows sensor is located in dead zone with poor flow. Sensor is mounted too close to reactor wall and acid injection point. Installation location is causing measurement delays and local pH variations.',
-          icon: 'fas fa-map-marker-alt'
+        'analyze_flow_parameters': {
+          title: 'Flow Parameters Analysis',
+          content: 'Flow parameter analysis reveals control loop settings were changed from conservative to aggressive values. Flow rate increased by 40%, control response time reduced by 60%, and safety margins eliminated. These changes are causing the violent system behavior.',
+          icon: 'fas fa-chart-line'
         }
       };
       
