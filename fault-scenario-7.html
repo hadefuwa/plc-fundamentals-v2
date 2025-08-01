@@ -197,8 +197,8 @@
       </div>
     </div>
 
-    <!-- Simulation Section -->
-    <div class="worksheet-section simulation-section">
+    <!-- Simulation Section - Commented out for consistency with other scenarios -->
+    <!-- <div class="worksheet-section simulation-section">
       <h2 class="section-header"><i class="fas fa-cogs"></i> System Simulation</h2>
       <div class="worksheet-content">
         <div id="injection-molding-simulation" class="simulation-container">
@@ -212,31 +212,44 @@
         <div id="fault-injection-panel" class="simulation-panel" style="margin-top: 20px;"></div>
         <div id="diagnostic-challenges-panel" class="simulation-panel" style="margin-top: 20px;"></div>
       </div>
-    </div>
+    </div> -->
 
     <!-- Assessment Questions Section -->
     <div class="worksheet-section questions-section">
-      <h2 class="section-header"><i class="fas fa-question-circle"></i> Assessment Questions</h2>
-      <div class="worksheet-content">
-        <div class="question-card">
-          <h3>Question 7.1</h3>
-          <p>What is the most likely cause of temperature variations between mold cavities?</p>
-          <div class="options">
-            <label><input type="radio" name="q7.1" value="0"> The temperature controller is broken</label>
-            <label><input type="radio" name="q7.1" value="1"> Uneven cooling water flow distribution between cavities</label>
-            <label><input type="radio" name="q7.1" value="2"> The plastic material has changed properties</label>
-            <label><input type="radio" name="q7.1" value="3"> The operator is using the wrong temperature setting</label>
+      <h2 class="section-header"><i class="fas fa-clipboard-list"></i> Fault Analysis Worksheet</h2>
+      <div class="questions-content">
+        <div class="analysis-section">
+          <h4>Observations:</h4>
+          <textarea class="answer-input" data-question="observations" placeholder="Record your observations of the system behavior, readings, and any unusual indicators..."></textarea>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer('observations')">Save Observations</button>
           </div>
-          <button onclick="submitAnswer('7.1')" class="submit-btn">Submit Answer</button>
+        </div>
+        
+        <div class="analysis-section">
+          <h4>Problem:</h4>
+          <textarea class="answer-input" data-question="problem" placeholder="Identify the root cause and describe the specific problem affecting the system..."></textarea>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer('problem')">Save Problem Analysis</button>
+          </div>
+        </div>
+        
+        <div class="analysis-section">
+          <h4>Solution:</h4>
+          <textarea class="answer-input" data-question="solution" placeholder="Describe the steps you would take to resolve the issue safely and effectively..."></textarea>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer('solution')">Save Solution</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <script src="hmi-simulation.js"></script>
-  <script src="plc-simulation.js"></script>
-  <script src="valve-simulation.js"></script>
-  <script src="pump-simulation.js"></script>
+  <!-- Simulation scripts commented out to prevent JavaScript conflicts -->
+  <!-- <script src="hmi-simulation.js"></script> -->
+  <!-- <script src="plc-simulation.js"></script> -->
+  <!-- <script src="valve-simulation.js"></script> -->
+  <!-- <script src="pump-simulation.js"></script> -->
   <script>
     // Tool usage tracking
     let toolResults = {};
@@ -317,10 +330,25 @@
     
     // Load saved answers on page load
     document.addEventListener('DOMContentLoaded', function() {
-      const savedAnswer = localStorage.getItem('fault-scenario-7-7.1');
-      if (savedAnswer !== null) {
-        const radio = document.querySelector(`input[name="q7.1"][value="${savedAnswer}"]`);
-        if (radio) radio.checked = true;
+      // Load observations
+      const savedObservations = localStorage.getItem('fault7_observations');
+      if (savedObservations !== null) {
+        const textarea = document.querySelector('[data-question="observations"]');
+        if (textarea) textarea.value = savedObservations;
+      }
+      
+      // Load problem
+      const savedProblem = localStorage.getItem('fault7_problem');
+      if (savedProblem !== null) {
+        const textarea = document.querySelector('[data-question="problem"]');
+        if (textarea) textarea.value = savedProblem;
+      }
+      
+      // Load solution
+      const savedSolution = localStorage.getItem('fault7_solution');
+      if (savedSolution !== null) {
+        const textarea = document.querySelector('[data-question="solution"]');
+        if (textarea) textarea.value = savedSolution;
       }
     });
   </script>
