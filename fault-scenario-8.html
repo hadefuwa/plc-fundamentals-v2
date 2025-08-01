@@ -224,15 +224,30 @@
 
     <!-- Assessment Questions Section -->
     <div class="worksheet-section questions-section">
-      <h2 class="section-header"><i class="fas fa-question-circle"></i> Assessment Questions</h2>
-      <div class="worksheet-content">
-        <div class="question-card">
-          <h3>Question 8.1</h3>
-          <p>What is the most likely cause of pH control valve hunting?</p>
-          <div class="answer-input">
-            <textarea data-question="8.1" placeholder="Enter your answer here..." rows="4"></textarea>
+      <h2 class="section-header"><i class="fas fa-clipboard-list"></i> Fault Analysis Worksheet</h2>
+      <div class="questions-content">
+        <div class="analysis-section">
+          <h4>Observations:</h4>
+          <textarea class="answer-input" data-question="observations" placeholder="Record your observations of the system behavior, readings, and any unusual indicators..."></textarea>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer('observations')">Save Observations</button>
           </div>
-          <button onclick="submitAnswer('8.1')" class="submit-btn">Submit Answer</button>
+        </div>
+        
+        <div class="analysis-section">
+          <h4>Problem:</h4>
+          <textarea class="answer-input" data-question="problem" placeholder="Identify the root cause and describe the specific problem affecting the system..."></textarea>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer('problem')">Save Problem Analysis</button>
+          </div>
+        </div>
+        
+        <div class="analysis-section">
+          <h4>Solution:</h4>
+          <textarea class="answer-input" data-question="solution" placeholder="Describe the steps you would take to resolve the issue safely and effectively..."></textarea>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer('solution')">Save Solution</button>
+          </div>
         </div>
       </div>
     </div>
@@ -323,10 +338,25 @@
     
     // Load saved answers on page load
     document.addEventListener('DOMContentLoaded', function() {
-      const savedAnswer = localStorage.getItem('fault8_8.1');
-      if (savedAnswer !== null) {
-        const textarea = document.querySelector('[data-question="8.1"]');
-        if (textarea) textarea.value = savedAnswer;
+      // Load observations
+      const savedObservations = localStorage.getItem('fault8_observations');
+      if (savedObservations !== null) {
+        const textarea = document.querySelector('[data-question="observations"]');
+        if (textarea) textarea.value = savedObservations;
+      }
+      
+      // Load problem
+      const savedProblem = localStorage.getItem('fault8_problem');
+      if (savedProblem !== null) {
+        const textarea = document.querySelector('[data-question="problem"]');
+        if (textarea) textarea.value = savedProblem;
+      }
+      
+      // Load solution
+      const savedSolution = localStorage.getItem('fault8_solution');
+      if (savedSolution !== null) {
+        const textarea = document.querySelector('[data-question="solution"]');
+        if (textarea) textarea.value = savedSolution;
       }
     });
   </script>
