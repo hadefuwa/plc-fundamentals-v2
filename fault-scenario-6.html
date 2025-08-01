@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Matrix TSL - Fault Scenario 6: Steam Sterilization System</title>
+  <title>Matrix TSL - Fault Scenario 6: River Bridge Waste Company</title>
   <link rel="stylesheet" href="main.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">    <script src="worksheet-core.js"></script>
@@ -60,7 +60,7 @@
           </button>
         </div>
         <div class="worksheet-header-center">
-          <h1 class="worksheet-title">Fault Scenario 6 - Steam Sterilization System</h1>
+          <h1 class="worksheet-title">Fault Scenario 6 - River Bridge Waste Company</h1>
         </div>
         <div class="worksheet-header-right">
           <button class="worksheet-nav-btn worksheet-next-btn" onclick="window.location.href='fault-scenario-7.html'">
@@ -72,27 +72,27 @@
     </div>
     <!-- Introduction Section -->
     <div class="worksheet-section introduction-section">
-      <h2 class="section-header"><i class="fas fa-info-circle"></i> Scenario Overview</h2>
+      <h2 class="section-header"><i class="fas fa-info-circle"></i> Fault Scenario 6: River Bridge Waste Company</h2>
       <div class="worksheet-content">
         <div class="scenario-info">
           <div class="info-grid">
             <div class="info-item">
-              <strong>Company:</strong> Fresh Foods Processing Inc.
+              <strong>Company:</strong> River Bridge Waste Company
             </div>
             <div class="info-item">
-              <strong>Process:</strong> Steam sterilization for food safety
+              <strong>Process:</strong> Wastewater treatment system
             </div>
             <div class="info-item">
-              <strong>Shift:</strong> First day as maintenance technician
+              <strong>Shift:</strong> First day on the job
             </div>
             <div class="info-item">
-              <strong>Urgency:</strong> High - Food safety compliance required
+              <strong>Urgency:</strong> High - System keeps shutting down randomly
             </div>
             <div class="info-item">
-              <strong>Difficulty:</strong> Beginner
+              <strong>Difficulty:</strong> Advanced
             </div>
             <div class="info-item">
-              <strong>Time:</strong> 20-30 minutes
+              <strong>Time:</strong> 30-40 minutes
             </div>
           </div>
         </div>
@@ -101,19 +101,19 @@
           <div class="background-text">
             <div class="scenario-description">
               <h3>Background</h3>
-              <p>You've just started as a maintenance technician at a food processing plant.</p>
+              <p>You start your first day on the job at River Bridge Waste Company and their wastewater system is in bad shape. The maintenance guys are all mechanical and you're electrical biased so it's now your job to fix things.</p>
               
-              <p>During your first day, an operator reports that the steam sterilization system isn't reaching the required temperature.</p>
+              <p>They've recently swapped out a broken PLC module, repaired the Estop and fixed the temperature sensor wiring. They've said the float switches need to be replaced at some point.</p>
               
-              <p>The system should maintain 121°C for proper sterilization, but it's only reaching 115°C.</p>
+              <p>Even with those repairs, the system keeps shutting down randomly. It's just happened again, please help.</p>
               
-              <p>The steam pressure gauge shows normal supply pressure, but something is clearly wrong with the temperature control.</p>
+              <p><strong>Industry Context:</strong> In wastewater treatment, system reliability is critical for environmental compliance. Random shutdowns can cause untreated wastewater to bypass treatment, leading to environmental violations and regulatory fines.</p>
             </div>
           </div>
           
           <div class="background-image">
-            <img src="assets/scenarios/sterilizer.png" alt="Steam Sterilization System">
-            <figcaption>Steam Sterilization System - Food Processing</figcaption>
+            <img src="assets/scenarios/sterilizer.png" alt="Wastewater Treatment System">
+            <figcaption>Wastewater Treatment System - Environmental Compliance</figcaption>
           </div>
         </div>
 
@@ -121,32 +121,32 @@
           <h3>System Status</h3>
           <div class="status-grid">
             <div class="status-item">
-              <span class="status-label">Target Temperature:</span>
-              <span class="status-value">121°C</span>
+              <span class="status-label">System Operation:</span>
+              <span class="status-value error">SHUT DOWN</span>
             </div>
             <div class="status-item">
-              <span class="status-label">Current Temperature:</span>
-              <span class="status-value warning">115°C</span>
+              <span class="status-label">PLC Module:</span>
+              <span class="status-value">RECENTLY REPLACED</span>
             </div>
             <div class="status-item">
-              <span class="status-label">Steam Pressure:</span>
-              <span class="status-value">2.1 bar</span>
+              <span class="status-label">Emergency Stop:</span>
+              <span class="status-value">RECENTLY REPAIRED</span>
             </div>
             <div class="status-item">
-              <span class="status-label">Required Pressure:</span>
-              <span class="status-value">2.0 bar</span>
+              <span class="status-label">Temperature Sensor:</span>
+              <span class="status-value">RECENTLY FIXED</span>
             </div>
             <div class="status-item">
-              <span class="status-label">Controller Status:</span>
-              <span class="status-value warning">FLICKERING</span>
+              <span class="status-label">Float Switches:</span>
+              <span class="status-value warning">NEED REPLACEMENT</span>
             </div>
             <div class="status-item">
-              <span class="status-label">Sterilization Status:</span>
-              <span class="status-value critical">INADEQUATE</span>
+              <span class="status-label">Shutdown Pattern:</span>
+              <span class="status-value error">RANDOM</span>
             </div>
             <div class="status-item">
-              <span class="status-label">Food Safety Compliance:</span>
-              <span class="status-value critical">FAILED</span>
+              <span class="status-label">Environmental Compliance:</span>
+              <span class="status-value error">AT RISK</span>
             </div>
           </div>
         </div>
@@ -158,10 +158,10 @@
       <h2 class="section-header"><i class="fas fa-lightbulb"></i> Troubleshooting Tips</h2>
       <div class="worksheet-content">
         <ul class="objectives-list">
-          <li>Verify power supply voltage and quality to the controller</li>
-          <li>Check thermocouple wiring and connections for damage</li>
-          <li>Use portable thermometer to verify actual sterilizer temperature</li>
-          <li>Test controller calibration and sensor response time</li>
+          <li>Check for loose electrical connections and poor wiring quality</li>
+          <li>Inspect float switch condition and electrical integrity</li>
+          <li>Verify PLC module installation and configuration</li>
+          <li>Test emergency stop circuit and safety interlocks</li>
         </ul>
       </div>
     </div>
@@ -171,25 +171,25 @@
       <h2 class="section-header"><i class="fas fa-tools"></i> Investigation Tools</h2>
       <div class="worksheet-content">
         <div class="tools-grid">
-          <div class="tool-card" onclick="useTool('check_power_supply')">
-            <i class="fas fa-bolt"></i>
-            <h3>Check Controller Power Supply</h3>
-            <p>Verify voltage and power quality to the controller</p>
-          </div>
-          <div class="tool-card" onclick="useTool('inspect_wiring')">
+          <div class="tool-card" onclick="useTool('check_electrical_connections')">
             <i class="fas fa-plug"></i>
-            <h3>Inspect Sensor Wiring</h3>
-            <p>Check thermocouple wiring and connections</p>
+            <h3>Check Electrical Connections</h3>
+            <p>Inspect for loose connections and poor wiring quality</p>
           </div>
-          <div class="tool-card" onclick="useTool('verify_actual_temperature')">
-            <i class="fas fa-thermometer-half"></i>
-            <h3>Verify Actual Temperature</h3>
-            <p>Use portable thermometer to check real sterilizer temperature</p>
+          <div class="tool-card" onclick="useTool('test_float_switches')">
+            <i class="fas fa-toggle-on"></i>
+            <h3>Test Float Switches</h3>
+            <p>Check float switch condition and electrical integrity</p>
           </div>
-          <div class="tool-card" onclick="useTool('test_controller_calibration')">
-            <i class="fas fa-cog"></i>
-            <h3>Test Controller Calibration</h3>
-            <p>Check if controller is reading sensor correctly</p>
+          <div class="tool-card" onclick="useTool('verify_plc_installation')">
+            <i class="fas fa-microchip"></i>
+            <h3>Verify PLC Installation</h3>
+            <p>Check PLC module installation and configuration</p>
+          </div>
+          <div class="tool-card" onclick="useTool('test_emergency_stop')">
+            <i class="fas fa-stop-circle"></i>
+            <h3>Test Emergency Stop</h3>
+            <p>Check emergency stop circuit and safety interlocks</p>
           </div>
         </div>
         <div id="tool-results" class="tool-results"></div>
@@ -257,25 +257,25 @@
     
     function useTool(toolId) {
       const toolData = {
-        'check_power_supply': {
-          title: 'Power Supply Analysis Results',
-          content: 'Power supply voltage is fluctuating between 22-26V (should be stable 24V). Poor electrical connections detected at terminal block. Controller is receiving unstable power, causing display flickering.',
-          icon: 'fas fa-bolt'
-        },
-        'inspect_wiring': {
-          title: 'Sensor Wiring Inspection Results',
-          content: 'Thermocouple wiring shows loose connection at terminal block. Wire insulation is damaged near the connection point. Intermittent signal loss is causing temperature reading fluctuations.',
+        'check_electrical_connections': {
+          title: 'Electrical Connections Analysis',
+          content: 'Multiple loose electrical connections found throughout the system. Terminal blocks show signs of corrosion and poor contact. Several wire connections are barely making contact, causing intermittent system shutdowns.',
           icon: 'fas fa-plug'
         },
-        'verify_actual_temperature': {
-          title: 'Actual Temperature Verification',
-          content: 'Portable thermometer reading shows actual sterilizer temperature is 121°C. The controller display is incorrect due to electrical issues. The sterilization process is actually working correctly.',
-          icon: 'fas fa-thermometer-half'
+        'test_float_switches': {
+          title: 'Float Switch Test Results',
+          content: 'Float switches show severe corrosion and electrical degradation. Switch contacts are intermittent and unreliable. The switches are sending false signals to the PLC, causing random system shutdowns.',
+          icon: 'fas fa-toggle-on'
         },
-        'test_controller_calibration': {
-          title: 'Controller Calibration Test',
-          content: 'Controller calibration is correct. The issue is electrical - poor connections and unstable power supply are causing the display to show incorrect readings despite proper sensor input.',
-          icon: 'fas fa-cog'
+        'verify_plc_installation': {
+          title: 'PLC Installation Verification',
+          content: 'PLC module installation appears correct, but the module is receiving intermittent signals from corroded float switches. The PLC is responding to false shutdown signals from the degraded switches.',
+          icon: 'fas fa-microchip'
+        },
+        'test_emergency_stop': {
+          title: 'Emergency Stop Circuit Test',
+          content: 'Emergency stop circuit is functioning correctly after recent repair. The issue is not with the E-stop but with the float switch signals causing the PLC to initiate shutdown sequences.',
+          icon: 'fas fa-stop-circle'
         }
       };
       
@@ -350,3 +350,4 @@
   </script>
 </body>
 </html> 
+
