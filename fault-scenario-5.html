@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Matrix TSL - Fault Scenario 5: Brine Flow Control System</title>
+  <title>Matrix TSL - Fault Scenario 5: Potash Mine Oil Level Monitoring</title>
   <link rel="stylesheet" href="main.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">    <script src="worksheet-core.js"></script>
@@ -60,7 +60,7 @@
           </button>
         </div>
         <div class="worksheet-header-center">
-          <h1 class="worksheet-title">Fault Scenario 5 - Brine Flow Control System</h1>
+          <h1 class="worksheet-title">Fault Scenario 5 - Potash Mine Oil Level Monitoring</h1>
         </div>
         <div class="worksheet-header-right">
           <button class="worksheet-nav-btn worksheet-next-btn" onclick="window.location.href='fault-scenario-6.html'">
@@ -72,27 +72,27 @@
     </div>
     <!-- Introduction Section -->
     <div class="worksheet-section introduction-section">
-      <h2 class="section-header"><i class="fas fa-info-circle"></i> Scenario Overview</h2>
+      <h2 class="section-header"><i class="fas fa-info-circle"></i> Fault Scenario 5: Potash Mine Oil Level Monitoring</h2>
       <div class="worksheet-content">
         <div class="scenario-info">
           <div class="info-grid">
             <div class="info-item">
-              <strong>Company:</strong> Northern Potash Mining Ltd.
+              <strong>Company:</strong> Potash Mine in Yorkshire
             </div>
             <div class="info-item">
-              <strong>Process:</strong> Brine injection system for potash extraction
+              <strong>Process:</strong> Oil level monitoring for mining shafts
             </div>
             <div class="info-item">
-              <strong>Shift:</strong> Day shift operation
+              <strong>Shift:</strong> Emergency call-out
             </div>
             <div class="info-item">
-              <strong>Urgency:</strong> Medium - Production efficiency declining
+              <strong>Urgency:</strong> High - System won't start, safety critical
             </div>
             <div class="info-item">
               <strong>Difficulty:</strong> Advanced
             </div>
             <div class="info-item">
-              <strong>Time:</strong> 35-45 minutes
+              <strong>Time:</strong> 30-40 minutes
             </div>
           </div>
         </div>
@@ -101,19 +101,19 @@
           <div class="background-text">
             <div class="scenario-description">
               <h3>Background</h3>
-              <p>At a potash mine, the brine injection system's flow control loop is showing inconsistent behavior.</p>
+              <p>Your company has installed a new oil level monitoring system into a Potash mine in Yorkshire. This system monitors the oil level of two mining shafts that carry workers and potash minerals up a shaft.</p>
               
-              <p>Operators report that the flow rate fluctuates despite a constant setpoint, affecting the extraction process efficiency.</p>
+              <p>This system was known for having many huge leaks, which would lead to miners being stuck down in the mine. Your company installed a system to monitor if the oil is too high or too low.</p>
               
-              <p>The control valve position indicator shows frequent movement, suggesting the system is 'hunting' for the correct position.</p>
+              <p>They've asked you to come out and fix the system as it won't start. There's an alarm active on the system, the system LED is red, but the alarm screen shows nothing. You're told the oil level is normal.</p>
               
-              <p>Pressure sensors upstream and downstream of the control valve show stable readings, ruling out pressure-related issues.</p>
+              <p><strong>Industry Context:</strong> In mining operations, oil level monitoring is critical for shaft safety. Oil leaks can cause catastrophic failures that trap workers underground. The monitoring system must be reliable and accurate to prevent such incidents.</p>
             </div>
           </div>
           
           <div class="background-image">
-            <img src="assets/scenarios/brine-system.png" alt="Brine Injection System">
-            <figcaption>Brine Injection System - Potash Mining</figcaption>
+            <img src="assets/scenarios/brine-system.png" alt="Potash Mine Oil Level Monitoring">
+            <figcaption>Potash Mine Oil Level Monitoring - Mining Safety</figcaption>
           </div>
         </div>
 
@@ -121,36 +121,36 @@
           <h3>System Status</h3>
           <div class="status-grid">
             <div class="status-item">
-              <span class="status-label">Flow Setpoint:</span>
-              <span class="status-value">250 L/min</span>
+              <span class="status-label">System Operation:</span>
+              <span class="status-value error">WON'T START</span>
             </div>
             <div class="status-item">
-              <span class="status-label">Current Flow:</span>
-              <span class="status-value">248 L/min</span>
+              <span class="status-label">System LED:</span>
+              <span class="status-value error">RED</span>
             </div>
             <div class="status-item">
-              <span class="status-label">Flow Variation:</span>
-              <span class="status-value warning">±15 L/min</span>
+              <span class="status-label">Alarm Status:</span>
+              <span class="status-value warning">ACTIVE</span>
             </div>
             <div class="status-item">
-              <span class="status-label">Valve Position:</span>
-              <span class="status-value">67%</span>
+              <span class="status-label">Alarm Screen:</span>
+              <span class="status-value">SHOWS NOTHING</span>
             </div>
             <div class="status-item">
-              <span class="status-label">Valve Movement:</span>
-              <span class="status-value warning">HUNTING</span>
+              <span class="status-label">Oil Level:</span>
+              <span class="status-value">NORMAL</span>
             </div>
             <div class="status-item">
-              <span class="status-label">Brine Temperature:</span>
-              <span class="status-value">45°C</span>
+              <span class="status-label">Shaft 1 Status:</span>
+              <span class="status-value">UNKNOWN</span>
             </div>
             <div class="status-item">
-              <span class="status-label">Control Stability:</span>
-              <span class="status-value warning">POOR</span>
+              <span class="status-label">Shaft 2 Status:</span>
+              <span class="status-value">UNKNOWN</span>
             </div>
             <div class="status-item">
-              <span class="status-label">Extraction Efficiency:</span>
-              <span class="status-value warning">DECLINING</span>
+              <span class="status-label">Safety Status:</span>
+              <span class="status-value error">CRITICAL</span>
             </div>
           </div>
         </div>
@@ -162,40 +162,41 @@
       <h2 class="section-header"><i class="fas fa-lightbulb"></i> Troubleshooting Tips</h2>
       <div class="worksheet-content">
         <ul class="objectives-list">
-          <li>Check valve sizing and flow characteristics vs system requirements</li>
-          <li>Look for cavitation conditions and pressure drop issues</li>
-          <li>Review PID controller tuning parameters and response curves</li>
-          <li>Test valve response time and position accuracy</li>
+          <li>Check alarm system communication and display functionality</li>
+          <li>Verify sensor connections and signal integrity</li>
+          <li>Inspect system power supply and electrical connections</li>
+          <li>Test alarm screen and LED indicator functionality</li>
         </ul>
       </div>
     </div>
 
-    <!-- Investigation Tools Section -->
+    <!-- Interactive Tools Section -->
     <div class="worksheet-section tools-section">
       <h2 class="section-header"><i class="fas fa-tools"></i> Investigation Tools</h2>
-      <div class="tools-content">
+      <div class="worksheet-content">
         <div class="tools-grid">
-          <div class="tool-card" data-tool="analyze_valve_characteristics">
-            <h4><i class="fas fa-valve"></i> Analyze Valve Flow Characteristics</h4>
-            <p>Check valve sizing and flow characteristics vs system requirements</p>
-            <button class="tool-btn" onclick="useTool('analyze_valve_characteristics')">Use Tool</button>
+          <div class="tool-card" onclick="useTool('check_alarm_system')">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h3>Check Alarm System</h3>
+            <p>Test alarm communication and display functionality</p>
           </div>
-          <div class="tool-card" data-tool="check_cavitation_conditions">
-            <h4><i class="fas fa-water"></i> Check for Cavitation Conditions</h4>
-            <p>Evaluate pressure drop and vapor pressure conditions</p>
-            <button class="tool-btn" onclick="useTool('check_cavitation_conditions')">Use Tool</button>
+          <div class="tool-card" onclick="useTool('test_sensor_connections')">
+            <i class="fas fa-microchip"></i>
+            <h3>Test Sensor Connections</h3>
+            <p>Verify sensor connections and signal integrity</p>
           </div>
-          <div class="tool-card" data-tool="review_controller_tuning">
-            <h4><i class="fas fa-sliders-h"></i> Review Controller Tuning</h4>
-            <p>Check PID parameters and control loop response</p>
-            <button class="tool-btn" onclick="useTool('review_controller_tuning')">Use Tool</button>
+          <div class="tool-card" onclick="useTool('inspect_power_supply')">
+            <i class="fas fa-bolt"></i>
+            <h3>Inspect Power Supply</h3>
+            <p>Check system power and electrical connections</p>
           </div>
-          <div class="tool-card" data-tool="monitor_temperature_effects">
-            <h4><i class="fas fa-thermometer-half"></i> Monitor Temperature Effects</h4>
-            <p>Analyze how brine temperature affects flow characteristics</p>
-            <button class="tool-btn" onclick="useTool('monitor_temperature_effects')">Use Tool</button>
+          <div class="tool-card" onclick="useTool('test_display_functionality')">
+            <i class="fas fa-desktop"></i>
+            <h3>Test Display Functionality</h3>
+            <p>Check alarm screen and LED indicator operation</p>
           </div>
         </div>
+        <div id="tool-results" class="tool-results"></div>
       </div>
     </div>
 
@@ -268,25 +269,25 @@
     
     function useTool(toolId) {
       const toolData = {
-        'analyze_valve_characteristics': {
-          title: 'Valve Flow Characteristics Analysis',
-          content: 'Valve sizing analysis shows the control valve is oversized for the current flow range. Operating at 67% position indicates poor control resolution. Valve characteristic curve shows non-linear behavior in the operating range.',
-          icon: 'fas fa-valve'
+        'check_alarm_system': {
+          title: 'Alarm System Analysis',
+          content: 'Alarm system communication test reveals no signal from the oil level sensors. The alarm is active but no sensor data is being received. This explains why the alarm screen shows nothing despite an active alarm.',
+          icon: 'fas fa-exclamation-triangle'
         },
-        'check_cavitation_conditions': {
-          title: 'Cavitation Analysis Results',
-          content: 'Cavitation analysis reveals critical pressure drop conditions. With brine temperature at 45°C, the vapor pressure margin is reduced. Pressure drop across the valve exceeds the cavitation threshold, causing flow instability.',
-          icon: 'fas fa-water'
+        'test_sensor_connections': {
+          title: 'Sensor Connection Test Results',
+          content: 'Sensor connection test shows both oil level sensors are disconnected. Signal integrity test reveals open circuits on both sensor lines. The system cannot start because it has no sensor input to validate oil levels.',
+          icon: 'fas fa-microchip'
         },
-        'review_controller_tuning': {
-          title: 'Controller Tuning Review',
-          content: 'PID parameters show aggressive tuning with high proportional gain. This amplifies the flow variations caused by cavitation. Controller is responding to noise rather than actual process changes.',
-          icon: 'fas fa-sliders-h'
+        'inspect_power_supply': {
+          title: 'Power Supply Inspection',
+          content: 'Power supply test shows normal voltage output (24V DC). However, the sensor power circuit shows intermittent connection. The sensor power is cycling on and off, preventing stable sensor operation.',
+          icon: 'fas fa-bolt'
         },
-        'monitor_temperature_effects': {
-          title: 'Temperature Effects Analysis',
-          content: 'Temperature correlation analysis shows direct relationship between brine temperature and control instability. Higher temperatures reduce cavitation margin, causing more frequent valve hunting behavior.',
-          icon: 'fas fa-thermometer-half'
+        'test_display_functionality': {
+          title: 'Display Functionality Test',
+          content: 'Display functionality test shows the alarm screen and LED are working correctly. The red LED indicates an active alarm, but the screen shows nothing because there is no sensor data to display.',
+          icon: 'fas fa-desktop'
         }
       };
       
