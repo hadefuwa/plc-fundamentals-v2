@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Matrix TSL - Fault Scenario 3: CNC Coolant System Performance</title>
+  <title>Matrix TSL - Fault Scenario 3: CNC Cooling System</title>
   <link rel="stylesheet" href="main.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">    <script src="worksheet-core.js"></script>
@@ -60,7 +60,7 @@
           </button>
         </div>
         <div class="worksheet-header-center">
-          <h1 class="worksheet-title">Fault Scenario 3 - Bad Flow</h1>
+          <h1 class="worksheet-title">Fault Scenario 3 - CNC Cooling System</h1>
         </div>
         <div class="worksheet-header-right">
           <button class="worksheet-nav-btn worksheet-next-btn" onclick="window.location.href='fault-scenario-4.html'">
@@ -72,27 +72,27 @@
     </div>
     <!-- Introduction Section -->
     <div class="worksheet-section introduction-section">
-      <h2 class="section-header"><i class="fas fa-info-circle"></i> Fault Scenario 3: Bad Flow</h2>
+      <h2 class="section-header"><i class="fas fa-info-circle"></i> Fault Scenario 3: CNC Cooling System</h2>
       <div class="worksheet-content">
         <div class="scenario-info">
           <div class="info-grid">
             <div class="info-item">
-              <strong>Scenario:</strong> Bad Flow
+              <strong>Company:</strong> Automotive Parts Manufacturing Plant
             </div>
             <div class="info-item">
-              <strong>Process:</strong> Flow sensor monitoring and control
+              <strong>Process:</strong> CNC machine cooling system
             </div>
             <div class="info-item">
-              <strong>Shift:</strong> Production shift during normal operation
+              <strong>Shift:</strong> Night shift operator concern
             </div>
             <div class="info-item">
-              <strong>Urgency:</strong> Medium - System performance affected
+              <strong>Urgency:</strong> Medium - No alarms but operator concern
             </div>
             <div class="info-item">
-              <strong>Difficulty:</strong> Beginner
+              <strong>Difficulty:</strong> Intermediate
             </div>
             <div class="info-item">
-              <strong>Time:</strong> 20-30 minutes
+              <strong>Time:</strong> 25-35 minutes
             </div>
           </div>
         </div>
@@ -100,49 +100,49 @@
         <div class="background-section">
           <div class="background-text">
             <div class="scenario-description">
-              <h3>Scenario Background</h3>
-              <p>You're monitoring a flow system where the flow manometer gauge shows the system is delivering approximately 50 litres per minute too much flow.</p>
+              <h3>Background</h3>
+              <p>You maintain the cooling system for CNC machines in an automotive parts plant. The system circulates temperature-controlled coolant to prevent overheating. The night shift operator flags you down.</p>
               
-              <p>The flow sensor on the I/O screen has an offset applied that is causing the system to deliver excessive flow rates. This is affecting system performance and efficiency.</p>
+              <p>No alarms. No fault codes. Everything on the HMI looks normal. But he's certain something is off. He points to the return line. Coolant is splashing aggressively into the reservoir, creating turbulence he's never seen before.</p>
               
-              <p>The flow readings are consistently higher than the expected values, and the system is not operating within normal parameters.</p>
+              <p>A few machines have developed slight condensation near the cooling blocks – "This is not normal" he shouts. The operator has been working here for 15 years and knows the system behavior intimately.</p>
               
-              <p><strong>Industry Context:</strong> This kind of problem tends to occur in industry because flow issues can be caused by blockages, airlocks in the piping, pump cavitation, or partially closed valves. Wear and tear on pumps or leaks in the system can also reduce flow, while buildup of debris in filters or strainers can create unexpected restrictions. If these issues aren't identified and fixed, the system struggles to maintain proper flow rates, leading to unstable operation.</p>
+              <p><strong>Industry Context:</strong> In CNC manufacturing, cooling systems are critical for maintaining precise machining tolerances and preventing thermal expansion. Unusual coolant behavior can indicate air entrainment, pump cavitation, or system pressure issues that could affect machining quality and tool life.</p>
             </div>
           </div>
           
           <div class="background-image">
-            <img src="assets/scenarios/cnc-cooling.png" alt="Flow Sensor System">
-            <figcaption>Flow Sensor System - Industrial Processing</figcaption>
+            <img src="assets/scenarios/cnc-cooling.png" alt="CNC Cooling System">
+            <figcaption>CNC Cooling System - Automotive Manufacturing</figcaption>
           </div>
         </div>
 
         <div class="system-overview">
-          <h3>Initial System Status</h3>
+          <h3>System Status</h3>
           <div class="status-grid">
             <div class="status-item">
-              <span class="status-label">Expected Flow Rate:</span>
-              <span class="status-value">100 L/min</span>
-            </div>
-            <div class="status-item">
-              <span class="status-label">Actual Flow Rate:</span>
-              <span class="status-value warning">150 L/min</span>
-            </div>
-            <div class="status-item">
-              <span class="status-label">Flow Offset:</span>
-              <span class="status-value error">+50 L/min</span>
-            </div>
-            <div class="status-item">
-              <span class="status-label">System Performance:</span>
-              <span class="status-value warning">REDUCED</span>
-            </div>
-            <div class="status-item">
-              <span class="status-label">Flow Sensor Status:</span>
-              <span class="status-value warning">OFFSET APPLIED</span>
+              <span class="status-label">HMI Status:</span>
+              <span class="status-value">NORMAL</span>
             </div>
             <div class="status-item">
               <span class="status-label">Alarm Status:</span>
-              <span class="status-value warning">HIGH FLOW</span>
+              <span class="status-value">NONE</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">Return Line Behavior:</span>
+              <span class="status-value warning">AGGRESSIVE SPLASHING</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">Reservoir Turbulence:</span>
+              <span class="status-value warning">UNUSUAL</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">Machine Condensation:</span>
+              <span class="status-value warning">SLIGHT</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label">Operator Concern:</span>
+              <span class="status-value warning">HIGH</span>
             </div>
           </div>
         </div>
@@ -154,40 +154,41 @@
       <h2 class="section-header"><i class="fas fa-lightbulb"></i> Troubleshooting Tips</h2>
       <div class="worksheet-content">
         <ul class="objectives-list">
-          <li>Check coolant system maintenance schedules and filter conditions</li>
-          <li>Monitor thermal cycling patterns and system efficiency trends</li>
-          <li>Investigate the correlation between operational changes and performance</li>
-          <li>Use systematic approach: check flow, pressure, temperature, and quality</li>
+          <li>Check for air entrainment in the cooling system</li>
+          <li>Verify pump performance and cavitation conditions</li>
+          <li>Inspect system pressure and flow distribution</li>
+          <li>Monitor coolant temperature and thermal cycling patterns</li>
         </ul>
       </div>
     </div>
 
-    <!-- Investigation Tools Section -->
+    <!-- Interactive Tools Section -->
     <div class="worksheet-section tools-section">
       <h2 class="section-header"><i class="fas fa-tools"></i> Investigation Tools</h2>
-      <div class="tools-content">
+      <div class="worksheet-content">
         <div class="tools-grid">
-          <div class="tool-card" data-tool="analyze_coolant_quality">
-            <h4><i class="fas fa-flask"></i> Analyze Coolant Quality</h4>
-            <p>Test coolant chemistry, pH, and contamination levels</p>
-            <button class="tool-btn" onclick="useTool('analyze_coolant_quality')">Use Tool</button>
+          <div class="tool-card" onclick="useTool('check_air_entrainment')">
+            <i class="fas fa-wind"></i>
+            <h3>Check Air Entrainment</h3>
+            <p>Inspect for air bubbles and system aeration</p>
           </div>
-          <div class="tool-card" data-tool="inspect_heat_exchanger">
-            <h4><i class="fas fa-thermometer-half"></i> Inspect Heat Exchanger</h4>
-            <p>Check for fouling, scaling, and thermal efficiency</p>
-            <button class="tool-btn" onclick="useTool('inspect_heat_exchanger')">Use Tool</button>
+          <div class="tool-card" onclick="useTool('test_pump_performance')">
+            <i class="fas fa-tachometer-alt"></i>
+            <h3>Test Pump Performance</h3>
+            <p>Check for cavitation and pump efficiency</p>
           </div>
-          <div class="tool-card" data-tool="monitor_temperature_cycles">
-            <h4><i class="fas fa-chart-line"></i> Monitor Temperature Cycles</h4>
-            <p>Track system temperature over 24-hour periods</p>
-            <button class="tool-btn" onclick="useTool('monitor_temperature_cycles')">Use Tool</button>
+          <div class="tool-card" onclick="useTool('monitor_system_pressure')">
+            <i class="fas fa-gauge-high"></i>
+            <h3>Monitor System Pressure</h3>
+            <p>Check pressure differentials and flow rates</p>
           </div>
-          <div class="tool-card" data-tool="verify_flow_distribution">
-            <h4><i class="fas fa-water"></i> Verify Flow Distribution</h4>
-            <p>Check flow rates to individual CNC machines</p>
-            <button class="tool-btn" onclick="useTool('verify_flow_distribution')">Use Tool</button>
+          <div class="tool-card" onclick="useTool('analyze_coolant_behavior')">
+            <i class="fas fa-thermometer-half"></i>
+            <h3>Analyze Coolant Behavior</h3>
+            <p>Monitor temperature patterns and thermal cycling</p>
           </div>
         </div>
+        <div id="tool-results" class="tool-results"></div>
       </div>
     </div>
 
@@ -312,97 +313,57 @@
   <script src="valve-simulation.js"></script>
   -->
   <script>
-    // Tool results data
-    const toolResults = {
-      'analyze_coolant_quality': {
-        title: 'Coolant Quality Analysis Results',
-        content: `
-          <div class="result-item">
-            <h4>Coolant Analysis Results:</h4>
-            <ul>
-              <li>pH Level: 9.2 (Normal: 8.5-9.0)</li>
-              <li>Contamination: High levels of metal particles</li>
-              <li>Coolant Age: 6 months (Exceeds recommended 3-month cycle)</li>
-              <li>Bacterial Growth: Detected</li>
-              <li>Concentration: 8% (Normal: 5-7%)</li>
-            </ul>
-            <p><strong>Analysis:</strong> The coolant has degraded significantly due to 24-hour operation without proper maintenance cycles. The high pH and contamination are reducing heat transfer efficiency.</p>
-          </div>
-        `
-      },
-      'inspect_heat_exchanger': {
-        title: 'Heat Exchanger Inspection Results',
-        content: `
-          <div class="result-item">
-            <h4>Heat Exchanger Condition:</h4>
-            <ul>
-              <li>Thermal Efficiency: 65% (Normal: 85-90%)</li>
-              <li>Tube Fouling: Heavy scaling detected</li>
-              <li>Pressure Drop: 2.5 bar (Normal: 1.0 bar)</li>
-              <li>Last Maintenance: 8 months ago</li>
-              <li>Recommended Service: Overdue by 5 months</li>
-            </ul>
-            <p><strong>Analysis:</strong> Significant fouling has reduced heat transfer efficiency by 35%. The scaling buildup is from continuous operation without maintenance intervals.</p>
-          </div>
-        `
-      },
-      'monitor_temperature_cycles': {
-        title: 'Temperature Cycle Analysis',
-        content: `
-          <div class="result-item">
-            <h4>24-Hour Temperature Monitoring:</h4>
-            <ul>
-              <li>Day Shift Start: 22°C</li>
-              <li>Day Shift End: 25°C (+3°C)</li>
-              <li>Night Shift Start: 25°C</li>
-              <li>Night Shift End: 28°C (+3°C)</li>
-              <li>Recovery Periods: None detected</li>
-              <li>Cooling System Load: 95% (Normal: 60-70%)</li>
-            </ul>
-            <p><strong>Analysis:</strong> Temperature increases by 2-3°C per 8-hour shift with no recovery periods. The system reaches critical levels by night shift.</p>
-          </div>
-        `
-      },
-      'verify_flow_distribution': {
-        title: 'Flow Distribution Results',
-        content: `
-          <div class="result-item">
-            <h4>Flow Rate Analysis:</h4>
-            <ul>
-              <li>Main Pump Flow: 120 L/min (Normal: 150 L/min)</li>
-              <li>Machine 1 Flow: 45 L/min (Required: 50 L/min)</li>
-              <li>Machine 2 Flow: 35 L/min (Required: 50 L/min)</li>
-              <li>Machine 3 Flow: 40 L/min (Required: 50 L/min)</li>
-              <li>Pressure Drop: 1.8 bar (Normal: 1.0 bar)</li>
-            </ul>
-            <p><strong>Analysis:</strong> Flow rates to individual CNC machines are inconsistent. Some machines receiving only 60% of required flow due to system pressure drops and fouling.</p>
-          </div>
-        `
-      }
-    };
-
-    // Use investigation tool
+    // Tool usage tracking
+    let toolResults = {};
+    
     function useTool(toolId) {
-      const resultsSection = document.getElementById('investigation-results');
-      const resultsContent = document.getElementById('results-content');
-      const toolCard = document.querySelector(`[data-tool="${toolId}"]`);
-      const toolBtn = toolCard.querySelector('.tool-btn');
+      const toolData = {
+        'check_air_entrainment': {
+          title: 'Air Entrainment Analysis',
+          content: 'Visual inspection reveals significant air bubbles in the return line. Coolant appears frothy and aerated. Air entrainment is causing the aggressive splashing behavior. Air is being drawn into the system through a loose connection or seal.',
+          icon: 'fas fa-wind'
+        },
+        'test_pump_performance': {
+          title: 'Pump Performance Test Results',
+          content: 'Pump efficiency test shows 78% efficiency (normal is 85%). Motor current is 9.8A (normal is 8.5A). Pump is experiencing mild cavitation due to air entrainment. Impeller shows no damage but performance is affected by air in the system.',
+          icon: 'fas fa-tachometer-alt'
+        },
+        'monitor_system_pressure': {
+          title: 'System Pressure Analysis',
+          content: 'Inlet pressure: 1.5 bar (normal). Outlet pressure: 2.8 bar (elevated). Pressure differential: 1.3 bar (normal is 1.0 bar). Air entrainment is causing increased system pressure and flow turbulence.',
+          icon: 'fas fa-gauge-high'
+        },
+        'analyze_coolant_behavior': {
+          title: 'Coolant Behavior Analysis',
+          content: 'Temperature monitoring shows normal coolant temperature (22°C). However, thermal cycling is irregular due to air entrainment. Condensation on machines is caused by air bubbles creating localized cooling variations.',
+          icon: 'fas fa-thermometer-half'
+        }
+      };
       
-      // Disable the tool button
-      toolBtn.disabled = true;
-      toolBtn.textContent = 'Used';
-      
-      // Show results
-      const result = toolResults[toolId];
-      resultsContent.innerHTML = `
-        <h3>${result.title}</h3>
-        ${result.content}
-      `;
-      resultsSection.style.display = 'block';
-      
-      // Scroll to results
-      resultsSection.scrollIntoView({ behavior: 'smooth' });
+      const result = toolData[toolId];
+      if (result) {
+        toolResults[toolId] = result;
+        displayToolResult(toolId, result);
+      }
     }
+    
+    function displayToolResult(toolId, result) {
+      const resultsDiv = document.getElementById('tool-results');
+      const resultHtml = `
+        <div class="tool-result" id="result-${toolId}">
+          <div class="result-header">
+            <i class="${result.icon}"></i>
+            <h3>${result.title}</h3>
+          </div>
+          <div class="result-content">
+            <p>${result.content}</p>
+          </div>
+        </div>
+      `;
+      resultsDiv.innerHTML += resultHtml;
+    }
+
+
     
     // Submit answer
     function submitAnswer(questionType) {
