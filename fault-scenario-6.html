@@ -308,7 +308,13 @@
       const answer = input.value.trim();
       
       if (answer) {
+        // Save to local storage for backward compatibility
         localStorage.setItem(`fault6_${questionType}`, answer);
+        
+        // Track with the tracking system if available
+        if (typeof trackFaultScenarioAnswer === 'function') {
+          trackFaultScenarioAnswer(questionType, answer);
+        }
         
         const button = event.target;
         const originalText = button.textContent;

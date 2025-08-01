@@ -293,22 +293,7 @@
       }
     }
 
-    /* Remove any fault-grid specific styles if they exist */
-    .fault-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-      width: 100%;
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    @media (max-width: 768px) {
-      .fault-grid {
-        grid-template-columns: 1fr;
-      }
-    }
+    /* Fault scenarios use the same worksheet-grid class for consistency */
 
     .chart-section {
       background: #23272b;
@@ -940,6 +925,10 @@
         return;
       }
       
+      // Load settings and student info
+      loadSettings();
+      loadStudentInfo();
+      
       // Initialize dashboard components
       initializeDashboard();
       initializeCharts();
@@ -1105,6 +1094,9 @@
       const maintenanceCount = document.getElementById('maintenanceCount');
       let maintenanceCompleted = 0;
       
+      // Debug: Log maintenance data
+      console.log('Maintenance worksheets data:', worksheetTracker.worksheets.maintenance);
+      
       maintenanceContainer.innerHTML = worksheetTracker.worksheets.maintenance.map(worksheet => {
         const progress = allProgress[`maintenance-${worksheet.id}`] || {
           completedQuestions: 0,
@@ -1143,6 +1135,10 @@
       
       // Use the same worksheet-grid class for consistency
       faultContainer.className = 'worksheet-grid';
+      
+      // Debug: Log fault scenario data
+      console.log('Fault scenarios data:', worksheetTracker.worksheets.fault);
+      console.log('All progress data:', allProgress);
       
       faultContainer.innerHTML = worksheetTracker.worksheets.fault.map(worksheet => {
         const progress = allProgress[`fault-${worksheet.id}`] || {

@@ -296,22 +296,30 @@
       resultsDiv.innerHTML += resultHtml;
     }
     
+    // Submit answer
     function submitAnswer(questionId) {
-      const selectedOption = document.querySelector(`input[name="q${questionId}"]:checked`);
-      if (selectedOption) {
-        const answer = parseInt(selectedOption.value);
-        const correctAnswer = 1; // For question 8.1
+      const input = document.querySelector(`[data-question="${questionId}"]`);
+      const answer = input.value.trim();
+      
+      if (answer) {
+        // Save to local storage for backward compatibility
+        localStorage.setItem(`fault8_${questionId}`, answer);
         
-        if (answer === correctAnswer) {
-          alert('Correct! Poor mixing causes slow pH response, leading to control valve hunting.');
-        } else {
-          alert('Incorrect. The correct answer is: Poor mixing causing slow pH response.');
+        // Track with the tracking system if available
+        if (typeof trackFaultScenarioAnswer === 'function') {
+          trackFaultScenarioAnswer(questionId, answer);
         }
         
-        // Save answer
-        localStorage.setItem(`fault-scenario-8-${questionId}`, answer);
+        const button = event.target;
+        const originalText = button.textContent;
+        button.textContent = 'Saved!';
+        button.style.background = '#4CAF50';
+        
+        setTimeout(() => {
+          button.textContent = originalText;
+        }, 2000);
       } else {
-        alert('Please select an answer before submitting.');
+        alert('Please enter content before saving.');
       }
     }
     

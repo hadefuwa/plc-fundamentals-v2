@@ -1,5 +1,0 @@
-[33m591227a[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m Update project files and add new content for closed-loop maintenance training
-[33mcdd156e[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Comment out System Simulation sections and fix Assessment Questions to Fault Analysis Worksheet format for fault scenarios 3-7
-[33me8218a6[m Fix PWA scrolling issue in fault-scenario-1.html - Remove CSS version parameter to load latest styles
-[33m2d8a7fe[m Fix Process Variable color mismatch in worksheet-1 simulation graph - Updated chart colors to #0066CC and legend to match
-[33me7707c4[m Fix PWA scrolling issues and graph color mismatch - Enhanced PWA scrolling rules in main.css for worksheets and fault scenarios - Fixed Process Variable color in worksheet-1.html chart to match legend

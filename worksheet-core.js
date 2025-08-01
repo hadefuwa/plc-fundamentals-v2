@@ -718,7 +718,10 @@ function submitAnswer(questionNumber) {
   // Save with enhanced tracking if available
   if (typeof worksheetTracker !== 'undefined') {
     const worksheetId = getUrlParameter('id') || getWorksheetIdFromUrl();
-    const type = getUrlParameter('type') || 'maintenance';
+    // Detect if this is a fault scenario based on URL
+    const path = window.location.pathname;
+    const isFaultScenario = path.includes('fault-scenario');
+    const type = getUrlParameter('type') || (isFaultScenario ? 'fault' : 'maintenance');
     worksheetTracker.saveAnswer(worksheetId, questionNumber, answer, type);
   } else {
     // Fallback to original save method
@@ -745,8 +748,14 @@ function submitAnswer(questionNumber) {
 // Helper function to get worksheet ID from URL
 function getWorksheetIdFromUrl() {
   const path = window.location.pathname;
-  const match = path.match(/worksheet-(\d+)\.html/);
-  return match ? parseInt(match[1]) : 1;
+  // Check for fault scenario pattern first
+  const faultMatch = path.match(/fault-scenario-(\d+)\.html/);
+  if (faultMatch) {
+    return parseInt(faultMatch[1]);
+  }
+  // Check for regular worksheet pattern
+  const worksheetMatch = path.match(/worksheet-(\d+)\.html/);
+  return worksheetMatch ? parseInt(worksheetMatch[1]) : 1;
 }
 
 function submitMultipleChoiceQuestion(questionId) {
@@ -769,7 +778,10 @@ function submitMultipleChoiceQuestion(questionId) {
 
 function saveAnswer(questionNumber, answer) {
   const worksheetId = getUrlParameter('id') || getWorksheetIdFromUrl();
-  const type = getUrlParameter('type') || 'maintenance';
+  // Detect if this is a fault scenario based on URL
+  const path = window.location.pathname;
+  const isFaultScenario = path.includes('fault-scenario');
+  const type = getUrlParameter('type') || (isFaultScenario ? 'fault' : 'maintenance');
   const key = `worksheet-${type}-${worksheetId}-answers`;
   
   const savedAnswers = JSON.parse(localStorage.getItem(key) || '{}');
@@ -780,7 +792,10 @@ function saveAnswer(questionNumber, answer) {
 
 function loadSavedAnswers() {
   const worksheetId = getUrlParameter('id') || getWorksheetIdFromUrl();
-  const type = getUrlParameter('type') || 'maintenance';
+  // Detect if this is a fault scenario based on URL
+  const path = window.location.pathname;
+  const isFaultScenario = path.includes('fault-scenario');
+  const type = getUrlParameter('type') || (isFaultScenario ? 'fault' : 'maintenance');
   const key = `worksheet-${type}-${worksheetId}-answers`;
   
   const savedAnswers = JSON.parse(localStorage.getItem(key) || '{}');

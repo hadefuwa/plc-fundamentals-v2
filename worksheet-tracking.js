@@ -21,14 +21,14 @@ class WorksheetTracker {
         { id: 14, title: "Fault Detection & Troubleshooting", type: "maintenance", totalQuestions: 5 }
       ],
       fault: [
-        { id: 1, title: "Fault Scenario 1", type: "fault", totalQuestions: 3 },
-        { id: 2, title: "Fault Scenario 2", type: "fault", totalQuestions: 3 },
-        { id: 3, title: "Fault Scenario 3", type: "fault", totalQuestions: 3 },
-        { id: 4, title: "Fault Scenario 4", type: "fault", totalQuestions: 3 },
-        { id: 5, title: "Fault Scenario 5", type: "fault", totalQuestions: 3 },
-        { id: 6, title: "Fault Scenario 6", type: "fault", totalQuestions: 3 },
-        { id: 7, title: "Fault Scenario 7", type: "fault", totalQuestions: 3 },
-        { id: 8, title: "Fault Scenario 8", type: "fault", totalQuestions: 3 }
+        { id: 1, title: "Titanium Forging System Failure", type: "fault", totalQuestions: 3 },
+        { id: 2, title: "Pharmaceutical Cleanroom Contamination", type: "fault", totalQuestions: 3 },
+        { id: 3, title: "Injection Molding Temperature Control", type: "fault", totalQuestions: 3 },
+        { id: 4, title: "CNC Cooling System Overheating", type: "fault", totalQuestions: 3 },
+        { id: 5, title: "Brine System Pump Failure", type: "fault", totalQuestions: 3 },
+        { id: 6, title: "pH Control System Imbalance", type: "fault", totalQuestions: 3 },
+        { id: 7, title: "Server Room Cooling Emergency", type: "fault", totalQuestions: 3 },
+        { id: 8, title: "Sterilizer Pressure Control Fault", type: "fault", totalQuestions: 3 }
       ]
     };
 
@@ -648,11 +648,41 @@ class WorksheetTracker {
 // Create global instance
 const worksheetTracker = new WorksheetTracker();
 
+// Function to track fault scenario answers
+function trackFaultScenarioAnswer(questionType, answer) {
+  try {
+    const path = window.location.pathname;
+    const faultMatch = path.match(/fault-scenario-(\d+)\.html/);
+    if (!faultMatch) {
+      console.error('Could not determine fault scenario ID from URL');
+      return false;
+    }
+    
+    const worksheetId = parseInt(faultMatch[1]);
+    const type = 'fault';
+    
+    // Save with enhanced tracking
+    const success = worksheetTracker.saveAnswer(worksheetId, questionType, answer, type);
+    
+    if (success) {
+      console.log(`Fault scenario ${worksheetId} answer saved: ${questionType} = ${answer}`);
+    }
+    
+    return success;
+  } catch (error) {
+    console.error('Error tracking fault scenario answer:', error);
+    return false;
+  }
+}
+
 // Enhanced submitAnswer function
 function submitAnswerWithTracking(questionNumber) {
   try {
     const worksheetId = getUrlParameter('id') || getWorksheetIdFromUrl();
-    const type = getUrlParameter('type') || 'maintenance';
+    // Detect if this is a fault scenario based on URL
+    const path = window.location.pathname;
+    const isFaultScenario = path.includes('fault-scenario');
+    const type = getUrlParameter('type') || (isFaultScenario ? 'fault' : 'maintenance');
     
     const answerInput = document.querySelector(`[data-question="${questionNumber}"]`);
     if (!answerInput) return false;
