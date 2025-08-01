@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Matrix TSL - Fault Scenario 7: Injection Molding Temperature Control</title>
+  <title>Matrix TSL - Fault Scenario 7: CNC Machines Offset Issues</title>
   <link rel="stylesheet" href="main.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">    <script src="worksheet-core.js"></script>
@@ -60,7 +60,7 @@
           </button>
         </div>
         <div class="worksheet-header-center">
-          <h1 class="worksheet-title">Fault Scenario 7 - Injection Molding Temperature Control</h1>
+          <h1 class="worksheet-title">Fault Scenario 7 - CNC Machines Offset Issues</h1>
         </div>
         <div class="worksheet-header-right">
           <button class="worksheet-nav-btn worksheet-next-btn" onclick="window.location.href='fault-scenario-8.html'">
@@ -73,27 +73,27 @@
 
     <!-- Introduction Section -->
     <div class="worksheet-section introduction-section">
-      <h2 class="section-header"><i class="fas fa-info-circle"></i> Scenario Overview</h2>
+      <h2 class="section-header"><i class="fas fa-info-circle"></i> Fault Scenario 7: CNC Machines Offset Issues</h2>
       <div class="worksheet-content">
         <div class="scenario-info">
           <div class="info-grid">
             <div class="info-item">
-              <strong>Company:</strong> Precision Plastics Manufacturing
+              <strong>Company:</strong> Automotive Parts Manufacturing
             </div>
             <div class="info-item">
-              <strong>Process:</strong> High-precision injection molding
+              <strong>Process:</strong> CNC machining operations
             </div>
             <div class="info-item">
-              <strong>Shift:</strong> Quality issue investigation
+              <strong>Shift:</strong> Night shift operator call-out
             </div>
             <div class="info-item">
-              <strong>Urgency:</strong> Medium - Customer quality complaints
+              <strong>Urgency:</strong> High - Production stopped, system won't run
             </div>
             <div class="info-item">
-              <strong>Difficulty:</strong> Intermediate
+              <strong>Difficulty:</strong> Advanced
             </div>
             <div class="info-item">
-              <strong>Time:</strong> 25-35 minutes
+              <strong>Time:</strong> 20-30 minutes
             </div>
           </div>
         </div>
@@ -102,19 +102,19 @@
           <div class="background-text">
             <div class="scenario-description">
               <h3>Background</h3>
-              <p>A plastic injection molding machine is producing parts with inconsistent quality.</p>
+              <p>Those CNC machines you fixed in Scenario 3 are down again. The night shift operator has reiterated that he's checked all the offsets on all the inputs and outputs – there's nothing!</p>
               
-              <p>The mold temperature control unit shows the temperature is within specification at 80°C.</p>
+              <p>The system just won't run. You know that the operators like to play with settings so you're sure it's the offsets again.</p>
               
-              <p>Quality control reports that parts from certain cavities are showing signs of incomplete filling and surface defects.</p>
+              <p>Despite the operator's insistence that everything is correct, you need to investigate the CNC machine parameters and offset settings to get production running again.</p>
               
-              <p>The issue seems to be worse after extended production runs, suggesting a thermal-related problem.</p>
+              <p><strong>Industry Context:</strong> In CNC machining, offset settings are critical for tool positioning and part accuracy. Operators sometimes adjust these settings to compensate for tool wear or part variations, but incorrect offsets can prevent the machine from running or cause crashes.</p>
             </div>
           </div>
           
           <div class="background-image">
-            <img src="assets/scenarios/injection-mold.png" alt="Injection Molding System">
-            <figcaption>Injection Molding System - Plastic Manufacturing</figcaption>
+            <img src="assets/scenarios/injection-mold.png" alt="CNC Machining System">
+            <figcaption>CNC Machining System - Automotive Manufacturing</figcaption>
           </div>
         </div>
 
@@ -122,32 +122,32 @@
           <h3>System Status</h3>
           <div class="status-grid">
             <div class="status-item">
-              <span class="status-label">Mold Temperature Setpoint:</span>
-              <span class="status-value">80°C</span>
+              <span class="status-label">System Operation:</span>
+              <span class="status-value error">WON'T RUN</span>
             </div>
             <div class="status-item">
-              <span class="status-label">Displayed Temperature:</span>
-              <span class="status-value">80°C</span>
+              <span class="status-label">Operator Check:</span>
+              <span class="status-value">ALL OFFSETS CHECKED</span>
             </div>
             <div class="status-item">
-              <span class="status-label">Actual Cavity Temperatures:</span>
-              <span class="status-value warning">79, 82, 77, 84°C</span>
+              <span class="status-label">Input/Output Status:</span>
+              <span class="status-value">OPERATOR SAYS NOTHING</span>
             </div>
             <div class="status-item">
-              <span class="status-label">Cooling Water Temp:</span>
-              <span class="status-value">25°C</span>
+              <span class="status-label">Tool Offsets:</span>
+              <span class="status-value warning">SUSPECT</span>
             </div>
             <div class="status-item">
-              <span class="status-label">Cooling Water Pressure:</span>
-              <span class="status-value">3.2 bar</span>
+              <span class="status-label">Work Offsets:</span>
+              <span class="status-value warning">SUSPECT</span>
             </div>
             <div class="status-item">
-              <span class="status-label">Quality Status:</span>
-              <span class="status-value warning">DECLINING</span>
+              <span class="status-label">Production Status:</span>
+              <span class="status-value error">STOPPED</span>
             </div>
             <div class="status-item">
-              <span class="status-label">Thermal Uniformity:</span>
-              <span class="status-value warning">POOR</span>
+              <span class="status-label">Machine Safety:</span>
+              <span class="status-value">NO CRASH DETECTED</span>
             </div>
           </div>
         </div>
@@ -159,10 +159,10 @@
       <h2 class="section-header"><i class="fas fa-lightbulb"></i> Troubleshooting Tips</h2>
       <div class="worksheet-content">
         <ul class="objectives-list">
-          <li>Use thermal imaging to map temperature across all cavities</li>
-          <li>Check flow rates and temperatures in each cooling circuit</li>
-          <li>Analyze which cavities have quality issues vs temperature</li>
-          <li>Monitor temperature uniformity during extended production runs</li>
+          <li>Check tool offset values against standard settings</li>
+          <li>Verify work offset coordinates and reference points</li>
+          <li>Inspect program parameters and machine configuration</li>
+          <li>Review recent operator changes to offset settings</li>
         </ul>
       </div>
     </div>
@@ -172,25 +172,25 @@
       <h2 class="section-header"><i class="fas fa-tools"></i> Investigation Tools</h2>
       <div class="worksheet-content">
         <div class="tools-grid">
-          <div class="tool-card" onclick="useTool('thermal_mapping')">
-            <i class="fas fa-camera"></i>
-            <h3>Thermal Mapping of Mold</h3>
-            <p>Use thermal imaging to map temperature across all cavities</p>
+          <div class="tool-card" onclick="useTool('check_tool_offsets')">
+            <i class="fas fa-wrench"></i>
+            <h3>Check Tool Offsets</h3>
+            <p>Verify tool offset values against standard settings</p>
           </div>
-          <div class="tool-card" onclick="useTool('cooling_circuit_analysis')">
-            <i class="fas fa-water"></i>
-            <h3>Cooling Circuit Analysis</h3>
-            <p>Check flow rates and temperatures in each cooling circuit</p>
+          <div class="tool-card" onclick="useTool('verify_work_offsets')">
+            <i class="fas fa-crosshairs"></i>
+            <h3>Verify Work Offsets</h3>
+            <p>Check work offset coordinates and reference points</p>
           </div>
-          <div class="tool-card" onclick="useTool('quality_correlation')">
-            <i class="fas fa-chart-bar"></i>
-            <h3>Quality vs Temperature Correlation</h3>
-            <p>Analyze which cavities have quality issues vs temperature</p>
+          <div class="tool-card" onclick="useTool('inspect_program_parameters')">
+            <i class="fas fa-cog"></i>
+            <h3>Inspect Program Parameters</h3>
+            <p>Check program parameters and machine configuration</p>
           </div>
-          <div class="tool-card" onclick="useTool('extended_run_monitoring')">
-            <i class="fas fa-clock"></i>
-            <h3>Extended Run Monitoring</h3>
-            <p>Monitor temperature stability during long production runs</p>
+          <div class="tool-card" onclick="useTool('review_operator_changes')">
+            <i class="fas fa-history"></i>
+            <h3>Review Operator Changes</h3>
+            <p>Check recent operator modifications to offset settings</p>
           </div>
         </div>
         <div id="tool-results" class="tool-results"></div>
@@ -256,25 +256,25 @@
     
     function useTool(toolId) {
       const toolData = {
-        'thermal_mapping': {
-          title: 'Thermal Mapping Results',
-          content: 'Thermal imaging reveals significant temperature variations across cavities: Cavity 1 (79°C), Cavity 2 (82°C), Cavity 3 (77°C), Cavity 4 (84°C). Temperature gradient shows cooling circuit imbalance.',
-          icon: 'fas fa-camera'
+        'check_tool_offsets': {
+          title: 'Tool Offset Analysis',
+          content: 'Tool offset check reveals several tools have been modified from standard settings. Tool 1 offset changed from 0.000 to -0.015, Tool 2 from 0.000 to +0.008, Tool 3 from 0.000 to -0.022. These changes are preventing the machine from running.',
+          icon: 'fas fa-wrench'
         },
-        'cooling_circuit_analysis': {
-          title: 'Cooling Circuit Analysis Results',
-          content: 'Flow rate measurements show uneven distribution: Circuit 1 (85% flow), Circuit 2 (100% flow), Circuit 3 (60% flow), Circuit 4 (110% flow). Circuit 3 has partial blockage causing reduced cooling.',
-          icon: 'fas fa-water'
+        'verify_work_offsets': {
+          title: 'Work Offset Verification',
+          content: 'Work offset inspection shows G54 work offset has been modified from standard coordinates. X-axis offset changed from 0.000 to +0.125, Y-axis from 0.000 to -0.087, Z-axis from 0.000 to +0.203. These changes are causing positioning errors.',
+          icon: 'fas fa-crosshairs'
         },
-        'quality_correlation': {
-          title: 'Quality vs Temperature Correlation',
-          content: 'Quality analysis shows cavities 3 and 4 (77°C and 84°C) produce the most defective parts. Temperature extremes cause incomplete filling and surface defects. Cavities 1 and 2 show acceptable quality.',
-          icon: 'fas fa-chart-bar'
+        'inspect_program_parameters': {
+          title: 'Program Parameter Inspection',
+          content: 'Program parameter check shows feed rate and spindle speed settings are correct. However, the program is referencing modified offset values that are preventing proper tool positioning. The machine cannot execute the program with current offset settings.',
+          icon: 'fas fa-cog'
         },
-        'extended_run_monitoring': {
-          title: 'Extended Run Monitoring Results',
-          content: 'Temperature monitoring over 8-hour production run shows thermal drift. Cavity temperatures vary by ±3°C over time, with poorest thermal stability in cavities 3 and 4. Controller sensor location is not representative.',
-          icon: 'fas fa-clock'
+        'review_operator_changes': {
+          title: 'Operator Changes Review',
+          content: 'Review of recent operator changes shows multiple offset modifications made during the previous shift. The operator attempted to compensate for tool wear but made incorrect adjustments. The changes are preventing the machine from running safely.',
+          icon: 'fas fa-history'
         }
       };
       
