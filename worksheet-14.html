@@ -368,48 +368,74 @@
     <div class="worksheet-section over-to-you-section">
       <h2 class="section-header"><i class="fas fa-hands-helping"></i> 2. Over To You</h2>
       <div class="worksheet-content">
-        <p><strong>Apply comprehensive troubleshooting techniques using all the knowledge gained from previous worksheets:</strong></p>
-        
         <div class="steps-container">
           <div class="step-card" data-step="1">
             <div class="step-number">1</div>
             <div class="step-content">
               <div class="step-header">
-                <h4>Systematic Fault Detection</h4>
+                <h4>Run the System and Trigger E-Stop</h4>
                 <label class="step-checkbox">
                   <input type="checkbox" class="step-complete-checkbox">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <p>Practice systematic troubleshooting by examining Status LEDs, PLC I/O indicators, HMI alarms, and sensor readings to build a complete picture of system health.</p>
+              <p>Run the system and then hit the E-Stop.</p>
             </div>
           </div>
-          
           <div class="step-card" data-step="2">
             <div class="step-number">2</div>
             <div class="step-content">
               <div class="step-header">
-                <h4>Integrated System Testing</h4>
+                <h4>Check Alarms Page</h4>
                 <label class="step-checkbox">
                   <input type="checkbox" class="step-complete-checkbox">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <p>Test interactions between components: observe how flow sensor feedback affects pump control, how temperature limits trigger safety systems, and how float switches protect against overflow/dry-running.</p>
+              <p>Before clearing the fault, close the popup and navigate to the <strong>Alarms</strong> page on the HMI.<br>
+              This is a common way of displaying alarms, in a tabular format, with date and time.</p>
             </div>
           </div>
-          
           <div class="step-card" data-step="3">
             <div class="step-number">3</div>
             <div class="step-content">
               <div class="step-header">
-                <h4>Root Cause Analysis</h4>
+                <h4>Check Alarm Raise Time</h4>
                 <label class="step-checkbox">
                   <input type="checkbox" class="step-complete-checkbox">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <p>Practice identifying root causes versus symptoms. Use the IO screen, alarm history, and component behavior to trace faults back to their source rather than just treating symptoms.</p>
+              <p>Check the raise time of the alarm. This is the time the alarm occurred. Checking this time when an alarm occurs is important.</p>
+            </div>
+          </div>
+          <div class="step-card" data-step="4">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Check Fault Page</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Navigate back to the Main Menu and then to the <strong>Fault Page</strong> on the HMI.<br>
+              This is a page similar to the IO page, where it displays all the faults that occur in the software.<br>
+              It shows the status of each fault, active or inactive.</p>
+            </div>
+          </div>
+          <div class="step-card" data-step="5">
+            <div class="step-number">5</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Test Other Faults</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Reset the Emergency Stop and try another fault, like the proximity switch or temperature offset.<br>
+              Navigate to the Faults and Alarms pages and view the new fault.</p>
             </div>
           </div>
         </div>
@@ -420,37 +446,46 @@
     <div class="worksheet-section so-what-section">
       <h2 class="section-header"><i class="fas fa-lightbulb"></i> 3. So What?</h2>
       <div class="so-what-content">
-        <p>Effective fault detection combines all the diagnostic tools and techniques learned throughout this curriculum:</p>
+        <p>Faults in industrial systems can generally be categorized into three types:</p>
         
         <div class="key-point">
-          <i class="fas fa-lightbulb"></i>
+          <i class="fas fa-code"></i>
           <div>
-            <strong>Systematic Approach</strong>
-            <p>Professional troubleshooting follows a logical sequence: observe symptoms, gather data, form hypotheses, test theories, and implement solutions while documenting findings.</p>
+            <strong>Software Faults</strong>
+            <p>These occur due to incorrect programming or parameter settings that cause the system to behave unpredictably. For example, a temperature offset in software can prevent the system from starting.</p>
           </div>
         </div>
         
         <div class="key-point">
-          <i class="fas fa-lightbulb"></i>
+          <i class="fas fa-bolt"></i>
           <div>
-            <strong>Multiple Information Sources</strong>
-            <p>Effective diagnosis combines visual indicators (LEDs), digital displays (HMI), real-time data (IO screens), and historical information (alarm logs) for complete understanding.</p>
+            <strong>Electrical Faults</strong>
+            <p>These arise from issues such as broken connections, faulty wiring, or sensor failures, leading to incorrect readings or system shutdowns.</p>
           </div>
         </div>
         
         <div class="key-point">
-          <i class="fas fa-lightbulb"></i>
+          <i class="fas fa-cogs"></i>
           <div>
-            <strong>Preventive Maintenance</strong>
-            <p>Regular monitoring and systematic maintenance prevent many faults. Understanding normal operation helps identify abnormal conditions before they become failures.</p>
+            <strong>Mechanical Faults</strong>
+            <p>These involve physical issues like stuck valves or damaged components, affecting the movement of fluids or mechanical parts.</p>
           </div>
         </div>
+        
+        <p>To become proficient in fault finding, you must develop an understanding of system behaviours and learn to recognize abnormal conditions.</p>
         
         <div class="key-point">
           <i class="fas fa-lightbulb"></i>
           <div>
-            <strong>Professional Development</strong>
-            <p>Mastering these diagnostic techniques, safety procedures, and troubleshooting methods provides the foundation for effective maintenance and reliable system operation in industrial environments.</p>
+            <strong>Key Takeaways</strong>
+            <ul>
+              <li>Fault finding is a critical skill in industrial maintenance, used to identify and fix mechanical, electrical, and software issues.</li>
+              <li>Industrial faults are either software (settings or code issues), electrical (wiring or sensor faults), or mechanical (stuck or damaged parts).</li>
+              <li>Alarms and fault screens on the HMI help diagnose issues by showing when and where a fault occurred.</li>
+              <li>Checking the alarm raise time can help trace when a problem started.</li>
+              <li>Recognising patterns and abnormal behaviour in the system is key to diagnosing faults effectively.</li>
+              <li>Practising with simulated faults, such as E-stops or sensor offsets, helps build confidence in real-world troubleshooting.</li>
+            </ul>
           </div>
         </div>
       </div>
