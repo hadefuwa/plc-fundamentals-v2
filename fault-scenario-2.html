@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Matrix TSL - Fault Scenario 2: Cleanroom Temperature Control System</title>
+  <title>Matrix TSL - Fault Scenario 2: Pharmaceutical Flow System</title>
   <link rel="stylesheet" href="main.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">    <script src="worksheet-core.js"></script>
@@ -60,7 +60,7 @@
           </button>
         </div>
         <div class="worksheet-header-center">
-          <h1 class="worksheet-title">Fault Scenario 2 - Tank Lid Flicker</h1>
+          <h1 class="worksheet-title">Fault Scenario 2 - Pharmaceutical Flow System</h1>
         </div>
         <div class="worksheet-header-right">
           <button class="worksheet-nav-btn worksheet-next-btn" onclick="window.location.href='fault-scenario-3.html'">
@@ -72,27 +72,27 @@
     </div>
     <!-- Introduction Section -->
     <div class="worksheet-section introduction-section">
-      <h2 class="section-header"><i class="fas fa-info-circle"></i> Fault Scenario 2: Tank Lid Flicker</h2>
+      <h2 class="section-header"><i class="fas fa-info-circle"></i> Fault Scenario 2: Pharmaceutical Flow System</h2>
       <div class="worksheet-content">
         <div class="scenario-info">
           <div class="info-grid">
             <div class="info-item">
-              <strong>Scenario:</strong> Tank Lid Flicker
+              <strong>Company:</strong> Pharmaceutical Manufacturing Plant
             </div>
             <div class="info-item">
-              <strong>Process:</strong> Tank lid proximity switch monitoring
+              <strong>Process:</strong> Sterile liquid solution production for IV bags
             </div>
             <div class="info-item">
-              <strong>Shift:</strong> Production shift during normal operation
+              <strong>Shift:</strong> Production shift start
             </div>
             <div class="info-item">
-              <strong>Urgency:</strong> Medium - System operation affected
+              <strong>Urgency:</strong> High - Production blocked by low-flow alarm
             </div>
             <div class="info-item">
-              <strong>Difficulty:</strong> Beginner
+              <strong>Difficulty:</strong> Intermediate
             </div>
             <div class="info-item">
-              <strong>Time:</strong> 15-25 minutes
+              <strong>Time:</strong> 20-30 minutes
             </div>
           </div>
         </div>
@@ -100,37 +100,37 @@
         <div class="background-section">
           <div class="background-text">
             <div class="scenario-description">
-              <h3>Scenario Background</h3>
-              <p>You're monitoring a tank system where the lid proximity switch keeps flicking on and off every 5 seconds. The system is designed to only operate when the lid is properly closed, but the intermittent signal is causing operational issues.</p>
+              <h3>Background</h3>
+              <p>You work in a pharmaceutical plant that produces sterile liquid solutions for IV bags. The flow system is critical for maintaining precise fluid levels in mixing tanks. As your shift starts, the production team reports a low-flow alarm preventing the system from running.</p>
               
-              <p>The proximity switch on the tank lid is showing erratic behavior in the I/O screen, indicating the lid is opening and closing repeatedly. This is preventing normal system operation and causing production delays.</p>
+              <p>The supervisor mentions that the flow was fine earlier, but now the pump seems to be running at full speed with barely any flow. The system is designed to maintain precise fluid levels for pharmaceutical production, and any interruption could affect product quality and sterility.</p>
               
-              <p>The maintenance team was recently working on the tank system, and this issue started immediately after their work was completed.</p>
+              <p>The flow sensor is showing minimal flow despite the pump running at maximum capacity. This suggests either a blockage, pump failure, or sensor malfunction that needs immediate attention.</p>
               
-              <p><strong>Industry Context:</strong> An issue like this would happen in industry because proximity switches are prone to misalignment over time due to vibrations, repeated use, or mechanical wear. If the sensor isn't properly checked during maintenance, it may flicker on and off, falsely indicating that the lid is open and preventing the system from running.</p>
+              <p><strong>Industry Context:</strong> In pharmaceutical manufacturing, flow systems are critical for maintaining precise fluid levels and ensuring product quality. Low-flow conditions can indicate pump wear, blockages, or sensor issues that could affect production schedules and product sterility.</p>
             </div>
           </div>
           
           <div class="background-image">
-            <img src="assets/scenarios/pharma-cleanroom.png" alt="Tank Lid Proximity Switch System">
-            <figcaption>Tank Lid Proximity Switch System - Industrial Processing</figcaption>
+            <img src="assets/scenarios/pharma-cleanroom.png" alt="Pharmaceutical Flow System">
+            <figcaption>Pharmaceutical Flow System - Sterile Liquid Production</figcaption>
           </div>
         </div>
 
         <div class="system-overview">
-          <h3>Initial System Status</h3>
+          <h3>System Status</h3>
           <div class="status-grid">
             <div class="status-item">
-              <span class="status-label">Lid Status:</span>
-              <span class="status-value warning">FLICKERING</span>
+              <span class="status-label">Flow Rate:</span>
+              <span class="status-value error">LOW</span>
             </div>
             <div class="status-item">
-              <span class="status-label">Proximity Switch:</span>
-              <span class="status-value warning">INTERMITTENT</span>
+              <span class="status-label">Pump Speed:</span>
+              <span class="status-value">100%</span>
             </div>
             <div class="status-item">
-              <span class="status-label">Flicker Interval:</span>
-              <span class="status-value">5 seconds</span>
+              <span class="status-label">Flow Sensor:</span>
+              <span class="status-value warning">MINIMAL FLOW</span>
             </div>
             <div class="status-item">
               <span class="status-label">System Operation:</span>
@@ -138,11 +138,11 @@
             </div>
             <div class="status-item">
               <span class="status-label">Production Status:</span>
-              <span class="status-value error">DELAYED</span>
+              <span class="status-value error">STOPPED</span>
             </div>
             <div class="status-item">
               <span class="status-label">Alarm Status:</span>
-              <span class="status-value warning">LID FAULT</span>
+              <span class="status-value warning">LOW FLOW ALARM</span>
             </div>
           </div>
         </div>
@@ -152,45 +152,43 @@
     <!-- Troubleshooting Tips Section -->
     <div class="worksheet-section objectives-section">
       <h2 class="section-header"><i class="fas fa-lightbulb"></i> Troubleshooting Tips</h2>
-      <div class="objectives-content">
+      <div class="worksheet-content">
         <ul class="objectives-list">
-          <li>Check if production increases exceed original system design capacity</li>
-          <li>Monitor HVAC load percentage and compare with historical data</li>
-          <li>Consider temporary vs permanent solutions for capacity issues</li>
-          <li>Evaluate the cost-benefit of system upgrades vs production limits</li>
+          <li>Check for blockages in the flow system and piping</li>
+          <li>Verify pump performance and mechanical condition</li>
+          <li>Test flow sensor accuracy and calibration</li>
+          <li>Inspect for air entrainment or cavitation issues</li>
         </ul>
       </div>
     </div>
 
-    <!-- Investigation Tools Section -->
+    <!-- Interactive Tools Section -->
     <div class="worksheet-section tools-section">
       <h2 class="section-header"><i class="fas fa-tools"></i> Investigation Tools</h2>
-      <div class="tools-content">
+      <div class="worksheet-content">
         <div class="tools-grid">
-          <div class="tool-card" data-tool="check_heat_load">
-            <h4><i class="fas fa-fire"></i> Check Heat Load Analysis</h4>
-            <p>Analyze current heat generation from equipment and personnel</p>
-            <button class="tool-btn" onclick="useTool('check_heat_load')">Use Tool</button>
+          <div class="tool-card" onclick="useTool('check_pump_performance')">
+            <i class="fas fa-tachometer-alt"></i>
+            <h3>Check Pump Performance</h3>
+            <p>Analyze pump efficiency and mechanical condition</p>
           </div>
-          
-          <div class="tool-card" data-tool="verify_chiller_capacity">
-            <h4><i class="fas fa-snowflake"></i> Verify Chiller Capacity</h4>
-            <p>Check chiller system specifications and current performance</p>
-            <button class="tool-btn" onclick="useTool('verify_chiller_capacity')">Use Tool</button>
+          <div class="tool-card" onclick="useTool('inspect_flow_system')">
+            <i class="fas fa-water"></i>
+            <h3>Inspect Flow System</h3>
+            <p>Check for blockages and flow restrictions</p>
           </div>
-          
-          <div class="tool-card" data-tool="analyze_production_schedule">
-            <h4><i class="fas fa-calendar-alt"></i> Analyze Production Schedule</h4>
-            <p>Review production timeline and equipment usage patterns</p>
-            <button class="tool-btn" onclick="useTool('analyze_production_schedule')">Use Tool</button>
+          <div class="tool-card" onclick="useTool('test_flow_sensor')">
+            <i class="fas fa-microchip"></i>
+            <h3>Test Flow Sensor</h3>
+            <p>Verify sensor accuracy and calibration</p>
           </div>
-          
-          <div class="tool-card" data-tool="inspect_airflow_distribution">
-            <h4><i class="fas fa-wind"></i> Inspect Airflow Distribution</h4>
-            <p>Check air distribution system and ductwork efficiency</p>
-            <button class="tool-btn" onclick="useTool('inspect_airflow_distribution')">Use Tool</button>
+          <div class="tool-card" onclick="useTool('check_system_pressure')">
+            <i class="fas fa-gauge-high"></i>
+            <h3>Check System Pressure</h3>
+            <p>Monitor pressure differentials and system performance</p>
           </div>
         </div>
+        <div id="tool-results" class="tool-results"></div>
       </div>
     </div>
 
@@ -455,96 +453,57 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   
   <script>
-    // Tool results data
-    const toolResults = {
-      'check_heat_load': {
-        title: 'Heat Load Analysis',
-        content: `
-          <div class="result-item">
-            <h4>Current Heat Generation:</h4>
-            <ul>
-              <li>Production Equipment: 45 kW (was 32 kW)</li>
-              <li>Personnel: 8 kW (was 6 kW)</li>
-              <li>Lighting: 12 kW (was 10 kW)</li>
-              <li>Total Heat Load: 65 kW (was 48 kW)</li>
-              <li>Increase: +35% from previous levels</li>
-            </ul>
-            <p><strong>Analysis:</strong> The 40% production increase has resulted in a 35% increase in heat generation, exceeding the HVAC system's design capacity.</p>
-          </div>
-        `
-      },
-      'verify_chiller_capacity': {
-        title: 'Chiller Capacity Verification',
-        content: `
-          <div class="result-item">
-            <h4>Chiller System Specifications:</h4>
-            <ul>
-              <li>Design Capacity: 60 kW cooling</li>
-              <li>Current Load: 65 kW</li>
-              <li>Overload: 8.3% above capacity</li>
-              <li>Chiller Efficiency: 95% (normal)</li>
-              <li>Cooling Water Flow: Maximum</li>
-            </ul>
-            <p><strong>Analysis:</strong> The chiller is operating at 108.3% of its design capacity, explaining why it cannot maintain the setpoint temperature.</p>
-          </div>
-        `
-      },
-      'analyze_production_schedule': {
-        title: 'Production Schedule Analysis',
-        content: `
-          <div class="result-item">
-            <h4>Production Timeline:</h4>
-            <ul>
-              <li>Previous Production: 100 units/day</li>
-              <li>Current Production: 140 units/day</li>
-              <li>Equipment Runtime: 18 hours/day (was 12 hours)</li>
-              <li>Peak Hours: 10:00-16:00 (highest heat generation)</li>
-              <li>Contract Duration: 6 months</li>
-            </ul>
-            <p><strong>Analysis:</strong> The increased production schedule is permanent, requiring a long-term solution rather than temporary adjustments.</p>
-          </div>
-        `
-      },
-      'inspect_airflow_distribution': {
-        title: 'Airflow Distribution Inspection',
-        content: `
-          <div class="result-item">
-            <h4>Air Distribution System:</h4>
-            <ul>
-              <li>Supply Air Temperature: 18°C (normal)</li>
-              <li>Air Flow Rate: Maximum capacity</li>
-              <li>Ductwork: Clean, no obstructions</li>
-              <li>Return Air Temperature: 26°C (elevated)</li>
-              <li>Air Changes: 20/hour (design specification)</li>
-            </ul>
-            <p><strong>Analysis:</strong> The air distribution system is operating correctly but cannot compensate for the excessive heat load.</p>
-          </div>
-        `
-      }
-    };
-
-    // Use investigation tool
+    // Tool usage tracking
+    let toolResults = {};
+    
     function useTool(toolId) {
-      const resultsSection = document.getElementById('investigation-results');
-      const resultsContent = document.getElementById('results-content');
-      const toolCard = document.querySelector(`[data-tool="${toolId}"]`);
-      const toolBtn = toolCard.querySelector('.tool-btn');
+      const toolData = {
+        'check_pump_performance': {
+          title: 'Pump Performance Analysis',
+          content: 'Pump efficiency test shows 65% efficiency (normal is 85%). Motor current is 12.5A (normal is 8.2A), indicating mechanical wear. Pump impeller shows signs of cavitation damage. Pump is running at full speed but delivering only 30% of rated flow.',
+          icon: 'fas fa-tachometer-alt'
+        },
+        'inspect_flow_system': {
+          title: 'Flow System Inspection Results',
+          content: 'Visual inspection reveals partial blockage in main supply line. Pressure differential across filter shows 2.8 bar (normal is 0.5 bar). Filter element is 90% clogged with pharmaceutical residue. Flow restriction is causing pump to work against high backpressure.',
+          icon: 'fas fa-water'
+        },
+        'test_flow_sensor': {
+          title: 'Flow Sensor Test Results',
+          content: 'Flow sensor calibration check shows sensor is accurate within ±2%. Sensor output matches actual flow conditions. No sensor malfunction detected. Low flow reading is confirmed by manual flow measurement.',
+          icon: 'fas fa-microchip'
+        },
+        'check_system_pressure': {
+          title: 'System Pressure Analysis',
+          content: 'Inlet pressure: 1.2 bar (normal). Outlet pressure: 4.0 bar (elevated). Pressure differential: 2.8 bar (normal is 1.5 bar). High backpressure indicates system restriction, not pump failure. Pressure relief valve is operating correctly.',
+          icon: 'fas fa-gauge-high'
+        }
+      };
       
-      // Disable the tool button
-      toolBtn.disabled = true;
-      toolBtn.textContent = 'Used';
-      
-      // Show results
-      const result = toolResults[toolId];
-      resultsContent.innerHTML = `
-        <h3>${result.title}</h3>
-        ${result.content}
-      `;
-      resultsSection.style.display = 'block';
-      
-      // Scroll to results
-      resultsSection.scrollIntoView({ behavior: 'smooth' });
+      const result = toolData[toolId];
+      if (result) {
+        toolResults[toolId] = result;
+        displayToolResult(toolId, result);
+      }
     }
+    
+    function displayToolResult(toolId, result) {
+      const resultsDiv = document.getElementById('tool-results');
+      const resultHtml = `
+        <div class="tool-result" id="result-${toolId}">
+          <div class="result-header">
+            <i class="${result.icon}"></i>
+            <h3>${result.title}</h3>
+          </div>
+          <div class="result-content">
+            <p>${result.content}</p>
+          </div>
+        </div>
+      `;
+      resultsDiv.innerHTML += resultHtml;
+    }
+
+
 
     // Submit answer
     function submitAnswer(questionType) {
