@@ -1483,6 +1483,27 @@ h1 {
     z-index: 11;
 }
 
+/* Distinct border styling for each section */
+.worksheet-box .introduction-section {
+    border: 2px solid #2196F3 !important;
+    box-shadow: 0 0 15px rgba(33, 150, 243, 0.3) !important;
+}
+
+.worksheet-box .over-to-you-section {
+    border: 2px solid #4CAF50 !important;
+    box-shadow: 0 0 15px rgba(76, 175, 80, 0.3) !important;
+}
+
+.worksheet-box .so-what-section {
+    border: 2px solid #9C27B0 !important;
+    box-shadow: 0 0 15px rgba(156, 39, 176, 0.3) !important;
+}
+
+.worksheet-box .questions-section {
+    border: 2px solid #FF9800 !important;
+    box-shadow: 0 0 15px rgba(255, 152, 0, 0.3) !important;
+}
+
 /* Force all inner elements to have solid backgrounds */
 .worksheet-box .key-point,
 .worksheet-box .step-card,
