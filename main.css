@@ -1101,6 +1101,160 @@ h1 {
     margin: 0;
 }
 
+/* So What Section Card Styles */
+.explanation-card {
+  background: linear-gradient(135deg, #333333, #555555);
+  border: 2px solid #666666;
+  border-radius: 12px;
+  margin: 20px 0;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.explanation-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  border-color: var(--accent-color);
+}
+
+.card-header {
+  background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.card-header i {
+  font-size: 24px;
+  color: #ffffff;
+}
+
+.card-header h3 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.card-content {
+  padding: 25px;
+}
+
+.card-content p {
+  margin: 0;
+  line-height: 1.6;
+  color: #ffffff;
+  font-size: 16px;
+}
+
+.key-points-card {
+  background: linear-gradient(135deg, #333333, #555555);
+  border: 2px solid #666666;
+  border-radius: 12px;
+  margin: 20px 0;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.key-points-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  border-color: var(--accent-color);
+}
+
+.key-points-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 25px;
+}
+
+.key-point-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  padding: 20px;
+  background: linear-gradient(135deg, #2a2a2a, #444444);
+  border: 1px solid #555555;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.key-point-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  border-color: var(--accent-color);
+  background: linear-gradient(135deg, #333333, #555555);
+}
+
+.key-point-icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(58, 140, 230, 0.3);
+}
+
+.key-point-icon i {
+  font-size: 18px;
+  color: #ffffff;
+}
+
+.key-point-content {
+  flex: 1;
+}
+
+.key-point-content strong {
+  color: #ffffff;
+  font-size: 16px;
+  line-height: 1.5;
+  display: block;
+}
+
+/* Responsive design for the new cards */
+@media (max-width: 768px) {
+  .key-points-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    padding: 20px;
+  }
+  
+  .card-header {
+    padding: 15px;
+  }
+  
+  .card-header h3 {
+    font-size: 18px;
+  }
+  
+  .card-content {
+    padding: 20px;
+  }
+  
+  .key-point-item {
+    padding: 15px;
+  }
+  
+  .key-point-icon {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .key-point-icon i {
+    font-size: 16px;
+  }
+}
+
 /* CAD Model Styling */
 .cad-models {
     display: grid;

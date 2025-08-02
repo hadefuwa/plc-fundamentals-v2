@@ -160,35 +160,70 @@
     <div class="worksheet-section so-what-section">
       <h2 class="section-header"><i class="fas fa-lightbulb"></i> 3. So What?</h2>
       <div class="so-what-content">
-        <p>This is part of a control system, which automates processes in Industry. At the heart of this system is a PLC (Programmable Logic Controller), a computer that makes real-time decisions based on sensor data. The HMI (Human-Machine Interface) allows you to monitor and adjust settings easily.</p>
-        
-        <p>Restricting the hand valve reduced flow, which the sensor detected and sent to the PLC. The PLC increased pump speed and adjusted the valve to restore flow, showing automatic correction. Rapid valve changes caused oscillations, highlighting the need for gradual adjustments. Fully closing the valve stopped flow; the PLC responded by maxing the pump and opening the valve, but no water moved. This demonstrates risks like pressure buildup and why managing flow restrictions is critical.</p>
-        
-        <div class="key-point">
-          <i class="fas fa-lightbulb"></i>
-          <div>
-            <strong>Closed-loop systems continuously adjust using sensor feedback to maintain accuracy.</strong>
+        <!-- Main Explanation Card -->
+        <div class="explanation-card">
+          <div class="card-header">
+            <i class="fas fa-cogs"></i>
+            <h3>Control System Overview</h3>
+          </div>
+          <div class="card-content">
+            <p>This is part of a control system, which automates processes in Industry. At the heart of this system is a PLC (Programmable Logic Controller), a computer that makes real-time decisions based on sensor data. The HMI (Human-Machine Interface) allows you to monitor and adjust settings easily.</p>
           </div>
         </div>
-        
-        <div class="key-point">
-          <i class="fas fa-lightbulb"></i>
-          <div>
-            <strong>PID control ensures stability by fine-tuning pump speed and valve position.</strong>
+
+        <!-- System Behavior Card -->
+        <div class="explanation-card">
+          <div class="card-header">
+            <i class="fas fa-chart-line"></i>
+            <h3>System Response & Behavior</h3>
+          </div>
+          <div class="card-content">
+            <p>Restricting the hand valve reduced flow, which the sensor detected and sent to the PLC. The PLC increased pump speed and adjusted the valve to restore flow, showing automatic correction. Rapid valve changes caused oscillations, highlighting the need for gradual adjustments. Fully closing the valve stopped flow; the PLC responded by maxing the pump and opening the valve, but no water moved. This demonstrates risks like pressure buildup and why managing flow restrictions is critical.</p>
           </div>
         </div>
-        
-        <div class="key-point">
-          <i class="fas fa-lightbulb"></i>
-          <div>
-            <strong>The pump and proportional valve work together to match the setpoint, even with disturbances.</strong>
+
+        <!-- Key Learning Points Card -->
+        <div class="key-points-card">
+          <div class="card-header">
+            <i class="fas fa-lightbulb"></i>
+            <h3>Key Learning Points</h3>
           </div>
-        </div>
-        
-        <div class="key-point">
-          <i class="fas fa-lightbulb"></i>
-          <div>
-            <strong>Understanding this process helps you troubleshoot issues and optimize system performance effectively.</strong>
+          <div class="key-points-grid">
+            <div class="key-point-item">
+              <div class="key-point-icon">
+                <i class="fas fa-sync-alt"></i>
+              </div>
+              <div class="key-point-content">
+                <strong>Closed-loop systems continuously adjust using sensor feedback to maintain accuracy.</strong>
+              </div>
+            </div>
+            
+            <div class="key-point-item">
+              <div class="key-point-icon">
+                <i class="fas fa-sliders-h"></i>
+              </div>
+              <div class="key-point-content">
+                <strong>PID control ensures stability by fine-tuning pump speed and valve position.</strong>
+              </div>
+            </div>
+            
+            <div class="key-point-item">
+              <div class="key-point-icon">
+                <i class="fas fa-handshake"></i>
+              </div>
+              <div class="key-point-content">
+                <strong>The pump and proportional valve work together to match the setpoint, even with disturbances.</strong>
+              </div>
+            </div>
+            
+            <div class="key-point-item">
+              <div class="key-point-icon">
+                <i class="fas fa-tools"></i>
+              </div>
+              <div class="key-point-content">
+                <strong>Understanding this process helps you troubleshoot issues and optimize system performance effectively.</strong>
+              </div>
+            </div>
           </div>
         </div>
       </div>
