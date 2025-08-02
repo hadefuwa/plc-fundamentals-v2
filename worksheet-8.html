@@ -322,7 +322,7 @@
       </div>
     </div>
 
-    <!-- Simulation Section - COMMENTED OUT
+    <!-- Simulation Section -->
     <div class="simulation-section">
       <h2 class="section-header"><i class="fas fa-cogs"></i> 3. Interactive Float Switch System Maintenance</h2>
       
@@ -420,7 +420,6 @@
       <!-- Add Chart.js -->
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </div>
-    -->
 
     <!-- Add Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -430,7 +429,7 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <!-- <script src="float-switch-simulation.js"></script> -->
+  <script src="float-switch-simulation.js"></script>
   
   <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -440,7 +439,7 @@
           console.log('Initializing', initFunc);
           window[initFunc]();
         } else {
-          document.querySelector('.simulation-loading').innerHTML = '<p>Simulation ready - Float Switch System Maintenance</p>';
+          console.log('Float switch simulation script not found');
         }
       }, 1000);
       loadSavedAnswers();
