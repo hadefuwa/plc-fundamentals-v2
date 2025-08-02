@@ -155,17 +155,25 @@
         <!-- Key Learning Points Card -->
         <div class="key-points-card">
           <div class="card-header">
-            <i class="fas fa-cogs"></i>
-            <h3>Valve Operation & Control Features</h3>
+            <i class="fas fa-lightbulb"></i>
+            <h3>Key Learning Points</h3>
           </div>
           <div class="key-points-grid">
+            <div class="key-point-item">
+              <div class="key-point-icon">
+                <i class="fas fa-water"></i>
+              </div>
+              <div class="key-point-content">
+                <strong>Valves control flow, pressure, and direction in a system.</strong>
+              </div>
+            </div>
+            
             <div class="key-point-item">
               <div class="key-point-icon">
                 <i class="fas fa-sliders-h"></i>
               </div>
               <div class="key-point-content">
-                <strong>Proportional Control</strong>
-                <p>Unlike simple on/off valves, proportional valves adjust gradually using PWM signals, enabling precise flow and pressure control for stable system operation.</p>
+                <strong>Proportional valves adjust gradually, controlled by PWM signals.</strong>
               </div>
             </div>
             
@@ -174,18 +182,34 @@
                 <i class="fas fa-minus-circle"></i>
               </div>
               <div class="key-point-content">
-                <strong>Deadband Operation</strong>
-                <p>Most valves have a deadband - they typically stay closed until receiving about 10% demand signal, after which they begin to open proportionally.</p>
+                <strong>Valves often stay closed until 10% demand (deadband).</strong>
               </div>
             </div>
             
             <div class="key-point-item">
               <div class="key-point-icon">
-                <i class="fas fa-shield-alt"></i>
+                <i class="fas fa-exclamation-triangle"></i>
               </div>
               <div class="key-point-content">
-                <strong>Fail-Safe Behavior</strong>
-                <p>Valves are designed with specific fail-safe positions (open or closed) when power is lost or during emergency stops, which is crucial for safety system design.</p>
+                <strong>Blockages, coil failures, or power loss can cause valve faults.</strong>
+              </div>
+            </div>
+            
+            <div class="key-point-item">
+              <div class="key-point-icon">
+                <i class="fas fa-cogs"></i>
+              </div>
+              <div class="key-point-content">
+                <strong>Some valves are mechanical or pilot operated.</strong>
+              </div>
+            </div>
+            
+            <div class="key-point-item">
+              <div class="key-point-icon">
+                <i class="fas fa-eye"></i>
+              </div>
+              <div class="key-point-content">
+                <strong>Some valves have sensors that give position feedback to detect issues.</strong>
               </div>
             </div>
             
@@ -194,8 +218,16 @@
                 <i class="fas fa-thermometer-half"></i>
               </div>
               <div class="key-point-content">
-                <strong>Maintenance Indicators</strong>
-                <p>Valve connectors typically warm during operation - this is normal but useful for diagnostics. Blockages, coil failures, or power loss can cause valve faults.</p>
+                <strong>Valves may get warm when operating – normal but not for leak checks.</strong>
+              </div>
+            </div>
+            
+            <div class="key-point-item">
+              <div class="key-point-icon">
+                <i class="fas fa-shield-alt"></i>
+              </div>
+              <div class="key-point-content">
+                <strong>Always check how valves behave during an E-Stop for safety.</strong>
               </div>
             </div>
           </div>
