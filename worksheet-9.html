@@ -618,9 +618,47 @@
     function loadSavedAnswers() {
       // This function is now handled by the tracking system
     }
-    function loadSavedAnswers() {
-      // This function is now handled by the tracking system
+    
+    // Step card click functionality
+    function initializeStepCardClicks() {
+      const stepCards = document.querySelectorAll('.step-card');
+      
+      stepCards.forEach(card => {
+        card.addEventListener('click', function(e) {
+          // Don't trigger if clicking on the checkbox itself
+          if (e.target.closest('.step-checkbox')) {
+            return;
+          }
+          
+          const checkbox = this.querySelector('.step-complete-checkbox');
+          if (checkbox) {
+            // Toggle the checkbox
+            checkbox.checked = !checkbox.checked;
+            
+            // Update the card's completed state using the existing class name
+            if (checkbox.checked) {
+              this.classList.add('step-completed');
+            } else {
+              this.classList.remove('step-completed');
+            }
+            
+            // Trigger change event on checkbox for any existing listeners
+            const event = new Event('change', { bubbles: true });
+            checkbox.dispatchEvent(event);
+          }
+        });
+      });
     }
+    
+    // Initialize step card functionality when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      initializeStepCardClicks();
+      
+      // Use the existing step tracking system
+      if (typeof initializeStepTracking === 'function') {
+        initializeStepTracking();
+      }
+    });
   </script>
   
   <!-- Bottom Navigation -->

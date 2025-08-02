@@ -98,13 +98,13 @@
             <div class="step-number">1</div>
             <div class="step-content">
               <div class="step-header">
-                <h4>Locate and Identify PLC I/O</h4>
+                <h4>Locate the PLC</h4>
                 <label class="step-checkbox">
                   <input type="checkbox" class="step-complete-checkbox">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <p>Locate the PLC in your training system. Identify the DI a/b (digital inputs) and DQ a/b (digital outputs) status LEDs on the PLC module.</p>
+              <p>Locate the PLC in your training system.</p>
             </div>
           </div>
           
@@ -112,13 +112,13 @@
             <div class="step-number">2</div>
             <div class="step-content">
               <div class="step-header">
-                <h4>Observe System Operation</h4>
+                <h4>Identify Digital Input Groups</h4>
                 <label class="step-checkbox">
                   <input type="checkbox" class="step-complete-checkbox">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <p>Run the system and observe the LED changes. Watch for the status LED flash on startup and the flow sensor input LED flashing during operation. Adjust flow by opening/closing the hand valve to see how sensor frequency changes.</p>
+              <p>Identify the inputs and outputs status LEDs on the PLC. You will see DI a and DI b, which are two groups of digital inputs.</p>
             </div>
           </div>
           
@@ -126,13 +126,111 @@
             <div class="step-number">3</div>
             <div class="step-content">
               <div class="step-header">
-                <h4>Test Emergency Stop Channels</h4>
+                <h4>Identify Digital Output Groups</h4>
                 <label class="step-checkbox">
                   <input type="checkbox" class="step-complete-checkbox">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <p>Observe DI a 0 and 1 (E-Stop channels) - they should be on during normal operation. Press the E-Stop to see them turn off, then reset and watch DI a 2 activate when pressing the blue reset button.</p>
+              <p>You will also see DQ a and DQ b, which are two groups of digital outputs.</p>
+            </div>
+          </div>
+          
+          <div class="step-card" data-step="4">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Run the System</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Run the system and you should see some of the lights change. Be sure to open the hand valve, if left shut from the previous worksheet.</p>
+            </div>
+          </div>
+          
+          <div class="step-card" data-step="5">
+            <div class="step-number">5</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Observe Status LED on Startup</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>The bottom LEDs showing the outputs will have one of them flash briefly as the system starts up. This is our status LED flashing.</p>
+            </div>
+          </div>
+          
+          <div class="step-card" data-step="6">
+            <div class="step-number">6</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Monitor Flow Sensor LED</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>As the system is running, you will see one of the digital inputs flashing fast. This is our flow sensor as it rotates.</p>
+            </div>
+          </div>
+          
+          <div class="step-card" data-step="7">
+            <div class="step-number">7</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Test Flow Rate Changes</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>If you decrease flow, the LED will flash slower as the propeller inside the flow sensor spins slower. If you run at full speed, the LED will almost go solid as the propeller spins extremely fast.</p>
+            </div>
+          </div>
+          
+          <div class="step-card" data-step="8">
+            <div class="step-number">8</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Check Emergency Stop Channels</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Look at the inputs at DI a 0 and 1. These two should be on. These are your two emergency stop channels.</p>
+            </div>
+          </div>
+          
+          <div class="step-card" data-step="9">
+            <div class="step-number">9</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Test Emergency Stop Function</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Press the estop and these two LEDs will go out. Reset the estop and they will come back on.</p>
+            </div>
+          </div>
+          
+          <div class="step-card" data-step="10">
+            <div class="step-number">10</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Test Reset Button</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>As you press the blue reset button, you will observe that DI a 2 will turn on whilst you hold it down.</p>
             </div>
           </div>
         </div>
@@ -1061,6 +1159,47 @@
     function loadSavedAnswers() {
       // This function is now handled by the tracking system
     }
+
+    // Step card click functionality
+    function initializeStepCardClicks() {
+      const stepCards = document.querySelectorAll('.step-card');
+      
+      stepCards.forEach(card => {
+        card.addEventListener('click', function(e) {
+          // Don't trigger if clicking on the checkbox itself
+          if (e.target.closest('.step-checkbox')) {
+            return;
+          }
+          
+          const checkbox = this.querySelector('.step-complete-checkbox');
+          if (checkbox) {
+            // Toggle the checkbox
+            checkbox.checked = !checkbox.checked;
+            
+            // Update the card's completed state using the existing class name
+            if (checkbox.checked) {
+              this.classList.add('step-completed');
+            } else {
+              this.classList.remove('step-completed');
+            }
+            
+            // Trigger change event on checkbox for any existing listeners
+            const event = new Event('change', { bubbles: true });
+            checkbox.dispatchEvent(event);
+          }
+        });
+      });
+    }
+
+    // Initialize step card functionality when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      initializeStepCardClicks();
+      
+      // Use the existing step tracking system
+      if (typeof initializeStepTracking === 'function') {
+        initializeStepTracking();
+      }
+    });
   </script>
   
   <!-- Bottom Navigation -->
