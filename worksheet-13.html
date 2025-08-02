@@ -419,7 +419,20 @@
             <h3>Analogue Sensor System Overview</h3>
           </div>
           <div class="card-content">
-            <p>Analogue sensors provide continuous measurement data that requires proper scaling and calibration:</p>
+            <p>The temperature sensor in this system is set up to measure 0 to 100°C, and it sends a voltage signal from 0 to 10V into the PLC. The PLC doesn't see temperature directly. Instead, it sees a raw number. On a Siemens S7-1200, the full raw input range is 0 to 27648. This means:</p>
+            <ul>
+              <li>0V = 0</li>
+              <li>10V = 27648</li>
+              <li>5V = 13824</li>
+            </ul>
+            <p>To make this useful, the PLC uses scaling to convert the raw number into a real-world value, like temperature. For a 0–100°C sensor, the scaling is set so:</p>
+            <ul>
+              <li>0 = 0°C</li>
+              <li>27648 = 100°C</li>
+              <li>13824 = 50°C</li>
+            </ul>
+            <p>If the sensor is replaced with one that measures 0 to 300°C, the PLC's scaling needs to be changed. If not, the PLC will still show 100°C at 10V, when the real temperature is actually 300°C. This causes the HMI to display incorrect values.</p>
+            <p>Always update the PLC analogue input scaling when the sensor range changes, to keep readings accurate and prevent control errors.</p>
           </div>
         </div>
 

@@ -402,7 +402,13 @@
             <h3>Digital Sensor System Overview</h3>
           </div>
           <div class="card-content">
-            <p>Digital sensors provide essential binary feedback for control systems and safety monitoring:</p>
+            <p>Digital sensors send a simple on or off signal, usually using 24V DC. To set one up, connect the power wires (+24V and 0V) and the signal wire to a PLC digital input. The PLC reads this as either on (1) or off (0). You can usually monitor the status of these digital inputs directly on the PLC, and also on the IO screen of the HMI.</p>
+            <p>There are two types:</p>
+            <ul>
+              <li><strong>Normally Open (NO)</strong>: Sends a signal only when triggered.</li>
+              <li><strong>Normally Closed (NC)</strong>: Sends a signal when idle and stops when triggered.</li>
+            </ul>
+            <p>This matters for safety. For example, emergency stops use NC so that if a wire breaks, the system sees it as a fault. Always check the sensor type before wiring.</p>
           </div>
         </div>
 
