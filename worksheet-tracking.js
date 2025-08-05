@@ -16,9 +16,7 @@ class WorksheetTracker {
         { id: 9, title: "Temperature Sensor", type: "maintenance", totalQuestions: 5 },
         { id: 10, title: "Digital Outputs", type: "maintenance", totalQuestions: 5 },
         { id: 11, title: "Motor PWM", type: "maintenance", totalQuestions: 5 },
-        { id: 12, title: "Motor Relay", type: "maintenance", totalQuestions: 5 },
-        { id: 13, title: "Analogue Sensors System Maintenance", type: "maintenance", totalQuestions: 5 },
-        { id: 14, title: "Fault Detection & Troubleshooting", type: "maintenance", totalQuestions: 5 }
+        { id: 12, title: "Motor Relay", type: "maintenance", totalQuestions: 5 }
       ],
       fault: [
         { id: 1, title: "Titanium Forging System Failure", type: "fault", totalQuestions: 3 },
