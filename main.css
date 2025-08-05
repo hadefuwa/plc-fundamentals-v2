@@ -39,7 +39,7 @@ body {
     margin: 0 auto;
     padding: 20px;
     box-sizing: border-box;
-    overflow-y: auto;
+    overflow-y: visible; /* Remove scrollbar */
 }
 
 @media screen and (display-mode: standalone) {
@@ -51,8 +51,8 @@ body {
     }
     
     .main-container {
-        height: calc(100vh - 80px);
-        overflow-y: auto !important;
+        min-height: calc(100vh - 80px);
+        overflow-y: visible !important;
     }
     
     /* Ensure worksheet box works in standalone mode */
@@ -3861,7 +3861,7 @@ h1 {
     }
     
     .main-container {
-        overflow-y: auto;
+        overflow-y: visible;
     }
     
     .worksheet-box,
@@ -3882,7 +3882,7 @@ h1 {
     
     /* Fix main container scrolling */
     .main-container {
-        overflow-y: auto !important;
+        overflow-y: visible !important;
         height: auto !important;
         min-height: 100vh;
     }

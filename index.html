@@ -179,23 +179,59 @@
     .hero-section {
       background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
       border-radius: 12px;
-      padding: 40px;
-      margin-bottom: 30px;
+      padding: 30px;
+      margin-bottom: 20px;
       text-align: center;
       border: 2px solid var(--accent-color);
       box-shadow: 0 8px 25px var(--accent-shadow-light);
     }
 
     .hero-content {
-      max-width: 800px;
+      max-width: 1200px;
       margin: 0 auto;
+    }
+
+    .hero-intro {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .hero-text {
+      flex: 1;
+      text-align: left;
+    }
+
+    .hero-image {
+      flex-shrink: 0;
+      width: 300px;
+      height: 200px;
+      border-radius: 8px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-cad-image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      transition: transform 0.3s ease;
+    }
+
+    .hero-image:hover .hero-cad-image {
+      transform: scale(1.05);
     }
 
     .hero-title {
       color: #FFFFFF;
-      font-size: 48px;
+      font-size: 42px;
       font-weight: bold;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       text-transform: uppercase;
       letter-spacing: 2px;
       text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
@@ -203,9 +239,9 @@
 
     .hero-subtitle {
       color: #CCCCCC;
-      font-size: 20px;
-      margin-bottom: 30px;
-      line-height: 1.6;
+      font-size: 18px;
+      margin-bottom: 25px;
+      line-height: 1.5;
     }
 
     .hero-install-button {
@@ -230,37 +266,38 @@
       box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
     }
 
-         /* Main Container - Full Height */
-     .main-container {
-       min-height: calc(100vh - 120px); /* Subtract nav height */
-       display: flex;
-       flex-direction: column;
-       justify-content: center;
-       padding: 20px;
-       max-width: 1400px;
-       margin: 0 auto;
-     }
+                   /* Main Container - Responsive Height */
+      .main-container {
+        min-height: calc(100vh - 120px); /* Minimum height, not fixed */
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        padding: 20px;
+        max-width: 1400px;
+        margin: 0 auto;
+        overflow-y: visible; /* Remove scrollbar */
+      }
 
-     /* Features Section */
-     .features-section {
-       display: flex;
-       flex-direction: column;
-       gap: 30px;
-       flex: 1;
-       justify-content: center;
-     }
+           /* Features Section */
+      .features-section {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        flex: 1;
+        justify-content: flex-start;
+      }
 
      .feature-card {
        background: linear-gradient(135deg, #333333, #555555);
        border: 2px solid #666666;
        border-radius: 12px;
-       padding: 30px;
+       padding: 25px;
        transition: all 0.3s ease;
        cursor: pointer;
        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
        display: flex;
        align-items: center;
-       gap: 25px;
+       gap: 20px;
        position: relative;
        overflow: hidden;
      }
@@ -305,8 +342,8 @@
 
     .feature-icon {
       flex-shrink: 0;
-      width: 80px;
-      height: 80px;
+      width: 70px;
+      height: 70px;
       background: linear-gradient(135deg, var(--accent-color), #3a7bd5);
       border-radius: 50%;
       display: flex;
@@ -316,7 +353,7 @@
     }
 
     .feature-icon i {
-      font-size: 36px;
+      font-size: 32px;
       color: white;
     }
 
@@ -325,16 +362,16 @@
     }
 
     .feature-content h3 {
-      font-size: 24px;
+      font-size: 22px;
       font-weight: bold;
       margin-bottom: 10px;
       color: inherit;
     }
 
     .feature-content p {
-      font-size: 16px;
-      line-height: 1.5;
-      margin-bottom: 15px;
+      font-size: 15px;
+      line-height: 1.4;
+      margin-bottom: 12px;
       opacity: 0.8;
     }
 
@@ -349,17 +386,17 @@
        text-transform: uppercase;
      }
 
-     .feature-image {
-       flex-shrink: 0;
-       width: 120px;
-       height: 80px;
-       border-radius: 8px;
-       overflow: hidden;
-       background: rgba(255,255,255,0.05);
-       display: flex;
-       align-items: center;
-       justify-content: center;
-     }
+           .feature-image {
+        flex-shrink: 0;
+        width: 100px;
+        height: 70px;
+        border-radius: 8px;
+        overflow: hidden;
+        background: rgba(255,255,255,0.05);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
 
      .feature-image .cad-image {
        width: 100%;
@@ -372,11 +409,11 @@
        transform: scale(1.05);
      }
 
-     .features-grid {
-       display: grid;
-       grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-       gap: 20px;
-     }
+           .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 15px;
+      }
 
     /* Main Content Layout (Legacy - keeping for compatibility) */
     .main-content {
@@ -565,57 +602,75 @@
     }
 
          /* Responsive Design */
-     @media (max-width: 1200px) {
-       .main-content {
-         flex-direction: column;
-         align-items: center;
-       }
-       
-       .side-content {
-         width: 100%;
-         max-width: 400px;
-         margin: 10px 0;
-       }
-       
-       .features-grid {
-         grid-template-columns: 1fr;
-       }
-       
-       .feature-image {
-         width: 100px;
-         height: 70px;
-       }
-     }
+           @media (max-width: 1200px) {
+        .main-content {
+          flex-direction: column;
+          align-items: center;
+        }
+        
+        .side-content {
+          width: 100%;
+          max-width: 400px;
+          margin: 10px 0;
+        }
+        
+        .features-grid {
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          gap: 15px;
+        }
+        
+        .feature-image {
+          width: 90px;
+          height: 60px;
+        }
+      }
 
-     @media (max-width: 768px) {
-       .main-container {
-         min-height: calc(100vh - 100px);
-         padding: 15px;
-       }
-       
-       .hero-section {
-         padding: 20px;
-         margin-bottom: 20px;
-       }
-       
-       .hero-title {
-         font-size: 32px;
-       }
-       
-       .hero-subtitle {
-         font-size: 16px;
-       }
-       
-       .hero-install-button {
-         padding: 10px 20px;
-         font-size: 14px;
-       }
+           @media (max-width: 768px) {
+        .main-container {
+          min-height: calc(100vh - 100px);
+          padding: 15px;
+          justify-content: flex-start;
+          overflow-y: visible;
+        }
+        
+        .hero-section {
+          padding: 20px;
+          margin-bottom: 15px;
+        }
+
+        .hero-intro {
+          flex-direction: column;
+          gap: 20px;
+          text-align: center;
+        }
+
+        .hero-text {
+          text-align: center;
+        }
+
+        .hero-image {
+          width: 250px;
+          height: 150px;
+        }
+        
+        .hero-title {
+          font-size: 32px;
+        }
+        
+        .hero-subtitle {
+          font-size: 16px;
+        }
+        
+        .hero-install-button {
+          padding: 10px 20px;
+          font-size: 14px;
+        }
        
        .feature-card {
-         padding: 20px;
+         padding: 18px;
          flex-direction: column;
          text-align: center;
-         gap: 15px;
+         gap: 12px;
        }
        
        .feature-icon {
@@ -649,29 +704,46 @@
        }
      }
 
-     @media (max-width: 480px) {
-       .main-container {
-         min-height: calc(100vh - 80px);
-         padding: 10px;
-       }
-       
-       .hero-section {
-         padding: 15px;
-         margin-bottom: 15px;
-       }
-       
-       .hero-title {
-         font-size: 24px;
-       }
-       
-       .hero-subtitle {
-         font-size: 14px;
-       }
-       
-       .hero-install-button {
-         padding: 8px 16px;
-         font-size: 12px;
-       }
+           @media (max-width: 480px) {
+        .main-container {
+          min-height: calc(100vh - 80px);
+          padding: 10px;
+          justify-content: flex-start;
+          overflow-y: visible;
+        }
+        
+        .hero-section {
+          padding: 12px;
+          margin-bottom: 12px;
+        }
+
+        .hero-intro {
+          flex-direction: column;
+          gap: 15px;
+          text-align: center;
+        }
+
+        .hero-text {
+          text-align: center;
+        }
+
+        .hero-image {
+          width: 200px;
+          height: 120px;
+        }
+        
+        .hero-title {
+          font-size: 24px;
+        }
+        
+        .hero-subtitle {
+          font-size: 14px;
+        }
+        
+        .hero-install-button {
+          padding: 8px 16px;
+          font-size: 12px;
+        }
        
        .feature-card {
          padding: 15px;
@@ -775,75 +847,70 @@
     <!-- HERO SECTION -->
     <div class="hero-section">
       <div class="hero-content">
-                 <h1 class="hero-title">PLC Fundamentals Trainer</h1>
-        <p class="hero-subtitle">
-          Comprehensive training platform for industrial maintenance technicians. 
-          Master closed-loop control systems through interactive worksheets and real-world scenarios.
-        </p>
-        <button onclick="installPWA()" class="hero-install-button">
-          <i class="fas fa-download"></i> Install Matrix IM6930 App
-        </button>
+        <div class="hero-intro">
+          <div class="hero-text">
+            <h1 class="hero-title">PLC Fundamentals Trainer</h1>
+            <p class="hero-subtitle">
+              Comprehensive training platform for industrial maintenance technicians. 
+              Master closed-loop control systems through interactive worksheets and real-world scenarios.
+            </p>
+            <button onclick="installPWA()" class="hero-install-button">
+              <i class="fas fa-download"></i> Install Matrix IM6930 App
+            </button>
+          </div>
+          <div class="hero-image">
+            <img src="assets/cad.png" alt="PLC Fundamentals Training System" class="hero-cad-image">
+          </div>
+        </div>
       </div>
     </div>
 
          <!-- FEATURES SECTION -->
      <div class="features-section">
-       <div class="feature-card main-feature" onclick="window.location='CP2388-worksheets.html'">
-         <div class="feature-icon">
-           <i class="fas fa-cogs"></i>
-         </div>
-         <div class="feature-content">
-           <h3>CP2388 - Industrial Maintenance</h3>
-           <p>14 comprehensive worksheets covering control systems, emergency stops, PLC maintenance, and more.</p>
-           <span class="feature-badge">Primary Curriculum</span>
-         </div>
-         <div class="feature-image">
-           <img src="assets/cad.png" alt="CP2388 Curriculum" class="cad-image">
-         </div>
-       </div>
+               <div class="feature-card main-feature" onclick="window.location='CP2388-worksheets.html'">
+          <div class="feature-icon">
+            <i class="fas fa-cogs"></i>
+          </div>
+          <div class="feature-content">
+            <h3>CP2388 - Industrial Maintenance</h3>
+            <p>14 comprehensive worksheets covering control systems, emergency stops, PLC maintenance, and more.</p>
+            <span class="feature-badge">Primary Curriculum</span>
+          </div>
+        </div>
 
        <div class="features-grid">
-         <div class="feature-card" onclick="openPDF('docs/CP2388 - Industrial Maintenance of PLC Fundamentals Systems.pdf')">
-           <div class="feature-icon">
-             <i class="fas fa-cogs"></i>
-           </div>
-           <div class="feature-content">
-             <h3>Curriculum Guide</h3>
-             <p>Complete CP2388 curriculum documentation and learning objectives.</p>
-             <span class="feature-badge">CP2388</span>
-           </div>
-           <div class="feature-image">
-             <img src="assets/cad.png" alt="Curriculum Guide" class="cad-image">
-           </div>
-         </div>
+                   <div class="feature-card" onclick="openPDF('docs/CP2388 - Industrial Maintenance of PLC Fundamentals Systems.pdf')">
+            <div class="feature-icon">
+              <i class="fas fa-cogs"></i>
+            </div>
+            <div class="feature-content">
+              <h3>Curriculum Guide</h3>
+              <p>Complete CP2388 curriculum documentation and learning objectives.</p>
+              <span class="feature-badge">CP2388</span>
+            </div>
+          </div>
 
-         <div class="feature-card" onclick="openPDF('docs/IM6930 - Maintenance of PLC Fundamentals Systems User Manual.pdf')">
-           <div class="feature-icon">
-             <i class="fas fa-book"></i>
-           </div>
-           <div class="feature-content">
-             <h3>User Manual</h3>
-             <p>Comprehensive user manual for the IM6930 PLC Fundamentals Trainer.</p>
-             <span class="feature-badge">IM6930</span>
-           </div>
-           <div class="feature-image">
-             <img src="assets/cad2.png" alt="User Manual" class="cad-image">
-           </div>
-         </div>
+                   <div class="feature-card" onclick="openPDF('docs/IM6930 - Maintenance of PLC Fundamentals Systems User Manual.pdf')">
+            <div class="feature-icon">
+              <i class="fas fa-book"></i>
+            </div>
+            <div class="feature-content">
+              <h3>User Manual</h3>
+              <p>Comprehensive user manual for the IM6930 PLC Fundamentals Trainer.</p>
+              <span class="feature-badge">IM6930</span>
+            </div>
+          </div>
 
-         <div class="feature-card" onclick="openPDF('docs/IM6930 Electrical Drawings RevG.pdf')">
-           <div class="feature-icon">
-             <i class="fas fa-bolt"></i>
-           </div>
-           <div class="feature-content">
-             <h3>Electrical Drawings</h3>
-             <p>Detailed electrical schematics and wiring diagrams for the training system.</p>
-             <span class="feature-badge">RevG</span>
-           </div>
-           <div class="feature-image">
-             <img src="assets/cad2.png" alt="Electrical Drawings" class="cad-image">
-           </div>
-         </div>
+                   <div class="feature-card" onclick="openPDF('docs/IM6930 Electrical Drawings RevG.pdf')">
+            <div class="feature-icon">
+              <i class="fas fa-bolt"></i>
+            </div>
+            <div class="feature-content">
+              <h3>Electrical Drawings</h3>
+              <p>Detailed electrical schematics and wiring diagrams for the training system.</p>
+              <span class="feature-badge">RevG</span>
+            </div>
+          </div>
        </div>
      </div>
   </div>
