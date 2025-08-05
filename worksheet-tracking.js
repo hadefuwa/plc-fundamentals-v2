@@ -37,6 +37,9 @@ class WorksheetTracker {
   // Initialize storage with default values if not exists
   initializeStorage() {
     try {
+      // Clean up old worksheet data for non-existent worksheets
+      this.cleanupOldWorksheetData();
+      
       // Initialize overall progress if not exists
       if (!localStorage.getItem('worksheet-overall-progress')) {
         this.updateOverallProgress();
@@ -83,6 +86,37 @@ class WorksheetTracker {
       });
     } catch (error) {
       console.error('Error initializing storage:', error);
+    }
+  }
+
+  // Clean up old worksheet data for non-existent worksheets
+  cleanupOldWorksheetData() {
+    try {
+      const keys = Object.keys(localStorage);
+      const validMaintenanceIds = this.worksheets.maintenance.map(w => w.id);
+      const validFaultIds = this.worksheets.fault.map(w => w.id);
+      
+      keys.forEach(key => {
+        // Check for old maintenance worksheet data
+        if (key.startsWith('worksheet-maintenance-')) {
+          const id = parseInt(key.replace('worksheet-maintenance-', ''));
+          if (!validMaintenanceIds.includes(id)) {
+            localStorage.removeItem(key);
+            console.log(`Removed old maintenance worksheet data: ${key}`);
+          }
+        }
+        
+        // Check for old fault worksheet data
+        if (key.startsWith('worksheet-fault-')) {
+          const id = parseInt(key.replace('worksheet-fault-', ''));
+          if (!validFaultIds.includes(id)) {
+            localStorage.removeItem(key);
+            console.log(`Removed old fault worksheet data: ${key}`);
+          }
+        }
+      });
+    } catch (error) {
+      console.error('Error cleaning up old worksheet data:', error);
     }
   }
 

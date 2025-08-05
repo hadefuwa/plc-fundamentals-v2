@@ -912,6 +912,11 @@
         return;
       }
       
+      // Force cleanup of old worksheet data
+      if (typeof worksheetTracker !== 'undefined') {
+        worksheetTracker.cleanupOldWorksheetData();
+      }
+      
       // Load settings and student info
       loadSettings();
       loadStudentInfo();
