@@ -84,8 +84,10 @@
 
     <!-- Over To You Section -->
     <div class="worksheet-section over-to-you-section">
-      <h2 class="section-header"><i class="fas fa-hands-helping"></i> Over To You</h2>
+      <h2 class="section-header"><i class="fas fa-hands-helping"></i> 2. Over To You</h2>
       <div class="worksheet-content">
+        <p><strong>Navigate to Worksheet 2 and observe how the same hardware can perform more complex tasks. This system demonstrates sequencing and latching in PLC control.</strong></p>
+        
         <div class="steps-container">
           <div class="step-card" data-step="1">
             <div class="step-number">1</div>
@@ -148,29 +150,100 @@
 
     <!-- So What Section -->
     <div class="worksheet-section so-what-section">
-      <h2 class="section-header"><i class="fas fa-lightbulb"></i> So What?</h2>
+      <h2 class="section-header"><i class="fas fa-lightbulb"></i> 3. So What?</h2>
       <div class="so-what-content">
-        <p>The physical system (i.e. the wiring) has not changed but the behaviour has. In worksheet 1, the logic was basic, if we get input 0, then turn on the 3 outputs.</p>
-        
-        <p>Now we're dealing with a more complex system. If we get input 0, latch that as a start command, and then start a sequence to turn on one output at a time, until they're all on. Releasing Input 0, makes no difference anymore, due to the PLC program - the command is latched on.</p>
-        
-        <p>The PLC will only break this command if you press the red button on Input 2 or if you press the Emergency Stop (more on that later).</p>
-        
-        <p>Remember: Our button is still a momentary button, but it is being latched by the PLC software.</p>
-        
-        <p>This is an example of a complex PLC system. As you progress in Industrial Maintenance and fault-finding or troubleshooting, you will need to understand what type of circuit you have and what's happening or supposed to be happening in the PLC code. You will rarely work on simple PLC systems, most will be a lot more complicated than what we've looked at in this worksheet.</p>
-        
-        <div class="key-points">
-          <h3>Key Takeaways</h3>
-          <ul>
-            <li>Complex PLC systems use multiple inputs, outputs, and steps to complete a process.</li>
-            <li>The same hardware can do simple or complex tasks based on the PLC's program.</li>
-            <li>A start button signal can be latched in the PLC software so the process keeps going without holding the button down.</li>
-            <li>Pressing an emergency or stop button can interrupt the process, adding a layer of safety.</li>
-            <li>These systems rely on sensors and programmed logic to work safely and reliably.</li>
-            <li>In real industrial environments, most PLC systems use sequences and latches to manage complex tasks.</li>
-            <li>Understanding how a process is programmed and how to read inputs and outputs is key to troubleshooting and fixing faults.</li>
-          </ul>
+        <!-- Main Explanation Card -->
+        <div class="explanation-card">
+          <div class="card-header">
+            <i class="fas fa-cogs"></i>
+            <h3>Complex PLC Control Overview</h3>
+          </div>
+          <div class="card-content">
+            <p>The physical system (i.e. the wiring) has not changed but the behaviour has. In worksheet 1, the logic was basic, if we get input 0, then turn on the 3 outputs. Now we're dealing with a more complex system. If we get input 0, latch that as a start command, and then start a sequence to turn on one output at a time, until they're all on.</p>
+          </div>
+        </div>
+
+        <!-- System Behavior Card -->
+        <div class="explanation-card">
+          <div class="card-header">
+            <i class="fas fa-chart-line"></i>
+            <h3>System Behavior & Safety</h3>
+          </div>
+          <div class="card-content">
+            <p>Releasing Input 0, makes no difference anymore, due to the PLC program - the command is latched on. The PLC will only break this command if you press the red button on Input 2 or if you press the Emergency Stop. Remember: Our button is still a momentary button, but it is being latched by the PLC software.</p>
+          </div>
+        </div>
+
+        <!-- Key Learning Points Card -->
+        <div class="key-points-card">
+          <div class="card-header">
+            <i class="fas fa-lightbulb"></i>
+            <h3>Key Learning Points</h3>
+          </div>
+          <div class="key-points-grid">
+            <div class="key-point-item">
+              <div class="key-point-icon">
+                <i class="fas fa-layer-group"></i>
+              </div>
+              <div class="key-point-content">
+                <strong>Complex PLC systems use multiple inputs, outputs, and steps to complete a process.</strong>
+              </div>
+            </div>
+            
+            <div class="key-point-item">
+              <div class="key-point-icon">
+                <i class="fas fa-exchange-alt"></i>
+              </div>
+              <div class="key-point-content">
+                <strong>The same hardware can do simple or complex tasks based on the PLC's program.</strong>
+              </div>
+            </div>
+            
+            <div class="key-point-item">
+              <div class="key-point-icon">
+                <i class="fas fa-lock"></i>
+              </div>
+              <div class="key-point-content">
+                <strong>A start button signal can be latched in the PLC software so the process keeps going without holding the button down.</strong>
+              </div>
+            </div>
+            
+            <div class="key-point-item">
+              <div class="key-point-icon">
+                <i class="fas fa-shield-alt"></i>
+              </div>
+              <div class="key-point-content">
+                <strong>Pressing an emergency or stop button can interrupt the process, adding a layer of safety.</strong>
+              </div>
+            </div>
+            
+            <div class="key-point-item">
+              <div class="key-point-icon">
+                <i class="fas fa-cogs"></i>
+              </div>
+              <div class="key-point-content">
+                <strong>These systems rely on sensors and programmed logic to work safely and reliably.</strong>
+              </div>
+            </div>
+            
+            <div class="key-point-item">
+              <div class="key-point-icon">
+                <i class="fas fa-industry"></i>
+              </div>
+              <div class="key-point-content">
+                <strong>In real industrial environments, most PLC systems use sequences and latches to manage complex tasks.</strong>
+              </div>
+            </div>
+            
+            <div class="key-point-item">
+              <div class="key-point-icon">
+                <i class="fas fa-tools"></i>
+              </div>
+              <div class="key-point-content">
+                <strong>Understanding how a process is programmed and how to read inputs and outputs is key to troubleshooting and fixing faults.</strong>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
