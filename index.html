@@ -421,43 +421,39 @@
 
   <!-- Main Container -->
   <div class="main-container">
+    <!-- TOP SECTION - MAIN CONTENT -->
+    <div class="center-content" style="margin-bottom: 30px;">
+        <h2 class="center-title">Industrial Maintenance</h2>
+        <p class="center-subtitle">
+            Comprehensive training platform for industrial maintenance technicians. 
+            Master closed-loop control systems through interactive worksheets and real-world scenarios.
+        </p>
+        
+        <button onclick="installPWA()" class="pwa-install-button" style="margin-bottom: 20px;">
+            <i class="fas fa-download"></i> Install Matrix IM6930 App
+        </button>
+        
+        <div class="curriculum-grid">
+            <div class="curriculum-card" onclick="window.location='CP2388-worksheets.html'">
+                <i class="fas fa-cogs"></i>
+                <h3>CP2388 - Industrial Maintenance</h3>
+                <p>14 comprehensive worksheets covering control systems, emergency stops, PLC maintenance, and more.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTTOM SECTION - SIDE CONTENT -->
     <div class="main-content">
         <!-- LEFT SIDE - CURRICULUM -->
         <div class="side-content">
             <h2 class="side-header curriculum">CURRICULUM</h2>
             <img src="assets/cad.png" alt="CAD Diagram 1" class="cad-image">
             <div class="button-container">
-
                 <a href="#" class="side-button" onclick="openPDF('docs/CP2388 - Industrial Maintenance of PLC Fundamentals Systems.pdf')">
                     <i class="fas fa-cogs"></i>
                     <span class="button-text">Industrial Maintenance</span>
                     <small>(CP2388)</small>
                 </a>
-            </div>
-        </div>
-
-        <!-- CENTER CONTENT -->
-        <div class="center-content">
-            <h2 class="center-title">Industrial Maintenance</h2>
-            <p class="center-subtitle">
-                Comprehensive training platform for industrial maintenance technicians. 
-                Master closed-loop control systems through interactive worksheets and real-world scenarios.
-            </p>
-            
-            <button onclick="installPWA()" class="pwa-install-button" style="margin-bottom: 20px;">
-                <i class="fas fa-download"></i> Install Matrix IM6930 App
-            </button>
-            
-
-            
-            <div class="curriculum-grid">
-                <div class="curriculum-card" onclick="window.location='CP2388-worksheets.html'">
-                    <i class="fas fa-cogs"></i>
-                    <h3>CP2388 - Industrial Maintenance</h3>
-                    <p>14 comprehensive worksheets covering control systems, emergency stops, PLC maintenance, and more.</p>
-                </div>
-                
-
             </div>
         </div>
 
