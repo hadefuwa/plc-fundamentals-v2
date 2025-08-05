@@ -22,7 +22,6 @@
   <!-- Load app-specific scripts after dependencies -->
   <script defer src="image-fallback.js"></script>
   <script defer src="scenario-popup.js"></script>
-  <script defer src="pdf-popup.js"></script>
   <script>
     // Clear any existing service worker registrations
     if ('serviceWorker' in navigator) {
@@ -783,16 +782,7 @@
 
 
   
-  <!-- PDF Opening Popup -->
-  <div id="pdf-popup" class="pdf-popup">
-    <div class="pdf-popup-content">
-      <i class="fas fa-file-pdf"></i>
-      <div class="pdf-popup-text">
-        <h3>Opening PDF Document</h3>
-        <p id="pdf-popup-filename">Document will open in your default PDF viewer...</p>
-      </div>
-    </div>
-  </div>
+
 
   <div id="splash-screen">
     <div class="splash-content">
@@ -924,11 +914,6 @@
   <script>
     // PWA PDF opening function
     function openPDF(pdfPath) {
-      // Show popup if available
-      if (typeof showPDFPopup === 'function') {
-        showPDFPopup(pdfPath);
-      }
-      
       // Try to open PDF directly in browser, with fallback to download
       const link = document.createElement('a');
       link.href = pdfPath;
@@ -1046,26 +1031,7 @@
     // Restart animation on window focus
     window.addEventListener('focus', ensureBackgroundAnimation);
     
-    // PDF Opening Popup Functionality
-    function showPDFPopup(pdfPath) {
-      const popup = document.getElementById('pdf-popup');
-      const filename = document.getElementById('pdf-popup-filename');
-      
-      // Extract filename from path
-      const pathParts = pdfPath.split('/');
-      const fileName = pathParts[pathParts.length - 1];
-      
-      // Update popup text
-      filename.textContent = `Opening: ${fileName}`;
-      
-      // Show popup
-      popup.classList.add('show');
-      
-      // Hide popup after 5 seconds
-      setTimeout(() => {
-        popup.classList.remove('show');
-      }, 5000);
-    }
+
   </script>
   <script>
     // Ensure window.electron is not referenced
