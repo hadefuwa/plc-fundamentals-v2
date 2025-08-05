@@ -1208,7 +1208,7 @@ function submitAnswer(questionNumber) {
   
   // Determine if answer is correct (extract letter from correct answer)
   const correctLetter = correctAnswerText.match(/^[A-D])/);
-  const isCorrect = correctLetter && answer === correctLetter[0];
+  const isCorrect = correctLetter && answer === correctLetter;
   
   // Style the selected option
   const allOptions = answerInput.querySelectorAll('.option-label');
@@ -1221,7 +1221,7 @@ function submitAnswer(questionNumber) {
   } else {
     selectedOption.closest('.option-label').classList.add('incorrect');
     // Also mark the correct option as correct
-    const correctOption = answerInput.querySelector(`input[name="question-${questionNumber}"][value="${correctLetter[0]}"]`);
+    const correctOption = answerInput.querySelector(`input[name="question-${questionNumber}"][value="${correctLetter}"]`);
     if (correctOption) {
       correctOption.closest('.option-label').classList.add('correct');
     }
