@@ -293,7 +293,7 @@
       }
     }
 
-    /* Fault scenarios use the same worksheet-grid class for consistency */
+
 
     .chart-section {
       background: #23272b;
@@ -885,16 +885,7 @@
           </div>
         </div>
 
-        <!-- Fault Worksheets -->
-        <div class="progress-section">
-          <div class="section-header">
-            <h2><i class="fas fa-exclamation-triangle"></i> Fault Scenarios (CP6773)</h2>
-            <span class="section-count" id="faultCount">0/8</span>
-          </div>
-          <div class="worksheet-grid" id="faultWorksheets">
-            <!-- Will be populated by JavaScript -->
-          </div>
-        </div>
+
       </div>
     </div>
   </div>
@@ -1123,56 +1114,11 @@
       }).join('');
       
       maintenanceCount.textContent = `${maintenanceCompleted}/${worksheetTracker.worksheets.maintenance.length}`;
-      
-      // Update fault worksheets
-      const faultContainer = document.getElementById('faultWorksheets');
-      const faultCount = document.getElementById('faultCount');
-      let faultCompleted = 0;
-      
-      // Use the same worksheet-grid class for consistency
-      faultContainer.className = 'worksheet-grid';
-      
-      // Debug: Log fault scenario data
-      console.log('Fault scenarios data:', worksheetTracker.worksheets.fault);
-      console.log('All progress data:', allProgress);
-      
-      faultContainer.innerHTML = worksheetTracker.worksheets.fault.map(worksheet => {
-        const progress = allProgress[`fault-${worksheet.id}`] || {
-          completedQuestions: 0,
-          totalQuestions: worksheet.totalQuestions,
-          completionPercentage: 0
-        };
-        
-        const isComplete = progress.completedQuestions === progress.totalQuestions;
-        const statusClass = progress.completedQuestions === 0 ? 'not-started' : 
-                          isComplete ? 'completed' : 'incomplete';
-        
-        if (isComplete) faultCompleted++;
-        
-        return `
-          <div class="worksheet-card ${statusClass}" onclick="openWorksheet('fault', ${worksheet.id})">
-            <div class="worksheet-title">${worksheet.title}</div>
-            <span class="worksheet-type fault">Fault Scenario</span>
-            <div class="progress-bar">
-              <div class="progress-fill ${statusClass}" style="width: ${progress.completionPercentage || 0}%"></div>
-            </div>
-            <div class="worksheet-stats">
-              <span>${progress.completedQuestions || 0}/${progress.totalQuestions} questions</span>
-              <span>${progress.completionPercentage || 0}%</span>
-            </div>
-            ${progress.lastUpdated ? `<div class="last-activity">Last updated: ${new Date(progress.lastUpdated).toLocaleString()}</div>` : ''}
-          </div>
-        `;
-      }).join('');
-      
-      faultCount.textContent = `${faultCompleted}/${worksheetTracker.worksheets.fault.length}`;
     }
 
     function openWorksheet(type, id) {
       if (type === 'maintenance') {
         window.location.href = `worksheet-${id}.html`;
-      } else if (type === 'fault') {
-        window.location.href = `fault-scenario-${id}.html`;
       }
     }
 
