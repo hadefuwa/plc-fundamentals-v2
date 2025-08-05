@@ -34,11 +34,23 @@
       });
     }
   </script>
-  <style>
-    .hidden {
-      opacity: 0;
-      pointer-events: none;
-    }
+     <style>
+     /* Full Height Setup */
+     html, body {
+       height: 100%;
+       margin: 0;
+       padding: 0;
+       overflow-x: hidden;
+     }
+
+     body {
+       min-height: 100vh;
+     }
+
+     .hidden {
+       opacity: 0;
+       pointer-events: none;
+     }
 
     /* Install Button Styles */
     .nav-link.pwa-install-button {
@@ -218,25 +230,56 @@
       box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
     }
 
-    /* Features Section */
-    .features-section {
-      display: flex;
-      flex-direction: column;
-      gap: 30px;
-    }
+         /* Main Container - Full Height */
+     .main-container {
+       min-height: calc(100vh - 120px); /* Subtract nav height */
+       display: flex;
+       flex-direction: column;
+       justify-content: center;
+       padding: 20px;
+       max-width: 1400px;
+       margin: 0 auto;
+     }
 
-    .feature-card {
-      background: linear-gradient(135deg, #333333, #555555);
-      border: 2px solid #666666;
-      border-radius: 12px;
-      padding: 30px;
-      transition: all 0.3s ease;
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-      display: flex;
-      align-items: center;
-      gap: 25px;
-    }
+     /* Features Section */
+     .features-section {
+       display: flex;
+       flex-direction: column;
+       gap: 30px;
+       flex: 1;
+       justify-content: center;
+     }
+
+     .feature-card {
+       background: linear-gradient(135deg, #333333, #555555);
+       border: 2px solid #666666;
+       border-radius: 12px;
+       padding: 30px;
+       transition: all 0.3s ease;
+       cursor: pointer;
+       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+       display: flex;
+       align-items: center;
+       gap: 25px;
+       position: relative;
+       overflow: hidden;
+     }
+
+     .feature-card::before {
+       content: '';
+       position: absolute;
+       top: 0;
+       left: 0;
+       right: 0;
+       bottom: 0;
+       background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+       opacity: 0;
+       transition: opacity 0.3s ease;
+     }
+
+     .feature-card:hover::before {
+       opacity: 1;
+     }
 
     .feature-card:hover {
       background: linear-gradient(135deg, #FFFFFF, #F5F5F5);
@@ -295,22 +338,45 @@
       opacity: 0.8;
     }
 
-    .feature-badge {
-      display: inline-block;
-      padding: 6px 12px;
-      background: var(--accent-color);
-      color: white;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: bold;
-      text-transform: uppercase;
-    }
+         .feature-badge {
+       display: inline-block;
+       padding: 6px 12px;
+       background: var(--accent-color);
+       color: white;
+       border-radius: 20px;
+       font-size: 12px;
+       font-weight: bold;
+       text-transform: uppercase;
+     }
 
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: 20px;
-    }
+     .feature-image {
+       flex-shrink: 0;
+       width: 120px;
+       height: 80px;
+       border-radius: 8px;
+       overflow: hidden;
+       background: rgba(255,255,255,0.05);
+       display: flex;
+       align-items: center;
+       justify-content: center;
+     }
+
+     .feature-image .cad-image {
+       width: 100%;
+       height: 100%;
+       object-fit: contain;
+       transition: transform 0.3s ease;
+     }
+
+     .feature-card:hover .feature-image .cad-image {
+       transform: scale(1.05);
+     }
+
+     .features-grid {
+       display: grid;
+       grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+       gap: 20px;
+     }
 
     /* Main Content Layout (Legacy - keeping for compatibility) */
     .main-content {
@@ -498,109 +564,141 @@
       text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
     }
 
-    /* Responsive Design */
-    @media (max-width: 1200px) {
-      .main-content {
-        flex-direction: column;
-        align-items: center;
-      }
-      
-      .side-content {
-        width: 100%;
-        max-width: 400px;
-        margin: 10px 0;
-      }
-      
-      .features-grid {
-        grid-template-columns: 1fr;
-      }
-    }
+         /* Responsive Design */
+     @media (max-width: 1200px) {
+       .main-content {
+         flex-direction: column;
+         align-items: center;
+       }
+       
+       .side-content {
+         width: 100%;
+         max-width: 400px;
+         margin: 10px 0;
+       }
+       
+       .features-grid {
+         grid-template-columns: 1fr;
+       }
+       
+       .feature-image {
+         width: 100px;
+         height: 70px;
+       }
+     }
 
-    @media (max-width: 768px) {
-      .hero-section {
-        padding: 30px 20px;
-      }
-      
-      .hero-title {
-        font-size: 36px;
-      }
-      
-      .hero-subtitle {
-        font-size: 18px;
-      }
-      
-      .hero-install-button {
-        padding: 12px 24px;
-        font-size: 16px;
-      }
-      
-      .feature-card {
-        padding: 20px;
-        flex-direction: column;
-        text-align: center;
-      }
-      
-      .feature-icon {
-        width: 60px;
-        height: 60px;
-      }
-      
-      .feature-icon i {
-        font-size: 28px;
-      }
-      
-      .feature-content h3 {
-        font-size: 20px;
-      }
-      
-      .feature-content p {
-        font-size: 14px;
-      }
-      
-      .side-content {
-        max-width: 100%;
-      }
-      
-      .cad-image {
-        height: 150px;
-      }
-    }
+     @media (max-width: 768px) {
+       .main-container {
+         min-height: calc(100vh - 100px);
+         padding: 15px;
+       }
+       
+       .hero-section {
+         padding: 20px;
+         margin-bottom: 20px;
+       }
+       
+       .hero-title {
+         font-size: 32px;
+       }
+       
+       .hero-subtitle {
+         font-size: 16px;
+       }
+       
+       .hero-install-button {
+         padding: 10px 20px;
+         font-size: 14px;
+       }
+       
+       .feature-card {
+         padding: 20px;
+         flex-direction: column;
+         text-align: center;
+         gap: 15px;
+       }
+       
+       .feature-icon {
+         width: 60px;
+         height: 60px;
+       }
+       
+       .feature-icon i {
+         font-size: 28px;
+       }
+       
+       .feature-content h3 {
+         font-size: 20px;
+       }
+       
+       .feature-content p {
+         font-size: 14px;
+       }
+       
+       .feature-image {
+         width: 80px;
+         height: 60px;
+       }
+       
+       .side-content {
+         max-width: 100%;
+       }
+       
+       .cad-image {
+         height: 150px;
+       }
+     }
 
-    @media (max-width: 480px) {
-      .hero-title {
-        font-size: 28px;
-      }
-      
-      .hero-subtitle {
-        font-size: 16px;
-      }
-      
-      .hero-install-button {
-        padding: 10px 20px;
-        font-size: 14px;
-      }
-      
-      .feature-card {
-        padding: 15px;
-      }
-      
-      .feature-content h3 {
-        font-size: 18px;
-      }
-      
-      .feature-content p {
-        font-size: 12px;
-      }
-      
-      .feature-icon {
-        width: 50px;
-        height: 50px;
-      }
-      
-      .feature-icon i {
-        font-size: 24px;
-      }
-    }
+     @media (max-width: 480px) {
+       .main-container {
+         min-height: calc(100vh - 80px);
+         padding: 10px;
+       }
+       
+       .hero-section {
+         padding: 15px;
+         margin-bottom: 15px;
+       }
+       
+       .hero-title {
+         font-size: 24px;
+       }
+       
+       .hero-subtitle {
+         font-size: 14px;
+       }
+       
+       .hero-install-button {
+         padding: 8px 16px;
+         font-size: 12px;
+       }
+       
+       .feature-card {
+         padding: 15px;
+       }
+       
+       .feature-content h3 {
+         font-size: 18px;
+       }
+       
+       .feature-content p {
+         font-size: 12px;
+       }
+       
+       .feature-icon {
+         width: 50px;
+         height: 50px;
+       }
+       
+       .feature-icon i {
+         font-size: 24px;
+       }
+       
+       .feature-image {
+         width: 60px;
+         height: 40px;
+       }
+     }
   </style>
 </head>
 <body class="home-page">
@@ -688,54 +786,66 @@
       </div>
     </div>
 
-    <!-- FEATURES SECTION -->
-    <div class="features-section">
-      <div class="feature-card main-feature" onclick="window.location='CP2388-worksheets.html'">
-        <div class="feature-icon">
-          <i class="fas fa-cogs"></i>
-        </div>
-        <div class="feature-content">
-          <h3>CP2388 - Industrial Maintenance</h3>
-          <p>14 comprehensive worksheets covering control systems, emergency stops, PLC maintenance, and more.</p>
-          <span class="feature-badge">Primary Curriculum</span>
-        </div>
-      </div>
+         <!-- FEATURES SECTION -->
+     <div class="features-section">
+       <div class="feature-card main-feature" onclick="window.location='CP2388-worksheets.html'">
+         <div class="feature-icon">
+           <i class="fas fa-cogs"></i>
+         </div>
+         <div class="feature-content">
+           <h3>CP2388 - Industrial Maintenance</h3>
+           <p>14 comprehensive worksheets covering control systems, emergency stops, PLC maintenance, and more.</p>
+           <span class="feature-badge">Primary Curriculum</span>
+         </div>
+         <div class="feature-image">
+           <img src="assets/cad.png" alt="CP2388 Curriculum" class="cad-image">
+         </div>
+       </div>
 
-      <div class="features-grid">
-        <div class="feature-card" onclick="openPDF('docs/CP2388 - Industrial Maintenance of PLC Fundamentals Systems.pdf')">
-          <div class="feature-icon">
-            <i class="fas fa-cogs"></i>
-          </div>
-          <div class="feature-content">
-            <h3>Curriculum Guide</h3>
-            <p>Complete CP2388 curriculum documentation and learning objectives.</p>
-            <span class="feature-badge">CP2388</span>
-          </div>
-        </div>
+       <div class="features-grid">
+         <div class="feature-card" onclick="openPDF('docs/CP2388 - Industrial Maintenance of PLC Fundamentals Systems.pdf')">
+           <div class="feature-icon">
+             <i class="fas fa-cogs"></i>
+           </div>
+           <div class="feature-content">
+             <h3>Curriculum Guide</h3>
+             <p>Complete CP2388 curriculum documentation and learning objectives.</p>
+             <span class="feature-badge">CP2388</span>
+           </div>
+           <div class="feature-image">
+             <img src="assets/cad.png" alt="Curriculum Guide" class="cad-image">
+           </div>
+         </div>
 
-        <div class="feature-card" onclick="openPDF('docs/IM6930 - Maintenance of PLC Fundamentals Systems User Manual.pdf')">
-          <div class="feature-icon">
-            <i class="fas fa-book"></i>
-          </div>
-          <div class="feature-content">
-            <h3>User Manual</h3>
-            <p>Comprehensive user manual for the IM6930 PLC Fundamentals Trainer.</p>
-            <span class="feature-badge">IM6930</span>
-          </div>
-        </div>
+         <div class="feature-card" onclick="openPDF('docs/IM6930 - Maintenance of PLC Fundamentals Systems User Manual.pdf')">
+           <div class="feature-icon">
+             <i class="fas fa-book"></i>
+           </div>
+           <div class="feature-content">
+             <h3>User Manual</h3>
+             <p>Comprehensive user manual for the IM6930 PLC Fundamentals Trainer.</p>
+             <span class="feature-badge">IM6930</span>
+           </div>
+           <div class="feature-image">
+             <img src="assets/cad2.png" alt="User Manual" class="cad-image">
+           </div>
+         </div>
 
-        <div class="feature-card" onclick="openPDF('docs/IM6930 Electrical Drawings RevG.pdf')">
-          <div class="feature-icon">
-            <i class="fas fa-bolt"></i>
-          </div>
-          <div class="feature-content">
-            <h3>Electrical Drawings</h3>
-            <p>Detailed electrical schematics and wiring diagrams for the training system.</p>
-            <span class="feature-badge">RevG</span>
-          </div>
-        </div>
-      </div>
-    </div>
+         <div class="feature-card" onclick="openPDF('docs/IM6930 Electrical Drawings RevG.pdf')">
+           <div class="feature-icon">
+             <i class="fas fa-bolt"></i>
+           </div>
+           <div class="feature-content">
+             <h3>Electrical Drawings</h3>
+             <p>Detailed electrical schematics and wiring diagrams for the training system.</p>
+             <span class="feature-badge">RevG</span>
+           </div>
+           <div class="feature-image">
+             <img src="assets/cad2.png" alt="Electrical Drawings" class="cad-image">
+           </div>
+         </div>
+       </div>
+     </div>
   </div>
 
   <!-- Load dependencies -->
