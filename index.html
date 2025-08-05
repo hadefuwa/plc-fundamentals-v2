@@ -19,9 +19,10 @@
   <!-- Load dependencies -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
-  <!-- Load app-specific scripts after dependencies -->
-  <script defer src="image-fallback.js"></script>
-  <script defer src="scenario-popup.js"></script>
+     <!-- Load app-specific scripts after dependencies -->
+   <script defer src="image-fallback.js"></script>
+   <script defer src="scenario-popup.js"></script>
+   <script defer src="shared-navigation.js"></script>
   <script>
     // Clear any existing service worker registrations
     if ('serviceWorker' in navigator) {
@@ -794,43 +795,7 @@
     </div>
   </div>
 
-  <!-- Navigation -->
-  <nav class="main-navigation">
-    <div class="nav-container">
-      <div class="nav-logo" onclick="window.location='index.html'" title="Go to Home">
-        <img src="assets/matrix-logo.png" alt="Matrix Logo">
-      </div>
-      <ul class="nav-menu" id="nav-menu">
-        <li class="nav-item">
-          <a href="#" onclick="window.location='index.html'" class="nav-link active">
-            <i class="fas fa-home"></i> HOME
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="#" onclick="window.location='CP2388-worksheets.html'" class="nav-link">
-            <i class="fas fa-cogs"></i> CP2388
-          </a>
-        </li>
 
-        
-        <li class="nav-item">
-          <a href="#" onclick="window.location='tracking-dashboard.html'" class="nav-link">
-            <i class="fas fa-chart-line"></i> PROGRESS
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="#" onclick="window.location='about.html'" class="nav-link">
-            <i class="fas fa-info-circle"></i> ABOUT
-          </a>
-        </li>
-        <li class="nav-item">
-          <button onclick="installPWA()" class="nav-link pwa-install-button">
-            <i class="fas fa-download"></i> INSTALL APP
-          </button>
-        </li>
-      </ul>
-    </div>
-  </nav>
 
   <!-- Main Container -->
   <div class="main-container">
