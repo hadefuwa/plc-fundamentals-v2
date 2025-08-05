@@ -28,7 +28,9 @@
             <i class="fas fa-cogs"></i> CP2388
           </a>
         </li>
-        
+        <li class="nav-item">
+          
+        </li>
         
         <li class="nav-item">
           <a href="#" onclick="window.location='tracking-dashboard.html'" class="nav-link">
@@ -137,172 +139,37 @@
     <div class="worksheet-section so-what-section">
       <h2 class="section-header"><i class="fas fa-lightbulb"></i> 3. So What?</h2>
       <div class="so-what-content">
-        <!-- Valve Overview Card -->
-        <div class="explanation-card">
-          <div class="card-header">
-            <i class="fas fa-valve"></i>
-            <h3>Valve Control System Overview</h3>
-          </div>
-          <div class="card-content">
-            <p>Valves play a critical role in fluid control, and their correct operation is essential for system stability and efficiency. Different types of valves serve different functions, and understanding their behaviour helps in diagnosing potential faults.</p>
-          </div>
-        </div>
-
-        <!-- Flow and Pressure Regulation Card -->
-        <div class="explanation-card">
-          <div class="card-header">
-            <i class="fas fa-water"></i>
-            <h3>Flow and Pressure Regulation</h3>
-          </div>
-          <div class="card-content">
-            <p>A valve controls how much fluid passes through a system.</p>
+        <p>Valves play a critical role in fluid control, and understanding their operation is essential for system efficiency:</p>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>Proportional Control</strong>
+            <p>Unlike simple on/off valves, proportional valves adjust gradually using PWM signals, enabling precise flow and pressure control for stable system operation.</p>
           </div>
         </div>
-
-        <!-- Solenoid Valve Functionality Card -->
-        <div class="explanation-card">
-          <div class="card-header">
-            <i class="fas fa-bolt"></i>
-            <h3>Solenoid Valve Functionality</h3>
-          </div>
-          <div class="card-content">
-            <p>Electrically operated valves should open and close reliably when activated. If a solenoid valve fails to switch, it could be due to coil failure, power loss, or blocked ports.</p>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>Deadband Operation</strong>
+            <p>Most valves have a deadband - they typically stay closed until receiving about 10% demand signal, after which they begin to open proportionally.</p>
           </div>
         </div>
-
-        <!-- Mechanical Valves Card -->
-        <div class="explanation-card">
-          <div class="card-header">
-            <i class="fas fa-cogs"></i>
-            <h3>Mechanical Valves</h3>
-          </div>
-          <div class="card-content">
-            <p>Not all valves are electronically operated. Some are operated mechanically like our hand valve. Some are operated using air or even other fluids, like with pilot-operated valves. There are many types of valves.</p>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>Fail-Safe Behavior</strong>
+            <p>Valves are designed with specific fail-safe positions (open or closed) when power is lost or during emergency stops, which is crucial for safety system design.</p>
           </div>
         </div>
-
-        <!-- Proportional Valve Issues Card -->
-        <div class="explanation-card">
-          <div class="card-header">
-            <i class="fas fa-sliders-h"></i>
-            <h3>Proportional Valve Issues</h3>
-          </div>
-          <div class="card-content">
-            <p>Some systems use proportional valves that adjust gradually instead of fully opening or closing. If these fail, flow control becomes erratic, leading to unstable system performance.</p>
-          </div>
-        </div>
-
-        <!-- Mechanical Blockages Card -->
-        <div class="explanation-card">
-          <div class="card-header">
-            <i class="fas fa-exclamation-triangle"></i>
-            <h3>Mechanical Blockages</h3>
-          </div>
-          <div class="card-content">
-            <p>Dirt, debris, or scale buildup inside a valve can restrict movement or cause leaks, leading to pressure drops or stuck positions.</p>
-          </div>
-        </div>
-
-        <!-- Valve Position Feedback Card -->
-        <div class="explanation-card">
-          <div class="card-header">
-            <i class="fas fa-eye"></i>
-            <h3>Valve Position Feedback</h3>
-          </div>
-          <div class="card-content">
-            <p>Some automated systems use sensors to confirm if a valve is open, closed, or in transition. If a valve position sensor disagrees with expected operation, it may indicate a mechanical fault or electrical issue.</p>
-          </div>
-        </div>
-
-        <!-- Fail-Safe Behaviour Card -->
-        <div class="explanation-card">
-          <div class="card-header">
-            <i class="fas fa-shield-alt"></i>
-            <h3>Fail-Safe Behaviour</h3>
-          </div>
-          <div class="card-content">
-            <p>Certain valves return to a default position (open or closed) when power is lost. Observing how a valve reacts to power cuts or E-Stop activation can help determine if it is configured correctly for safety.</p>
-          </div>
-        </div>
-
-        <!-- Key Learning Points Card -->
-        <div class="key-points-card">
-          <div class="card-header">
-            <i class="fas fa-lightbulb"></i>
-            <h3>Key Learning Points</h3>
-          </div>
-          <div class="key-points-grid">
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-water"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>Valves control flow, pressure, and direction in a system.</strong>
-              </div>
-            </div>
-            
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-sliders-h"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>Proportional valves adjust gradually, controlled by PWM signals.</strong>
-              </div>
-            </div>
-            
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-minus-circle"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>Valves often stay closed until 10% demand (deadband).</strong>
-              </div>
-            </div>
-            
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-exclamation-triangle"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>Blockages, coil failures, or power loss can cause valve faults.</strong>
-              </div>
-            </div>
-            
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-cogs"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>Some valves are mechanical or pilot operated.</strong>
-              </div>
-            </div>
-            
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-eye"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>Some valves have sensors that give position feedback to detect issues.</strong>
-              </div>
-            </div>
-            
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-thermometer-half"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>Valves may get warm when operating – normal but not for leak checks.</strong>
-              </div>
-            </div>
-            
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-shield-alt"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>Always check how valves behave during an E-Stop for safety.</strong>
-              </div>
-            </div>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>Maintenance Indicators</strong>
+            <p>Valve connectors typically warm during operation - this is normal but useful for diagnostics. Blockages, coil failures, or power loss can cause valve faults.</p>
           </div>
         </div>
       </div>
@@ -456,13 +323,6 @@
     <!-- Simulation Section -->
     <div class="simulation-section">
       <h2 class="section-header"><i class="fas fa-cogs"></i> 3. Interactive Valve System Maintenance</h2>
-      <div id="valve-panel" class="simulation-container">
-        <div class="simulation-loading">
-          <i class="fas fa-spinner fa-spin"></i>
-          <p>Loading valve simulation...</p>
-          <p>Simulation will initialize automatically</p>
-        </div>
-      </div>
       
       <!-- On/Off Valve Simulation -->
       <div class="simulation-subsection">
@@ -685,47 +545,6 @@
     function loadSavedAnswers() {
       // This function is now handled by the tracking system
     }
-    
-    // Step card click functionality
-    function initializeStepCardClicks() {
-      const stepCards = document.querySelectorAll('.step-card');
-      
-      stepCards.forEach(card => {
-        card.addEventListener('click', function(e) {
-          // Don't trigger if clicking on the checkbox itself
-          if (e.target.closest('.step-checkbox')) {
-            return;
-          }
-          
-          const checkbox = this.querySelector('.step-complete-checkbox');
-          if (checkbox) {
-            // Toggle the checkbox
-            checkbox.checked = !checkbox.checked;
-            
-            // Update the card's completed state using the existing class name
-            if (checkbox.checked) {
-              this.classList.add('step-completed');
-            } else {
-              this.classList.remove('step-completed');
-            }
-            
-            // Trigger change event on checkbox for any existing listeners
-            const event = new Event('change', { bubbles: true });
-            checkbox.dispatchEvent(event);
-          }
-        });
-      });
-    }
-    
-    // Initialize step card functionality when DOM is loaded
-    document.addEventListener('DOMContentLoaded', function() {
-      initializeStepCardClicks();
-      
-      // Use the existing step tracking system
-      if (typeof initializeStepTracking === 'function') {
-        initializeStepTracking();
-      }
-    });
   </script>
   
   <!-- Bottom Navigation -->

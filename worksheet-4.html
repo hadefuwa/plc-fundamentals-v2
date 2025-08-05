@@ -28,7 +28,9 @@
             <i class="fas fa-cogs"></i> CP2388
           </a>
         </li>
-        
+        <li class="nav-item">
+          
+        </li>
         
         <li class="nav-item">
           <a href="#" onclick="window.location='tracking-dashboard.html'" class="nav-link">
@@ -94,13 +96,13 @@
             <div class="step-number">1</div>
             <div class="step-content">
               <div class="step-header">
-                <h4>Locate the PLC</h4>
+                <h4>Locate and Identify PLC I/O</h4>
                 <label class="step-checkbox">
                   <input type="checkbox" class="step-complete-checkbox">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <p>Locate the PLC in your training system.</p>
+              <p>Locate the PLC in your training system. Identify the DI a/b (digital inputs) and DQ a/b (digital outputs) status LEDs on the PLC module.</p>
             </div>
           </div>
           
@@ -108,13 +110,13 @@
             <div class="step-number">2</div>
             <div class="step-content">
               <div class="step-header">
-                <h4>Identify Digital Input Groups</h4>
+                <h4>Observe System Operation</h4>
                 <label class="step-checkbox">
                   <input type="checkbox" class="step-complete-checkbox">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <p>Identify the inputs and outputs status LEDs on the PLC. You will see DI a and DI b, which are two groups of digital inputs.</p>
+              <p>Run the system and observe the LED changes. Watch for the status LED flash on startup and the flow sensor input LED flashing during operation. Adjust flow by opening/closing the hand valve to see how sensor frequency changes.</p>
             </div>
           </div>
           
@@ -122,111 +124,13 @@
             <div class="step-number">3</div>
             <div class="step-content">
               <div class="step-header">
-                <h4>Identify Digital Output Groups</h4>
+                <h4>Test Emergency Stop Channels</h4>
                 <label class="step-checkbox">
                   <input type="checkbox" class="step-complete-checkbox">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <p>You will also see DQ a and DQ b, which are two groups of digital outputs.</p>
-            </div>
-          </div>
-          
-          <div class="step-card" data-step="4">
-            <div class="step-number">4</div>
-            <div class="step-content">
-              <div class="step-header">
-                <h4>Run the System</h4>
-                <label class="step-checkbox">
-                  <input type="checkbox" class="step-complete-checkbox">
-                  <span class="checkmark"></span>
-                </label>
-              </div>
-              <p>Run the system and you should see some of the lights change. Be sure to open the hand valve, if left shut from the previous worksheet.</p>
-            </div>
-          </div>
-          
-          <div class="step-card" data-step="5">
-            <div class="step-number">5</div>
-            <div class="step-content">
-              <div class="step-header">
-                <h4>Observe Status LED on Startup</h4>
-                <label class="step-checkbox">
-                  <input type="checkbox" class="step-complete-checkbox">
-                  <span class="checkmark"></span>
-                </label>
-              </div>
-              <p>The bottom LEDs showing the outputs will have one of them flash briefly as the system starts up. This is our status LED flashing.</p>
-            </div>
-          </div>
-          
-          <div class="step-card" data-step="6">
-            <div class="step-number">6</div>
-            <div class="step-content">
-              <div class="step-header">
-                <h4>Monitor Flow Sensor LED</h4>
-                <label class="step-checkbox">
-                  <input type="checkbox" class="step-complete-checkbox">
-                  <span class="checkmark"></span>
-                </label>
-              </div>
-              <p>As the system is running, you will see one of the digital inputs flashing fast. This is our flow sensor as it rotates.</p>
-            </div>
-          </div>
-          
-          <div class="step-card" data-step="7">
-            <div class="step-number">7</div>
-            <div class="step-content">
-              <div class="step-header">
-                <h4>Test Flow Rate Changes</h4>
-                <label class="step-checkbox">
-                  <input type="checkbox" class="step-complete-checkbox">
-                  <span class="checkmark"></span>
-                </label>
-              </div>
-              <p>If you decrease flow, the LED will flash slower as the propeller inside the flow sensor spins slower. If you run at full speed, the LED will almost go solid as the propeller spins extremely fast.</p>
-            </div>
-          </div>
-          
-          <div class="step-card" data-step="8">
-            <div class="step-number">8</div>
-            <div class="step-content">
-              <div class="step-header">
-                <h4>Check Emergency Stop Channels</h4>
-                <label class="step-checkbox">
-                  <input type="checkbox" class="step-complete-checkbox">
-                  <span class="checkmark"></span>
-                </label>
-              </div>
-              <p>Look at the inputs at DI a 0 and 1. These two should be on. These are your two emergency stop channels.</p>
-            </div>
-          </div>
-          
-          <div class="step-card" data-step="9">
-            <div class="step-number">9</div>
-            <div class="step-content">
-              <div class="step-header">
-                <h4>Test Emergency Stop Function</h4>
-                <label class="step-checkbox">
-                  <input type="checkbox" class="step-complete-checkbox">
-                  <span class="checkmark"></span>
-                </label>
-              </div>
-              <p>Press the estop and these two LEDs will go out. Reset the estop and they will come back on.</p>
-            </div>
-          </div>
-          
-          <div class="step-card" data-step="10">
-            <div class="step-number">10</div>
-            <div class="step-content">
-              <div class="step-header">
-                <h4>Test Reset Button</h4>
-                <label class="step-checkbox">
-                  <input type="checkbox" class="step-complete-checkbox">
-                  <span class="checkmark"></span>
-                </label>
-              </div>
-              <p>As you press the blue reset button, you will observe that DI a 2 will turn on whilst you hold it down.</p>
+              <p>Observe DI a 0 and 1 (E-Stop channels) - they should be on during normal operation. Press the E-Stop to see them turn off, then reset and watch DI a 2 activate when pressing the blue reset button.</p>
             </div>
           </div>
         </div>
@@ -237,50 +141,37 @@
     <div class="worksheet-section so-what-section">
       <h2 class="section-header"><i class="fas fa-lightbulb"></i> 3. So What?</h2>
       <div class="so-what-content">
-        <!-- System Overview Card -->
-        <div class="explanation-card">
-          <div class="card-header">
-            <i class="fas fa-microchip"></i>
-            <h3>PLC I/O Status System Overview</h3>
-          </div>
-          <div class="card-content">
-            <p>The I/O status LEDs on the PLC are invaluable for maintenance engineers because they provide real-time feedback on the system's operation. These lights help identify whether sensors, switches, and outputs are functioning correctly, making troubleshooting faster and reducing downtime.</p>
+        <p>The I/O status LEDs on the PLC provide invaluable real-time feedback for maintenance and troubleshooting:</p>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>Quick Fault Diagnosis</strong>
+            <p>If an expected input LED isn't lighting up, it may indicate a faulty sensor, wiring issue, or failed connection, enabling rapid troubleshooting.</p>
           </div>
         </div>
-
-        <!-- Key Learning Points Card -->
-        <div class="key-points-card">
-          <div class="card-header">
-            <i class="fas fa-lightbulb"></i>
-            <h3>Key Learning Points</h3>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>Verifying System Responses</strong>
+            <p>Watching the LEDs change confirms that the PLC is correctly processing inputs and activating outputs in response to system conditions.</p>
           </div>
-          <div class="key-points-grid">
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-search"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>Quick Fault Diagnosis – If an expected input LED isn't lighting up, it may indicate a faulty sensor, wiring issue, or failed connection.</strong>
-              </div>
-            </div>
-            
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-sync-alt"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>Verifying System Responses – Watching the LEDs change confirms that the PLC is correctly processing inputs and activating outputs.</strong>
-              </div>
-            </div>
-            
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-toggle-on"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>Output Activation Check – The DQ LEDs confirm that outputs like solenoid valves and pumps are being triggered by the PLC. If an expected output LED isn't lighting up, it may indicate that the PLC logic is not enabling the output due to an unmet condition.</strong>
-              </div>
-            </div>
+        </div>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>Output Activation Check</strong>
+            <p>The DQ LEDs confirm that outputs like solenoid valves and pumps are being triggered by the PLC. Missing LED activation may indicate unmet logic conditions.</p>
+          </div>
+        </div>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>Safety System Verification</strong>
+            <p>Emergency stop channels and reset functions can be verified through the input LEDs, ensuring safety systems are functioning correctly.</p>
           </div>
         </div>
       </div>
@@ -1155,47 +1046,6 @@
     function loadSavedAnswers() {
       // This function is now handled by the tracking system
     }
-
-    // Step card click functionality
-    function initializeStepCardClicks() {
-      const stepCards = document.querySelectorAll('.step-card');
-      
-      stepCards.forEach(card => {
-        card.addEventListener('click', function(e) {
-          // Don't trigger if clicking on the checkbox itself
-          if (e.target.closest('.step-checkbox')) {
-            return;
-          }
-          
-          const checkbox = this.querySelector('.step-complete-checkbox');
-          if (checkbox) {
-            // Toggle the checkbox
-            checkbox.checked = !checkbox.checked;
-            
-            // Update the card's completed state using the existing class name
-            if (checkbox.checked) {
-              this.classList.add('step-completed');
-            } else {
-              this.classList.remove('step-completed');
-            }
-            
-            // Trigger change event on checkbox for any existing listeners
-            const event = new Event('change', { bubbles: true });
-            checkbox.dispatchEvent(event);
-          }
-        });
-      });
-    }
-
-    // Initialize step card functionality when DOM is loaded
-    document.addEventListener('DOMContentLoaded', function() {
-      initializeStepCardClicks();
-      
-      // Use the existing step tracking system
-      if (typeof initializeStepTracking === 'function') {
-        initializeStepTracking();
-      }
-    });
   </script>
   
   <!-- Bottom Navigation -->

@@ -28,7 +28,9 @@
             <i class="fas fa-cogs"></i> CP2388
           </a>
         </li>
-        
+        <li class="nav-item">
+          
+        </li>
         
         <li class="nav-item">
           <a href="#" onclick="window.location='tracking-dashboard.html'" class="nav-link">
@@ -139,92 +141,37 @@
     <div class="worksheet-section so-what-section">
       <h2 class="section-header"><i class="fas fa-lightbulb"></i> 3. So What?</h2>
       <div class="so-what-content">
-        <!-- LED Color States Card -->
-        <div class="explanation-card">
-          <div class="card-header">
-            <i class="fas fa-circle" style="color: #4CAF50;"></i>
-            <h3>Green LED - Normal Operation</h3>
-          </div>
-          <div class="card-content">
-            <p>Green indicates the system is operating normally. This is the expected state during regular operation.</p>
-          </div>
-        </div>
-
-        <!-- Orange LED Card -->
-        <div class="explanation-card">
-          <div class="card-header">
-            <i class="fas fa-circle" style="color: #FF9800;"></i>
-            <h3>Orange LED - Fault Detected</h3>
-          </div>
-          <div class="card-content">
-            <p>Orange indicates a fault has been detected, but the system may still function. This requires investigation to identify and resolve the issue.</p>
+        <p>The Status LED has three colour states that provide instant visual feedback about system conditions:</p>
+        
+        <div class="key-point">
+          <i class="fas fa-circle" style="color: #4CAF50;"></i>
+          <div>
+            <strong>Green - Normal Operation</strong>
+            <p>System is operating normally and all parameters are within acceptable ranges.</p>
           </div>
         </div>
-
-        <!-- Red LED Card -->
-        <div class="explanation-card">
-          <div class="card-header">
-            <i class="fas fa-circle" style="color: #F44336;"></i>
-            <h3>Red LED - Safety Fault</h3>
-          </div>
-          <div class="card-content">
-            <p>Red indicates a safety fault has occurred. The system requires immediate attention before it can restart.</p>
+        
+        <div class="key-point">
+          <i class="fas fa-circle" style="color: #FF9800;"></i>
+          <div>
+            <strong>Orange - Fault Detected</strong>
+            <p>A fault has been detected, but the system may still function. Investigate the issue to prevent escalation.</p>
           </div>
         </div>
-
-        <!-- Diagnostic Tool Card -->
-        <div class="explanation-card">
-          <div class="card-header">
-            <i class="fas fa-tools"></i>
-            <h3>Diagnostic Tool for Maintenance</h3>
-          </div>
-          <div class="card-content">
-            <p>Using the Status LED as a diagnostic tool helps with preventive maintenance and troubleshooting. If an orange or red light appears, maintenance personnel should take immediate action to identify and resolve the issue.</p>
+        
+        <div class="key-point">
+          <i class="fas fa-circle" style="color: #F44336;"></i>
+          <div>
+            <strong>Red - Safety Fault</strong>
+            <p>A safety fault has occurred. The system requires immediate attention before it can restart.</p>
           </div>
         </div>
-
-        <!-- Key Learning Points Card -->
-        <div class="key-points-card">
-          <div class="card-header">
-            <i class="fas fa-lightbulb"></i>
-            <h3>Key Learning Points</h3>
-          </div>
-          <div class="key-points-grid">
-            <div class="key-point-item">
-              <div class="key-point-icon" style="background: #4CAF50;">
-                <i class="fas fa-circle" style="color: #ffffff;"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>Green means normal operation.</strong>
-              </div>
-            </div>
-            
-            <div class="key-point-item">
-              <div class="key-point-icon" style="background: #FF9800;">
-                <i class="fas fa-circle" style="color: #ffffff;"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>Orange indicates a fault that needs investigation.</strong>
-              </div>
-            </div>
-            
-            <div class="key-point-item">
-              <div class="key-point-icon" style="background: #F44336;">
-                <i class="fas fa-circle" style="color: #ffffff;"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>Red signals a critical safety fault requiring immediate intervention.</strong>
-              </div>
-            </div>
-            
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-tools"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>Regular monitoring of the Status LED helps prevent downtime and improve system reliability.</strong>
-              </div>
-            </div>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>Preventive Maintenance</strong>
+            <p>Using the Status LED as a diagnostic tool helps with preventive maintenance and troubleshooting. Regular monitoring helps prevent downtime and ensures faults are addressed before escalating.</p>
           </div>
         </div>
       </div>
@@ -1278,47 +1225,6 @@
         function loadSavedAnswers() {
           // This function is now handled by the tracking system
         }
-        
-        // Step card click functionality
-        function initializeStepCardClicks() {
-          const stepCards = document.querySelectorAll('.step-card');
-          
-          stepCards.forEach(card => {
-            card.addEventListener('click', function(e) {
-              // Don't trigger if clicking on the checkbox itself
-              if (e.target.closest('.step-checkbox')) {
-                return;
-              }
-              
-              const checkbox = this.querySelector('.step-complete-checkbox');
-              if (checkbox) {
-                // Toggle the checkbox
-                checkbox.checked = !checkbox.checked;
-                
-                // Update the card's completed state using the existing class name
-                if (checkbox.checked) {
-                  this.classList.add('step-completed');
-                } else {
-                  this.classList.remove('step-completed');
-                }
-                
-                // Trigger change event on checkbox for any existing listeners
-                const event = new Event('change', { bubbles: true });
-                checkbox.dispatchEvent(event);
-              }
-            });
-          });
-        }
-        
-        // Initialize step card functionality when DOM is loaded
-        document.addEventListener('DOMContentLoaded', function() {
-          initializeStepCardClicks();
-          
-          // Use the existing step tracking system
-          if (typeof initializeStepTracking === 'function') {
-            initializeStepTracking();
-          }
-        });
   </script>
   
   <!-- Bottom Navigation -->

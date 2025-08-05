@@ -28,7 +28,9 @@
             <i class="fas fa-cogs"></i> CP2388
           </a>
         </li>
-        
+        <li class="nav-item">
+          
+        </li>
         
         <li class="nav-item">
           <a href="#" onclick="window.location='tracking-dashboard.html'" class="nav-link">
@@ -137,59 +139,37 @@
     <div class="worksheet-section so-what-section">
       <h2 class="section-header"><i class="fas fa-lightbulb"></i> 3. So What?</h2>
       <div class="so-what-content">
-        <!-- System Overview Card -->
-        <div class="explanation-card">
-          <div class="card-header">
-            <i class="fas fa-desktop"></i>
-            <h3>HMI System Overview</h3>
-          </div>
-          <div class="card-content">
-            <p>The HMI improves maintenance by logging alarms, verifying system responses, monitoring processes, and providing control functions. It helps diagnose faults, detect inefficiencies, and identify hardware failures. Engineers can reset alarms, adjust setpoints, and test system functions. Setup screens allow configuration of safety limits, such as high-temperature cutouts, ensuring automatic shutdowns or alarms prevent equipment damage.</p>
+        <p>The HMI improves maintenance by providing centralized monitoring, control, and diagnostic capabilities:</p>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>Alarm Logging and Management</strong>
+            <p>HMIs log alarms and warnings, helping identify faults quickly without requiring direct access to the PLC programming.</p>
           </div>
         </div>
-
-        <!-- Key Learning Points Card -->
-        <div class="key-points-card">
-          <div class="card-header">
-            <i class="fas fa-lightbulb"></i>
-            <h3>Key Learning Points</h3>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>Real-time System Monitoring</strong>
+            <p>Live data displays confirm sensor functionality and process conditions, enabling proactive maintenance and troubleshooting.</p>
           </div>
-          <div class="key-points-grid">
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-chart-line"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>HMIs provide real-time system monitoring and are essential for troubleshooting.</strong>
-              </div>
-            </div>
-            
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-exclamation-triangle"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>Alarms and warnings help identify faults quickly without accessing the PLC.</strong>
-              </div>
-            </div>
-            
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-eye"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>Live data displays confirm sensor functionality and process conditions.</strong>
-              </div>
-            </div>
-            
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-sliders-h"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>Control functions allow engineers to adjust and reset system settings.</strong>
-              </div>
-            </div>
+        </div>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>Safety Configuration</strong>
+            <p>Setup screens allow configuration of safety limits such as temperature cutouts, ensuring automatic shutdowns prevent equipment damage.</p>
+          </div>
+        </div>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>Control Functions</strong>
+            <p>Engineers can reset alarms, adjust setpoints, and test system functions directly through the HMI interface.</p>
           </div>
         </div>
       </div>
@@ -1022,47 +1002,6 @@
     function loadSavedAnswers() {
       // This function is now handled by the tracking system
     }
-    
-    // Step card click functionality
-    function initializeStepCardClicks() {
-      const stepCards = document.querySelectorAll('.step-card');
-      
-      stepCards.forEach(card => {
-        card.addEventListener('click', function(e) {
-          // Don't trigger if clicking on the checkbox itself
-          if (e.target.closest('.step-checkbox')) {
-            return;
-          }
-          
-          const checkbox = this.querySelector('.step-complete-checkbox');
-          if (checkbox) {
-            // Toggle the checkbox
-            checkbox.checked = !checkbox.checked;
-            
-            // Update the card's completed state using the existing class name
-            if (checkbox.checked) {
-              this.classList.add('step-completed');
-            } else {
-              this.classList.remove('step-completed');
-            }
-            
-            // Trigger change event on checkbox for any existing listeners
-            const event = new Event('change', { bubbles: true });
-            checkbox.dispatchEvent(event);
-          }
-        });
-      });
-    }
-    
-    // Initialize step card functionality when DOM is loaded
-    document.addEventListener('DOMContentLoaded', function() {
-      initializeStepCardClicks();
-      
-      // Use the existing step tracking system
-      if (typeof initializeStepTracking === 'function') {
-        initializeStepTracking();
-      }
-    });
   </script>
   
   <!-- Bottom Navigation -->

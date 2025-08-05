@@ -28,7 +28,9 @@
             <i class="fas fa-cogs"></i> CP2388
           </a>
         </li>
-        
+        <li class="nav-item">
+          
+        </li>
         
         <li class="nav-item">
           <a href="#" onclick="window.location='tracking-dashboard.html'" class="nav-link">
@@ -137,105 +139,37 @@
     <div class="worksheet-section so-what-section">
       <h2 class="section-header"><i class="fas fa-lightbulb"></i> 3. So What?</h2>
       <div class="so-what-content">
-        <!-- Proximity Switch Overview Card -->
-        <div class="explanation-card">
-          <div class="card-header">
-            <i class="fas fa-radar"></i>
-            <h3>Proximity Switch System Overview</h3>
-          </div>
-          <div class="card-content">
-            <p>Proximity switches improve automation and safety by detecting objects without physical contact, reducing wear and increasing durability. They are commonly used to monitor guards, access points, and object positions. Proximity sensors are sometimes overridden during maintenance by presenting a different metal object to simulate detection.</p>
-          </div>
-        </div>
-
-        <!-- Sensor Types Card -->
-        <div class="explanation-card">
-          <div class="card-header">
-            <i class="fas fa-microchip"></i>
-            <h3>Types of Proximity Sensors</h3>
-          </div>
-          <div class="card-content">
-            <ul>
-              <li><strong>Inductive</strong> – detects metal objects only</li>
-              <li><strong>Capacitive</strong> – detects both metal and non-metal materials</li>
-              <li><strong>Photoelectric</strong> – uses light to detect objects</li>
-            </ul>
+        <p>Proximity switches improve automation and safety by providing reliable non-contact detection:</p>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>Sensor Types</strong>
+            <p>Inductive (metal detection), Capacitive (metal and non-metal), and Photoelectric (light-based) sensors each serve different detection needs in industrial applications.</p>
           </div>
         </div>
-
-        <!-- Safety Applications Card -->
-        <div class="explanation-card">
-          <div class="card-header">
-            <i class="fas fa-shield-alt"></i>
-            <h3>Safety Applications</h3>
-          </div>
-          <div class="card-content">
-            <p>A common use for an inductive sensor is to confirm whether a metal component, such as a tank lid, is in place. If the sensor fails to detect the metal, the system may be prevented from operating to avoid unsafe conditions.</p>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>Safety Applications</strong>
+            <p>Proximity sensors monitor guards, access points, and safety equipment positions. They prevent system operation when unsafe conditions are detected, protecting personnel and equipment.</p>
           </div>
         </div>
-
-        <!-- Fault Detection Card -->
-        <div class="explanation-card">
-          <div class="card-header">
-            <i class="fas fa-exclamation-triangle"></i>
-            <h3>Fault Detection and Prevention</h3>
-          </div>
-          <div class="card-content">
-            <p>Misalignment, poor mounting, wiring faults, or environmental factors like dust or moisture can all cause false signals or detection failures. Using the correct sensor type and installing it properly is essential for reliable and safe operation.</p>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>Maintenance Benefits</strong>
+            <p>Non-contact operation reduces wear and increases sensor durability compared to mechanical switches, leading to more reliable and longer-lasting detection systems.</p>
           </div>
         </div>
-
-        <!-- Key Learning Points Card -->
-        <div class="key-points-card">
-          <div class="card-header">
-            <i class="fas fa-lightbulb"></i>
-            <h3>Key Learning Points</h3>
-          </div>
-          <div class="key-points-grid">
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-hand-paper"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>Proximity switches detect objects without contact, reducing wear and increasing system reliability.</strong>
-              </div>
-            </div>
-            
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-microchip"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>Inductive sensors detect metal, capacitive sensors detect various materials, and photoelectric sensors use light.</strong>
-              </div>
-            </div>
-            
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-shield-alt"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>A sensor may prevent system operation if it fails to detect a required object, such as a metal lid.</strong>
-              </div>
-            </div>
-            
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-exclamation-triangle"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>False signals can result from misalignment, poor mounting, wiring faults, or environmental interference.</strong>
-              </div>
-            </div>
-            
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-tools"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>Sensors are sometimes overridden during maintenance using metal objects to simulate detection.</strong>
-              </div>
-            </div>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>Troubleshooting</strong>
+            <p>False signals can result from misalignment, environmental interference, or wiring faults. Proper installation and maintenance ensure reliable operation in harsh industrial environments.</p>
           </div>
         </div>
       </div>
@@ -389,13 +323,6 @@
     <!-- Simulation Section -->
     <div class="simulation-section">
       <h2 class="section-header"><i class="fas fa-cogs"></i> 3. Interactive Proximity Switch System Maintenance</h2>
-      <div id="proximity-panel" class="simulation-container">
-        <div class="simulation-loading">
-          <i class="fas fa-spinner fa-spin"></i>
-          <p>Loading proximity switch simulation...</p>
-          <p>Simulation will initialize automatically</p>
-        </div>
-      </div>
       
       <!-- Introduction -->
       <div class="simulation-intro" style="background: #2a2a2a; padding: 20px; border-radius: 12px; border: 1px solid #333; margin-bottom: 20px;">
@@ -614,47 +541,9 @@
     function loadSavedAnswers() {
       // This function is now handled by the tracking system
     }
-    
-    // Step card click functionality
-    function initializeStepCardClicks() {
-      const stepCards = document.querySelectorAll('.step-card');
-      
-      stepCards.forEach(card => {
-        card.addEventListener('click', function(e) {
-          // Don't trigger if clicking on the checkbox itself
-          if (e.target.closest('.step-checkbox')) {
-            return;
-          }
-          
-          const checkbox = this.querySelector('.step-complete-checkbox');
-          if (checkbox) {
-            // Toggle the checkbox
-            checkbox.checked = !checkbox.checked;
-            
-            // Update the card's completed state using the existing class name
-            if (checkbox.checked) {
-              this.classList.add('step-completed');
-            } else {
-              this.classList.remove('step-completed');
-            }
-            
-            // Trigger change event on checkbox for any existing listeners
-            const event = new Event('change', { bubbles: true });
-            checkbox.dispatchEvent(event);
-          }
-        });
-      });
+    function loadSavedAnswers() {
+      // This function is now handled by the tracking system
     }
-    
-    // Initialize step card functionality when DOM is loaded
-    document.addEventListener('DOMContentLoaded', function() {
-      initializeStepCardClicks();
-      
-      // Use the existing step tracking system
-      if (typeof initializeStepTracking === 'function') {
-        initializeStepTracking();
-      }
-    });
   </script>
   
   <!-- Bottom Navigation -->

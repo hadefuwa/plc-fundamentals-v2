@@ -28,7 +28,9 @@
             <i class="fas fa-cogs"></i> CP2388
           </a>
         </li>
-        
+        <li class="nav-item">
+          
+        </li>
         
         <li class="nav-item">
           <a href="#" onclick="window.location='tracking-dashboard.html'" class="nav-link">
@@ -137,79 +139,37 @@
     <div class="worksheet-section so-what-section">
       <h2 class="section-header"><i class="fas fa-lightbulb"></i> 3. So What?</h2>
       <div class="so-what-content">
-        <!-- System Overview Card -->
-        <div class="explanation-card">
-          <div class="card-header">
-            <i class="fas fa-water"></i>
-            <h3>Float Switch System Overview</h3>
-          </div>
-          <div class="card-content">
-            <p>Float switches monitor liquid levels and help protect the system. The low-level switch is normally open (NO) and only closes when there is enough liquid. This allows the pump to run. If the level drops, it opens and stops the pump to avoid dry running.</p>
-            <p>The high-level switch is normally closed (NC) and breaks the circuit when the tank is full. This stops filling or triggers an alarm to prevent overflow.</p>
-            <p>This setup is fail-safe. If a wire breaks or a switch fails, the system detects the change and shuts down safely. NC switches are used where a constant signal confirms safety. NO switches are used where action is only needed in specific conditions, like confirming enough fluid is present.</p>
+        <p>Float switches provide essential level monitoring and protection in fluid systems:</p>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>Low-Level Protection (NO)</strong>
+            <p>The low-level switch is Normally Open (NO) and only closes when there's enough liquid. This allows the pump to run and prevents dry running damage.</p>
           </div>
         </div>
-
-        <!-- Key Learning Points Card -->
-        <div class="key-points-card">
-          <div class="card-header">
-            <i class="fas fa-lightbulb"></i>
-            <h3>Key Learning Points</h3>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>High-Level Protection (NC)</strong>
+            <p>The high-level switch is Normally Closed (NC) and breaks the circuit when the tank is full, stopping filling or triggering alarms to prevent overflow.</p>
           </div>
-          <div class="key-points-grid">
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-tint"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>Float switches detect tank levels and help control pumps or alarms.</strong>
-              </div>
-            </div>
-            
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-arrow-down"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>The low-level switch is NO and stops the pump if fluid is too low.</strong>
-              </div>
-            </div>
-            
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-arrow-up"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>The high-level switch is NC and stops filling when the tank is full.</strong>
-              </div>
-            </div>
-            
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-shield-alt"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>This setup is fail-safe. If wiring or switches fail, the system shuts down safely.</strong>
-              </div>
-            </div>
-            
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-link"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>NO switches only give a signal when needed. NC switches give a constant signal and fail safely if lost.</strong>
-              </div>
-            </div>
-            
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-tools"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>Knowing how float switches behave helps prevent damage, improve safety, and maintain system reliability.</strong>
-              </div>
-            </div>
+        </div>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>Safety System Integration</strong>
+            <p>Float switches integrate with pump control systems to automatically stop operations when unsafe conditions are detected, protecting equipment and preventing spills.</p>
+          </div>
+        </div>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>Maintenance Considerations</strong>
+            <p>Regular inspection ensures float switches move freely and contacts operate correctly. Debris or mechanical wear can cause false readings or system failures.</p>
           </div>
         </div>
       </div>
@@ -454,9 +414,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Add Chart.js -->
-      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </div>
 
     <!-- Add Chart.js -->
@@ -477,7 +434,7 @@
           console.log('Initializing', initFunc);
           window[initFunc]();
         } else {
-          console.log('Float switch simulation script not found');
+          document.querySelector('.simulation-loading').innerHTML = '<p>Simulation ready - Float Switch System Maintenance</p>';
         }
       }, 1000);
       loadSavedAnswers();
@@ -553,47 +510,9 @@
     function loadSavedAnswers() {
       // This function is now handled by the tracking system
     }
-    
-    // Step card click functionality
-    function initializeStepCardClicks() {
-      const stepCards = document.querySelectorAll('.step-card');
-      
-      stepCards.forEach(card => {
-        card.addEventListener('click', function(e) {
-          // Don't trigger if clicking on the checkbox itself
-          if (e.target.closest('.step-checkbox')) {
-            return;
-          }
-          
-          const checkbox = this.querySelector('.step-complete-checkbox');
-          if (checkbox) {
-            // Toggle the checkbox
-            checkbox.checked = !checkbox.checked;
-            
-            // Update the card's completed state using the existing class name
-            if (checkbox.checked) {
-              this.classList.add('step-completed');
-            } else {
-              this.classList.remove('step-completed');
-            }
-            
-            // Trigger change event on checkbox for any existing listeners
-            const event = new Event('change', { bubbles: true });
-            checkbox.dispatchEvent(event);
-          }
-        });
-      });
+    function loadSavedAnswers() {
+      // This function is now handled by the tracking system
     }
-    
-    // Initialize step card functionality when DOM is loaded
-    document.addEventListener('DOMContentLoaded', function() {
-      initializeStepCardClicks();
-      
-      // Use the existing step tracking system
-      if (typeof initializeStepTracking === 'function') {
-        initializeStepTracking();
-      }
-    });
   </script>
   
   <!-- Bottom Navigation -->

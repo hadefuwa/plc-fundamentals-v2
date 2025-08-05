@@ -299,7 +299,9 @@
             <i class="fas fa-cogs"></i> CP2388
           </a>
         </li>
-        
+        <li class="nav-item">
+          
+        </li>
         
         <li class="nav-item">
           <a href="#" onclick="window.location='tracking-dashboard.html'" class="nav-link">
@@ -408,129 +410,37 @@
     <div class="worksheet-section so-what-section">
       <h2 class="section-header"><i class="fas fa-lightbulb"></i> 3. So What?</h2>
       <div class="so-what-content">
-        <!-- Analogue Sensor Overview Card -->
-        <div class="explanation-card">
-          <div class="card-header">
-            <i class="fas fa-chart-line"></i>
-            <h3>Analogue Sensor System Overview</h3>
-          </div>
-          <div class="card-content">
-            <p>The temperature sensor in this system is set up to measure 0 to 100°C, and it sends a voltage signal from 0 to 10V into the PLC. The PLC doesn't see temperature directly. Instead, it sees a raw number. On a Siemens S7-1200, the full raw input range is 0 to 27648.</p>
-          </div>
-        </div>
-
-        <!-- Voltage to Raw Values Card -->
-        <div class="explanation-card">
-          <div class="card-header">
-            <i class="fas fa-calculator"></i>
-            <h3>Voltage to Raw Values</h3>
-          </div>
-          <div class="card-content">
-            <ul>
-              <li>0V = 0</li>
-              <li>10V = 27648</li>
-              <li>5V = 13824</li>
-            </ul>
+        <p>Analogue sensors provide continuous measurement data that requires proper scaling and calibration:</p>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>Signal Scaling</strong>
+            <p>PLCs convert analogue signals (0-10V) into raw values (0-27648 on S7-1200), which must be scaled to meaningful engineering units like temperature or pressure.</p>
           </div>
         </div>
-
-        <!-- PLC Scaling Card -->
-        <div class="explanation-card">
-          <div class="card-header">
-            <i class="fas fa-microchip"></i>
-            <h3>PLC Scaling</h3>
-          </div>
-          <div class="card-content">
-            <p>To make this useful, the PLC uses scaling to convert the raw number into a real-world value, like temperature. For a 0–100°C sensor, the scaling is set so:</p>
-            <ul>
-              <li>0 = 0°C</li>
-              <li>27648 = 100°C</li>
-              <li>13824 = 50°C</li>
-            </ul>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>Range Matching</strong>
+            <p>When sensors are replaced with different ranges (e.g., 0-300°C vs 0-100°C), PLC scaling must be updated to prevent incorrect readings and control errors.</p>
           </div>
         </div>
-
-        <!-- Sensor Range Changes Card -->
-        <div class="explanation-card">
-          <div class="card-header">
-            <i class="fas fa-exclamation-triangle"></i>
-            <h3>Sensor Range Changes</h3>
-          </div>
-          <div class="card-content">
-            <p>If the sensor is replaced with one that measures 0 to 300°C, the PLC's scaling needs to be changed. If not, the PLC will still show 100°C at 10V, when the real temperature is actually 300°C. This causes the HMI to display incorrect values.</p>
-            <p>Always update the PLC analogue input scaling when the sensor range changes, to keep readings accurate and prevent control errors.</p>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>Offset Correction</strong>
+            <p>Offsets compensate for sensor drift or installation variations. A sensor reading 5°C high can be corrected with a -5°C offset to restore accuracy.</p>
           </div>
         </div>
-
-        <!-- Key Learning Points Card -->
-        <div class="key-points-card">
-          <div class="card-header">
-            <i class="fas fa-lightbulb"></i>
-            <h3>Key Learning Points</h3>
-          </div>
-          <div class="key-points-grid">
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-chart-line"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>Analogue sensors send a continuous signal (like 0–10V) to represent values such as temperature or pressure, unlike digital sensors which are just on or off.</strong>
-              </div>
-            </div>
-            
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-thermometer-half"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>The temperature sensor on this rig uses a 0–10V signal to represent 0–100°C, meaning 5V equals 50°C.</strong>
-              </div>
-            </div>
-            
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-microchip"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>The PLC reads this voltage as a raw value and scales it to show the correct temperature on the HMI.</strong>
-              </div>
-            </div>
-            
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-calculator"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>On a Siemens S7-1200, the raw input range is 0 to 27648, so the PLC converts this into a temperature using a formula.</strong>
-              </div>
-            </div>
-            
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-exclamation-triangle"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>If the sensor range changes (e.g. from 0–100°C to 0–300°C), the PLC scaling must be updated. If not, the readings will be incorrect.</strong>
-              </div>
-            </div>
-            
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-balance-scale"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>An offset can be used to correct small differences or errors in readings. For example, if the sensor shows 5°C too high, an offset of –5 can be applied.</strong>
-              </div>
-            </div>
-            
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-tools"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>Understanding scaling and offset ensures accurate measurements and prevents control issues in automated systems.</strong>
-              </div>
-            </div>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>Continuous Monitoring</strong>
+            <p>Unlike digital sensors that are simply on/off, analogue sensors provide detailed information about how much something is changing, enabling precise process control.</p>
           </div>
         </div>
       </div>
@@ -791,47 +701,6 @@
             }
           }
         });
-      }
-    });
-    
-    // Step card click functionality
-    function initializeStepCardClicks() {
-      const stepCards = document.querySelectorAll('.step-card');
-      
-      stepCards.forEach(card => {
-        card.addEventListener('click', function(e) {
-          // Don't trigger if clicking on the checkbox itself
-          if (e.target.closest('.step-checkbox')) {
-            return;
-          }
-          
-          const checkbox = this.querySelector('.step-complete-checkbox');
-          if (checkbox) {
-            // Toggle the checkbox
-            checkbox.checked = !checkbox.checked;
-            
-            // Update the card's completed state using the existing class name
-            if (checkbox.checked) {
-              this.classList.add('step-completed');
-            } else {
-              this.classList.remove('step-completed');
-            }
-            
-            // Trigger change event on checkbox for any existing listeners
-            const event = new Event('change', { bubbles: true });
-            checkbox.dispatchEvent(event);
-          }
-        });
-      });
-    }
-    
-    // Initialize step card functionality when DOM is loaded
-    document.addEventListener('DOMContentLoaded', function() {
-      initializeStepCardClicks();
-      
-      // Use the existing step tracking system
-      if (typeof initializeStepTracking === 'function') {
-        initializeStepTracking();
       }
     });
   </script>

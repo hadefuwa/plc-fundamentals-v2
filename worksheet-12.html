@@ -282,7 +282,9 @@
             <i class="fas fa-cogs"></i> CP2388
           </a>
         </li>
-        
+        <li class="nav-item">
+          
+        </li>
         
         <li class="nav-item">
           <a href="#" onclick="window.location='tracking-dashboard.html'" class="nav-link">
@@ -391,83 +393,37 @@
     <div class="worksheet-section so-what-section">
       <h2 class="section-header"><i class="fas fa-lightbulb"></i> 3. So What?</h2>
       <div class="so-what-content">
-        <!-- System Overview Card -->
-        <div class="explanation-card">
-          <div class="card-header">
-            <i class="fas fa-toggle-on"></i>
-            <h3>Digital Sensor System Overview</h3>
-          </div>
-          <div class="card-content">
-            <p>Digital sensors send a simple on or off signal, usually using 24V DC. To set one up, connect the power wires (+24V and 0V) and the signal wire to a PLC digital input. The PLC reads this as either on (1) or off (0). You can usually monitor the status of these digital inputs directly on the PLC, and also on the IO screen of the HMI.</p>
-            <p>There are two types:</p>
-            <ul>
-              <li><strong>Normally Open (NO)</strong>: Sends a signal only when triggered.</li>
-              <li><strong>Normally Closed (NC)</strong>: Sends a signal when idle and stops when triggered.</li>
-            </ul>
-            <p>This matters for safety. For example, emergency stops use NC so that if a wire breaks, the system sees it as a fault. Always check the sensor type before wiring.</p>
+        <p>Digital sensors provide essential binary feedback for control systems and safety monitoring:</p>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>Binary Signal Processing</strong>
+            <p>Digital sensors send simple on/off signals (typically 24V DC) that PLCs read as binary values (1 for on, 0 for off), enabling reliable control decisions.</p>
           </div>
         </div>
-
-        <!-- Key Learning Points Card -->
-        <div class="key-points-card">
-          <div class="card-header">
-            <i class="fas fa-lightbulb"></i>
-            <h3>Key Learning Points</h3>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>Contact Types Matter for Safety</strong>
+            <p>Normally Open (NO) sensors signal only when triggered, while Normally Closed (NC) sensors used for safety detect broken wires as faults, ensuring fail-safe operation.</p>
           </div>
-          <div class="key-points-grid">
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-toggle-on"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>Digital sensors send an on/off signal to the PLC, typically using 24V DC.</strong>
-              </div>
-            </div>
-            
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-microchip"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>The PLC reads these signals as either 1 (on) or 0 (off) and uses them to monitor and control system actions.</strong>
-              </div>
-            </div>
-            
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-eye"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>Input status can be viewed directly on the PLC and also on the IO screen of the HMI.</strong>
-              </div>
-            </div>
-            
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-link"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>Digital sensors can be Normally Open (NO) or Normally Closed (NC), and the choice affects how faults are detected.</strong>
-              </div>
-            </div>
-            
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-shield-alt"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>Safety devices like Emergency Stops use NC contacts so a broken wire or fault is detected immediately.</strong>
-              </div>
-            </div>
-            
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-tools"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>Knowing the sensor type and how it behaves is essential for safe and reliable system operation.</strong>
-              </div>
-            </div>
+        </div>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>Real-time Monitoring</strong>
+            <p>Digital input status can be viewed directly on PLC indicators and HMI screens, providing immediate feedback for troubleshooting and system verification.</p>
+          </div>
+        </div>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>System Integration</strong>
+            <p>Digital sensors enable automated responses to system conditions - from simple pump control to complex safety interlocks that protect equipment and personnel.</p>
           </div>
         </div>
       </div>
@@ -728,47 +684,6 @@
             }
           }
         });
-      }
-    });
-    
-    // Step card click functionality
-    function initializeStepCardClicks() {
-      const stepCards = document.querySelectorAll('.step-card');
-      
-      stepCards.forEach(card => {
-        card.addEventListener('click', function(e) {
-          // Don't trigger if clicking on the checkbox itself
-          if (e.target.closest('.step-checkbox')) {
-            return;
-          }
-          
-          const checkbox = this.querySelector('.step-complete-checkbox');
-          if (checkbox) {
-            // Toggle the checkbox
-            checkbox.checked = !checkbox.checked;
-            
-            // Update the card's completed state using the existing class name
-            if (checkbox.checked) {
-              this.classList.add('step-completed');
-            } else {
-              this.classList.remove('step-completed');
-            }
-            
-            // Trigger change event on checkbox for any existing listeners
-            const event = new Event('change', { bubbles: true });
-            checkbox.dispatchEvent(event);
-          }
-        });
-      });
-    }
-    
-    // Initialize step card functionality when DOM is loaded
-    document.addEventListener('DOMContentLoaded', function() {
-      initializeStepCardClicks();
-      
-      // Use the existing step tracking system
-      if (typeof initializeStepTracking === 'function') {
-        initializeStepTracking();
       }
     });
   </script>

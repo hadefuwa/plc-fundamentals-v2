@@ -93,7 +93,9 @@
             <i class="fas fa-cogs"></i> CP2388
           </a>
         </li>
-        
+        <li class="nav-item">
+          
+        </li>
         
         <li class="nav-item">
           <a href="#" onclick="window.location='tracking-dashboard.html'" class="nav-link">
@@ -203,112 +205,37 @@
     <div class="worksheet-section so-what-section">
       <h2 class="section-header"><i class="fas fa-lightbulb"></i> 3. So What?</h2>
       <div class="so-what-content">
-        <!-- Temperature Sensor Types Card -->
-        <div class="explanation-card">
-          <div class="card-header">
-            <i class="fas fa-thermometer-half"></i>
-            <h3>Types of Temperature Sensors</h3>
-          </div>
-          <div class="card-content">
-            <ul>
-              <li><strong>Thermocouple</strong> – Measures temperature by detecting voltage changes.</li>
-              <li><strong>RTD</strong> – Measures temperature through changes in resistance.</li>
-              <li><strong>Thermistor</strong> – A resistor that changes with temperature and responds quickly.</li>
-            </ul>
+        <p>Temperature sensors provide critical monitoring to prevent equipment damage and ensure safe operation:</p>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>Sensor Technologies</strong>
+            <p>RTDs use resistance changes, thermocouples detect voltage changes, and thermistors provide rapid response - each suited for different temperature ranges and applications.</p>
           </div>
         </div>
-
-        <!-- Safety and Fault Detection Card -->
-        <div class="explanation-card">
-          <div class="card-header">
-            <i class="fas fa-shield-alt"></i>
-            <h3>Safety and Fault Detection</h3>
-          </div>
-          <div class="card-content">
-            <p>Temperature sensors keep equipment safe by preventing overheating and detecting faults. They provide live readings, but strange or missing values may point to damage, wiring issues, or interference. Dirt or vibration can also affect accuracy, and incorrect readings may require recalibration or replacement.</p>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>Safety Protection</strong>
+            <p>Temperature cutouts automatically shut down systems when limits are exceeded, preventing overheating damage and ensuring safe operation in various process conditions.</p>
           </div>
         </div>
-
-        <!-- Control and Monitoring Card -->
-        <div class="explanation-card">
-          <div class="card-header">
-            <i class="fas fa-cogs"></i>
-            <h3>Control and Monitoring</h3>
-          </div>
-          <div class="card-content">
-            <p>Sensors often control heaters, fans, or coolers. If the temperature doesn't change, check airflow, controls, or sensor placement. Many systems rely on these sensors to trigger alarms or shutdowns when temperatures get too high.</p>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>System Integration</strong>
+            <p>Temperature sensors often control heaters, coolers, and fans. The HMI displays live readings and allows configuration of safety limits for automated protection.</p>
           </div>
         </div>
-
-        <!-- Key Learning Points Card -->
-        <div class="key-points-card">
-          <div class="card-header">
-            <i class="fas fa-lightbulb"></i>
-            <h3>Key Learning Points</h3>
-          </div>
-          <div class="key-points-grid">
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-thermometer-half"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>Temperature sensors monitor heat levels to keep systems running safely and efficiently.</strong>
-              </div>
-            </div>
-            
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-microchip"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>RTDs change resistance with temperature, and the transmitter converts this to a signal the PLC can read.</strong>
-              </div>
-            </div>
-            
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-desktop"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>The HMI displays live temperature and allows you to set cutout limits for high and low temperatures.</strong>
-              </div>
-            </div>
-            
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-shield-alt"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>Setting a cutout beyond the current temperature will shut down the system to prevent damage.</strong>
-              </div>
-            </div>
-            
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-exclamation-triangle"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>Strange or missing readings may indicate sensor faults, wiring issues, or environmental interference.</strong>
-              </div>
-            </div>
-            
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-cogs"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>Sensors often control heaters or coolers and trigger alarms or shutdowns if temperatures go out of range.</strong>
-              </div>
-            </div>
-            
-            <div class="key-point-item">
-              <div class="key-point-icon">
-                <i class="fas fa-tools"></i>
-              </div>
-              <div class="key-point-content">
-                <strong>Regular checks and calibration help ensure accurate and reliable operation.</strong>
-              </div>
-            </div>
+        
+        <div class="key-point">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>Maintenance Indicators</strong>
+            <p>Strange or missing readings may indicate sensor damage, wiring issues, or environmental interference. Regular calibration ensures accurate monitoring and reliable control.</p>
           </div>
         </div>
       </div>
@@ -569,47 +496,6 @@
             }
           }
         });
-      }
-    });
-    
-    // Step card click functionality
-    function initializeStepCardClicks() {
-      const stepCards = document.querySelectorAll('.step-card');
-      
-      stepCards.forEach(card => {
-        card.addEventListener('click', function(e) {
-          // Don't trigger if clicking on the checkbox itself
-          if (e.target.closest('.step-checkbox')) {
-            return;
-          }
-          
-          const checkbox = this.querySelector('.step-complete-checkbox');
-          if (checkbox) {
-            // Toggle the checkbox
-            checkbox.checked = !checkbox.checked;
-            
-            // Update the card's completed state using the existing class name
-            if (checkbox.checked) {
-              this.classList.add('step-completed');
-            } else {
-              this.classList.remove('step-completed');
-            }
-            
-            // Trigger change event on checkbox for any existing listeners
-            const event = new Event('change', { bubbles: true });
-            checkbox.dispatchEvent(event);
-          }
-        });
-      });
-    }
-    
-    // Initialize step card functionality when DOM is loaded
-    document.addEventListener('DOMContentLoaded', function() {
-      initializeStepCardClicks();
-      
-      // Use the existing step tracking system
-      if (typeof initializeStepTracking === 'function') {
-        initializeStepTracking();
       }
     });
   </script>
