@@ -8,8 +8,7 @@ function getUrlParameter(name) {
 }
 
 function getWorksheetsPageUrl() {
-  const type = getUrlParameter('type') || 'maintenance';
-  return type === 'fault' ? 'cp6773-worksheets.html' : 'cp0539-worksheets.html';
+  return 'CP2388-worksheets.html';
 }
 
 function goBackToWorksheets() {

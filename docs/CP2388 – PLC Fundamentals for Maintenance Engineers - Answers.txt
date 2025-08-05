@@ -1,0 +1,238 @@
+
+
+
+
+
+
+Introduction 2
+Answers 3
+Worksheet 2 – Complex PLC Control Systems 5
+Worksheet 3 – HMIs 6
+Worksheet 4 – Emergency Stops 7
+Worksheet 5 – Status LED 8
+Worksheet 6 – Normally Open vs Normally Closed 9
+Worksheet 7 – Proximity Switch 10
+Worksheet 8 – Potentiometer 11
+Worksheet 9 – Temperature Sensor 12
+Worksheet 10 – Digital Outputs 13
+Worksheet 11 – Motor PWM 14
+Worksheet 12 – Motor Relay 15
+Version Control 16
+
+
+
+INTRODUCTION
+This document highlights all the answers to the questions posed in the student handout for the worksheets curriculum “CP2388 - PLC Fundamentals for Maintenance Engineers”.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ANSWERS
+
+
+
+Worksheet 1 – Simple PLC Control Systems
+Questions:
+1. What type of control does this system demonstrate?
+2. What happens when you press and hold input I0?
+3. What do the PLC’s status LEDs show during operation?
+4. Where might a system like this be used in real industrial settings?
+Answers:
+1. It demonstrates simple on/off control using push buttons and indicator lights.
+2. The red light turns on while the button is pressed, then turns off when released.
+3. They show which inputs and outputs are active, based on the PLC logic.
+4. In factories to control devices like lights, fans, or alarms.
+
+
+
+Worksheet 2 – Complex PLC Control Systems
+Questions:
+1. What does a complex PLC system control?
+2. What happens when you press input I0 in this worksheet?
+3. What does it mean when the PLC latches a signal?
+4. How can the process be stopped once it starts?
+5. Why is understanding PLC logic important for fault finding?
+Answers:
+1. It controls step-by-step processes using inputs, outputs, and logic, like in real factory systems.
+2. The outputs turn on one by one in a sequence, even after you release the button.
+3. The PLC stores the input signal in memory, so the process keeps running without holding the button.
+4. By pressing the red stop button (I2) or the emergency stop.
+5. Because most real systems are complex, and you need to know how the program works to fix problems.
+
+
+Worksheet 3 – HMIs
+Questions:
+1. What is the purpose of an HMI in an industrial system?
+2. What does this worksheet’s HMI screen represent?
+3. What happens when you press the Mix button?
+4. Why are some HMI controls greyed out during mixing?
+5. How can maintenance engineers use HMIs during fault finding?
+Answers:
+1. An HMI lets operators view system status and send commands to the PLC.
+2. It shows a batch mixing process with ingredient tanks and a final product tank.
+3. The three tanks drain into the bottom tank, and controls are locked until mixing finishes.
+4. To prevent changes during critical parts of the process, keeping the system safe.
+5. They use it to check inputs, outputs, alarms, and test system behaviour.
+
+
+Worksheet 4 – Emergency Stops
+Questions:
+1. What is the purpose of an Emergency Stop (E-Stop)?
+2. How is an E-Stop different from a normal stop button?
+3. What happens when you press the E-Stop during the mixing process?
+4. Why does the E-Stop have two contacts?
+5. What steps must be taken to reset the system after pressing the E-Stop?
+Answers:
+1. To stop the machine immediately in an emergency to keep people safe and protect equipment.
+2. An E-Stop is only for emergencies, not for normal stopping or shutdown.
+3. The system stops, an alarm appears, and mixing is halted until reset.
+4. For safety. If either contact opens, the system stops. This makes the E-Stop more reliable.
+5. Twist the E-Stop to release it, then press the blue reset button or use the HMI reset.
+
+
+Worksheet 5 – Status LED
+Questions:
+1. What is the purpose of the status LED in a PLC system?
+2. What does a red status LED usually mean?
+3. What does a green status LED usually mean?
+4. How does the status LED change across Basic, Enhanced, and Live Process modes?
+5. Why is it important to understand how the LED is programmed?
+Answers:
+1. It shows the current state of the system using colours, helping identify faults or normal operation.
+2. It often means there is a fault or the emergency stop has been pressed.
+3. It usually means the system is healthy and ready or running normally.
+4. It may show solid or flashing patterns based on system state, like startup, running, or fault.
+5. Because LED behaviour is set in the PLC code and can vary between machines, so reading the manual and understanding the logic is key.
+
+
+
+Worksheet 6 – Normally Open vs Normally Closed
+Questions:
+1. What is the difference between a normally open (NO) and normally closed (NC) contact?
+2. What does green text on the HMI input screen mean?
+3. How does Input 2 behave when not pressed?
+4. What happens to Input 3 when it is pressed and released?
+5. Why is it important to understand NO and NC input states in maintenance?
+Answers:
+1. An NO contact is off until pressed, while an NC contact is on until pressed.
+2. Green means the input is currently on; white means it is off.
+3. It stays on by default and turns off when the red button is pressed.
+4. It latches on when pressed and stays on until pressed again.
+5. So you can correctly read input states and avoid misdiagnosing faults.
+
+
+Worksheet 7 – Proximity Switch
+Questions:
+1. What does a proximity sensor detect?
+2. Why are proximity sensors useful in automation systems?
+3. What type of object does an inductive sensor detect?
+4. What caused the fault in the locking sequence during the exercise?
+5. How can engineers test a proximity sensor during troubleshooting?
+Answers:
+1. It detects the presence of an object without physical contact.
+2. They improve safety and reduce wear by detecting position without touching the object.
+3. Metal objects only.
+4. The system couldn’t detect the locking pins because the sensor was not triggered.
+5. By placing a metal object in front of the sensor to simulate detection.
+
+
+Worksheet 8 – Potentiometer
+Questions:
+1. What does a potentiometer do in a PLC system?
+2. What voltage range does a potentiometer typically output?
+3. How does the motor respond as you turn the potentiometer?
+4. What does applying an offset do to the input signal?
+5. Why is scaling (scalar) important in PLC systems?
+Answers:
+1. It creates a variable voltage signal used to control things like motor speed or level settings.
+2. Between 0 and 10 volts.
+3. The motor speed increases as the potentiometer is turned to the right.
+4. It shifts the signal higher or lower to correct for drift or to fine-tune control.
+5. It adjusts the signal to match real-world values, ensuring the system behaves as expected.
+
+
+
+Worksheet 9 – Temperature Sensor
+Questions:
+1. What does a temperature sensor do in a PLC system?
+2. What type of temperature sensor is used in this worksheet?
+3. Why is a signal converter needed with an RTD sensor?
+4. What does the PLC do with the analogue voltage from the sensor?
+5. What might a raw value near 32,000 mean?
+Answers:
+1. It tracks heat levels to help prevent overheating, freezing, or system faults.
+2. A PT100 RTD sensor.
+3. Because the PLC can’t read resistance directly—it needs a 0–10?V voltage signal.
+4. It converts the voltage into a raw value, then multiplies it by a scalar to get temperature in °C.
+5. It usually means a fault like a disconnected sensor, wrong input type, or wiring issue.
+
+
+Worksheet 10 – Digital Outputs
+Questions:
+1. What are digital outputs used for in a PLC system?
+2. What happens when you press and hold input I0?
+3. How does input I1 behave differently from I0?
+4. What does the selector switch (I4/I5) control in this worksheet?
+5. Why is it useful to recognise output patterns like the LED sequence?
+Answers:
+1. To control external devices like lights, motors, relays, and solenoids.
+2. LED Q0 turns on only while the button is pressed.
+3. LED Q1 stays on after the button is released until turned off by I2.
+4. It changes the behaviour of LED Q3. Left keeps it on, right makes it flash.
+5. Because real systems often use sequences and recognising them helps with fault finding and confirming correct operation.
+
+
+Worksheet 11 – Motor PWM
+Questions:
+1. What does PWM stand for, and what is it used for in PLC systems?
+2. How does PWM control the speed of a motor?
+3. What role does the potentiometer play in this worksheet?
+4. What does a 100% duty cycle mean compared to 0%?
+5. Why is it important to understand PWM when working with motors?
+Answers:
+1. PWM stands for Pulse Width Modulation, and it is used to control motor speed.
+2. It changes how long the output is on versus off, controlling how much power the motor receives.
+3. It sets the PWM level by sending a 0-10?V signal to the PLC.
+4. 100% means the motor is fully on, and 0% means it is off.
+5. Because many real systems use PWM to control speed, and being able to read and adjust it helps with troubleshooting and setup.
+
+
+Worksheet 12 – Motor Relay
+Questions:
+1. What is the main purpose of a relay in a PLC system?
+2. How does the PLC activate a relay?
+3. What happens when the relay is energised?
+4. Why can’t PLCs always control devices like motors directly?
+5. What should you check if a relay does not switch as expected?
+Answers:
+1. To safely control higher-power devices like motors or solenoids.
+2. By sending power to a coil inside the relay.
+3. The relay closes internal contacts to switch the connected output on.
+4. Because PLC outputs are low-power and need a relay to handle larger loads.
+5. Check for stuck contacts, faulty coils, incorrect logic, or wiring issues.
+
+
+VERSION CONTROL
+11 07 25 		 First Revision Created
+
+0Introduction		
+
+Page | 2 
+	Copyright © 2025 Matrix Technology Solutions Limited
+

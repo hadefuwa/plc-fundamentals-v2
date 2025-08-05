@@ -1,0 +1,284 @@
+ 
+Name: PLC Fundamentals Trainer
+Product Range:  Industrial Maintenance 
+Product Code: IM6930
+Curriculum Code: CP2388
+Power Supply: 24V 
+Product Description 
+The PLC Fundamentals Trainer is a hands-on training platform designed specifically for those new to industrial maintenance and automation. It provides a structured, practical introduction to PLC-controlled systems using real-world components and industrial wiring standards. At the heart of the system is a Siemens S7-1214 PLC and a 7-inch Unified Basic HMI, delivering a realistic interface for observing how inputs and outputs interact in a typical automated process.
+Rather than focusing on programming or diagnostics, the module helps learners build core knowledge from the ground up. It starts with how a basic control panel is laid out and how devices like push buttons, proximity sensors, and temperature inputs are wired into a PLC. The system includes clearly labelled terminals and a mix of digital and analogue devices, offering opportunities to explore normally open (NO) and normally closed (NC) contacts, signal types, and typical industrial safety features such as dual-channel emergency stops and output isolation through relays.
+Each component has been carefully selected to reflect what learners will encounter in real facilities. From the MCB and safety relay to the red-and-white RPM feedback motors and DIN rail relays, every interaction is visible and tactile. This makes concepts like I/O mapping, contact state logic, and basic sequencing intuitive and easy to grasp.
+Designed to support T-Level qualifications and foundational maintenance training, the module includes a short set of worksheets that guide users through each component’s role, wiring, and interaction with the PLC. By the end of the course, learners will have a solid understanding of how signals flow through a control system and how industrial hardware works together, even if they have never touched a control panel before.
+Perfect for the hands-on learner who has never opened a control panel and isn’t sure if a PLC is a fuse or a fancy relay. This is the place to start building real industrial confidence.
+Target Audience
+This curriculum is designed for 16 to 18-year-old engineering students in further education colleges, as well as apprentices beginning their careers in industrial maintenance and automation. It is ideal for those studying T Levels, BTECs, or similar vocational qualifications where practical understanding of control systems is essential. The program focuses on giving learners their first exposure to PLC hardware, inputs and outputs, safety systems, and real industrial components, without requiring prior knowledge of programming or electrical systems. Whether the goal is to work in manufacturing, utilities, or process industries, this course lays the groundwork for understanding what is inside a control panel, how components interact, and how modern automation systems are built and maintained.
+
+
+Key Features 
+System Hardware and Design
+* Siemens S7-1214 PLC with digital and analogue inputs and outputs
+* Siemens Unified Basic HMI for monitoring I/O and displaying system status
+* Range of input devices including push buttons, selector switch, proximity sensor, potentiometer, and temperature sensor
+* Output devices including red and green LEDs, DIN rail-mounted relays, and two visual RPM feedback motors
+* Integrated emergency stop and blue reset button wired through a dual-channel safety relay
+* Clearly labelled terminals, modular DIN rail layout, and MCB for power isolation
+* Industrial-grade 24V components selected to reflect real control panels
+* Compact desktop format suitable for classroom and bench-top use
+Curriculum and Learning Outcomes
+* Introduces basic concepts of PLC-controlled systems and industrial control panels
+* Explains digital and analogue inputs and outputs, including NO and NC contact types
+* Covers dual-channel E-stop circuits, relay logic, and safe wiring practices
+* Provides practical exposure to reading sensor signals and observing actuator response
+* Helps learners build confidence in identifying components and understanding their roles
+
+
+Hands-On Interaction and Visual Feedback
+* Visible signal indicators via LEDs and rotating motor discs for easy observation of output activity
+* Use of multimeters encouraged to test voltages and continuity across terminals
+* PLC and field devices include LED indicators to support signal tracing and logic understanding
+Worksheets and Instructor Support
+* Includes a structured set of worksheets focused on each component and concept
+* Worksheets cover E-stops, push buttons, relays, safety relays, terminals, indicator lights, and more
+* “Over to You” sections guide learners to explore and apply concepts independently
+* Full documentation with wire numbers, terminal references, and test points
+Target Audience and Qualification Mapping
+* Designed for students aged 16 to 18 in further education or apprenticeships
+* Aligned with UK T-Level and BTEC Maintenance, Installation, and Repair units
+* Suitable for learners with no prior experience in PLCs or control panels
+* Ideal for classrooms, lab sessions, and vocational training programs
+
+
+Learning Objectives
+By the end of the curriculum, learners will be able to:
+1. Identify and describe the key components found in a basic industrial control panel, including PLCs, relays, push buttons, terminal blocks, safety devices, and indicator lights.
+2. Explain the role of a PLC in monitoring inputs and controlling outputs within an automated system.
+3. Distinguish between different types of input devices, such as normally open (NO) and normally closed (NC) push buttons, selector switches, proximity sensors, and analogue inputs like potentiometers and temperature sensors.
+4. Demonstrate safe system isolation using an MCB and describe the purpose of a dual-channel emergency stop system connected via a safety relay.
+5. Wire and test basic input and output devices to a Siemens S7-1214 PLC using clearly labelled terminal blocks and DIN rail-mounted components.
+6. Interpret HMI displays to monitor live system status, including I/O activity, safety states, and signal conditions.
+7. Use basic test equipment such as multimeters to measure voltages, check continuity, and verify correct I/O operation.
+8. Describe the difference between digital and analogue signals, and explain how each type is processed by the PLC.
+9. Understand the function of indicator LEDs and motors as visual representations of output signals in a control circuit.
+10. Follow a structured worksheet to complete guided activities on system setup, component function, and signal tracing.
+
+
+
+Worksheets 
+CP2388 – PLC Fundamentals for Maintenance Engineers
+* Worksheet 1 – Simple PLC Systems
+Introduction to basic PLC control panels and hardware. Hands-on with push buttons, indicator lights, and PLC logic for basic ON/OFF tasks.
+* Worksheet 2 – Complex PLC Systems
+Sequencing and latching logic. Learners explore multi-step processes and how PLCs manage signals and output sequences.
+* Worksheet 3 – HMIs
+Using the touchscreen HMI to monitor processes, adjust parameters, and view live data and alarms.
+* Worksheet 4 – Emergency Stops
+Understanding emergency stop circuits, dual-channel logic, and reset procedures.
+* Worksheet 5 – Status LED
+Interpreting machine state using status LEDs. Normal, fault, and emergency conditions.
+* Worksheet 6 – Normally Open vs Normally Closed
+Exploring NO and NC push buttons, contact types, and how each affects system behaviour and diagnostics.
+* Worksheet 7 – Proximity Switch
+Operation and diagnostic use of inductive proximity sensors for object detection and safety interlocks.
+* Worksheet 8 – Potentiometer
+Analogue input basics—using a potentiometer for variable signals, scaling, and adjusting system response.
+* Worksheet 9 – Temperature Sensor
+Working with PT100 sensors and transmitters. Analogue scaling, calibration, and interpreting sensor faults.
+* Worksheet 10 – Digital Outputs
+Hands-on testing with digital outputs: indicator LEDs, actuators, and basic output mapping and logic.
+* Worksheet 11 – Motor PWM
+Using pulse width modulation to control motor speed. Understanding duty cycle, analogue input control, and observing real-time output on the HMI.
+* Worksheet 12 – Relays
+How PLCs use relays to control higher-power devices. Practical relay logic, isolation, output switching, and fault diagnosis.
+
+Packing List
+Essentially the product will be sold as almost one complete tested unit.
+Contents;
+- IM6930: Base with all components installed PLC & HMI.
+- Matrix 24V Power Supply
+
+
+Curriculum
+CP2388 – PLC Fundamentals for Maintenance Engineers
+
+Click here to download curriculum from our Learning Centre  
+
+
+Main Components 
+Main Module 
+
+Below are the main components of the PLC Fundamentals Trainer. Each part has been carefully selected to reflect real-world industrial systems and is fully integrated for hands-on learning.
+PLC – Siemens S7-1200 (CPU 1214C)
+* Purpose: Central controller for logic, safety interlocks, and I/O processing
+* Key Features:
+o 14x Digital Inputs, 10x Digital Outputs (24VDC)
+o 2x Analog Inputs (0–10V)
+o Interfaces with HMI for setpoint, alarms, and diagnosticsUnified HMI – Siemens Unified Basic Panel (MTP700)
+* Purpose: Operator interface for real-time monitoring, fault display, and parameter input
+* Key Features:
+o 7" touch screen for flow setpoint input and system feedback
+o Displays alarms, I/O status, values, and temperature cutoffs.
+o Setup page allows editing of temperature cutout limits and viewing system stateMotor – Geared DC Motor, 24 V DC, 30 RPM
+* Purpose: Used to visually represent output activation and rotational speed in PLC-controlled systems.
+* Key Features:
+o Operates on 24?V DC via relay or PWM output from the PLC
+o Drives a red-and-white disc to provide a clear visual indication of motor speed
+o Ideal for demonstrating output control, switching, and variable speed functionality in a safe, compact formatRelay – WAGO Interface Relay, DIN Rail Mount, 24?V AC/DC Coil, 1-Pole 
+* Purpose: Relay – WAGO Interface Relay, DIN Rail Mount, 24?V AC/DC Coil, 1-Pole (857-358)
+
+* Key Features:
+o 24?V AC/DC coil, compatible with standard PLC output voltage
+o 1-pole changeover (SPDT) contact rated up to 250?V AC / 6?A
+o Includes integrated status indicator for visual feedbackProximity Sensor – Omron E2E-X16MB1T12 2M (Inductive, M12, PNP, NO)
+* Purpose: Detects the presence of nearby metal objects without physical contact. Used to simulate safety interlocks or object detection in automated systems.
+* Key Features:
+o Inductive sensor with 16?mm sensing distance, ideal for general object detectionTemperature Transmitter – IFM TP9237 (Evaluation Unit for PT100/PT1000 Sensors)
+* Purpose: Converts resistance signals from PT100 or PT1000 temperature sensors into a standard 0–10?V analogue output signal readable by a PLC.
+* Key Features:
+o Compatible with both PT100 and PT1000 RTDs
+o Provides a 0–10?V analogue output for temperature measurement
+o Designed for use in industrial environments with robust housing and secure terminals
+
+
+
+Frequently asked questions 
+What software is needed to run the system?
+None. The system runs entirely self-contained using the onboard Siemens PLC and Unified HMI.
+Optionally, Siemens TIA Portal (v20 and above recommended) can be used to modify or create your own PLC logic.
+Does the kit come with curriculum materials?
+Yes. A full curriculum is included, complete with guided student worksheets and detailed teacher notes, available through the Matrix Learning Centre.
+What age group is this kit aimed at?
+It’s designed for further and higher education students aged 16–20 studying engineering, automation, or maintenance.
+How many students can use the kit at once?
+It’s ideal for 1 or 2 students working collaboratively. Two learners can comfortably work side-by-side during practical sessions.
+How is the system powered?
+The system uses a 24V DC power supply and comes with UK, EU, and US adapters. No mains wiring is required.
+Is post-use maintenance required?
+Very little. The system is fully electrical and requires no cleaning or servicing beyond occasional checks for loose wires or damaged cables.
+Can I reprogram the PLC?
+Yes. You may load your own program using TIA Portal. The system is delivered with default training code, which is editable.
+How is the system stored?
+The compact design allows it to be stored on a shelf or under a bench. The carry handles make it easy to move. All components are securely mounted for transport.
+Is the system portable?
+Yes. The system is manageable by one person and designed for easy transport between classrooms or benches.
+Do I need a PC to operate it?
+No PC is needed for normal operation. The HMI provides all necessary control and diagnostics. 
+Is technical training required to use the kit?
+No prior experience is needed. The worksheets walk students through system operation, faults, and diagnostics step-by-step.
+What is the warranty or support included?
+The product includes a standard 12-month warranty with full technical support from Matrix TSL.
+
+ 
+ 
+
+
+Tender Specification 
+Matrix Technology Solutions Ltd shall supply the PLC Fundamentals Trainer with the following features, capabilities, and performance assurances:
+Hardware Specification
+* The system shall be a desktop-format, fully electrical industrial training kit designed for beginner-level maintenance training in PLC-controlled systems.
+* The system shall feature a steel or composite baseplate with industrial DIN rail components securely mounted and clearly labelled.
+* The system shall include the following input devices:
+* Four push buttons with a mix of normally open and normally closed contact types
+* One 2-position selector switch
+* One potentiometer (0–10?V)
+* One inductive proximity sensor (Omron E2E-X16MB1T12)
+* One IFM temperature transmitter (TP9237) for PT100/1000 sensors
+* One simulated dual-channel emergency stop push button
+* One blue reset button
+* The system shall include the following output devices:
+* Six indicator LEDs (three green, three red)
+* Two DC motors with red-and-white RPM discs for visual feedback
+* DIN rail-mounted relays (WAGO 857-358 or equivalent)
+* The system shall include electrical protection and distribution components:
+* One miniature circuit breaker (MCB) for system power isolation
+* Touch-safe 24?V DC power supply
+* DIN rail-mounted terminal blocks for I/O and power wiring
+* The system shall be supplied with carry handles for portability and a compact footprint suitable for benches and desks.
+Control & Communication Features
+* The system shall include a Siemens S7-1200 CPU 1214C PLC, providing 14 digital inputs, 10 digital outputs, and 2 analogue inputs.
+* The system shall include a Siemens Unified Basic HMI (7"), offering real-time I/O display and user interaction through a capacitive touchscreen.
+* Communication interfaces shall include:
+o Ethernet for PLC programming and PLC-HMI communication
+o USB port for firmware updates to the HMI
+* The system shall operate from a 24?V DC input, with UK, EU, and US-compatible plug adapters supplied.
+
+Performance Expectations
+* The system shall allow learners to monitor and control input and output states through physical devices and a visual HMI interface.
+* Each component shall be mounted and prewired to allow practical testing, signal tracing, and multimeter-based verification.
+* The system shall include a simulated dual-channel emergency stop system, controlled in PLC logic to disable outputs and reflect industrial safety principles.
+* The motors shall visually represent PLC output control, with rotation speed reflecting either relay control or PWM drive depending on configuration.
+* Analogue inputs (potentiometer and temperature sensor) shall be accessible for signal variation and HMI monitoring exercises.
+
+
+
+Software & Curriculum
+* The system shall be delivered with default Siemens PLC and HMI programs, ready for training use.
+* Logic and HMI screens shall be editable using Siemens TIA Portal (v20 or later). Project files shall be made available on request.
+* The system shall include a set of 10 guided worksheets, focusing on:
+o Understanding PLC I/O basics
+o Simulated emergency stop and reset functionality
+o Contact types (NO/NC) and input signal types
+o Digital vs analogue I/O
+o Output devices including LEDs, motors, and relays
+o Power supply and isolation components
+* Worksheets shall be accompanied by instructor notes, wiring schematics, and expected learning outcomes.
+* Curriculum shall align with UK T-Level and BTEC standards in Maintenance, Installation, and Repair.
+Quantity & Scope of Delivery
+* Each unit shall be delivered fully assembled and ready to operate, including:
+o Siemens PLC and HMI
+o Prewired components and labelled terminals
+o Power supply with global plug set
+o Cable storage tray or compartment
+* Each kit shall support one or two learners working simultaneously.
+* The system shall be factory tested and provided with access to ongoing support and updates through the Matrix Learning Centre.
+
+
+
+Electrical Safety Information
+The PLC Fundamentals Trainer is designed with safety in mind and complies with relevant low-voltage and EMC standards. Users must adhere to the following safety guidance to ensure safe and correct operation.
+Key Safety Notes
+* Low Voltage Operation:
+The system operates at 24V DC only. It does not require or tolerate direct connection to mains voltage. Doing so will result in damage and void the warranty.
+* Power Supply:
+Use only the supplied 24V power adapter with approved plug heads (UK, EU, US). The power supply is a Class II, CE-marked unit with overvoltage and short-circuit protection.
+* Enclosure and Wiring:
+All electrical components are mounted in a protective enclosure or DIN rail panel with finger-safe terminals. No exposed live connections are present under normal use.
+* Fuse and Circuit Protection:
+The system is internally protected by a Siemens 5SY MCB (3A, Curve B) to prevent overload or short-circuit damage.
+Maintenance and Inspection
+* Only qualified personnel should service or inspect internal wiring.
+* Regularly inspect external cables for damage or wear.
+* Do not modify wiring without referring to the system schematic and isolating power first.
+* Always isolate power before performing any hardware fault insertion or removal of connectors.
+Emergency and Fault Handling
+* Simulated Emergency Stop:
+The system includes a dual-channel E-Stop for educational and simulation purposes only. It is not connected to a certified safety relay or safety-rated PLC. Pressing the button will halt outputs via PLC logic, but should not be relied on for personal protection in real emergency scenarios.
+* Reset Logic:
+After the E-Stop is pressed, it must be manually reset (twist to release), followed by pressing the reset button on the front panel or HMI.
+* Recommended Emergency Action:
+In a real emergency, the most effective method to isolate the system is to switch off the rear-mounted circuit breaker or unplug the 24V DC barrel connector. This fully cuts power to all components.
+* Fault LED Indicator:
+A red system LED indicates a fault or simulated safety event. The system should not be operated until the issue is resolved.
+Standards Compliance
+This system is designed for educational and training use and incorporates industrial-grade components and wiring practices. While it follows best practices in system layout and electrical safety, it is not intended for use in operational industrial environments.
+The system aligns with the following standards where applicable:
+* EN 60204-1 – Electrical equipment of machines (informative compliance in wiring and protection practices)
+* EN 61010-1 – Safety requirements for electrical equipment for measurement, control, and laboratory use
+* Low Voltage Directive 2014/35/EU – Applicable to included power supply and components
+* RoHS Directive 2011/65/EU – Restriction of hazardous substances compliance for electronic components
+Note: This product does not fall under the scope of the Machinery Directive (2006/42/EC), as it is a non-functional teaching aid and does not include certified safety control circuits.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

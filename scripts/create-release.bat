@@ -1,5 +1,5 @@
 @echo off
-echo Creating release for Closed Loop Maintenance PC Companion...
+echo Creating release for PLC Fundamentals Trainer PC Companion...
 echo.
 
 echo Step 1: Building the application...
@@ -8,7 +8,7 @@ npm run build
 echo.
 echo Step 2: Build complete!
 echo.
-echo Your executable is ready at: dist\Matrix Closed Loop Maintenance Setup 0.5.2.exe
+echo Your executable is ready at: dist\Matrix PLC Fundamentals Trainer Setup 0.5.2.exe
 echo.
 echo Now you have 2 options:
 echo.

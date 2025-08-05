@@ -1,4 +1,4 @@
-# PDF Integration Guide for Closed Loop Maintenance PC Companion
+# PDF Integration Guide for PLC Fundamentals Trainer PC Companion
 
 ## Overview
 This document explains how to add PDF hosting and viewing capabilities to your Electron app without modifying existing code. The solution will allow you to store PDFs locally and display them within the app interface.
@@ -21,7 +21,7 @@ This document explains how to add PDF hosting and viewing capabilities to your E
 
 #### File Structure:
 ```
-Closed Loop Maintenance PC Companion/
+PLC Fundamentals Trainer PC Companion/
 ├── docs/                          # New folder for PDFs
 │   ├── manual.pdf
 │   ├── troubleshooting.pdf

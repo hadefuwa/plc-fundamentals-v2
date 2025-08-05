@@ -1,4 +1,4 @@
-// Service Worker for Matrix IM0004 Curriculum
+// Service Worker for Matrix IM6930 Curriculum
 const CACHE_NAME = 'matrix-training-cache-v1';
 
 // Resources to cache
@@ -6,8 +6,8 @@ const CORE_ASSETS = [
   './',
   './index.html',
   './about.html',
-  './cp0539-worksheets.html',
-  './cp6773-worksheets.html',
+  './CP2388-worksheets.html',
+
   './main.css',
   './manifest.json',
   './assets/matrix-logo.png',

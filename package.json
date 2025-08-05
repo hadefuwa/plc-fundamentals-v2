@@ -1,7 +1,7 @@
 {
   "name": "matrix-training-platform",
   "version": "1.0.3",
-  "description": "Matrix Training Platform for Closed Loop Maintenance Curriculum",
+  "description": "Matrix Training Platform for PLC Fundamentals Trainer Curriculum",
   "main": "index.html",
   "scripts": {
     "start": "echo 'No Electron. Open index.html in browser.'",

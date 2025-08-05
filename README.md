@@ -1,4 +1,4 @@
-# 🏭 Closed Loop Maintenance Training System
+# 🏭 PLC Fundamentals Trainer Training System
 
 > **Inspiring the next generation of Engineers**
 
@@ -82,7 +82,7 @@ A comprehensive Progressive Web Application (PWA) for industrial maintenance tra
 ## 📋 System Structure
 
 ### 📚 Training Modules
-- **CP0539**: Industrial Maintenance Worksheets
+- **CP2388**: Industrial Maintenance Worksheets
   - System Components
   - Maintenance Procedures
   - Safety Protocols

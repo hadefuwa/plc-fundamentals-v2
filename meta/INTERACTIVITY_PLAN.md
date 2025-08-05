@@ -1,7 +1,7 @@
-# Interactivity Enhancement Plan for Closed Loop Maintenance Training
+# Interactivity Enhancement Plan for PLC Fundamentals Trainer Training
 
 ## Overview
-The Closed Loop Maintenance PC Companion is an educational application designed to train industrial maintenance technicians in the principles and practices of closed-loop control systems. The application currently consists of two main curricula: CP0539 (Industrial Maintenance) with 14 comprehensive worksheets covering fundamental topics from control systems to fault diagnosis, and CP6773 (Troubleshooting & Fault-Finding) featuring 8 real-world fault scenarios. Each module combines theoretical knowledge with practical scenarios, utilizing a combination of text-based learning materials, technical diagrams, and interactive Q&A sections. The application serves as a bridge between classroom learning and hands-on experience, allowing technicians to safely practice maintenance and troubleshooting procedures in a simulated environment before working on actual industrial equipment.
+The PLC Fundamentals Trainer PC Companion is an educational application designed to train industrial maintenance technicians in the principles and practices of closed-loop control systems. The application currently consists of two main curricula: CP2388 (Industrial Maintenance) with 14 comprehensive worksheets covering fundamental topics from control systems to fault diagnosis, and CP6773 (Troubleshooting & Fault-Finding) featuring 8 real-world fault scenarios. Each module combines theoretical knowledge with practical scenarios, utilizing a combination of text-based learning materials, technical diagrams, and interactive Q&A sections. The application serves as a bridge between classroom learning and hands-on experience, allowing technicians to safely practice maintenance and troubleshooting procedures in a simulated environment before working on actual industrial equipment.
 
 ## Current Structure Analysis
 

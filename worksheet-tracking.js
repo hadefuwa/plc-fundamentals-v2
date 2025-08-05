@@ -539,7 +539,7 @@ class WorksheetTracker {
         </div>
         
         <div class="progress-section">
-          <h2>Maintenance Worksheets (CP0539)</h2>
+          <h2>Maintenance Worksheets (CP2388)</h2>
           <div class="worksheet-grid">
             ${this.worksheets.maintenance.map(worksheet => {
               const progress = worksheets[`maintenance-${worksheet.id}`];
@@ -564,31 +564,7 @@ class WorksheetTracker {
           </div>
         </div>
         
-        <div class="progress-section">
-          <h2>Fault Scenarios (CP6773)</h2>
-          <div class="worksheet-grid">
-            ${this.worksheets.fault.map(worksheet => {
-              const progress = worksheets[`fault-${worksheet.id}`];
-              const statusClass = progress.completedQuestions === 0 ? 'not-started' : 
-                                progress.completionPercentage === 100 ? 'completed' : 'incomplete';
-              return `
-                <div class="worksheet-card ${statusClass}">
-                  <h3>${worksheet.title}</h3>
-                  <div class="progress-bar">
-                    <div class="progress-fill" style="width: ${progress.completionPercentage}%"></div>
-                  </div>
-                  <div class="worksheet-stats">
-                    <span>${progress.completedQuestions}/${progress.totalQuestions} questions</span>
-                    <span>${progress.completionPercentage}%</span>
-                  </div>
-                  ${progress.lastUpdated ? 
-                    `<p class="last-update">Last updated: ${new Date(progress.lastUpdated).toLocaleDateString()}</p>` 
-                    : ''}
-                </div>
-              `;
-            }).join('')}
-          </div>
-        </div>
+
       </body>
       </html>
     `;
