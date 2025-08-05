@@ -982,14 +982,9 @@
       const ctx = canvas.getContext('2d');
       const allProgress = worksheetTracker.getAllProgress();
       
-      // Prepare data for chart
+      // Prepare data for chart - only maintenance worksheets
       const maintenanceData = worksheetTracker.worksheets.maintenance.map(worksheet => {
         const progress = allProgress[`maintenance-${worksheet.id}`] || { completionPercentage: 0 };
-        return progress.completionPercentage || 0;
-      });
-      
-      const faultData = worksheetTracker.worksheets.fault.map(worksheet => {
-        const progress = allProgress[`fault-${worksheet.id}`] || { completionPercentage: 0 };
         return progress.completionPercentage || 0;
       });
 
@@ -1002,12 +997,11 @@
         type: 'bar',
         data: {
           labels: [
-            ...worksheetTracker.worksheets.maintenance.map(w => `WS ${w.id}`),
-            ...worksheetTracker.worksheets.fault.map(w => `FS ${w.id}`)
+            ...worksheetTracker.worksheets.maintenance.map(w => `WS ${w.id}`)
           ],
           datasets: [{
             label: 'Completion %',
-            data: [...maintenanceData, ...faultData],
+            data: [...maintenanceData],
                           backgroundColor: function(context) {
               const value = context.raw || 0;
               if (value === 0) return '#666';
