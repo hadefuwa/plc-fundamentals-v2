@@ -7,7 +7,6 @@ const CORE_ASSETS = [
   './index.html',
   './about.html',
   './CP2388-worksheets.html',
-
   './main.css',
   './manifest.json',
   './assets/matrix-logo.png',
@@ -24,7 +23,6 @@ const ADDITIONAL_ASSETS = [
   './worksheet-core.js',
   './worksheet-tracking.js',
   './worksheet-maintenance-handler.js',
-  './worksheet-fault-handler.js',
   './pwa-install.js',
   './scenario-popup.js',
   './pdf-popup.js',
@@ -42,13 +40,30 @@ self.addEventListener('install', event => {
     caches.open(CACHE_NAME)
       .then(cache => {
         console.log('Caching core assets...');
-        return cache.addAll(CORE_ASSETS);
+        // Cache core assets with individual error handling
+        return Promise.allSettled(
+          CORE_ASSETS.map(url => 
+            cache.add(url).catch(err => {
+              console.log(`Failed to cache ${url}:`, err);
+              return null;
+            })
+          )
+        );
       })
       .then(() => {
-        console.log('Core assets cached');
-        // Cache additional assets in the background
+        console.log('Core assets caching completed');
+        // Cache additional assets in the background with error handling
         return caches.open(CACHE_NAME)
-          .then(cache => cache.addAll(ADDITIONAL_ASSETS))
+          .then(cache => 
+            Promise.allSettled(
+              ADDITIONAL_ASSETS.map(url => 
+                cache.add(url).catch(err => {
+                  console.log(`Failed to cache ${url}:`, err);
+                  return null;
+                })
+              )
+            )
+          )
           .catch(err => console.log('Additional assets caching error:', err));
       })
   );
