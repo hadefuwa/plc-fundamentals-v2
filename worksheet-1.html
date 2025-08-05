@@ -407,7 +407,7 @@ function submitAnswer(questionNumber) {
   }
   
   // Determine if answer is correct (extract letter from correct answer)
-  const correctLetter = correctAnswerText.match(/^[A-D])/);
+  const correctLetter = correctAnswerText.match(/^[A-D]\)/);
   const isCorrect = correctLetter && answer === correctLetter[0];
   
   // Style the selected option
