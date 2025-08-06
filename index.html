@@ -860,7 +860,7 @@
                          <h3>CP2388 - PLC Fundamentals</h3>
              <p>12 structured worksheets covering PLC systems, HMIs, emergency stops, sensors, relays, and industrial components.</p>
             <span class="feature-badge">Primary Curriculum</span>
-            <button class="start-here-btn" onclick="window.location='CP2388-worksheets.html'">
+                         <button class="start-here-btn" onclick="navigateToCP2388()">
               <i class="fas fa-play"></i> Start Here
             </button>
           </div>
@@ -908,25 +908,45 @@
   <script src="scenario-popup.js"></script>
   <script src="pwa-install.js"></script>
   
-  <!-- PDF Opening Function - Must be defined before use -->
-  <script>
-    // PWA PDF opening function
-    function openPDF(pdfPath) {
-      // Try to open PDF directly in browser, with fallback to download
-      const link = document.createElement('a');
-      link.href = pdfPath;
-      link.target = '_blank';
-      link.download = pdfPath.split('/').pop() || 'document.pdf';
-      
-      // Try to open in new tab first
-      const newWindow = window.open(pdfPath, '_blank');
-      
-      // If that fails, trigger download
-      if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
-        link.click();
-      }
-    }
-  </script>
+     <!-- PDF Opening Function - Must be defined before use -->
+   <script>
+     // PWA PDF opening function
+     function openPDF(pdfPath) {
+       // Try to open PDF directly in browser, with fallback to download
+       const link = document.createElement('a');
+       link.href = pdfPath;
+       link.target = '_blank';
+       link.download = pdfPath.split('/').pop() || 'document.pdf';
+       
+       // Try to open in new tab first
+       const newWindow = window.open(pdfPath, '_blank');
+       
+       // If that fails, trigger download
+       if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
+         link.click();
+       }
+     }
+     
+     // CP2388 Navigation Function with error handling
+     function navigateToCP2388() {
+       try {
+         console.log('Attempting to navigate to CP2388 worksheets...');
+         window.location.href = 'CP2388-worksheets.html';
+       } catch (error) {
+         console.error('Navigation error:', error);
+         // Fallback: try alternative methods
+         try {
+           window.location = 'CP2388-worksheets.html';
+         } catch (fallbackError) {
+           console.error('Fallback navigation also failed:', fallbackError);
+           // Last resort: create a link and click it
+           const link = document.createElement('a');
+           link.href = 'CP2388-worksheets.html';
+           link.click();
+         }
+       }
+     }
+   </script>
   
   <!-- Splash Screen Logic -->
   <script>
