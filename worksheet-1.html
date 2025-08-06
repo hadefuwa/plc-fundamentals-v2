@@ -491,55 +491,63 @@ function initializeStepTracking() {
         card.style.position = 'relative';
         card.style.zIndex = '1';
         
-        // Add click handler to the entire card
-        card.addEventListener('click', function(e) {
-          console.log('Card clicked:', stepNumber);
-          
-          // Don't toggle if clicking directly on the checkbox or its label
-          if (e.target === checkbox || 
-              e.target.closest('.step-checkbox') || 
-              e.target.closest('label') ||
-              e.target.tagName === 'INPUT' ||
-              e.target.tagName === 'LABEL') {
-            console.log('Clicking on checkbox or label, not toggling card');
-            return;
-          }
-          
-          // Toggle the checkbox
-          checkbox.checked = !checkbox.checked;
-          
-          // Trigger change event
-          const changeEvent = new Event('change', { bubbles: true });
-          checkbox.dispatchEvent(changeEvent);
-          
-          console.log('Checkbox toggled to:', checkbox.checked);
-          console.log('Card classes after toggle:', card.className);
-        });
+                 // Add click handler to the entire card
+         card.addEventListener('click', function(e) {
+           console.log('Card clicked:', stepNumber);
+           
+           // Don't toggle if clicking directly on the checkbox or its label
+           if (e.target === checkbox || 
+               e.target.closest('.step-checkbox') || 
+               e.target.closest('label') ||
+               e.target.tagName === 'INPUT' ||
+               e.target.tagName === 'LABEL') {
+             console.log('Clicking on checkbox or label, not toggling card');
+             return;
+           }
+           
+           // Prevent the default checkbox behavior
+           e.preventDefault();
+           e.stopPropagation();
+           
+           // Toggle the checkbox directly without triggering events
+           checkbox.checked = !checkbox.checked;
+           
+           // Manually call the change handler
+           handleCheckboxChange(checkbox, card, stepNumber);
+           
+           console.log('Checkbox toggled to:', checkbox.checked);
+           console.log('Card classes after toggle:', card.className);
+         });
         
-        // Add change handler to checkbox
-        checkbox.addEventListener('change', function() {
-          console.log('Checkbox changed:', stepNumber, 'checked:', checkbox.checked);
-          
-          if (checkbox.checked) {
-            card.classList.add('step-completed');
-            // Force the styles to apply
-            card.style.background = '#2a2a2a';
-            card.style.opacity = '0.7';
-            card.style.cursor = 'default';
-            console.log('Added step-completed class to card', stepNumber);
-            console.log('Card classes after adding:', card.className);
-            localStorage.setItem(`step-${stepNumber}`, 'true');
-          } else {
-            card.classList.remove('step-completed');
-            // Reset the styles
-            card.style.background = '';
-            card.style.opacity = '';
-            card.style.cursor = 'pointer';
-            console.log('Removed step-completed class from card', stepNumber);
-            console.log('Card classes after removing:', card.className);
-            localStorage.setItem(`step-${stepNumber}`, 'false');
-          }
-        });
+                 // Create a shared change handler function
+         function handleCheckboxChange(checkbox, card, stepNumber) {
+           console.log('Checkbox changed:', stepNumber, 'checked:', checkbox.checked);
+           
+           if (checkbox.checked) {
+             card.classList.add('step-completed');
+             // Force the styles to apply
+             card.style.background = '#2a2a2a';
+             card.style.opacity = '0.7';
+             card.style.cursor = 'default';
+             console.log('Added step-completed class to card', stepNumber);
+             console.log('Card classes after adding:', card.className);
+             localStorage.setItem(`step-${stepNumber}`, 'true');
+           } else {
+             card.classList.remove('step-completed');
+             // Reset the styles
+             card.style.background = '';
+             card.style.opacity = '';
+             card.style.cursor = 'pointer';
+             console.log('Removed step-completed class from card', stepNumber);
+             console.log('Card classes after removing:', card.className);
+             localStorage.setItem(`step-${stepNumber}`, 'false');
+           }
+         }
+         
+         // Add change handler to checkbox
+         checkbox.addEventListener('change', function() {
+           handleCheckboxChange(checkbox, card, stepNumber);
+         });
         
         // Also make the checkbox itself clickable
         checkbox.addEventListener('click', function(e) {
