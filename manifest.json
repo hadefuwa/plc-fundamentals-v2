@@ -1,7 +1,7 @@
 {
   "name": "Matrix IM6930 Curriculum",
   "short_name": "Matrix IM6930",
-  "version": "0.0.3",
+  "version": "1.0.4",
   "description": "Industrial maintenance training platform with interactive worksheets and analytics.",
   "start_url": "./",
   "display": "fullscreen",
