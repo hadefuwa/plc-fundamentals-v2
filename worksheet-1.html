@@ -479,6 +479,8 @@ function initializeStepTracking() {
       console.log('Setting up card', stepNumber, 'with checkbox:', !!checkbox);
       
       if (checkbox) {
+        // Add a flag to prevent double execution
+        let isProcessing = false;
         // Load saved state
         const savedState = localStorage.getItem(`step-${stepNumber}`);
         if (savedState === 'true') {
@@ -495,33 +497,48 @@ function initializeStepTracking() {
         card.style.position = 'relative';
         card.style.zIndex = '1';
         
-                 // Add click handler to the entire card
-         card.addEventListener('click', function(e) {
-           console.log('Card clicked:', stepNumber);
-           
-           // Don't toggle if clicking directly on the checkbox or its label
-           if (e.target === checkbox || 
-               e.target.closest('.step-checkbox') || 
-               e.target.closest('label') ||
-               e.target.tagName === 'INPUT' ||
-               e.target.tagName === 'LABEL') {
-             console.log('Clicking on checkbox or label, not toggling card');
-             return;
-           }
-           
-           // Prevent the default checkbox behavior
-           e.preventDefault();
-           e.stopPropagation();
-           
-           // Toggle the checkbox directly without triggering events
-           checkbox.checked = !checkbox.checked;
-           
-           // Manually call the change handler
-           handleCheckboxChange(checkbox, card, stepNumber);
-           
-           console.log('Checkbox toggled to:', checkbox.checked);
-           console.log('Card classes after toggle:', card.className);
-         });
+                           // Add click handler to the entire card
+          card.addEventListener('click', function(e) {
+            console.log('Card clicked:', stepNumber);
+            
+            // Prevent double execution
+            if (isProcessing) {
+              console.log('Already processing, ignoring click');
+              return;
+            }
+            
+            // Don't toggle if clicking directly on the checkbox or its label
+            if (e.target === checkbox || 
+                e.target.closest('.step-checkbox') || 
+                e.target.closest('label') ||
+                e.target.tagName === 'INPUT' ||
+                e.target.tagName === 'LABEL') {
+              console.log('Clicking on checkbox or label, not toggling card');
+              return;
+            }
+            
+            // Prevent the default checkbox behavior and stop propagation
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            
+            // Set processing flag
+            isProcessing = true;
+            
+            // Toggle the checkbox directly without triggering events
+            checkbox.checked = !checkbox.checked;
+            
+            // Manually call the change handler
+            handleCheckboxChange(checkbox, card, stepNumber);
+            
+            console.log('Checkbox toggled to:', checkbox.checked);
+            console.log('Card classes after toggle:', card.className);
+            
+            // Reset processing flag after a short delay
+            setTimeout(() => {
+              isProcessing = false;
+            }, 100);
+          });
         
                  // Create a shared change handler function
          function handleCheckboxChange(checkbox, card, stepNumber) {
@@ -548,15 +565,18 @@ function initializeStepTracking() {
            }
          }
          
-         // Add change handler to checkbox
-         checkbox.addEventListener('change', function() {
-           handleCheckboxChange(checkbox, card, stepNumber);
-         });
+                   // Add change handler to checkbox
+          checkbox.addEventListener('change', function() {
+            if (!isProcessing) {
+              handleCheckboxChange(checkbox, card, stepNumber);
+            }
+          });
         
-        // Also make the checkbox itself clickable
-        checkbox.addEventListener('click', function(e) {
-          e.stopPropagation(); // Prevent card click when clicking checkbox
-        });
+                 // Also make the checkbox itself clickable
+         checkbox.addEventListener('click', function(e) {
+           e.stopPropagation(); // Prevent card click when clicking checkbox
+           e.stopImmediatePropagation(); // Stop any other handlers
+         });
       }
     });
   }, 100);
