@@ -11,6 +11,51 @@
   <script src="worksheet-tracking.js"></script>
   <script defer src="shared-navigation.js"></script>
   <script defer src="pwa-install.js"></script>
+  <style>
+    /* Enhanced step card styling for better clickability */
+    .step-card {
+      transition: all 0.3s ease !important;
+      cursor: pointer !important;
+      position: relative !important;
+      overflow: hidden !important;
+      background: #333 !important;
+    }
+    
+    .step-card:hover {
+      transform: translateY(-2px) !important;
+      box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3) !important;
+      border-color: var(--accent-color) !important;
+      background: #3a3a3a !important;
+    }
+    
+    .step-card:active {
+      transform: translateY(0px) !important;
+      box-shadow: 0 2px 8px rgba(74, 158, 255, 0.2) !important;
+    }
+    
+    .step-card.step-completed {
+      background: #2a2a2a !important;
+      opacity: 0.7 !important;
+      cursor: default !important;
+      border-left-color: #666 !important;
+    }
+    
+    .step-card.step-completed:hover {
+      transform: none !important;
+      box-shadow: none !important;
+      background: #2a2a2a !important;
+    }
+    
+    /* Make sure the checkbox area doesn't interfere */
+    .step-checkbox {
+      pointer-events: auto !important;
+      z-index: 10 !important;
+    }
+    
+    .step-complete-checkbox {
+      pointer-events: auto !important;
+    }
+  </style>
 </head>
 <body>
 
@@ -479,51 +524,103 @@ function initializeStepTracking() {
       console.log('Setting up card', stepNumber, 'with checkbox:', !!checkbox);
       
       if (checkbox) {
+        // Add a flag to prevent double execution
+        let isProcessing = false;
         // Load saved state
         const savedState = localStorage.getItem(`step-${stepNumber}`);
         if (savedState === 'true') {
           checkbox.checked = true;
           card.classList.add('step-completed');
+          // Apply the completed styles
+          card.style.background = '#2a2a2a';
+          card.style.opacity = '0.7';
+          card.style.cursor = 'default';
         }
         
         // Make the entire card clickable
         card.style.cursor = 'pointer';
+        card.style.position = 'relative';
+        card.style.zIndex = '1';
         
         // Add click handler to the entire card
         card.addEventListener('click', function(e) {
           console.log('Card clicked:', stepNumber);
           
-          // Don't toggle if clicking directly on the checkbox
-          if (e.target === checkbox || e.target.closest('.step-checkbox')) {
+          // Prevent double execution
+          if (isProcessing) {
+            console.log('Already processing, ignoring click');
             return;
           }
           
-          // Toggle the checkbox
+          // Don't toggle if clicking directly on the checkbox or its label
+          if (e.target === checkbox || 
+              e.target.closest('.step-checkbox') || 
+              e.target.closest('label') ||
+              e.target.tagName === 'INPUT' ||
+              e.target.tagName === 'LABEL') {
+            console.log('Clicking on checkbox or label, not toggling card');
+            return;
+          }
+          
+          // Prevent the default checkbox behavior and stop propagation
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          
+          // Set processing flag
+          isProcessing = true;
+          
+          // Toggle the checkbox directly without triggering events
           checkbox.checked = !checkbox.checked;
           
-          // Trigger change event
-          const changeEvent = new Event('change', { bubbles: true });
-          checkbox.dispatchEvent(changeEvent);
+          // Manually call the change handler
+          handleCheckboxChange(checkbox, card, stepNumber);
           
           console.log('Checkbox toggled to:', checkbox.checked);
+          console.log('Card classes after toggle:', card.className);
+          
+          // Reset processing flag after a short delay
+          setTimeout(() => {
+            isProcessing = false;
+          }, 100);
         });
         
-        // Add change handler to checkbox
-        checkbox.addEventListener('change', function() {
+        // Create a shared change handler function
+        function handleCheckboxChange(checkbox, card, stepNumber) {
           console.log('Checkbox changed:', stepNumber, 'checked:', checkbox.checked);
           
           if (checkbox.checked) {
             card.classList.add('step-completed');
+            // Force the styles to apply
+            card.style.background = '#2a2a2a';
+            card.style.opacity = '0.7';
+            card.style.cursor = 'default';
+            console.log('Added step-completed class to card', stepNumber);
+            console.log('Card classes after adding:', card.className);
             localStorage.setItem(`step-${stepNumber}`, 'true');
           } else {
             card.classList.remove('step-completed');
+            // Reset the styles
+            card.style.background = '';
+            card.style.opacity = '';
+            card.style.cursor = 'pointer';
+            console.log('Removed step-completed class from card', stepNumber);
+            console.log('Card classes after removing:', card.className);
             localStorage.setItem(`step-${stepNumber}`, 'false');
+          }
+        }
+        
+        // Add change handler to checkbox
+        checkbox.addEventListener('change', function() {
+          if (!isProcessing) {
+            handleCheckboxChange(checkbox, card, stepNumber);
           }
         });
         
         // Also make the checkbox itself clickable
         checkbox.addEventListener('click', function(e) {
           e.stopPropagation(); // Prevent card click when clicking checkbox
+          e.stopImmediatePropagation(); // Stop any other handlers
         });
       }
     });
