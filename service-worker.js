@@ -16,9 +16,6 @@ const CORE_ASSETS = [
 
 // Additional assets to cache
 const ADDITIONAL_ASSETS = [
-  // Stylesheets
-  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css',
-  
   // JavaScript files
   './worksheet-core.js',
   './worksheet-tracking.js',
@@ -95,7 +92,7 @@ self.addEventListener('activate', event => {
 
 // Fetch event - serve from cache, falling back to network
 self.addEventListener('fetch', event => {
-  // Skip cross-origin requests
+  // Skip cross-origin requests that aren't CDN
   if (!event.request.url.startsWith(self.location.origin) && 
       !event.request.url.startsWith('https://cdnjs.cloudflare.com')) {
     return;
@@ -123,17 +120,23 @@ self.addEventListener('fetch', event => {
             // Clone the response because it can only be used once
             const responseToCache = response.clone();
 
-            // Cache the new resource
+            // Cache the new resource (only for successful responses)
             caches.open(CACHE_NAME)
               .then(cache => {
                 cache.put(event.request, responseToCache);
-              });
+              })
+              .catch(err => console.log('Cache put error:', err));
 
             return response;
           })
           .catch(error => {
-            console.log('Fetch failed:', error);
-            // You could return a custom offline page here
+            console.log('Fetch failed for:', event.request.url, error);
+            // For CDN failures, just return the original request to let the browser handle it
+            if (event.request.url.startsWith('https://cdnjs.cloudflare.com')) {
+              return fetch(event.request);
+            }
+            // For local resources, you could return a custom offline page here
+            return new Response('Network error', { status: 503 });
           });
       })
   );
