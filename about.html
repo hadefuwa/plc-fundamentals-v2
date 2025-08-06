@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="main.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">
+  <script defer src="shared-navigation.js"></script>
+  <script defer src="pwa-install.js"></script>
   <style>
     /* CSS Custom Properties for dynamic theming */
     :root {
@@ -681,38 +683,7 @@
   </style>
 </head>
 <body>
-  <!-- Navigation -->
-  <nav class="main-navigation">
-    <div class="nav-container">
-      <div class="nav-logo" onclick="window.location='index.html'" title="Go to Home">
-        <img src="assets/matrix-logo.png" alt="Matrix Logo">
-      </div>
-      <ul class="nav-menu" id="nav-menu">
-        <li class="nav-item">
-          <a href="#" onclick="window.location='index.html'" class="nav-link">
-            <i class="fas fa-home"></i> HOME
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="#" onclick="window.location='CP2388-worksheets.html'" class="nav-link">
-            <i class="fas fa-cogs"></i> CP2388
-          </a>
-        </li>
 
-        
-        <li class="nav-item">
-          <a href="#" onclick="window.location='tracking-dashboard.html'" class="nav-link">
-            <i class="fas fa-chart-line"></i> PROGRESS
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="#" onclick="window.location='about.html'" class="nav-link active">
-            <i class="fas fa-info-circle"></i> ABOUT
-          </a>
-        </li>
-      </ul>
-    </div>
-  </nav>
 
   <!-- Main Container -->
   <div class="main-container">
@@ -1141,15 +1112,15 @@
           // Try registering with different approaches
           let registration;
           try {
-            // Try with absolute path first
-            registration = await navigator.serviceWorker.register('/service-worker.js', {
-              scope: '/'
-            });
-          } catch (e) {
-            console.log('Absolute path failed, trying relative path...');
-            // Try with relative path
+            // Try with relative path first (recommended for local development)
             registration = await navigator.serviceWorker.register('service-worker.js', {
               scope: './'
+            });
+          } catch (e) {
+            console.log('Relative path failed, trying absolute path...');
+            // Try with absolute path as fallback
+            registration = await navigator.serviceWorker.register('/service-worker.js', {
+              scope: '/'
             });
           }
 
