@@ -87,34 +87,42 @@
     }
 
     /* Start Here Button Styles */
-    .start-here-btn {
-      background: linear-gradient(135deg, #4CAF50, #45a049);
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      border-radius: 8px;
-      font-weight: bold;
-      font-size: 16px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 15px;
-      box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
+         .start-here-btn {
+       background: linear-gradient(135deg, #4CAF50, #45a049);
+       color: white;
+       border: none;
+       padding: 12px 24px;
+       border-radius: 8px;
+       font-weight: bold;
+       font-size: 16px;
+       cursor: pointer;
+       transition: all 0.3s ease;
+       display: flex;
+       align-items: center;
+       gap: 8px;
+       margin-top: 15px;
+       box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+       text-transform: uppercase;
+       letter-spacing: 0.5px;
+       position: relative;
+       z-index: 10;
+       pointer-events: auto;
+     }
 
-    .start-here-btn:hover {
-      background: linear-gradient(135deg, #45a049, #388E3C);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
-    }
+     .start-here-btn:hover {
+       background: linear-gradient(135deg, #45a049, #388E3C);
+       transform: translateY(-2px);
+       box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+     }
 
-    .start-here-btn i {
-      font-size: 14px;
-    }
+     .start-here-btn:active {
+       transform: translateY(0px);
+       box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+     }
+
+     .start-here-btn i {
+       font-size: 14px;
+     }
 
     /* Navigation Styles */
     .main-navigation {
@@ -360,14 +368,21 @@
       background: linear-gradient(135deg, #2d2d2d, #4a4a4a);
       border: 2px solid var(--accent-color);
       box-shadow: 0 6px 20px var(--accent-shadow-light);
+      position: relative;
     }
 
          .feature-card.main-feature:hover {
        background: linear-gradient(135deg, #4a4a4a, #666666);
        color: #ffffff;
-       transform: translateY(-5px);
-       box-shadow: 0 10px 30px rgba(74, 158, 255, 0.5);
+       transform: translateY(-3px);
+       box-shadow: 0 8px 25px rgba(74, 158, 255, 0.4);
        border: 2px solid var(--accent-color);
+     }
+
+     .feature-card.main-feature .start-here-btn {
+       position: relative;
+       z-index: 20;
+       pointer-events: auto;
      }
 
     .feature-icon {
@@ -927,25 +942,26 @@
        }
      }
      
-     // CP2388 Navigation Function with error handling
-     function navigateToCP2388() {
-       try {
-         console.log('Attempting to navigate to CP2388 worksheets...');
-         window.location.href = 'CP2388-worksheets.html';
-       } catch (error) {
-         console.error('Navigation error:', error);
-         // Fallback: try alternative methods
-         try {
-           window.location = 'CP2388-worksheets.html';
-         } catch (fallbackError) {
-           console.error('Fallback navigation also failed:', fallbackError);
-           // Last resort: create a link and click it
-           const link = document.createElement('a');
-           link.href = 'CP2388-worksheets.html';
-           link.click();
-         }
-       }
-     }
+           // CP2388 Navigation Function with error handling
+      function navigateToCP2388() {
+        console.log('navigateToCP2388 function called!');
+        try {
+          console.log('Attempting to navigate to CP2388 worksheets...');
+          window.location.href = 'CP2388-worksheets.html';
+        } catch (error) {
+          console.error('Navigation error:', error);
+          // Fallback: try alternative methods
+          try {
+            window.location = 'CP2388-worksheets.html';
+          } catch (fallbackError) {
+            console.error('Fallback navigation also failed:', fallbackError);
+            // Last resort: create a link and click it
+            const link = document.createElement('a');
+            link.href = 'CP2388-worksheets.html';
+            link.click();
+          }
+        }
+      }
    </script>
   
   <!-- Splash Screen Logic -->
