@@ -14,42 +14,46 @@
   <style>
     /* Enhanced step card styling for better clickability */
     .step-card {
-      transition: all 0.3s ease;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
+      transition: all 0.3s ease !important;
+      cursor: pointer !important;
+      position: relative !important;
+      overflow: hidden !important;
+      background: #333 !important;
     }
     
     .step-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3);
-      border-color: var(--accent-color);
+      transform: translateY(-2px) !important;
+      box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3) !important;
+      border-color: var(--accent-color) !important;
+      background: #3a3a3a !important;
     }
     
     .step-card:active {
-      transform: translateY(0px);
-      box-shadow: 0 2px 8px rgba(74, 158, 255, 0.2);
+      transform: translateY(0px) !important;
+      box-shadow: 0 2px 8px rgba(74, 158, 255, 0.2) !important;
     }
     
     .step-card.step-completed {
       background: #2a2a2a !important;
-      opacity: 0.7;
-      cursor: default;
+      opacity: 0.7 !important;
+      cursor: default !important;
+      border-left-color: #666 !important;
     }
     
     .step-card.step-completed:hover {
-      transform: none;
-      box-shadow: none;
+      transform: none !important;
+      box-shadow: none !important;
+      background: #2a2a2a !important;
     }
     
     /* Make sure the checkbox area doesn't interfere */
     .step-checkbox {
-      pointer-events: auto;
-      z-index: 10;
+      pointer-events: auto !important;
+      z-index: 10 !important;
     }
     
     .step-complete-checkbox {
-      pointer-events: auto;
+      pointer-events: auto !important;
     }
   </style>
 </head>
