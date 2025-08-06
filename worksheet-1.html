@@ -11,6 +11,47 @@
   <script src="worksheet-tracking.js"></script>
   <script defer src="shared-navigation.js"></script>
   <script defer src="pwa-install.js"></script>
+  <style>
+    /* Enhanced step card styling for better clickability */
+    .step-card {
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .step-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3);
+      border-color: var(--accent-color);
+    }
+    
+    .step-card:active {
+      transform: translateY(0px);
+      box-shadow: 0 2px 8px rgba(74, 158, 255, 0.2);
+    }
+    
+    .step-card.step-completed {
+      background: #2a2a2a !important;
+      opacity: 0.7;
+      cursor: default;
+    }
+    
+    .step-card.step-completed:hover {
+      transform: none;
+      box-shadow: none;
+    }
+    
+    /* Make sure the checkbox area doesn't interfere */
+    .step-checkbox {
+      pointer-events: auto;
+      z-index: 10;
+    }
+    
+    .step-complete-checkbox {
+      pointer-events: auto;
+    }
+  </style>
 </head>
 <body>
 
@@ -447,13 +488,20 @@ function initializeStepTracking() {
         
         // Make the entire card clickable
         card.style.cursor = 'pointer';
+        card.style.position = 'relative';
+        card.style.zIndex = '1';
         
         // Add click handler to the entire card
         card.addEventListener('click', function(e) {
           console.log('Card clicked:', stepNumber);
           
-          // Don't toggle if clicking directly on the checkbox
-          if (e.target === checkbox || e.target.closest('.step-checkbox')) {
+          // Don't toggle if clicking directly on the checkbox or its label
+          if (e.target === checkbox || 
+              e.target.closest('.step-checkbox') || 
+              e.target.closest('label') ||
+              e.target.tagName === 'INPUT' ||
+              e.target.tagName === 'LABEL') {
+            console.log('Clicking on checkbox or label, not toggling card');
             return;
           }
           
@@ -486,7 +534,7 @@ function initializeStepTracking() {
             // Reset the styles
             card.style.background = '';
             card.style.opacity = '';
-            card.style.cursor = '';
+            card.style.cursor = 'pointer';
             console.log('Removed step-completed class from card', stepNumber);
             console.log('Card classes after removing:', card.className);
             localStorage.setItem(`step-${stepNumber}`, 'false');
