@@ -466,6 +466,10 @@ function initializeStepTracking() {
         if (savedState === 'true') {
           checkbox.checked = true;
           card.classList.add('step-completed');
+          // Apply the completed styles
+          card.style.background = '#2a2a2a';
+          card.style.opacity = '0.7';
+          card.style.cursor = 'default';
         }
         
         // Make the entire card clickable
@@ -488,6 +492,7 @@ function initializeStepTracking() {
           checkbox.dispatchEvent(changeEvent);
           
           console.log('Checkbox toggled to:', checkbox.checked);
+          console.log('Card classes after toggle:', card.className);
         });
         
         // Add change handler to checkbox
@@ -496,9 +501,21 @@ function initializeStepTracking() {
           
           if (checkbox.checked) {
             card.classList.add('step-completed');
+            // Force the styles to apply
+            card.style.background = '#2a2a2a';
+            card.style.opacity = '0.7';
+            card.style.cursor = 'default';
+            console.log('Added step-completed class to card', stepNumber);
+            console.log('Card classes after adding:', card.className);
             localStorage.setItem(`step-${stepNumber}`, 'true');
           } else {
             card.classList.remove('step-completed');
+            // Reset the styles
+            card.style.background = '';
+            card.style.opacity = '';
+            card.style.cursor = '';
+            console.log('Removed step-completed class from card', stepNumber);
+            console.log('Card classes after removing:', card.className);
             localStorage.setItem(`step-${stepNumber}`, 'false');
           }
         });

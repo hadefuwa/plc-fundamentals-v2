@@ -17,17 +17,8 @@ class WorksheetTracker {
         { id: 10, title: "Digital Outputs", type: "maintenance", totalQuestions: 5 },
         { id: 11, title: "Motor PWM", type: "maintenance", totalQuestions: 5 },
         { id: 12, title: "Motor Relay", type: "maintenance", totalQuestions: 5 }
-      ],
-      fault: [
-        { id: 1, title: "Titanium Forging System Failure", type: "fault", totalQuestions: 3 },
-        { id: 2, title: "Pharmaceutical Cleanroom Contamination", type: "fault", totalQuestions: 3 },
-        { id: 3, title: "Injection Molding Temperature Control", type: "fault", totalQuestions: 3 },
-        { id: 4, title: "CNC Cooling System Overheating", type: "fault", totalQuestions: 3 },
-        { id: 5, title: "Brine System Pump Failure", type: "fault", totalQuestions: 3 },
-        { id: 6, title: "pH Control System Imbalance", type: "fault", totalQuestions: 3 },
-        { id: 7, title: "Server Room Cooling Emergency", type: "fault", totalQuestions: 3 },
-        { id: 8, title: "Sterilizer Pressure Control Fault", type: "fault", totalQuestions: 3 }
       ]
+      // Removed fault scenarios - they are no longer part of the system
     };
 
     // Initialize storage if needed
@@ -70,20 +61,21 @@ class WorksheetTracker {
         }
       });
 
-      this.worksheets.fault.forEach(worksheet => {
-        const key = `worksheet-fault-${worksheet.id}`;
-        if (!localStorage.getItem(key)) {
-          localStorage.setItem(key, JSON.stringify({
-            answers: {},
-            metadata: {
-              lastUpdated: null,
-              completedQuestions: 0,
-              totalQuestions: worksheet.totalQuestions,
-              completionPercentage: 0
-            }
-          }));
-        }
-      });
+      // Removed fault worksheets initialization
+      // this.worksheets.fault.forEach(worksheet => {
+      //   const key = `worksheet-fault-${worksheet.id}`;
+      //   if (!localStorage.getItem(key)) {
+      //     localStorage.setItem(key, JSON.stringify({
+      //       answers: {},
+      //       metadata: {
+      //         lastUpdated: null,
+      //         completedQuestions: 0,
+      //         totalQuestions: worksheet.totalQuestions,
+      //         completionPercentage: 0
+      //       }
+      //     }));
+      //   }
+      // });
     } catch (error) {
       console.error('Error initializing storage:', error);
     }
@@ -94,7 +86,7 @@ class WorksheetTracker {
     try {
       const keys = Object.keys(localStorage);
       const validMaintenanceIds = this.worksheets.maintenance.map(w => w.id);
-      const validFaultIds = this.worksheets.fault.map(w => w.id);
+      // Removed validFaultIds
       
       keys.forEach(key => {
         // Check for old maintenance worksheet data
@@ -106,13 +98,10 @@ class WorksheetTracker {
           }
         }
         
-        // Check for old fault worksheet data
+        // Clean up ALL fault worksheet data since fault scenarios are no longer supported
         if (key.startsWith('worksheet-fault-')) {
-          const id = parseInt(key.replace('worksheet-fault-', ''));
-          if (!validFaultIds.includes(id)) {
-            localStorage.removeItem(key);
-            console.log(`Removed old fault worksheet data: ${key}`);
-          }
+          localStorage.removeItem(key);
+          console.log(`Removed fault worksheet data: ${key}`);
         }
       });
     } catch (error) {
@@ -208,15 +197,15 @@ class WorksheetTracker {
     try {
       const allProgress = {};
       
-      // Get maintenance worksheets progress
+      // Get maintenance worksheets progress only (worksheets 1-12)
       this.worksheets.maintenance.forEach(worksheet => {
         allProgress[`maintenance-${worksheet.id}`] = this.getWorksheetProgress(worksheet.id, 'maintenance');
       });
       
-      // Get fault worksheets progress
-      this.worksheets.fault.forEach(worksheet => {
-        allProgress[`fault-${worksheet.id}`] = this.getWorksheetProgress(worksheet.id, 'fault');
-      });
+      // Exclude fault worksheets from exports
+      // this.worksheets.fault.forEach(worksheet => {
+      //   allProgress[`fault-${worksheet.id}`] = this.getWorksheetProgress(worksheet.id, 'fault');
+      // });
       
       return allProgress;
     } catch (error) {
@@ -231,7 +220,7 @@ class WorksheetTracker {
       const allProgress = this.getAllProgress();
       
       const overallStats = {
-        totalWorksheets: this.worksheets.maintenance.length + this.worksheets.fault.length,
+        totalWorksheets: this.worksheets.maintenance.length, // Only count maintenance worksheets
         completedWorksheets: 0,
         totalQuestions: 0,
         completedQuestions: 0,
@@ -332,20 +321,23 @@ class WorksheetTracker {
         completed: 0,
         total: this.worksheets.maintenance.length
       },
-      faultProgress: {
-        completed: 0,
-        total: this.worksheets.fault.length
-      },
+      // Remove fault progress since we're only exporting maintenance worksheets
+      // faultProgress: {
+      //   completed: 0,
+      //   total: this.worksheets.fault.length
+      // },
       lastActivity: overallStats.lastActivity
     };
     
-    // Calculate progress by type
+    // Calculate progress by type (maintenance only)
     Object.entries(allProgress).forEach(([key, progress]) => {
       if (key.startsWith('maintenance-') && progress.completionPercentage === 100) {
         summary.maintenanceProgress.completed++;
-      } else if (key.startsWith('fault-') && progress.completionPercentage === 100) {
-        summary.faultProgress.completed++;
       }
+      // Remove fault scenario calculations
+      // else if (key.startsWith('fault-') && progress.completionPercentage === 100) {
+      //   summary.faultProgress.completed++;
+      // }
     });
     
     return summary;
@@ -418,7 +410,7 @@ class WorksheetTracker {
     // Validate worksheet data
     for (const [key, progress] of Object.entries(data.worksheets)) {
       const [type, id] = key.split('-');
-      if (!type || !id || !['maintenance', 'fault'].includes(type)) return false;
+      if (!type || !id || !['maintenance'].includes(type)) return false; // Only maintenance allowed
       if (!progress || typeof progress !== 'object') return false;
     }
     
@@ -467,21 +459,21 @@ class WorksheetTracker {
       csvContent += `Completed Worksheets,${overallStats.completedWorksheets}/${overallStats.totalWorksheets}\n`;
       csvContent += `Completed Questions,${overallStats.completedQuestions}/${overallStats.totalQuestions}\n\n`;
       
-      // Add worksheet details
-      csvContent += "Worksheet Progress\n";
+      // Add worksheet details (maintenance only)
+      csvContent += "Worksheet Progress (Worksheets 1-12)\n";
       csvContent += "Type,ID,Title,Completed Questions,Total Questions,Completion %,Last Updated\n";
       
-      // Add maintenance worksheets
+      // Add maintenance worksheets only
       this.worksheets.maintenance.forEach(worksheet => {
         const progress = allProgress[`maintenance-${worksheet.id}`];
         csvContent += `Maintenance,${worksheet.id},"${worksheet.title}",${progress.completedQuestions},${progress.totalQuestions},${progress.completionPercentage}%,${progress.lastUpdated || 'Never'}\n`;
       });
       
-      // Add fault worksheets
-      this.worksheets.fault.forEach(worksheet => {
-        const progress = allProgress[`fault-${worksheet.id}`];
-        csvContent += `Fault,${worksheet.id},"${worksheet.title}",${progress.completedQuestions},${progress.totalQuestions},${progress.completionPercentage}%,${progress.lastUpdated || 'Never'}\n`;
-      });
+      // Remove fault worksheets section
+      // this.worksheets.fault.forEach(worksheet => {
+      //   const progress = allProgress[`fault-${worksheet.id}`];
+      //   csvContent += `Fault,${worksheet.id},"${worksheet.title}",${progress.completedQuestions},${progress.totalQuestions},${progress.completionPercentage}%,${progress.lastUpdated || 'Never'}\n`;
+      // });
       
       const encodedUri = encodeURI(csvContent);
       const link = document.createElement('a');
@@ -656,41 +648,12 @@ class WorksheetTracker {
 // Create global instance
 const worksheetTracker = new WorksheetTracker();
 
-// Function to track fault scenario answers
-function trackFaultScenarioAnswer(questionType, answer) {
-  try {
-    const path = window.location.pathname;
-    const faultMatch = path.match(/fault-scenario-(\d+)\.html/);
-    if (!faultMatch) {
-      console.error('Could not determine fault scenario ID from URL');
-      return false;
-    }
-    
-    const worksheetId = parseInt(faultMatch[1]);
-    const type = 'fault';
-    
-    // Save with enhanced tracking
-    const success = worksheetTracker.saveAnswer(worksheetId, questionType, answer, type);
-    
-    if (success) {
-      console.log(`Fault scenario ${worksheetId} answer saved: ${questionType} = ${answer}`);
-    }
-    
-    return success;
-  } catch (error) {
-    console.error('Error tracking fault scenario answer:', error);
-    return false;
-  }
-}
-
 // Enhanced submitAnswer function
 function submitAnswerWithTracking(questionNumber) {
   try {
     const worksheetId = getUrlParameter('id') || getWorksheetIdFromUrl();
-    // Detect if this is a fault scenario based on URL
-    const path = window.location.pathname;
-    const isFaultScenario = path.includes('fault-scenario');
-    const type = getUrlParameter('type') || (isFaultScenario ? 'fault' : 'maintenance');
+    // Only maintenance worksheets are supported now
+    const type = 'maintenance';
     
     const answerInput = document.querySelector(`[data-question="${questionNumber}"]`);
     if (!answerInput) return false;
