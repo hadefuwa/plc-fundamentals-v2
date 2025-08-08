@@ -738,7 +738,7 @@
 
          <!-- FEATURES SECTION -->
      <div class="features-section">
-               <div class="feature-card main-feature">
+               <div class="feature-card main-feature" onclick="navigateToCP2388()">
           <div class="feature-icon">
             <i class="fas fa-cogs"></i>
           </div>
@@ -746,7 +746,7 @@
                          <h3>CP2388 - PLC Fundamentals</h3>
              <p>12 structured worksheets covering PLC systems, HMIs, emergency stops, sensors, relays, and industrial components.</p>
             <span class="feature-badge">Primary Curriculum</span>
-                         <button class="start-here-btn" onclick="navigateToCP2388()">
+                         <button class="start-here-btn" onclick="event.stopPropagation(); navigateToCP2388()">
               <i class="fas fa-play"></i> Start Here
             </button>
           </div>

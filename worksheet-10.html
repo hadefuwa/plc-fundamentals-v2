@@ -215,142 +215,142 @@
       <h2 class="section-header"><i class="fas fa-question-circle"></i> Questions & Answers</h2>
       <div class="questions-content">
         <div class="question-item" data-question="1">
-          <h4>Question 1: What does a flow sensor measure and why is it important in automated systems?</h4>
+          <h4>Question 1: What are digital outputs used for in a PLC system?</h4>
           <div class="multiple-choice-options">
             <label class="option-label">
               <input type="radio" name="question-1" value="A" class="option-radio">
-              <span class="option-text">A) It measures fluid movement and helps regulate flow, which is critical for system reliability, detecting faults, and maintaining performance</span>
+              <span class="option-text">A) To control external devices like lights, motors, relays, and solenoids</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-1" value="B" class="option-radio">
-              <span class="option-text">B) It measures temperature and controls heating</span>
+              <span class="option-text">B) To display trends</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-1" value="C" class="option-radio">
-              <span class="option-text">C) It measures pressure and controls valves</span>
+              <span class="option-text">C) To power the PLC</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-1" value="D" class="option-radio">
-              <span class="option-text">D) It measures level and controls pumps</span>
+              <span class="option-text">D) To measure level</span>
             </label>
           </div>
           <div class="question-actions">
             <button class="submit-question-btn" onclick="submitAnswer(1)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
-            <strong style="color: #4CAF50;">Correct Answer:</strong> A) It measures fluid movement and helps regulate flow, which is critical for system reliability, detecting faults, and maintaining performance.
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) To control external devices like lights, motors, relays, and solenoids.
           </div>
         </div>
         
         <div class="question-item" data-question="2">
-          <h4>Question 2: How does a turbine flow sensor work?</h4>
+          <h4>Question 2: What happens when you press and hold input I0?</h4>
           <div class="multiple-choice-options">
             <label class="option-label">
               <input type="radio" name="question-2" value="A" class="option-radio">
-              <span class="option-text">A) It uses a spinning rotor, and the number of spins (pulses) is counted to determine the flow rate</span>
+              <span class="option-text">A) Nothing happens</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-2" value="B" class="option-radio">
-              <span class="option-text">B) It uses a magnetic field to measure flow</span>
+              <span class="option-text">B) The outputs turn on one by one in a sequence</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-2" value="C" class="option-radio">
-              <span class="option-text">C) It uses ultrasonic waves to measure flow</span>
+              <span class="option-text">C) The light turns on red and stays on while the button is held</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-2" value="D" class="option-radio">
-              <span class="option-text">D) It uses pressure difference to measure flow</span>
+              <span class="option-text">D) The light flashes</span>
             </label>
           </div>
           <div class="question-actions">
             <button class="submit-question-btn" onclick="submitAnswer(2)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
-            <strong style="color: #4CAF50;">Correct Answer:</strong> C) It uses ultrasonic waves to measure flow.
+            <strong style="color: #4CAF50;">Correct Answer:</strong> C) The light turns on red and stays on while the button is held.
           </div>
         </div>
         
         <div class="question-item" data-question="3">
-          <h4>Question 3: What role does the PLC play in reading the flow sensor data?</h4>
+          <h4>Question 3: How does input I1 behave differently from I0?</h4>
           <div class="multiple-choice-options">
             <label class="option-label">
               <input type="radio" name="question-3" value="A" class="option-radio">
-              <span class="option-text">A) The PLC counts pulses from the turbine sensor and calculates the flow rate, which is shown on the HMI</span>
+              <span class="option-text">A) It turns off outputs</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-3" value="B" class="option-radio">
-              <span class="option-text">B) The PLC controls the flow sensor directly</span>
+              <span class="option-text">B) LED Q1 stays on after the button is released until turned off by I2</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-3" value="C" class="option-radio">
-              <span class="option-text">C) The PLC provides power to the flow sensor</span>
+              <span class="option-text">C) It flashes randomly</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-3" value="D" class="option-radio">
-              <span class="option-text">D) The PLC calibrates the flow sensor</span>
+              <span class="option-text">D) Nothing happens</span>
             </label>
           </div>
           <div class="question-actions">
             <button class="submit-question-btn" onclick="submitAnswer(3)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
-            <strong style="color: #4CAF50;">Correct Answer:</strong> B) The PLC controls the flow sensor directly.
+            <strong style="color: #4CAF50;">Correct Answer:</strong> B) LED Q1 stays on after the button is released until turned off by I2.
           </div>
         </div>
         
         <div class="question-item" data-question="4">
-          <h4>Question 4: What might unstable or incorrect flow readings indicate?</h4>
+          <h4>Question 4: What does the selector switch (I4/I5) control in this worksheet?</h4>
           <div class="multiple-choice-options">
             <label class="option-label">
               <input type="radio" name="question-4" value="A" class="option-radio">
-              <span class="option-text">A) They could indicate blockages, valve restrictions, air pockets, sensor faults, or wiring issues</span>
+              <span class="option-text">A) It changes the behaviour of LED Q3. Left keeps it on, right makes it flash</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-4" value="B" class="option-radio">
-              <span class="option-text">B) They indicate the system is working perfectly</span>
+              <span class="option-text">B) It changes the PLC speed</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-4" value="C" class="option-radio">
-              <span class="option-text">C) They indicate the flow rate is too high</span>
+              <span class="option-text">C) It turns off the HMI</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-4" value="D" class="option-radio">
-              <span class="option-text">D) They indicate the temperature is too high</span>
+              <span class="option-text">D) It enables PWM</span>
             </label>
           </div>
           <div class="question-actions">
             <button class="submit-question-btn" onclick="submitAnswer(4)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
-            <strong style="color: #4CAF50;">Correct Answer:</strong> D) They indicate the temperature is too high.
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) It changes the behaviour of LED Q3. Left keeps it on, right makes it flash.
           </div>
         </div>
         
         <div class="question-item" data-question="5">
-          <h4>Question 5: Why is regular calibration of flow sensors important?</h4>
+          <h4>Question 5: Why is it useful to recognise output patterns like the LED sequence?</h4>
           <div class="multiple-choice-options">
             <label class="option-label">
               <input type="radio" name="question-5" value="A" class="option-radio">
-              <span class="option-text">A) Calibration ensures the sensor remains accurate over time and helps prevent false readings or system faults</span>
+              <span class="option-text">A) Because real systems often use sequences and recognising them helps with fault finding and confirming correct operation</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-5" value="B" class="option-radio">
-              <span class="option-text">B) Calibration makes the sensor work faster</span>
+              <span class="option-text">B) Because it saves energy</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-5" value="C" class="option-radio">
-              <span class="option-text">C) Calibration reduces energy consumption</span>
+              <span class="option-text">C) Because it changes colours</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-5" value="D" class="option-radio">
-              <span class="option-text">D) Calibration makes the sensor quieter</span>
+              <span class="option-text">D) Because it disables alarms</span>
             </label>
           </div>
           <div class="question-actions">
             <button class="submit-question-btn" onclick="submitAnswer(5)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
-            <strong style="color: #4CAF50;">Correct Answer:</strong> B) To ensure accurate flow measurements and system performance.
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) Because real systems often use sequences and recognising them helps with fault finding and confirming correct operation.
           </div>
         </div>
       </div>
@@ -543,8 +543,9 @@ function submitAnswer(questionNumber) {
   }
   
   // Determine if answer is correct (extract letter from correct answer)
-  const correctLetter = correctAnswerText.match(/^[A-D]/);
-  const isCorrect = correctLetter && answer === correctLetter;
+  const correctLetterMatch = correctAnswerText.match(/^([A-D])\)/);
+  const correctLetter = correctLetterMatch ? correctLetterMatch[1] : null;
+  const isCorrect = !!correctLetter && answer === correctLetter;
   
   // Style the selected option
   const allOptions = answerInput.querySelectorAll('.option-label');

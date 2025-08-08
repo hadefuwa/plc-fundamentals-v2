@@ -203,11 +203,11 @@
       <h2 class="section-header"><i class="fas fa-question-circle"></i> Questions & Answers</h2>
       <div class="questions-content">
         <div class="question-item" data-question="1">
-          <h4>Question 1: What is the purpose of the Status LED in the system?</h4>
+          <h4>Question 1: What is the purpose of an HMI in an industrial system?</h4>
           <div class="multiple-choice-options">
             <label class="option-label">
               <input type="radio" name="question-1" value="A" class="option-radio">
-              <span class="option-text">A) To indicate the system's condition and help quickly identify faults and safety issues for efficient maintenance</span>
+              <span class="option-text">A) An HMI lets operators view system status and send commands to the PLC</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-1" value="B" class="option-radio">
@@ -226,119 +226,119 @@
             <button class="submit-question-btn" onclick="submitAnswer(1)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
-            <strong style="color: #4CAF50;">Correct Answer:</strong> A) To indicate the system's condition and help quickly identify faults and safety issues for efficient maintenance.
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) An HMI lets operators view system status and send commands to the PLC.
           </div>
         </div>
         
         <div class="question-item" data-question="2">
-          <h4>Question 2: What does a green Status LED indicate?</h4>
+          <h4>Question 2: What does this worksheet’s HMI screen represent?</h4>
           <div class="multiple-choice-options">
             <label class="option-label">
               <input type="radio" name="question-2" value="A" class="option-radio">
-              <span class="option-text">A) Green means the system is operating normally</span>
+              <span class="option-text">A) It shows a batch mixing process with ingredient tanks and a final product tank</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-2" value="B" class="option-radio">
-              <span class="option-text">B) Green means there is a fault</span>
+              <span class="option-text">B) It shows a motor speed control screen</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-2" value="C" class="option-radio">
-              <span class="option-text">C) Green means the system is starting up</span>
+              <span class="option-text">C) It shows a temperature-only monitoring screen</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-2" value="D" class="option-radio">
-              <span class="option-text">D) Green means the system is shutting down</span>
+              <span class="option-text">D) It shows a pressure control screen</span>
             </label>
           </div>
           <div class="question-actions">
             <button class="submit-question-btn" onclick="submitAnswer(2)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
-            <strong style="color: #4CAF50;">Correct Answer:</strong> C) Green means the system is starting up.
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) It shows a batch mixing process with ingredient tanks and a final product tank.
           </div>
         </div>
         
         <div class="question-item" data-question="3">
-          <h4>Question 3: What colour does the LED turn when a fault is detected, but the system may still function?</h4>
+          <h4>Question 3: What happens when you press the Mix button?</h4>
           <div class="multiple-choice-options">
             <label class="option-label">
               <input type="radio" name="question-3" value="A" class="option-radio">
-              <span class="option-text">A) Orange, it signals a fault that needs investigation</span>
+              <span class="option-text">A) The three tanks drain into the bottom tank, and controls are locked until mixing finishes</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-3" value="B" class="option-radio">
-              <span class="option-text">B) Red, it signals a critical fault</span>
+              <span class="option-text">B) The screen changes to the alarms page automatically</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-3" value="C" class="option-radio">
-              <span class="option-text">C) Blue, it signals normal operation</span>
+              <span class="option-text">C) The tanks fill up from the bottom tank</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-3" value="D" class="option-radio">
-              <span class="option-text">D) Yellow, it signals the system is starting</span>
+              <span class="option-text">D) Nothing happens</span>
             </label>
           </div>
           <div class="question-actions">
             <button class="submit-question-btn" onclick="submitAnswer(3)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
-            <strong style="color: #4CAF50;">Correct Answer:</strong> B) Red, it signals a critical fault.
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) The three tanks drain into the bottom tank, and controls are locked until mixing finishes.
           </div>
         </div>
         
         <div class="question-item" data-question="4">
-          <h4>Question 4: How can you trigger a safety fault to observe the LED behaviour?</h4>
+          <h4>Question 4: Why are some HMI controls greyed out during mixing?</h4>
           <div class="multiple-choice-options">
             <label class="option-label">
               <input type="radio" name="question-4" value="A" class="option-radio">
-              <span class="option-text">A) By pressing the Emergency Stop (E-Stop) to put the system into a safety error mode</span>
+              <span class="option-text">A) To prevent changes during critical parts of the process, keeping the system safe</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-4" value="B" class="option-radio">
-              <span class="option-text">B) By turning off the main power</span>
+              <span class="option-text">B) To save energy on the HMI</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-4" value="C" class="option-radio">
-              <span class="option-text">C) By pressing the start button</span>
+              <span class="option-text">C) So operators cannot see the process</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-4" value="D" class="option-radio">
-              <span class="option-text">D) By adjusting the setpoint</span>
+              <span class="option-text">D) Because the PLC is offline</span>
             </label>
           </div>
           <div class="question-actions">
             <button class="submit-question-btn" onclick="submitAnswer(4)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
-            <strong style="color: #4CAF50;">Correct Answer:</strong> D) By adjusting the setpoint.
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) To prevent changes during critical parts of the process, keeping the system safe.
           </div>
         </div>
         
         <div class="question-item" data-question="5">
-          <h4>Question 5: Why is it important to monitor the Status LED regularly?</h4>
+          <h4>Question 5: How can maintenance engineers use HMIs during fault finding?</h4>
           <div class="multiple-choice-options">
             <label class="option-label">
               <input type="radio" name="question-5" value="A" class="option-radio">
-              <span class="option-text">A) Because it helps prevent downtime and ensures faults are addressed before escalating</span>
+              <span class="option-text">A) They use it to check inputs, outputs, alarms, and test system behaviour</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-5" value="B" class="option-radio">
-              <span class="option-text">B) Because it saves energy</span>
+              <span class="option-text">B) They use it to change PLC firmware</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-5" value="C" class="option-radio">
-              <span class="option-text">C) Because it makes the system look better</span>
+              <span class="option-text">C) They use it to paint the machine</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-5" value="D" class="option-radio">
-              <span class="option-text">D) Because it is required by regulations</span>
+              <span class="option-text">D) They use it to disable all safety systems</span>
             </label>
           </div>
           <div class="question-actions">
             <button class="submit-question-btn" onclick="submitAnswer(5)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
-            <strong style="color: #4CAF50;">Correct Answer:</strong> B) Because it saves energy.
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) They use it to check inputs, outputs, alarms, and test system behaviour.
           </div>
         </div>
       </div>
@@ -1197,10 +1197,10 @@
       // Define correct answers for worksheet 3
       const correctAnswers = {
         "1": "A",
-        "2": "C",
-        "3": "B",
-        "4": "D",
-        "5": "B"
+        "2": "A",
+        "3": "A",
+        "4": "A",
+        "5": "A"
       };
           
           // Apply visual feedback
@@ -1309,8 +1309,9 @@ function submitAnswer(questionNumber) {
   }
   
   // Determine if answer is correct (extract letter from correct answer)
-  const correctLetter = correctAnswerText.match(/^[A-D]/);
-  const isCorrect = correctLetter && answer === correctLetter;
+  const correctLetterMatch = correctAnswerText.match(/^([A-D])\)/);
+  const correctLetter = correctLetterMatch ? correctLetterMatch[1] : null;
+  const isCorrect = !!correctLetter && answer === correctLetter;
   
   // Style the selected option
   const allOptions = answerInput.querySelectorAll('.option-label');

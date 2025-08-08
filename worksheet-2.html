@@ -351,7 +351,7 @@
             <button class="submit-question-btn" onclick="submitAnswer(5)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
-            <strong style="color: #4CAF50;">Correct Answer:</strong> A) Most industrial PLC systems use complex logic with sequences and safety features
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) Because most real systems are complex, and you need to know how the program works to fix problems
           </div>
         </div>
       </div>
@@ -416,8 +416,9 @@ function submitAnswer(questionNumber) {
   }
   
   // Determine if answer is correct (extract letter from correct answer)
-  const correctLetter = correctAnswerText.match(/^[A-D]/);
-  const isCorrect = correctLetter && answer === correctLetter;
+  const correctLetterMatch = correctAnswerText.match(/^([A-D])\)/);
+  const correctLetter = correctLetterMatch ? correctLetterMatch[1] : null;
+  const isCorrect = !!correctLetter && answer === correctLetter;
   
   // Style the selected option
   const allOptions = answerInput.querySelectorAll('.option-label');

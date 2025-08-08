@@ -424,142 +424,142 @@
       <h2 class="section-header"><i class="fas fa-question-circle"></i> Questions & Answers</h2>
       <div class="questions-content">
         <div class="question-item" data-question="1">
-          <h4>Question 1: What type of signal does a digital sensor send to a PLC?</h4>
+          <h4>Question 1: What is the main purpose of a relay in a PLC system?</h4>
           <div class="multiple-choice-options">
             <label class="option-label">
               <input type="radio" name="question-1" value="A" class="option-radio">
-              <span class="option-text">A) A digital sensor sends a simple on/off signal, usually using 24V DC</span>
+              <span class="option-text">A) To safely control higher-power devices like motors or solenoids</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-1" value="B" class="option-radio">
-              <span class="option-text">B) A digital sensor sends a continuous analog signal</span>
+              <span class="option-text">B) To measure temperature</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-1" value="C" class="option-radio">
-              <span class="option-text">C) A digital sensor sends a wireless signal</span>
+              <span class="option-text">C) To provide power to the PLC</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-1" value="D" class="option-radio">
-              <span class="option-text">D) A digital sensor sends a fiber optic signal</span>
+              <span class="option-text">D) To display HMI trends</span>
             </label>
           </div>
           <div class="question-actions">
             <button class="submit-question-btn" onclick="submitAnswer(1)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
-            <strong style="color: #4CAF50;">Correct Answer:</strong> A) A digital sensor sends a simple on/off signal, usually using 24V DC.
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) To safely control higher-power devices like motors or solenoids.
           </div>
         </div>
         
         <div class="question-item" data-question="2">
-          <h4>Question 2: How can you monitor the status of a digital input?</h4>
+          <h4>Question 2: How does the PLC activate a relay?</h4>
           <div class="multiple-choice-options">
             <label class="option-label">
               <input type="radio" name="question-2" value="A" class="option-radio">
-              <span class="option-text">A) You can view the input status directly on the PLC or on the IO screen of the HMI</span>
+              <span class="option-text">A) By sending power to a coil inside the relay</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-2" value="B" class="option-radio">
-              <span class="option-text">B) You can only monitor it with a multimeter</span>
+              <span class="option-text">B) By changing HMI theme</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-2" value="C" class="option-radio">
-              <span class="option-text">C) You can only monitor it with an oscilloscope</span>
+              <span class="option-text">C) By changing PLC time</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-2" value="D" class="option-radio">
-              <span class="option-text">D) You cannot monitor digital inputs</span>
+              <span class="option-text">D) By pressing E-Stop</span>
             </label>
           </div>
           <div class="question-actions">
             <button class="submit-question-btn" onclick="submitAnswer(2)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
-            <strong style="color: #4CAF50;">Correct Answer:</strong> B) You can only monitor it with a multimeter.
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) By sending power to a coil inside the relay.
           </div>
         </div>
         
         <div class="question-item" data-question="3">
-          <h4>Question 3: What is the difference between a Normally Open (NO) and Normally Closed (NC) sensor?</h4>
+          <h4>Question 3: What happens when the relay is energised?</h4>
           <div class="multiple-choice-options">
             <label class="option-label">
               <input type="radio" name="question-3" value="A" class="option-radio">
-              <span class="option-text">A) A NO sensor sends a signal only when triggered, while an NC sensor sends a signal when idle and stops when triggered</span>
+              <span class="option-text">A) The relay closes internal contacts to switch the connected output on</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-3" value="B" class="option-radio">
-              <span class="option-text">B) A NO sensor is always on, an NC sensor is always off</span>
+              <span class="option-text">B) The HMI turns off</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-3" value="C" class="option-radio">
-              <span class="option-text">C) A NO sensor measures temperature, an NC sensor measures pressure</span>
+              <span class="option-text">C) The PLC changes colour</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-3" value="D" class="option-radio">
-              <span class="option-text">D) There is no difference between them</span>
+              <span class="option-text">D) Nothing happens</span>
             </label>
           </div>
           <div class="question-actions">
             <button class="submit-question-btn" onclick="submitAnswer(3)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
-            <strong style="color: #4CAF50;">Correct Answer:</strong> D) There is no difference between them.
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) The relay closes internal contacts to switch the connected output on.
           </div>
         </div>
         
         <div class="question-item" data-question="4">
-          <h4>Question 4: Why are Emergency Stop buttons typically wired as Normally Closed (NC)?</h4>
+          <h4>Question 4: Why can’t PLCs always control devices like motors directly?</h4>
           <div class="multiple-choice-options">
             <label class="option-label">
               <input type="radio" name="question-4" value="A" class="option-radio">
-              <span class="option-text">A) So that if a wire breaks or becomes disconnected, the system sees it as a fault and shuts down for safety</span>
+              <span class="option-text">A) Because PLC outputs are low-power and need a relay to handle larger loads</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-4" value="B" class="option-radio">
-              <span class="option-text">B) So they are easier to install</span>
+              <span class="option-text">B) Because the PLC is too loud</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-4" value="C" class="option-radio">
-              <span class="option-text">C) So they use less power</span>
+              <span class="option-text">C) Because the HMI requires it</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-4" value="D" class="option-radio">
-              <span class="option-text">D) So they are cheaper to manufacture</span>
+              <span class="option-text">D) Because it saves energy</span>
             </label>
           </div>
           <div class="question-actions">
             <button class="submit-question-btn" onclick="submitAnswer(4)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
-            <strong style="color: #4CAF50;">Correct Answer:</strong> C) So they use less power.
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) Because PLC outputs are low-power and need a relay to handle larger loads.
           </div>
         </div>
         
         <div class="question-item" data-question="5">
-          <h4>Question 5: Can you name the seven digital inputs used in the training system?</h4>
+          <h4>Question 5: What should you check if a relay does not switch as expected?</h4>
           <div class="multiple-choice-options">
             <label class="option-label">
               <input type="radio" name="question-5" value="A" class="option-radio">
-              <span class="option-text">A) Flow sensor, tank high switch, tank low switch, tank lid proximity switch, two E-Stop channels, and the blue reset switch</span>
+              <span class="option-text">A) Check for stuck contacts, faulty coils, incorrect logic, or wiring issues</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-5" value="B" class="option-radio">
-              <span class="option-text">B) E-Stop Ch1, E-Stop Ch2, Reset Button, Tank High Float [NC], Tank Low Float [NO], Tank Cover Switch.</span>
+              <span class="option-text">B) Replace the PLC immediately</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-5" value="C" class="option-radio">
-              <span class="option-text">C) Flow sensor, temperature sensor, pressure sensor, level sensor, valve position, pump status, and reset switch</span>
+              <span class="option-text">C) Rewire the entire panel</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-5" value="D" class="option-radio">
-              <span class="option-text">D) Flow sensor, temperature sensor, pressure sensor, level sensor, valve position, pump status, and E-Stop</span>
+              <span class="option-text">D) Change HMI colours</span>
             </label>
           </div>
           <div class="question-actions">
             <button class="submit-question-btn" onclick="submitAnswer(5)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
-            <strong style="color: #4CAF50;">Correct Answer:</strong> B) E-Stop Ch1, E-Stop Ch2, Reset Button, Tank High Float [NC], Tank Low Float [NO], Tank Cover Switch.
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) Check for stuck contacts, faulty coils, incorrect logic, or wiring issues.
           </div>
         </div>
       </div>
@@ -752,8 +752,9 @@ function submitAnswer(questionNumber) {
   }
   
   // Determine if answer is correct (extract letter from correct answer)
-  const correctLetter = correctAnswerText.match(/^[A-D]/);
-  const isCorrect = correctLetter && answer === correctLetter;
+  const correctLetterMatch = correctAnswerText.match(/^([A-D])\)/);
+  const correctLetter = correctLetterMatch ? correctLetterMatch[1] : null;
+  const isCorrect = !!correctLetter && answer === correctLetter;
   
   // Style the selected option
   const allOptions = answerInput.querySelectorAll('.option-label');

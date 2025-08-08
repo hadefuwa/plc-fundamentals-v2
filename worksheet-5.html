@@ -184,11 +184,11 @@
       <h2 class="section-header"><i class="fas fa-question-circle"></i> Questions & Answers</h2>
       <div class="questions-content">
         <div class="question-item" data-question="1">
-          <h4>Question 1: What is the purpose of a Human-Machine Interface (HMI)?</h4>
+          <h4>Question 1: What is the purpose of the status LED in a PLC system?</h4>
           <div class="multiple-choice-options">
             <label class="option-label">
               <input type="radio" name="question-1" value="A" class="option-radio">
-              <span class="option-text">A) To allow operators to interact with the system, view live data, control settings, and diagnose faults</span>
+              <span class="option-text">A) It shows the current state of the system using colours, helping identify faults or normal operation</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-1" value="B" class="option-radio">
@@ -207,119 +207,119 @@
             <button class="submit-question-btn" onclick="submitAnswer(1)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
-            <strong style="color: #4CAF50;">Correct Answer:</strong> B) To provide basic system information only.
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) It shows the current state of the system using colours, helping identify faults or normal operation.
           </div>
         </div>
         
         <div class="question-item" data-question="2">
-          <h4>Question 2: Where can you view system faults and alarms on the HMI?</h4>
+          <h4>Question 2: What does a red status LED usually mean?</h4>
           <div class="multiple-choice-options">
             <label class="option-label">
               <input type="radio" name="question-2" value="A" class="option-radio">
-              <span class="option-text">A) Faults are shown in the Faults section; alarms are shown in the Alarms section of the HMI</span>
+              <span class="option-text">A) It often means there is a fault or the emergency stop has been pressed</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-2" value="B" class="option-radio">
-              <span class="option-text">B) Faults and alarms are shown on the main screen only</span>
+              <span class="option-text">B) It means the system is operating normally</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-2" value="C" class="option-radio">
-              <span class="option-text">C) Faults and alarms are not shown on the HMI</span>
+              <span class="option-text">C) It means the system is starting up</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-2" value="D" class="option-radio">
-              <span class="option-text">D) Faults and alarms are shown in the settings menu</span>
+              <span class="option-text">D) It means the system is shutting down</span>
             </label>
           </div>
           <div class="question-actions">
             <button class="submit-question-btn" onclick="submitAnswer(2)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
-            <strong style="color: #4CAF50;">Correct Answer:</strong> D) Faults and alarms are shown in the settings menu.
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) It often means there is a fault or the emergency stop has been pressed.
           </div>
         </div>
         
         <div class="question-item" data-question="3">
-          <h4>Question 3: What happens when you adjust the High or Low Temperature Cutout settings beyond the current temperature?</h4>
+          <h4>Question 3: What does a green status LED usually mean?</h4>
           <div class="multiple-choice-options">
             <label class="option-label">
               <input type="radio" name="question-3" value="A" class="option-radio">
-              <span class="option-text">A) The system shuts down and displays a fault; it will not restart until the settings are returned to safe values</span>
+              <span class="option-text">A) It usually means the system is healthy and ready or running normally</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-3" value="B" class="option-radio">
-              <span class="option-text">B) The system continues running normally</span>
+              <span class="option-text">B) It usually means there is a fault</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-3" value="C" class="option-radio">
-              <span class="option-text">C) The system speeds up</span>
+              <span class="option-text">C) It means the system is shutting down</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-3" value="D" class="option-radio">
-              <span class="option-text">D) The system slows down</span>
+              <span class="option-text">D) It means the system is starting up</span>
             </label>
           </div>
           <div class="question-actions">
             <button class="submit-question-btn" onclick="submitAnswer(3)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
-            <strong style="color: #4CAF50;">Correct Answer:</strong> A) The system shuts down and displays a fault; it will not restart until the settings are returned to safe values.
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) It usually means the system is healthy and ready or running normally.
           </div>
         </div>
         
         <div class="question-item" data-question="4">
-          <h4>Question 4: How does the HMI assist with troubleshooting and maintenance?</h4>
+          <h4>Question 4: How does the status LED change across Basic, Enhanced, and Live Process modes?</h4>
           <div class="multiple-choice-options">
             <label class="option-label">
               <input type="radio" name="question-4" value="A" class="option-radio">
-              <span class="option-text">A) It logs alarms, shows sensor readings, lets engineers adjust settings, and helps detect issues like hardware faults or inefficiencies</span>
+              <span class="option-text">A) It may show solid or flashing patterns based on system state, like startup, running, or fault</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-4" value="B" class="option-radio">
-              <span class="option-text">B) It only displays basic information</span>
+              <span class="option-text">B) It stays the same colour always</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-4" value="C" class="option-radio">
-              <span class="option-text">C) It controls the system automatically</span>
+              <span class="option-text">C) It only turns off and on</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-4" value="D" class="option-radio">
-              <span class="option-text">D) It provides power to the system</span>
+              <span class="option-text">D) It only flashes red</span>
             </label>
           </div>
           <div class="question-actions">
             <button class="submit-question-btn" onclick="submitAnswer(4)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
-            <strong style="color: #4CAF50;">Correct Answer:</strong> C) It controls the system automatically.
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) It may show solid or flashing patterns based on system state, like startup, running, or fault.
           </div>
         </div>
         
         <div class="question-item" data-question="5">
-          <h4>Question 5: What real-time information can be seen on the main page of the HMI during system operation?</h4>
+          <h4>Question 5: Why is it important to understand how the LED is programmed?</h4>
           <div class="multiple-choice-options">
             <label class="option-label">
               <input type="radio" name="question-5" value="A" class="option-radio">
-              <span class="option-text">A) The main screen displays the current water temperature in the top left, along with the system diagram. It also shows flow rate, valve position, and pump demand in real time</span>
+              <span class="option-text">A) Because LED behaviour is set in the PLC code and can vary between machines, so reading the manual and understanding the logic is key</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-5" value="B" class="option-radio">
-              <span class="option-text">B) Only the temperature is shown</span>
+              <span class="option-text">B) Because it saves energy</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-5" value="C" class="option-radio">
-              <span class="option-text">C) Only the system diagram is shown</span>
+              <span class="option-text">C) Because it controls the motor directly</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-5" value="D" class="option-radio">
-              <span class="option-text">D) Only historical data is shown</span>
+              <span class="option-text">D) Because it changes colour with time of day</span>
             </label>
           </div>
           <div class="question-actions">
             <button class="submit-question-btn" onclick="submitAnswer(5)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
-            <strong style="color: #4CAF50;">Correct Answer:</strong> B) Only the temperature is shown.
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) Because LED behaviour is set in the PLC code and can vary between machines, so reading the manual and understanding the logic is key.
           </div>
         </div>
       </div>
@@ -1202,8 +1202,9 @@ function submitAnswer(questionNumber) {
   }
   
   // Determine if answer is correct (extract letter from correct answer)
-  const correctLetter = correctAnswerText.match(/^[A-D]/);
-  const isCorrect = correctLetter && answer === correctLetter;
+  const correctLetterMatch = correctAnswerText.match(/^([A-D])\)/);
+  const correctLetter = correctLetterMatch ? correctLetterMatch[1] : null;
+  const isCorrect = !!correctLetter && answer === correctLetter;
   
   // Style the selected option
   const allOptions = answerInput.querySelectorAll('.option-label');
