@@ -184,6 +184,26 @@
             <p>You’ll see PWM used everywhere to vary motor speed without analogue output cards. Duty cycle directly affects motor power—100% is fully on, 0% is off. Understanding the link between an analogue input (potentiometer) and the PWM output builds core diagnostic skills.</p>
           </div>
         </div>
+
+        <div class="explanation-card">
+          <div class="card-header">
+            <i class="fas fa-wave-square"></i>
+            <h3>Duty cycle in practice</h3>
+          </div>
+          <div class="card-content">
+            <p>As you turn the potentiometer up, the PWM duty cycle increases and the motor speeds up. If the motor doesn’t respond, check the output wiring and the HMI trend.</p>
+          </div>
+        </div>
+
+        <div class="explanation-card">
+          <div class="card-header">
+            <i class="fas fa-stethoscope"></i>
+            <h3>Diagnostic tip</h3>
+          </div>
+          <div class="card-content">
+            <p>Compare the scaled input %, the PWM % on the HMI, and the motor speed. If input and PWM change but speed doesn’t, suspect the motor or the power stage.</p>
+          </div>
+        </div>
       </div>
 
     </div>

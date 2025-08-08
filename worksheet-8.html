@@ -145,6 +145,26 @@
             <p>Potentiometers are used to give operators direct control over speed, pressure, temperature or position. Offsets and scaling change how inputs behave—if you don’t understand them, you can misdiagnose faults. Real systems rarely use the full 0–10 V range, so correct scaling is essential.</p>
           </div>
         </div>
+
+        <div class="explanation-card">
+          <div class="card-header">
+            <i class="fas fa-sliders-h"></i>
+            <h3>Offset vs. scalar</h3>
+          </div>
+          <div class="card-content">
+            <p>Offset shifts the whole reading up or down. Scalar stretches or compresses the range. Use both to map 0–10 V to meaningful units like % or °C.</p>
+          </div>
+        </div>
+
+        <div class="explanation-card">
+          <div class="card-header">
+            <i class="fas fa-gauge"></i>
+            <h3>Practical testing</h3>
+          </div>
+          <div class="card-content">
+            <p>Set the pot to 0%, 50%, and 100% and confirm the scaled value follows. If it doesn’t, adjust scalar first, then fine‑tune with a small offset.</p>
+          </div>
+        </div>
       </div>
 
     </div>

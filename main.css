@@ -1589,6 +1589,12 @@ h1 {
     box-shadow: 0 0 15px rgba(255, 152, 0, 0.3) !important;
 }
 
+/* Key Takeaways Section - distinct glow */
+.worksheet-box .key-takeaways-section {
+    border: 2px solid #00BCD4 !important; /* Cyan accent */
+    box-shadow: 0 0 15px rgba(0, 188, 212, 0.3) !important;
+}
+
 /* Force all inner elements to have solid backgrounds */
 .worksheet-box .key-point,
 .worksheet-box .step-card,

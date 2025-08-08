@@ -131,6 +131,26 @@
             <p>Temperature sensors keep equipment safe by preventing overheating and detecting faults. We are using a PT100 probe connected to an evaluation unit that converts resistance to a 0–10 V signal for the PLC. The PLC reads a raw value (0–27,648) and scales it to a real temperature.</p>
           </div>
         </div>
+
+        <div class="explanation-card">
+          <div class="card-header">
+            <i class="fas fa-temperature-half"></i>
+            <h3>Scaling the reading</h3>
+          </div>
+          <div class="card-content">
+            <p>Raw values must be scaled to °C. Use the suggested scalar, then check against a known ambient (about 20–40 °C). A value near max can indicate a wiring fault.</p>
+          </div>
+        </div>
+
+        <div class="explanation-card">
+          <div class="card-header">
+            <i class="fas fa-bug"></i>
+            <h3>Typical faults</h3>
+          </div>
+          <div class="card-content">
+            <p>Loose terminals, damaged probes, electrical noise, or drift in the transmitter can cause bad readings. Verify wiring first, then compare IO, HMI, and reality.</p>
+          </div>
+        </div>
       </div>
 
     </div>
