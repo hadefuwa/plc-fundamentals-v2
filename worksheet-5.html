@@ -39,7 +39,7 @@
       <div class="worksheet-content">
         <div class="introduction-content-wrapper">
           <div class="introduction-text">
-            <p>This worksheet covers maintenance procedures for HMI system maintenance. The HMI is the primary interface between humans and the automated system.</p>
+            <p>The Status LED shows what the system is doing. It lights up in different colours to show if things are working normally or if there is a problem. This makes it easier for maintenance teams to spot issues early, fix them quickly, and keep the system running safely and reliably.</p>
           </div>
           <div class="introduction-image">
             <div class="system-diagram">
@@ -54,48 +54,76 @@
     <div class="worksheet-section over-to-you-section">
       <h2 class="section-header"><i class="fas fa-hands-helping"></i> 2. Over To You</h2>
       <div class="worksheet-content">
-        <p><strong>Explore the HMI interface and understand its role in system monitoring and fault management:</strong></p>
-        
+        <p><strong>Follow these steps to explore the Status LED:</strong></p>
+
         <div class="steps-container">
           <div class="step-card" data-step="1">
             <div class="step-number">1</div>
             <div class="step-content">
               <div class="step-header">
-                <h4>Navigate HMI Screens</h4>
+                <h4>Open Worksheet 5</h4>
                 <label class="step-checkbox">
                   <input type="checkbox" class="step-complete-checkbox">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <p>Run the system and navigate between different HMI screens. Explore the Main Menu, IO Screen, Setup page, and Alarm/Fault pages to understand the available monitoring and control options.</p>
+              <p>Navigate to Worksheet 5 on the HMI and locate the Status LED on your training system.</p>
             </div>
           </div>
-          
+
           <div class="step-card" data-step="2">
             <div class="step-number">2</div>
             <div class="step-content">
               <div class="step-header">
-                <h4>Test Temperature Cutout</h4>
+                <h4>Basic Mode</h4>
                 <label class="step-checkbox">
                   <input type="checkbox" class="step-complete-checkbox">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <p>Leave the system running and navigate to the Setup page. Adjust either the "High Temp Cutout" or "Low Temp Cutout" settings until the system cuts out. Observe how the system responds to these safety limits.</p>
+              <p>Turn on the Basic Mode switch. Note the LED colour on-screen and on the physical rig (green for healthy, red for fault).</p>
             </div>
           </div>
-          
+
           <div class="step-card" data-step="3">
             <div class="step-number">3</div>
             <div class="step-content">
               <div class="step-header">
-                <h4>Alarm Management</h4>
+                <h4>E-Stop Check</h4>
                 <label class="step-checkbox">
                   <input type="checkbox" class="step-complete-checkbox">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <p>Navigate to the Alarm/Fault page to confirm the active fault. Reset the temperature settings back to original values (High: 30°C, Low: 5°C) and clear the fault to restore normal operation.</p>
+              <p>Press the E-Stop and observe the change in LED colour. Reset the E-Stop and confirm the LED returns to normal.</p>
+            </div>
+          </div>
+
+          <div class="step-card" data-step="4">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Enhanced Mode</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Turn off Basic Mode and enable Enhanced Mode. Press Start and observe how the Status LED behaves with the motor running. Stop the motor when done.</p>
+            </div>
+          </div>
+
+          <div class="step-card" data-step="5">
+            <div class="step-number">5</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Live Process</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Enable Live Process Mode. Start the process and observe the LED while bottles pass on the conveyor. Activate Fast Processing and note LED behaviour for OK vs defective bottles.</p>
             </div>
           </div>
         </div>
@@ -106,48 +134,25 @@
     <div class="worksheet-section so-what-section">
       <h2 class="section-header"><i class="fas fa-lightbulb"></i> 3. So What?</h2>
       <div class="so-what-content">
-        <!-- Main Explanation Card -->
         <div class="explanation-card">
           <div class="card-header">
             <i class="fas fa-cogs"></i>
-            <h3>System Overview</h3>
+            <h3>Why this matters</h3>
           </div>
           <div class="card-content">
-            <p>The HMI improves maintenance by providing centralized monitoring, control, and diagnostic capabilities:</p>
-        
-        <div class="key-point">
-          <i class="fas fa-lightbulb"></i>
-          <div>
-            <strong>Alarm Logging and Management</strong>
-            <p>HMIs log alarms and warnings, helping identify faults quickly without requiring direct access to the PLC programming.</p>
-          </div>
-        </div>
-        
-        <div class="key-point">
-          <i class="fas fa-lightbulb"></i>
-          <div>
-            <strong>Real-time System Monitoring</strong>
-            <p>Live data displays confirm sensor functionality and process conditions, enabling proactive maintenance and troubleshooting.</p>
-          </div>
-        </div>
-        
-        <div class="key-point">
-          <i class="fas fa-lightbulb"></i>
-          <div>
-            <strong>Safety Configuration</strong>
-            <p>Setup screens allow configuration of safety limits such as temperature cutouts, ensuring automatic shutdowns prevent equipment damage.</p>
-          </div>
-        </div>
-        
-        <div class="key-point">
-          <i class="fas fa-lightbulb"></i>
-          <div>
-            <strong>Control Functions</strong>
-            <p>Engineers can reset alarms, adjust setpoints, and test system functions directly through the HMI interface.</p>
+            <p>In industry, you’ll need to know how to read a system’s status at a glance. Status LEDs are one of the fastest ways to do that. Whether the machine is healthy, starting up, running, or in fault, the colour and flashing pattern of the LED can tell you a lot if you know what to look for. These modes are examples, not universal standards—always read the machine manual and understand how the LED is controlled by the PLC.</p>
+            <h3 style="margin-top:16px;">Key Takeaways</h3>
+            <ul>
+              <li>Status LEDs show machine state at a glance.</li>
+              <li>Colours and flash rates mean different things.</li>
+              <li>Modes shown here are examples, not official standards.</li>
+              <li>Always check the machine manual and HMI.</li>
+              <li>LED behaviour is set in the PLC program.</li>
+              <li>Understanding LEDs helps with fault finding.</li>
+            </ul>
           </div>
         </div>
       </div>
-    </div>
 
     <div class="worksheet-section questions-section">
       <h2 class="section-header"><i class="fas fa-question-circle"></i> Questions & Answers</h2>

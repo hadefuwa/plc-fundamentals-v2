@@ -295,7 +295,7 @@
       <div class="worksheet-content">
         <div class="introduction-content-wrapper">
           <div class="introduction-text">
-            <p>This worksheet covers maintenance procedures for digital sensor systems. Digital sensors provide discrete on/off signals and are essential for position detection, limit switches, safety interlocks, and status monitoring in industrial control systems.</p>
+            <p>Relays are electrically operated switches that allow a PLC to control higher-power devices safely. The PLC energises a low-power coil, which activates internal contacts to switch outputs on or off. This worksheet helps you understand how relays isolate and control output devices like motors or solenoids.</p>
           </div>
           <div class="introduction-image">
             <div class="system-diagram">
@@ -310,48 +310,62 @@
     <div class="worksheet-section over-to-you-section">
       <h2 class="section-header"><i class="fas fa-hands-helping"></i> 2. Over To You</h2>
       <div class="worksheet-content">
-        <p><strong>Examine the digital sensor inputs and understand binary signal processing:</strong></p>
-        
+        <p><strong>Follow these steps to explore relays:</strong></p>
+
         <div class="steps-container">
           <div class="step-card" data-step="1">
             <div class="step-number">1</div>
             <div class="step-content">
               <div class="step-header">
-                <h4>Identify Digital Inputs on Tank</h4>
+                <h4>Open Worksheet 12</h4>
                 <label class="step-checkbox">
                   <input type="checkbox" class="step-complete-checkbox">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <p>Identify the 4 digital inputs on top of the tank: Flow Sensor, Tank High Switch, Tank Low Switch, and Tank Lid Proximity Switch.</p>
+              <p>Press the green I0 button to energise the relay. Observe the relay LED when the coil is on.</p>
             </div>
           </div>
-          
+
           <div class="step-card" data-step="2">
             <div class="step-number">2</div>
             <div class="step-content">
               <div class="step-header">
-                <h4>Identify Control Panel Inputs</h4>
+                <h4>Stop with I2</h4>
                 <label class="step-checkbox">
                   <input type="checkbox" class="step-complete-checkbox">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <p>Identify the remaining 3 digital inputs: Two E-Stop Channels and the Blue Reset Switch. Test these by pressing the Emergency Stop and Blue Reset button while observing PLC LEDs.</p>
+              <p>Press the red button I2 and confirm the relay de-energises and the output device stops.</p>
             </div>
           </div>
-          
+
           <div class="step-card" data-step="3">
             <div class="step-number">3</div>
             <div class="step-content">
               <div class="step-header">
-                <h4>Monitor Inputs on HMI</h4>
+                <h4>Auto Trip via Potentiometer</h4>
                 <label class="step-checkbox">
                   <input type="checkbox" class="step-complete-checkbox">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <p>Navigate to the IO screen on the HMI and repeat the E-Stop and Blue Reset tests. Observe how the digital input status changes in real-time on the screen display.</p>
+              <p>Rotate the potentiometer slowly. At around 50%, the relay should activate automatically. Observe the output only runs when the relay is energised.</p>
+            </div>
+          </div>
+
+          <div class="step-card" data-step="4">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>E-Stop Check</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Press the Emergency Stop and confirm the relay de-energises.</p>
             </div>
           </div>
         </div>
@@ -362,48 +376,23 @@
     <div class="worksheet-section so-what-section">
       <h2 class="section-header"><i class="fas fa-lightbulb"></i> 3. So What?</h2>
       <div class="so-what-content">
-        <!-- Main Explanation Card -->
         <div class="explanation-card">
           <div class="card-header">
             <i class="fas fa-cogs"></i>
-            <h3>System Overview</h3>
+            <h3>Why this matters</h3>
           </div>
           <div class="card-content">
-            <p>Digital sensors provide essential binary feedback for control systems and safety monitoring:</p>
-        
-        <div class="key-point">
-          <i class="fas fa-lightbulb"></i>
-          <div>
-            <strong>Binary Signal Processing</strong>
-            <p>Digital sensors send simple on/off signals (typically 24V DC) that PLCs read as binary values (1 for on, 0 for off), enabling reliable control decisions.</p>
-          </div>
-        </div>
-        
-        <div class="key-point">
-          <i class="fas fa-lightbulb"></i>
-          <div>
-            <strong>Contact Types Matter for Safety</strong>
-            <p>Normally Open (NO) sensors signal only when triggered, while Normally Closed (NC) sensors used for safety detect broken wires as faults, ensuring fail-safe operation.</p>
-          </div>
-        </div>
-        
-        <div class="key-point">
-          <i class="fas fa-lightbulb"></i>
-          <div>
-            <strong>Real-time Monitoring</strong>
-            <p>Digital input status can be viewed directly on PLC indicators and HMI screens, providing immediate feedback for troubleshooting and system verification.</p>
-          </div>
-        </div>
-        
-        <div class="key-point">
-          <i class="fas fa-lightbulb"></i>
-          <div>
-            <strong>System Integration</strong>
-            <p>Digital sensors enable automated responses to system conditions - from simple pump control to complex safety interlocks that protect equipment and personnel.</p>
+            <p>In real systems, PLC outputs can’t always drive motors or solenoids directly. Relays bridge low-power PLC control and higher-power loads, and provide isolation. You’ll diagnose stuck contacts, faulty coils, or incorrect logic in the field.</p>
+            <h3 style="margin-top:16px;">Key Takeaways</h3>
+            <ul>
+              <li>Relays let PLCs safely switch higher-power devices.</li>
+              <li>PLC energises a coil; contacts switch the load.</li>
+              <li>Relays provide electrical isolation.</li>
+              <li>Status LEDs on relays/HMI help diagnosis.</li>
+            </ul>
           </div>
         </div>
       </div>
-    </div>
 
     <div class="worksheet-section questions-section">
       <h2 class="section-header"><i class="fas fa-question-circle"></i> Questions & Answers</h2>

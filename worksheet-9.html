@@ -41,7 +41,7 @@
       <div class="worksheet-content">
         <div class="introduction-content-wrapper">
           <div class="introduction-text">
-            <p>This worksheet covers maintenance procedures for proximity switch systems. Proximity switches are non-contact sensors that detect the presence of metallic objects and are critical for position sensing, object detection, and safety applications in industrial systems.</p>
+            <p>A temperature sensor tracks heat levels in real time to maintain safe and efficient system operation. Common in automation and process control, it helps prevent overheating or freezing. Engineers must understand these sensors to detect faults, ensure accurate readings, and avoid equipment damage or shutdowns.</p>
           </div>
           <div class="introduction-image">
             <div class="system-diagram">
@@ -56,48 +56,62 @@
     <div class="worksheet-section over-to-you-section">
       <h2 class="section-header"><i class="fas fa-hands-helping"></i> 2. Over To You</h2>
       <div class="worksheet-content">
-        <p><strong>Examine the proximity switch system and understand non-contact detection principles:</strong></p>
-        
+        <p><strong>Follow these steps to explore the temperature sensor and scaling:</strong></p>
+
         <div class="steps-container">
           <div class="step-card" data-step="1">
             <div class="step-number">1</div>
             <div class="step-content">
               <div class="step-header">
-                <h4>Locate Proximity Sensor</h4>
+                <h4>Open Worksheet 9</h4>
                 <label class="step-checkbox">
                   <input type="checkbox" class="step-complete-checkbox">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <p>Locate the proximity sensor on your training system. This sensor monitors whether the tank lid is properly in place to ensure safe operation.</p>
+              <p>Place your fingers on the temperature probe and observe the “Temp Sensor Raw” value change.</p>
             </div>
           </div>
-          
+
           <div class="step-card" data-step="2">
             <div class="step-number">2</div>
             <div class="step-content">
               <div class="step-header">
-                <h4>Test Proximity Detection</h4>
+                <h4>Apply Scalar 10</h4>
                 <label class="step-checkbox">
                   <input type="checkbox" class="step-complete-checkbox">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <p>Disturb the proximity sensor by slightly lifting the tank, removing the lid slightly, or gently bending the metal bracket away from the sensor. Observe how this triggers a fault and shuts off the system.</p>
+              <p>Add a scalar value of 10. Observe how the blue scaled value changes.</p>
             </div>
           </div>
-          
+
           <div class="step-card" data-step="3">
             <div class="step-number">3</div>
             <div class="step-content">
               <div class="step-header">
-                <h4>Monitor Status on IO Screen</h4>
+                <h4>Apply Scalar 1000</h4>
                 <label class="step-checkbox">
                   <input type="checkbox" class="step-complete-checkbox">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <p>Navigate to the IO screen and monitor the status of the proximity sensor. Disturb the sensor again and observe the status changing in real-time on the HMI.</p>
+              <p>Set scalar to 1000 and observe the much higher scaled value.</p>
+            </div>
+          </div>
+
+          <div class="step-card" data-step="4">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Tune to Ambient</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Adjust the scalar until the value represents a sensible ambient temperature (20–40°C). The IO screen shows a suggested scalar.</p>
             </div>
           </div>
         </div>
@@ -108,48 +122,23 @@
     <div class="worksheet-section so-what-section">
       <h2 class="section-header"><i class="fas fa-lightbulb"></i> 3. So What?</h2>
       <div class="so-what-content">
-        <!-- Main Explanation Card -->
         <div class="explanation-card">
           <div class="card-header">
             <i class="fas fa-cogs"></i>
-            <h3>System Overview</h3>
+            <h3>Why this matters</h3>
           </div>
           <div class="card-content">
-            <p>Proximity switches improve automation and safety by providing reliable non-contact detection:</p>
-        
-        <div class="key-point">
-          <i class="fas fa-lightbulb"></i>
-          <div>
-            <strong>Sensor Types</strong>
-            <p>Inductive (metal detection), Capacitive (metal and non-metal), and Photoelectric (light-based) sensors each serve different detection needs in industrial applications.</p>
-          </div>
-        </div>
-        
-        <div class="key-point">
-          <i class="fas fa-lightbulb"></i>
-          <div>
-            <strong>Safety Applications</strong>
-            <p>Proximity sensors monitor guards, access points, and safety equipment positions. They prevent system operation when unsafe conditions are detected, protecting personnel and equipment.</p>
-          </div>
-        </div>
-        
-        <div class="key-point">
-          <i class="fas fa-lightbulb"></i>
-          <div>
-            <strong>Maintenance Benefits</strong>
-            <p>Non-contact operation reduces wear and increases sensor durability compared to mechanical switches, leading to more reliable and longer-lasting detection systems.</p>
-          </div>
-        </div>
-        
-        <div class="key-point">
-          <i class="fas fa-lightbulb"></i>
-          <div>
-            <strong>Troubleshooting</strong>
-            <p>False signals can result from misalignment, environmental interference, or wiring faults. Proper installation and maintenance ensure reliable operation in harsh industrial environments.</p>
+            <p>Temperature sensors keep equipment safe by preventing overheating and detecting faults. We are using a PT100 probe connected to an evaluation unit that converts resistance to a 0–10 V signal for the PLC. The PLC reads a raw value (0–27,648) and scales it to a real temperature.</p>
+            <h3 style="margin-top:16px;">Key Takeaways</h3>
+            <ul>
+              <li>PT100 → evaluation unit → 0–10 V analogue input to PLC.</li>
+              <li>Raw value range 0–27,648 must be scaled to °C.</li>
+              <li>A reading near 32,000 indicates a fault (e.g., disconnected sensor).</li>
+              <li>Accurate scaling is essential (typical room 20–40 °C).</li>
+            </ul>
           </div>
         </div>
       </div>
-    </div>
 
     <div class="worksheet-section questions-section">
       <h2 class="section-header"><i class="fas fa-question-circle"></i> Questions & Answers</h2>

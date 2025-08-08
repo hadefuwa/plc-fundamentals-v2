@@ -43,7 +43,7 @@
       <div class="worksheet-content">
         <div class="introduction-content-wrapper">
           <div class="introduction-text">
-            <p>Status LEDs provide instant visual feedback about system conditions and are essential for quick diagnosis. These simple but critical indicators help operators understand system status at a glance.</p>
+            <p>An HMI is the touchscreen or control panel you see in front of industrial systems. It is how operators monitor what is going on in a process and send commands to the PLC. Operators use HMIs to navigate menus, view real-time input and output data, and see how alarms or errors show up. HMIs are essential for operators to safely and effectively control machines and processes.</p>
           </div>
           <div class="introduction-image">
             <div class="system-diagram">
@@ -58,48 +58,90 @@
     <div class="worksheet-section over-to-you-section">
       <h2 class="section-header"><i class="fas fa-hands-helping"></i> 2. Over To You</h2>
       <div class="worksheet-content">
-        <p><strong>Follow these steps to understand how the Status LED works as a diagnostic tool:</strong></p>
-        
+        <p><strong>Follow these steps to explore the HMI and the batch mixing process:</strong></p>
+
         <div class="steps-container">
           <div class="step-card" data-step="1">
             <div class="step-number">1</div>
             <div class="step-content">
               <div class="step-header">
-                <h4>Normal Operation</h4>
+                <h4>Open Worksheet 3</h4>
                 <label class="step-checkbox">
                   <input type="checkbox" class="step-complete-checkbox">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <p>Run the system as you have done previously. Locate the Status LED on your training system and observe the LED colour during normal operation.</p>
+              <p>Navigate to Worksheet 3 on the HMI.</p>
             </div>
           </div>
-          
+
           <div class="step-card" data-step="2">
             <div class="step-number">2</div>
             <div class="step-content">
               <div class="step-header">
-                <h4>Trigger a System Fault</h4>
+                <h4>Check Tank Levels</h4>
                 <label class="step-checkbox">
                   <input type="checkbox" class="step-complete-checkbox">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <p>Fully close the hand valve and watch as the system errors out. Observe how the LED changes colour to indicate a fault. Then restore normal operation by reopening the valve and resetting the system.</p>
+              <p>Observe the three tank levels at the top left of the screen.</p>
             </div>
           </div>
-          
+
           <div class="step-card" data-step="3">
             <div class="step-number">3</div>
             <div class="step-content">
               <div class="step-header">
-                <h4>Trigger a Safety Fault</h4>
+                <h4>Bottom Tank</h4>
                 <label class="step-checkbox">
                   <input type="checkbox" class="step-complete-checkbox">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <p>Press the Emergency Stop and observe how the system goes into a safety error mode. Note the colour of the LED and then reset the E-Stop by twisting it anti-clockwise and pressing the blue reset button.</p>
+              <p>Observe the bottom tank where the final mix collects.</p>
+            </div>
+          </div>
+
+          <div class="step-card" data-step="4">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Change Batch</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Use the dropdown at the top right to change the batch from Lotion to Cream, Serum or Cleanser.</p>
+            </div>
+          </div>
+
+          <div class="step-card" data-step="5">
+            <div class="step-number">5</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Mix Process</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Press the Mix button and observe the ingredients drain into the bottom tank. During mixing, the controls are inactive (greyed out). When complete, the Next Batch button becomes active again.</p>
+            </div>
+          </div>
+
+          <div class="step-card" data-step="6">
+            <div class="step-number">6</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Adjust Parameters</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>There are three parameters labelled Mix 1, Mix 2, and Mix 3. Adjust them and observe how they affect the tanks draining.</p>
             </div>
           </div>
         </div>
@@ -114,43 +156,20 @@
         <div class="explanation-card">
           <div class="card-header">
             <i class="fas fa-cogs"></i>
-            <h3>System Overview</h3>
+            <h3>Why this matters</h3>
           </div>
           <div class="card-content">
-            <p>The Status LED has three colour states that provide instant visual feedback about system conditions:</p>
-        
-        <div class="key-point">
-          <i class="fas fa-circle" style="color: #4CAF50;"></i>
-          <div>
-            <strong>Green - Normal Operation</strong>
-            <p>System is operating normally and all parameters are within acceptable ranges.</p>
+            <p>This is a typical HMI screen you will find in any factory, anywhere in the world. This particular example is of a batch mixing process. There are four tanks, three with the ingredients and the fourth is the final mixed product. Operators, not maintenance engineers, use these screens daily to control a process. However, maintenance engineers will need to use them during maintenance of the machine to test and troubleshoot. Sometimes you can adjust certain parameters on the screen, other times the on-screen components are for information only. This is not always obvious—reading the user manual that comes with the HMI or system is essential.</p>
+            <h3 style="margin-top:16px;">Key Takeaways</h3>
+            <ul>
+              <li>HMIs are essential for operators to monitor and control industrial processes safely and effectively.</li>
+              <li>HMIs show real-time data like tank levels and alarms and allow you to adjust process parameters.</li>
+              <li>In batch mixing processes, HMIs display how ingredients are combined and let you change batch settings.</li>
+              <li>Operators use HMIs every day, but maintenance engineers use them too during troubleshooting and testing.</li>
+              <li>Not all HMI screens allow changes. Some only display data, while others let you adjust parameters.</li>
+              <li>Always read the user manual for your specific HMI.</li>
+            </ul>
           </div>
-        </div>
-        
-        <div class="key-point">
-          <i class="fas fa-circle" style="color: #FF9800;"></i>
-          <div>
-            <strong>Orange - Fault Detected</strong>
-            <p>A fault has been detected, but the system may still function. Investigate the issue to prevent escalation.</p>
-          </div>
-        </div>
-        
-        <div class="key-point">
-          <i class="fas fa-circle" style="color: #F44336;"></i>
-          <div>
-            <strong>Red - Safety Fault</strong>
-            <p>A safety fault has occurred. The system requires immediate attention before it can restart.</p>
-          </div>
-        </div>
-        
-        <div class="key-point">
-          <i class="fas fa-lightbulb"></i>
-          <div>
-            <strong>Preventive Maintenance</strong>
-            <p>Using the Status LED as a diagnostic tool helps with preventive maintenance and troubleshooting. Regular monitoring helps prevent downtime and ensures faults are addressed before escalating.</p>
-          </div>
-        </div>
-      </div>
     </div>
 
     <!-- Questions Section -->

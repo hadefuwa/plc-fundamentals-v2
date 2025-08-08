@@ -45,7 +45,7 @@
       <div class="worksheet-content">
         <div class="introduction-content-wrapper">
           <div class="introduction-text">
-            <p>This worksheet covers maintenance procedures for PLC system maintenance. The PLC is the central nervous system of modern industrial automation, making thousands of decisions per second.</p>
+            <p>An Emergency Stop (E-Stop) is a safety button that quickly stops a machine or system when there is an emergency. It helps keep people safe and prevents damage to equipment. An E-Stop is not the same as a normal stop button. It should only be used in emergencies, not to turn off the machine during normal use.</p>
           </div>
           <div class="introduction-image">
             <div class="system-diagram">
@@ -60,48 +60,104 @@
     <div class="worksheet-section over-to-you-section">
       <h2 class="section-header"><i class="fas fa-hands-helping"></i> 2. Over To You</h2>
       <div class="worksheet-content">
-        <p><strong>Examine the PLC and understand how its I/O status LEDs help with system diagnostics:</strong></p>
-        
+        <p><strong>Follow these steps to work with the Emergency Stop:</strong></p>
+
         <div class="steps-container">
           <div class="step-card" data-step="1">
             <div class="step-number">1</div>
             <div class="step-content">
               <div class="step-header">
-                <h4>Locate and Identify PLC I/O</h4>
+                <h4>Open Worksheet 4</h4>
                 <label class="step-checkbox">
                   <input type="checkbox" class="step-complete-checkbox">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <p>Locate the PLC in your training system. Identify the DI a/b (digital inputs) and DQ a/b (digital outputs) status LEDs on the PLC module.</p>
+              <p>Navigate to Worksheet 4 on the HMI. This is the same system as Worksheet 3, with fewer items on screen so you can focus on the E-Stop.</p>
             </div>
           </div>
-          
+
           <div class="step-card" data-step="2">
             <div class="step-number">2</div>
             <div class="step-content">
               <div class="step-header">
-                <h4>Observe System Operation</h4>
+                <h4>Find the E-Stop</h4>
                 <label class="step-checkbox">
                   <input type="checkbox" class="step-complete-checkbox">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <p>Run the system and observe the LED changes. Watch for the status LED flash on startup and the flow sensor input LED flashing during operation. Adjust flow by opening/closing the hand valve to see how sensor frequency changes.</p>
+              <p>Locate the Emergency Stop button at the top of your training rig.</p>
             </div>
           </div>
-          
+
           <div class="step-card" data-step="3">
             <div class="step-number">3</div>
             <div class="step-content">
               <div class="step-header">
-                <h4>Test Emergency Stop Channels</h4>
+                <h4>Start and Stop</h4>
                 <label class="step-checkbox">
                   <input type="checkbox" class="step-complete-checkbox">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <p>Observe DI a 0 and 1 (E-Stop channels) - they should be on during normal operation. Press the E-Stop to see them turn off, then reset and watch DI a 2 activate when pressing the blue reset button.</p>
+              <p>Start the mix. When the tank is about half full, press the E-Stop.</p>
+            </div>
+          </div>
+
+          <div class="step-card" data-step="4">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Alarm Banner</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Read the alarm banner at the bottom of the screen. Tap it to go to the Alarm page and find the E-Stop alarm in the table.</p>
+            </div>
+          </div>
+
+          <div class="step-card" data-step="5">
+            <div class="step-number">5</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Reset Procedure</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Twist the E-Stop left to reset it, then press the blue reset button. Confirm that the E-Stop alarm is cleared.</p>
+            </div>
+          </div>
+
+          <div class="step-card" data-step="6">
+            <div class="step-number">6</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Check Faults Page</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Go back to Main Menu → Faults page. Confirm the E-Stop fault is cleared.</p>
+            </div>
+          </div>
+
+          <div class="step-card" data-step="7">
+            <div class="step-number">7</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Repeat and Reset on HMI</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Press the E-Stop again and observe the fault on the Faults page. This time, reset the system using the Reset button on the HMI.</p>
             </div>
           </div>
         </div>
@@ -112,48 +168,23 @@
     <div class="worksheet-section so-what-section">
       <h2 class="section-header"><i class="fas fa-lightbulb"></i> 3. So What?</h2>
       <div class="so-what-content">
-        <!-- Main Explanation Card -->
         <div class="explanation-card">
           <div class="card-header">
             <i class="fas fa-cogs"></i>
-            <h3>System Overview</h3>
+            <h3>Why this matters</h3>
           </div>
           <div class="card-content">
-            <p>The I/O status LEDs on the PLC provide invaluable real-time feedback for maintenance and troubleshooting:</p>
-        
-        <div class="key-point">
-          <i class="fas fa-lightbulb"></i>
-          <div>
-            <strong>Quick Fault Diagnosis</strong>
-            <p>If an expected input LED isn't lighting up, it may indicate a faulty sensor, wiring issue, or failed connection, enabling rapid troubleshooting.</p>
-          </div>
-        </div>
-        
-        <div class="key-point">
-          <i class="fas fa-lightbulb"></i>
-          <div>
-            <strong>Verifying System Responses</strong>
-            <p>Watching the LEDs change confirms that the PLC is correctly processing inputs and activating outputs in response to system conditions.</p>
-          </div>
-        </div>
-        
-        <div class="key-point">
-          <i class="fas fa-lightbulb"></i>
-          <div>
-            <strong>Output Activation Check</strong>
-            <p>The DQ LEDs confirm that outputs like solenoid valves and pumps are being triggered by the PLC. Missing LED activation may indicate unmet logic conditions.</p>
-          </div>
-        </div>
-        
-        <div class="key-point">
-          <i class="fas fa-lightbulb"></i>
-          <div>
-            <strong>Safety System Verification</strong>
-            <p>Emergency stop channels and reset functions can be verified through the input LEDs, ensuring safety systems are functioning correctly.</p>
+            <p>E-Stops have dual channels or two inputs into the control system, to make them reliable and safe. After using an E-Stop, the emergency stop button must be reset and the reset button must be pressed once before the system can start again. Regularly inspect the E-Stop for damage or loose parts and test it during downtime to ensure it functions properly. Never cover or tamper with one.</p>
+            <h3 style="margin-top:16px;">Key Takeaways</h3>
+            <ul>
+              <li>E-Stops are for emergencies, not regular use.</li>
+              <li>They have two safety circuits to make sure they work.</li>
+              <li>Manual reset is required before restart.</li>
+              <li>Regular checks and tests keep them reliable.</li>
+            </ul>
           </div>
         </div>
       </div>
-    </div>
 
     <!-- Questions Section -->
     <div class="worksheet-section questions-section">

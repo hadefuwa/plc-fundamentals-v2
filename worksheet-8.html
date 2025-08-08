@@ -41,7 +41,7 @@
       <div class="worksheet-content">
         <div class="introduction-content-wrapper">
           <div class="introduction-text">
-            <p>This worksheet covers maintenance procedures for float switch system maintenance. Float switches are simple but essential safety devices that prevent tank overflows and pump dry-running.</p>
+            <p>A potentiometer is an adjustable resistor used to create a variable voltage signal, typically between 0 and 10 V. In PLC systems, it is commonly used to set speeds, adjust levels, or simulate sensor values. Understanding how potentiometers work helps engineers control analogue inputs, scale values, and test system responses accurately.</p>
           </div>
           <div class="introduction-image">
             <div class="system-diagram">
@@ -56,48 +56,76 @@
     <div class="worksheet-section over-to-you-section">
       <h2 class="section-header"><i class="fas fa-hands-helping"></i> 2. Over To You</h2>
       <div class="worksheet-content">
-        <p><strong>Examine the float switch system and understand level detection principles:</strong></p>
-        
+        <p><strong>Follow these steps to explore the potentiometer and scaling:</strong></p>
+
         <div class="steps-container">
           <div class="step-card" data-step="1">
             <div class="step-number">1</div>
             <div class="step-content">
               <div class="step-header">
-                <h4>Locate Float Switches</h4>
+                <h4>Open Worksheet 8</h4>
                 <label class="step-checkbox">
                   <input type="checkbox" class="step-complete-checkbox">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <p>Locate the two float switches in your training system. Identify the high-level switch (prevents overflow) and low-level switch (protects against dry running).</p>
+              <p>Turn the potentiometer to 0 and observe the motor speed.</p>
             </div>
           </div>
-          
+
           <div class="step-card" data-step="2">
             <div class="step-number">2</div>
             <div class="step-content">
               <div class="step-header">
-                <h4>Observe Float Movement</h4>
+                <h4>Go To 100%</h4>
                 <label class="step-checkbox">
                   <input type="checkbox" class="step-complete-checkbox">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <p>Run the system and observe how the float switches move with the water level. Note their current positions - are they raised or lowered?</p>
+              <p>Slowly rotate the potentiometer to the right until the HMI shows 100%.</p>
             </div>
           </div>
-          
+
           <div class="step-card" data-step="3">
             <div class="step-number">3</div>
             <div class="step-content">
               <div class="step-header">
-                <h4>Check Switch Status on IO Screen</h4>
+                <h4>Add Offset +50</h4>
                 <label class="step-checkbox">
                   <input type="checkbox" class="step-complete-checkbox">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <p>Navigate to Main Menu → IO Screen and find the high and low float switches. Observe the difference between the two sensors - one should be on (NO type) and one should be off (NC type).</p>
+              <p>Press the purple “i” next to Potentiometer Scaled and apply an offset of 50. Rotate to observe the effect.</p>
+            </div>
+          </div>
+
+          <div class="step-card" data-step="4">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Add Offset -50</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Set the offset to -50 and repeat the test.</p>
+            </div>
+          </div>
+
+          <div class="step-card" data-step="5">
+            <div class="step-number">5</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Change Scalar</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Remove the offset. Change scalar from 100 to 10 and observe behaviour. Adjust until the scaled value represents a sensible ambient temperature (20–40°C).</p>
             </div>
           </div>
         </div>
@@ -108,48 +136,23 @@
     <div class="worksheet-section so-what-section">
       <h2 class="section-header"><i class="fas fa-lightbulb"></i> 3. So What?</h2>
       <div class="so-what-content">
-        <!-- Main Explanation Card -->
         <div class="explanation-card">
           <div class="card-header">
             <i class="fas fa-cogs"></i>
-            <h3>System Overview</h3>
+            <h3>Why this matters</h3>
           </div>
           <div class="card-content">
-            <p>Float switches provide essential level monitoring and protection in fluid systems:</p>
-        
-        <div class="key-point">
-          <i class="fas fa-lightbulb"></i>
-          <div>
-            <strong>Low-Level Protection (NO)</strong>
-            <p>The low-level switch is Normally Open (NO) and only closes when there's enough liquid. This allows the pump to run and prevents dry running damage.</p>
-          </div>
-        </div>
-        
-        <div class="key-point">
-          <i class="fas fa-lightbulb"></i>
-          <div>
-            <strong>High-Level Protection (NC)</strong>
-            <p>The high-level switch is Normally Closed (NC) and breaks the circuit when the tank is full, stopping filling or triggering alarms to prevent overflow.</p>
-          </div>
-        </div>
-        
-        <div class="key-point">
-          <i class="fas fa-lightbulb"></i>
-          <div>
-            <strong>Safety System Integration</strong>
-            <p>Float switches integrate with pump control systems to automatically stop operations when unsafe conditions are detected, protecting equipment and preventing spills.</p>
-          </div>
-        </div>
-        
-        <div class="key-point">
-          <i class="fas fa-lightbulb"></i>
-          <div>
-            <strong>Maintenance Considerations</strong>
-            <p>Regular inspection ensures float switches move freely and contacts operate correctly. Debris or mechanical wear can cause false readings or system failures.</p>
+            <p>Potentiometers are used to give operators direct control over speed, pressure, temperature or position. Offsets and scaling change how inputs behave—if you don’t understand them, you can misdiagnose faults. Real systems rarely use the full 0–10 V range, so correct scaling is essential.</p>
+            <h3 style="margin-top:16px;">Key Takeaways</h3>
+            <ul>
+              <li>Potentiometer is a 0–10 V analogue input to the PLC.</li>
+              <li>Offset shifts the whole range; scalar stretches or compresses it.</li>
+              <li>Correct scaling is needed to match real-world units (e.g., % or RPM).</li>
+              <li>Used to tune, simulate, and test system responses.</li>
+            </ul>
           </div>
         </div>
       </div>
-    </div>
 
     <div class="worksheet-section questions-section">
       <h2 class="section-header"><i class="fas fa-question-circle"></i> Questions & Answers</h2>

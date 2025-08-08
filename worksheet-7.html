@@ -41,7 +41,7 @@
       <div class="worksheet-content">
         <div class="introduction-content-wrapper">
           <div class="introduction-text">
-            <p>This worksheet covers maintenance procedures for valve system maintenance. Control valves are precision instruments that regulate fluid flow in process control systems.</p>
+            <p>A proximity switch detects an object's presence without contact, making it ideal for automation, positioning and safety systems. Maintenance engineers should know how they work to troubleshoot misalignments or faults, otherwise false triggers can cause machine stoppages or safety hazards. We use inductive sensors to detect metal objects.</p>
           </div>
           <div class="introduction-image">
             <div class="system-diagram">
@@ -56,48 +56,62 @@
     <div class="worksheet-section over-to-you-section">
       <h2 class="section-header"><i class="fas fa-hands-helping"></i> 2. Over To You</h2>
       <div class="worksheet-content">
-        <p><strong>Examine the valve system and understand proportional control principles:</strong></p>
-        
+        <p><strong>Follow these steps to use the inductive proximity sensor:</strong></p>
+
         <div class="steps-container">
           <div class="step-card" data-step="1">
             <div class="step-number">1</div>
             <div class="step-content">
               <div class="step-header">
-                <h4>Locate and Identify Valve</h4>
+                <h4>Open Worksheet 7</h4>
                 <label class="step-checkbox">
                   <input type="checkbox" class="step-complete-checkbox">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <p>Locate the control valve in your training system. Note the electronic connector and understand that this valve controls flow by adjusting its opening position.</p>
+              <p>Navigate to Worksheet 7 on the HMI. Locate the proximity sensor (I6) on your training rig. Ensure it is not triggered (LED off on sensor and HMI).</p>
             </div>
           </div>
-          
+
           <div class="step-card" data-step="2">
             <div class="step-number">2</div>
             <div class="step-content">
               <div class="step-header">
-                <h4>Test Proportional Control</h4>
+                <h4>Start and Lock</h4>
                 <label class="step-checkbox">
                   <input type="checkbox" class="step-complete-checkbox">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <p>Run the system and change the setpoint from high to low flow rates. Observe how the valve position changes gradually rather than simply opening/closing completely. Note the connector warmth during operation.</p>
+              <p>Press Raise to lift the press from 0 mm to 15000 mm. Press Lock to begin the locking sequence. A fault will appear because the system did not detect the locking pins as engaged.</p>
             </div>
           </div>
-          
+
           <div class="step-card" data-step="3">
             <div class="step-number">3</div>
             <div class="step-content">
               <div class="step-header">
-                <h4>Test Emergency Behavior</h4>
+                <h4>Use Metal Target</h4>
                 <label class="step-checkbox">
                   <input type="checkbox" class="step-complete-checkbox">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <p>Press the E-Stop and observe whether the valve goes fully open or fully closed. Understanding this fail-safe behavior is critical for safety system design.</p>
+              <p>Reset, repeat the locking step, and this time place a metal object in front of the proximity sensor to simulate detection of the locking pins.</p>
+            </div>
+          </div>
+
+          <div class="step-card" data-step="4">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Observe Result</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Observe what happens to the red locking pins at the top of the press when the sensor is triggered.</p>
             </div>
           </div>
         </div>
@@ -108,48 +122,23 @@
     <div class="worksheet-section so-what-section">
       <h2 class="section-header"><i class="fas fa-lightbulb"></i> 3. So What?</h2>
       <div class="so-what-content">
-        <!-- Main Explanation Card -->
         <div class="explanation-card">
           <div class="card-header">
             <i class="fas fa-cogs"></i>
-            <h3>System Overview</h3>
+            <h3>Why this matters</h3>
           </div>
           <div class="card-content">
-            <p>Valves play a critical role in fluid control, and understanding their operation is essential for system efficiency:</p>
-        
-        <div class="key-point">
-          <i class="fas fa-lightbulb"></i>
-          <div>
-            <strong>Proportional Control</strong>
-            <p>Unlike simple on/off valves, proportional valves adjust gradually using PWM signals, enabling precise flow and pressure control for stable system operation.</p>
-          </div>
-        </div>
-        
-        <div class="key-point">
-          <i class="fas fa-lightbulb"></i>
-          <div>
-            <strong>Deadband Operation</strong>
-            <p>Most valves have a deadband - they typically stay closed until receiving about 10% demand signal, after which they begin to open proportionally.</p>
-          </div>
-        </div>
-        
-        <div class="key-point">
-          <i class="fas fa-lightbulb"></i>
-          <div>
-            <strong>Fail-Safe Behavior</strong>
-            <p>Valves are designed with specific fail-safe positions (open or closed) when power is lost or during emergency stops, which is crucial for safety system design.</p>
-          </div>
-        </div>
-        
-        <div class="key-point">
-          <i class="fas fa-lightbulb"></i>
-          <div>
-            <strong>Maintenance Indicators</strong>
-            <p>Valve connectors typically warm during operation - this is normal but useful for diagnostics. Blockages, coil failures, or power loss can cause valve faults.</p>
+            <p>Proximity switches detect the presence of metal objects without physical contact, making them crucial for safety and reliability. In the forging press example, the sensor confirms that locking pins are engaged. If not detected, the system faults and stops to prevent unsafe movement.</p>
+            <h3 style="margin-top:16px;">Key Takeaways</h3>
+            <ul>
+              <li>Inductive sensors detect metal only; capacitive and photoelectric serve other materials/methods.</li>
+              <li>Used for guards, access points, and position checks in safety interlocks.</li>
+              <li>Misalignment and wiring faults cause false signals—verify with a metal target during tests.</li>
+              <li>Correct mounting and regular checks ensure reliable operation.</li>
+            </ul>
           </div>
         </div>
       </div>
-    </div>
 
     <div class="worksheet-section questions-section">
       <h2 class="section-header"><i class="fas fa-question-circle"></i> Questions & Answers</h2>

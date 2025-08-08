@@ -108,7 +108,7 @@
       <div class="worksheet-content">
         <div class="introduction-content-wrapper">
           <div class="introduction-text">
-            <p>This worksheet covers maintenance procedures for temperature sensor systems. Temperature sensors are critical components that measure thermal conditions and are essential for process control, safety monitoring, and quality assurance in industrial systems.</p>
+            <p>Pulse Width Modulation (PWM) is a method used by PLCs to control motor speed by rapidly switching an output on and off. The ratio of on-time to off-time determines how much power the motor receives. This worksheet explores how PWM is used to vary the speed of a DC motor.</p>
           </div>
           <div class="introduction-image">
             <div class="system-diagram">
@@ -123,48 +123,48 @@
     <div class="worksheet-section over-to-you-section">
       <h2 class="section-header"><i class="fas fa-hands-helping"></i> 2. Over To You</h2>
       <div class="worksheet-content">
-        <p><strong>Examine the temperature sensor system and understand analogue measurement principles:</strong></p>
-        
+        <p><strong>Follow these steps to explore PWM motor control:</strong></p>
+
         <div class="steps-container">
           <div class="step-card" data-step="1">
             <div class="step-number">1</div>
             <div class="step-content">
               <div class="step-header">
-                <h4>Identify Temperature Sensor Components</h4>
+                <h4>Open Worksheet 11</h4>
                 <label class="step-checkbox">
                   <input type="checkbox" class="step-complete-checkbox">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <p>Locate the temperature sensor comprising an RTD probe and electronic transmitter module. Understand that the RTD changes resistance with temperature, which the transmitter converts to a voltage signal for the PLC.</p>
+              <p>Set the potentiometer to 0% (fully anticlockwise). Press Start.</p>
             </div>
           </div>
-          
+
           <div class="step-card" data-step="2">
             <div class="step-number">2</div>
             <div class="step-content">
               <div class="step-header">
-                <h4>Observe Temperature Monitoring</h4>
+                <h4>Increase Speed</h4>
                 <label class="step-checkbox">
                   <input type="checkbox" class="step-complete-checkbox">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <p>Run the system on full flow and observe the temperature on the HMI. Note the current temperature as running for 10 minutes would cause it to rise due to pump heat generation.</p>
+              <p>Rotate the potentiometer clockwise and observe motor speed increase. Watch the PWM Duty Cycle on the HMI.</p>
             </div>
           </div>
-          
+
           <div class="step-card" data-step="3">
             <div class="step-number">3</div>
             <div class="step-content">
               <div class="step-header">
-                <h4>Test Temperature Cutout System</h4>
+                <h4>Full Range Test</h4>
                 <label class="step-checkbox">
                   <input type="checkbox" class="step-complete-checkbox">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <p>Navigate to Main Menu → Setup screen. Set the high temperature cutout below the current temperature to trigger a safety shutdown. Reset to 40°C and low cutout to 5°C afterward, then clear all faults.</p>
+              <p>Move from 100% to 0% a few times and observe the trend of the scaled input and the duty cycle.</p>
             </div>
           </div>
         </div>
@@ -175,48 +175,23 @@
     <div class="worksheet-section so-what-section">
       <h2 class="section-header"><i class="fas fa-lightbulb"></i> 3. So What?</h2>
       <div class="so-what-content">
-        <!-- Main Explanation Card -->
         <div class="explanation-card">
           <div class="card-header">
             <i class="fas fa-cogs"></i>
-            <h3>System Overview</h3>
+            <h3>Why this matters</h3>
           </div>
           <div class="card-content">
-            <p>Temperature sensors provide critical monitoring to prevent equipment damage and ensure safe operation:</p>
-        
-        <div class="key-point">
-          <i class="fas fa-lightbulb"></i>
-          <div>
-            <strong>Sensor Technologies</strong>
-            <p>RTDs use resistance changes, thermocouples detect voltage changes, and thermistors provide rapid response - each suited for different temperature ranges and applications.</p>
-          </div>
-        </div>
-        
-        <div class="key-point">
-          <i class="fas fa-lightbulb"></i>
-          <div>
-            <strong>Safety Protection</strong>
-            <p>Temperature cutouts automatically shut down systems when limits are exceeded, preventing overheating damage and ensuring safe operation in various process conditions.</p>
-          </div>
-        </div>
-        
-        <div class="key-point">
-          <i class="fas fa-lightbulb"></i>
-          <div>
-            <strong>System Integration</strong>
-            <p>Temperature sensors often control heaters, coolers, and fans. The HMI displays live readings and allows configuration of safety limits for automated protection.</p>
-          </div>
-        </div>
-        
-        <div class="key-point">
-          <i class="fas fa-lightbulb"></i>
-          <div>
-            <strong>Maintenance Indicators</strong>
-            <p>Strange or missing readings may indicate sensor damage, wiring issues, or environmental interference. Regular calibration ensures accurate monitoring and reliable control.</p>
+            <p>You’ll see PWM used everywhere to vary motor speed without analogue output cards. Duty cycle directly affects motor power—100% is fully on, 0% is off. Understanding the link between an analogue input (potentiometer) and the PWM output builds core diagnostic skills.</p>
+            <h3 style="margin-top:16px;">Key Takeaways</h3>
+            <ul>
+              <li>PWM controls speed by switching outputs quickly.</li>
+              <li>Duty cycle (%) sets power delivered to the motor.</li>
+              <li>The potentiometer sets PWM level via a 0–10 V input.</li>
+              <li>Reading HMI trends helps diagnose speed issues.</li>
+            </ul>
           </div>
         </div>
       </div>
-    </div>
 
     <div class="worksheet-section questions-section">
       <h2 class="section-header"><i class="fas fa-question-circle"></i> Questions & Answers</h2>

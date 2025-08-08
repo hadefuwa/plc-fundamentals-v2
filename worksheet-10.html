@@ -43,7 +43,7 @@
       <div class="worksheet-content">
         <div class="introduction-content-wrapper">
           <div class="introduction-text">
-            <p>This worksheet covers maintenance procedures for flow sensor systems. Flow sensors are critical components that measure the rate of fluid movement through pipes and are essential for process control, safety monitoring, and efficiency optimization in industrial systems.</p>
+            <p>Digital outputs are how a PLC controls external devices. These could be lights, motors, relays or solenoids. In this worksheet, you'll test a variety of output devices using buttons, sensors, and the HMI. This helps you understand how PLCs activate real-world hardware in response to logic conditions.</p>
           </div>
           <div class="introduction-image">
             <div class="system-diagram">
@@ -58,48 +58,90 @@
     <div class="worksheet-section over-to-you-section">
       <h2 class="section-header"><i class="fas fa-hands-helping"></i> 2. Over To You</h2>
       <div class="worksheet-content">
-        <p><strong>Examine the flow sensor system and understand flow measurement principles:</strong></p>
-        
+        <p><strong>Follow these steps to test digital outputs:</strong></p>
+
         <div class="steps-container">
           <div class="step-card" data-step="1">
             <div class="step-number">1</div>
             <div class="step-content">
               <div class="step-header">
-                <h4>Locate and Observe Flow Sensor</h4>
+                <h4>I0 → Q0 (Momentary)</h4>
                 <label class="step-checkbox">
                   <input type="checkbox" class="step-complete-checkbox">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <p>Run the system and locate the flow sensor both on the HMI screen and physically on the system. Note that while there's no external movement, an internal turbine is spinning and being counted by the PLC.</p>
+              <p>Press and hold the green push button I0. Observe LED Q0 turns on only while the button is pressed.</p>
             </div>
           </div>
-          
+
           <div class="step-card" data-step="2">
             <div class="step-number">2</div>
             <div class="step-content">
               <div class="step-header">
-                <h4>Test Flow Rate Response</h4>
+                <h4>I1 Latch, I2 Reset</h4>
                 <label class="step-checkbox">
                   <input type="checkbox" class="step-complete-checkbox">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <p>Increase the flow rate to 300 litres per hour and observe the reading change. Then constrict the flow by closing the hand valve clockwise and watch the flow rate drop until the system faults.</p>
+              <p>Press the black button I1 once and release. Q1 stays on. Press the red button I2 to turn it off.</p>
             </div>
           </div>
-          
+
           <div class="step-card" data-step="3">
             <div class="step-number">3</div>
             <div class="step-content">
               <div class="step-header">
-                <h4>Observe Flow Settling</h4>
+                <h4>I3 Latching</h4>
                 <label class="step-checkbox">
                   <input type="checkbox" class="step-complete-checkbox">
                   <span class="checkmark"></span>
                 </label>
               </div>
-              <p>Open the valve fully and restart the system. When running normally, hit the E-Stop and observe how the flow sensor takes time to settle, detecting residual forward or backward flow even after the pump stops.</p>
+              <p>Press the white latching button. Observe Q2 turns on and stays on.</p>
+            </div>
+          </div>
+
+          <div class="step-card" data-step="4">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>I4/I5 Selector → Q3</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Turn the selector switch left to turn on I4 and observe Q3 stays on. Turn right to turn on I5 and observe Q3 flashes.</p>
+            </div>
+          </div>
+
+          <div class="step-card" data-step="5">
+            <div class="step-number">5</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Proximity and Pot → Q4, Q5</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Trigger the proximity sensor and observe Q4. Rotate the potentiometer and observe Q5 respond.</p>
+            </div>
+          </div>
+
+          <div class="step-card" data-step="6">
+            <div class="step-number">6</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Dance Mode</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Set all inputs back to off. Press the “Dance Mode” button on the HMI and observe all 6 LEDs sequence.</p>
             </div>
           </div>
         </div>
@@ -110,48 +152,24 @@
     <div class="worksheet-section so-what-section">
       <h2 class="section-header"><i class="fas fa-lightbulb"></i> 3. So What?</h2>
       <div class="so-what-content">
-        <!-- Main Explanation Card -->
         <div class="explanation-card">
           <div class="card-header">
             <i class="fas fa-cogs"></i>
-            <h3>System Overview</h3>
+            <h3>Why this matters</h3>
           </div>
           <div class="card-content">
-            <p>Flow sensors provide critical measurement data for system control and troubleshooting:</p>
-        
-        <div class="key-point">
-          <i class="fas fa-lightbulb"></i>
-          <div>
-            <strong>Flow Measurement Technologies</strong>
-            <p>Turbine sensors count pulses from a spinning rotor, while electromagnetic and ultrasonic sensors offer alternative measurement methods for different applications.</p>
-          </div>
-        </div>
-        
-        <div class="key-point">
-          <i class="fas fa-lightbulb"></i>
-          <div>
-            <strong>System Protection</strong>
-            <p>Flow sensors enable protective functions - lack of proper flow can trigger alarms or stop processes to prevent equipment damage from dry running or blockages.</p>
-          </div>
-        </div>
-        
-        <div class="key-point">
-          <i class="fas fa-lightbulb"></i>
-          <div>
-            <strong>Calibration and Accuracy</strong>
-            <p>Flow meters require regular calibration to maintain accuracy. HMI systems often provide scaling, offset adjustments, and alarm threshold configurations for optimal performance.</p>
-          </div>
-        </div>
-        
-        <div class="key-point">
-          <i class="fas fa-lightbulb"></i>
-          <div>
-            <strong>Troubleshooting Indicators</strong>
-            <p>Unstable readings may indicate air pockets, valve restrictions, or sensor faults. No signal could point to wiring issues, while drift may require recalibration or cleaning.</p>
+            <p>As a maintenance apprentice, understanding digital outputs is essential. Outputs are what actually make things happen: starting motors, energising relays, activating solenoids, opening valves, or turning on lamps. Recognising output sequences is valuable because many industrial processes rely on timed events.</p>
+            <h3 style="margin-top:16px;">Key Takeaways</h3>
+            <ul>
+              <li>PLCs use digital outputs to control devices like lights, motors, and valves.</li>
+              <li>Outputs can be triggered by buttons, switches, sensors, or analogue signals.</li>
+              <li>Latching and selector switches show different output behaviours.</li>
+              <li>Sensors like proximity and analogue inputs can drive outputs.</li>
+              <li>Sequences (“dance mode”) mirror real process timing patterns.</li>
+            </ul>
           </div>
         </div>
       </div>
-    </div>
 
     <div class="worksheet-section questions-section">
       <h2 class="section-header"><i class="fas fa-question-circle"></i> Questions & Answers</h2>
