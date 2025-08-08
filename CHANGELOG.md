@@ -23,7 +23,7 @@ ________________________________________________________________________________
 **Edits (highlights)**:
 - `worksheet-3.html`: Q3 → B, Q4 → D, Q5 → B; simulation section commented (already).
 - `worksheet-4.html`: Q3 → B, Q4 → D, Q5 → C; simulation section retained, diagnostic blocks present.
-- `worksheet-5.html`: Q2 → A, Q4 → C, Q5 → B; simulation section commented.
+- `worksheet-5.html`: Q1 → D, Q2 → A, Q3 → B, Q4 → C, Q5 → C; simulation section commented.
 - `worksheet-6.html`: Q2 → C, Q3 → B, Q4 → D; simulation section commented.
 - `worksheet-7.html`: Q2 → D, Q4 → D, Q5 → B; simulation section commented.
 - `worksheet-8.html`: Q2 → B, Q3 → C, Q4 → D, Q5 → B (visible letters updated accordingly).
