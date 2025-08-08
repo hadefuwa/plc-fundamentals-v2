@@ -344,11 +344,12 @@
       </div>
     </div>
 
-    <!-- Simulation Section (commented out for future use)
+    <!-- SIMULATION DISABLED: This simulation works but is intentionally disabled for now.
+         To re-enable: remove this comment block and uncomment the script includes below.
+    
     <div class="simulation-section">
       <h2 class="section-header"><i class="fas fa-lightbulb"></i> 3. Interactive Status LED System</h2>
       
-      <!-- Learning Guide -->
       <div class="simulation-container" style="margin-bottom: 25px;">
         <div style="background: linear-gradient(135deg, #1976D2, #1565C0); border-radius: 12px; padding: 25px; margin-bottom: 20px;">
           <h4 style="color: white; margin-bottom: 15px; font-size: 22px;">
@@ -361,14 +362,10 @@
               <li style="margin-bottom: 8px;">Recognize escalating fault conditions through LED behavior</li>
               <li style="margin-bottom: 8px;">Understand the relationship between system conditions and LED states</li>
               <li style="margin-bottom: 8px;">Practice troubleshooting using LED diagnostic information</li>
-            </strong>
-              </div>
-            </div>
+            </ul>
           </div>
         </div>
-        </div>
         
-        <!-- Progress Tracker -->
         <div style="background: #2a2a2a; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
           <h5 style="color: #FFFFFF; margin-bottom: 15px; font-size: 20px;">Progress Tracker</h5>
           <div id="progress-steps" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
@@ -400,7 +397,6 @@
         </div>
       </div>
       
-      <!-- Step 1: Basic LED States -->
       <div id="step-1" class="learning-step active-step" style="margin-bottom: 25px;">
         <div class="simulation-container">
           <h4 style="color: #4CAF50; margin-bottom: 20px; font-size: 18px; display: flex; align-items: center; gap: 10px;">
@@ -473,7 +469,6 @@
         </div>
       </div>
       
-      <!-- Step 2: System Monitoring -->
       <div id="step-2" class="learning-step" style="margin-bottom: 25px; display: none;">
         <div class="simulation-container">
           <h4 style="color: #FF9800; margin-bottom: 20px; font-size: 18px; display: flex; align-items: center; gap: 10px;">
@@ -543,7 +538,6 @@
         </div>
       </div>
       
-      <!-- Step 3: Fault Diagnosis -->
       <div id="step-3" class="learning-step" style="margin-bottom: 25px; display: none;">
         <div class="simulation-container">
           <h4 style="color: #F44336; margin-bottom: 20px; font-size: 18px; display: flex; align-items: center; gap: 10px;">
@@ -617,7 +611,6 @@
         </div>
       </div>
       
-      <!-- Step 4: Troubleshooting Challenge -->
       <div id="step-4" class="learning-step" style="margin-bottom: 25px; display: none;">
         <div class="simulation-container">
           <h4 style="color: #9C27B0; margin-bottom: 20px; font-size: 18px; display: flex; align-items: center; gap: 10px;">
@@ -633,9 +626,7 @@
             </p>
           </div>
           
-          <div id="challenge-container">
-            <!-- Challenge content will be generated here -->
-          </div>
+          <div id="challenge-container"></div>
           
           <button id="complete-step-4" class="next-step-btn" style="background: linear-gradient(145deg, #9C27B0, #8E24AA); color: white; border: 2px solid #BA68C8; padding: 18px 25px; border-radius: 12px; cursor: pointer; font-weight: bold; font-size: 16px; width: 100%; margin-top: 20px; box-shadow: 0 6px 12px rgba(156, 39, 176, 0.4), 0 3px 6px rgba(0,0,0,0.3); transition: all 0.3s ease;" disabled onmouseover="if(!this.disabled) { this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 16px rgba(156, 39, 176, 0.5), 0 4px 8px rgba(0,0,0,0.4)'; }" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 12px rgba(156, 39, 176, 0.4), 0 3px 6px rgba(0,0,0,0.3)';" onmousedown="if(!this.disabled) this.style.transform='translateY(1px)'" onmouseup="if(!this.disabled) this.style.transform='translateY(-2px)'">
             <i class="fas fa-trophy"></i> Complete All Steps - Simulation Finished!
@@ -656,9 +647,14 @@
 
   <!-- Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <!-- SIMULATION SCRIPT DISABLED: Works but intentionally disabled for now
   <script src="status-led-simulation.js"></script>
+  -->
   
   <script>
+    /* SIMULATION CODE DISABLED: This code works but is intentionally disabled for now.
+       To re-enable: remove this comment wrapper and uncomment the script include above.
+    
     // Enhanced Status LED Simulation with Progressive Learning
     let currentStep = 1;
     let completedSteps = [];
@@ -1250,6 +1246,7 @@
         function loadSavedAnswers() {
           // This function is now handled by the tracking system
         }
+    */
   </script>
   
   <!-- Bottom Navigation -->

@@ -6,6 +6,33 @@ This document summarizes all changes made to fix various issues in the PLC Funda
 ## Issues Fixed (Chronological Order)
 ________________________________________________________________________________
 
+### Issue 0017: Worksheet Simulations Cleanup
+**Date**: 2025-01-27
+**Summary**: Cleaned up simulation sections across all worksheets and fixed broken HTML
+
+**Changes**:
+- **Worksheet 3**: Commented out entire simulation section with clear explanatory notes, removed stray `-->`
+- **Worksheet 4**: Commented out diagnostic challenge section with explanatory notes
+- **Worksheet 5**: Updated simulation comment to match pattern used in other worksheets
+- **Worksheets 6-9**: Completely deleted simulation sections and related JavaScript includes
+- **Worksheets 10-12**: Fixed broken HTML with malformed simulation sections and removed stray `-->` markers
+
+**Files Affected**:
+- `worksheet-3.html` - Simulation section commented out (works but disabled)
+- `worksheet-4.html` - Diagnostic challenge section commented out
+- `worksheet-5.html` - Updated simulation comment format
+- `worksheet-6.html` - Completely removed pump simulation section
+- `worksheet-7.html` - Completely removed valve simulation section  
+- `worksheet-8.html` - Completely removed simulation section
+- `worksheet-9.html` - Completely removed simulation section
+- `worksheet-10.html` - Fixed broken simulation HTML and removed stray comment markers
+- `worksheet-11.html` - Fixed broken simulation HTML and removed stray comment markers
+- `worksheet-12.html` - Fixed broken simulation HTML and removed stray comment markers
+
+**Status**: ✅ **FIXED**
+
+________________________________________________________________________________
+
 ### Version 1.0.5
 **Date**: 2025-08-08
 **Summary**: Version up-rev and about page sync
