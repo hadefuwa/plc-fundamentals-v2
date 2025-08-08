@@ -23,17 +23,7 @@
    <script defer src="image-fallback.js"></script>
    <script defer src="scenario-popup.js"></script>
    <script defer src="shared-navigation.js"></script>
-  <script>
-    // Clear any existing service worker registrations
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.getRegistrations().then(function(registrations) {
-        for(let registration of registrations) {
-          registration.unregister();
-          console.log('Existing service worker unregistered');
-        }
-      });
-    }
-  </script>
+  
      <style>
      /* Full Height Setup */
      html, body {
@@ -52,39 +42,7 @@
        pointer-events: none;
      }
 
-    /* Install Button Styles */
-    .nav-link.pwa-install-button {
-      background: linear-gradient(135deg, #4CAF50, #45a049);
-      border: none;
-      padding: 8px 16px;
-      color: white;
-      font-weight: bold;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
-      font-size: 14px;
-      height: 100%;
-      margin: auto 0;
-    }
-
-    .nav-link.pwa-install-button:hover {
-      background: linear-gradient(135deg, #45a049, #388E3C);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
-    }
-
-    .nav-link.pwa-install-button i {
-      font-size: 1em;
-    }
-
-    /* Hide install button when app is installed */
-    @media all and (display-mode: standalone), (display-mode: fullscreen) {
-      .nav-item .pwa-install-button {
-        display: none;
-      }
-    }
+    /* Install button removed from header; styles no longer needed */
 
     /* Start Here Button Styles */
          .start-here-btn {

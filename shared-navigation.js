@@ -30,11 +30,7 @@ function createSharedNavigation() {
               <i class="fas fa-info-circle"></i> ABOUT
             </a>
           </li>
-          <li class="nav-item">
-            <button onclick="installPWA()" class="nav-link pwa-install-button">
-              <i class="fas fa-download"></i> INSTALL APP
-            </button>
-          </li>
+          
         </ul>
       </div>
     </nav>
