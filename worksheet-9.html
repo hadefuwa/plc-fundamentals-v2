@@ -129,17 +129,21 @@
           </div>
           <div class="card-content">
             <p>Temperature sensors keep equipment safe by preventing overheating and detecting faults. We are using a PT100 probe connected to an evaluation unit that converts resistance to a 0–10 V signal for the PLC. The PLC reads a raw value (0–27,648) and scales it to a real temperature.</p>
-            <h3 style="margin-top:16px;">Key Takeaways</h3>
-            <ul>
-              <li>PT100 → evaluation unit → 0–10 V analogue input to PLC.</li>
-              <li>Raw value range 0–27,648 must be scaled to °C.</li>
-              <li>A reading near 32,000 indicates a fault (e.g., disconnected sensor).</li>
-              <li>Accurate scaling is essential (typical room 20–40 °C).</li>
-            </ul>
           </div>
         </div>
       </div>
 
+    </div>
+
+    <!-- Key Takeaways Section -->
+    <div class="worksheet-section key-takeaways-section">
+      <h2 class="section-header"><i class="fas fa-list-check"></i> Key Takeaways</h2>
+      <ul>
+        <li>PT100 → evaluation unit → 0–10 V analogue input to PLC.</li>
+        <li>Raw value range 0–27,648 must be scaled to °C.</li>
+        <li>A reading near 32,000 indicates a fault (e.g., disconnected sensor).</li>
+        <li>Accurate scaling is essential (typical room 20–40 °C).</li>
+      </ul>
     </div>
 
     <div class="worksheet-section questions-section">
