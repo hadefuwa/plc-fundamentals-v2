@@ -6,6 +6,17 @@ This document summarizes all changes made to fix various issues in the PLC Funda
 ## Issues Fixed (Chronological Order)
 ________________________________________________________________________________
 
+### Version 1.0.5
+**Date**: 2025-08-08
+**Summary**: Version up-rev and about page sync
+
+**Changes**:
+- Bumped app version to `1.0.5` in `package.json`.
+- Updated `about.html` version display to `1.0.5` and set Last Updated to `08/08/2025`.
+- No functional changes beyond prior Issue 0016 edits.
+
+________________________________________________________________________________
+
 ### Issue 0016: MCQ Alignment and Distribution, Simulations Hidden
 **Date**: 2025-08-08
 **Problem**: Worksheet MCQs did not fully match the answers document; internal answer parsing was unreliable in places; correct options were clustered on letter A; interactive simulations needed to be hidden after Q&A for print/clarity.
