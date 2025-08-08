@@ -1595,6 +1595,90 @@ h1 {
     box-shadow: 0 0 15px rgba(0, 188, 212, 0.3) !important;
 }
 
+/* Match section header color to section accent (CSS-only, no JS) */
+.worksheet-box .introduction-section .section-header,
+.worksheet-box .introduction-section .section-header i {
+    color: #2196F3 !important; /* matches introduction border */
+}
+
+.worksheet-box .over-to-you-section .section-header,
+.worksheet-box .over-to-you-section .section-header i {
+    color: #4CAF50 !important; /* matches over-to-you border */
+}
+
+.worksheet-box .so-what-section .section-header,
+.worksheet-box .so-what-section .section-header i {
+    color: #9C27B0 !important; /* matches so-what border */
+}
+
+.worksheet-box .questions-section .section-header,
+.worksheet-box .questions-section .section-header i {
+    color: #FF9800 !important; /* matches questions border */
+}
+
+.worksheet-box .key-takeaways-section .section-header,
+.worksheet-box .key-takeaways-section .section-header i {
+    color: #00BCD4 !important; /* matches key takeaways border */
+}
+
+/* Key Takeaways List - simple, readable styling */
+.worksheet-box .key-takeaways-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.worksheet-box .key-takeaways-section li {
+    position: relative;
+    background: #333;
+    color: #FFFFFF;
+    border: 1px solid #555;
+    border-left: 4px solid #00BCD4; /* Cyan accent */
+    border-radius: 8px;
+    padding: 14px 14px 14px 48px; /* space for checkmark */
+    line-height: 1.5;
+    transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.worksheet-box .key-takeaways-section li::before {
+    content: "✓";
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #00BCD4; /* Cyan */
+    color: #0b0f12;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.worksheet-box .key-takeaways-section li:hover {
+    background: #3a3a3a;
+    transform: translateX(2px);
+    box-shadow: 0 4px 12px rgba(0, 188, 212, 0.15);
+}
+
+@media (max-width: 480px) {
+    .worksheet-box .key-takeaways-section li {
+        padding: 12px 12px 12px 44px;
+    }
+    .worksheet-box .key-takeaways-section li::before {
+        width: 22px;
+        height: 22px;
+        left: 12px;
+        font-size: 13px;
+    }
+}
+
 /* Force all inner elements to have solid backgrounds */
 .worksheet-box .key-point,
 .worksheet-box .step-card,
