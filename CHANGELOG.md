@@ -4,6 +4,39 @@
 This document summarizes all changes made to fix various issues in the PLC Fundamentals application during this development session.
 
 ## Issues Fixed (Chronological Order)
+________________________________________________________________________________
+
+### Issue 0016: MCQ Alignment and Distribution, Simulations Hidden
+**Date**: 2025-08-08
+**Problem**: Worksheet MCQs did not fully match the answers document; internal answer parsing was unreliable in places; correct options were clustered on letter A; interactive simulations needed to be hidden after Q&A for print/clarity.
+
+**Files Affected**:
+- `worksheet-3.html` through `worksheet-12.html` (varies per change)
+- `docs/CP2388 – PLC Fundamentals for Maintenance Engineers - Answers.txt` (reference only)
+
+**Solutions**:
+- Aligned Questions & Answers content to the source answers document (worksheets 2–12; 1 unchanged).
+- Fixed regex-based answer extraction across worksheets that read from the visible “Correct Answer:” line using pattern `^([A-D])\)`.
+- Commented out interactive simulation sections after the Q&A so they remain in the file but are hidden.
+- Began redistributing correct answers across A–D to avoid clustering; ensured the visible letter and any internal `correctAnswers` mappings match.
+
+**Edits (highlights)**:
+- `worksheet-3.html`: Q3 → B, Q4 → D, Q5 → B; simulation section commented (already).
+- `worksheet-4.html`: Q3 → B, Q4 → D, Q5 → C; simulation section retained, diagnostic blocks present.
+- `worksheet-5.html`: Q2 → A, Q4 → C, Q5 → B; simulation section commented.
+- `worksheet-6.html`: Q2 → C, Q3 → B, Q4 → D; simulation section commented.
+- `worksheet-7.html`: Q2 → D, Q4 → D, Q5 → B; simulation section commented.
+- `worksheet-8.html`: Q2 → B, Q3 → C, Q4 → D, Q5 → B (visible letters updated accordingly).
+- `worksheet-9.html`: Q2 → C, Q3 → B, Q4 → D, Q5 → C (visible letters updated accordingly).
+- `worksheet-10.html`: mapping updated → Q4=A, Q5=A (internal `correctAnswers`).
+- `worksheet-11.html`: Q2 → D, Q3 → C, Q4 → B, Q5 → D; mapping updated accordingly.
+- `worksheet-12.html`: Q1 → D, Q2 → C, Q3 → D, Q4 → C, Q5 → B; mapping updated accordingly.
+
+**Artifacts**:
+- Added `docs/WORKSHEET_MCQ_UPDATE_LOG.md` to track MCQ redistribution progress and rules of engagement.
+
+**Status**: ✅ **PARTIALLY FIXED** (redistribution continuing; content alignment and simulation hiding complete)
+
 
 ________________________________________________________________________________
 

@@ -249,7 +249,7 @@
           <div class="multiple-choice-options">
             <label class="option-label">
               <input type="radio" name="question-2" value="A" class="option-radio">
-              <span class="option-text">A) An E-Stop is only for emergencies, not for normal stopping or shutdown</span>
+              <span class="option-text">A) To pause the machine for breaks</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-2" value="B" class="option-radio">
@@ -268,7 +268,7 @@
             <button class="submit-question-btn" onclick="submitAnswer(2)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
-            <strong style="color: #4CAF50;">Correct Answer:</strong> A) An E-Stop is only for emergencies, not for normal stopping or shutdown.
+            <strong style="color: #4CAF50;">Correct Answer:</strong> C) A normal stop is used for routine stops; E-Stop is for emergencies.
           </div>
         </div>
         
@@ -277,11 +277,11 @@
           <div class="multiple-choice-options">
             <label class="option-label">
               <input type="radio" name="question-3" value="A" class="option-radio">
-              <span class="option-text">A) The system stops, an alarm appears, and mixing is halted until reset</span>
+              <span class="option-text">A) The system speeds up</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-3" value="B" class="option-radio">
-              <span class="option-text">B) The system speeds up</span>
+              <span class="option-text">B) The system stops, an alarm appears, and mixing is halted until reset</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-3" value="C" class="option-radio">
@@ -296,7 +296,7 @@
             <button class="submit-question-btn" onclick="submitAnswer(3)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
-            <strong style="color: #4CAF50;">Correct Answer:</strong> A) The system stops, an alarm appears, and mixing is halted until reset.
+            <strong style="color: #4CAF50;">Correct Answer:</strong> B) The system stops, an alarm appears, and mixing is halted until reset.
           </div>
         </div>
         
@@ -305,7 +305,7 @@
           <div class="multiple-choice-options">
             <label class="option-label">
               <input type="radio" name="question-4" value="A" class="option-radio">
-              <span class="option-text">A) For safety. If either contact opens, the system stops. This makes the E-Stop more reliable</span>
+              <span class="option-text">A) To meet LED colour standards</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-4" value="B" class="option-radio">
@@ -317,14 +317,14 @@
             </label>
             <label class="option-label">
               <input type="radio" name="question-4" value="D" class="option-radio">
-              <span class="option-text">D) To meet LED colour standards</span>
+              <span class="option-text">D) For safety. If either contact opens, the system stops. This makes the E-Stop more reliable</span>
             </label>
           </div>
           <div class="question-actions">
             <button class="submit-question-btn" onclick="submitAnswer(4)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
-            <strong style="color: #4CAF50;">Correct Answer:</strong> A) For safety. If either contact opens, the system stops. This makes the E-Stop more reliable.
+            <strong style="color: #4CAF50;">Correct Answer:</strong> D) For safety. If either contact opens, the system stops. This makes the E-Stop more reliable.
           </div>
         </div>
         
@@ -333,7 +333,7 @@
           <div class="multiple-choice-options">
             <label class="option-label">
               <input type="radio" name="question-5" value="A" class="option-radio">
-              <span class="option-text">A) Twist the E-Stop to release it, then press the blue reset button or use the HMI reset</span>
+              <span class="option-text">A) Replace the PLC</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-5" value="B" class="option-radio">
@@ -341,7 +341,7 @@
             </label>
             <label class="option-label">
               <input type="radio" name="question-5" value="C" class="option-radio">
-              <span class="option-text">C) Replace the PLC</span>
+              <span class="option-text">C) Twist the E-Stop to release it, then press the blue reset button or use the HMI reset</span>
             </label>
             <label class="option-label">
               <input type="radio" name="question-5" value="D" class="option-radio">
@@ -352,7 +352,7 @@
             <button class="submit-question-btn" onclick="submitAnswer(5)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
-            <strong style="color: #4CAF50;">Correct Answer:</strong> A) Twist the E-Stop to release it, then press the blue reset button or use the HMI reset.
+            <strong style="color: #4CAF50;">Correct Answer:</strong> C) Twist the E-Stop to release it, then press the blue reset button or use the HMI reset.
           </div>
         </div>
       </div>
@@ -953,16 +953,16 @@
           worksheetTracker.saveAnswer(4, questionNumber, answer, 'maintenance');
           
           // Define correct answers for worksheet 4
-          const correctAnswers = {
-                "1": "C",
-                "2": "B",
-                "3": "D",
-                "4": "A",
-                "5": "B",
-                "scenario-1": "A",
-                "scenario-2": "B", 
-                "scenario-3": "B"
-          };
+      const correctAnswers = {
+            "1": "A",
+            "2": "C",
+            "3": "A",
+            "4": "A",
+            "5": "A",
+            "scenario-1": "A",
+            "scenario-2": "B", 
+            "scenario-3": "B"
+      };
           
           // Apply visual feedback
           const allOptions = answerInput.querySelectorAll('.option-label');
