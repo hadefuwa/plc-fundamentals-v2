@@ -659,11 +659,14 @@ h1 {
 .system-diagram { 
     text-align: center; 
     margin: 20px 0; 
+    width: 100%;
 }
 
 .system-diagram img { 
-    width: 350px; 
-    height: 250px; 
+    display: block;
+    max-width: 100%;
+    width: 100%;
+    height: auto; 
     object-fit: contain;
     border-radius: 8px; 
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); 
@@ -711,7 +714,7 @@ h1 {
     max-width: 300px;
     height: auto;
     max-height: 25vh;
-    min-height: 200px;
+    /* Removed min-height to avoid overflow on very small viewports */
     object-fit: contain;
 }
 
@@ -2984,15 +2987,17 @@ h1 {
   
   /* Responsive system diagram images */
   .system-diagram img {
-    width: 280px;
-    height: 200px;
+    width: 100%;
+    max-width: 280px;
+    height: auto;
   }
 }
 
 @media (max-width: 768px) {
   .system-diagram img {
-    width: 320px;
-    height: 230px;
+    width: 100%;
+    max-width: 320px;
+    height: auto;
   }
 }
 
