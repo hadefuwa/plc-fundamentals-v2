@@ -1,0 +1,12 @@
+AddType application/javascript .js
+AddType application/json .json
+
+# Enable CORS for service worker
+<IfModule mod_headers.c>
+    Header set Service-Worker-allowed "/"
+</IfModule>
+
+# Proper MIME type for service worker
+<Files "service-worker.js">
+    ForceType application/javascript
+</Files> 

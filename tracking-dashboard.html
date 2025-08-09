@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Matrix TSL - Progress Dashboard</title>
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">
+  <link rel="manifest" href="manifest.json">
+  <script defer src="shared-navigation.js"></script>
+  <script defer src="pwa-install.js"></script>
+  <script src="worksheet-core.js"></script>
+  <script src="worksheet-tracking.js"></script>
+  <!-- Add Chart.js before our scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .tracking-dashboard {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .dashboard-header {
+      text-align: center;
+      margin-bottom: 30px;
+      background: linear-gradient(135deg, var(--background-color) 0%, #1a1d20 100%);
+      padding: 30px;
+      border-radius: 10px;
+      color: white;
+      border: 2px solid var(--accent-color);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 20px;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 20px;
+      height: fit-content;
+    }
+    
+    .student-info {
+      background: #23272b;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      margin-bottom: 20px;
+      color: white;
+    }
+    
+    .student-form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .form-group label {
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: white;
+    }
+    
+    .form-group input {
+      padding: 10px;
+      border: 2px solid #444;
+      border-radius: 4px;
+      font-size: 14px;
+      background: #2d2d2d;
+      color: white;
+      transition: border-color 0.3s ease;
+    }
+    
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--accent-color);
+    }
+
+    .quick-stats {
+      background: #23272b;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      margin-bottom: 20px;
+      color: white;
+    }
+
+    .stat-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #444;
+    }
+
+    .stat-item:last-child {
+      border-bottom: none;
+    }
+
+    .stat-label {
+      color: #aaa;
+    }
+
+    .stat-value {
+      font-weight: bold;
+      color: var(--accent-color);
+    }
+
+    .main-content {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    
+    .progress-section {
+      background: #23272b;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      color: white;
+    }
+    
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #444;
+    }
+    
+    .section-header h2 {
+      color: var(--accent-color);
+      margin: 0;
+    }
+    
+    .section-count {
+      color: var(--accent-color);
+      font-weight: bold;
+      font-size: 1.1em;
+    }
+
+    .worksheet-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .worksheet-card {
+      border: 1px solid #444;
+      border-radius: 8px;
+      padding: 20px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+      background: #2d2d2d;
+      color: white;
+      min-height: 150px;
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 15px;
+      margin: 0;
+      box-sizing: border-box;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .worksheet-title {
+      font-size: 1.2em;
+      font-weight: bold;
+      margin: 0;
+      color: #fff;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+      line-height: 1.4;
+    }
+    
+    .worksheet-type {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85em;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .worksheet-type.maintenance {
+      background: rgba(74, 158, 255, 0.15);
+      color: var(--accent-color);
+      border: 1px solid rgba(74, 158, 255, 0.3);
+    }
+    
+    .worksheet-type.fault {
+      background: rgba(255, 152, 0, 0.15);
+      color: #ff9800;
+      border: 1px solid rgba(255, 152, 0, 0.3);
+    }
+    
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 8px 0;
+      position: relative;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      transition: width 0.3s ease;
+      border-radius: 4px;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    
+    .progress-fill.completed {
+      background: linear-gradient(90deg, var(--accent-color), #3a8ce6);
+      box-shadow: 0 0 10px rgba(74, 158, 255, 0.3);
+    }
+    
+    .progress-fill.incomplete {
+      background: linear-gradient(90deg, #ff9800, #ffb74d);
+      box-shadow: 0 0 10px rgba(255, 152, 0, 0.3);
+    }
+    
+    .progress-fill.not-started {
+      background: linear-gradient(90deg, #666, #888);
+    }
+    
+    .worksheet-stats {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9em;
+      color: rgba(255, 255, 255, 0.7);
+      margin-top: auto;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .last-activity {
+      font-size: 0.8em;
+      color: rgba(255, 255, 255, 0.5);
+      margin-top: 5px;
+    }
+    
+    .worksheet-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+      border-color: var(--accent-color);
+    }
+    
+    .worksheet-card.completed {
+      border-left: 4px solid var(--accent-color);
+      background: linear-gradient(135deg, rgba(74, 158, 255, 0.1) 0%, rgba(74, 158, 255, 0.05) 100%);
+    }
+    
+    .worksheet-card.incomplete {
+      border-left: 4px solid #ff9800;
+      background: linear-gradient(135deg, rgba(255, 152, 0, 0.1) 0%, rgba(255, 152, 0, 0.05) 100%);
+    }
+    
+    .worksheet-card.not-started {
+      border-left: 4px solid #666;
+      background: linear-gradient(135deg, rgba(102, 102, 102, 0.1) 0%, rgba(102, 102, 102, 0.05) 100%);
+    }
+    
+    .worksheet-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    @media (max-width: 768px) {
+      .worksheet-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+
+
+    .chart-section {
+      background: #23272b;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      margin-bottom: 20px;
+      color: white;
+      width: 100%;
+      overflow: hidden;
+      max-width: 100%;
+    }
+
+    .chart-container {
+      height: 400px;
+      width: 100%;
+      margin-top: 20px;
+      position: relative;
+      max-width: 100%;
+      overflow: hidden;
+      z-index: 1;
+    }
+    
+    @media (max-width: 1200px) {
+      .chart-container {
+        height: 350px;
+      }
+      .worksheet-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+      .worksheet-card {
+        min-height: 140px;
+        padding: 15px;
+      }
+      .progress-section {
+        padding: 15px;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+      .chart-container {
+        height: 300px;
+      }
+      .worksheet-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+      .worksheet-card {
+        min-height: 130px;
+      }
+    }
+
+    /* Prevent chart overflow */
+    canvas {
+      max-width: 100% !important;
+      height: auto !important;
+    }
+
+    .export-section {
+      background: #23272b;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      margin-bottom: 20px;
+      color: white;
+    }
+    
+    .export-buttons {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    
+    .export-btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .export-btn.json {
+      background: linear-gradient(135deg, #2196F3, #1976D2);
+      color: white;
+    }
+    
+    .export-btn.csv {
+      background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
+      color: white;
+    }
+    
+    .export-btn.pdf {
+      background: linear-gradient(135deg, #f44336, #d32f2f);
+      color: white;
+    }
+    
+    .export-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+    }
+
+    .save-btn {
+      background: linear-gradient(135deg, var(--accent-color), #3a8ce6);
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+    
+    .save-btn:hover {
+      background: linear-gradient(135deg, #3a8ce6, #2d7dd2);
+    }
+
+    .file-input-wrapper {
+      position: relative;
+      display: inline-block;
+      margin: 10px 0;
+    }
+    
+    .file-input {
+      position: absolute;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+    
+    .file-input-label {
+      background: linear-gradient(135deg, #2196F3, #1976D2);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s;
+    }
+    
+    .file-input-label:hover {
+      background: linear-gradient(135deg, #1976D2, #1565C0);
+    }
+
+    @media (max-width: 1200px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .student-form {
+        grid-template-columns: 1fr;
+      }
+      
+      .export-buttons {
+        flex-direction: column;
+      }
+      
+      .worksheet-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Reset Controls Styles */
+    .reset-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .reset-options {
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid #444;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .reset-options.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Reset Button Styles */
+    .reset-btn {
+      background: linear-gradient(135deg, #f44336, #d32f2f);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .reset-btn:hover:not(:disabled) {
+      background: linear-gradient(135deg, #d32f2f, #b71c1c);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(244, 67, 54, 0.4);
+    }
+
+    .reset-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .reset-btn.export-btn {
+      background: linear-gradient(135deg, #2196F3, #1976D2);
+    }
+
+    .reset-btn.export-btn:hover {
+      background: linear-gradient(135deg, #1976D2, #1565C0);
+      box-shadow: 0 4px 12px rgba(33, 150, 243, 0.4);
+    }
+
+    .reset-btn.confirm-btn {
+      background: linear-gradient(135deg, #f44336, #d32f2f);
+    }
+
+    .reset-btn.confirm-btn:hover {
+      background: linear-gradient(135deg, #d32f2f, #b71c1c);
+      box-shadow: 0 4px 12px rgba(244, 67, 54, 0.4);
+    }
+
+    .reset-btn.cancel-btn {
+      background: linear-gradient(135deg, #666666, #444444);
+    }
+
+    .reset-btn.cancel-btn:hover {
+      background: linear-gradient(135deg, #555555, #333333);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Popup Styles */
+    /* Modal/Popup Layer */
+    .modal-layer {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Chart Layer */
+    .chart-container {
+      position: relative;
+      z-index: 1;
+    }
+
+    canvas {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Reset z-index stacking context */
+    body {
+      position: relative;
+      z-index: auto;
+    }
+    
+    .main-container,
+    .main-content,
+    .chart-container,
+    canvas,
+    .Chart {
+      position: relative;
+      z-index: 1;
+    }
+    
+    /* Ensure main content stays below popup */
+    .main-content {
+      z-index: 1 !important;
+      position: relative !important;
+    }
+
+    /* Popup Layer - Above Everything */
+    /* Create new stacking context for popup */
+    body.popup-open {
+      overflow: hidden !important;
+    }
+    
+    body.popup-open .main-content {
+      filter: blur(4px);
+      pointer-events: none;
+    }
+    
+    #resetPopup.popup-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 2147483647 !important;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      overflow: hidden;
+      opacity: 0;
+      transition: all 0.3s ease;
+      will-change: opacity;
+      transform: translateZ(0);
+    }
+
+    #resetPopup.popup-overlay[style*="display: block"] {
+      opacity: 1;
+    }
+
+    #resetPopup .popup-content {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(135deg, #2a2a2a, #3a3a3a);
+      padding: 30px;
+      border-radius: 12px;
+      border: 2px solid var(--accent-color);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+      max-width: 500px;
+      width: 90%;
+      z-index: 2147483647 !important;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      transform: translate(-50%, -50%) scale(0.95);
+    }
+
+    #resetPopup.popup-overlay[style*="display: block"] .popup-content {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .popup-content h3 {
+      color: #f44336;
+      font-size: 24px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .popup-content p {
+      color: #FFFFFF;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .popup-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 25px;
+    }
+
+    .popup-btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .popup-btn.export-first {
+      background: linear-gradient(135deg, #2196F3, #1976D2);
+      color: white;
+    }
+
+    .popup-btn.export-first:hover {
+      background: linear-gradient(135deg, #1976D2, #1565C0);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(33, 150, 243, 0.4);
+    }
+
+    .popup-btn.reset-only {
+      background: linear-gradient(135deg, #f44336, #d32f2f);
+      color: white;
+    }
+
+    .popup-btn.reset-only:hover {
+      background: linear-gradient(135deg, #d32f2f, #b71c1c);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(244, 67, 54, 0.4);
+    }
+
+    .popup-btn.cancel {
+      background: linear-gradient(135deg, #666666, #444444);
+      color: white;
+    }
+
+    .popup-btn.cancel:hover {
+      background: linear-gradient(135deg, #555555, #333333);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    @media (max-width: 480px) {
+      .popup-content {
+        padding: 20px;
+      }
+
+      .popup-content h3 {
+        font-size: 20px;
+      }
+
+      .popup-content p {
+        font-size: 14px;
+      }
+
+      .popup-btn {
+        padding: 10px 20px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+
+  <!-- Main Content -->
+  <div class="tracking-dashboard">
+    <div class="dashboard-header">
+      <h1><i class="fas fa-chart-line"></i> Progress Dashboard</h1>
+      <p>Track your progress across all worksheets and export results for your teacher</p>
+    </div>
+
+    <div class="dashboard-grid">
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Student Information -->
+        <div class="student-info">
+          <h2><i class="fas fa-user"></i> Student Information</h2>
+          <form id="studentForm" class="student-form">
+            <div class="form-group">
+              <label for="studentName">Student Name:</label>
+              <input type="text" id="studentName" placeholder="Enter your name">
+            </div>
+            <div class="form-group">
+              <label for="studentId">Student ID:</label>
+              <input type="text" id="studentId" placeholder="Enter your student ID">
+            </div>
+            <button type="submit" class="save-btn">Save Information</button>
+          </form>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="quick-stats">
+          <h2><i class="fas fa-tachometer-alt"></i> Quick Stats</h2>
+          <div id="quickStats">
+            <!-- Will be populated by JavaScript -->
+          </div>
+        </div>
+
+        <!-- Export Section -->
+        <div class="export-section">
+          <h2><i class="fas fa-download"></i> Export Progress</h2>
+          <p>Export your progress report:</p>
+          <div class="export-buttons">
+            <button class="export-btn json" onclick="exportToJSON()">
+              <i class="fas fa-file-code"></i> Export as JSON
+            </button>
+            <button class="export-btn csv" onclick="exportToCSV()">
+              <i class="fas fa-file-csv"></i> Export as CSV
+            </button>
+            <button class="export-btn pdf" onclick="exportToPDF()">
+              <i class="fas fa-file-pdf"></i> Export as PDF
+            </button>
+          </div>
+          
+          <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #444;">
+            <h3 style="color: var(--accent-color); margin-bottom: 15px;">
+              <i class="fas fa-upload"></i> Import Progress
+            </h3>
+            <p style="margin-bottom: 15px; color: #9da5b1;">
+              Import from a previous export:
+            </p>
+            <div class="file-input-wrapper">
+              <input type="file" id="importFile" class="file-input" accept=".json" onchange="importProgressData(this)">
+              <label for="importFile" class="file-input-label">
+                <i class="fas fa-upload"></i> Choose JSON File
+              </label>
+            </div>
+            <div id="importStatus" style="margin-top: 10px; padding: 10px; border-radius: 4px; display: none;"></div>
+          </div>
+
+          <!-- Reset Section -->
+          <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #444;">
+            <h3 style="color: #f44336; margin-bottom: 15px;">
+              <i class="fas fa-trash-alt"></i> Reset Progress
+            </h3>
+            <p style="margin-bottom: 15px; color: #9da5b1;">
+              Reset all worksheet progress (this cannot be undone):
+            </p>
+            <div class="reset-controls">
+              <button onclick="showResetOptions()" class="reset-btn" id="initialResetBtn">
+                <i class="fas fa-trash-alt"></i> Reset All Progress
+              </button>
+              <div id="resetOptions" class="reset-options">
+                <button onclick="exportAndReset()" class="reset-btn export-btn">
+                  <i class="fas fa-download"></i> Export & Reset
+                </button>
+                <button onclick="resetProgress()" class="reset-btn confirm-btn">
+                  <i class="fas fa-exclamation-triangle"></i> Confirm Reset
+                </button>
+                <button onclick="hideResetOptions()" class="reset-btn cancel-btn">
+                  <i class="fas fa-times"></i> Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <!-- Progress Charts -->
+        <div class="chart-section">
+          <h2><i class="fas fa-chart-bar"></i> Progress Overview</h2>
+          <div class="chart-container">
+            <canvas id="progressChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Maintenance Worksheets -->
+        <div class="progress-section">
+          <div class="section-header">
+            <h2><i class="fas fa-cogs"></i> Maintenance Worksheets (CP2388)</h2>
+            <span class="section-count" id="maintenanceCount">0/12</span>
+          </div>
+          <div class="worksheet-grid" id="maintenanceWorksheets">
+            <!-- Will be populated by JavaScript -->
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let progressChart = null; // Global reference to chart instance
+
+    // Load settings and apply accent color
+    function loadSettings() {
+      try {
+        const settings = JSON.parse(localStorage.getItem('app-settings') || '{}');
+        if (settings.appAccent) {
+          document.documentElement.style.setProperty('--accent-color', settings.appAccent);
+        }
+      } catch (error) {
+        console.warn('Could not load settings:', error);
+      }
+    }
+
+    // Initialize dashboard when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof Chart === 'undefined') {
+        console.error('Chart.js not loaded');
+        return;
+      }
+      
+      // Force cleanup of old worksheet data
+      if (typeof worksheetTracker !== 'undefined') {
+        worksheetTracker.cleanupOldWorksheetData();
+      }
+      
+      // Load settings and student info
+      loadSettings();
+      loadStudentInfo();
+      
+      // Initialize dashboard components
+      initializeDashboard();
+      initializeCharts();
+      
+      // Set up refresh button
+      const refreshBtn = document.getElementById('refreshBtn');
+      if (refreshBtn) {
+        refreshBtn.addEventListener('click', function() {
+          updateQuickStats();
+          updateWorksheetsDisplay();
+          initializeCharts();
+        });
+      }
+    });
+
+    function initializeDashboard() {
+      updateQuickStats();
+      updateWorksheetsDisplay();
+    }
+
+    function updateQuickStats() {
+      const stats = worksheetTracker.getOverallProgress();
+      const quickStatsDiv = document.getElementById('quickStats');
+      
+      quickStatsDiv.innerHTML = `
+        <div class="stat-item">
+          <span class="stat-label">Overall Progress</span>
+          <span class="stat-value">${stats.completionPercentage}%</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Completed Worksheets</span>
+          <span class="stat-value">${stats.completedWorksheets}/${stats.totalWorksheets}</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Questions Answered</span>
+          <span class="stat-value">${stats.completedQuestions}/${stats.totalQuestions}</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Last Activity</span>
+          <span class="stat-value">${formatLastActivity(stats.lastActivity)}</span>
+        </div>
+      `;
+    }
+
+    function formatLastActivity(lastActivity) {
+      if (!lastActivity) return 'Never';
+      try {
+        const date = new Date(lastActivity);
+        if (isNaN(date.getTime()) || date > new Date()) return 'Never';
+        return date.toLocaleDateString();
+      } catch (error) {
+        console.warn('Error formatting date:', error);
+        return 'Never';
+      }
+    }
+
+    function initializeCharts() {
+      const canvas = document.getElementById('progressChart');
+      if (!canvas) {
+        console.error('Progress chart canvas not found');
+        return;
+      }
+
+      const ctx = canvas.getContext('2d');
+      const allProgress = worksheetTracker.getAllProgress();
+      
+      // Prepare data for chart - only maintenance worksheets
+      const maintenanceData = worksheetTracker.worksheets.maintenance.map(worksheet => {
+        const progress = allProgress[`maintenance-${worksheet.id}`] || { completionPercentage: 0 };
+        return progress.completionPercentage || 0;
+      });
+
+      // Destroy existing chart if it exists
+      if (progressChart instanceof Chart) {
+        progressChart.destroy();
+      }
+      
+      progressChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: [
+            ...worksheetTracker.worksheets.maintenance.map(w => `WS ${w.id}`)
+          ],
+          datasets: [{
+            label: 'Completion %',
+            data: [...maintenanceData],
+                          backgroundColor: function(context) {
+              const value = context.raw || 0;
+              if (value === 0) return '#666';
+              if (value === 100) return getComputedStyle(document.documentElement).getPropertyValue('--accent-color').trim();
+              return '#ff9800';
+            },
+            borderColor: '#333',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          resizeDelay: 0,
+          animation: {
+            duration: 0
+          },
+          layout: {
+            padding: {
+              left: 10,
+              right: 30,
+              top: 10,
+              bottom: 10
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 100,
+              grid: {
+                color: '#333'
+              },
+              ticks: {
+                color: '#aaa',
+                callback: value => value + '%'
+              }
+            },
+            x: {
+              grid: {
+                color: '#333'
+              },
+              ticks: {
+                color: '#aaa'
+              }
+            }
+          },
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              enabled: true,
+              position: 'nearest',
+              z: 1,
+              callbacks: {
+                label: function(context) {
+                  return `Completion: ${context.raw || 0}%`;
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function updateWorksheetsDisplay() {
+      const allProgress = worksheetTracker.getAllProgress();
+      
+      // Update maintenance worksheets
+      const maintenanceContainer = document.getElementById('maintenanceWorksheets');
+      const maintenanceCount = document.getElementById('maintenanceCount');
+      let maintenanceCompleted = 0;
+      
+      // Debug: Log maintenance data
+      console.log('Maintenance worksheets data:', worksheetTracker.worksheets.maintenance);
+      
+      maintenanceContainer.innerHTML = worksheetTracker.worksheets.maintenance.map(worksheet => {
+        const progress = allProgress[`maintenance-${worksheet.id}`] || {
+          completedQuestions: 0,
+          totalQuestions: worksheet.totalQuestions,
+          completionPercentage: 0
+        };
+        
+        const isComplete = progress.completedQuestions === progress.totalQuestions;
+        const statusClass = progress.completedQuestions === 0 ? 'not-started' : 
+                          isComplete ? 'completed' : 'incomplete';
+        
+        if (isComplete) maintenanceCompleted++;
+        
+        return `
+          <div class="worksheet-card ${statusClass}" onclick="openWorksheet('maintenance', ${worksheet.id})">
+            <div class="worksheet-title">${worksheet.title}</div>
+            <span class="worksheet-type maintenance">Maintenance</span>
+            <div class="progress-bar">
+              <div class="progress-fill ${statusClass}" style="width: ${progress.completionPercentage || 0}%"></div>
+            </div>
+            <div class="worksheet-stats">
+              <span>${progress.completedQuestions || 0}/${progress.totalQuestions} questions</span>
+              <span>${progress.completionPercentage || 0}%</span>
+            </div>
+            ${progress.lastUpdated ? `<div class="last-activity">Last updated: ${new Date(progress.lastUpdated).toLocaleString()}</div>` : ''}
+          </div>
+        `;
+      }).join('');
+      
+      maintenanceCount.textContent = `${maintenanceCompleted}/${worksheetTracker.worksheets.maintenance.length}`;
+    }
+
+    function openWorksheet(type, id) {
+      if (type === 'maintenance') {
+        window.location.href = `worksheet-${id}.html`;
+      }
+    }
+
+    function loadStudentInfo() {
+      const studentInfo = worksheetTracker.getStudentInfo();
+      document.getElementById('studentName').value = studentInfo.name;
+      document.getElementById('studentId').value = studentInfo.id;
+    }
+
+    // Student form submission
+    document.getElementById('studentForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('studentName').value;
+      const id = document.getElementById('studentId').value;
+      
+      worksheetTracker.setStudentInfo(name, id);
+      
+      // Show success message
+      const saveBtn = document.querySelector('.save-btn');
+      const originalText = saveBtn.textContent;
+      saveBtn.textContent = 'Saved!';
+      saveBtn.style.background = 'var(--accent-color)';
+      
+      setTimeout(() => {
+        saveBtn.textContent = originalText;
+        saveBtn.style.background = '';
+      }, 2000);
+    });
+
+    // Export functions
+    function exportToJSON() {
+      worksheetTracker.exportToJSON();
+    }
+
+    function exportToCSV() {
+      worksheetTracker.exportToCSV();
+    }
+
+    function exportToPDF() {
+      worksheetTracker.exportToPDF();
+    }
+
+    // Import function
+    function importProgressData(input) {
+      const file = input.files[0];
+      if (!file) return;
+
+      const statusDiv = document.getElementById('importStatus');
+      
+      // Show loading status
+      statusDiv.style.display = 'block';
+      statusDiv.style.background = '#2f2f1a';
+      statusDiv.style.border = '1px solid #ff9800';
+      statusDiv.style.color = '#ff9800';
+      statusDiv.textContent = 'Importing data...';
+
+      worksheetTracker.importFromFile(file)
+        .then(result => {
+          if (result.success) {
+            statusDiv.style.background = '#1a2f1a';
+            statusDiv.style.border = '1px solid var(--accent-color)';
+            statusDiv.style.color = 'var(--accent-color)';
+            statusDiv.textContent = result.message + ' Refreshing...';
+            
+            // Clear the file input
+            input.value = '';
+            
+            // Refresh the page
+            setTimeout(() => {
+              window.location.reload();
+            }, 2000);
+          } else {
+            throw new Error(result.message);
+          }
+        })
+        .catch(error => {
+          statusDiv.style.background = '#2f1a1a';
+          statusDiv.style.border = '1px solid #f44336';
+          statusDiv.style.color = '#f44336';
+          statusDiv.textContent = 'Import failed: ' + error.message;
+          
+          // Clear the file input
+          input.value = '';
+        });
+    }
+
+    // Reset options functions
+    function showResetOptions() {
+      const resetOptions = document.getElementById('resetOptions');
+      const initialBtn = document.getElementById('initialResetBtn');
+      
+      // Show options with animation
+      resetOptions.style.display = 'flex';
+      resetOptions.classList.add('show');
+      
+      // Disable initial button
+      initialBtn.disabled = true;
+      initialBtn.style.opacity = '0.5';
+      
+      // Add escape key listener
+      document.addEventListener('keydown', handleEscapeKey);
+    }
+
+    function hideResetOptions() {
+      const resetOptions = document.getElementById('resetOptions');
+      const initialBtn = document.getElementById('initialResetBtn');
+      
+      // Hide options with animation
+      resetOptions.classList.remove('show');
+      
+      // Re-enable initial button
+      initialBtn.disabled = false;
+      initialBtn.style.opacity = '1';
+      
+      // Remove escape key listener
+      document.removeEventListener('keydown', handleEscapeKey);
+      
+      // Hide options after animation
+      setTimeout(() => {
+        resetOptions.style.display = 'none';
+      }, 300);
+    }
+    
+    function handleEscapeKey(event) {
+      if (event.key === 'Escape') {
+        hideResetOptions();
+      }
+    }
+
+    function exportAndReset() {
+      // Export current progress
+      exportToJSON();
+      
+      // Wait a brief moment to ensure export completes
+      setTimeout(() => {
+        resetProgress();
+      }, 500);
+    }
+
+    function resetProgress() {
+      // Clear all progress data
+      worksheetTracker.clearAllProgress();
+      
+      // Update the UI
+      updateQuickStats();
+      updateWorksheetsDisplay();
+      initializeCharts();
+      
+      // Hide the reset options
+      hideResetOptions();
+      
+      // Show success message
+      const statusDiv = document.createElement('div');
+      statusDiv.className = 'inline-notification success';
+      statusDiv.innerHTML = `
+        <div class="notification-title">Progress Reset Successfully</div>
+        <div class="notification-message">All worksheet progress has been cleared.</div>
+      `;
+      document.body.appendChild(statusDiv);
+      
+      // Remove the notification after 3 seconds
+      setTimeout(() => {
+        statusDiv.classList.add('fade-out');
+        setTimeout(() => {
+          statusDiv.remove();
+        }, 300);
+      }, 3000);
+    }
+
+    // Refresh dashboard every 30 seconds
+    setInterval(() => {
+      updateQuickStats();
+      updateWorksheetsDisplay();
+    }, 30000);
+  </script>
+</body>
+</html> 

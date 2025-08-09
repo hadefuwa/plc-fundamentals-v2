@@ -1,0 +1,1056 @@
+{
+    "scenarios": [
+        {
+            "id": 1,
+            "title": "Closed-Loop Control Systems",
+            "functionCall": "showInteractiveWorksheet1",
+            "paragraphs": [
+                "You are working with a closed-loop flow control system that continuously adjusts flow using sensor feedback to meet a setpoint.",
+                "The system maintains accuracy and stability even when conditions change.",
+                "You need to understand the system components and their interactions.",
+                "This includes the PLC, sensors, actuators, and control elements."
+            ],
+            "image": "closed-loop-control.png",
+            "questions": [
+                {
+                    "id": "1.1",
+                    "text": "What is the purpose of a closed-loop flow control system?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "To turn the system on and off automatically",
+                        "To continuously adjust flow using sensor feedback to meet a setpoint, maintaining accuracy and stability even if conditions change",
+                        "To only control temperature, not flow",
+                        "To provide basic on/off control"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "A closed-loop flow control system continuously adjusts flow using sensor feedback to meet a setpoint, maintaining accuracy and stability even if conditions change. This is different from simple on/off control."
+                },
+                {
+                    "id": "1.2",
+                    "text": "What must you check before starting the system?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only check if the power is on",
+                        "Ensure the hand valve is in the open position, with the handle in line with the piping",
+                        "Just check the temperature sensor",
+                        "Only verify the pump is working"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Before starting the system, you must ensure the hand valve is in the open position, with the handle in line with the piping. This allows proper flow through the system."
+                },
+                {
+                    "id": "1.3",
+                    "text": "What happens when you restrict the flow using the hand valve?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "Nothing happens to the system",
+                        "The flow drops, the sensor detects this and sends data to the PLC, which increases pump speed and adjusts the valve to restore flow",
+                        "The system shuts down immediately",
+                        "Only the temperature changes"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "When you restrict the flow using the hand valve, the flow drops, the sensor detects this and sends data to the PLC, which increases pump speed and adjusts the valve to restore flow. This demonstrates the closed-loop control in action."
+                },
+                {
+                    "id": "1.4",
+                    "text": "What role does the PLC play in the system?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "It only displays information",
+                        "The PLC is a computer that makes real-time decisions based on sensor data to control devices like pumps and valves",
+                        "It only controls the temperature",
+                        "It only monitors the flow sensor"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "The PLC is a computer that makes real-time decisions based on sensor data to control devices like pumps and valves. It processes the feedback from sensors and adjusts the system accordingly."
+                },
+                {
+                    "id": "1.5",
+                    "text": "Why should you avoid making rapid changes to the valve?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "It doesn't matter how fast you change it",
+                        "Rapid changes can cause oscillations in flow, making the system unstable; gradual adjustments help maintain smooth control",
+                        "It will damage the valve",
+                        "It will only affect the temperature"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Rapid changes can cause oscillations in flow, making the system unstable; gradual adjustments help maintain smooth control. This is important for maintaining system stability."
+                }
+            ],
+            "simulation": {
+                "title": "HMI Interface Simulation",
+                "description": "Interactive HMI simulation with alarm management, configuration screens, and operator training scenarios."
+            }
+        },
+        {
+            "id": 2,
+            "title": "Emergency Stop Systems",
+            "introduction": {
+                "title": "Emergency Stop System Overview",
+                "paragraphs": [
+                    "Emergency Stop (E-Stop) systems are critical safety components in industrial automation.",
+                    "These systems must function perfectly to protect both personnel and equipment.",
+                    "You need to understand how E-Stops work and how to properly test them.",
+                    "This includes understanding the reset procedure and safety features."
+                ],
+                "keyPoints": [
+                    {
+                        "title": "Dual-Channel Safety",
+                        "description": "Modern E-Stop systems use redundant channels to ensure reliability. If one channel fails, the other continues to provide protection.",
+                        "icon": "fas fa-shield-alt",
+                        "color": "#4CAF50"
+                    },
+                    {
+                        "title": "Fault Detection",
+                        "description": "The system continuously monitors both channels for faults, including wire breaks, contact wear, and other potential failure modes.",
+                        "icon": "fas fa-exclamation-triangle",
+                        "color": "#FF9800"
+                    },
+                    {
+                        "title": "Reset Procedures",
+                        "description": "After an emergency stop, proper reset procedures must be followed to ensure system safety before restarting operations.",
+                        "icon": "fas fa-redo",
+                        "color": "#2196F3"
+                    }
+                ]
+            },
+            "overToYou": {
+                "title": "Your Task",
+                "description": "You will interact with a realistic Emergency Stop system simulation. Practice activating the E-Stop, injecting faults to test system response, and performing proper reset procedures.",
+                "objectives": [
+                    "Activate the emergency stop system",
+                    "Inject various fault conditions",
+                    "Practice the reset sequence",
+                    "Monitor system diagnostics"
+                ]
+            },
+            "soWhat": {
+                "title": "Why This Matters",
+                "description": "Emergency Stop systems are the last line of defense in industrial safety. Understanding their operation and being able to troubleshoot them quickly can prevent accidents and save lives.",
+                "keyLearnings": [
+                    "Safety system redundancy principles",
+                    "Fault detection and diagnosis",
+                    "Proper reset procedures",
+                    "System monitoring and maintenance"
+                ]
+            },
+            "image": "emergency-stops.png",
+            "questions": [
+                {
+                    "id": "2.1",
+                    "text": "What is the main purpose of an Emergency Stop (E-Stop)?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "To turn the system on and off normally",
+                        "To quickly stop a machine or system in an emergency to protect people and equipment",
+                        "To control the flow rate",
+                        "To adjust the temperature"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "The main purpose of an Emergency Stop (E-Stop) is to quickly stop a machine or system in an emergency to protect people and equipment. It provides immediate shutdown capability."
+                },
+                {
+                    "id": "2.2",
+                    "text": "How do you reset the E-Stop after it has been pressed?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "Just press the E-Stop again",
+                        "Twist the E-Stop anti-clockwise, then press the blue reset button or the HMI reset button",
+                        "Turn the power off and on",
+                        "Wait for it to reset automatically"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "To reset the E-Stop after it has been pressed, you must twist the E-Stop anti-clockwise, then press the blue reset button or the HMI reset button. This ensures the system is properly reset."
+                },
+                {
+                    "id": "2.3",
+                    "text": "What makes an E-Stop more reliable than a normal stop button?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "It's bigger and more visible",
+                        "It has two contact channels; both must be closed for operation, and either opening will stop the system, this redundancy ensures safety",
+                        "It's made of better materials",
+                        "It has a different color"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "An E-Stop has two contact channels; both must be closed for operation, and either opening will stop the system. This redundancy ensures safety and makes it more reliable than a normal stop button."
+                },
+                {
+                    "id": "2.4",
+                    "text": "When should an E-Stop be used?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "For regular stopping of the machine",
+                        "Only during emergencies, not for regular stopping of the machine",
+                        "Whenever you want to stop the system",
+                        "To test the system"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "An E-Stop should only be used during emergencies, not for regular stopping of the machine. It's a safety device for emergency situations only."
+                },
+                {
+                    "id": "2.5",
+                    "text": "Why is it important to regularly inspect the E-Stop?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "To keep it clean",
+                        "To ensure it is free from damage or faults and will work properly when needed",
+                        "To make sure it's visible",
+                        "To test the wiring"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "It's important to regularly inspect the E-Stop to ensure it is free from damage or faults and will work properly when needed. Regular inspection prevents failures during emergencies."
+                }
+            ],
+            "simulation": {
+                "title": "Emergency Stop System Simulation",
+                "description": "Interactive Emergency Stop system with dual-channel safety, fault injection, reset procedures, and diagnostic monitoring.",
+                "sections": [
+                    {
+                        "id": "emergency-stop-control-panel",
+                        "title": "Emergency Stop Control Panel",
+                        "description": "Main E-Stop controls with emergency stop button and reset functionality"
+                    },
+                    {
+                        "id": "fault-injection-panel",
+                        "title": "Fault Injection & Diagnostics",
+                        "description": "Inject various fault conditions to test system response"
+                    },
+                    {
+                        "id": "reset-sequence-panel",
+                        "title": "Reset Sequence Training",
+                        "description": "Practice proper reset procedures with twist and blue button sequence"
+                    },
+                    {
+                        "id": "fault-history-panel",
+                        "title": "Fault History & Diagnostics",
+                        "description": "Monitor system diagnostics and fault history"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 3,
+            "title": "Status LED Indicators",
+            "paragraphs": [
+                "The Status LED is a crucial indicator that shows the system's condition.",
+                "It helps quickly identify faults and safety issues for efficient maintenance.",
+                "Understanding the LED colors and their meanings is essential for system monitoring.",
+                "You need to know how to interpret the LED behavior and trigger test conditions."
+            ],
+            "image": "status-led.png",
+            "questions": [
+                {
+                    "id": "3.1",
+                    "text": "What is the purpose of the Status LED in the system?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "To make the system look more professional",
+                        "To indicate the system's condition and help quickly identify faults and safety issues for efficient maintenance",
+                        "To control the temperature",
+                        "To measure the flow rate"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "The Status LED indicates the system's condition and helps quickly identify faults and safety issues for efficient maintenance. It provides immediate visual feedback about system status."
+                },
+                {
+                    "id": "3.2",
+                    "text": "What does a green Status LED indicate?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "The system is in fault mode",
+                        "Green means the system is operating normally",
+                        "The system is starting up",
+                        "The system is shutting down"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "A green Status LED means the system is operating normally. This indicates all systems are functioning correctly and there are no active faults."
+                },
+                {
+                    "id": "3.3",
+                    "text": "What colour does the LED turn when a fault is detected, but the system may still function?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "Red",
+                        "Orange, it signals a fault that needs investigation",
+                        "Blue",
+                        "Yellow"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "When a fault is detected but the system may still function, the LED turns orange. This signals a fault that needs investigation but doesn't require immediate shutdown."
+                },
+                {
+                    "id": "3.4",
+                    "text": "How can you trigger a safety fault to observe the LED behaviour?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "Turn off the power",
+                        "By pressing the Emergency Stop (E-Stop) to put the system into a safety error mode",
+                        "Change the temperature settings",
+                        "Adjust the flow rate"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "You can trigger a safety fault to observe the LED behaviour by pressing the Emergency Stop (E-Stop) to put the system into a safety error mode. This allows you to see how the LED responds to faults."
+                },
+                {
+                    "id": "3.5",
+                    "text": "Why is it important to monitor the Status LED regularly?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "To keep it clean",
+                        "Because it helps prevent downtime and ensures faults are addressed before escalating",
+                        "To test the wiring",
+                        "To check the power supply"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "It's important to monitor the Status LED regularly because it helps prevent downtime and ensures faults are addressed before escalating. Early detection of issues prevents more serious problems."
+                }
+            ],
+            "simulation": {
+                "title": "Pump Control Simulation",
+                "description": "Interactive pump simulation with PWM control, dry-run protection, and fault scenarios."
+            }
+        },
+        {
+            "id": 4,
+            "title": "PLC",
+            "paragraphs": [
+                "A Programmable Logic Controller (PLC) is an industrial computer designed for real-time control.",
+                "It operates in harsh environments and controls machines and processes.",
+                "The PLC has status LEDs that show real-time feedback of input and output signals.",
+                "Understanding the PLC's role and indicators is essential for system operation."
+            ],
+            "image": "plc.png",
+            "questions": [
+                {
+                    "id": "4.1",
+                    "text": "What is a PLC and what is it designed for?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "A personal computer for office use",
+                        "A Programmable Logic Controller (PLC) is an industrial computer designed for real-time control of machines and processes in harsh environments",
+                        "A temperature sensor",
+                        "A flow control valve"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "A Programmable Logic Controller (PLC) is an industrial computer designed for real-time control of machines and processes in harsh environments. It's specifically built for industrial automation."
+                },
+                {
+                    "id": "4.2",
+                    "text": "What do the status LEDs on the PLC indicate?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "The power status only",
+                        "They show real-time feedback of input and output signals, helping verify if components are functioning correctly",
+                        "The temperature readings",
+                        "The flow rate values"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "The status LEDs on the PLC show real-time feedback of input and output signals, helping verify if components are functioning correctly. They provide immediate visual feedback about system status."
+                },
+                {
+                    "id": "4.3",
+                    "text": "What does it mean if an input LED expected to be on is not lit?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "The system is working normally",
+                        "It could indicate a faulty sensor, wiring problem, or failed connection",
+                        "The LED is just dirty",
+                        "The power is off"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "If an input LED expected to be on is not lit, it could indicate a faulty sensor, wiring problem, or failed connection. This helps identify issues quickly."
+                },
+                {
+                    "id": "4.4",
+                    "text": "What should you observe on the output LEDs when the system starts?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "All LEDs should turn off",
+                        "One of the output LEDs will flash briefly, this represents the system's status LED",
+                        "All LEDs should stay solid",
+                        "The LEDs don't change"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "When the system starts, one of the output LEDs will flash briefly, this represents the system's status LED. This indicates the system is initializing properly."
+                },
+                {
+                    "id": "4.5",
+                    "text": "How can you tell the flow sensor is working by looking at the PLC?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "The temperature LED will flash",
+                        "One of the input LEDs will flash rapidly; if flow is reduced, it slows down, and if flow increases, it nearly goes solid, showing the sensor is active",
+                        "The power LED will turn green",
+                        "All LEDs will turn off"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "You can tell the flow sensor is working by looking at the PLC because one of the input LEDs will flash rapidly; if flow is reduced, it slows down, and if flow increases, it nearly goes solid, showing the sensor is active."
+                }
+            ],
+            "simulation": {
+                "title": "PLC I/O Simulation",
+                "description": "Interactive PLC simulation with real-time I/O monitoring, ladder logic visualization, and fault injection capabilities."
+            }
+        },
+        {
+            "id": 5,
+            "title": "HMI",
+            "paragraphs": [
+                "A Human-Machine Interface (HMI) allows operators to interact with the system.",
+                "It provides live data, control settings, and fault diagnosis capabilities.",
+                "The HMI has different sections for faults, alarms, and system information.",
+                "Understanding the HMI is essential for system operation and troubleshooting."
+            ],
+            "image": "hmi.png",
+            "questions": [
+                {
+                    "id": "5.1",
+                    "text": "What is the purpose of a Human-Machine Interface (HMI)?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "To control the temperature only",
+                        "To allow operators to interact with the system, view live data, control settings, and diagnose faults",
+                        "To measure the flow rate",
+                        "To turn the system on and off"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "A Human-Machine Interface (HMI) allows operators to interact with the system, view live data, control settings, and diagnose faults. It's the primary interface between humans and the automated system."
+                },
+                {
+                    "id": "5.2",
+                    "text": "Where can you view system faults and alarms on the HMI?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only on the main screen",
+                        "Faults are shown in the Faults section; alarms are shown in the Alarms section of the HMI",
+                        "Only in the settings menu",
+                        "Only when the system is off"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Faults are shown in the Faults section; alarms are shown in the Alarms section of the HMI. These sections provide organized access to system status information."
+                },
+                {
+                    "id": "5.3",
+                    "text": "What happens when you adjust the High or Low Temperature Cutout settings beyond the current temperature?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "Nothing happens",
+                        "The system shuts down and displays a fault; it will not restart until the settings are returned to safe values",
+                        "The temperature changes automatically",
+                        "The flow rate increases"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "When you adjust the High or Low Temperature Cutout settings beyond the current temperature, the system shuts down and displays a fault; it will not restart until the settings are returned to safe values."
+                },
+                {
+                    "id": "5.4",
+                    "text": "How does the HMI assist with troubleshooting and maintenance?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "It only shows the current temperature",
+                        "It logs alarms, shows sensor readings, lets engineers adjust settings, and helps detect issues like hardware faults or inefficiencies",
+                        "It only controls the pump",
+                        "It only measures flow"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "The HMI assists with troubleshooting and maintenance by logging alarms, showing sensor readings, letting engineers adjust settings, and helping detect issues like hardware faults or inefficiencies."
+                },
+                {
+                    "id": "5.5",
+                    "text": "What real-time information can be seen on the main page of the HMI during system operation?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only the temperature",
+                        "The main screen displays the current water temperature in the top left, along with the system diagram. It also shows flow rate, valve position, and pump demand in real time",
+                        "Only the flow rate",
+                        "Only the valve position"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "The main screen displays the current water temperature in the top left, along with the system diagram. It also shows flow rate, valve position, and pump demand in real time."
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "title": "Pump",
+            "paragraphs": [
+                "A pump moves fluids through a system by creating flow and pressure.",
+                "It supports process control and system regulation.",
+                "Pumps can be controlled by varying voltage, PWM signals, or VFDs.",
+                "Understanding pump operation and protection is essential for system reliability."
+            ],
+            "image": "pump.png",
+            "questions": [
+                {
+                    "id": "6.1",
+                    "text": "What is the function of a pump in an industrial system?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "To control the temperature",
+                        "To move fluids through a system by creating flow and pressure, supporting process control and system regulation",
+                        "To measure the flow rate",
+                        "To control the valve position"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "The function of a pump in an industrial system is to move fluids through a system by creating flow and pressure, supporting process control and system regulation."
+                },
+                {
+                    "id": "6.2",
+                    "text": "How can a pump be controlled to vary its speed?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only by turning it on and off",
+                        "By varying the voltage (0–24V), using PWM signals, or through a Variable Frequency Drive (VFD) to adjust speed proportionally",
+                        "Only by changing the temperature",
+                        "Only by adjusting the flow sensor"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "A pump can be controlled to vary its speed by varying the voltage (0–24V), using PWM signals, or through a Variable Frequency Drive (VFD) to adjust speed proportionally."
+                },
+                {
+                    "id": "6.3",
+                    "text": "What might it indicate if a pump is running at full speed but still not meeting the setpoint?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "The pump is working normally",
+                        "It could signal a system fault such as a partially closed valve, clogged filter, or restriction in the piping",
+                        "The temperature is too high",
+                        "The flow sensor is broken"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "If a pump is running at full speed but still not meeting the setpoint, it could signal a system fault such as a partially closed valve, clogged filter, or restriction in the piping."
+                },
+                {
+                    "id": "6.4",
+                    "text": "Why must pumps not be run dry, and what protects against this?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "It doesn't matter if they run dry",
+                        "Pumps use the fluid as coolant and lubricant; running dry can cause overheating or damage. A low-level sensor in the tank prevents this",
+                        "It will only affect the temperature",
+                        "It will only affect the flow rate"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Pumps must not be run dry because they use the fluid as coolant and lubricant; running dry can cause overheating or damage. A low-level sensor in the tank prevents this."
+                },
+                {
+                    "id": "6.5",
+                    "text": "What are some signs that maintenance engineers should look for to detect pump issues early?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only check if the pump is running",
+                        "Gradual drops in flow with rising power use, unusual noises, or excessive vibration are signs of potential pump problems",
+                        "Only check the temperature",
+                        "Only check the pressure"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Signs that maintenance engineers should look for to detect pump issues early include gradual drops in flow with rising power use, unusual noises, or excessive vibration."
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "title": "Valve",
+            "paragraphs": [
+                "A valve controls the flow of fluids by opening, closing, or partially restricting the passage.",
+                "Valve position is controlled using Pulse Width Modulation (PWM).",
+                "Understanding valve behavior and deadband is essential for system control.",
+                "Valve operation during emergency stops is critical for safety."
+            ],
+            "image": "valve.png",
+            "questions": [
+                {
+                    "id": "7.1",
+                    "text": "What is the main function of a valve in an industrial system?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "To measure the flow rate",
+                        "To control the flow of fluids by opening, closing, or partially restricting the passage through the system",
+                        "To control the temperature",
+                        "To measure the pressure"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "The main function of a valve in an industrial system is to control the flow of fluids by opening, closing, or partially restricting the passage through the system."
+                },
+                {
+                    "id": "7.2",
+                    "text": "How is the valve position controlled in this system?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "By turning it on and off only",
+                        "By using Pulse Width Modulation (PWM) to vary voltage, which proportionally adjusts how open or closed the valve is",
+                        "By changing the temperature",
+                        "By adjusting the pump speed"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "The valve position is controlled by using Pulse Width Modulation (PWM) to vary voltage, which proportionally adjusts how open or closed the valve is."
+                },
+                {
+                    "id": "7.3",
+                    "text": "What is meant by the term \"deadband\" in valve control?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "The valve is broken",
+                        "Deadband refers to the range (typically 0–10% demand) where the valve remains shut and doesn't begin opening until demand exceeds this threshold",
+                        "The valve is fully open",
+                        "The valve is fully closed"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Deadband refers to the range (typically 0–10% demand) where the valve remains shut and doesn't begin opening until demand exceeds this threshold."
+                },
+                {
+                    "id": "7.4",
+                    "text": "What should you do to check if a valve is active during operation?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "Look at the HMI only",
+                        "Carefully feel for warmth on the valve's electrical connector, it typically gets warm when active (never check for leaks by hand)",
+                        "Listen for noise only",
+                        "Check the temperature only"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "To check if a valve is active during operation, carefully feel for warmth on the valve's electrical connector, it typically gets warm when active (never check for leaks by hand)."
+                },
+                {
+                    "id": "7.5",
+                    "text": "Why is it important to observe valve behaviour during an Emergency Stop?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "To see if it's working",
+                        "To ensure the valve fails to the correct position (open or closed) for safety, in this system, it should go fully closed",
+                        "To check the temperature",
+                        "To measure the flow"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "It's important to observe valve behaviour during an Emergency Stop to ensure the valve fails to the correct position (open or closed) for safety, in this system, it should go fully closed."
+                }
+            ],
+            "simulation": {
+                "title": "Valve Control Simulation",
+                "description": "Interactive valve simulation with proportional control, deadband effects, and calibration procedures."
+            }
+        },
+        {
+            "id": 8,
+            "title": "Float Switch",
+            "paragraphs": [
+                "Float switches detect liquid levels in a tank and trigger actions.",
+                "They can stop a pump or sound an alarm based on level conditions.",
+                "Understanding normally open (NO) and normally closed (NC) configurations is essential.",
+                "Float switches are critical for preventing dry running and overflow conditions."
+            ],
+            "image": "float-switch.png",
+            "questions": [
+                {
+                    "id": "8.1",
+                    "text": "What is the main purpose of a float switch in an industrial system?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "To control the temperature",
+                        "To detect liquid levels in a tank and trigger actions such as stopping a pump or sounding an alarm",
+                        "To measure the flow rate",
+                        "To control the valve position"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "The main purpose of a float switch in an industrial system is to detect liquid levels in a tank and trigger actions such as stopping a pump or sounding an alarm."
+                },
+                {
+                    "id": "8.2",
+                    "text": "What is the difference between a normally open (NO) and a normally closed (NC) float switch?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "There is no difference",
+                        "A NO switch only sends a signal when activated (float is lifted). An NC switch sends a signal when inactivated and breaks the signal when lifted",
+                        "They work the same way",
+                        "One is for high level, one is for low level"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "A NO switch only sends a signal when activated (float is lifted). An NC switch sends a signal when inactivated and breaks the signal when lifted."
+                },
+                {
+                    "id": "8.3",
+                    "text": "Why is the low-level float switch normally open (NO)?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "It doesn't matter",
+                        "So, the pump only runs when there is enough fluid. If the level drops, the circuit opens and stops the pump to prevent dry running",
+                        "To save power",
+                        "To make it simpler"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "The low-level float switch is normally open (NO) so the pump only runs when there is enough fluid. If the level drops, the circuit opens and stops the pump to prevent dry running."
+                },
+                {
+                    "id": "8.4",
+                    "text": "Why is the high-level float switch normally closed (NC)?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "It doesn't matter",
+                        "So, the system constantly monitors for overflow. If the tank gets too full, the circuit breaks and stops the filling process or triggers an alarm",
+                        "To save power",
+                        "To make it simpler"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "The high-level float switch is normally closed (NC) so the system constantly monitors for overflow. If the tank gets too full, the circuit breaks and stops the filling process or triggers an alarm."
+                },
+                {
+                    "id": "8.5",
+                    "text": "What are some common float switch faults, and how can they be identified?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "There are no common faults",
+                        "Sticking, misalignment, or contact failure. These can be identified by testing float movement and checking IO screen signals",
+                        "Only electrical faults",
+                        "Only mechanical faults"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Common float switch faults include sticking, misalignment, or contact failure. These can be identified by testing float movement and checking IO screen signals."
+                }
+            ],
+            "simulation": {
+                "title": "Float Switch Simulation",
+                "description": "Interactive float switch simulation with tank level monitoring, NO vs NC logic testing, and fault scenarios."
+            }
+        },
+        {
+            "id": 9,
+            "title": "Proximity Switch",
+            "paragraphs": [
+                "A proximity switch detects the presence of an object without physical contact.",
+                "It helps with automation, positioning, and safety applications.",
+                "Different types of proximity sensors detect different materials.",
+                "Understanding proximity switch operation is essential for system safety."
+            ],
+            "image": "proximity-switch.png",
+            "questions": [
+                {
+                    "id": "9.1",
+                    "text": "What is the main function of a proximity switch in an automated system?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "To control the temperature",
+                        "To detect the presence of an object without physical contact, helping with automation, positioning, and safety",
+                        "To measure the flow rate",
+                        "To control the valve position"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "The main function of a proximity switch in an automated system is to detect the presence of an object without physical contact, helping with automation, positioning, and safety."
+                },
+                {
+                    "id": "9.2",
+                    "text": "What type of object does an inductive proximity sensor detect?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "All objects",
+                        "It detects metal objects only",
+                        "Only plastic objects",
+                        "Only wood objects"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "An inductive proximity sensor detects metal objects only. It uses electromagnetic induction to detect metallic targets."
+                },
+                {
+                    "id": "9.3",
+                    "text": "Why is the proximity sensor used to detect the tank lid in this system?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "To measure the temperature",
+                        "To ensure the tank lid is in place before the system runs, preventing water from being pumped without the lid",
+                        "To control the flow rate",
+                        "To measure the level"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "The proximity sensor is used to detect the tank lid to ensure the tank lid is in place before the system runs, preventing water from being pumped without the lid."
+                },
+                {
+                    "id": "9.4",
+                    "text": "What are three types of proximity sensors and what do they detect?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "All detect the same things",
+                        "Inductive (metal), capacitive (metal and non-metal), and photoelectric (uses light to detect objects)",
+                        "Only inductive sensors",
+                        "Only capacitive sensors"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Three types of proximity sensors are inductive (metal), capacitive (metal and non-metal), and photoelectric (uses light to detect objects)."
+                },
+                {
+                    "id": "9.5",
+                    "text": "What common issues can cause a proximity sensor to give false readings?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "Nothing can cause false readings",
+                        "Misalignment, poor mounting, wiring faults, dust, or moisture",
+                        "Only electrical faults",
+                        "Only mechanical faults"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Common issues that can cause a proximity sensor to give false readings include misalignment, poor mounting, wiring faults, dust, or moisture."
+                }
+            ]
+        },
+        {
+            "id": 10,
+            "title": "Flow Sensor",
+            "paragraphs": [
+                "Flow sensors measure fluid movement in pipes and vessels.",
+                "Accurate flow measurement is critical for process control.",
+                "Regular maintenance ensures measurement accuracy and reliability.",
+                "You need to verify both sensor operation and signal processing."
+            ],
+            "image": "flow-sensor.png",
+            "questions": [
+                {
+                    "id": "10.1",
+                    "text": "How would you calibrate a flow sensor?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only check if the sensor shows a reading",
+                        "Compare sensor reading with a calibrated reference at multiple flow rates",
+                        "Just adjust the display",
+                        "Assume the sensor is accurate"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Flow sensor calibration involves comparing the sensor reading with a calibrated reference instrument at multiple flow rates across the sensor's operating range to ensure accuracy throughout the measurement range."
+                },
+                {
+                    "id": "10.2",
+                    "text": "What affects flow sensor accuracy?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only the fluid type",
+                        "Fluid properties, installation conditions, and environmental factors",
+                        "Just the mounting position",
+                        "Only the power supply"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Flow sensor accuracy is affected by fluid properties (viscosity, density), installation conditions (straight pipe lengths, orientation), and environmental factors (temperature, pressure, vibration)."
+                },
+                {
+                    "id": "10.3",
+                    "text": "What maintenance is required for flow sensors?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only replace when they fail",
+                        "Regular cleaning, calibration checks, and performance monitoring",
+                        "Just clean the sensor",
+                        "Only check the wiring"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Flow sensor maintenance should include regular cleaning to prevent fouling, periodic calibration checks to maintain accuracy, and continuous performance monitoring to detect degradation."
+                }
+            ]
+        },
+        {
+            "id": 11,
+            "title": "Temperature Sensor",
+            "paragraphs": [
+                "Temperature sensors monitor process and equipment heat.",
+                "Accurate temperature measurement is vital for control and safety.",
+                "Regular maintenance ensures measurement accuracy and reliability.",
+                "You need to verify both sensor operation and signal processing."
+            ],
+            "image": "temperature-sensor.png",
+            "questions": [
+                {
+                    "id": "11.1",
+                    "text": "How would you calibrate a temperature sensor?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only check if the sensor shows a reading",
+                        "Compare sensor reading with a calibrated reference at multiple temperature points",
+                        "Just adjust the display",
+                        "Assume the sensor is accurate"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Temperature sensor calibration involves comparing the sensor reading with a calibrated reference thermometer at multiple temperature points across the sensor's operating range to ensure accuracy throughout the measurement range."
+                },
+                {
+                    "id": "11.2",
+                    "text": "What affects temperature sensor accuracy?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only the ambient temperature",
+                        "Installation depth, thermal contact, environmental conditions, and electrical interference",
+                        "Just the mounting position",
+                        "Only the power supply"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Temperature sensor accuracy is affected by installation depth (for immersion sensors), thermal contact with the measured medium, environmental conditions (humidity, vibration), and electrical interference from nearby equipment."
+                },
+                {
+                    "id": "11.3",
+                    "text": "What maintenance is required for temperature sensors?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only replace when they fail",
+                        "Regular calibration checks, cleaning, and performance monitoring",
+                        "Just clean the sensor",
+                        "Only check the wiring"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Temperature sensor maintenance should include regular calibration checks to maintain accuracy, cleaning to prevent fouling, and continuous performance monitoring to detect drift or degradation."
+                }
+            ]
+        },
+        {
+            "id": 12,
+            "title": "Digital Sensors",
+            "paragraphs": [
+                "Digital sensors provide binary state information.",
+                "These sensors are used for position, level, and presence detection.",
+                "Regular maintenance ensures reliable operation and signal integrity.",
+                "You need to verify both sensor operation and signal processing."
+            ],
+            "image": "digital-sensors.png",
+            "questions": [
+                {
+                    "id": "12.1",
+                    "text": "How would you test digital sensor operation?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only check if the sensor is powered",
+                        "Test switching action, response time, and signal integrity",
+                        "Just test the electrical output",
+                        "Assume the sensor works if it's mounted"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Digital sensor testing should include verifying proper switching action (on/off states), measuring response time to changes, and checking signal integrity to ensure reliable binary output."
+                },
+                {
+                    "id": "12.2",
+                    "text": "What affects digital sensor reliability?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only the power supply",
+                        "Environmental conditions, mechanical wear, and electrical interference",
+                        "Just the mounting position",
+                        "Only the sensor type"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Digital sensor reliability is affected by environmental conditions (temperature, humidity, vibration), mechanical wear from repeated operation, and electrical interference from nearby equipment."
+                },
+                {
+                    "id": "12.3",
+                    "text": "What maintenance is required for digital sensors?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only replace when they fail",
+                        "Regular cleaning, mechanical inspection, and performance testing",
+                        "Just clean the sensor",
+                        "Only check the wiring"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Digital sensor maintenance should include regular cleaning to prevent fouling, mechanical inspection for wear or damage, and periodic performance testing to ensure reliable switching operation."
+                }
+            ]
+        },
+        {
+            "id": 13,
+            "title": "Analogue Sensors",
+            "paragraphs": [
+                "Analogue sensors provide continuous measurement values.",
+                "These sensors measure variables like pressure, flow, and level.",
+                "Regular maintenance ensures measurement accuracy and reliability.",
+                "You need to verify both sensor operation and signal processing."
+            ],
+            "image": "analogue-sensors.png",
+            "questions": [
+                {
+                    "id": "13.1",
+                    "text": "How would you calibrate analogue sensors?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only check if the sensor shows a reading",
+                        "Compare sensor output with calibrated reference at multiple points across the range",
+                        "Just adjust the display",
+                        "Assume the sensor is accurate"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Analogue sensor calibration involves comparing the sensor's output signal with a calibrated reference instrument at multiple points across the sensor's operating range to ensure linearity and accuracy."
+                },
+                {
+                    "id": "13.2",
+                    "text": "What affects analogue sensor accuracy?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only the power supply",
+                        "Environmental conditions, signal conditioning, and electrical interference",
+                        "Just the mounting position",
+                        "Only the sensor type"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Analogue sensor accuracy is affected by environmental conditions (temperature, humidity), signal conditioning quality, and electrical interference from nearby equipment that can distort the analogue signal."
+                },
+                {
+                    "id": "13.3",
+                    "text": "What maintenance is required for analogue sensors?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only replace when they fail",
+                        "Regular calibration, signal verification, and performance monitoring",
+                        "Just clean the sensor",
+                        "Only check the wiring"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Analogue sensor maintenance should include regular calibration to maintain accuracy, signal verification to ensure proper output, and continuous performance monitoring to detect drift or degradation."
+                }
+            ]
+        },
+        {
+            "id": 14,
+            "title": "Faults",
+            "paragraphs": [
+                "System faults can occur in any part of the control system.",
+                "Quick fault diagnosis and resolution is essential.",
+                "Regular maintenance helps prevent common faults.",
+                "You need to understand fault types and troubleshooting methods."
+            ],
+            "image": "faults.png",
+            "questions": [
+                {
+                    "id": "14.1",
+                    "text": "What are common control system faults?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only sensor failures",
+                        "Sensor failures, wiring issues, controller problems, and actuator faults",
+                        "Just controller failures",
+                        "Only actuator problems"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Common control system faults include sensor failures (drift, calibration issues), wiring problems (loose connections, corrosion), controller issues (program errors, communication failures), and actuator faults (sticking, positioning errors)."
+                },
+                {
+                    "id": "14.2",
+                    "text": "How would you diagnose system faults?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only check the display",
+                        "Use systematic approach: check symptoms, isolate components, and verify signals",
+                        "Just restart the system",
+                        "Assume it's a sensor problem"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Systematic fault diagnosis involves checking symptoms and error messages, isolating components to identify the fault location, and verifying signals at each point in the control loop to determine the root cause."
+                },
+                {
+                    "id": "14.3",
+                    "text": "What preventive maintenance reduces faults?",
+                    "type": "multiple_choice",
+                    "options": [
+                        "Only replace parts when they fail",
+                        "Regular maintenance, calibration, environmental monitoring, and training",
+                        "Just clean the equipment",
+                        "Only check the wiring"
+                    ],
+                    "correct_answer": 1,
+                    "explanation": "Preventive measures include regular maintenance schedules, periodic calibration of sensors and instruments, environmental monitoring and control, and proper training of maintenance personnel to identify potential issues early."
+                }
+            ]
+        }
+    ]
+} 
