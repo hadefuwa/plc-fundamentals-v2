@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="description" content="CP2388 Industrial Maintenance Worksheets - PLC Fundamentals Training">
+  <meta name="theme-color" content="#4a9eff">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Matrix Training">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="msapplication-TileColor" content="#4a9eff">
+  <meta name="msapplication-TileImage" content="assets/icons/matrix-icon-192.png">
+  <title>CP2388 - Industrial Maintenance Worksheets</title>
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">
+  <link rel="manifest" href="manifest.json">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <script defer src="image-fallback.js"></script>
+  <script defer src="scenario-popup.js"></script>
+  <script defer src="pdf-popup.js"></script>
+  <script defer src="shared-navigation.js"></script>
+  <style>
+    .hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Navigation styles removed here to use centralized styles from main.css */
+
+    /* Worksheets Grid */
+    .worksheets-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .worksheets-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .worksheets-title {
+      color: #FFFFFF;
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    }
+
+    .worksheets-subtitle {
+      color: #CCCCCC;
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .worksheets-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .worksheet-card {
+      background: linear-gradient(135deg, #333333, #555555);
+      border: 2px solid #666666;
+      border-radius: 12px;
+      padding: 25px;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .worksheet-card:hover {
+      background: linear-gradient(135deg, #FFFFFF, #F5F5F5);
+      color: #000;
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(255, 255, 255, 0.4);
+      border: 2px solid #FFFFFF;
+    }
+
+    .worksheet-card i {
+      font-size: 48px;
+      margin-bottom: 15px;
+      display: block;
+      color: var(--accent-color);
+    }
+
+    .worksheet-card h3 {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .worksheet-card p {
+      font-size: 14px;
+      opacity: 0.8;
+      line-height: 1.4;
+      margin-bottom: 15px;
+    }
+
+
+
+    /* Progress tracking */
+    .progress-indicator {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid #666;
+    }
+
+    .progress-indicator.completed {
+      background: #4CAF50;
+      border-color: #4CAF50;
+    }
+
+    .progress-indicator.in-progress {
+      background: #FF9800;
+      border-color: #FF9800;
+    }
+
+    .progress-indicator.not-started {
+      background: transparent;
+      border-color: #666;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .worksheets-title {
+        font-size: 28px;
+      }
+      
+      .worksheets-subtitle {
+        font-size: 16px;
+      }
+      
+      .worksheets-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .worksheet-card {
+        padding: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .worksheets-title {
+        font-size: 24px;
+      }
+      
+      .worksheets-subtitle {
+        font-size: 14px;
+      }
+      
+      .worksheet-card h3 {
+        font-size: 18px;
+      }
+      
+      .worksheet-card p {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body class="worksheets-page">
+  
+  <!-- Offline Indicator -->
+  <div class="offline-indicator">
+    <i class="fas fa-wifi-slash"></i> You are currently offline. Some features may be limited.
+  </div>
+
+  <!-- PDF Opening Popup -->
+  <div id="pdf-popup" class="pdf-popup">
+    <div class="pdf-popup-content">
+      <i class="fas fa-file-pdf"></i>
+      <div class="pdf-popup-text">
+        <h3>Opening PDF Document</h3>
+        <p id="pdf-popup-filename">Document will open in your default PDF viewer...</p>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Main Container -->
+  <div class="worksheets-container">
+    <div class="worksheets-header">
+      <h1 class="worksheets-title">CP2388 – PLC Fundamentals for Maintenance Engineers</h1>
+      <p class="worksheets-subtitle">Comprehensive training worksheets covering PLC fundamentals, control systems, and industrial maintenance procedures.</p>
+    </div>
+
+    <div class="worksheets-grid">
+      <div class="worksheet-card" onclick="window.location.href='worksheet-1.html'">
+        <div class="progress-indicator not-started" id="progress-1"></div>
+        <i class="fas fa-microchip"></i>
+        <h3>Worksheet 1: Simple PLC Control Systems</h3>
+        <p>Introduction to PLC basics, components, and programming fundamentals.</p>
+      </div>
+
+      <div class="worksheet-card" onclick="window.location.href='worksheet-2.html'">
+        <div class="progress-indicator not-started" id="progress-2"></div>
+        <i class="fas fa-cogs"></i>
+        <h3>Worksheet 2: Complex PLC Control Systems</h3>
+        <p>Understanding control system principles and PLC applications.</p>
+      </div>
+
+       <div class="worksheet-card" onclick="window.location.href='worksheet-3.html'">
+        <div class="progress-indicator not-started" id="progress-3"></div>
+         <i class="fas fa-desktop"></i>
+         <h3>Worksheet 3: HMIs</h3>
+        <p>Human Machine Interface design and programming for industrial applications.</p>
+      </div>
+
+       <div class="worksheet-card" onclick="window.location.href='worksheet-4.html'">
+        <div class="progress-indicator not-started" id="progress-4"></div>
+         <i class="fas fa-exclamation-triangle"></i>
+         <h3>Worksheet 4: Emergency Stops</h3>
+        <p>Safety systems, emergency stop circuits, and safety protocols.</p>
+      </div>
+
+       <div class="worksheet-card" onclick="window.location.href='worksheet-5.html'">
+        <div class="progress-indicator not-started" id="progress-5"></div>
+         <i class="fas fa-lightbulb"></i>
+         <h3>Worksheet 5: Status LED</h3>
+        <p>Status LED indicators and visual feedback systems.</p>
+      </div>
+
+       <div class="worksheet-card" onclick="window.location.href='worksheet-6.html'">
+        <div class="progress-indicator not-started" id="progress-6"></div>
+         <i class="fas fa-toggle-on"></i>
+         <h3>Worksheet 6: Normally Open vs Normally Closed</h3>
+        <p>Understanding normally open and normally closed switch configurations.</p>
+      </div>
+
+       <div class="worksheet-card" onclick="window.location.href='worksheet-7.html'">
+        <div class="progress-indicator not-started" id="progress-7"></div>
+         <i class="fas fa-sensor"></i>
+         <h3>Worksheet 7: Proximity Switch</h3>
+        <p>Proximity switch operation and industrial sensing applications.</p>
+      </div>
+
+       <div class="worksheet-card" onclick="window.location.href='worksheet-8.html'">
+        <div class="progress-indicator not-started" id="progress-8"></div>
+         <i class="fas fa-sliders-h"></i>
+         <h3>Worksheet 8: Potentiometer</h3>
+        <p>Potentiometer operation and analog input applications.</p>
+      </div>
+
+       <div class="worksheet-card" onclick="window.location.href='worksheet-9.html'">
+        <div class="progress-indicator not-started" id="progress-9"></div>
+         <i class="fas fa-thermometer-half"></i>
+         <h3>Worksheet 9: Temperature Sensor</h3>
+        <p>Temperature sensor operation and thermal monitoring systems.</p>
+      </div>
+
+       <div class="worksheet-card" onclick="window.location.href='worksheet-10.html'">
+        <div class="progress-indicator not-started" id="progress-10"></div>
+         <i class="fas fa-digital-tachograph"></i>
+         <h3>Worksheet 10: Digital Outputs</h3>
+        <p>Digital output control and industrial automation applications.</p>
+      </div>
+
+       <div class="worksheet-card" onclick="window.location.href='worksheet-11.html'">
+        <div class="progress-indicator not-started" id="progress-11"></div>
+         <i class="fas fa-cog"></i>
+         <h3>Worksheet 11: Motor PWM</h3>
+        <p>Motor control using Pulse Width Modulation techniques.</p>
+      </div>
+
+       <div class="worksheet-card" onclick="window.location.href='worksheet-12.html'">
+        <div class="progress-indicator not-started" id="progress-12"></div>
+         <i class="fas fa-cogs"></i>
+         <h3>Worksheet 12: Motor Relay</h3>
+        <p>Motor control using relay switching and industrial automation.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Load dependencies -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="scenario-popup.js"></script>
+  <script src="worksheet-tracking.js"></script>
+  
+  <!-- PDF Opening Function -->
+  <script>
+    function openPDF(pdfPath) {
+      if (typeof showPDFPopup === 'function') {
+        showPDFPopup(pdfPath);
+      }
+      
+      const link = document.createElement('a');
+      link.href = pdfPath;
+      link.target = '_blank';
+      link.download = pdfPath.split('/').pop() || 'document.pdf';
+      
+      const newWindow = window.open(pdfPath, '_blank');
+      
+      if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
+        link.click();
+      }
+    }
+
+    // Load progress indicators
+    document.addEventListener('DOMContentLoaded', function() {
+      // Load progress data from localStorage
+      for (let i = 1; i <= 12; i++) {
+        const progressKey = `worksheet-${i}`;
+        const progressData = localStorage.getItem(progressKey);
+        
+        if (progressData) {
+          try {
+            const progress = JSON.parse(progressData);
+            const indicator = document.getElementById(`progress-${i}`);
+            
+            if (indicator && progress.completionPercentage !== undefined) {
+              if (progress.completionPercentage === 100) {
+                indicator.className = 'progress-indicator completed';
+              } else if (progress.completionPercentage > 0) {
+                indicator.className = 'progress-indicator in-progress';
+              }
+            }
+          } catch (e) {
+            console.error('Error parsing progress data:', e);
+          }
+        }
+      }
+    });
+  </script>
+  
+  <script>
+    // Ensure window.electron is not referenced
+    if (typeof window.electron === 'undefined') {
+      window.electron = null;
+    }
+    
+    // Add offline indicator
+    window.addEventListener('online', function() {
+      document.body.classList.remove('offline');
+    });
+    
+    window.addEventListener('offline', function() {
+      document.body.classList.add('offline');
+    });
+  </script>
+</body>
+</html> 

@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Matrix TSL - Motor Relay</title>
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">
+  <script src="worksheet-core.js"></script>
+  <script src="worksheet-tracking.js"></script>
+  <script defer src="shared-navigation.js"></script>
+  <script defer src="pwa-install.js"></script>
+
+  <style>
+    /* Digital Sensor Styles */
+    .sensor-item {
+      background: #23272b;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      border: 1px solid #333;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 15px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sensor-label {
+      color: #aaa;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sensor-indicator {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .sensor-indicator.off {
+      background: linear-gradient(145deg, #1a1a1a, #333);
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+    }
+
+    .sensor-indicator.on {
+      background: linear-gradient(145deg, #4CAF50, #388E3C);
+      box-shadow: 0 0 20px rgba(76,175,80,0.4);
+    }
+
+    .sensor-indicator::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+    }
+
+    .toggle-btn {
+      background: #2196F3;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .toggle-btn:hover {
+      background: #1976D2;
+      box-shadow: 0 0 15px rgba(33,150,243,0.3);
+    }
+
+    .plc-status {
+      background: #1a1a1a;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+
+    .plc-indicators {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .plc-input {
+      background: #23272b;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      border: 1px solid #333;
+    }
+
+    .input-label {
+      color: #aaa;
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .plc-indicator {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      margin: 0 auto;
+      transition: all 0.3s ease;
+    }
+
+    .plc-indicator.off {
+      background: linear-gradient(145deg, #1a1a1a, #333);
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+    }
+
+    .plc-indicator.on {
+      background: linear-gradient(145deg, #2196F3, #1976D2);
+      box-shadow: 0 0 20px rgba(33,150,243,0.4);
+    }
+
+    .maintenance-btn, .fault-btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .maintenance-btn {
+      background: #2196F3;
+    }
+
+    .maintenance-btn:hover {
+      background: #1976D2;
+      box-shadow: 0 0 15px rgba(33,150,243,0.3);
+    }
+
+    .fault-btn {
+      background: #FF5722;
+    }
+
+    .fault-btn:hover {
+      background: #F4511E;
+      box-shadow: 0 0 15px rgba(255,87,34,0.3);
+    }
+
+    .task-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      padding: 10px;
+      background: #23272b;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .task-item input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .task-item label {
+      color: #aaa;
+      cursor: pointer;
+      flex: 1;
+    }
+
+    .diagnostic-log {
+      background: #23272b;
+      padding: 15px;
+      border-radius: 5px;
+      max-height: 200px;
+      overflow-y: auto;
+      font-family: monospace;
+      color: #aaa;
+      margin-top: 10px;
+    }
+
+    .diagnostic-log p {
+      margin: 5px 0;
+      padding: 5px;
+      border-radius: 3px;
+      transition: background-color 0.3s ease;
+    }
+
+    .diagnostic-log p:hover {
+      background: rgba(255,255,255,0.05);
+    }
+
+    .timestamp {
+      color: #666;
+      margin-right: 10px;
+    }
+
+    /* Wiring Diagram */
+    .wiring-diagram {
+      background: #23272b;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 20px 0;
+      position: relative;
+      height: 200px;
+      overflow: hidden;
+    }
+
+    .wire {
+      position: absolute;
+      background: #444;
+      transition: all 0.3s ease;
+    }
+
+    .wire.active {
+      background: #2196F3;
+      box-shadow: 0 0 10px rgba(33,150,243,0.4);
+    }
+
+    .wire.fault {
+      background: #FF5722;
+      box-shadow: 0 0 10px rgba(255,87,34,0.4);
+    }
+
+    .connection-point {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background: #666;
+      border-radius: 50%;
+      border: 2px solid #444;
+      transition: all 0.3s ease;
+    }
+
+    .connection-point.active {
+      background: #2196F3;
+      border-color: #1976D2;
+      box-shadow: 0 0 10px rgba(33,150,243,0.4);
+    }
+
+    .connection-point.fault {
+      background: #FF5722;
+      border-color: #F4511E;
+      box-shadow: 0 0 10px rgba(255,87,34,0.4);
+    }
+  </style>
+</head>
+<body>
+
+
+  <div class="worksheet-box">
+    <!-- Integrated Worksheet Header -->
+    <div class="worksheet-header">
+      <div class="worksheet-header-content">
+        <div class="worksheet-header-left">
+          <button class="worksheet-nav-btn worksheet-back-btn" onclick="window.location.href='worksheet-11.html'">
+            <i class="fas fa-arrow-left"></i>
+            <span>Previous Worksheet</span>
+          </button>
+        </div>
+        <div class="worksheet-header-center">
+          <h1 class="worksheet-title">Worksheet 12 - Motor Relay</h1>
+        </div>
+        <div class="worksheet-header-right">
+          <button class="worksheet-nav-btn worksheet-next-btn" onclick="window.location.href='CP2388-worksheets.html'">
+            <span>Back to Worksheets</span>
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="worksheet-section introduction-section">
+      <h2 class="section-header"><i class="fas fa-info-circle"></i> 1. Introduction</h2>
+      <div class="worksheet-content">
+        <div class="introduction-content-wrapper">
+          <div class="introduction-text">
+            <p>Relays are electrically operated switches that allow a PLC to control higher-power devices safely. The PLC energises a low-power coil, which activates internal contacts to switch outputs on or off. This worksheet helps you understand how relays isolate and control output devices like motors or solenoids.</p>
+          </div>
+          <div class="introduction-image">
+            <div class="system-diagram">
+              <img src="assets/maintenance/ws12.png" alt="Digital Sensors System Maintenance">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Over To You Section -->
+    <div class="worksheet-section over-to-you-section">
+      <h2 class="section-header"><i class="fas fa-hands-helping"></i> 2. Over To You</h2>
+      <div class="worksheet-content">
+        <p><strong>Follow these steps to explore relays:</strong></p>
+
+        <div class="steps-container">
+          <div class="step-card" data-step="1">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Open Worksheet 12</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Press the green I0 button to energise the relay. Observe the relay LED when the coil is on.</p>
+            </div>
+          </div>
+
+          <div class="step-card" data-step="2">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Stop with I2</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Press the red button I2 and confirm the relay de-energises and the output device stops.</p>
+            </div>
+          </div>
+
+          <div class="step-card" data-step="3">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Auto Trip via Potentiometer</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Rotate the potentiometer slowly. At around 50%, the relay should activate automatically. Observe the output only runs when the relay is energised.</p>
+            </div>
+          </div>
+
+          <div class="step-card" data-step="4">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>E-Stop Check</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Press the Emergency Stop and confirm the relay de-energises.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- So What Section -->
+    <div class="worksheet-section so-what-section">
+      <h2 class="section-header"><i class="fas fa-lightbulb"></i> 3. So What?</h2>
+      <div class="so-what-content">
+        <div class="explanation-card">
+          <div class="card-header">
+            <i class="fas fa-cogs"></i>
+            <h3>Why this matters</h3>
+          </div>
+          <div class="card-content">
+            <p>In real systems, PLC outputs can’t always drive motors or solenoids directly. Relays bridge low-power PLC control and higher-power loads, and provide isolation. You’ll diagnose stuck contacts, faulty coils, or incorrect logic in the field.</p>
+          </div>
+        </div>
+
+        <div class="explanation-card">
+          <div class="card-header">
+            <i class="fas fa-diagram-project"></i>
+            <h3>How a relay works</h3>
+          </div>
+          <div class="card-content">
+            <p>The PLC energises a coil. That magnet pulls contacts together (or apart) to switch the load. You’ll often see a small relay LED when the coil is on.</p>
+          </div>
+        </div>
+
+        <div class="explanation-card">
+          <div class="card-header">
+            <i class="fas fa-magnifying-glass"></i>
+            <h3>Simple checks</h3>
+          </div>
+          <div class="card-content">
+            <p>If the output device won’t run, check: input command present, relay coil LED on, relay clicks, and output voltage at the load. Replace the relay if the coil works but contacts don’t switch.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Key Takeaways Section -->
+    <div class="worksheet-section key-takeaways-section">
+      <h2 class="section-header"><i class="fas fa-list-check"></i> Key Takeaways</h2>
+      <ul>
+        <li>Relays let PLCs safely switch higher-power devices.</li>
+        <li>PLC energises a coil; contacts switch the load.</li>
+        <li>Relays provide electrical isolation.</li>
+        <li>Status LEDs on relays/HMI help diagnosis.</li>
+      </ul>
+    </div>
+
+    <div class="worksheet-section questions-section">
+      <h2 class="section-header"><i class="fas fa-question-circle"></i> Questions & Answers</h2>
+      <div class="questions-content">
+        <div class="question-item" data-question="1">
+          <h4>Question 1: What is the main purpose of a relay in a PLC system?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-1" value="A" class="option-radio">
+              <span class="option-text">A) To safely control higher-power devices like motors or solenoids</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-1" value="B" class="option-radio">
+              <span class="option-text">B) To measure temperature</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-1" value="C" class="option-radio">
+              <span class="option-text">C) To provide power to the PLC</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-1" value="D" class="option-radio">
+              <span class="option-text">D) To display HMI trends</span>
+            </label>
+          </div>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(1)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> D) To safely control higher-power devices like motors or solenoids.
+          </div>
+        </div>
+        
+        <div class="question-item" data-question="2">
+          <h4>Question 2: How does the PLC activate a relay?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-2" value="A" class="option-radio">
+              <span class="option-text">A) By sending power to a coil inside the relay</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-2" value="B" class="option-radio">
+              <span class="option-text">B) By changing HMI theme</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-2" value="C" class="option-radio">
+              <span class="option-text">C) By changing PLC time</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-2" value="D" class="option-radio">
+              <span class="option-text">D) By pressing E-Stop</span>
+            </label>
+          </div>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(2)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> C) By sending power to a coil inside the relay.
+          </div>
+        </div>
+        
+        <div class="question-item" data-question="3">
+          <h4>Question 3: What happens when the relay is energised?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-3" value="A" class="option-radio">
+              <span class="option-text">A) The relay closes internal contacts to switch the connected output on</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-3" value="B" class="option-radio">
+              <span class="option-text">B) The HMI turns off</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-3" value="C" class="option-radio">
+              <span class="option-text">C) The PLC changes colour</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-3" value="D" class="option-radio">
+              <span class="option-text">D) Nothing happens</span>
+            </label>
+          </div>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(3)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> D) The relay closes internal contacts to switch the connected output on.
+          </div>
+        </div>
+        
+        <div class="question-item" data-question="4">
+          <h4>Question 4: Why can’t PLCs always control devices like motors directly?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-4" value="A" class="option-radio">
+              <span class="option-text">A) Because PLC outputs are low-power and need a relay to handle larger loads</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-4" value="B" class="option-radio">
+              <span class="option-text">B) Because the PLC is too loud</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-4" value="C" class="option-radio">
+              <span class="option-text">C) Because the HMI requires it</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-4" value="D" class="option-radio">
+              <span class="option-text">D) Because it saves energy</span>
+            </label>
+          </div>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(4)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> C) Because PLC outputs are low-power and need a relay to handle larger loads.
+          </div>
+        </div>
+        
+        <div class="question-item" data-question="5">
+          <h4>Question 5: What should you check if a relay does not switch as expected?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-5" value="A" class="option-radio">
+              <span class="option-text">A) Check for stuck contacts, faulty coils, incorrect logic, or wiring issues</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-5" value="B" class="option-radio">
+              <span class="option-text">B) Replace the PLC immediately</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-5" value="C" class="option-radio">
+              <span class="option-text">C) Rewire the entire panel</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-5" value="D" class="option-radio">
+              <span class="option-text">D) Change HMI colours</span>
+            </label>
+          </div>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(5)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> B) Check for stuck contacts, faulty coils, incorrect logic, or wiring issues.
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="digital-sensors-simulation.js"></script>
+  
+  <script>
+    // Define correct answers for worksheet 12
+    const correctAnswers = {
+      "1": "D",
+      "2": "C",
+      "3": "D",
+      "4": "C",
+      "5": "B"
+    };
+
+    function submitAnswer(questionNumber) {
+      const questionItem = document.querySelector(`[data-question="${questionNumber}"]`);
+      if (!questionItem) return;
+      
+      const selectedOption = questionItem.querySelector('.option-radio:checked');
+      if (!selectedOption) {
+        alert('Please select an answer before submitting.');
+        return;
+      }
+      
+      const answer = selectedOption.value;
+      
+      // Save with enhanced tracking
+      worksheetTracker.saveAnswer(12, questionNumber, answer, 'maintenance');
+      
+      // Apply visual feedback
+      const allOptions = questionItem.querySelectorAll('.option-label');
+      const correctAnswer = correctAnswers[questionNumber];
+      
+      allOptions.forEach(option => {
+        const radio = option.querySelector('.option-radio');
+        const optionValue = radio.value;
+        
+        if (optionValue === correctAnswer) {
+          option.classList.add('correct');
+        } else if (optionValue === answer && answer !== correctAnswer) {
+          option.classList.add('incorrect');
+        }
+      });
+      
+      // Mark question as submitted to disable further interaction
+      questionItem.classList.add('submitted');
+      
+      // Update submit button
+      const button = questionItem.querySelector('.submit-question-btn');
+      const originalText = button.textContent;
+      button.textContent = answer === correctAnswer ? 'Correct!' : 'Incorrect!';
+      button.style.background = answer === correctAnswer ? '#4CAF50' : '#f44336';
+      
+      // Add incorrect class for enhanced styling
+      if (answer !== correctAnswer) {
+        button.classList.add('incorrect');
+      }
+      
+      setTimeout(() => {
+        button.textContent = originalText;
+        button.style.background = '#4CAF50';
+        button.classList.remove('incorrect');
+      }, 2000);
+
+      // Show correct answer
+      const correctAnswerDiv = questionItem.querySelector('.correct-answer');
+      if (correctAnswerDiv) {
+        correctAnswerDiv.style.display = 'block';
+      }
+    }
+
+    // Initialize when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize tracking system
+      if (typeof worksheetTracker === 'undefined') {
+        console.error('Worksheet tracking system not loaded');
+        return;
+      }
+
+      // Load any saved answers
+      const progress = worksheetTracker.getWorksheetProgress(12, 'maintenance');
+      if (progress && progress.answers) {
+        Object.entries(progress.answers).forEach(([questionNumber, answerData]) => {
+          const questionItem = document.querySelector(`[data-question="${questionNumber}"]`);
+          if (questionItem) {
+            const radio = questionItem.querySelector(`.option-radio[value="${answerData.value}"]`);
+            if (radio) {
+              radio.checked = true;
+              // Show the correct answer for previously answered questions
+              const correctAnswerDiv = questionItem.querySelector('.correct-answer');
+              if (correctAnswerDiv) {
+                correctAnswerDiv.style.display = 'block';
+              }
+            }
+          }
+        });
+      }
+    });
+  </script>
+  
+  <!-- Bottom Navigation -->
+  <div class="worksheet-bottom-nav">
+    <div class="worksheet-header-content">
+      <div class="worksheet-header-left">
+        <button class="worksheet-nav-btn worksheet-back-btn" onclick="window.location.href='worksheet-11.html'">
+          <i class="fas fa-arrow-left"></i>
+          <span>Previous Worksheet</span>
+        </button>
+      </div>
+       <div class="worksheet-header-center">
+       <h1 class="worksheet-title">Worksheet 12 - Motor Relay</h1>
+      </div>
+      <div class="worksheet-header-right">
+          <button class="worksheet-nav-btn worksheet-next-btn" onclick="window.location.href='CP2388-worksheets.html'">
+            <span>Back to Worksheets</span>
+            <i class="fas fa-chevron-right"></i>
+          </button>
+      </div>
+    </div>
+  </div>
+  
+<script>
+
+// Enhanced answer handling functions
+function submitAnswer(questionNumber) {
+  const answerInput = document.querySelector(`[data-question="${questionNumber}"]`);
+  if (!answerInput) return;
+  
+  const selectedOption = document.querySelector(`input[name="question-${questionNumber}"]:checked`);
+  if (!selectedOption) {
+    alert('Please select an answer before submitting.');
+    return;
+  }
+  
+  const answer = selectedOption.value;
+  
+  // Save with enhanced tracking if available
+  if (typeof worksheetTracker !== 'undefined') {
+    const worksheetId = getUrlParameter('id') || getWorksheetIdFromUrl();
+    const path = window.location.pathname;
+    const isFaultScenario = path.includes('fault-scenario');
+    const type = getUrlParameter('type') || (isFaultScenario ? 'fault' : 'maintenance');
+    worksheetTracker.saveAnswer(worksheetId, questionNumber, answer, type);
+  } else {
+    saveAnswer(questionNumber, answer);
+  }
+  
+  // Get correct answer from the correct-answer div
+  const correctAnswerDiv = answerInput.querySelector('.correct-answer');
+  let correctAnswerText = '';
+  if (correctAnswerDiv) {
+    const strongElement = correctAnswerDiv.querySelector('strong');
+    if (strongElement) {
+      correctAnswerText = strongElement.nextSibling.textContent.trim();
+    }
+  }
+  
+  // Determine if answer is correct (extract letter from correct answer)
+  const correctLetterMatch = correctAnswerText.match(/^([A-D])\)/);
+  const correctLetter = correctLetterMatch ? correctLetterMatch[1] : null;
+  const isCorrect = !!correctLetter && answer === correctLetter;
+  
+  // Style the selected option
+  const allOptions = answerInput.querySelectorAll('.option-label');
+  allOptions.forEach(option => {
+    option.classList.remove('correct', 'incorrect');
+  });
+  
+  if (isCorrect) {
+    selectedOption.closest('.option-label').classList.add('correct');
+  } else {
+    selectedOption.closest('.option-label').classList.add('incorrect');
+    // Also mark the correct option as correct
+    const correctOption = answerInput.querySelector(`input[name="question-${questionNumber}"][value="${correctLetter}"]`);
+    if (correctOption) {
+      correctOption.closest('.option-label').classList.add('correct');
+    }
+  }
+  
+  const submitBtn = answerInput.querySelector('.submit-question-btn');
+  if (submitBtn) {
+    submitBtn.textContent = isCorrect ? 'Correct!' : 'Incorrect';
+    submitBtn.style.background = isCorrect ? '#4CAF50' : '#f44336';
+    setTimeout(() => {
+      submitBtn.textContent = 'Submit Answer';
+      submitBtn.style.background = '#4CAF50';
+    }, 2000);
+  }
+  
+  // Show correct answer
+  if (correctAnswerDiv) {
+    correctAnswerDiv.style.display = 'block';
+  }
+}
+
+
+// Enhanced step tracking functions
+function initializeStepTracking() {
+  console.log('Initializing step tracking...');
+  
+  // Add flag to prevent double execution
+  let isProcessing = false;
+  
+  // Wait a bit to ensure DOM is ready
+  setTimeout(() => {
+    const stepCards = document.querySelectorAll('.step-card');
+    console.log('Found', stepCards.length, 'step cards');
+    
+    stepCards.forEach((card, index) => {
+      const checkbox = card.querySelector('.step-complete-checkbox');
+      const stepNumber = card.getAttribute('data-step') || (index + 1);
+      
+      console.log('Setting up card', stepNumber, 'with checkbox:', !!checkbox);
+      
+      if (checkbox) {
+        // Load saved state
+        const savedState = localStorage.getItem(`step-${stepNumber}`);
+        if (savedState === 'true') {
+          checkbox.checked = true;
+          card.classList.add('step-completed');
+          // Apply the completed styles
+          card.style.background = '#2a2a2a';
+          card.style.opacity = '0.7';
+          card.style.cursor = 'default';
+        }
+        
+        // Make the entire card clickable
+        card.style.cursor = 'pointer';
+        card.style.position = 'relative';
+        card.style.zIndex = '1';
+        
+        // Add click handler to the entire card
+        card.addEventListener('click', function(e) {
+          console.log('Card clicked:', stepNumber);
+          
+          // Prevent double execution
+          if (isProcessing) {
+            console.log('Already processing, ignoring click');
+            return;
+          }
+          
+          // Don't toggle if clicking directly on the checkbox or its label
+          if (e.target === checkbox || 
+              e.target.closest('.step-checkbox') || 
+              e.target.closest('label') ||
+              e.target.tagName === 'INPUT' ||
+              e.target.tagName === 'LABEL') {
+            console.log('Clicking on checkbox or label, not toggling card');
+            return;
+          }
+          
+          // Prevent the default checkbox behavior and stop propagation
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          
+          // Set processing flag
+          isProcessing = true;
+          
+          // Toggle the checkbox directly without triggering events
+          checkbox.checked = !checkbox.checked;
+          
+          // Manually call the change handler
+          handleCheckboxChange(checkbox, card, stepNumber);
+          
+          console.log('Checkbox toggled to:', checkbox.checked);
+          console.log('Card classes after toggle:', card.className);
+          
+          // Reset processing flag after a short delay
+          setTimeout(() => {
+            isProcessing = false;
+          }, 100);
+        });
+        
+        // Create a shared change handler function
+        function handleCheckboxChange(checkbox, card, stepNumber) {
+          console.log('Checkbox changed:', stepNumber, 'checked:', checkbox.checked);
+          
+          if (checkbox.checked) {
+            card.classList.add('step-completed');
+            // Force the styles to apply
+            card.style.background = '#2a2a2a';
+            card.style.opacity = '0.7';
+            card.style.cursor = 'default';
+            console.log('Added step-completed class to card', stepNumber);
+            console.log('Card classes after adding:', card.className);
+            localStorage.setItem(`step-${stepNumber}`, 'true');
+          } else {
+            card.classList.remove('step-completed');
+            // Reset the styles
+            card.style.background = '';
+            card.style.opacity = '';
+            card.style.cursor = 'pointer';
+            console.log('Removed step-completed class from card', stepNumber);
+            console.log('Card classes after removing:', card.className);
+            localStorage.setItem(`step-${stepNumber}`, 'false');
+          }
+        }
+        
+        // Add change handler to checkbox
+        checkbox.addEventListener('change', function() {
+          if (!isProcessing) {
+            handleCheckboxChange(checkbox, card, stepNumber);
+          }
+        });
+        
+        // Also make the checkbox itself clickable
+        checkbox.addEventListener('click', function(e) {
+          e.stopPropagation(); // Prevent card click when clicking checkbox
+          e.stopImmediatePropagation(); // Stop any other handlers
+        });
+      }
+    });
+  }, 100);
+}
+
+// Initialize when page loads
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initializeStepTracking);
+} else {
+  // DOM is already loaded
+  initializeStepTracking();
+}
+
+// Also try again after a short delay to ensure everything is ready
+setTimeout(initializeStepTracking, 500);
+
+
+</script>
+</body>
+</html> 

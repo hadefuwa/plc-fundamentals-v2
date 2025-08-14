@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Matrix TSL - Simple PLC Systems</title>
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">
+  <link rel="manifest" href="manifest.json">
+  <script src="worksheet-core.js"></script>
+  <script src="worksheet-tracking.js"></script>
+  <script defer src="shared-navigation.js"></script>
+  <script defer src="pwa-install.js"></script>
+  <style>
+    /* Enhanced step card styling for better clickability */
+    .step-card {
+      transition: all 0.3s ease !important;
+      cursor: pointer !important;
+      position: relative !important;
+      overflow: hidden !important;
+      background: #333 !important;
+    }
+    
+    .step-card:hover {
+      transform: translateY(-2px) !important;
+      box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3) !important;
+      border-color: var(--accent-color) !important;
+      background: #3a3a3a !important;
+    }
+    
+    .step-card:active {
+      transform: translateY(0px) !important;
+      box-shadow: 0 2px 8px rgba(74, 158, 255, 0.2) !important;
+    }
+    
+    .step-card.step-completed {
+      background: #2a2a2a !important;
+      opacity: 0.7 !important;
+      cursor: default !important;
+      border-left-color: #666 !important;
+    }
+    
+    .step-card.step-completed:hover {
+      transform: none !important;
+      box-shadow: none !important;
+      background: #2a2a2a !important;
+    }
+    
+    /* Make sure the checkbox area doesn't interfere */
+    .step-checkbox {
+      pointer-events: auto !important;
+      z-index: 10 !important;
+    }
+    
+    .step-complete-checkbox {
+      pointer-events: auto !important;
+    }
+  </style>
+</head>
+<body>
+
+
+  <!-- Main Content -->
+  <div class="worksheet-box">
+    <!-- Worksheet Header -->
+    <div class="worksheet-header">
+      <div class="worksheet-header-content">
+        <div class="worksheet-header-left">
+          <button class="worksheet-nav-btn worksheet-back-btn" onclick="window.location.href='CP2388-worksheets.html'">
+            <i class="fas fa-arrow-left"></i>
+            <span>Back to Worksheets</span>
+          </button>
+        </div>
+        <div class="worksheet-header-center">
+          <h1 class="worksheet-title">Worksheet 1 - Simple PLC Systems</h1>
+        </div>
+        <div class="worksheet-header-right">
+          <button class="worksheet-nav-btn worksheet-next-btn" onclick="window.location.href='worksheet-2.html'">
+            <span>Next Worksheet</span>
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Introduction Section -->
+    <div class="worksheet-section introduction-section">
+      <h2 class="section-header"><i class="fas fa-info-circle"></i> Introduction</h2>
+      <div class="worksheet-content">
+        <div class="introduction-content-wrapper">
+          <div class="introduction-text">
+            <p>The PLC Fundamentals Training rig in front of you represents a basic industrial control system like those used in factories. It includes real components such as push buttons, lights, motors, and a Siemens PLC that controls them. This worksheet introduces the core concept of how a PLC processes inputs to control outputs.</p>
+          </div>
+          <div class="introduction-image">
+            <div class="system-diagram">
+              <img src="assets/maintenance/ws1.png" alt="Siemens S7-1200 PLC">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Over To You Section -->
+    <div class="worksheet-section over-to-you-section">
+      <h2 class="section-header"><i class="fas fa-hands-helping"></i> 2. Over To You</h2>
+      <div class="worksheet-content">
+        <p><strong>Navigate to Worksheet 1 and observe the simple PLC control system. This system demonstrates basic input/output control where a button controls a light.</strong></p>
+        
+        <div class="steps-container">
+          <div class="step-card" data-step="1">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Navigate to Worksheet 1</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>When on the Home Page, press the Start button to enter the Main Menu, select Worksheets and then Worksheet 1.</p>
+            </div>
+          </div>
+          
+          <div class="step-card" data-step="2">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Observe the System</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Observe the picture in the centre of the screen. It displays a simple PLC control system, where a Siemens PLC controls a lamp above the panel.</p>
+            </div>
+          </div>
+          
+          <div class="step-card" data-step="3">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Test Input I0</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Press & hold button I0. Observe the light change turn on Red.</p>
+            </div>
+          </div>
+          
+          <div class="step-card" data-step="4">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Observe LED Behavior</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Press & Release the button a few times. You should observe the LED on the left & right of the image, turning on and off. You should also observe the LEDs on the PLC turning on and off.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- So What Section -->
+    <div class="worksheet-section so-what-section">
+      <h2 class="section-header"><i class="fas fa-lightbulb"></i> 3. So What?</h2>
+      <div class="so-what-content">
+        <!-- Main Explanation Card -->
+        <div class="explanation-card">
+          <div class="card-header">
+            <i class="fas fa-cogs"></i>
+            <h3>Simple PLC Control Overview</h3>
+          </div>
+          <div class="card-content">
+            <p>When you were pressing the button at Input 0, the output was only active whilst you held the button. This is called a momentary button – it only works whilst pressed down. When you released the button, the output turned off. The PLC code here is looking for the input signal and only turning on the output whilst it has this signal.</p>
+          </div>
+        </div>
+
+        <!-- System Behavior Card -->
+        <div class="explanation-card">
+          <div class="card-header">
+            <i class="fas fa-chart-line"></i>
+            <h3>System Behavior & Learning</h3>
+          </div>
+          <div class="card-content">
+            <p>Simple PLC systems are the first step into the world of automation. They use a PLC (programmable logic controller) to turn things on and off based on what it's been programmed to do, like switching on a light when you press a button. These systems have only a few parts and no complicated logic. They're easy to understand and perfect for learning how basic industrial control panels work.</p>
+          </div>
+        </div>
+
+        <!-- Key Learning Points moved to dedicated section below -->
+      </div>
+    </div>
+
+    <!-- Key Takeaways Section -->
+    <div class="worksheet-section key-takeaways-section">
+      <h2 class="section-header"><i class="fas fa-list-check"></i> Key Takeaways</h2>
+      <ul>
+        <li>Simple PLC systems control basic on/off actions, like switching on a light with a button.</li>
+        <li>They consist of a few parts: push buttons, indicator lights, and a PLC.</li>
+        <li>The PLC processes simple instructions – if the button is pressed, turn the light on.</li>
+        <li>You can see the PLC's internal logic via the PLC LEDs turning on and off.</li>
+        <li>These simple systems are the building blocks for more complex industrial processes.</li>
+      </ul>
+    </div>
+
+    <!-- Questions Section -->
+    <div class="worksheet-section questions-section">
+      <h2 class="section-header"><i class="fas fa-question-circle"></i> Questions</h2>
+      <div class="questions-content">
+        <div class="question-item" data-question="1">
+          <h4>Question 1: What type of control does this system demonstrate?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-1" value="A">
+              <span class="option-text">A) Simple on/off control using a momentary button</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-1" value="B">
+              <span class="option-text">B) Complex sequence control</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-1" value="C">
+              <span class="option-text">C) Analog control</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-1" value="D">
+              <span class="option-text">D) PID control</span>
+            </label>
+          </div>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(1)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) Simple on/off control using a momentary button
+          </div>
+        </div>
+
+        <div class="question-item" data-question="2">
+          <h4>Question 2: What happens when you press and hold input I0?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-2" value="A">
+              <span class="option-text">A) Nothing happens</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-2" value="B">
+              <span class="option-text">B) The system shuts down</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-2" value="C">
+              <span class="option-text">C) The light turns on red and stays on while the button is held</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-2" value="D">
+              <span class="option-text">D) The light flashes</span>
+            </label>
+          </div>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(2)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> C) The light turns on red and stays on while the button is held
+          </div>
+        </div>
+
+        <div class="question-item" data-question="3">
+          <h4>Question 3: What do the PLC's status LEDs show during operation?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-3" value="A">
+              <span class="option-text">A) Battery level</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-3" value="B">
+              <span class="option-text">B) System errors</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-3" value="C">
+              <span class="option-text">C) Network status</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-3" value="D">
+              <span class="option-text">D) Input and output states turning on and off</span>
+            </label>
+          </div>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(3)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> D) Input and output states turning on and off
+          </div>
+        </div>
+
+        <div class="question-item" data-question="4">
+          <h4>Question 4: Where might a system like this be used in real industrial settings?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-4" value="A">
+              <span class="option-text">A) Complex manufacturing processes</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-4" value="B">
+              <span class="option-text">B) Chemical mixing systems</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-4" value="C">
+              <span class="option-text">C) Temperature control systems</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-4" value="D">
+              <span class="option-text">D) Simple fan or alarm control systems</span>
+            </label>
+          </div>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(4)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> D) Simple fan or alarm control systems
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <div class="worksheet-bottom-nav">
+    <div class="worksheet-header-content">
+      <div class="worksheet-header-left">
+        <button class="worksheet-nav-btn worksheet-back-btn" onclick="window.location.href='CP2388-worksheets.html'">
+          <i class="fas fa-arrow-left"></i>
+          <span>Back to Worksheets</span>
+        </button>
+      </div>
+      <div class="worksheet-header-center">
+        <h1 class="worksheet-title">Worksheet 1 - Simple PLC Systems</h1>
+      </div>
+      <div class="worksheet-header-right">
+        <button class="worksheet-nav-btn worksheet-next-btn" onclick="window.location.href='worksheet-2.html'">
+          <span>Next Worksheet</span>
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+<script>
+
+// Enhanced answer handling functions
+function submitAnswer(questionNumber) {
+  const answerInput = document.querySelector(`[data-question="${questionNumber}"]`);
+  if (!answerInput) return;
+  
+  const selectedOption = document.querySelector(`input[name="question-${questionNumber}"]:checked`);
+  if (!selectedOption) {
+    alert('Please select an answer before submitting.');
+    return;
+  }
+  
+  const answer = selectedOption.value;
+  
+  // Save with enhanced tracking if available
+  if (typeof worksheetTracker !== 'undefined') {
+    const worksheetId = getUrlParameter('id') || getWorksheetIdFromUrl();
+    const path = window.location.pathname;
+    const isFaultScenario = path.includes('fault-scenario');
+    const type = getUrlParameter('type') || (isFaultScenario ? 'fault' : 'maintenance');
+    worksheetTracker.saveAnswer(worksheetId, questionNumber, answer, type);
+  } else {
+    saveAnswer(questionNumber, answer);
+  }
+  
+  // Get correct answer from the correct-answer div
+  const correctAnswerDiv = answerInput.querySelector('.correct-answer');
+  let correctAnswerText = '';
+  if (correctAnswerDiv) {
+    const strongElement = correctAnswerDiv.querySelector('strong');
+    if (strongElement) {
+      correctAnswerText = strongElement.nextSibling.textContent.trim();
+    }
+  }
+  
+  // Determine if answer is correct (extract letter from correct answer)
+  const correctLetterMatch = correctAnswerText.match(/^([A-D])\)/);
+  const correctLetter = correctLetterMatch ? correctLetterMatch[1] : null;
+  const isCorrect = correctLetter && answer === correctLetter;
+  
+  // Style the selected option
+  const allOptions = answerInput.querySelectorAll('.option-label');
+  allOptions.forEach(option => {
+    option.classList.remove('correct', 'incorrect');
+  });
+  
+  if (isCorrect) {
+    selectedOption.closest('.option-label').classList.add('correct');
+  } else {
+    selectedOption.closest('.option-label').classList.add('incorrect');
+    // Also mark the correct option as correct
+    const correctOption = answerInput.querySelector(`input[name="question-${questionNumber}"][value="${correctLetter}"]`);
+    if (correctOption) {
+      correctOption.closest('.option-label').classList.add('correct');
+    }
+  }
+  
+  const submitBtn = answerInput.querySelector('.submit-question-btn');
+  if (submitBtn) {
+    submitBtn.textContent = isCorrect ? 'Correct!' : 'Incorrect';
+    submitBtn.style.background = isCorrect ? '#4CAF50' : '#f44336';
+    setTimeout(() => {
+      submitBtn.textContent = 'Submit Answer';
+      submitBtn.style.background = '#4CAF50';
+    }, 2000);
+  }
+  
+  // Show correct answer
+  if (correctAnswerDiv) {
+    correctAnswerDiv.style.display = 'block';
+  }
+}
+
+
+// Enhanced step tracking functions
+function initializeStepTracking() {
+  console.log('Initializing step tracking...');
+  
+  // Wait a bit to ensure DOM is ready
+  setTimeout(() => {
+    const stepCards = document.querySelectorAll('.step-card');
+    console.log('Found', stepCards.length, 'step cards');
+    
+    stepCards.forEach((card, index) => {
+      const checkbox = card.querySelector('.step-complete-checkbox');
+      const stepNumber = card.getAttribute('data-step') || (index + 1);
+      
+      console.log('Setting up card', stepNumber, 'with checkbox:', !!checkbox);
+      
+      if (checkbox) {
+        // Add a flag to prevent double execution
+        let isProcessing = false;
+        // Load saved state
+        const savedState = localStorage.getItem(`step-${stepNumber}`);
+        if (savedState === 'true') {
+          checkbox.checked = true;
+          card.classList.add('step-completed');
+          // Apply the completed styles
+          card.style.background = '#2a2a2a';
+          card.style.opacity = '0.7';
+          card.style.cursor = 'default';
+        }
+        
+        // Make the entire card clickable
+        card.style.cursor = 'pointer';
+        card.style.position = 'relative';
+        card.style.zIndex = '1';
+        
+                           // Add click handler to the entire card
+          card.addEventListener('click', function(e) {
+            console.log('Card clicked:', stepNumber);
+            
+            // Prevent double execution
+            if (isProcessing) {
+              console.log('Already processing, ignoring click');
+              return;
+            }
+            
+            // Don't toggle if clicking directly on the checkbox or its label
+            if (e.target === checkbox || 
+                e.target.closest('.step-checkbox') || 
+                e.target.closest('label') ||
+                e.target.tagName === 'INPUT' ||
+                e.target.tagName === 'LABEL') {
+              console.log('Clicking on checkbox or label, not toggling card');
+              return;
+            }
+            
+            // Prevent the default checkbox behavior and stop propagation
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            
+            // Set processing flag
+            isProcessing = true;
+            
+            // Toggle the checkbox directly without triggering events
+            checkbox.checked = !checkbox.checked;
+            
+            // Manually call the change handler
+            handleCheckboxChange(checkbox, card, stepNumber);
+            
+            console.log('Checkbox toggled to:', checkbox.checked);
+            console.log('Card classes after toggle:', card.className);
+            
+            // Reset processing flag after a short delay
+            setTimeout(() => {
+              isProcessing = false;
+            }, 100);
+          });
+        
+                 // Create a shared change handler function
+         function handleCheckboxChange(checkbox, card, stepNumber) {
+           console.log('Checkbox changed:', stepNumber, 'checked:', checkbox.checked);
+           
+           if (checkbox.checked) {
+             card.classList.add('step-completed');
+             // Force the styles to apply
+             card.style.background = '#2a2a2a';
+             card.style.opacity = '0.7';
+             card.style.cursor = 'default';
+             console.log('Added step-completed class to card', stepNumber);
+             console.log('Card classes after adding:', card.className);
+             localStorage.setItem(`step-${stepNumber}`, 'true');
+           } else {
+             card.classList.remove('step-completed');
+             // Reset the styles
+             card.style.background = '';
+             card.style.opacity = '';
+             card.style.cursor = 'pointer';
+             console.log('Removed step-completed class from card', stepNumber);
+             console.log('Card classes after removing:', card.className);
+             localStorage.setItem(`step-${stepNumber}`, 'false');
+           }
+         }
+         
+                   // Add change handler to checkbox
+          checkbox.addEventListener('change', function() {
+            if (!isProcessing) {
+              handleCheckboxChange(checkbox, card, stepNumber);
+            }
+          });
+        
+                 // Also make the checkbox itself clickable
+         checkbox.addEventListener('click', function(e) {
+           e.stopPropagation(); // Prevent card click when clicking checkbox
+           e.stopImmediatePropagation(); // Stop any other handlers
+         });
+      }
+    });
+  }, 100);
+}
+
+// Initialize when page loads
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initializeStepTracking);
+} else {
+  // DOM is already loaded
+  initializeStepTracking();
+}
+
+// Also try again after a short delay to ensure everything is ready
+setTimeout(initializeStepTracking, 500);
+
+
+</script>
+</body>
+</html> 

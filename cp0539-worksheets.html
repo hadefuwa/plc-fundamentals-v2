@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="description" content="Industrial maintenance training platform with interactive worksheets and analytics">
+  <meta name="theme-color" content="#4a9eff">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Matrix Training">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="msapplication-TileColor" content="#4a9eff">
+  <meta name="msapplication-TileImage" content="assets/icons/matrix-icon-192.png">
+  <title>CP2388 - Industrial Maintenance Worksheets</title>
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">
+  <script defer src="shared-navigation.js"></script>
+  <script defer src="pwa-install.js"></script>
+  <link rel="manifest" href="manifest.json">
+  <style>
+    body {
+      overflow-y: auto;
+    }
+
+    .main-container {
+      min-height: calc(100vh - 100px);
+      overflow-y: auto;
+      margin: 20px auto;
+      padding: 20px;
+    }
+
+    .page-title {
+      text-align: center;
+      color: #FFFFFF;
+      font-size: 32px;
+      font-weight: bold;
+      margin-bottom: 30px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    }
+
+    /* Worksheets Section Styles */
+    .worksheets-section {
+      margin-bottom: 40px;
+    }
+
+    .worksheets-header {
+      color: #FFFFFF;
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 30px;
+      text-align: center;
+      text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .worksheets-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 25px;
+      margin-top: 30px;
+    }
+
+    .worksheet-card {
+      background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+      border: 2px solid #333;
+      border-radius: 12px;
+      padding: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .worksheet-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.5s;
+    }
+
+    .worksheet-card:hover::before {
+      left: 100%;
+    }
+
+    .worksheet-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
+      border-color: #444;
+    }
+
+    .worksheet-number {
+      color: var(--accent-color);
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      text-shadow: 0 0 10px var(--accent-shadow);
+    }
+
+    .worksheet-title {
+      color: #FFFFFF;
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 15px;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+
+    .worksheet-description {
+      color: #cccccc;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* PDF Popup Styles */
+    .pdf-popup {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+      border: 2px solid var(--accent-color);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      transform: translateX(400px);
+      transition: transform 0.3s ease;
+      max-width: 300px;
+    }
+
+    .pdf-popup.show {
+      transform: translateX(0);
+    }
+
+    .pdf-popup-content {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .pdf-popup i {
+      color: #ff4444;
+      font-size: 24px;
+    }
+
+    .pdf-popup-text {
+      color: #FFFFFF;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .pdf-popup-text h3 {
+      margin: 0 0 5px 0;
+      font-size: 16px;
+      color: var(--accent-color);
+    }
+
+    .pdf-popup-text p {
+      margin: 0;
+      color: #cccccc;
+    }
+
+    /* Install button removed from header; styles no longer needed */
+  </style>
+</head>
+<body>
+  
+
+
+
+  <!-- Main Container -->
+  <div class="main-container">
+    <!-- Worksheets Section -->
+    <section class="worksheets-section">
+        <h2 class="worksheets-header">
+            <i class="fas fa-cogs"></i> CP2388 - Industrial Maintenance of PLC Fundamentals Systems
+        </h2>
+        <div class="worksheets-grid">
+            <div class="worksheet-card" onclick="window.location='worksheet-1.html'">
+                <div class="worksheet-number">Worksheet 1</div>
+                <div class="worksheet-title">Closed-Loop Control Systems</div>
+                <div class="worksheet-description">Learn about PID control, feedback loops, and system response analysis with interactive simulations.</div>
+            </div>
+            <div class="worksheet-card" onclick="window.location='worksheet-2.html'">
+                <div class="worksheet-number">Worksheet 2</div>
+                <div class="worksheet-title">Emergency Stops</div>
+                <div class="worksheet-description">Understanding emergency stop systems, safety circuits, and proper reset procedures.</div>
+            </div>
+            <div class="worksheet-card" onclick="window.location='worksheet-3.html'">
+                <div class="worksheet-number">Worksheet 3</div>
+                <div class="worksheet-title">Status LED</div>
+                <div class="worksheet-description">Interpreting LED indicators, status codes, and visual diagnostic systems.</div>
+            </div>
+            <div class="worksheet-card" onclick="window.location='worksheet-4.html'">
+                <div class="worksheet-number">Worksheet 4</div>
+                <div class="worksheet-title">PLC</div>
+                <div class="worksheet-description">Programmable Logic Controller fundamentals, programming, and troubleshooting.</div>
+            </div>
+            <div class="worksheet-card" onclick="window.location='worksheet-5.html'">
+                <div class="worksheet-number">Worksheet 5</div>
+                <div class="worksheet-title">HMI</div>
+                <div class="worksheet-description">Human Machine Interface design, operation, and maintenance procedures.</div>
+            </div>
+            <div class="worksheet-card" onclick="window.location='worksheet-6.html'">
+                <div class="worksheet-number">Worksheet 6</div>
+                <div class="worksheet-title">Pump</div>
+                <div class="worksheet-description">Pump systems, performance curves, cavitation, and maintenance schedules.</div>
+            </div>
+            <div class="worksheet-card" onclick="window.location='worksheet-7.html'">
+                <div class="worksheet-number">Worksheet 7</div>
+                <div class="worksheet-title">Valve</div>
+                <div class="worksheet-description">Valve types, actuators, control characteristics, and calibration procedures.</div>
+            </div>
+            <div class="worksheet-card" onclick="window.location='worksheet-8.html'">
+                <div class="worksheet-number">Worksheet 8</div>
+                <div class="worksheet-title">Float Switch</div>
+                <div class="worksheet-description">Level sensing with float switches, installation, and troubleshooting techniques.</div>
+            </div>
+            <div class="worksheet-card" onclick="window.location='worksheet-9.html'">
+                <div class="worksheet-number">Worksheet 9</div>
+                <div class="worksheet-title">Proximity Switch</div>
+                <div class="worksheet-description">Proximity switch operation, types, and applications in automation and safety systems.</div>
+            </div>
+            <div class="worksheet-card" onclick="window.location='worksheet-10.html'">
+                <div class="worksheet-number">Worksheet 10</div>
+                <div class="worksheet-title">Flow Sensor</div>
+                <div class="worksheet-description">Flow sensor calibration, maintenance, and accuracy verification procedures.</div>
+            </div>
+            <div class="worksheet-card" onclick="window.location='worksheet-11.html'">
+                <div class="worksheet-number">Worksheet 11</div>
+                <div class="worksheet-title">Temperature Sensor</div>
+                <div class="worksheet-description">Temperature sensor calibration, maintenance, and accuracy verification procedures.</div>
+            </div>
+            <div class="worksheet-card" onclick="window.location='worksheet-12.html'">
+                <div class="worksheet-number">Worksheet 12</div>
+                <div class="worksheet-title">Digital Sensors</div>
+                <div class="worksheet-description">Digital sensor testing, maintenance, and reliability verification procedures.</div>
+            </div>
+            <div class="worksheet-card" onclick="window.location='worksheet-13.html'">
+                <div class="worksheet-number">Worksheet 13</div>
+                <div class="worksheet-title">Analogue Sensors</div>
+                <div class="worksheet-description">Analogue sensor calibration, maintenance, and accuracy verification procedures.</div>
+            </div>
+            <div class="worksheet-card" onclick="window.location='worksheet-14.html'">
+                <div class="worksheet-number">Worksheet 14</div>
+                <div class="worksheet-title">Faults</div>
+                <div class="worksheet-description">System fault diagnosis, troubleshooting methods, and preventive maintenance procedures.</div>
+            </div>
+
+        </div>
+    </section>
+  </div>
+
+  <!-- PDF Opening Popup -->
+  <div id="pdf-popup" class="pdf-popup">
+    <div class="pdf-popup-content">
+      <i class="fas fa-file-pdf"></i>
+      <div class="pdf-popup-text">
+        <h3>Opening PDF Document</h3>
+        <p id="pdf-popup-filename">Document will open in your default PDF viewer...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Load dependencies -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="image-fallback.js"></script>
+  <script src="scenario-popup.js"></script>
+  
+  <!-- PDF Opening Popup Functionality -->
+  <script>
+    // PDF Opening Popup Functionality
+    function showPDFPopup(pdfPath) {
+      const popup = document.getElementById('pdf-popup');
+      const filename = document.getElementById('pdf-popup-filename');
+      
+      // Extract filename from path
+      const pathParts = pdfPath.split('/');
+      const fileName = pathParts[pathParts.length - 1];
+      
+      // Update popup text
+      filename.textContent = `Opening: ${fileName}`;
+      
+      // Show popup
+      popup.classList.add('show');
+      
+      // Hide popup after 5 seconds
+      setTimeout(() => {
+        popup.classList.remove('show');
+      }, 5000);
+    }
+    
+    // PDF opening function for PWA
+    function openPDF(pdfPath) {
+      // Show popup first
+      showPDFPopup(pdfPath);
+      
+      // Try to open PDF directly in browser, with fallback to download
+      const link = document.createElement('a');
+      link.href = pdfPath;
+      link.target = '_blank';
+      link.download = pdfPath.split('/').pop() || 'document.pdf';
+      
+      // Try to open in new tab first
+      const newWindow = window.open(pdfPath, '_blank');
+      
+      // If that fails, trigger download
+      if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
+        link.click();
+      }
+    }
+  </script>
+
+  <script>
+
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('service-worker.js');
+      });
+    }
+  </script>
+</body>
+</html> 

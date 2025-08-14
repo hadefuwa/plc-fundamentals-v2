@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Matrix TSL - Proximity Switch</title>
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">    <script src="worksheet-core.js"></script>
+<script src="worksheet-tracking.js"></script>
+  <script defer src="shared-navigation.js"></script>
+  <script defer src="pwa-install.js"></script>
+
+</head>
+<body>
+
+
+  <div class="worksheet-box">
+    <!-- Integrated Worksheet Header -->
+    <div class="worksheet-header">
+      <div class="worksheet-header-content">
+        <div class="worksheet-header-left">
+          <button class="worksheet-nav-btn worksheet-back-btn" onclick="window.location.href='worksheet-6.html'">
+            <i class="fas fa-arrow-left"></i>
+            <span>Previous Worksheet</span>
+          </button>
+        </div>
+        <div class="worksheet-header-center">
+          <h1 class="worksheet-title">Worksheet 7 - Proximity Switch</h1>
+        </div>
+        <div class="worksheet-header-right">
+          <button class="worksheet-nav-btn worksheet-next-btn" onclick="window.location.href='worksheet-8.html'">
+            <span>Next Worksheet</span>
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="worksheet-section introduction-section">
+      <h2 class="section-header"><i class="fas fa-info-circle"></i> 1. Introduction</h2>
+      <div class="worksheet-content">
+        <div class="introduction-content-wrapper">
+          <div class="introduction-text">
+            <p>A proximity switch detects an object's presence without contact, making it ideal for automation, positioning and safety systems. Maintenance engineers should know how they work to troubleshoot misalignments or faults, otherwise false triggers can cause machine stoppages or safety hazards. We use inductive sensors to detect metal objects.</p>
+          </div>
+          <div class="introduction-image">
+            <div class="system-diagram">
+              <img src="assets/maintenance/ws7.png" alt="Valve System Maintenance">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Over To You Section -->
+    <div class="worksheet-section over-to-you-section">
+      <h2 class="section-header"><i class="fas fa-hands-helping"></i> 2. Over To You</h2>
+      <div class="worksheet-content">
+        <p><strong>Follow these steps to use the inductive proximity sensor:</strong></p>
+
+        <div class="steps-container">
+          <div class="step-card" data-step="1">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Open Worksheet 7</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Navigate to Worksheet 7 on the HMI. Locate the proximity sensor (I6) on your training rig. Ensure it is not triggered (LED off on sensor and HMI).</p>
+            </div>
+          </div>
+
+          <div class="step-card" data-step="2">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Start and Lock</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Press Raise to lift the press from 0 mm to 15000 mm. Press Lock to begin the locking sequence. A fault will appear because the system did not detect the locking pins as engaged.</p>
+            </div>
+          </div>
+
+          <div class="step-card" data-step="3">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Use Metal Target</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Reset, repeat the locking step, and this time place a metal object in front of the proximity sensor to simulate detection of the locking pins.</p>
+            </div>
+          </div>
+
+          <div class="step-card" data-step="4">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Observe Result</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Observe what happens to the red locking pins at the top of the press when the sensor is triggered.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- So What Section -->
+    <div class="worksheet-section so-what-section">
+      <h2 class="section-header"><i class="fas fa-lightbulb"></i> 3. So What?</h2>
+      <div class="so-what-content">
+        <div class="explanation-card">
+          <div class="card-header">
+            <i class="fas fa-cogs"></i>
+            <h3>Why this matters</h3>
+          </div>
+          <div class="card-content">
+            <p>Proximity switches detect the presence of metal objects without physical contact, making them crucial for safety and reliability. In the forging press example, the sensor confirms that locking pins are engaged. If not detected, the system faults and stops to prevent unsafe movement.</p>
+          </div>
+        </div>
+
+        <div class="explanation-card">
+          <div class="card-header">
+            <i class="fas fa-industry"></i>
+            <h3>Common applications</h3>
+          </div>
+          <div class="card-content">
+            <p>Used to detect guards shut, parts present, end-of-travel on cylinders, and indexing positions. Inductive = metal only; use other sensor types for non‑metal.</p>
+          </div>
+        </div>
+
+        <div class="explanation-card">
+          <div class="card-header">
+            <i class="fas fa-wrench"></i>
+            <h3>Setup and checks</h3>
+          </div>
+          <div class="card-content">
+            <p>Mount within rated range, align to the target face, and avoid side detection. Verify the on/off point using a known metal target and confirm on the HMI IO page.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Key Takeaways Section -->
+    <div class="worksheet-section key-takeaways-section">
+      <h2 class="section-header"><i class="fas fa-list-check"></i> Key Takeaways</h2>
+      <ul>
+        <li>Inductive sensors detect metal only; capacitive and photoelectric serve other materials/methods.</li>
+        <li>Used for guards, access points, and position checks in safety interlocks.</li>
+        <li>Misalignment and wiring faults cause false signals—verify with a metal target during tests.</li>
+        <li>Correct mounting and regular checks ensure reliable operation.</li>
+      </ul>
+    </div>
+
+    <div class="worksheet-section questions-section">
+      <h2 class="section-header"><i class="fas fa-question-circle"></i> Questions & Answers</h2>
+      <div class="questions-content">
+        <div class="question-item" data-question="1">
+          <h4>Question 1: What does a proximity sensor detect?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-1" value="A" class="option-radio">
+              <span class="option-text">A) It measures temperature</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-1" value="B" class="option-radio">
+              <span class="option-text">B) It detects the presence of an object without physical contact</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-1" value="C" class="option-radio">
+              <span class="option-text">C) It controls motor speed</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-1" value="D" class="option-radio">
+              <span class="option-text">D) It provides power to equipment</span>
+            </label>
+          </div>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(1)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> B) It detects the presence of an object without physical contact.
+          </div>
+        </div>
+        
+        <div class="question-item" data-question="2">
+          <h4>Question 2: Why are proximity sensors useful in automation systems?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-2" value="A" class="option-radio">
+              <span class="option-text">A) They improve safety and reduce wear by detecting position without touching the object</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-2" value="B" class="option-radio">
+              <span class="option-text">B) They provide light</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-2" value="C" class="option-radio">
+              <span class="option-text">C) They control power supplies</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-2" value="D" class="option-radio">
+              <span class="option-text">D) They only measure temperature</span>
+            </label>
+          </div>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(2)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> D) They improve safety and reduce wear by detecting position without touching the object.
+          </div>
+        </div>
+        
+        <div class="question-item" data-question="3">
+          <h4>Question 3: What type of object does an inductive sensor detect?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-3" value="A" class="option-radio">
+              <span class="option-text">A) Non‑metal objects</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-3" value="B" class="option-radio">
+              <span class="option-text">B) Metal objects only</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-3" value="C" class="option-radio">
+              <span class="option-text">C) All objects</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-3" value="D" class="option-radio">
+              <span class="option-text">D) Only wooden objects</span>
+            </label>
+          </div>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(3)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> B) Metal objects only.
+          </div>
+        </div>
+        
+        <div class="question-item" data-question="4">
+          <h4>Question 4: What caused the fault in the locking sequence during the exercise?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-4" value="A" class="option-radio">
+              <span class="option-text">A) The valve was closed</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-4" value="B" class="option-radio">
+              <span class="option-text">B) The valve was closed</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-4" value="C" class="option-radio">
+              <span class="option-text">C) The pump failed</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-4" value="D" class="option-radio">
+              <span class="option-text">D) The system couldn’t detect the locking pins because the sensor was not triggered</span>
+            </label>
+          </div>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(4)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> D) The system couldn’t detect the locking pins because the sensor was not triggered.
+          </div>
+        </div>
+        
+        <div class="question-item" data-question="5">
+          <h4>Question 5: How can engineers test a proximity sensor during troubleshooting?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-5" value="A" class="option-radio">
+              <span class="option-text">A) By placing a metal object in front of the sensor to simulate detection</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-5" value="B" class="option-radio">
+              <span class="option-text">B) By turning off power</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-5" value="C" class="option-radio">
+              <span class="option-text">C) By replacing the PLC</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-5" value="D" class="option-radio">
+              <span class="option-text">D) By changing HMI theme</span>
+            </label>
+          </div>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(5)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> B) By placing a metal object in front of the sensor to simulate detection.
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="valve-simulation.js"></script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const initFunc = 'initializeValveSimulation';
+      setTimeout(() => {
+        if (typeof window[initFunc] === 'function') {
+          console.log('Initializing', initFunc);
+          window[initFunc]();
+        } else {
+          document.querySelector('.simulation-loading').innerHTML = '<p>Simulation ready - Valve System Maintenance</p>';
+        }
+      }, 1000);
+      loadSavedAnswers();
+    });
+    
+        function submitAnswer(questionNumber) {
+          const answerInput = document.querySelector(`[data-question="${questionNumber}"]`);
+          if (!answerInput) return;
+          
+          const selectedOption = document.querySelector(`input[name="question-${questionNumber}"]:checked`);
+          if (!selectedOption) {
+            alert('Please select an answer before submitting.');
+            return;
+          }
+          
+          const answer = selectedOption.value;
+          
+          // Save with enhanced tracking
+          worksheetTracker.saveAnswer(7, questionNumber, answer, 'maintenance');
+          
+          // Define correct answers for worksheet 7
+          const correctAnswers = {
+                "1": "A",
+                "2": "D",
+                "3": "B",
+                "4": "C",
+                "5": "B"
+          };
+          
+          // Apply visual feedback
+          const allOptions = answerInput.querySelectorAll('.option-label');
+          const correctAnswer = correctAnswers[questionNumber];
+          
+          allOptions.forEach(option => {
+            const radio = option.querySelector('.option-radio');
+            const optionValue = radio.value;
+            
+            if (optionValue === correctAnswer) {
+              option.classList.add('correct');
+            } else if (optionValue === answer && answer !== correctAnswer) {
+              option.classList.add('incorrect');
+            }
+          });
+          
+          // Mark question as submitted to disable further interaction
+          answerInput.classList.add('submitted');
+          
+          // Show feedback on button
+          const submitBtn = answerInput.querySelector('.submit-question-btn');
+          if (submitBtn) {
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = answer === correctAnswer ? 'Correct!' : 'Incorrect!';
+            submitBtn.style.background = answer === correctAnswer ? '#4CAF50' : '#f44336';
+            
+            // Add incorrect class for enhanced styling
+            if (answer !== correctAnswer) {
+              submitBtn.classList.add('incorrect');
+            }
+            
+            setTimeout(() => {
+              submitBtn.textContent = originalText;
+              submitBtn.style.background = '#4CAF50';
+              submitBtn.classList.remove('incorrect');
+            }, 2000);
+          }
+          
+          // Show correct answer if available
+          const correctAnswerDiv = answerInput.querySelector('.correct-answer');
+          if (correctAnswerDiv) {
+            correctAnswerDiv.style.display = 'block';
+          }
+        }
+    function loadSavedAnswers() {
+      // This function is now handled by the tracking system
+    }
+  </script>
+  
+  <!-- Bottom Navigation -->
+  <div class="worksheet-bottom-nav">
+    <div class="worksheet-header-content">
+      <div class="worksheet-header-left">
+        <button class="worksheet-nav-btn worksheet-back-btn" onclick="window.location.href='worksheet-6.html'">
+          <i class="fas fa-arrow-left"></i>
+          <span>Previous Worksheet</span>
+        </button>
+      </div>
+       <div class="worksheet-header-center">
+       <h1 class="worksheet-title">Worksheet 7 - Proximity Switch</h1>
+      </div>
+      <div class="worksheet-header-right">
+        <button class="worksheet-nav-btn worksheet-next-btn" onclick="window.location.href='worksheet-8.html'">
+          <span>Next Worksheet</span>
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+<script>
+
+// Enhanced answer handling functions
+function submitAnswer(questionNumber) {
+  const answerInput = document.querySelector(`[data-question="${questionNumber}"]`);
+  if (!answerInput) return;
+  
+  const selectedOption = document.querySelector(`input[name="question-${questionNumber}"]:checked`);
+  if (!selectedOption) {
+    alert('Please select an answer before submitting.');
+    return;
+  }
+  
+  const answer = selectedOption.value;
+  
+  // Save with enhanced tracking if available
+  if (typeof worksheetTracker !== 'undefined') {
+    const worksheetId = getUrlParameter('id') || getWorksheetIdFromUrl();
+    const path = window.location.pathname;
+    const isFaultScenario = path.includes('fault-scenario');
+    const type = getUrlParameter('type') || (isFaultScenario ? 'fault' : 'maintenance');
+    worksheetTracker.saveAnswer(worksheetId, questionNumber, answer, type);
+  } else {
+    saveAnswer(questionNumber, answer);
+  }
+  
+  // Get correct answer from the correct-answer div
+  const correctAnswerDiv = answerInput.querySelector('.correct-answer');
+  let correctAnswerText = '';
+  if (correctAnswerDiv) {
+    const strongElement = correctAnswerDiv.querySelector('strong');
+    if (strongElement) {
+      correctAnswerText = strongElement.nextSibling.textContent.trim();
+    }
+  }
+  
+  // Determine if answer is correct (extract letter from correct answer)
+  const correctLetterMatch = correctAnswerText.match(/^([A-D])\)/);
+  const correctLetter = correctLetterMatch ? correctLetterMatch[1] : null;
+  const isCorrect = !!correctLetter && answer === correctLetter;
+  
+  // Style the selected option
+  const allOptions = answerInput.querySelectorAll('.option-label');
+  allOptions.forEach(option => {
+    option.classList.remove('correct', 'incorrect');
+  });
+  
+  if (isCorrect) {
+    selectedOption.closest('.option-label').classList.add('correct');
+  } else {
+    selectedOption.closest('.option-label').classList.add('incorrect');
+    // Also mark the correct option as correct
+    const correctOption = answerInput.querySelector(`input[name="question-${questionNumber}"][value="${correctLetter}"]`);
+    if (correctOption) {
+      correctOption.closest('.option-label').classList.add('correct');
+    }
+  }
+  
+  const submitBtn = answerInput.querySelector('.submit-question-btn');
+  if (submitBtn) {
+    submitBtn.textContent = isCorrect ? 'Correct!' : 'Incorrect';
+    submitBtn.style.background = isCorrect ? '#4CAF50' : '#f44336';
+    setTimeout(() => {
+      submitBtn.textContent = 'Submit Answer';
+      submitBtn.style.background = '#4CAF50';
+    }, 2000);
+  }
+  
+  // Show correct answer
+  if (correctAnswerDiv) {
+    correctAnswerDiv.style.display = 'block';
+  }
+}
+
+
+// Enhanced step tracking functions
+function initializeStepTracking() {
+  console.log('Initializing step tracking...');
+  
+  // Add flag to prevent double execution
+  let isProcessing = false;
+  
+  // Wait a bit to ensure DOM is ready
+  setTimeout(() => {
+    const stepCards = document.querySelectorAll('.step-card');
+    console.log('Found', stepCards.length, 'step cards');
+    
+    stepCards.forEach((card, index) => {
+      const checkbox = card.querySelector('.step-complete-checkbox');
+      const stepNumber = card.getAttribute('data-step') || (index + 1);
+      
+      console.log('Setting up card', stepNumber, 'with checkbox:', !!checkbox);
+      
+      if (checkbox) {
+        // Load saved state
+        const savedState = localStorage.getItem(`step-${stepNumber}`);
+        if (savedState === 'true') {
+          checkbox.checked = true;
+          card.classList.add('step-completed');
+          // Apply the completed styles
+          card.style.background = '#2a2a2a';
+          card.style.opacity = '0.7';
+          card.style.cursor = 'default';
+        }
+        
+        // Make the entire card clickable
+        card.style.cursor = 'pointer';
+        card.style.position = 'relative';
+        card.style.zIndex = '1';
+        
+        // Add click handler to the entire card
+        card.addEventListener('click', function(e) {
+          console.log('Card clicked:', stepNumber);
+          
+          // Prevent double execution
+          if (isProcessing) {
+            console.log('Already processing, ignoring click');
+            return;
+          }
+          
+          // Don't toggle if clicking directly on the checkbox or its label
+          if (e.target === checkbox || 
+              e.target.closest('.step-checkbox') || 
+              e.target.closest('label') ||
+              e.target.tagName === 'INPUT' ||
+              e.target.tagName === 'LABEL') {
+            console.log('Clicking on checkbox or label, not toggling card');
+            return;
+          }
+          
+          // Prevent the default checkbox behavior and stop propagation
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          
+          // Set processing flag
+          isProcessing = true;
+          
+          // Toggle the checkbox directly without triggering events
+          checkbox.checked = !checkbox.checked;
+          
+          // Manually call the change handler
+          handleCheckboxChange(checkbox, card, stepNumber);
+          
+          console.log('Checkbox toggled to:', checkbox.checked);
+          console.log('Card classes after toggle:', card.className);
+          
+          // Reset processing flag after a short delay
+          setTimeout(() => {
+            isProcessing = false;
+          }, 100);
+        });
+        
+        // Create a shared change handler function
+        function handleCheckboxChange(checkbox, card, stepNumber) {
+          console.log('Checkbox changed:', stepNumber, 'checked:', checkbox.checked);
+          
+          if (checkbox.checked) {
+            card.classList.add('step-completed');
+            // Force the styles to apply
+            card.style.background = '#2a2a2a';
+            card.style.opacity = '0.7';
+            card.style.cursor = 'default';
+            console.log('Added step-completed class to card', stepNumber);
+            console.log('Card classes after adding:', card.className);
+            localStorage.setItem(`step-${stepNumber}`, 'true');
+          } else {
+            card.classList.remove('step-completed');
+            // Reset the styles
+            card.style.background = '';
+            card.style.opacity = '';
+            card.style.cursor = 'pointer';
+            console.log('Removed step-completed class from card', stepNumber);
+            console.log('Card classes after removing:', card.className);
+            localStorage.setItem(`step-${stepNumber}`, 'false');
+          }
+        }
+        
+        // Add change handler to checkbox
+        checkbox.addEventListener('change', function() {
+          if (!isProcessing) {
+            handleCheckboxChange(checkbox, card, stepNumber);
+          }
+        });
+        
+        // Also make the checkbox itself clickable
+        checkbox.addEventListener('click', function(e) {
+          e.stopPropagation(); // Prevent card click when clicking checkbox
+          e.stopImmediatePropagation(); // Stop any other handlers
+        });
+      }
+    });
+  }, 100);
+}
+
+// Initialize when page loads
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initializeStepTracking);
+} else {
+  // DOM is already loaded
+  initializeStepTracking();
+}
+
+// Also try again after a short delay to ensure everything is ready
+setTimeout(initializeStepTracking, 500);
+
+
+</script>
+</body>
+</html> 

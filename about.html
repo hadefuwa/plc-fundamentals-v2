@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About - Matrix TSL PLC Fundamentals Trainer Training Platform</title>
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">
+  <link rel="manifest" href="manifest.json">
+  <script defer src="shared-navigation.js"></script>
+  <script defer src="pwa-install.js"></script>
+  <style>
+    /* CSS Custom Properties for dynamic theming */
+    :root {
+      --accent-secondary: #3a8ce6;
+    }
+    
+    /* Reset container styles */
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      width: 100%;
+    }
+
+    body {
+      background: var(--background-color);
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    /* Main Container Layout */
+    .main-container {
+      min-height: calc(100vh - 100px);
+      margin: 20px auto;
+      padding: 20px;
+      max-width: 1400px;
+      width: calc(100% - 40px);
+      box-sizing: border-box;
+      background: #2d2d2d;
+      border-radius: 8px;
+    }
+
+    .about-container {
+      width: 100%;
+      margin: 0;
+      padding: 40px;
+      background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+      border-radius: 12px;
+      border: 2px solid #333;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+      box-sizing: border-box;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .main-container {
+        padding: 15px;
+        margin: 15px auto;
+        width: calc(100% - 30px);
+      }
+      
+      .about-container {
+        padding: 20px;
+      }
+
+      .about-header h1 {
+        font-size: 28px;
+      }
+
+      .about-header p {
+        font-size: 16px;
+      }
+
+      .version-info {
+        padding: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .main-container {
+        padding: 10px;
+        margin: 10px auto;
+        width: calc(100% - 20px);
+      }
+      
+      .about-container {
+        padding: 15px;
+      }
+
+      .about-header h1 {
+        font-size: 24px;
+      }
+
+      .about-header p {
+        font-size: 14px;
+      }
+
+      .version-info {
+        padding: 15px;
+      }
+    }
+
+    /* New section styling */
+    .product-description, .target-audience, .learning-objectives, .key-features {
+      margin: 30px 0;
+      padding: 25px;
+      background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+      border-radius: 8px;
+      border: 1px solid #333;
+    }
+
+    .learning-objectives ol {
+      margin: 15px 0;
+      padding-left: 20px;
+    }
+
+    .learning-objectives li {
+      margin: 10px 0;
+      line-height: 1.6;
+    }
+
+    .features-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .feature-category {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 20px;
+      border-radius: 6px;
+      border: 1px solid #444;
+    }
+
+    .feature-category h4 {
+      color: var(--accent-color);
+      margin-bottom: 15px;
+      font-size: 18px;
+    }
+
+    .feature-category ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .feature-category li {
+      margin: 8px 0;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 768px) {
+      .features-list {
+        grid-template-columns: 1fr;
+      }
+      
+      .product-description, .target-audience, .learning-objectives, .key-features {
+        padding: 20px;
+        margin: 20px 0;
+      }
+    }
+
+    .about-header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding-bottom: 30px;
+      border-bottom: 2px solid var(--accent-color);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .about-header h1 {
+      color: #FFFFFF;
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    }
+
+    .about-header p {
+      color: #CCCCCC;
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    .version-info {
+      background: linear-gradient(135deg, #2a2a2a, #3a3a3a);
+      border-radius: 8px;
+      padding: 25px;
+      margin-bottom: 30px;
+      border-left: 4px solid var(--accent-color);
+    }
+
+    .version-info h2 {
+      color: var(--accent-color);
+      font-size: 24px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .version-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .version-item {
+      background: #1a1a1a;
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid #444;
+    }
+
+    .version-item h3 {
+      color: #FFFFFF;
+      font-size: 18px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .version-item p {
+      color: #CCCCCC;
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .company-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+
+    .company-card {
+      background: linear-gradient(135deg, #2a2a2a, #3a3a3a);
+      border-radius: 12px;
+      padding: 30px;
+      border: 2px solid #444;
+      transition: all 0.3s ease;
+    }
+
+    .company-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px var(--accent-shadow);
+      border-color: var(--accent-color);
+    }
+
+    .company-card h2 {
+      color: var(--accent-color);
+      font-size: 28px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .company-card h3 {
+      color: #FFFFFF;
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+
+    .company-card p {
+      color: #CCCCCC;
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+
+    .company-card ul {
+      color: #CCCCCC;
+      font-size: 16px;
+      line-height: 1.6;
+      padding-left: 20px;
+    }
+
+    .company-card li {
+      margin-bottom: 8px;
+    }
+
+    .features-section {
+      background: linear-gradient(135deg, #2a2a2a, #3a3a3a);
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 30px;
+      border: 2px solid #444;
+    }
+
+    .features-section h2 {
+      color: var(--accent-color);
+      font-size: 28px;
+      margin-bottom: 25px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .feature-item {
+      background: #1a1a1a;
+      padding: 20px;
+      border-radius: 8px;
+      border-left: 4px solid var(--accent-color);
+    }
+
+    .feature-item h3 {
+      color: #FFFFFF;
+      font-size: 18px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .feature-item p {
+      color: #CCCCCC;
+      font-size: 14px;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .contact-section {
+      background: linear-gradient(135deg, #2a2a2a, #3a3a3a);
+      border-radius: 12px;
+      padding: 30px;
+      border: 2px solid #444;
+    }
+
+    .contact-section h2 {
+      color: var(--accent-color);
+      font-size: 28px;
+      margin-bottom: 25px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .contact-item {
+      background: #1a1a1a;
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid #444;
+    }
+
+    .contact-item h3 {
+      color: #FFFFFF;
+      font-size: 16px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .contact-item p {
+      color: #CCCCCC;
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
+      color: white;
+      text-decoration: none;
+      padding: 15px 30px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      margin-top: 20px;
+    }
+
+    .back-button:hover {
+      background: linear-gradient(135deg, var(--accent-secondary), var(--accent-color));
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px var(--accent-shadow);
+    }
+
+    /* Contact Us Section Styles */
+    .contact-us-section {
+      background: linear-gradient(135deg, #2a2a2a, #3a3a3a);
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 30px;
+      border: 2px solid #444;
+      text-align: center;
+    }
+
+    .contact-us-content {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .contact-us-content p {
+      color: #CCCCCC;
+      font-size: 18px;
+      line-height: 1.6;
+      margin-bottom: 25px;
+    }
+
+    .contact-actions {
+      margin-top: 20px;
+    }
+
+    .email-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
+      color: white;
+      text-decoration: none;
+      padding: 18px 35px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 18px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px var(--accent-shadow);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .email-button:hover {
+      background: linear-gradient(135deg, var(--accent-secondary), var(--accent-color));
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px var(--accent-shadow-heavy);
+    }
+
+    .email-button:active {
+      transform: translateY(-1px);
+    }
+
+    .email-button i {
+      font-size: 20px;
+    }
+
+    /* Product Specifications Styles */
+    .product-specs {
+      margin-top: 40px;
+      padding-top: 30px;
+      border-top: 2px solid #444;
+    }
+
+    .product-specs h3 {
+      margin-bottom: 25px;
+    }
+
+    .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .spec-item {
+      background: #1a1a1a;
+      padding: 20px;
+      border-radius: 8px;
+      border-left: 4px solid var(--accent-color);
+    }
+
+    .spec-item h4 {
+      color: var(--accent-color);
+      font-size: 16px;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .spec-item p {
+      color: #CCCCCC;
+      font-size: 14px;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .spec-item strong {
+      color: #FFFFFF;
+    }
+
+    /* CAD Image Styles */
+    .cad-image-section {
+      text-align: center;
+      margin: 30px 0;
+      padding: 20px;
+      background: #1a1a1a;
+      border-radius: 12px;
+      border: 2px solid #444;
+    }
+
+    .cad-image {
+      max-width: 40%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+      transition: transform 0.3s ease;
+    }
+
+    .cad-image:hover {
+      transform: scale(1.02);
+    }
+
+    .cad-caption {
+      color: #CCCCCC;
+      font-size: 16px;
+      font-style: italic;
+      margin-top: 15px;
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .about-container {
+        margin: 10px;
+        padding: 20px;
+      }
+
+      .company-section {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .about-header h1 {
+        font-size: 28px;
+      }
+
+      .about-header p {
+        font-size: 16px;
+      }
+    }
+
+    /* Embedded Image Slider Styles */
+    .embedded-slider {
+      margin-top: 25px;
+      padding-top: 25px;
+      border-top: 1px solid #444;
+    }
+
+    .embedded-slider h3 {
+      color: var(--accent-color);
+      font-size: 20px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .image-slider {
+      position: relative;
+      width: 100%;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .slider-wrapper {
+      position: relative;
+      width: 100%;
+      height: 250px;
+    }
+
+    .slider-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    .slider-image.active {
+      opacity: 1;
+    }
+
+    .slider-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      border: none;
+      padding: 15px 12px;
+      cursor: pointer;
+      border-radius: 50%;
+      font-size: 18px;
+      transition: all 0.3s ease;
+      z-index: 10;
+    }
+
+    .slider-btn:hover {
+      background: var(--accent-shadow-heavy);
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .prev-btn {
+      left: 15px;
+    }
+
+    .next-btn {
+      right: 15px;
+    }
+
+    .slider-dots {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      z-index: 10;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .dot.active {
+      background: var(--accent-color);
+      transform: scale(1.2);
+    }
+
+    .dot:hover {
+      background: var(--accent-shadow-heavy);
+    }
+
+    @media (max-width: 768px) {
+      .slider-wrapper {
+        height: 200px;
+      }
+      
+      .slider-btn {
+        padding: 10px 8px;
+        font-size: 14px;
+      }
+      
+      .slider-dots {
+        bottom: 10px;
+      }
+      
+      .dot {
+        width: 8px;
+        height: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+
+  <!-- Main Container -->
+  <div class="main-container">
+    <!-- About Content -->
+    <div class="about-container">
+      <div class="about-header">
+        <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 20px;">
+          <img src="assets/matrix-logo.png" alt="Matrix Logo" style="height: 60px; width: auto;">
+        </div>
+        <p>Advanced Industrial Maintenance Training Platform for PLC Fundamentals Control Systems</p>
+      </div>
+
+      <!-- 1. Application Information -->
+      <div class="version-info">
+        <h2><i class="fas fa-code-branch"></i> Application Information</h2>
+        <div class="version-grid">
+          <div class="version-item">
+            <h3><i class="fas fa-tag"></i> Version</h3>
+            <p>1.0.5</p>
+          </div>
+          <div class="version-item">
+            <h3><i class="fas fa-calendar-alt"></i> Last Updated</h3>
+            <p>08/08/2025</p>
+          </div>
+          <div class="version-item">
+            <h3><i class="fas fa-code"></i> Build</h3>
+            <p>Production Release</p>
+          </div>
+          <div class="version-item">
+            <h3><i class="fas fa-shield-alt"></i> Status</h3>
+            <p>Active Development</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Product Information -->
+      <div class="features-section">
+        <h2 class="section-header"><i class="fas fa-industry"></i> Product Information - IM6930</h2>
+        <div class="features-grid">
+          <div class="feature-item">
+            <h3><i class="fas fa-cube"></i> Product Overview</h3>
+            <p><strong>Model:</strong> IM6930 - PLC Fundamentals Trainer<br>
+            <strong>Product Range:</strong> Industrial Maintenance<br>
+            <strong>Curriculum Codes:</strong> CP2388<br>
+            <strong>Power Supply:</strong> 24V DC</p>
+          </div>
+          <div class="feature-item">
+            <h3><i class="fas fa-microchip"></i> Core Components</h3>
+            <p>Siemens S7-1214 PLC, Unified Basic HMI (MTP700), push buttons, selector switch, proximity sensor, potentiometer, temperature sensor, indicator LEDs, DC motors, and DIN rail relays.</p>
+          </div>
+          <div class="feature-item">
+            <h3><i class="fas fa-graduation-cap"></i> Educational Focus</h3>
+            <p>Designed for 16-18 year old engineering students and apprentices in further education, aligned with UK T-Level & BTEC qualifications in Maintenance, Installation & Repair.</p>
+          </div>
+          <div class="feature-item">
+            <h3><i class="fas fa-tools"></i> Hands-on Training</h3>
+            <p>12 guided worksheets covering PLC I/O basics, emergency stops, contact types, digital vs analogue I/O, output devices, and power supply components.</p>
+          </div>
+          <div class="feature-item">
+            <h3><i class="fas fa-exclamation-triangle"></i> Safety Features</h3>
+            <p>Dual-channel emergency stop system, safety relay, MCB power isolation, and comprehensive electrical safety measures for educational use.</p>
+          </div>
+          <div class="feature-item">
+            <h3><i class="fas fa-shield-alt"></i> Safety & Standards</h3>
+            <p>24V DC operation, finger-safe terminals, CE-marked components, and compliance with educational equipment standards for safe classroom use.</p>
+          </div>
+        </div>
+        
+        <!-- Product Description -->
+        <div class="product-description">
+          <h3 class="section-header" style="color: var(--accent-color);"><i class="fas fa-info-circle"></i> Product Description</h3>
+          <p>The PLC Fundamentals Trainer is a hands-on training platform designed specifically for those new to industrial maintenance and automation. It provides a structured, practical introduction to PLC-controlled systems using real-world components and industrial wiring standards. At the heart of the system is a Siemens S7-1214 PLC and a 7-inch Unified Basic HMI, delivering a realistic interface for observing how inputs and outputs interact in a typical automated process.</p>
+          
+          <p>Rather than focusing on programming or diagnostics, the module helps learners build core knowledge from the ground up. It starts with how a basic control panel is laid out and how devices like push buttons, proximity sensors, and temperature inputs are wired into a PLC. The system includes clearly labelled terminals and a mix of digital and analogue devices, offering opportunities to explore normally open (NO) and normally closed (NC) contacts, signal types, and typical industrial safety features such as dual-channel emergency stops and output isolation through relays.</p>
+          
+          <p>Each component has been carefully selected to reflect what learners will encounter in real facilities. From the MCB and safety relay to the red-and-white RPM feedback motors and DIN rail relays, every interaction is visible and tactile. This makes concepts like I/O mapping, contact state logic, and basic sequencing intuitive and easy to grasp.</p>
+        </div>
+
+        <!-- Target Audience -->
+        <div class="target-audience">
+          <h3 class="section-header" style="color: var(--accent-color);"><i class="fas fa-users"></i> Target Audience</h3>
+          <p>This curriculum is designed for 16 to 18-year-old engineering students in further education colleges, as well as apprentices beginning their careers in industrial maintenance and automation. It is ideal for those studying T Levels, BTECs, or similar vocational qualifications where practical understanding of control systems is essential.</p>
+          
+          <p>The program focuses on giving learners their first exposure to PLC hardware, inputs and outputs, safety systems, and real industrial components, without requiring prior knowledge of programming or electrical systems. Whether the goal is to work in manufacturing, utilities, or process industries, this course lays the groundwork for understanding what is inside a control panel, how components interact, and how modern automation systems are built and maintained.</p>
+        </div>
+
+        <!-- Product Specifications -->
+        <div class="product-specs">
+          <h3 class="section-header" style="color: var(--accent-color);"><i class="fas fa-clipboard-list"></i> Technical Specifications</h3>
+          
+          <!-- CAD Image Display -->
+          <div class="cad-image-section">
+            <img src="assets/cad.png" alt="IM6930 PLC Fundamentals Control System CAD Design" class="cad-image">
+            <p class="cad-caption">IM6930 PLC Fundamentals Control System - CAD Design</p>
+          </div>
+          
+          <div class="specs-grid">
+            <div class="spec-item">
+              <h4><i class="fas fa-ruler"></i> Physical Format</h4>
+              <p><strong>Design:</strong> Desktop-format training kit<br>
+              <strong>Baseplate:</strong> Steel or composite with DIN rail components<br>
+              <strong>Portability:</strong> Carry handles, compact footprint</p>
+            </div>
+            <div class="spec-item">
+              <h4><i class="fas fa-plug"></i> Power & Control</h4>
+              <p><strong>Power Supply:</strong> 24V DC<br>
+              <strong>PLC I/O:</strong> 14 Digital Inputs, 10 Digital Outputs<br>
+              <strong>Analog I/O:</strong> 2 Analog Inputs (0-10V)</p>
+            </div>
+            <div class="spec-item">
+              <h4><i class="fas fa-touchscreen"></i> HMI Interface</h4>
+              <p><strong>Display:</strong> 7" Capacitive Touchscreen<br>
+              <strong>Type:</strong> Siemens Unified Basic Panel (MTP700)<br>
+              <strong>Features:</strong> Real-time I/O display & user interaction</p>
+            </div>
+            <div class="spec-item">
+              <h4><i class="fas fa-microchip"></i> Input Devices</h4>
+              <p><strong>Push Buttons:</strong> 4 (mix of NO/NC contacts)<br>
+              <strong>Selector Switch:</strong> 2-position<br>
+              <strong>Sensors:</strong> Proximity, potentiometer, temperature</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Learning Objectives -->
+        <div class="learning-objectives">
+          <h3 class="section-header" style="color: var(--accent-color);"><i class="fas fa-graduation-cap"></i> Learning Objectives</h3>
+          <p>By the end of the curriculum, learners will be able to:</p>
+          <ol>
+            <li>Identify and describe the key components found in a basic industrial control panel, including PLCs, relays, push buttons, terminal blocks, safety devices, and indicator lights.</li>
+            <li>Explain the role of a PLC in monitoring inputs and controlling outputs within an automated system.</li>
+            <li>Distinguish between different types of input devices, such as normally open (NO) and normally closed (NC) push buttons, selector switches, proximity sensors, and analogue inputs like potentiometers and temperature sensors.</li>
+            <li>Demonstrate safe system isolation using an MCB and describe the purpose of a dual-channel emergency stop system connected via a safety relay.</li>
+            <li>Wire and test basic input and output devices to a Siemens S7-1214 PLC using clearly labelled terminal blocks and DIN rail-mounted components.</li>
+            <li>Interpret HMI displays to monitor live system status, including I/O activity, safety states, and signal conditions.</li>
+            <li>Use basic test equipment such as multimeters to measure voltages, check continuity, and verify correct I/O operation.</li>
+            <li>Describe the difference between digital and analogue signals, and explain how each type is processed by the PLC.</li>
+            <li>Understand the function of indicator LEDs and motors as visual representations of output signals in a control circuit.</li>
+            <li>Follow a structured worksheet to complete guided activities on system setup, component function, and signal tracing.</li>
+          </ol>
+        </div>
+
+        <!-- Key Features -->
+        <div class="key-features">
+          <h3 class="section-header" style="color: var(--accent-color);"><i class="fas fa-star"></i> Key Features</h3>
+          <div class="features-list">
+            <div class="feature-category">
+              <h4><i class="fas fa-cogs"></i> System Hardware and Design</h4>
+              <ul>
+                <li>Siemens S7-1214 PLC with digital and analogue inputs and outputs</li>
+                <li>Siemens Unified Basic HMI for monitoring I/O and displaying system status</li>
+                <li>Range of input devices including push buttons, selector switch, proximity sensor, potentiometer, and temperature sensor</li>
+                <li>Output devices including red and green LEDs, DIN rail-mounted relays, and two visual RPM feedback motors</li>
+                <li>Integrated emergency stop and blue reset button wired through a dual-channel safety relay</li>
+                <li>Clearly labelled terminals, modular DIN rail layout, and MCB for power isolation</li>
+                <li>Industrial-grade 24V components selected to reflect real control panels</li>
+                <li>Compact desktop format suitable for classroom and bench-top use</li>
+              </ul>
+            </div>
+            <div class="feature-category">
+              <h4><i class="fas fa-book"></i> Curriculum and Learning Outcomes</h4>
+              <ul>
+                <li>Introduces basic concepts of PLC-controlled systems and industrial control panels</li>
+                <li>Explains digital and analogue inputs and outputs, including NO and NC contact types</li>
+                <li>Covers dual-channel E-stop circuits, relay logic, and safe wiring practices</li>
+                <li>Provides practical exposure to reading sensor signals and observing actuator response</li>
+                <li>Helps learners build confidence in identifying components and understanding their roles</li>
+              </ul>
+            </div>
+            <div class="feature-category">
+              <h4><i class="fas fa-hands-helping"></i> Hands-On Interaction and Visual Feedback</h4>
+              <ul>
+                <li>Visible signal indicators via LEDs and rotating motor discs for easy observation of output activity</li>
+                <li>Use of multimeters encouraged to test voltages and continuity across terminals</li>
+                <li>PLC and field devices include LED indicators to support signal tracing and logic understanding</li>
+              </ul>
+            </div>
+            <div class="feature-category">
+              <h4><i class="fas fa-chalkboard-teacher"></i> Worksheets and Instructor Support</h4>
+              <ul>
+                <li>Includes a structured set of worksheets focused on each component and concept</li>
+                <li>Worksheets cover E-stops, push buttons, relays, safety relays, terminals, indicator lights, and more</li>
+                <li>'Over to You' sections guide learners to explore and apply concepts independently</li>
+                <li>Full documentation with wire numbers, terminal references, and test points</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Matrix/Halifax Information -->
+      <div class="company-section">
+        <!-- Matrix TSL -->
+        <div class="company-card">
+          <h2><i class="fas fa-industry"></i> Matrix Technology Solutions Ltd</h2>
+          
+          <!-- Matrix TSL Image Slider -->
+          <div class="embedded-slider">
+            <div class="image-slider" id="matrix-slider">
+              <div class="slider-wrapper">
+                <img src="assets/about/matrix1.png" alt="Matrix TSL - Image 1" class="slider-image active">
+                <img src="assets/about/matrix2.png" alt="Matrix TSL - Image 2" class="slider-image">
+                <img src="assets/about/matrix3.png" alt="Matrix TSL - Image 3" class="slider-image">
+              </div>
+              <button class="slider-btn prev-btn" onclick="changeSlide('matrix-slider', -1)">
+                <i class="fas fa-chevron-left"></i>
+              </button>
+              <button class="slider-btn next-btn" onclick="changeSlide('matrix-slider', 1)">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+              <div class="slider-dots">
+                <span class="dot active" onclick="currentSlide('matrix-slider', 0)"></span>
+                <span class="dot" onclick="currentSlide('matrix-slider', 1)"></span>
+                <span class="dot" onclick="currentSlide('matrix-slider', 2)"></span>
+              </div>
+            </div>
+          </div>
+          
+          <h3>About Matrix TSL</h3>
+          <p>Matrix Technology Solutions Ltd is a global provider of hands-on engineering education training solutions. We develop, create and manufacture innovative hardware and software designed to support the teaching of multiple engineering disciplines.</p>
+          
+          <h3>Our Vision</h3>
+          <p>Inspiring the next generation of engineers through practical, hands-on learning that transforms classroom theory and prepares young people for the careers of tomorrow.</p>
+          
+          <h3>Our Mission</h3>
+          <p>At Matrix TSL, our mission is to transform engineering teaching by developing innovative, hands-on solutions that make complex concepts accessible, engaging, and applicable to real-world scenarios with proven results.</p>
+          
+          <h3>Who are we?</h3>
+          <p>We are committed to empowering educators with the resources and support they need to inspire the next generation of engineers and technicians. Through practical hardware, intuitive software, and comprehensive learning materials, we help bridge the gap between theory and practice — ensuring that learners at every level develop the skills and confidence they need to succeed in modern engineering and technology industries.</p>
+          
+          <h3>Our Solutions</h3>
+          <ul>
+            <li>Hands-on Engineering Education Training</li>
+            <li>Innovative Hardware and Software Development</li>
+            <li>Multiple Engineering Disciplines Support</li>
+            <li>Practical Skills Development</li>
+            <li>Industry-Relevant Training Solutions</li>
+          </ul>
+        </div>
+
+        <!-- Halifax UK -->
+        <div class="company-card">
+          <h2><i class="fas fa-map-marker-alt"></i> Halifax, England</h2>
+          
+          <!-- Halifax Image Slider -->
+          <div class="embedded-slider">
+            <div class="image-slider" id="halifax-slider">
+              <div class="slider-wrapper">
+                <img src="assets/about/halifax1.jpg" alt="Halifax - Image 1" class="slider-image active">
+                <img src="assets/about/halifax2.png" alt="Halifax - Image 2" class="slider-image">
+                <img src="assets/about/halifax3.jpg" alt="Halifax - Image 3" class="slider-image">
+              </div>
+              <button class="slider-btn prev-btn" onclick="changeSlide('halifax-slider', -1)">
+                <i class="fas fa-chevron-left"></i>
+              </button>
+              <button class="slider-btn next-btn" onclick="changeSlide('halifax-slider', 1)">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+              <div class="slider-dots">
+                <span class="dot active" onclick="currentSlide('halifax-slider', 0)"></span>
+                <span class="dot" onclick="currentSlide('halifax-slider', 1)"></span>
+                <span class="dot" onclick="currentSlide('halifax-slider', 2)"></span>
+              </div>
+            </div>
+          </div>
+          
+          <h3>About Halifax</h3>
+          <p>Halifax is a historic market town in West Yorkshire, England, known for its rich industrial heritage and vibrant community. Located in the heart of Yorkshire, Halifax has been a center of commerce and industry for centuries.</p>
+          
+          <h3>Location & Heritage</h3>
+          <p>Halifax is situated in the Calder Valley, surrounded by the beautiful Pennine hills. The town has a proud history of textile manufacturing, engineering, and innovation, making it an ideal location for educational technology companies like Matrix TSL.</p>
+          
+          <h3>Modern Halifax</h3>
+          <p>Today, Halifax continues to be a thriving town with a mix of traditional industries and modern businesses. It serves as an important regional center for education, commerce, and culture in West Yorkshire.</p>
+          
+          <h3>Key Features</h3>
+          <ul>
+            <li>Historic Market Town</li>
+            <li>Industrial Heritage</li>
+            <li>Educational Excellence</li>
+            <li>Transportation Hub</li>
+            <li>Cultural Center</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 4. Contact Information -->
+      <div class="contact-section">
+        <h2><i class="fas fa-envelope"></i> Contact Information</h2>
+        <div class="contact-grid">
+          <div class="contact-item">
+            <h3><i class="fas fa-globe"></i> Matrix TSL Website</h3>
+            <p>www.matrixtsl.com</p>
+          </div>
+          <div class="contact-item">
+            <h3><i class="fas fa-envelope"></i> Matrix TSL Email</h3>
+            <p>info@matrixtsl.com</p>
+          </div>
+          <div class="contact-item">
+            <h3><i class="fas fa-phone"></i> Matrix TSL Phone</h3>
+            <p>+44 (0) 1422 252380</p>
+          </div>
+          <div class="contact-item">
+            <h3><i class="fas fa-map-marker-alt"></i> Matrix TSL Address</h3>
+            <p>33 Gibbet St, Halifax HX1 5BA, England</p>
+          </div>
+          <div class="contact-item">
+            <h3><i class="fas fa-phone"></i> Matrix TSL Phone</h3>
+            <p>01422 252380</p>
+          </div>
+          <div class="contact-item">
+            <h3><i class="fas fa-map-marker-alt"></i> Halifax Location</h3>
+            <p>Halifax, West Yorkshire, England</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Us Section -->
+      <div class="contact-us-section">
+        <h2 class="section-header" style="color: var(--accent-color);"><i class="fas fa-headset"></i> Contact Us</h2>
+        <div class="contact-us-content">
+          <p>Ready to get started with our industrial maintenance training solutions? Our sales team is here to help you find the perfect training solution for your needs.</p>
+          <div class="contact-actions">
+                         <a href="mailto:sales@matrixtsl.com?subject=Inquiry about IM6930 PLC Fundamentals Trainer&body=Hello,%0D%0A%0D%0AI'm interested in learning more about the IM6930 PLC Fundamentals Trainer (CP2388 curriculum).%0D%0A%0D%0APlease provide information about:%0D%0A- IM6930 PLC Fundamentals Trainer specifications%0D%0A- CP2388 curriculum details and worksheets%0D%0A- Pricing and delivery options%0D%0A- Training and support services%0D%0A- Warranty and technical support%0D%0A%0D%0AThank you,%0D%0A[Your Name]" class="email-button">
+              <i class="fas fa-envelope"></i> Email Us Now
+            </a>
+          </div>
+        </div>
+      </div>
+
+    <!-- Back Button -->
+    <div style="text-align: center;">
+      <a href="index.html" class="back-button">
+        <i class="fas fa-arrow-left"></i> Back to Home
+      </a>
+    </div>
+  </div>
+  </div>
+
+  <script>
+    // Image Slider Functionality
+    let slideIndexes = {
+      'matrix-slider': 0,
+      'halifax-slider': 0
+    };
+
+    function changeSlide(sliderId, direction) {
+      const slider = document.getElementById(sliderId);
+      if (!slider) return; // Exit if slider doesn't exist
+      
+      const images = slider.querySelectorAll('.slider-image');
+      const dots = slider.querySelectorAll('.dot');
+      const totalSlides = images.length;
+      
+      if (totalSlides === 0) return; // Exit if no images found
+      
+      slideIndexes[sliderId] += direction;
+      
+      if (slideIndexes[sliderId] >= totalSlides) {
+        slideIndexes[sliderId] = 0;
+      } else if (slideIndexes[sliderId] < 0) {
+        slideIndexes[sliderId] = totalSlides - 1;
+      }
+      
+      showSlide(sliderId, slideIndexes[sliderId]);
+    }
+
+    function currentSlide(sliderId, index) {
+      if (typeof index !== 'number' || index < 0) return; // Validate index
+      slideIndexes[sliderId] = index;
+      showSlide(sliderId, index);
+    }
+
+    function showSlide(sliderId, index) {
+      const slider = document.getElementById(sliderId);
+      if (!slider) return; // Exit if slider doesn't exist
+      
+      const images = slider.querySelectorAll('.slider-image');
+      const dots = slider.querySelectorAll('.dot');
+      
+      if (images.length === 0) return; // Exit if no images found
+      
+      // Hide all images
+      images.forEach(img => img.classList.remove('active'));
+      dots.forEach(dot => dot.classList.remove('active'));
+      
+      // Show current image and dot
+      if (images[index]) {
+        images[index].classList.add('active');
+      }
+      if (dots[index]) {
+        dots[index].classList.add('active');
+      }
+    }
+
+    // Auto-advance slides every 5 seconds
+    function autoAdvanceSlides() {
+      Object.keys(slideIndexes).forEach(sliderId => {
+        const slider = document.getElementById(sliderId);
+        if (slider && slider.querySelectorAll('.slider-image').length > 0) {
+          changeSlide(sliderId, 1);
+        }
+      });
+    }
+
+    // Start auto-advance when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('About page loaded successfully');
+      
+      // Auto-advance slides every 5 seconds
+      setInterval(autoAdvanceSlides, 5000);
+    });
+  </script>
+  <script>
+    // Register service worker for PWA functionality
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', async function() {
+        try {
+          // First, unregister any existing service workers
+          const registrations = await navigator.serviceWorker.getRegistrations();
+          for (let registration of registrations) {
+            await registration.unregister();
+            console.log('Existing service worker unregistered');
+          }
+
+          // Try registering with different approaches
+          let registration;
+          try {
+            // Try with relative path first (recommended for local development)
+            registration = await navigator.serviceWorker.register('service-worker.js', {
+              scope: './'
+            });
+          } catch (e) {
+            console.log('Relative path failed, trying absolute path...');
+            // Try with absolute path as fallback
+            registration = await navigator.serviceWorker.register('/service-worker.js', {
+              scope: '/'
+            });
+          }
+
+          console.log('Service Worker registered successfully:', registration);
+          
+          // Verify the MIME type
+          const response = await fetch('service-worker.js');
+          const contentType = response.headers.get('content-type');
+          if (!contentType || !contentType.includes('javascript')) {
+            throw new Error(`Invalid MIME type: ${contentType}. Must be application/javascript`);
+          }
+          
+        } catch (error) {
+          console.error('Service Worker registration failed:', error);
+          
+          if (error.name === 'SecurityError' || error.message.includes('MIME type')) {
+            const serverInstructions = `
+To fix MIME type error:
+
+1. Stop current server (Ctrl+C)
+2. Run one of these commands:
+
+   Node.js server (recommended):
+   > node server.js
+
+   Python server:
+   > python server.py
+
+   OR use VS Code Live Server:
+   1. Install "Live Server" extension
+   2. Right-click index.html
+   3. Select "Open with Live Server"
+
+Current error: ${error.message}
+`;
+            console.error(serverInstructions);
+            
+            // Create an error notification
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+              position: fixed;
+              top: 20px;
+              left: 50%;
+              transform: translateX(-50%);
+              background: #ff5252;
+              color: white;
+              padding: 15px 25px;
+              border-radius: 8px;
+              font-size: 14px;
+              z-index: 10000;
+              box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+              text-align: center;
+              max-width: 80%;
+            `;
+            notification.innerHTML = `
+              <strong>Service Worker Error</strong><br>
+              MIME type issue detected. Please check console for server instructions.
+              <button onclick="this.parentElement.remove()" style="
+                background: white;
+                color: #ff5252;
+                border: none;
+                padding: 5px 10px;
+                border-radius: 4px;
+                margin-left: 10px;
+                cursor: pointer;
+              ">Dismiss</button>
+            `;
+            document.body.appendChild(notification);
+          }
+        }
+      });
+    }
+  </script>
+</body>
+</html> 

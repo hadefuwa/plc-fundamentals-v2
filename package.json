@@ -1,0 +1,76 @@
+{
+  "name": "matrix-training-platform",
+  "version": "1.0.5",
+  "description": "Matrix Training Platform for PLC Fundamentals Trainer Curriculum",
+  "main": "index.html",
+  "scripts": {
+    "start": "echo 'No Electron. Open index.html in browser.'",
+    "build": "echo 'No build step needed for static PWA.'"
+  },
+  "build": {
+    "appId": "com.matrix.training.platform",
+    "productName": "Matrix Training Platform",
+    "files": [
+      "main.js",
+      "index.html",
+      "worksheets.html",
+      "worksheet.html",
+      "scenario-popup.js",
+      "pdf-popup.js",
+      "preload.js",
+      "package.json",
+      "dbMaintenanceScenarios.json",
+      "dbFaultScenarios.json",
+      "main.css",
+      "assets/**/*",
+      "docs/**/*",
+      "LICENSE",
+      "README.md"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "hadefuwa",
+        "repo": "closed-loop-maint"
+      }
+    ],
+    "win": {
+      "icon": "assets/icons/matrix-icon.ico"
+    },
+    "mac": {
+      "icon": "assets/icons/matrix-icon.icns"
+    },
+    "linux": {
+      "icon": "assets/icons/matrix-icon.png"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hadefuwa/closed-loop-maint.git"
+  },
+  "author": "Hamed Adefuwa",
+  "license": "MIT",
+  "dependencies": {
+    "animejs": "^3.2.2",
+    "jquery": "^3.7.1",
+    "pdfjs-dist": "^5.3.31"
+  },
+  "devDependencies": {
+    "electron": "^25.9.8",
+    "electron-builder": "^24.6.3"
+  },
+  "keywords": [
+    "training",
+    "education",
+    "maintenance",
+    "curriculum",
+    "industrial"
+  ],
+  "bugs": {
+    "url": "https://github.com/hadefuwa/closed-loop-maint/issues"
+  },
+  "homepage": "https://github.com/hadefuwa/closed-loop-maint#readme"
+}

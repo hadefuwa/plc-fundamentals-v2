@@ -1,0 +1,29 @@
+{
+  "name": "Matrix IM6930 Curriculum",
+  "short_name": "Matrix IM6930",
+  "version": "0.0.3",
+  "description": "Industrial maintenance training platform with interactive worksheets and analytics.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#2c3033",
+  "theme_color": "#4a9eff",
+  "icons": [
+    {
+      "src": "assets/icons/matrix-icon.png",
+      "sizes": "any",
+      "type": "image/png"
+    }
+  ],
+  "prefer_related_applications": false,
+  "launch_handler": {
+    "client_mode": "focus-existing"
+  },
+  "screenshots": [
+    {
+      "src": "assets/matrix-logo.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ]
+} 

@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Matrix TSL - HMIs</title>
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="icon" type="image/x-icon" href="assets/icons/matrix-icon.ico">
+  <link rel="manifest" href="manifest.json">
+  <script src="worksheet-core.js"></script>
+  <script src="worksheet-tracking.js"></script>
+  <script defer src="shared-navigation.js"></script>
+  <script defer src="pwa-install.js"></script>
+
+</head>
+<body>
+  <!-- Main Content -->
+  <div class="worksheet-box">
+    <!-- Integrated Worksheet Header -->
+    <div class="worksheet-header">
+      <div class="worksheet-header-content">
+        <div class="worksheet-header-left">
+          <button class="worksheet-nav-btn worksheet-back-btn" onclick="window.location.href='worksheet-2.html'">
+            <i class="fas fa-arrow-left"></i>
+            <span>Previous Worksheet</span>
+          </button>
+        </div>
+        <div class="worksheet-header-center">
+          <h1 class="worksheet-title">Worksheet 3 - HMIs</h1>
+        </div>
+        <div class="worksheet-header-right">
+          <button class="worksheet-nav-btn worksheet-next-btn" onclick="window.location.href='worksheet-4.html'">
+            <span>Next Worksheet</span>
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Introduction Section -->
+    <div class="worksheet-section introduction-section">
+      <h2 class="section-header"><i class="fas fa-info-circle"></i> 1. Introduction</h2>
+      <div class="worksheet-content">
+        <div class="introduction-content-wrapper">
+          <div class="introduction-text">
+            <p>An HMI is the touchscreen or control panel you see in front of industrial systems. It is how operators monitor what is going on in a process and send commands to the PLC. Operators use HMIs to navigate menus, view real-time input and output data, and see how alarms or errors show up. HMIs are essential for operators to safely and effectively control machines and processes.</p>
+          </div>
+          <div class="introduction-image">
+            <div class="system-diagram">
+              <img src="assets/maintenance/ws3.png" alt="Status LED System">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Over To You Section -->
+    <div class="worksheet-section over-to-you-section">
+      <h2 class="section-header"><i class="fas fa-hands-helping"></i> 2. Over To You</h2>
+      <div class="worksheet-content">
+        <p><strong>Follow these steps to explore the HMI and the batch mixing process:</strong></p>
+
+        <div class="steps-container">
+          <div class="step-card" data-step="1">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Open Worksheet 3</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Navigate to Worksheet 3 on the HMI.</p>
+            </div>
+          </div>
+
+          <div class="step-card" data-step="2">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Check Tank Levels</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Observe the three tank levels at the top left of the screen.</p>
+            </div>
+          </div>
+
+          <div class="step-card" data-step="3">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Bottom Tank</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Observe the bottom tank where the final mix collects.</p>
+            </div>
+          </div>
+
+          <div class="step-card" data-step="4">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Change Batch</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Use the dropdown at the top right to change the batch from Lotion to Cream, Serum or Cleanser.</p>
+            </div>
+          </div>
+
+          <div class="step-card" data-step="5">
+            <div class="step-number">5</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Mix Process</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>Press the Mix button and observe the ingredients drain into the bottom tank. During mixing, the controls are inactive (greyed out). When complete, the Next Batch button becomes active again.</p>
+            </div>
+          </div>
+
+          <div class="step-card" data-step="6">
+            <div class="step-number">6</div>
+            <div class="step-content">
+              <div class="step-header">
+                <h4>Adjust Parameters</h4>
+                <label class="step-checkbox">
+                  <input type="checkbox" class="step-complete-checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <p>There are three parameters labelled Mix 1, Mix 2, and Mix 3. Adjust them and observe how they affect the tanks draining.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- So What Section -->
+    <div class="worksheet-section so-what-section">
+      <h2 class="section-header"><i class="fas fa-lightbulb"></i> 3. So What?</h2>
+      <div class="so-what-content">
+        <!-- Main Explanation Card -->
+        <div class="explanation-card">
+          <div class="card-header">
+            <i class="fas fa-cogs"></i>
+            <h3>Why this matters</h3>
+          </div>
+          <div class="card-content">
+            <p>This is a typical HMI screen you will find in any factory, anywhere in the world. This particular example is of a batch mixing process. There are four tanks, three with the ingredients and the fourth is the final mixed product. Operators, not maintenance engineers, use these screens daily to control a process. However, maintenance engineers will need to use them during maintenance of the machine to test and troubleshoot. Sometimes you can adjust certain parameters on the screen, other times the on-screen components are for information only. This is not always obvious—reading the user manual that comes with the HMI or system is essential.</p>
+          </div>
+    </div>
+
+        <div class="explanation-card">
+          <div class="card-header">
+            <i class="fas fa-display"></i>
+            <h3>How it's used on site</h3>
+          </div>
+          <div class="card-content">
+            <p>HMIs let you start and stop processes, change batches, view IO status, and acknowledge alarms. When fault-finding, use the HMI to see which sensors are active, what outputs are on, and what the system thinks is happening.</p>
+          </div>
+        </div>
+
+        <div class="explanation-card">
+          <div class="card-header">
+            <i class="fas fa-triangle-exclamation"></i>
+            <h3>What to watch for</h3>
+          </div>
+          <div class="card-content">
+            <p>Some values are read-only and some are adjustable. Always check the alarm banner and the dedicated Faults/Alarms page. If the screen is locked or unclear, use the user manual for that HMI to avoid changing the wrong setting.</p>
+          </div>
+        </div>
+
+     </div>
+   </div>
+     <!-- Key Takeaways Section -->
+     <div class="worksheet-section key-takeaways-section">
+       <h2 class="section-header"><i class="fas fa-list-check"></i> Key Takeaways</h2>
+       <ul>
+         <li>HMIs are essential for operators to monitor and control industrial processes safely and effectively.</li>
+         <li>HMIs show real-time data like tank levels and alarms and allow you to adjust process parameters.</li>
+         <li>In batch mixing processes, HMIs display how ingredients are combined and let you change batch settings.</li>
+         <li>Operators use HMIs every day, but maintenance engineers use them too during troubleshooting and testing.</li>
+         <li>Not all HMI screens allow changes. Some only display data, while others let you adjust parameters.</li>
+         <li>Always read the user manual for your specific HMI.</li>
+       </ul>
+     </div>
+
+     <!-- Questions Section -->
+    <div class="worksheet-section questions-section">
+      <h2 class="section-header"><i class="fas fa-question-circle"></i> Questions & Answers</h2>
+      <div class="questions-content">
+        <div class="question-item" data-question="1">
+          <h4>Question 1: What is the purpose of an HMI in an industrial system?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-1" value="A" class="option-radio">
+              <span class="option-text">A) An HMI lets operators view system status and send commands to the PLC</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-1" value="B" class="option-radio">
+              <span class="option-text">B) To provide lighting for the work area</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-1" value="C" class="option-radio">
+              <span class="option-text">C) To measure system temperature</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-1" value="D" class="option-radio">
+              <span class="option-text">D) To control system power</span>
+            </label>
+          </div>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(1)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) An HMI lets operators view system status and send commands to the PLC.
+          </div>
+        </div>
+        
+        <div class="question-item" data-question="2">
+          <h4>Question 2: What does this worksheet’s HMI screen represent?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-2" value="A" class="option-radio">
+              <span class="option-text">A) It shows a motor speed control screen</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-2" value="B" class="option-radio">
+              <span class="option-text">B) It shows a motor speed control screen</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-2" value="C" class="option-radio">
+              <span class="option-text">C) It shows a batch mixing process with ingredient tanks and a final product tank</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-2" value="D" class="option-radio">
+              <span class="option-text">D) It shows a pressure control screen</span>
+            </label>
+          </div>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(2)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> C) It shows a batch mixing process with ingredient tanks and a final product tank.
+          </div>
+        </div>
+        
+        <div class="question-item" data-question="3">
+          <h4>Question 3: What happens when you press the Mix button?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-3" value="A" class="option-radio">
+              <span class="option-text">A) The screen changes to the alarms page automatically</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-3" value="B" class="option-radio">
+              <span class="option-text">B) The three tanks drain into the bottom tank, and controls are locked until mixing finishes</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-3" value="C" class="option-radio">
+              <span class="option-text">C) The tanks fill up from the bottom tank</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-3" value="D" class="option-radio">
+              <span class="option-text">D) Nothing happens</span>
+            </label>
+          </div>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(3)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> B) The three tanks drain into the bottom tank, and controls are locked until mixing finishes.
+          </div>
+        </div>
+        
+        <div class="question-item" data-question="4">
+          <h4>Question 4: Why are some HMI controls greyed out during mixing?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-4" value="A" class="option-radio">
+              <span class="option-text">A) To save energy on the HMI</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-4" value="B" class="option-radio">
+              <span class="option-text">B) So operators cannot see the process</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-4" value="C" class="option-radio">
+              <span class="option-text">C) Because the PLC is offline</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-4" value="D" class="option-radio">
+              <span class="option-text">D) To prevent changes during critical parts of the process, keeping the system safe</span>
+            </label>
+          </div>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(4)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> D) To prevent changes during critical parts of the process, keeping the system safe.
+          </div>
+        </div>
+        
+        <div class="question-item" data-question="5">
+          <h4>Question 5: How can maintenance engineers use HMIs during fault finding?</h4>
+          <div class="multiple-choice-options">
+            <label class="option-label">
+              <input type="radio" name="question-5" value="A" class="option-radio">
+              <span class="option-text">A) They use it to change PLC firmware</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-5" value="B" class="option-radio">
+              <span class="option-text">B) They use it to check inputs, outputs, alarms, and test system behaviour</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-5" value="C" class="option-radio">
+              <span class="option-text">C) They use it to paint the machine</span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="question-5" value="D" class="option-radio">
+              <span class="option-text">D) They use it to disable all safety systems</span>
+            </label>
+          </div>
+          <div class="question-actions">
+            <button class="submit-question-btn" onclick="submitAnswer(5)">Submit Answer</button>
+          </div>
+          <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
+            <strong style="color: #4CAF50;">Correct Answer:</strong> B) They use it to check inputs, outputs, alarms, and test system behaviour.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div> <!-- Close worksheet-box -->
+
+  <!-- Bottom Navigation -->
+  <div class="worksheet-bottom-nav">
+    <div class="worksheet-header-content">
+      <div class="worksheet-header-left">
+        <button class="worksheet-nav-btn worksheet-back-btn" onclick="window.location.href='worksheet-2.html'">
+          <i class="fas fa-arrow-left"></i>
+          <span>Previous Worksheet</span>
+        </button>
+      </div>
+      <div class="worksheet-header-center">
+        <h1 class="worksheet-title">Worksheet 3 - HMIs</h1>
+      </div>
+      <div class="worksheet-header-right">
+        <button class="worksheet-nav-btn worksheet-next-btn" onclick="window.location.href='worksheet-4.html'">
+          <span>Next Worksheet</span>
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+<script>
+
+// Enhanced answer handling functions
+function submitAnswer(questionNumber) {
+  const answerInput = document.querySelector(`[data-question="${questionNumber}"]`);
+  if (!answerInput) return;
+  
+  const selectedOption = document.querySelector(`input[name="question-${questionNumber}"]:checked`);
+  if (!selectedOption) {
+    alert('Please select an answer before submitting.');
+    return;
+  }
+  
+  const answer = selectedOption.value;
+  
+  // Save with enhanced tracking if available
+  if (typeof worksheetTracker !== 'undefined') {
+    const worksheetId = getUrlParameter('id') || getWorksheetIdFromUrl();
+    const path = window.location.pathname;
+    const isFaultScenario = path.includes('fault-scenario');
+    const type = getUrlParameter('type') || (isFaultScenario ? 'fault' : 'maintenance');
+    worksheetTracker.saveAnswer(worksheetId, questionNumber, answer, type);
+  } else {
+    saveAnswer(questionNumber, answer);
+  }
+  
+  // Get correct answer from the correct-answer div
+  const correctAnswerDiv = answerInput.querySelector('.correct-answer');
+  let correctAnswerText = '';
+  if (correctAnswerDiv) {
+    const strongElement = correctAnswerDiv.querySelector('strong');
+    if (strongElement) {
+      correctAnswerText = strongElement.nextSibling.textContent.trim();
+    }
+  }
+  
+  // Determine if answer is correct (extract letter from correct answer)
+  const correctLetterMatch = correctAnswerText.match(/^([A-D])\)/);
+  const correctLetter = correctLetterMatch ? correctLetterMatch[1] : null;
+  const isCorrect = !!correctLetter && answer === correctLetter;
+  
+  // Style the selected option
+  const allOptions = answerInput.querySelectorAll('.option-label');
+  allOptions.forEach(option => {
+    option.classList.remove('correct', 'incorrect');
+  });
+  
+  if (isCorrect) {
+    selectedOption.closest('.option-label').classList.add('correct');
+  } else {
+    selectedOption.closest('.option-label').classList.add('incorrect');
+    // Also mark the correct option as correct
+    const correctOption = answerInput.querySelector(`input[name="question-${questionNumber}"][value="${correctLetter}"]`);
+    if (correctOption) {
+      correctOption.closest('.option-label').classList.add('correct');
+    }
+  }
+  
+  const submitBtn = answerInput.querySelector('.submit-question-btn');
+  if (submitBtn) {
+    submitBtn.textContent = isCorrect ? 'Correct!' : 'Incorrect';
+    submitBtn.style.background = isCorrect ? '#4CAF50' : '#f44336';
+    setTimeout(() => {
+      submitBtn.textContent = 'Submit Answer';
+      submitBtn.style.background = '#4CAF50';
+    }, 2000);
+  }
+  
+  // Show correct answer
+  if (correctAnswerDiv) {
+    correctAnswerDiv.style.display = 'block';
+  }
+}
+
+
+// Enhanced step tracking functions
+function initializeStepTracking() {
+  console.log('Initializing step tracking...');
+  
+  // Add flag to prevent double execution
+  let isProcessing = false;
+  
+  // Wait a bit to ensure DOM is ready
+  setTimeout(() => {
+    const stepCards = document.querySelectorAll('.step-card');
+    console.log('Found', stepCards.length, 'step cards');
+    
+    stepCards.forEach((card, index) => {
+      const checkbox = card.querySelector('.step-complete-checkbox');
+      const stepNumber = card.getAttribute('data-step') || (index + 1);
+      
+      console.log('Setting up card', stepNumber, 'with checkbox:', !!checkbox);
+      
+      if (checkbox) {
+        // Load saved state
+        const savedState = localStorage.getItem(`step-${stepNumber}`);
+        if (savedState === 'true') {
+          checkbox.checked = true;
+          card.classList.add('step-completed');
+          // Apply the completed styles
+          card.style.background = '#2a2a2a';
+          card.style.opacity = '0.7';
+          card.style.cursor = 'default';
+        }
+        
+        // Make the entire card clickable
+        card.style.cursor = 'pointer';
+        card.style.position = 'relative';
+        card.style.zIndex = '1';
+        
+        // Add click handler to the entire card
+        card.addEventListener('click', function(e) {
+          console.log('Card clicked:', stepNumber);
+          
+          // Prevent double execution
+          if (isProcessing) {
+            console.log('Already processing, ignoring click');
+            return;
+          }
+          
+          // Don't toggle if clicking directly on the checkbox or its label
+          if (e.target === checkbox || 
+              e.target.closest('.step-checkbox') || 
+              e.target.closest('label') ||
+              e.target.tagName === 'INPUT' ||
+              e.target.tagName === 'LABEL') {
+            console.log('Clicking on checkbox or label, not toggling card');
+            return;
+          }
+          
+          // Prevent the default checkbox behavior and stop propagation
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          
+          // Set processing flag
+          isProcessing = true;
+          
+          // Toggle the checkbox directly without triggering events
+          checkbox.checked = !checkbox.checked;
+          
+          // Manually call the change handler
+          handleCheckboxChange(checkbox, card, stepNumber);
+          
+          console.log('Checkbox toggled to:', checkbox.checked);
+          console.log('Card classes after toggle:', card.className);
+          
+          // Reset processing flag after a short delay
+          setTimeout(() => {
+            isProcessing = false;
+          }, 100);
+        });
+        
+        // Create a shared change handler function
+        function handleCheckboxChange(checkbox, card, stepNumber) {
+          console.log('Checkbox changed:', stepNumber, 'checked:', checkbox.checked);
+          
+          if (checkbox.checked) {
+            card.classList.add('step-completed');
+            // Force the styles to apply
+            card.style.background = '#2a2a2a';
+            card.style.opacity = '0.7';
+            card.style.cursor = 'default';
+            console.log('Added step-completed class to card', stepNumber);
+            console.log('Card classes after adding:', card.className);
+            localStorage.setItem(`step-${stepNumber}`, 'true');
+          } else {
+            card.classList.remove('step-completed');
+            // Reset the styles
+            card.style.background = '';
+            card.style.opacity = '';
+            card.style.cursor = 'pointer';
+            console.log('Removed step-completed class from card', stepNumber);
+            console.log('Card classes after removing:', card.className);
+            localStorage.setItem(`step-${stepNumber}`, 'false');
+          }
+        }
+        
+        // Add change handler to checkbox
+        checkbox.addEventListener('change', function() {
+          if (!isProcessing) {
+            handleCheckboxChange(checkbox, card, stepNumber);
+          }
+        });
+        
+        // Also make the checkbox itself clickable
+        checkbox.addEventListener('click', function(e) {
+          e.stopPropagation(); // Prevent card click when clicking checkbox
+          e.stopImmediatePropagation(); // Stop any other handlers
+        });
+      }
+    });
+  }, 100);
+}
+
+// Initialize when page loads
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initializeStepTracking);
+} else {
+  // DOM is already loaded
+  initializeStepTracking();
+}
+
+// Also try again after a short delay to ensure everything is ready
+setTimeout(initializeStepTracking, 500);
+
+
+</script>
+</body>
+</html> 

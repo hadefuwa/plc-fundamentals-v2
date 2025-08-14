@@ -1,0 +1,9 @@
+/*
+  Content-Type: text/html
+*.js
+  Content-Type: application/javascript
+*.json
+  Content-Type: application/json
+service-worker.js
+  Content-Type: application/javascript
+  Service-Worker-Allowed: /
