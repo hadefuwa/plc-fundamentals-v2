@@ -12,13 +12,15 @@ git push origin main --tags
 
 #When ready for the next release
 git add -A
-git commit -m "Prepare for Rev 2.1 release"
-git tag -a rev2.1 -m "Rev 2.1 released"
+git commit -m "Prepare for Rev 2.2 release"
+git tag -a rev2.2 -m "Rev 2.2 released"
 git push origin main --tags
 
 
 git add .
-git commit -m "Changed Title"
+git commit -m "Updated Docs"
 
 git push origin main
 git push matrix main
+
+vcbvcb
