@@ -15,3 +15,7 @@ git add -A
 git commit -m "Prepare for Rev 2.1 release"
 git tag -a rev2.1 -m "Rev 2.1 released"
 git push origin main --tags
+
+
+git add .
+git commit -m "Enhanced checkbox functionality across all worksheets (WS3-12)"
