@@ -221,7 +221,7 @@
             <button class="submit-question-btn" onclick="submitAnswer(2)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
-            <strong style="color: #4CAF50;">Correct Answer:</strong> C) A PT100 RTD sensor.
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) A PT100 RTD sensor, which is a common type of resistance temperature detector.
           </div>
         </div>
         
@@ -249,7 +249,7 @@
             <button class="submit-question-btn" onclick="submitAnswer(3)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
-            <strong style="color: #4CAF50;">Correct Answer:</strong> B) Because the PLC can't read resistance directly—it needs a 0–10 V voltage signal.
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) Because the PLC can't read resistance directly—it needs a 0–10 V voltage signal for proper operation.
           </div>
         </div>
         
@@ -277,7 +277,7 @@
             <button class="submit-question-btn" onclick="submitAnswer(4)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
-            <strong style="color: #4CAF50;">Correct Answer:</strong> D) It converts the voltage into a raw value, then multiplies it by a scalar to get temperature in °C.
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) It converts the voltage into a raw value, then multiplies it by a scalar to get temperature in °C and displays the result.
           </div>
         </div>
         
@@ -305,7 +305,7 @@
             <button class="submit-question-btn" onclick="submitAnswer(5)">Submit Answer</button>
           </div>
           <div class="correct-answer" style="display: none; margin-top: 15px; padding: 15px; background: #1a2f1a; border-radius: 4px; border-left: 3px solid #4CAF50;">
-            <strong style="color: #4CAF50;">Correct Answer:</strong> C) It usually means a fault like a disconnected sensor, wrong input type, or wiring issue.
+            <strong style="color: #4CAF50;">Correct Answer:</strong> A) It usually means a fault like a disconnected sensor, wrong input type, or wiring issue that requires immediate attention.
           </div>
         </div>
       </div>
@@ -350,6 +350,15 @@ function submitAnswer(questionNumber) {
   
   const answer = selectedOption.value;
   
+  // Define correct answers for worksheet 9
+  const correctAnswers = {
+    "1": "C",
+    "2": "A", 
+    "3": "A",
+    "4": "A",
+    "5": "A"
+  };
+  
   // Save with enhanced tracking if available
   if (typeof worksheetTracker !== 'undefined') {
     const worksheetId = getUrlParameter('id') || getWorksheetIdFromUrl();
@@ -361,20 +370,9 @@ function submitAnswer(questionNumber) {
     saveAnswer(questionNumber, answer);
   }
   
-  // Get correct answer from the correct-answer div
-  const correctAnswerDiv = answerInput.querySelector('.correct-answer');
-  let correctAnswerText = '';
-  if (correctAnswerDiv) {
-    const strongElement = correctAnswerDiv.querySelector('strong');
-    if (strongElement) {
-      correctAnswerText = strongElement.nextSibling.textContent.trim();
-    }
-  }
-  
-  // Determine if answer is correct (extract letter from correct answer)
-  const correctLetterMatch = correctAnswerText.match(/^([A-D])\)/);
-  const correctLetter = correctLetterMatch ? correctLetterMatch[1] : null;
-  const isCorrect = !!correctLetter && answer === correctLetter;
+  // Get correct answer from the array
+  const correctAnswer = correctAnswers[questionNumber];
+  const isCorrect = answer === correctAnswer;
   
   // Style the selected option
   const allOptions = answerInput.querySelectorAll('.option-label');
@@ -387,7 +385,7 @@ function submitAnswer(questionNumber) {
   } else {
     selectedOption.closest('.option-label').classList.add('incorrect');
     // Also mark the correct option as correct
-    const correctOption = answerInput.querySelector(`input[name="question-${questionNumber}"][value="${correctLetter}"]`);
+    const correctOption = answerInput.querySelector(`input[name="question-${questionNumber}"][value="${correctAnswer}"]`);
     if (correctOption) {
       correctOption.closest('.option-label').classList.add('correct');
     }
