@@ -1,5 +1,5 @@
 // Service Worker for Matrix IM6930 Curriculum
-const CACHE_NAME = 'matrix-training-cache-v1';
+const CACHE_NAME = 'matrix-training-cache-v2.3';
 
 // Resources to cache
 const CORE_ASSETS = [
@@ -23,7 +23,8 @@ const ADDITIONAL_ASSETS = [
   './pwa-install.js',
   './scenario-popup.js',
   './pdf-popup.js',
-  './image-fallback.js'
+  './image-fallback.js',
+  './update-notifier.js'
 ];
 
 // Install event - cache core assets
@@ -86,6 +87,17 @@ self.addEventListener('activate', event => {
         console.log('Service Worker activated');
         // Take control immediately
         return clients.claim();
+      })
+      .then(() => {
+        // Notify all clients about the update
+        return self.clients.matchAll().then(clients => {
+          clients.forEach(client => {
+            client.postMessage({
+              type: 'UPDATE_AVAILABLE',
+              message: 'App updated! Refresh to get the latest version.'
+            });
+          });
+        });
       })
   );
 });
