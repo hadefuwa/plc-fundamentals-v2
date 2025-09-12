@@ -1,5 +1,5 @@
 git add -A
-git commit -m "updated worksheet 7"
+git commit -m "updated intro images"
 git push
 
 
@@ -18,7 +18,7 @@ git push origin main --tags
 
 
 git add .
-git commit -m "Updated Docs"
+git commit -m "Updated worksheet 7"
 
 git push origin main
 git push matrix main

@@ -659,17 +659,19 @@ h1 {
 .system-diagram { 
     text-align: center; 
     margin: 20px 0; 
-    width: 100%;
+    width: auto;
+    max-width: 100%;
 }
 
 .system-diagram img { 
     display: block;
     max-width: 100%;
-    width: 100%;
+    width: auto;
     height: auto; 
     object-fit: contain;
     border-radius: 8px; 
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    margin: 0 auto;
 }
 
 .system-diagram figcaption { 
@@ -699,21 +701,26 @@ h1 {
 }
 
 .introduction-image {
-    flex: 0 0 40%;
+    flex: 0 0 auto;
     display: flex;
     align-items: flex-start;
     justify-content: center;
+    max-width: 40%;
 }
 
 .introduction-image .system-diagram {
     margin: 0;
+    width: auto;
+    max-width: 100%;
 }
 
 .introduction-image .system-diagram img {
-    width: 100%;
+    width: auto;
     max-width: 300px;
     height: auto;
     max-height: 25vh;
+    display: block;
+    margin: 0 auto;
     /* Removed min-height to avoid overflow on very small viewports */
     object-fit: contain;
 }
