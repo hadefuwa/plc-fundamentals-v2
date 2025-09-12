@@ -55,7 +55,7 @@ function initializeTemperatureSensorSimulation() {
                             <div style="font-size: 48px; color: #FF5722; font-weight: bold; text-shadow: 0 0 10px rgba(255,87,34,0.5);">
                                 <span id="temp-value">25</span>°C
                             </div>
-                            <div style="margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                            <div style="margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; overflow-x: hidden;">
                                 <div style="background: #1a1a1a; padding: 15px; border-radius: 8px;">
                                     <div style="color: #aaa; font-size: 0.9em;">Voltage Output</div>
                                     <div style="color: #2196F3; font-size: 1.5em; font-weight: bold;">

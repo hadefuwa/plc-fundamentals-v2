@@ -122,7 +122,7 @@ function renderInteractiveFaultScenario(scenario) {
     <!-- Scenario Description -->
     <div class="worksheet-section introduction-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 2px solid #f44336; box-shadow: 0 8px 20px rgba(244, 67, 54, 0.2);">
       <h2 class="section-header" style="color: #f44336; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-exclamation-triangle"></i> Fault Scenario</h2>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; overflow-x: hidden;">
         <div class="worksheet-content">
           ${(scenario.introduction?.paragraphs || scenario.paragraphs || []).map(p => `<p style="color: #FFFFFF; margin-bottom: 15px;">${p}</p>`).join('')}
         </div>
@@ -385,7 +385,7 @@ function renderBasicFaultScenario(scenario) {
 
     <div class="worksheet-section introduction-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 2px solid #f44336; box-shadow: 0 8px 20px rgba(244, 67, 54, 0.2);">
       <h2 class="section-header" style="color: #f44336; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-exclamation-triangle"></i> Scenario Description</h2>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; overflow-x: hidden;">
         <div class="worksheet-content">
           ${(scenario.introduction?.paragraphs || scenario.paragraphs || []).map(p => `<p style="color: #FFFFFF; margin-bottom: 15px;">${p}</p>`).join('')}
         </div>

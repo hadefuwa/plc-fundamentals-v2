@@ -222,7 +222,7 @@ function renderMaintenanceWorksheet(scenario) {
           ${worksheetId === 1 ? `
             <p style="color: #FFFFFF; margin-bottom: 15px;">The system you have in front of you is a Closed-Loop Flow Control system, meaning it continuously adjusts itself to meet a desired target, called the setpoint. It does this by using feedback from sensors to control devices like pumps and valves, keeping the system accurate and stable even if conditions change.</p>
             
-            <div class="cad-models" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 30px 0;">
+            <div class="cad-models" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 30px 0; overflow-x: hidden;">
               <div class="cad-model" style="text-align: center;">
                 <img src="assets/cad.png" alt="CAD Model - Front View" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);">
                 <figcaption style="color: #FFFFFF; margin-top: 10px; font-style: italic;">CAD Model - Front View</figcaption>
@@ -358,7 +358,7 @@ function renderBasicFaultScenario(scenario) {
 
     <div class="worksheet-section introduction-section" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d); border-radius: 12px; padding: 30px; margin-bottom: 40px; border: 2px solid #f44336; box-shadow: 0 8px 20px rgba(244, 67, 54, 0.2);">
       <h2 class="section-header" style="color: #f44336; margin-bottom: 25px; font-size: 24px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-exclamation-triangle"></i> Scenario</h2>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; overflow-x: hidden;">
         <div class="worksheet-content">
           ${(scenario.introduction?.paragraphs || scenario.paragraphs || []).map(p => `<p style="color: #FFFFFF; margin-bottom: 15px;">${p}</p>`).join('')}
         </div>
@@ -406,7 +406,7 @@ function renderInlineInteractiveWorksheet(scenario, worksheetId) {
       <div class="worksheet-content">
         <p style="color: #FFFFFF; margin-bottom: 15px;">The system you have in front of you is a Closed-Loop Flow Control system, meaning it continuously adjusts itself to meet a desired target, called the setpoint. It does this by using feedback from sensors to control devices like pumps and valves, keeping the system accurate and stable even if conditions change.</p>
         
-        <div class="cad-models" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 30px 0;">
+        <div class="cad-models" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 30px 0; overflow-x: hidden;">
           <div class="cad-model" style="text-align: center;">
             <img src="assets/cad.png" alt="CAD Model - Front View" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);">
             <figcaption style="color: #FFFFFF; margin-top: 10px; font-style: italic;">CAD Model - Front View</figcaption>

@@ -96,7 +96,7 @@ function initializeIODisplay() {
         <i class="fas fa-microchip"></i> PLC I/O Status
       </h4>
       
-      <div class="io-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px;">
+      <div class="io-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; overflow-x: hidden;">
         <!-- Digital Inputs (Left Column) -->
         <div class="digital-inputs">
           <h5 style="color: #4CAF50; margin-bottom: 15px; font-size: 16px;">
@@ -154,7 +154,7 @@ function initializePLCControls() {
         <!-- Manual Input Control -->
         <div class="control-group" style="background: #333; padding: 15px; border-radius: 8px;">
           <h5 style="color: #FFFFFF; margin-bottom: 15px;">Manual Input Control</h5>
-          <div id="manual-input-controls" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+          <div id="manual-input-controls" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; overflow-x: hidden;">
             <!-- Manual input controls will be generated here -->
           </div>
         </div>

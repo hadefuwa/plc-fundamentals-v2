@@ -70,7 +70,7 @@ function initializeFlowSensorSimulation() {
                     
                     <!-- System Controls -->
                     <div style="background: #23272b; padding: 20px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #444;">
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; overflow-x: hidden;">
                             <!-- Pump Speed Control -->
                             <div style="background: #1a1a1a; padding: 15px; border-radius: 8px; border: 1px solid #333;">
                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
