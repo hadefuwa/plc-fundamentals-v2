@@ -440,7 +440,7 @@ function initializeStepTracking() {
         // Add a flag to prevent double execution
         let isProcessing = false;
         // Load saved state
-        const savedState = localStorage.getItem(`step-${stepNumber}`);
+        const savedState = localStorage.getItem(`worksheet-1-step-${stepNumber}`);
         if (savedState === 'true') {
           checkbox.checked = true;
           card.classList.add('step-completed');
@@ -510,7 +510,7 @@ function initializeStepTracking() {
              card.style.cursor = 'default';
              console.log('Added step-completed class to card', stepNumber);
              console.log('Card classes after adding:', card.className);
-             localStorage.setItem(`step-${stepNumber}`, 'true');
+             localStorage.setItem(`worksheet-1-step-${stepNumber}`, 'true');
            } else {
              card.classList.remove('step-completed');
              // Reset the styles
@@ -519,7 +519,7 @@ function initializeStepTracking() {
              card.style.cursor = 'pointer';
              console.log('Removed step-completed class from card', stepNumber);
              console.log('Card classes after removing:', card.className);
-             localStorage.setItem(`step-${stepNumber}`, 'false');
+             localStorage.setItem(`worksheet-1-step-${stepNumber}`, 'false');
            }
          }
          
