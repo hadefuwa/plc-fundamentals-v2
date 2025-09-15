@@ -773,25 +773,25 @@
             </div>
           </div>
 
-                   <div class="feature-card" onclick="openPDF('docs/IM6930 - PLC Fundamentals Trainer User Manual.pdf')">
+                   <div class="feature-card" onclick="navigateToInteractiveTraining()">
             <div class="feature-icon">
-              <i class="fas fa-book"></i>
+              <i class="fas fa-play-circle"></i>
             </div>
             <div class="feature-content">
-              <h3>User Manual</h3>
-              <p>Comprehensive user manual for the IM6930 PLC Fundamentals Trainer.</p>
-              <span class="feature-badge">IM6930</span>
+              <h3>Interactive Training</h3>
+              <p>Hands-on interactive training modules with real-time simulations and practical exercises.</p>
+              <span class="feature-badge">Training</span>
             </div>
           </div>
 
-                   <div class="feature-card" onclick="openPDF('docs/IM6930 Electrical Drawings Rev7.pdf')">
+                   <div class="feature-card" onclick="navigateToProgressTracking()">
             <div class="feature-icon">
-              <i class="fas fa-bolt"></i>
+              <i class="fas fa-chart-line"></i>
             </div>
             <div class="feature-content">
-              <h3>Electrical Drawings</h3>
-              <p>Detailed electrical schematics and wiring diagrams for the training system.</p>
-              <span class="feature-badge">Rev7</span>
+              <h3>Progress Tracking</h3>
+              <p>Monitor your learning progress, track completed modules, and view detailed analytics.</p>
+              <span class="feature-badge">Analytics</span>
             </div>
           </div>
        </div>
@@ -838,6 +838,51 @@
             // Last resort: create a link and click it
             const link = document.createElement('a');
             link.href = 'CP2388-worksheets.html';
+            link.click();
+          }
+        }
+      }
+      
+      // Interactive Training Navigation Function
+      function navigateToInteractiveTraining() {
+        console.log('navigateToInteractiveTraining function called!');
+        try {
+          console.log('Attempting to navigate to interactive training...');
+          // For now, navigate to the main training page
+          // You can change this to point to a specific interactive training page
+          window.location.href = 'CP2388-worksheets.html';
+        } catch (error) {
+          console.error('Navigation error:', error);
+          // Fallback: try alternative methods
+          try {
+            window.location = 'CP2388-worksheets.html';
+          } catch (fallbackError) {
+            console.error('Fallback navigation also failed:', fallbackError);
+            // Last resort: create a link and click it
+            const link = document.createElement('a');
+            link.href = 'CP2388-worksheets.html';
+            link.click();
+          }
+        }
+      }
+      
+      // Progress Tracking Navigation Function
+      function navigateToProgressTracking() {
+        console.log('navigateToProgressTracking function called!');
+        try {
+          console.log('Attempting to navigate to progress tracking...');
+          // Navigate to the tracking dashboard
+          window.location.href = 'tracking-dashboard.html';
+        } catch (error) {
+          console.error('Navigation error:', error);
+          // Fallback: try alternative methods
+          try {
+            window.location = 'tracking-dashboard.html';
+          } catch (fallbackError) {
+            console.error('Fallback navigation also failed:', fallbackError);
+            // Last resort: create a link and click it
+            const link = document.createElement('a');
+            link.href = 'tracking-dashboard.html';
             link.click();
           }
         }
